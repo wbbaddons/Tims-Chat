@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de">
+	<category name="wcf.header">
+		<item name="wcf.header.menu.chat"><![CDATA[Chat]]></item>
+	</category>
+	<category name="wcf.chat">
+		<item name="wcf.chat.title"><![CDATA[Chat]]></item>
+		<item name="wcf.chat.copyright"><![CDATA[<a href="http://timwolla.wbbaddons.de">Chat entwickelt von TimWolla</a>]]></item>
+	</category>
+</language>
