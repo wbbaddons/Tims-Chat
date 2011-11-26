@@ -7,5 +7,11 @@
 			<eventname>javascriptInclude</eventname>
 			<templatecode><![CDATA[{include file='chatJavascriptInclude'}]]></templatecode>
 		</templatelistener>
+		<templatelistener name="chatCopyright">
+			<environment>user</environment>
+			<templatename>footer</templatename>
+			<eventname>copyright</eventname>
+			<templatecode><![CDATA[{include file='chatCopyright'}]]></templatecode>
+		</templatelistener>
 	</import>
 </data>
