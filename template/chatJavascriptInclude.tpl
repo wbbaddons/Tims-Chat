@@ -1,0 +1,1 @@
+{if $templateName == 'chat'}<script type="text/javascript" src="{@RELATIVE_WCF_DIR}js/TimWolla.WCF.Chat.js"></script>{/if}

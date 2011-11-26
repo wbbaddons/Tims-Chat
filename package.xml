@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="timwolla.wcf.chat" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
+	<packageinformation>
+		<packagename><![CDATA[Tims Chat]]></packagename>
+		<packagedescription><![CDATA[Chat for WoltLab Community Framework™]]></packagedescription>
+		<standalone>0</standalone>
+		<isunique>1</isunique>
+		<version>3.0.0 Alpha 1</version>
+		<date>2011-11-26</date>
+		<plugin>com.woltlab.wcf</plugin> <!-- TODO: Correct me -->
+	</packageinformation>
+	
+	<authorinformation>
+		<author><![CDATA[Tim Düsterhus]]></author>
+		<authorurl><![CDATA[http://timwolla.wbbaddons.de]]></authorurl>
+	</authorinformation>
+	
+	<instructions type="install">
+		<instruction type="language">language/*.xml</instruction>
+		<instruction type="file">file.tar</instruction>
+		<instruction type="template">template.tar</instruction>
+		<instruction type="sql">install.sql</instruction>
+		<instruction type="option">option.xml</instruction>
+		<instruction type="pagemenu">pagemenu.xml</instruction>
+		<instruction type="templatelistener">templatelistener.xml</instruction>
+	</instructions>
+	
+	<instructions type="update" fromversion="3.0.0 Alpha *">
+		<instruction type="language">language/*.xml</instruction>
+		<instruction type="file">file.tar</instruction>
+		<instruction type="template">template.tar</instruction>
+		<instruction type="sql">install.sql</instruction>
+		<instruction type="option">option.xml</instruction>
+		<instruction type="pagemenu">pagemenu.xml</instruction>
+		<instruction type="templatelistener">templatelistener.xml</instruction>
+	</instructions>
+</package>
