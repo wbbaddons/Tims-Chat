@@ -11,5 +11,11 @@ namespace wcf\page;
  * @subpackage	page
  */
 class ChatPage extends AbstractPage {
-	
+	/**
+	 * @see wcf\page\IPage::show()
+	 */
+	public function show() {
+		\wcf\system\menu\page\PageMenu::getInstance()->setActiveMenuItem('wcf.header.menu.chat');
+		parent::show();
+	}
 }
