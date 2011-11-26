@@ -4,6 +4,11 @@
 	<title>{lang}wcf.chat.title{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude' sandbox=false}
+	<script type="text/javascript">
+	//<![CDATA[
+		new TimWolla.WCF.Chat({$roomID},1);
+	//]]>
+	</script>
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
