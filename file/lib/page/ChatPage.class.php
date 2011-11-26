@@ -36,12 +36,9 @@ class ChatPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		$this->rooms = chat\room\ChatRoom::getCache();
-		if (isset($this->rooms[$this->roomID])) {
-			$this->room = $this->rooms[$this->roomID];
-		}
-		else {
-			throw new \wcf\system\exception\IllegalLinkException();
-		}
+		$this->room = $this->rooms->search($this->roomID);
+		
+		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
 	}
 	
 	/**

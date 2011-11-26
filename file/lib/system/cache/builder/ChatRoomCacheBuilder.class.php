@@ -20,8 +20,7 @@ class ChatRoomCacheBuilder implements ICacheBuilder {
 		$roomList->sqlOrderBy = "chat_room.position";
 		$roomList->sqlLimit = 0;
 		$roomList->readObjects();
-		$rooms = $roomList->getObjects();
 		
-		return $rooms;
+		return $roomList;
 	}
 }
