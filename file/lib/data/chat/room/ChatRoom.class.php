@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\chat\room;
+use \wcf\system\cache\CacheHandler;
 
 /**
  * Represents a chat room.
@@ -31,14 +32,17 @@ class ChatRoom extends \wcf\data\DatabaseObject {
 	/**
 	 * Loads the room cache.
 	 */
-	protected static function getCache() {
-		if (self::$cache !== null) return;
-		CacheHandler::getInstance()->addResource(
-			'chatrooms',
-			WCF_DIR.'cache/cache.chatrooms.php',
-			'wcf\system\cache\builder\ChatRoomCacheBuilder'
-		);
-		self::$cache = CacheHandler::getInstance()->get('chatrooms');
+	public static function getCache() {
+		if (self::$cache === null) {
+			CacheHandler::getInstance()->addResource(
+				'chatrooms',
+				WCF_DIR.'cache/cache.chatrooms.php',
+				'wcf\system\cache\builder\ChatRoomCacheBuilder'
+			);
+			self::$cache = CacheHandler::getInstance()->get('chatrooms');
+		}
+		
+		return self::$cache;
 	}
 	
 	/**

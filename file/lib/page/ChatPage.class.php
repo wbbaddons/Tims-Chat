@@ -1,6 +1,7 @@
 <?php
 namespace wcf\page;
 use \wcf\system\WCF;
+use \wcf\data\chat;
 
 /**
  * Shows the chat-interface
@@ -12,9 +13,11 @@ use \wcf\system\WCF;
  * @subpackage	page
  */
 class ChatPage extends AbstractPage {
-	public $roomID = 0;
 	//public $neededModules = array('CHAT_ACTIVE');
 	//public $neededPermissions = array('user.chat.canEnter');
+	public $room = null;
+	public $roomID = 0;
+	public $rooms = array();
 	
 	/**
 	 * @see	\wcf\page\IPage::assignVariables()
@@ -32,6 +35,13 @@ class ChatPage extends AbstractPage {
 	 */
 	public function readData() {
 		parent::readData();
+		$this->rooms = chat\room\ChatRoom::getCache();
+		if (isset($this->rooms[$this->roomID])) {
+			$this->room = $this->rooms[$this->roomID];
+		}
+		else {
+			throw new \wcf\system\exception\IllegalLinkException();
+		}
 	}
 	
 	/**
