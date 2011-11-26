@@ -11,7 +11,7 @@ use \wcf\system\cache\CacheHandler;
  * @package	timwolla.wcf.chat
  * @subpackage	data.chat.room
  */
-class ChatRoom extends \wcf\data\DatabaseObject {
+class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\IRouteController {
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -46,11 +46,27 @@ class ChatRoom extends \wcf\data\DatabaseObject {
 	}
 	
 	/**
-	 * Returns the name of this chat-room.
-	 * 
-	 * @return	string
+	 * @see	\wcf\data\chat\room\ChatRoom::getTitle();
 	 */
 	public function __tostring() {
+		return $this->getTitle;
+	}
+	
+	/**
+	 * Returns the name of this chat-room.
+	 * 
+	 * @see	\wcf\system\request\IRouteController
+	 */
+	public function getTitle() {
 		return $this->title;
+	}
+	
+	/**
+	 * Returns the ID of this chat-room.
+	 *
+	 * @see	\wcf\system\request\RRouteHandler
+	 */
+	public function getID() {
+		return $this->roomID;
 	}
 }

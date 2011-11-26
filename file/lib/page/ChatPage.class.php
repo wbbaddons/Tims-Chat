@@ -26,7 +26,9 @@ class ChatPage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'roomID' => $this->roomID
+			'room' => $this->room,
+			'roomID' => $this->roomID,
+			'rooms' => $this->rooms
 		));
 	}
 	
@@ -36,6 +38,13 @@ class ChatPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		$this->rooms = chat\room\ChatRoom::getCache();
+		if ($this->roomID === 0) {
+			$this->rooms->seek(0);
+			\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
+				'object' => $this->rooms->search($this->rooms->key())
+			)));
+			exit;
+		}
 		$this->room = $this->rooms->search($this->roomID);
 		
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
