@@ -39,15 +39,33 @@ class ChatPage extends AbstractPage {
 		parent::readData();
 		$this->rooms = chat\room\ChatRoom::getCache();
 		if ($this->roomID === 0) {
-			$this->rooms->seek(0);
-			\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
-				'object' => $this->rooms->search($this->rooms->key())
-			)));
-			exit;
+			try {
+				$this->rooms->seek(0);
+				\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
+					'object' => $this->rooms->search($this->rooms->key())
+				)));
+				exit;
+			}
+			catch (\OutOfBoundsException $e) {
+				throw new \wcf\system\exception\IllegalLinkException();
+			}
 		}
 		$this->room = $this->rooms->search($this->roomID);
 		
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
+		
+		chat\message\ChatMessageEditor::create(array(
+			'roomID' => $this->room->roomID,
+			'sender' => WCF::getUser()->userID,
+			'username' => WCF::getUser()->username,
+			'time' => TIME_NOW,
+			'type' => chat\message\ChatMessage::TYPE_JOIN,
+			'message' => 'join',
+			'enableSmilies' => 0,
+			'enableHTML' => 0,
+			'color1' => 0xFF0000,
+			'color2' => 0x00FF00
+		));
 	}
 	
 	/**
