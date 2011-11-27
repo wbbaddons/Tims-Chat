@@ -1,7 +1,8 @@
 <?php
 namespace wcf\page;
-use \wcf\system\WCF;
 use \wcf\data\chat;
+use \wcf\system\cache\CacheHandler;
+use \wcf\system\WCF;
 
 /**
  * Shows the chat-interface
@@ -13,6 +14,7 @@ use \wcf\data\chat;
  * @subpackage	page
  */
 class ChatPage extends AbstractPage {
+	public $chatVersion = '';
 	//public $neededModules = array('CHAT_ACTIVE');
 	//public $neededPermissions = array('user.chat.canEnter');
 	public $room = null;
@@ -27,11 +29,26 @@ class ChatPage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
+			'chatVersion' => $this->chatVersion,
 			'room' => $this->room,
 			'roomID' => $this->roomID,
 			'rooms' => $this->rooms,
 			'smilies' => $this->smilies
 		));
+	}
+	
+	public function readChatVersion() {
+		CacheHandler::getInstance()->addResource(
+			'packages',
+			WCF_DIR.'cache/cache.packages.php',
+			'wcf\system\cache\builder\PackageCacheBuilder'
+		);
+		$packages = CacheHandler::getInstance()->get('packages');
+		foreach ($packages as $package) {
+			if ($package->package != 'timwolla.wcf.chat') continue;
+			$this->chatVersion = $package->packageVersion;
+			break;
+		}
 	}
 	
 	/**
@@ -69,8 +86,8 @@ class ChatPage extends AbstractPage {
 			'color2' => 0x00FF00
 		));
 		
-		$smilies = \wcf\data\smiley\SmileyCache::getInstance()->getSmilies();
-		$this->smilies = $smilies[null];
+		$this->readDefaultSmileys();
+		$this->readChatVersion();
 	}
 	
 	/**
@@ -80,6 +97,11 @@ class ChatPage extends AbstractPage {
 		parent::readParameters();
 		
 		if (isset($_GET['id'])) $this->roomID = (int) $_GET['id'];
+	}
+	
+	public function readDefaultSmileys() {
+		$smilies = \wcf\data\smiley\SmileyCache::getInstance()->getSmilies();
+		$this->smilies = $smilies[null];
 	}
 	
 	/**
