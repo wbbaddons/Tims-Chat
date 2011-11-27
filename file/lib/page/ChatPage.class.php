@@ -18,6 +18,7 @@ class ChatPage extends AbstractPage {
 	public $room = null;
 	public $roomID = 0;
 	public $rooms = array();
+	public $smilies = array();
 	
 	/**
 	 * @see	\wcf\page\IPage::assignVariables()
@@ -28,7 +29,8 @@ class ChatPage extends AbstractPage {
 		WCF::getTPL()->assign(array(
 			'room' => $this->room,
 			'roomID' => $this->roomID,
-			'rooms' => $this->rooms
+			'rooms' => $this->rooms,
+			'smilies' => $this->smilies
 		));
 	}
 	
@@ -66,6 +68,9 @@ class ChatPage extends AbstractPage {
 			'color1' => 0xFF0000,
 			'color2' => 0x00FF00
 		));
+		
+		$smilies = \wcf\data\smiley\SmileyCache::getInstance()->getSmilies();
+		$this->smilies = $smilies[null];
 	}
 	
 	/**
