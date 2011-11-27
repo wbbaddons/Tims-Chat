@@ -27,7 +27,7 @@ CREATE TABLE wcf1_chat_room (
   permanent tinyint(1) NOT NULL DEFAULT '1',
   owner int(10) DEFAULT NULL,
   PRIMARY KEY (roomID),
-  KEY position (position),
+  KEY positionKey (position),
   KEY owner (owner)
 );
 
