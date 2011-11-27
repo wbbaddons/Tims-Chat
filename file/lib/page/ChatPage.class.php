@@ -37,6 +37,9 @@ class ChatPage extends AbstractPage {
 		));
 	}
 	
+	/**
+	 * Reads chat-version. Used to avoid caching of JS-File when Tims Chat is updated.
+	 */
 	public function readChatVersion() {
 		CacheHandler::getInstance()->addResource(
 			'packages',
@@ -47,7 +50,7 @@ class ChatPage extends AbstractPage {
 		foreach ($packages as $package) {
 			if ($package->package != 'timwolla.wcf.chat') continue;
 			$this->chatVersion = $package->packageVersion;
-			break;
+			return;
 		}
 	}
 	
@@ -99,6 +102,9 @@ class ChatPage extends AbstractPage {
 		if (isset($_GET['id'])) $this->roomID = (int) $_GET['id'];
 	}
 	
+	/**
+	 * Reads the smilies in the default category.
+	 */
 	public function readDefaultSmileys() {
 		$smilies = \wcf\data\smiley\SmileyCache::getInstance()->getSmilies();
 		$this->smilies = $smilies[null];
@@ -108,6 +114,10 @@ class ChatPage extends AbstractPage {
 	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
+		// guests are not supported
+		if (!WCF::getUser()->userID) {
+			throw new \wcf\system\exception\PermissionDeniedException();
+		}
 		\wcf\system\menu\page\PageMenu::getInstance()->setActiveMenuItem('wcf.header.menu.chat');
 		
 		// remove index breadcrumb
