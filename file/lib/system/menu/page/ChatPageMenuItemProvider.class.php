@@ -17,6 +17,9 @@ class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
 	 * @see wcf\system\menu\page\PageMenuItemProvider::isVisible()
 	 */
 	public function isVisible() {
+		// guests are not supported
+		if (!WCF::getUser()->userID) return false;
+		
 		try {
 			\wcf\data\chat\room\ChatRoom::getCache()->seek(0);
 			return true;
