@@ -18,6 +18,7 @@
 	<requiredpackages>
 		<requiredpackage minversion="2.0.0 Alpha 1">com.woltlab.wcf</requiredpackage>
 		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.bbcode</requiredpackage>
+		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.acl</requiredpackage>
 	</requiredpackages>
 	
 	<instructions type="install">
@@ -25,9 +26,11 @@
 		<instruction type="file">file.tar</instruction>
 		<instruction type="template">template.tar</instruction>
 		<instruction type="sql">install.sql</instruction>
+		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="pagemenu">pagemenu.xml</instruction>
 		<instruction type="templatelistener">templatelistener.xml</instruction>
+		<instruction type="aclOption">acloptions.xml</instruction>
 	</instructions>
 	
 	<instructions type="update" fromversion="3.0.0 Alpha *">
@@ -35,8 +38,10 @@
 		<instruction type="file">file.tar</instruction>
 		<instruction type="template">template.tar</instruction>
 		<instruction type="sql">install.sql</instruction>
+		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="pagemenu">pagemenu.xml</instruction>
 		<instruction type="templatelistener">templatelistener.xml</instruction>
+		<instruction type="aclOption">acloptions.xml</instruction>
 	</instructions>
 </package>
