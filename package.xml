@@ -7,13 +7,18 @@
 		<isunique>1</isunique>
 		<version>3.0.0 Alpha 1</version>
 		<date>2011-11-26</date>
-		<plugin>com.woltlab.wcf</plugin> <!-- TODO: Correct me -->
+		<plugin>com.woltlab.wcf.bbcode</plugin> <!-- TODO: Correct me -->
 	</packageinformation>
 	
 	<authorinformation>
 		<author><![CDATA[Tim Düsterhus]]></author>
 		<authorurl><![CDATA[http://timwolla.wbbaddons.de]]></authorurl>
 	</authorinformation>
+	
+	<requiredpackages>
+		<requiredpackage minversion="2.0.0 Alpha 1">com.woltlab.wcf</requiredpackage>
+		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.bbcode</requiredpackage>
+	</requiredpackages>
 	
 	<instructions type="install">
 		<instruction type="language">language/*.xml</instruction>
