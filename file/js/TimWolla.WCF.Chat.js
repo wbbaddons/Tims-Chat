@@ -11,10 +11,11 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 	
 
 (function ($, document) {
-	TimWolla.WCF.Chat = function(roomID, messageID) { this.init(roomID, messageID); };
-	TimWolla.WCF.Chat.prototype = {
+	TimWolla.WCF.Chat = {
 		init: function(roomID, messageID) {
-			history.replaceState({}, '', 'index.php/Chat/'+roomID);
+			$('.smiley').click(function(event) {
+				alert($(event.target).attr('alt'));
+			});
 		}
 	};
 })(jQuery, document);
