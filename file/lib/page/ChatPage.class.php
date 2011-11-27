@@ -82,6 +82,9 @@ class ChatPage extends AbstractPage {
 	 */
 	public function show() {
 		\wcf\system\menu\page\PageMenu::getInstance()->setActiveMenuItem('wcf.header.menu.chat');
+		
+		// remove index breadcrumb
+		WCF::getBreadcrumbs()->remove(0);
 		parent::show();
 	}
 }
