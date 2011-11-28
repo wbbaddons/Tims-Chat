@@ -31,9 +31,23 @@ CREATE TABLE wcf1_chat_room (
   KEY owner (owner)
 );
 
+DROP TABLE IF EXISTS wcf1_chat_room_suspension;
+CREATE TABLE IF NOT EXISTS wcf1_chat_room_suspension (
+  roomID int(10) NOT NULL,
+  userID int(10) NOT NULL,
+  type tinyint(3) NOT NULL,
+  time int(10) NOT NULL,
+  PRIMARY KEY (roomID, userID),
+  KEY userID (userID),
+  KEY type (type, time),
+  KEY time (time)
+);
 
 ALTER TABLE wcf1_chat_message ADD FOREIGN KEY (receiver) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_chat_message ADD FOREIGN KEY (roomID) REFERENCES wcf1_chat_room (roomID) ON DELETE CASCADE;
 ALTER TABLE wcf1_chat_message ADD FOREIGN KEY (sender) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_chat_room ADD FOREIGN KEY (owner) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_chat_room_suspension ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_chat_room_suspension ADD FOREIGN KEY (roomID) REFERENCES wcf1_chat_room (roomID) ON DELETE CASCADE;
