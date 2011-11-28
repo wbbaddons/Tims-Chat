@@ -2,6 +2,8 @@
 namespace wcf\page;
 use \wcf\data\chat;
 use \wcf\system\cache\CacheHandler;
+use \wcf\system\package\PackageDependencyHandler;
+use \wcf\system\user\storage\UserStorageHandler;
 use \wcf\system\WCF;
 
 /**
@@ -21,6 +23,7 @@ class ChatPage extends AbstractPage {
 	public $roomID = 0;
 	public $rooms = array();
 	public $smilies = array();
+	public $userData = array();
 	
 	/**
 	 * @see	\wcf\page\IPage::assignVariables()
@@ -59,23 +62,9 @@ class ChatPage extends AbstractPage {
 	 */
 	public function readData() {
 		parent::readData();
-		$this->rooms = chat\room\ChatRoom::getCache();
-		if ($this->roomID === 0) {
-			try {
-				$this->rooms->seek(0);
-				\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
-					'object' => $this->rooms->search($this->rooms->key())
-				)));
-				exit;
-			}
-			catch (\OutOfBoundsException $e) {
-				throw new \wcf\system\exception\IllegalLinkException();
-			}
-		}
-		$this->room = $this->rooms->search($this->roomID);
 		
-		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
-		
+		$this->readRoom();
+		$this->readUserData();
 		chat\message\ChatMessageEditor::create(array(
 			'roomID' => $this->room->roomID,
 			'sender' => WCF::getUser()->userID,
@@ -85,12 +74,20 @@ class ChatPage extends AbstractPage {
 			'message' => 'join',
 			'enableSmilies' => 0,
 			'enableHTML' => 0,
-			'color1' => 0xFF0000,
-			'color2' => 0x00FF00
+			'color1' => $this->userData['color'][1],
+			'color2' => $this->userData['color'][2]
 		));
 		
 		$this->readDefaultSmileys();
 		$this->readChatVersion();
+	}
+	
+	/**
+	 * Reads the smilies in the default category.
+	 */
+	public function readDefaultSmileys() {
+		$smilies = \wcf\data\smiley\SmileyCache::getInstance()->getSmilies();
+		$this->smilies = $smilies[null];
 	}
 	
 	/**
@@ -103,11 +100,53 @@ class ChatPage extends AbstractPage {
 	}
 	
 	/**
-	 * Reads the smilies in the default category.
+	 * Reads room data.
 	 */
-	public function readDefaultSmileys() {
-		$smilies = \wcf\data\smiley\SmileyCache::getInstance()->getSmilies();
-		$this->smilies = $smilies[null];
+	public function readRoom() {
+		$this->rooms = chat\room\ChatRoom::getCache();
+		
+		if ($this->roomID === 0) {
+			// no room given
+			try {
+				// redirect to first chat-room
+				$this->rooms->seek(0);
+				\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
+					'object' => $this->rooms->search($this->rooms->key())
+				)));
+				exit;
+			}
+			catch (\OutOfBoundsException $e) {
+				// no valid room found
+				throw new \wcf\system\exception\IllegalLinkException();
+			}
+		}
+		
+		$this->room = $this->rooms->search($this->roomID);
+		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
+	}
+	
+	/**
+	 * Reads user data.
+	 */
+	public function readUserData() {
+		$ush = UserStorageHandler::getInstance();
+		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		
+		// load storage
+		$ush->loadStorage(array(WCF::getUser()->userID), $packageID);
+		$data = $ush->getStorage(array(WCF::getUser()->userID), 'color', $packageID);
+		
+		if ($data[WCF::getUser()->userID] === null) {
+			// set defaults
+			$data[WCF::getUser()->userID] = array(1 => 0xFF0000, 2 => 0x00FF00); // TODO: Change default values
+			$ush->update(WCF::getUser()->userID, 'color', serialize($data[WCF::getUser()->userID]), $packageID);
+		}
+		else {
+			// load existing data
+			$data[WCF::getUser()->userID] = unserialize($data[WCF::getUser()->userID]);
+		}
+		
+		$this->userData['color'] = $data[WCF::getUser()->userID];
 	}
 	
 	/**
