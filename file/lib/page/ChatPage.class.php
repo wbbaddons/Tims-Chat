@@ -19,6 +19,7 @@ class ChatPage extends AbstractPage {
 	public $chatVersion = '';
 	//public $neededModules = array('CHAT_ACTIVE');
 	//public $neededPermissions = array('user.chat.canEnter');
+	public $joinMessage = null;
 	public $room = null;
 	public $roomID = 0;
 	public $rooms = array();
@@ -33,6 +34,7 @@ class ChatPage extends AbstractPage {
 		
 		WCF::getTPL()->assign(array(
 			'chatVersion' => $this->chatVersion,
+			'joinMessage' => $this->joinMessage,
 			'room' => $this->room,
 			'roomID' => $this->roomID,
 			'rooms' => $this->rooms,
@@ -65,18 +67,25 @@ class ChatPage extends AbstractPage {
 		
 		$this->readRoom();
 		$this->readUserData();
-		chat\message\ChatMessageEditor::create(array(
+		$this->joinMessage = chat\message\ChatMessageEditor::create(array(
 			'roomID' => $this->room->roomID,
 			'sender' => WCF::getUser()->userID,
 			'username' => WCF::getUser()->username,
 			'time' => TIME_NOW,
 			'type' => chat\message\ChatMessage::TYPE_JOIN,
-			'message' => 'join',
-			'enableSmilies' => 0,
-			'enableHTML' => 0,
+			'message' => '',
 			'color1' => $this->userData['color'][1],
 			'color2' => $this->userData['color'][2]
 		));
+		if ($this->room->topic != '') {
+			chat\message\ChatMessageEditor::create(array(
+				'roomID' => $this->room->roomID,
+				'sender' => WCF::getUser()->userID,
+				'time' => TIME_NOW,
+				'type' => chat\message\ChatMessage::TYPE_INFORMATION,
+				'message' => WCF::getLanguage()->getDynamicVariable($this->room->topic)
+			));
+		}
 		
 		$this->readDefaultSmileys();
 		$this->readChatVersion();
