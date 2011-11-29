@@ -10,7 +10,7 @@
 {include file='header' sandbox=false}
 
 <header class="mainHeading">
-	<img src="{icon size='L'}chat{/icon}" alt="" />
+	<img src="{icon size='L'}chat1{/icon}" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.chat.title{/lang}</h1>
 	</hgroup>
