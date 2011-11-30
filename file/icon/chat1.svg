@@ -1,31 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!--
+	@author		Maximilian Mader
+	@copyright	2011 Tim Düsterhus
+	@license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
+-->
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
-   <g id="Lower" style="display:inline">
-		<path
-		   d="M 15,8 A 6,5 0 1 1 3,8 6,5 0 1 1 15,8 z"
-		   transform="matrix(1.0345788,0,0,0.95089627,-1.510083,0.10801843)"
-		   id="path3187"
-		   style="fill:none;stroke:#ffffff;stroke-opacity:1" />
-		<path
-		   d="m 3.9001344,11.947742 c 0.075049,1.120603 -0.7948094,1.693805 -1.4915533,2.143417 1.0104403,0.104041 3.4597063,-0.953975 3.9167086,-1.276108 0.00808,-0.0057 -2.4251553,-0.867309 -2.4251553,-0.867309 z"
-		   id="path3959"
-		   style="fill:#ffffff;fill-opacity:1;stroke:none" />
-		<path
-		   d="m 3.9001344,11.947742 c 0.075049,1.120603 -0.7948094,1.693805 -1.4915533,2.143417 1.0104403,0.104041 3.4597063,-0.953975 3.9167086,-1.276108 0.00808,-0.0057 -2.4251553,-0.867309 -2.4251553,-0.867309 z"
-		   id="path4015"
-		   style="fill:#ffffff;fill-opacity:1;stroke:none" />
-	</g>
+	<title>Chat</title>
+	<desc>Chat Icon (outlined)</desc>
 
-	<g id="Upper" style="display:inline">
-		<path
-		   d="M 15,8 A 6,5 0 1 1 3,8 6,5 0 1 1 15,8 z"
-		   transform="matrix(1.0345788,0,0,0.95089627,-1.5100816,-0.50773368)"
-		   id="path4009"
-		   style="fill:none;stroke:#666666;stroke-opacity:1" />
-		<path
-		   d="m 3.9001358,11.331991 c 0.075049,1.120603 -0.7948094,1.693805 -1.4915533,2.143417 1.0104403,0.104041 3.4597063,-0.953975 3.9167086,-1.276108 0.00808,-0.0057 -2.4251553,-0.867309 -2.4251553,-0.867309 z"
-		   id="path4011"
-		   style="fill:#666666;fill-opacity:1;stroke:none" />
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.Lower .bubble {
+					fill:none;
+					stroke:#ffffff;
+					stroke-opacity:1;
+				}		
+				.Lower .leaderLine {
+					fill:#ffffff;
+					fill-opacity:1;
+					stroke:none;
+				}		
+				.Upper .bubble {
+					fill:none;
+					stroke:#666666;
+					stroke-opacity:1;
+				}		
+				.Upper .leaderLine {
+					fill:#666666;
+					fill-opacity:1;
+					stroke:none;
+				}
+			]]>
+		</style>
+	</defs>
+	
+	<g id="IconChat">
+		<g class="Lower" style="display:inline">
+			<path class="bubble"
+				d="M 15,8 A 6,5 0 1 1 3,8 6,5 0 1 1 15,8 z"
+				transform="matrix(1.0345788,0,0,0.95089627,-1.510083,0.10801843)" />
+			<path class="leaderLine"
+				d="m 3.9001344,11.947742 c 0.075049,1.120603 -0.7948094,1.693805 -1.4915533,2.143417 1.0104403, 
+				0.104041 3.4597063,-0.953975 3.9167086,-1.276108 0.00808,-0.0057 -2.4251553,-0.867309 -2.4251553,-0.867309 z" />
+		</g>
+
+		<g class="Upper" style="display:inline">
+			<path class="bubble"
+				d="M 15,8 A 6,5 0 1 1 3,8 6,5 0 1 1 15,8 z"
+				transform="matrix(1.0345788,0,0,0.95089627,-1.5100816,-0.50773368)" />
+			<path class="leaderLine"
+				d="m 3.9001358,11.331991 c 0.075049,1.120603 -0.7948094,1.693805 -1.4915533,2.143417 1.0104403,
+				0.104041 3.4597063,-0.953975 3.9167086,-1.276108 0.00808,-0.0057 -2.4251553,-0.867309 -2.4251553,-0.867309 z" />
+		</g>
 	</g>
 </svg>
