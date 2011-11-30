@@ -32,7 +32,7 @@ CREATE TABLE wcf1_chat_room (
 );
 
 DROP TABLE IF EXISTS wcf1_chat_room_suspension;
-CREATE TABLE IF NOT EXISTS wcf1_chat_room_suspension (
+CREATE TABLE wcf1_chat_room_suspension (
   roomID int(10) NOT NULL,
   userID int(10) NOT NULL,
   type tinyint(3) NOT NULL,
