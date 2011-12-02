@@ -13,8 +13,15 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 (function ($, document) {
 	TimWolla.WCF.Chat = {
 		init: function(roomID, messageID) {
+			this.bindEvents();
+		},
+		bindEvents: function() {
 			$('.smiley').click(function(event) {
 				alert($(event.target).attr('alt'));
+			});
+			
+			$(window).bind('beforeunload', function() {
+				return false;
 			});
 		}
 	};
