@@ -202,7 +202,7 @@
 						<ul class="smilies">
 							{foreach from=$smilies item='smiley'}
 								<li>
-									<img src="{$smiley->getURL()}" alt="{$smiley->smileyCode}" title="{$smiley->smileyCode}" class="smiley" onclick="TimWolla.WCF.Chat.insertSmiley('{$smiley->smileyCode}');" />
+									<img src="{$smiley->getURL()}" alt="{$smiley->smileyCode}" title="{$smiley->smileyCode}" class="smiley" />
 								</li>
 							{/foreach}
 						</ul>
