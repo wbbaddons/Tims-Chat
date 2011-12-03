@@ -182,8 +182,9 @@
 			</div>			
 			<div class="second column">
 				<div>
-					<div class="topic border">
-						{$room->topic}
+					
+					<div class="topic border"{if !$room->topic|language} style="display: none;"{/if}>
+						{$room->topic|language}
 					</div>
 					<div class="chatMessage border content">
 						[HH:MM:SS] &lt;User 1&gt; Test
