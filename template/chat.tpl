@@ -46,7 +46,7 @@
 			padding: 0px 15px 25px;
 		}
 		
-		.topic, #smileyList {
+		#topic, #smileyList {
 			padding: 5px;
 		}
 
@@ -183,7 +183,7 @@
 			<div class="second column">
 				<div>
 					
-					<div class="topic border"{if !$room->topic|language} style="display: none;"{/if}>
+					<div class="border" id="topic"{if !$room->topic|language} style="display: none;"{/if}>
 						{$room->topic|language}
 					</div>
 					<div class="chatMessage border content">

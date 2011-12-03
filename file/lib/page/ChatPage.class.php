@@ -77,6 +77,15 @@ class ChatPage extends AbstractPage {
 			'color1' => $this->userData['color'][1],
 			'color2' => $this->userData['color'][2]
 		));
+		if ($this->room->topic != '') {
+			chat\message\ChatMessageEditor::create(array(
+				'roomID' => $this->room->roomID,
+				'sender' => WCF::getUser()->userID,
+				'time' => TIME_NOW,
+				'type' => chat\message\ChatMessage::TYPE_INFORMATION,
+				'message' => WCF::getLanguage()->getDynamicVariable($this->room->topic)
+			));
+		}
 		
 		$this->readDefaultSmileys();
 		$this->readChatVersion();
@@ -96,7 +105,10 @@ class ChatPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_GET['id'])) $this->roomID = (int) $_GET['id'];
+		if (isset($_REQUEST['id'])) $this->roomID = (int) $_REQUEST['id'];
+		if (isset($_REQUEST['ajax'])) {
+			$this->useTemplate = false;
+		}
 	}
 	
 	/**
@@ -162,5 +174,11 @@ class ChatPage extends AbstractPage {
 		// remove index breadcrumb
 		WCF::getBreadcrumbs()->remove(0);
 		parent::show();
+		
+		@header('Content-type: application/json');
+		echo \wcf\util\JSON::encode(array(
+			'topic' => WCF::getLanguage()->get($this->room->topic)
+		));
+		exit;
 	}
 }
