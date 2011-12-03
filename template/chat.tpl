@@ -193,7 +193,7 @@
 									<input type="text" id="chatInput" class="inputText" style="width: 100%" name="text" autocomplete="off">
 								</div>
 								<div class="column" style="width: 5%; text-align: center;">
-									<input type="image" class="inputImage" alt="Absenden" src="wcf/icon/toRight1.svg" style="width: 24px; margin-left: 5px; vertical-align: sub;">
+									<input type="image" class="inputImage" alt="Absenden" src="{icon size=M}toRight1{/icon}" style="height: 24px; margin-left: 5px; vertical-align: sub;">
 								</div>
 							</div>
 						</div>
