@@ -43,11 +43,10 @@
 		}
 		
 		.second.column > div {
-			padding: 15px 25px;
-			padding: 15px 25px;
+			padding: 0px 15px 25px;
 		}
 		
-		#smileyList {
+		.topic, #smileyList {
 			padding: 5px;
 		}
 
@@ -183,6 +182,9 @@
 			</div>			
 			<div class="second column">
 				<div>
+					<div class="topic border">
+						{$room->topic}
+					</div>
 					<div class="chatMessage border content">
 						[HH:MM:SS] &lt;User 1&gt; Test
 					</div>
@@ -193,7 +195,7 @@
 									<input type="text" id="chatInput" class="inputText" style="width: 100%" name="text" autocomplete="off">
 								</div>
 								<div class="column" style="width: 5%; text-align: center;">
-									<input type="image" class="inputImage" alt="Absenden" src="wcf/icon/toRight1.svg" style="width: 24px; margin-left: 5px; vertical-align: sub;">
+									<input type="image" class="inputImage" alt="Absenden" src="{icon size=M}toRight1{/icon}" style="height: 24px; margin-left: 5px; vertical-align: sub;">
 								</div>
 							</div>
 						</div>
@@ -202,7 +204,7 @@
 						<ul class="smilies">
 							{foreach from=$smilies item='smiley'}
 								<li>
-									<img src="{$smiley->getURL()}" alt="{$smiley->smileyCode}" title="{$smiley->smileyCode}" class="smiley" onclick="TimWolla.WCF.Chat.insertSmiley('{$smiley->smileyCode}');" />
+									<img src="{$smiley->getURL()}" alt="{$smiley->smileyCode}" title="{$smiley->smileyCode}" class="smiley" />
 								</li>
 							{/foreach}
 						</ul>
