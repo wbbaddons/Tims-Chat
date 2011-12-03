@@ -21,17 +21,17 @@
 		}
 		
 		.first {
-			width: 10%;
+			width: 15%;
 			background-color: #D8E7F5;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
 		}
 		
 		.second {
-			width: 80%;
+			width: 70%;
 		}
 		
 		.third {
-			width: 10%;
+			width: 15%;
 			background-color: #D8E7F5;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
 		}
@@ -67,12 +67,9 @@
 			min-height: 200px;
 		}
 		
-		/*
-		.chatSidebar {
-		    float: right;
-			width: 100%;
+		.chatSidebar a {
+			outline: none;
 		}
-		*/
 		
 		/*
 		.chatSidebar > div h1.activeMenuItem {
@@ -142,6 +139,15 @@
 		.chatSidebar .selectedUser {
 			margin-left: 20px;
 		}
+		
+		.ajaxLoad {
+			border-radius: 3px 3px 3px 3px;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
+			background-color: rgba(0, 0, 0, 0.1);
+			padding: 2px;
+			margin-right: 2px;
+			float: right;
+		}
 	</style>
 </head>
 
@@ -172,7 +178,7 @@
 							<ul>
 							{foreach from=$rooms item='roomListRoom'}
 								<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
-									<a href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom->title|language}</a>
+									<a id="room-{$roomListRoom->roomID}" href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom->title|language}</a>
 								</li>
 							{/foreach}
 							</ul>
