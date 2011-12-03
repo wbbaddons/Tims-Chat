@@ -43,11 +43,10 @@
 		}
 		
 		.second.column > div {
-			padding: 15px 25px;
-			padding: 15px 25px;
+			padding: 0px 15px 25px;
 		}
 		
-		#smileyList {
+		.topic, #smileyList {
 			padding: 5px;
 		}
 
@@ -183,6 +182,9 @@
 			</div>			
 			<div class="second column">
 				<div>
+					<div class="topic border">
+						{$room->topic}
+					</div>
 					<div class="chatMessage border content">
 						[HH:MM:SS] &lt;User 1&gt; Test
 					</div>
