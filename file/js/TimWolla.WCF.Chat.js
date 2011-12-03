@@ -27,12 +27,14 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			$('.chatRoom').click($.proxy(function (event) {
 				if (typeof window.history.replaceState != 'undefined') {
 					event.preventDefault();
-					this.changeRoom($(event.target).attr('href'));
+					this.changeRoom($(event.target));
 				}
 			}, this));
 		},
-		changeRoom: function(url) {
-			window.history.replaceState({}, '', url);
+		changeRoom: function(target) {
+			window.history.replaceState({}, '', target.attr('href'));
+			$('.activeMenuItem .chatRoom').parent().removeClass('activeMenuItem');
+			target.parent().addClass('activeMenuItem');
 		}
 	};
 })(jQuery, document);
