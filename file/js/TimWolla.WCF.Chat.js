@@ -23,6 +23,16 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			$(window).bind('beforeunload', function() {
 				return false;
 			});
+			
+			$('.chatRoom').click($.proxy(function (event) {
+				if (typeof window.history.replaceState != 'undefined') {
+					event.preventDefault();
+					this.changeRoom($(event.target).attr('href'));
+				}
+			}, this));
+		},
+		changeRoom: function(url) {
+			window.history.replaceState({}, '', url);
 		}
 	};
 })(jQuery, document);
