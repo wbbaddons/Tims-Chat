@@ -46,9 +46,17 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				type: 'POST',
 				success: $.proxy(function (data, textStatus, jqXHR) {
 					// set new topic
-					$('#topic').text(data.topic);
-					if (data.topic == '') $('#topic').wcfBlindOut();
-					else $('#topic').wcfBlindIn();
+					if (data.topic == '') {
+						$('#topic').wcfBlindOut('vertical', function() {
+							$('#topic').text('');
+						});
+					} else {
+						if($('#topic').text() != "") $('#topic').text(data.topic);
+						else {
+							$('#topic').text(data.topic);
+							$('#topic').wcfBlindIn();
+						}
+					}
 					
 					// set page-title
 					$('title').text(this.titleTemplate.fetch(data));
