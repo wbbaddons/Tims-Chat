@@ -77,15 +77,6 @@ class ChatPage extends AbstractPage {
 			'color1' => $this->userData['color'][1],
 			'color2' => $this->userData['color'][2]
 		));
-		if ($this->room->topic != '') {
-			chat\message\ChatMessageEditor::create(array(
-				'roomID' => $this->room->roomID,
-				'sender' => WCF::getUser()->userID,
-				'time' => TIME_NOW,
-				'type' => chat\message\ChatMessage::TYPE_INFORMATION,
-				'message' => WCF::getLanguage()->getDynamicVariable($this->room->topic)
-			));
-		}
 		
 		$this->readDefaultSmileys();
 		$this->readChatVersion();
