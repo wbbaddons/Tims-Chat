@@ -172,15 +172,11 @@
 						<h1 data-menu-item="timwolla.wcf.chat.channellist" class="menuHeader activeMenuItem">Channel</h1>
 						<div class="sidebarMenuGroup">
 							<ul>
-								<li class="activeMenuItem">
-									<a href="javascript:void(0)">#TEST</a>
-								</li>
-								<li>
-									<a href="javascript:void(0)">#TEST2</a>
-								</li>
-								<li>
-									<a href="javascript:void(0)">#TEST3</a>
-								</li>
+								{foreach from=$rooms item='roomListRoom'}
+									<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
+										<a href="{link controller='Chat' object=$roomListRoom}{/link}">{$roomListRoom->title|language}</a>
+									</li>
+								{/foreach}
 							</ul>
 						</div>
 					</div>
