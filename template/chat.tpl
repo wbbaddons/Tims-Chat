@@ -158,7 +158,7 @@
 
 <nav class="tabMenu">
 	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-		<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a title="Chat" href="{link controller="Chat"}{/link}">Chat</a></li>
+		<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a title="{lang}wcf.chat.title{/lang}" href="{link controller="Chat"}{/link}">{lang}wcf.chat.title{/lang}</a></li>
 		<li class="ui-state-default ui-corner-top ui-tabs-selected"><a title="Log" href="{link controller="Chat" isRaw="true"}Log{/link}">Protokoll</a></li>
 	</ul>
 </nav>
