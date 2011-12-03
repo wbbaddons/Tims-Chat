@@ -1,7 +1,7 @@
 {include file='documentHeader'}
 
 <head>
-	<title>{$room->title|language} - {lang}wcf.chat.title{/lang} - {PAGE_TITLE|language}</title>
+	<title>{lang}wcf.chat.title{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude' sandbox=false}
 	
@@ -158,36 +158,46 @@
 
 <nav class="tabMenu">
 	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-		<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a title="Seite" href="index.php/Chat">Chat</a></li>
-		<li class="ui-state-default ui-corner-top ui-tabs-selected"><a title="Seite" href="index.php/Chat/Log">Protokoll</a></li>
+		<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a title="Chat" href="{link controller="Chat"}{/link}">Chat</a></li>
+		<li class="ui-state-default ui-corner-top ui-tabs-selected"><a title="Log" href="{link controller="Chat" isRaw="true"}Log{/link}">Protokoll</a></li>
 	</ul>
 </nav>
 <div id="chatbox" class="border tabMenuContent ui-tabs-panel ui-widget-content ui-corner-bottom">
 	<div class="table border">
-		<div>
-		
+		<div>		
 			<div class="first column">
 				<div class="chatSidebar left">
 					<div id="chatChannelList">
 						<h1 data-menu-item="timwolla.wcf.chat.channellist" class="menuHeader activeMenuItem">Channel</h1>
 						<div class="sidebarMenuGroup">
 							<ul>
-								{foreach from=$rooms item='roomListRoom'}
-									<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
-										<a href="{link controller='Chat' object=$roomListRoom}{/link}">{$roomListRoom->title|language}</a>
-									</li>
-								{/foreach}
+							{foreach from=$rooms item='roomListRoom'}
+								<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
+									<a href="{link controller='Chat' object=$roomListRoom}{/link}">{$roomListRoom->title|language}</a>
+								</li>
+							{/foreach}
 							</ul>
 						</div>
 					</div>
 				</div>
-			</div>
-			
+			</div>			
 			<div class="second column">
 				<div>
 					<div class="chatMessage border content">
 						[HH:MM:SS] &lt;User 1&gt; Test
 					</div>
+					<form style="margin-top: 10px;" id="chatForm" action="index.php?form=Chat" method="post">
+						<div class="table">
+							<div>
+								<div class="column" style="width: 95%;">
+									<input type="text" id="chatInput" class="inputText" style="width: 100%" name="text" autocomplete="off">
+								</div>
+								<div class="column" style="width: 5%; text-align: center;">
+									<input type="image" class="inputImage" alt="Absenden" src="wcf/icon/toRight1.svg" style="width: 24px; margin-left: 5px; vertical-align: sub;">
+								</div>
+							</div>
+						</div>
+					</form>
 					<div id="smileyList" class="border">
 						<ul class="smilies">
 							{foreach from=$smilies item='smiley'}
@@ -198,8 +208,7 @@
 						</ul>
 					</div>
 				</div>
-			</div>
-			
+			</div>			
 			<div class="third column">
 				<div class="chatSidebar right">
 					<div id="chatUserList">
@@ -227,8 +236,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			
+			</div>			
 		</div>
 	</div>
 </div>
