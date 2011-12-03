@@ -1,1 +1,1 @@
-{if $templateName == 'chat'}{lang}wcf.chat.copyright{/lang}{/if}
+{if $templateName == 'chat'}<address class="copyright">{lang}wcf.chat.copyright{/lang}</address>{/if}
