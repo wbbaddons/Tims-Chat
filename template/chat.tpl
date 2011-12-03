@@ -247,6 +247,7 @@
 <script type="text/javascript">
 	//<![CDATA[
 		TimWolla.WCF.Chat.init({$room->roomID}, 1);
+		TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
 	//]]>
 </script>
 

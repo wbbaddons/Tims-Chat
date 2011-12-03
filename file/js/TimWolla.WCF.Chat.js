@@ -12,6 +12,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 
 (function ($, document) {
 	TimWolla.WCF.Chat = {
+		titleTemplate: '',
 		init: function(roomID, messageID) {
 			this.bindEvents();
 		},
@@ -33,17 +34,25 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		},
 		changeRoom: function(target) {
 			window.history.replaceState({}, '', target.attr('href'));
+			
+			// mark as active;
 			$('.activeMenuItem .chatRoom').parent().removeClass('activeMenuItem');
 			target.parent().addClass('activeMenuItem');
+				
+			// actually change the room
 			$.ajax(target.attr('href'), {
 				dataType: 'json',
 				data: { ajax: 1 },
 				type: 'POST',
-				success: function (data, textStatus, jqXHR) {
+				success: $.proxy(function (data, textStatus, jqXHR) {
+					// set new topic
 					$('#topic').text(data.topic);
-					if (data.topic == '') $('#topic').hide();
-					else $('#topic').show();
-				}
+					if (data.topic == '') $('#topic').wcfBlindOut();
+					else $('#topic').wcfBlindIn();
+					
+					// set page-title
+					$('title').text(this.titleTemplate.fetch(data));
+				}, this)
 			});
 		}
 	};
