@@ -21,9 +21,9 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				alert($(event.target).attr('alt'));
 			});
 			
-			$(window).bind('beforeunload', function() {
-				return false;
-			});
+			// $(window).bind('beforeunload', function() {
+				// return false;
+			// });
 			
 			$('.chatRoom').click($.proxy(function (event) {
 				if (typeof window.history.replaceState != 'undefined') {
@@ -45,14 +45,25 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				data: { ajax: 1 },
 				type: 'POST',
 				success: $.proxy(function (data, textStatus, jqXHR) {
+					this.loading = false;
+					$('#loading-' + target.attr('id')).remove();
+					target.css({
+						'float' : 'none',
+						'padding' : '5px 25px 7px 35px',
+						'width' : '',
+						'overflow' : 'visible'
+					});
+					
 					// set new topic
 					if (data.topic == '') {
+						if(data.topic == '' && $('#topic').text().trim() == '') return;
 						$('#topic').wcfBlindOut('vertical', function() {
-							$('#topic').text('');
+								$('#topic').text('');
 						});
 					} else {
-						if($('#topic').text() != "") $('#topic').text(data.topic);
-						else {
+						if($('#topic').text().trim() != '') {
+							$('#topic').text(data.topic);
+						} else {
 							$('#topic').text(data.topic);
 							$('#topic').wcfBlindIn();
 						}
@@ -60,6 +71,19 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					
 					// set page-title
 					$('title').text(this.titleTemplate.fetch(data));
+				}, this),
+				beforeSend: $.proxy(function () {
+					if(this.loading == true) return;
+					this.loading = true;
+					//target.append('<img id="loading-' + target.attr('id') + '" src="' + WCF.Icon.get('wcf.global.spinner') + '" />');
+					target.css({
+						'width' : target.width() - 19, 
+						'float' : 'left',
+						'padding' : '5px 0 7px 35px',
+						'overflow': 'hidden'
+					});
+					target.parent().append('<img id="loading-' + target.attr('id') + '" class="ajaxLoad" src="' + RELATIVE_WCF_DIR + 'icon/spinner1.svg" alt="" />');
+					$('#loading-' + target.attr('id')).css({'marginTop' : function(index) {return (target.parent().height() / 2) - ($(this).height() / 2) - 2}, 'borderRadius' : 3});
 				}, this)
 			});
 		}
