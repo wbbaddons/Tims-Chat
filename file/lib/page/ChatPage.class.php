@@ -165,7 +165,7 @@ class ChatPage extends AbstractPage {
 		// remove index breadcrumb
 		WCF::getBreadcrumbs()->remove(0);
 		parent::show();
-		
+		if ($this->useTemplate) exit;
 		@header('Content-type: application/json');
 		echo \wcf\util\JSON::encode(array(
 			'topic' => WCF::getLanguage()->get($this->room->topic)
