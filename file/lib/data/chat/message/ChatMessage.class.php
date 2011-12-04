@@ -66,6 +66,8 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	 * @return	string
 	 */
 	public function getFormattedUsername() {
+		if ($this->type == self::TYPE_INFORMATION) return '<strong>'.WCF::getLanguage()->get('wcf.chat.information').'</strong>';
+		
 		$string = str_split($this->username);
 		$r = (int) (($this->color1 >> 16 & 255) - ($this->color2 >> 16 & 255)) / (count($string) - 1);
 		$g = (int)  (($this->color1 >> 8 & 255) - ($this->color2 >> 8 & 255)) / (count($string) - 1);
