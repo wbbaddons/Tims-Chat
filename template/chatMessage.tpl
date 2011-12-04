@@ -1,0 +1,1 @@
+{@$time} {@$username}{@$message}
