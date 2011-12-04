@@ -174,7 +174,7 @@
 <nav class="tabMenu">
 	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 		<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a title="{lang}wcf.chat.title{/lang}" href="{link controller="Chat"}{/link}">{lang}wcf.chat.title{/lang}</a></li>
-		<li class="ui-state-default ui-corner-top ui-tabs-selected"><a title="Log" href="{link controller="Chat" isRaw="true"}Log{/link}">Protokoll</a></li>
+		<li class="ui-state-default ui-corner-top ui-tabs-selected"><a title="Log" href="{link controller="Chat" isRaw="true"}Log{/link}">{lang}wcf.chat.protocol{/lang}</a></li>
 	</ul>
 </nav>
 <div id="chatbox" class="border tabMenuContent ui-tabs-panel ui-widget-content ui-corner-bottom">
@@ -183,7 +183,7 @@
 			<div class="first column">
 				<div class="chatSidebar left">
 					<div id="chatChannelList">
-						<h1 data-menu-item="timwolla.wcf.chat.channellist" class="menuHeader activeMenuItem">Channel</h1>
+						<h1 data-menu-item="timwolla.wcf.chat.channellist" class="menuHeader activeMenuItem">{lang}wcf.chat.rooms{/lang}</h1>
 						<div class="sidebarMenuGroup">
 							<ul>
 							{foreach from=$rooms item='roomListRoom'}

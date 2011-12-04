@@ -5,6 +5,8 @@
 	</category>
 	<category name="wcf.chat">
 		<item name="wcf.chat.title"><![CDATA[Chat]]></item>
+		<item name="wcf.chat.protocol"><![CDATA[Protokoll]]></item>
+		<item name="wcf.chat.rooms"><![CDATA[Räume]]></item>
 		<item name="wcf.chat.copyright"><![CDATA[<a href="http://timwolla.wbbaddons.de">Chat entwickelt von TimWolla</a>]]></item>
 	</category>
 	<category name="wcf.chat.message">
