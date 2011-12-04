@@ -140,6 +140,20 @@
 			margin-left: 20px;
 		}
 		
+		.chatUserMenu {
+			display: none;
+		}
+		
+		#chatUserList .sidebarMenuGroup > ul li a {
+			margin-left: 20px;
+		}
+		
+		/*
+		.chatUser.activeMenuItem {
+			margin-bottom: 5px;
+		}
+		*/
+		
 		.ajaxLoad {
 			margin-right: 2px;
 			float: right;
@@ -220,9 +234,10 @@
 						<h1 data-menu-item="timwolla.wcf.chat.userlist" class="menuHeader activeMenuItem">User</h1>
 						<div class="sidebarMenuGroup">
 							<ul>
-								<li class="activeMenuItem">
-									<a href="javascript:void(0)">User 1</a>
-									<ul class="selectedUser">
+								{section name=user start=0 loop=10}
+								<li id="user-{$user + 1}" class="chatUser">
+									<a class="chatUserLink" href="javascript:void(0)">User {$user + 1}</a>
+									<ul class="chatUserMenu">
 										<li>
 											<a href="javascript:void(0)">Query</a>
 											<a href="javascript:void(0)">Kick</a>
@@ -231,12 +246,7 @@
 										</li>
 									</ul>
 								</li>
-								<li>
-									<a href="javascript:void(0)">User 2</a>
-								</li>
-								<li>
-									<a href="javascript:void(0)">User 3</a>
-								</li>
+								{/section}
 							</ul>
 						</div>
 					</div>

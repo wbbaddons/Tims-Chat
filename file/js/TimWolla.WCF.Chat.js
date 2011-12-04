@@ -31,6 +31,11 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					this.changeRoom($(event.target));
 				}
 			}, this));
+			
+			$('.chatUser .chatUserLink').click($.proxy(function (event) {
+				event.preventDefault();
+				this.toggleUserMenu($(event.target));
+			}, this));
 		},
 		changeRoom: function(target) {
 			window.history.replaceState({}, '', target.attr('href'));
@@ -54,7 +59,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					if (data.topic == '') {
 						if(data.topic == '' && $('#topic').text().trim() == '') return;
 						$('#topic').wcfBlindOut('vertical', function() {
-								$('#topic').text('');
+								$(this).text('');
 						});
 					} else {
 						if($('#topic').text().trim() != '') {
@@ -87,6 +92,17 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					$('#loading-' + target.attr('id')).css({'marginTop' : function(index) {return (target.parent().height() / 2) - ($(this).height() / 2)}});
 				}, this)
 			});
+		},
+		toggleUserMenu: function(target) {
+			liUserID = '#' + target.parent().attr('id');
+			if($(liUserID).hasClass('activeMenuItem')) {
+				$(liUserID + ' .chatUserMenu').wcfBlindOut('vertical', function() {
+					$(liUserID).removeClass('activeMenuItem');
+				});
+			} else {
+				$(liUserID).addClass('activeMenuItem');
+				$(liUserID + ' .chatUserMenu').wcfBlindIn();
+			}
 		}
 	};
 })(jQuery, document);
