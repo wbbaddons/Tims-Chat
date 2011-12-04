@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\chat\message;
+use \wcf\system\WCF;
 
 /**
  * Represents a chat message.
@@ -40,7 +41,23 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	 * @return	string
 	 */
 	public function __toString() {
-		return $this->message;
+		return $this->getFormattedMessage;
+	}
+	
+	/**
+	 * Returns the formatted message.
+	 *
+	 * @return	string
+	 */
+	public function getFormattedMessage() {
+		$message = $this->message;
+		switch ($this->type) {
+			case self::TYPE_JOIN:
+			case self::TYPE_LEAVE:
+			case self::TYPE_BACK:
+				$message = WCF::getLanguage()->get('wcf.chat.message.'.$this->type);
+		}
+		return $message;
 	}
 	
 	/**
