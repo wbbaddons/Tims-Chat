@@ -206,7 +206,8 @@
 						<ul>
 							{foreach from=$newestMessages item='message'}
 								<li>
-									{@$message->getFormattedUsername()}
+									{* TODO: Use an own time-function to display a short timestamp *}
+									{@$message->time|time} {@$message->getFormattedUsername()}
 								</li>
 							{/foreach}
 						</ul>
@@ -264,8 +265,8 @@
 
 <script type="text/javascript">
 	//<![CDATA[
-		TimWolla.WCF.Chat.init({$room->roomID}, 1);
 		TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
+		TimWolla.WCF.Chat.init({$room->roomID}, 1);
 	//]]>
 </script>
 
