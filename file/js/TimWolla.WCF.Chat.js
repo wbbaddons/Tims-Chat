@@ -35,10 +35,6 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		changeRoom: function(target) {
 			window.history.replaceState({}, '', target.attr('href'));
 			
-			// mark as active;
-			$('.activeMenuItem .chatRoom').parent().removeClass('activeMenuItem');
-			target.parent().addClass('activeMenuItem');
-				
 			// actually change the room
 			$.ajax(target.attr('href'), {
 				dataType: 'json',
@@ -73,7 +69,12 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					$('title').text(this.titleTemplate.fetch(data));
 				}, this),
 				beforeSend: $.proxy(function () {
-					if(this.loading == true) return;
+					if(this.loading == true || target.parent().attr('class') == "activeMenuItem") return false;
+					
+					// mark as active;
+					$('.activeMenuItem .chatRoom').parent().removeClass('activeMenuItem');
+					target.parent().addClass('activeMenuItem');
+					
 					this.loading = true;
 					//target.append('<img id="loading-' + target.attr('id') + '" src="' + WCF.Icon.get('wcf.global.spinner') + '" />');
 					target.css({
