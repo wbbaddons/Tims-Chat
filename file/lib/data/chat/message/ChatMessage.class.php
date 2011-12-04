@@ -42,4 +42,22 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	public function __toString() {
 		return $this->message;
 	}
+	
+	/**
+	 * Returns the formatted username
+	 *
+	 * @return	string
+	 */
+	public function getFormattedUsername() {
+		$string = str_split($this->username);
+		$r = (int) (($this->color1 >> 16 & 255) - ($this->color2 >> 16 & 255)) / (count($string) - 1);
+		$g = (int)  (($this->color1 >> 8 & 255) - ($this->color2 >> 8 & 255)) / (count($string) - 1);
+		$b = (int)  (($this->color1 & 255) - ($this->color2 & 255)) / (count($string) - 1);
+		$result = '';
+		for ($i = 0, $max = count($string); $i < $max; $i++) {
+			$result .= '<span style="color:rgb('.(($this->color1 >> 16 & 255) - $i * $r).', '.(($this->color1 >> 8 & 255) - $i * $g).', '.(($this->color1 & 255) - $i * $b).')">'.$string[$i].'</span>'; 
+		}
+		
+		return '<strong>'.$result.'</strong>';
+	}
 }

@@ -203,7 +203,13 @@
 						{$room->topic|language}
 					</div>
 					<div class="chatMessage border content">
-						[HH:MM:SS] &lt;User 1&gt; Test
+						<ul>
+							{foreach from=$newestMessages item='message'}
+								<li>
+									{@$message->getFormattedUsername()}
+								</li>
+							{/foreach}
+						</ul>
 					</div>
 					<form style="margin-top: 10px;" id="chatForm" action="index.php?form=Chat" method="post">
 						<div class="table">

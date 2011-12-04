@@ -20,6 +20,7 @@ class ChatPage extends AbstractPage {
 	//public $neededModules = array('CHAT_ACTIVE');
 	//public $neededPermissions = array('user.chat.canEnter');
 	public $joinMessage = null;
+	public $newestMessages = array();
 	public $room = null;
 	public $roomID = 0;
 	public $rooms = array();
@@ -35,6 +36,7 @@ class ChatPage extends AbstractPage {
 		WCF::getTPL()->assign(array(
 			'chatVersion' => $this->chatVersion,
 			'joinMessage' => $this->joinMessage,
+			'newestMessages' => $this->newestMessages,
 			'room' => $this->room,
 			'roomID' => $this->roomID,
 			'rooms' => $this->rooms,
@@ -80,6 +82,8 @@ class ChatPage extends AbstractPage {
 		
 		$this->readDefaultSmileys();
 		$this->readChatVersion();
+		
+		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, 5);
 	}
 	
 	/**
