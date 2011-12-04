@@ -7,4 +7,10 @@
 		<item name="wcf.chat.title"><![CDATA[Chat]]></item>
 		<item name="wcf.chat.copyright"><![CDATA[<a href="http://timwolla.wbbaddons.de">Chat entwickelt von TimWolla</a>]]></item>
 	</category>
+	<category name="wcf.chat.message">
+		<!-- 1 = TYPE_JOIN -->
+		<item name="wcf.chat.message.1"><![CDATA[hat den Chat betreten.]]></item>
+		<!-- 2 = TYPE_LEAVE -->
+		<item name="wcf.chat.message.2"><![CDATA[hat den Chat verlassen.]]></item>
+	</category>
 </language>
