@@ -84,7 +84,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 						'overflow': 'hidden'
 					});
 					target.parent().append('<img id="loading-' + target.attr('id') + '" class="ajaxLoad" src="' + RELATIVE_WCF_DIR + 'icon/spinner1.svg" alt="" />');
-					$('#loading-' + target.attr('id')).css({'marginTop' : function(index) {return (target.parent().height() / 2) - ($(this).height() / 2) - 2}, 'borderRadius' : 3});
+					$('#loading-' + target.attr('id')).css({'marginTop' : function(index) {return (target.parent().height() / 2) - ($(this).height() / 2)}});
 				}, this)
 			});
 		}

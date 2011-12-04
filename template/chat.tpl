@@ -141,10 +141,6 @@
 		}
 		
 		.ajaxLoad {
-			border-radius: 3px 3px 3px 3px;
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
-			background-color: rgba(0, 0, 0, 0.1);
-			padding: 2px;
 			margin-right: 2px;
 			float: right;
 		}
