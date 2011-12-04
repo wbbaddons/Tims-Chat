@@ -207,7 +207,7 @@
 							{foreach from=$newestMessages item='message'}
 								<li>
 									{* TODO: Use an own time-function to display a short timestamp *}
-									{@$message->time|time} {@$message->getFormattedUsername()}
+									{@$message->time|time} {@$message->getFormattedUsername()} {@$message->getFormattedMessage()}
 								</li>
 							{/foreach}
 						</ul>
