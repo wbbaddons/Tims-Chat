@@ -87,7 +87,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 		return \wcf\util\JSON::encode(array(
 			'formattedUsername' => $this->getFormattedUsername(),
 			'formattedMessage' => $this->getFormattedMessage(),
-			'formattedTime' => '<time>'.\wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s').'</time>',
+			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
 			'sender' => $this->sender,
 			'username' => $this->getUsername(),
 			'time' => $this->time,
