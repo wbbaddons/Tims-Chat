@@ -262,7 +262,7 @@
 	//<![CDATA[
 		TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
 		{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
-		TimWolla.WCF.Chat.messageTemplate = new WCF.Template('{$chatMessageTemplate|encodeJS}');
+		TimWolla.WCF.Chat.messageTemplate = new WCF.Template('{@$chatMessageTemplate|encodeJS}');
 		TimWolla.WCF.Chat.init({$room->roomID}, 1);
 		TimWolla.WCF.Chat.handleMessages([
 			{implode from=$newestMessages item='message'}
