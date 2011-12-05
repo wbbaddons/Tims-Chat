@@ -1,5 +1,5 @@
 <?php
-namespace \wcf\util;
+namespace wcf\util;
 
 /**
  * Chat utilities
