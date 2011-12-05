@@ -1,1 +1,1 @@
-{@$time} {@$username}{@$message}
+{literal}{@$time} {@$formattedUsername}{@$formattedMessage}{/literal}

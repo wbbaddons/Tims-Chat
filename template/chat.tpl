@@ -204,15 +204,6 @@
 					</div>
 					<div class="chatMessage border content">
 						<ul>
-							{foreach from=$newestMessages item='message'}
-								<li>
-									{* TODO: Use an own time-function to display a short timestamp *}
-									{assign var='time' value=$message->time|time}
-									{assign var='username' value=$message->getFormattedUsername()|concat:': '}
-									{assign var='message' value=$message->getFormattedMessage()}
-									{include file='chatMessage'}
-								</li>
-							{/foreach}
 						</ul>
 					</div>
 					<form style="margin-top: 10px;" id="chatForm" action="index.php?form=Chat" method="post">
@@ -269,12 +260,14 @@
 <script type="text/javascript">
 	//<![CDATA[
 		TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
-		{capture assign='time'}{literal}{@$time}{/literal}{/capture}
-		{capture assign='username'}{literal}{@$username}{/literal}{/capture}
-		{capture assign='message'}{literal}{@$message}{/literal}{/capture}
 		{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
 		TimWolla.WCF.Chat.messageTemplate = new WCF.Template('{$chatMessageTemplate|encodeJS}');
 		TimWolla.WCF.Chat.init({$room->roomID}, 1);
+		TimWolla.WCF.Chat.handleMessages([
+			{implode from=$newestMessages item='message'}
+				{@$message->jsonify()}
+			{/implode}
+		]);
 	//]]>
 </script>
 

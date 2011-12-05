@@ -12,12 +12,13 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 
 (function ($, document) {
 	TimWolla.WCF.Chat = {
-		titleTemplate: '',
+		titleTemplate: null,
+		messageTemplate: null,
 		init: function(roomID, messageID) {
 			this.bindEvents();
 		},
-		bindEvents: function() {
-			$('.smiley').click(function(event) {
+		bindEvents: function () {
+			$('.smiley').click(function (event) {
 				alert($(event.target).attr('alt'));
 			});
 			
@@ -37,7 +38,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				this.toggleUserMenu($(event.target));
 			}, this));
 		},
-		changeRoom: function(target) {
+		changeRoom: function (target) {
 			window.history.replaceState({}, '', target.attr('href'));
 			
 			// actually change the room
@@ -64,7 +65,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					if (data.topic == '') {
 						if (data.topic == '' && $('#topic').text().trim() == '') return;
 						
-						$('#topic').wcfBlindOut('vertical', function() {
+						$('#topic').wcfBlindOut('vertical', function () {
 							$(this).text('');
 						});
 					}
@@ -92,11 +93,11 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					})
 					.parent()
 					.append('<img class="ajaxLoad" src="' + RELATIVE_WCF_DIR + 'icon/spinner1.svg" alt="" />')
-					.css({'marginTop' : function(index) {return (target.parent().height() / 2) - ($(this).height() / 2)}});
+					.css({'marginTop' : function (index) {return (target.parent().height() / 2) - ($(this).height() / 2)}});
 				}, this)
 			});
 		},
-		toggleUserMenu: function(target) {
+		toggleUserMenu: function (target) {
 			liUserID = '#' + target.parent().attr('id');
 			if ($(liUserID).hasClass('activeMenuItem')) {
 				$(liUserID + ' .chatUserMenu').wcfBlindOut('vertical', function() {
@@ -106,6 +107,19 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			else {
 				$(liUserID).addClass('activeMenuItem');
 				$(liUserID + ' .chatUserMenu').wcfBlindIn();
+			}
+		},
+		handleMessages: function (messages) {
+			for (message in messages) {
+				message = messages[message];
+				output = this.messageTemplate.fetch(message);
+				
+				li = $('<li></li>');
+				li.addClass('chatMessage'+message.type);
+				if (message.sender == WCF.User.userID) li.addClass('ownMessage');
+				li.append(output);
+				
+				$('.chatMessage ul').append(li);
 			}
 		}
 	};

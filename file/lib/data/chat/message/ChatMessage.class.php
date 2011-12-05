@@ -41,7 +41,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	 * @return	string
 	 */
 	public function __toString() {
-		return $this->getFormattedMessage;
+		return $this->getFormattedMessage();
 	}
 	
 	/**
@@ -66,9 +66,9 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	 * @return	string
 	 */
 	public function getFormattedUsername() {
-		if ($this->type == self::TYPE_INFORMATION) return '<strong>'.WCF::getLanguage()->get('wcf.chat.information').'</strong>';
+		if ($this->type == self::TYPE_INFORMATION) return '<strong>'.$this->getUsername().'</strong>';
 		
-		$string = str_split($this->username);
+		$string = str_split($this->getUsername());
 		$r = (int) (($this->color1 >> 16 & 255) - ($this->color2 >> 16 & 255)) / (count($string) - 1);
 		$g = (int)  (($this->color1 >> 8 & 255) - ($this->color2 >> 8 & 255)) / (count($string) - 1);
 		$b = (int)  (($this->color1 & 255) - ($this->color2 & 255)) / (count($string) - 1);
@@ -78,5 +78,28 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 		}
 		
 		return '<strong>'.$result.'</strong>';
+	}
+	
+	/**
+	 * Returns the unformatted username
+	 *
+	 * @return	string
+	 */
+	public function getUsername() {
+		if ($this->type == self::TYPE_INFORMATION) return WCF::getLanguage()->get('wcf.chat.information');
+		return $this->username;
+	}
+	
+	public function jsonify() {
+		return \wcf\util\JSON::encode(array(
+			'formattedUsername' => $this->getFormattedUsername(),
+			'formattedMessage' => $this->getFormattedMessage(),
+			'time' => $this->time,
+			'sender' => $this->sender,
+			'username' => $this->getUsername(),
+			'receiver' => $this->receiver,
+			'type' => $this->type
+		));
+			
 	}
 }
