@@ -7,7 +7,7 @@
 	
 	<style type="text/css">
 		#chatbox {
-			
+			padding: 0;
 		}
 		
 		.table {
@@ -179,7 +179,7 @@
 	</ul>
 </nav>
 <div id="chatbox" class="border tabMenuContent ui-tabs-panel ui-widget-content ui-corner-bottom">
-	<div class="table border">
+	<div class="table">
 		<div>		
 			<div class="first column">
 				<div class="chatSidebar left">
