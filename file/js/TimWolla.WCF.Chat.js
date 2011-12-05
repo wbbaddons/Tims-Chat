@@ -121,6 +121,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				
 				$('.chatMessage ul').append(li);
 			}
+			$('.chatMessage').animate({scrollTop: $('.chatMessage ul').height()}, 10000);
 		}
 	};
 })(jQuery, document);
