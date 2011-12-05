@@ -68,6 +68,18 @@
 			overflow-y: scroll;
 		}
 		
+		.chatMessage time, .chatMessage time::before, .chatMessage time::after {
+			font-size: .8em;
+		}
+		
+		.chatMessage time::before {
+			content: "[";
+		}
+		
+		.chatMessage time::after {
+			content: "]";
+		}
+		
 		.chatSidebar a {
 			outline: none;
 		}
