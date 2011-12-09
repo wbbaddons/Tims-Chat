@@ -57,7 +57,7 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	 * @see	\wcf\data\chat\room\ChatRoom::getTitle();
 	 */
 	public function __tostring() {
-		return $this->getTitle;
+		return $this->getTitle();
 	}
 	
 	/**
