@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/options.xsd">
+	<import>
+		<categories>
+			<category name="chat"></category>
+			<category name="chat.general">
+				<parent>chat</parent>
+			</category>
+		</categories>
+
+		<options>
+			<option name="chat_active">
+				<categoryname>chat.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+		</options>
+	</import>
+</data>			
