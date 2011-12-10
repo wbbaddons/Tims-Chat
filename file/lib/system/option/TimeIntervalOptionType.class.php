@@ -24,8 +24,8 @@ class TimeIntervalOptionType extends TextOptionType {
 	public function getFormElement(\wcf\data\option\Option $option, $value) {
 		$tmp = (int) ($value / 60);
 		if ($value % 60 != 0) {
-			$tmp .= ','.($tmp % 60).'s';
+			$tmp .= ','.($value % 60).'s';
 		}
-		parent::getFormElement($option, $tmp);
+		return parent::getFormElement($option, $tmp);
 	}
 }
