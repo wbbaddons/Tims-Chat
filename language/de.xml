@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de">
+	<category name="wcf.acp.option">
+		<item name="wcf.acp.option.category.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.acp.option.category.chat.general"><![CDATA[Allgemein]]></item>
+		<item name="wcf.acp.option.chat_active"><![CDATA[Chat aktivieren]]></item>
+		<item name="wcf.acp.option.chat_active.description"><![CDATA[Aktiviert den Chat]]></item>
+		<item name="wcf.acp.option.chat_reloadtime"><![CDATA[Nachladezeit]]></item>
+		<item name="wcf.acp.option.chat_reloadtime.description"><![CDATA[Gibt die Zeit in Sekunden an, nach der neue Nachrichten geladen werden. (Standard: alle 5 Sekunden)]]></item>
+		<item name="wcf.acp.option.chat_lastmessages"><![CDATA[Anzahl der letzten Nachrichten]]></item>
+		<item name="wcf.acp.option.chat_lastmessages.description"><![CDATA[Gibt die Zahl der Nachrichten an, die beim Betreten des Chats angezeigt werden. (Standard: 5)]]></item>
+		<item name="wcf.acp.option.chat_display_join_leave"><![CDATA[Join- und Leave-Nachrichten anzeigen]]></item>
+		<item name="wcf.acp.option.chat_display_join_leave.description"><![CDATA[Gibt an, ob eine Nachricht angezeigt werden soll, wenn ein Nutzer den Chat betritt oder verlässt.]]></item>
+		<item name="wcf.acp.option.chat_display_clock"><![CDATA[Uhrzeit anzeigen]]></item>
+		<item name="wcf.acp.option.chat_display_clock.description"><![CDATA[Aktiviert die Anzeige der Uhrzeit von Nachrichten]]></item>
+		<item name="wcf.acp.option.chat_animations"><![CDATA[Animationen aktivieren]]></item>
+		<item name="wcf.acp.option.chat_animations.description"><![CDATA[Aktiviert die Animation neuer Nachrichten]]></item>
+		<item name="wcf.acp.option.chat_length"><![CDATA[Maximale Textlänge]]></item>
+		<item name="wcf.acp.option.chat_length.description"><![CDATA[Gibt die maximale Länge einer Chatnachricht an.]]></item>
+		<item name="wcf.acp.option.chat_show_version"><![CDATA[Versionsnummer anzeigen]]></item>
+		<item name="wcf.acp.option.chat_show_version.description"><![CDATA[Zeigt die Versionsnummer im Copyrighthinweis an.]]></item>
+		
+		<item name="wcf.acp.option.category.chat.log"><![CDATA[Protokoll]]></item>
+		<item name="wcf.acp.option.chat_log_active"><![CDATA[Protokoll aktivieren]]></item>
+		<item name="wcf.acp.option.chat_log_active.description"><![CDATA[Aktiviert das Chatprotokoll]]></item>
+		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Speicherzeit]]></item>
+		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Gibt die Zeit in Sekunden an, die eine Nachricht im Protokoll gespeichert bleibt.]]></item>
+	</category>
 	<category name="wcf.header">
 		<item name="wcf.header.menu.chat"><![CDATA[Chat]]></item>
 	</category>
@@ -7,7 +33,7 @@
 		<item name="wcf.chat.title"><![CDATA[Chat]]></item>
 		<item name="wcf.chat.protocol"><![CDATA[Protokoll]]></item>
 		<item name="wcf.chat.rooms"><![CDATA[Räume]]></item>
-		<item name="wcf.chat.copyright"><![CDATA[<a href="http://timwolla.wbbaddons.de">Chat entwickelt von TimWolla</a>]]></item>
+		<item name="wcf.chat.copyright"><![CDATA[<a href="http://timwolla.wbbaddons.de">Chat{if CHAT_SHOW_VERSION == 1} Version {$chatVersion}{/if} entwickelt von TimWolla</a>]]></item>
 	</category>
 	<category name="wcf.chat.message">
 		<!-- 1 = TYPE_JOIN -->
