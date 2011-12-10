@@ -74,7 +74,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	}
 	
 	/**
-	 * Returns the unformatted username
+	 * Returns the unformatted username.
 	 *
 	 * @return	string
 	 */
@@ -83,6 +83,11 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 		return $this->username;
 	}
 	
+	/**
+	 * Converts this message into json-form.
+	 *
+	 * @return	string
+	 */
 	public function jsonify() {
 		return \wcf\util\JSON::encode(array(
 			'formattedUsername' => $this->getFormattedUsername(),
@@ -94,6 +99,5 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			'receiver' => $this->receiver,
 			'type' => $this->type
 		));
-			
 	}
 }
