@@ -201,7 +201,7 @@
 							<ul>
 							{foreach from=$rooms item='roomListRoom'}
 								<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
-									<a id="room-{$roomListRoom->roomID}" href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom->title|language}</a>
+									<a id="room-{$roomListRoom->roomID}" href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom->getTitle()}</a>
 								</li>
 							{/foreach}
 							</ul>
