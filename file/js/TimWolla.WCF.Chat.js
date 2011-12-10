@@ -93,7 +93,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					})
 					.parent()
 					.append('<img class="ajaxLoad" src="' + RELATIVE_WCF_DIR + 'icon/spinner1.svg" alt="" />')
-					.css({'marginTop' : function (index) {return (target.parent().height() / 2) - ($(this).height() / 2)}});
+					.css({'marginTop' : function (index) {return (target.parent().height() / 2) - ($(this).height() / 2);}});
 				}, this)
 			});
 		},
