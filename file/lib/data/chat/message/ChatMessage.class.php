@@ -56,6 +56,11 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			case self::TYPE_LEAVE:
 			case self::TYPE_BACK:
 				$message = WCF::getLanguage()->get('wcf.chat.message.'.$this->type);
+			break;
+			case self::TYPE_NORMAL:
+				if (!$this->enableHTML) {
+					$message = \wcf\system\bbcode\SimpleMessageParser::getInstance()->parse($message, $this->enableSmilies);
+				}
 		}
 		return $message;
 	}
