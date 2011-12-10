@@ -6,14 +6,77 @@
 			<category name="chat.general">
 				<parent>chat</parent>
 			</category>
+			<category name="chat.log">
+				<parent>chat</parent>
+			</category>
 		</categories>
 
 		<options>
+			<!-- general chat options -->
 			<option name="chat_active">
 				<categoryname>chat.general</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<defaultvalue>1</defaultvalue>
+				<showorder>1</showorder>
 			</option>
+			<option name="chat_reloadtime">
+				<categoryname>chat.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>5</defaultvalue>
+				<showorder>2</showorder>
+			</option>
+			<option name="chat_lastmessages">
+				<categoryname>chat.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>5</defaultvalue>
+				<showorder>4</showorder>
+			</option>
+			<option name="chat_display_join_leave">
+				<categoryname>chat.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<showorder>5</showorder>
+			</option>
+			<option name="chat_display_clock">
+				<categoryname>chat.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<showorder>6</showorder>
+			</option>
+			<option name="chat_animations">
+				<categoryname>chat.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<showorder>7</showorder>
+			</option>
+			<option name="chat_length">
+				<categoryname>chat.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>500</defaultvalue>
+				<showorder>8</showorder>
+			</option>
+			<option name="chat_show_version">
+				<categoryname>chat.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<showorder>9</showorder>
+			</option>
+			<!-- general chat options end -->
+			
+			<!--log options-->
+			<option name="chat_log_active">
+				<categoryname>chat.log</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<showorder>1</showorder>
+			</option>
+			<option name="chat_log_archivetime">
+				<categoryname>chat.log</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>172800</defaultvalue>
+				<showorder>2</showorder>
+			</option>
+			<!--log options end-->
 		</options>
 	</import>
 </data>			
