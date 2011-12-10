@@ -24,7 +24,7 @@ class ChatMessageEditor extends \wcf\data\DatabaseObjectEditor {
 	 * @return	integer			Number of deleted messages.
 	 */
 	public static function cleanup($lifetime = CHAT_ARCHIVETIME) {
-		$sql = "SELECT 
+		$sql = "SELECT
 				".static::getDatabaseIndexName()."
 			FROM
 				".static::getDatabaseTableName()."
@@ -33,9 +33,7 @@ class ChatMessageEditor extends \wcf\data\DatabaseObjectEditor {
 		$statement = \wcf\system\WCF::getDB()->prepareStatement($sql);
 		$statement->execute(TIME_NOW - $lifetime);
 		$objectIDs = array();
-		while ($row = $statement->fetchArray()) {
-			$objectIDs[] = $row[static::getDatabaseIndexName()];
-		}
+		while ($objectIDs[] = $statement->fetchColumn());
 		return static::deleteAll($objectIDs);
 	}
 }

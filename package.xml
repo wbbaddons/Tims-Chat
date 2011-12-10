@@ -29,6 +29,7 @@
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="pagemenu">pagemenu.xml</instruction>
+		<instruction type="eventListener">eventListener.xml</instruction>
 		<instruction type="templatelistener">templatelistener.xml</instruction>
 		<instruction type="aclOption">acloptions.xml</instruction>
 	</instructions>
@@ -41,6 +42,7 @@
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="pagemenu">pagemenu.xml</instruction>
+		<instruction type="eventListener">eventListener.xml</instruction>
 		<instruction type="templatelistener">templatelistener.xml</instruction>
 		<instruction type="aclOption">acloptions.xml</instruction>
 	</instructions>

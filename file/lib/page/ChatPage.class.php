@@ -102,6 +102,15 @@ class ChatPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
+		if ($this->action == 'Log') {
+			//TODO: Initialise LogPage
+			exit;
+		}
+		elseif($this->action == 'Send') {
+			//TODO: Safe message in database
+			exit;
+		}
+		
 		if (isset($_REQUEST['id'])) $this->roomID = (int) $_REQUEST['id'];
 		if (isset($_REQUEST['ajax'])) {
 			$this->useTemplate = false;
