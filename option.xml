@@ -72,7 +72,7 @@
 			</option>
 			<option name="chat_log_archivetime">
 				<categoryname>chat.log</categoryname>
-				<optiontype>integer</optiontype>
+				<optiontype>timeInterval</optiontype>
 				<defaultvalue>172800</defaultvalue>
 				<showorder>2</showorder>
 			</option>

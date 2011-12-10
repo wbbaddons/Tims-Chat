@@ -4,7 +4,6 @@
 		<item name="wcf.acp.option.category.chat"><![CDATA[Chat]]></item>
 		<item name="wcf.acp.option.category.chat.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.chat_active"><![CDATA[Chat aktivieren]]></item>
-		<item name="wcf.acp.option.chat_active.description"><![CDATA[Aktiviert den Chat]]></item>
 		<item name="wcf.acp.option.chat_reloadtime"><![CDATA[Nachladezeit]]></item>
 		<item name="wcf.acp.option.chat_reloadtime.description"><![CDATA[Gibt die Zeit in Sekunden an, nach der neue Nachrichten geladen werden. (Standard: alle 5 Sekunden)]]></item>
 		<item name="wcf.acp.option.chat_lastmessages"><![CDATA[Anzahl der letzten Nachrichten]]></item>
@@ -22,9 +21,8 @@
 		
 		<item name="wcf.acp.option.category.chat.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.option.chat_log_active"><![CDATA[Protokoll aktivieren]]></item>
-		<item name="wcf.acp.option.chat_log_active.description"><![CDATA[Aktiviert das Chatprotokoll]]></item>
 		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Speicherzeit]]></item>
-		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Gibt die Zeit in Sekunden an, die eine Nachricht im Protokoll gespeichert bleibt.]]></item>
+		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Gibt die Zeit in Minuten an, die eine Nachricht im Protokoll gespeichert bleibt.]]></item>
 	</category>
 	<category name="wcf.header">
 		<item name="wcf.header.menu.chat"><![CDATA[Chat]]></item>
