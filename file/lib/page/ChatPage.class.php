@@ -20,6 +20,7 @@ class ChatPage extends AbstractPage {
 	public $neededModules = array('CHAT_ACTIVE');
 	//public $neededPermissions = array('user.chat.canEnter');
 	public $joinMessage = null;
+	public $newestMessages = array();
 	public $room = null;
 	public $roomID = 0;
 	public $rooms = array();
@@ -35,6 +36,7 @@ class ChatPage extends AbstractPage {
 		WCF::getTPL()->assign(array(
 			'chatVersion' => $this->chatVersion,
 			'joinMessage' => $this->joinMessage,
+			'newestMessages' => $this->newestMessages,
 			'room' => $this->room,
 			'roomID' => $this->roomID,
 			'rooms' => $this->rooms,
@@ -77,18 +79,11 @@ class ChatPage extends AbstractPage {
 			'color1' => $this->userData['color'][1],
 			'color2' => $this->userData['color'][2]
 		));
-		if ($this->room->topic != '') {
-			chat\message\ChatMessageEditor::create(array(
-				'roomID' => $this->room->roomID,
-				'sender' => WCF::getUser()->userID,
-				'time' => TIME_NOW,
-				'type' => chat\message\ChatMessage::TYPE_INFORMATION,
-				'message' => WCF::getLanguage()->getDynamicVariable($this->room->topic)
-			));
-		}
 		
 		$this->readDefaultSmileys();
 		$this->readChatVersion();
+		
+		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, 5);
 	}
 	
 	/**
@@ -105,7 +100,19 @@ class ChatPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_GET['id'])) $this->roomID = (int) $_GET['id'];
+		if ($this->action == 'Log') {
+			//TODO: Initialise LogPage
+			exit;
+		}
+		elseif($this->action == 'Send') {
+			//TODO: Safe message in database
+			exit;
+		}
+		
+		if (isset($_REQUEST['id'])) $this->roomID = (int) $_REQUEST['id'];
+		if (isset($_REQUEST['ajax'])) {
+			$this->useTemplate = false;
+		}
 	}
 	
 	/**
@@ -171,5 +178,12 @@ class ChatPage extends AbstractPage {
 		// remove index breadcrumb
 		WCF::getBreadcrumbs()->remove(0);
 		parent::show();
+		if ($this->useTemplate) exit;
+		@header('Content-type: application/json');
+		echo \wcf\util\JSON::encode(array(
+			'title' => WCF::getLanguage()->get($this->room->title),
+			'topic' => WCF::getLanguage()->get($this->room->topic)
+		));
+		exit;
 	}
 }
