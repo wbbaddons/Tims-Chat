@@ -66,7 +66,7 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	 * @see	\wcf\system\request\IRouteController
 	 */
 	public function getTitle() {
-		return $this->title;
+		return WCF::getLanguage()->get($this->title);
 	}
 	
 	/**
