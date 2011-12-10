@@ -17,4 +17,15 @@ class TimeIntervalOptionType extends TextOptionType {
 	public function getData(\wcf\data\option\Option $option, $newValue) {
 		return \wcf\util\ChatUtil::timeModifier($newValue);
 	}
+	
+	/**
+	 * @see wcf\system\option\TextOptionType::getFormElement()
+	 */
+	public function getFormElement(\wcf\data\option\Option $option, $value) {
+		$tmp = (int) ($value / 60);
+		if ($value % 60 != 0) {
+			$tmp .= ','.($tmp % 60).'s';
+		}
+		parent::getFormElement($option, $tmp);
+	}
 }
