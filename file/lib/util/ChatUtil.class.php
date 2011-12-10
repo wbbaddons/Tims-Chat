@@ -23,15 +23,17 @@ class ChatUtil {
 	 */
 	public static function gradient($string, $start, $end) {
 		$string = str_split($string);
-		$r = (int) ((($start >> 16 & 255) - ($end >> 16 & 255)) / (count($string) - 1));
-		$g = (int) ((($start >> 8 & 255) - ($end >> 8 & 255)) / (count($string) - 1));
-		$b = (int) ((($start & 255) - ($end & 255)) / (count($string) - 1));
+		$r = (int) ((($start & 0xFF0000) - ($end & 0xFF0000)) / (count($string) - 1));
+		$g = (int) ((($start & 0x00FF00) - ($end & 0x00FF00)) / (count($string) - 1));
+		$b = (int) ((($start & 0x0000FF) - ($end & 0x0000FF)) / (count($string) - 1));
 		
 		$result = '';
 		for ($i = 0, $max = count($string); $i < $max; $i++) {
-			$result .= '<span style="color:rgb('.(($start >> 16 & 255) - $i * $r).','.(($start >> 8 & 255) - $i * $g).','.(($start & 255) - $i * $b).')">'.$string[$i].'</span>'; 
+			$result .= '<span style="color:rgb('.(($start & 0xFF0000) - $i * $r).','.(($start & 0x00FF00) - $i * $g).','.(($start & 0x0000FF) - $i * $b).')">'.$string[$i].'</span>'; 
 		}
 		
 		return $result;
 	}
+	
+	
 }
