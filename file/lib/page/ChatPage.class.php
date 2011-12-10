@@ -69,21 +69,23 @@ class ChatPage extends AbstractPage {
 		
 		$this->readRoom();
 		$this->readUserData();
-		$this->joinMessage = chat\message\ChatMessageEditor::create(array(
-			'roomID' => $this->room->roomID,
-			'sender' => WCF::getUser()->userID,
-			'username' => WCF::getUser()->username,
-			'time' => TIME_NOW,
-			'type' => chat\message\ChatMessage::TYPE_JOIN,
-			'message' => '',
-			'color1' => $this->userData['color'][1],
-			'color2' => $this->userData['color'][2]
-		));
+		if (CHAT_DISPLAY_JOIN_LEAVE) {
+			$this->joinMessage = chat\message\ChatMessageEditor::create(array(
+				'roomID' => $this->room->roomID,
+				'sender' => WCF::getUser()->userID,
+				'username' => WCF::getUser()->username,
+				'time' => TIME_NOW,
+				'type' => chat\message\ChatMessage::TYPE_JOIN,
+				'message' => '',
+				'color1' => $this->userData['color'][1],
+				'color2' => $this->userData['color'][2]
+			));
+		}
 		
 		$this->readDefaultSmileys();
 		$this->readChatVersion();
 		
-		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, 5);
+		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
 	}
 	
 	/**
