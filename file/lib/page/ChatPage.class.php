@@ -181,7 +181,7 @@ class ChatPage extends AbstractPage {
 		if ($this->useTemplate) exit;
 		@header('Content-type: application/json');
 		echo \wcf\util\JSON::encode(array(
-			'title' => WCF::getLanguage()->get($this->room->title),
+			'title' => $this->room->getTitle(),
 			'topic' => WCF::getLanguage()->get($this->room->topic)
 		));
 		exit;
