@@ -104,7 +104,7 @@ class ChatPage extends AbstractPage {
 			//TODO: Initialise LogPage
 			exit;
 		}
-		elseif($this->action == 'Send') {
+		else if ($this->action == 'Send') {
 			//TODO: Safe message in database
 			exit;
 		}
@@ -181,7 +181,7 @@ class ChatPage extends AbstractPage {
 		if ($this->useTemplate) exit;
 		@header('Content-type: application/json');
 		echo \wcf\util\JSON::encode(array(
-			'title' => $this->room->getTitle(),
+			'title' => WCF::getLanguage()->get($this->room->title),
 			'topic' => WCF::getLanguage()->get($this->room->topic)
 		));
 		exit;
