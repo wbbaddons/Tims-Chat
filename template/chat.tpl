@@ -1,7 +1,7 @@
 {include file='documentHeader'}
 
 <head>
-	<title>{$room->title|language} - {lang}wcf.chat.title{/lang} - {PAGE_TITLE|language}</title>
+	<title>{$room->getTitle()} - {lang}wcf.chat.title{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude' sandbox=false}
 	
@@ -90,12 +90,12 @@
 		}
 		*/
 		
-		.chatSidebar > div h1 {
+		.chatSidebar > div h2 {
 			font-size: 130%;
 			padding: 7px 25px 7px 35px;
 		}
 		
-		.chatSidebar > div h1 {
+		.chatSidebar > div h2 {
 			background-image: url("wcf/icon/arrowRight.svg");
 			background-position: 15px center;
 			background-repeat: no-repeat;
@@ -196,12 +196,12 @@
 			<div class="first column">
 				<div class="chatSidebar left">
 					<div id="chatChannelList">
-						<h1 data-menu-item="timwolla.wcf.chat.channellist" class="menuHeader activeMenuItem">{lang}wcf.chat.rooms{/lang}</h1>
+						<h2 class="menuHeader activeMenuItem">{lang}wcf.chat.rooms{/lang}</h1>
 						<div class="sidebarMenuGroup">
 							<ul>
 							{foreach from=$rooms item='roomListRoom'}
 								<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
-									<a id="room-{$roomListRoom->roomID}" href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom->getTitle()}</a>
+									<a href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom->getTitle()}</a>
 								</li>
 							{/foreach}
 							</ul>
@@ -223,10 +223,10 @@
 						<div class="table">
 							<div>
 								<div class="column" style="width: 95%;">
-									<input type="text" id="chatInput" class="inputText" style="width: 100%" name="text" autocomplete="off">
+									<input type="text" id="chatInput" class="inputText" style="width: 100%" name="text" autocomplete="off" />
 								</div>
 								<div class="column" style="width: 5%; text-align: center;">
-									<input type="image" class="inputImage" alt="Absenden" src="{icon size=M}toRight1{/icon}" style="height: 24px; margin-left: 5px; vertical-align: sub;">
+									<input type="image" class="inputImage" alt="Absenden" src="{icon size=M}toRight1{/icon}" style="height: 24px; margin-left: 5px; vertical-align: sub;" />
 								</div>
 							</div>
 						</div>
@@ -245,7 +245,7 @@
 			<div class="third column">
 				<div class="chatSidebar right">
 					<div id="chatUserList">
-						<h1 data-menu-item="timwolla.wcf.chat.userlist" class="menuHeader activeMenuItem">User</h1>
+						<h2 class="menuHeader activeMenuItem">User</h1>
 						<div class="sidebarMenuGroup">
 							<ul>
 								{section name=user start=0 loop=10}
