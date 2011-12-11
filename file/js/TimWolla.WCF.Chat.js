@@ -18,9 +18,9 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			this.bindEvents();
 		},
 		bindEvents: function () {
-			$('.smiley').click(function (event) {
-				alert($(event.target).attr('alt'));
-			});
+			$('.smiley').click($.proxy(function (event) {
+				this.insertText($(event.target).attr('alt'));
+			}, this));
 			
 			// $(window).bind('beforeunload', function() {
 				// return false;
@@ -116,10 +116,14 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			}
 			$('.chatMessage').animate({scrollTop: $('.chatMessage ul').height()}, 10000);
 		},
+		insertText: function (text) {
+			// TODO: Add options here
+			$('#chatInput').val(text);
+		},
 		toggleUserMenu: function (target) {
 			liUserID = '#' + target.parent().attr('id');
 			if ($(liUserID).hasClass('activeMenuItem')) {
-				$(liUserID + ' .chatUserMenu').wcfBlindOut('vertical', function() {
+				$(liUserID + ' .chatUserMenu').wcfBlindOut('vertical', function () {
 					$(liUserID).removeClass('activeMenuItem');
 				});
 			}
