@@ -37,6 +37,10 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				event.preventDefault();
 				this.toggleUserMenu($(event.target));
 			}, this));
+			$('#chatForm').submit($.proxy(function (event) {
+				event.preventDefault();
+				$(event.target).find('input[type=image]').attr('src', WCF.Icon.get('wcf.icon.loading'));
+			}, this));
 		},
 		changeRoom: function (target) {
 			window.history.replaceState({}, '', target.attr('href'));
@@ -97,7 +101,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 						'overflow': 'hidden'
 					})
 					.parent()
-					.append('<img class="ajaxLoad" src="' + RELATIVE_WCF_DIR + 'icon/spinner1.svg" alt="" />')
+					.append('<img class="ajaxLoad" src="' + WCF.Icon.get('wcf.icon.loading') + '" alt="" />')
 					.css({'marginTop' : function (index) {return (target.parent().height() / 2) - ($(this).height() / 2);}});
 				}, this)
 			});
