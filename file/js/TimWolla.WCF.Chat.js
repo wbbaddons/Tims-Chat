@@ -16,11 +16,19 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		messageTemplate: null,
 		init: function(roomID, messageID) {
 			this.bindEvents();
+			$('#chatBox').css('background-color', $('div.main').css('background-color'));
+			$('#chatRoomContent').width($('#chatBox').width() - 400);
 		},
 		bindEvents: function () {
 			$('.smiley').click($.proxy(function (event) {
 				this.insertText($(event.target).attr('alt'));
 			}, this));
+
+			var chatRoomContent = $('#chatRoomContent');
+			var chatBox = $('#chatBox');
+			$(window).resize(function() {
+				chatRoomContent.width(chatBox.width() - 400);
+			});
 			
 			// $(window).bind('beforeunload', function() {
 				// return false;
@@ -52,14 +60,8 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				type: 'POST',
 				success: $.proxy(function (data, textStatus, jqXHR) {
 					this.loading = false;
-					target.css({
-						'float' : 'none',
-						'padding' : '5px 25px 7px 35px',
-						'width' : '',
-						'overflow' : 'visible'
-					})
-					.siblings('.ajaxLoad')
-					.remove();
+					
+					target.parent().removeClass('ajaxLoad');
 					
 					// mark as active;
 					$('.activeMenuItem .chatRoom').parent().removeClass('activeMenuItem');
@@ -94,15 +96,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					
 					this.loading = true;
 
-					target.css({
-						'width' : target.width() - 19, 
-						'float' : 'left',
-						'padding' : '5px 0 7px 35px',
-						'overflow': 'hidden'
-					})
-					.parent()
-					.append('<img class="ajaxLoad" src="' + WCF.Icon.get('wcf.icon.loading') + '" alt="" />')
-					.css({'marginTop' : function (index) {return (target.parent().height() / 2) - ($(this).height() / 2);}});
+					target.parent().addClass('ajaxLoad');
 				}, this)
 			});
 		},
@@ -112,20 +106,21 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				output = this.messageTemplate.fetch(message);
 				
 				li = $('<li></li>');
-				li.addClass('chatMessage'+message.type);
+				li.addClass('chatMessage chatMessage'+message.type);
 				if (message.sender == WCF.User.userID) li.addClass('ownMessage');
 				li.append(output);
 				
-				$('.chatMessage ul').append(li);
+				$('.chatMessageConainer ul').append(li);
 			}
-			$('.chatMessage').animate({scrollTop: $('.chatMessage ul').height()}, 10000);
+			$('.chatMessageConainer').animate({scrollTop: $('.chatMessageConainer ul').height()}, 10000);
 		},
 		insertText: function (text) {
 			// TODO: Add options here
-			$('#chatInput').val(text);
+			var input = $('#chatInput');
+			input.val(input.val() + ' ' + text + ' ');
 		},
 		toggleUserMenu: function (target) {
-			liUserID = '#' + target.parent().attr('id');
+			liUserID = '#' + target.parent().parent().attr('id');
 			if ($(liUserID).hasClass('activeMenuItem')) {
 				$(liUserID + ' .chatUserMenu').wcfBlindOut('vertical', function () {
 					$(liUserID).removeClass('activeMenuItem');
