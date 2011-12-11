@@ -226,7 +226,7 @@
 									<input type="text" id="chatInput" class="inputText" style="width: 100%" name="text" autocomplete="off" placeholder="Insert message here&hellip;" />
 								</div>
 								<div class="column" style="width: 5%; text-align: center;">
-									<input type="image" class="inputImage" alt="Absenden" src="{icon size=M}toRight1{/icon}" style="height: 24px; margin-left: 5px; vertical-align: sub;" />
+									<input type="image" class="inputImage" alt="Absenden" src="{icon size=M}toRight1{/icon}" style="height: 100%; margin-left: 5px;" />
 								</div>
 							</div>
 						</div>
