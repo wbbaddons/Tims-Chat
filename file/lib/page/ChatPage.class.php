@@ -106,7 +106,7 @@ class ChatPage extends AbstractPage {
 			//TODO: Initialise LogPage
 			exit;
 		}
-		elseif($this->action == 'Send') {
+		else if ($this->action == 'Send') {
 			//TODO: Safe message in database
 			exit;
 		}
