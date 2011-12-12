@@ -110,9 +110,9 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				if (message.sender == WCF.User.userID) li.addClass('ownMessage');
 				li.append(output);
 				
-				$('.chatMessageConainer ul').append(li);
+				$('.chatMessageContainer ul').append(li);
 			}
-			$('.chatMessageConainer').animate({scrollTop: $('.chatMessageConainer ul').height()}, 10000);
+			$('.chatMessageContainer').animate({scrollTop: $('.chatMessageContainer ul').height()}, 10000);
 		},
 		insertText: function (text) {
 			// TODO: Add options here

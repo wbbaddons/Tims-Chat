@@ -87,7 +87,7 @@
 			padding: 5px;
 		}	
 		
-		.chatMessageConainer {
+		.chatMessageContainer {
 			min-height: 200px;
 			overflow-y: scroll;
 		}
@@ -217,7 +217,7 @@
 			</aside>
 			<div id="chatRoomContent">
 				<div id="topic" class="border">Dieser Raum ist zum Testen da.</div>
-				<div class="chatMessageConainer border content">
+				<div class="chatMessageContainer border content">
 					<ul></ul>
 				</div>
 				
