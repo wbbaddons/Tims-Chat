@@ -178,7 +178,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					submitButton.attr('src', WCF.Icon.get('wcf.icon.toRight1'));
 				}
 			});
-		}
+		},
 		toggleUserMenu: function (target) {
 			liUserID = '#' + target.parent().parent().attr('id');
 			if ($(liUserID).hasClass('activeMenuItem')) {
