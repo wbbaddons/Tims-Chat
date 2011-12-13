@@ -22,6 +22,9 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			WCF.Icon.add('wcf.icon.toRight1', $('#chatForm .inputImage').attr('src'));
 			$('#chatInput').focus();
 		},
+		/**
+		 * Binds all the events needed for Tims Chat.
+		 */
 		bindEvents: function () {
 			$('.smiley').click($.proxy(function (event) {
 				this.insertText($(event.target).attr('alt'));
@@ -81,6 +84,11 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				});
 			}, this));
 		},
+		/**
+		 * Changes the chat-room.
+		 * 
+		 * @param	object	target
+		 */
 		changeRoom: function (target) {
 			window.history.replaceState({}, '', target.attr('href'));
 			
@@ -134,6 +142,11 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		getMessages: function (id) {
 		
 		},
+		/**
+		 * Appends the messages.
+		 * 
+		 * @param	array<object>	messages
+		 */
 		handleMessages: function (messages) {
 			for (message in messages) {
 				message = messages[message];
@@ -148,6 +161,12 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			}
 			$('.chatMessageContainer').animate({scrollTop: $('.chatMessageContainer ul').height()}, 10000);
 		},
+		/**
+		 * Inserts text into the chat-input.
+		 * 
+		 * @param	string	text
+		 * @param	object	options
+		 */
 		insertText: function (text, options) {
 			options = $.extend({
 				append: true,
