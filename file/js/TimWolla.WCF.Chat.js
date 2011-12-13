@@ -160,6 +160,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			$('#chatInput').val(text);
 			
 			if (options.submit) $('#chatForm').submit();
+			else $('#chatInput').focus();
 		},
 		toggleUserMenu: function (target) {
 			liUserID = '#' + target.parent().parent().attr('id');
