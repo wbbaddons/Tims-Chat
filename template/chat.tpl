@@ -1,7 +1,7 @@
 {include file='documentHeader'}
 
 <head>
-	<title>{$room->getTitle()} - {lang}wcf.chat.title{/lang} - {PAGE_TITLE|language}</title>
+	<title>{$room} - {lang}wcf.chat.title{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude' sandbox=false}
 	
