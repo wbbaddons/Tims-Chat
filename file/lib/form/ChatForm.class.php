@@ -86,6 +86,8 @@ class ChatForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
+		$commandHandler = new \wcf\system\chat\commands\ChatCommandHandler();
+		var_dump($commandHandler->isCommand($this->message));
 		$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
 			'data' => array(
 				'roomID' => $this->userData['roomID'],
