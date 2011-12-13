@@ -233,7 +233,7 @@
 				</ul>
 			</aside>
 			<div id="chatRoomContent">
-				<div id="topic" class="border">{$room->topic|language}</div>
+				<div id="topic" class="border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
 				<div class="chatMessageContainer border content">
 					<ul></ul>
 				</div>
