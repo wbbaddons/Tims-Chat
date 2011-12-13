@@ -107,7 +107,7 @@ class ChatPage extends AbstractPage {
 			exit;
 		}
 		else if ($this->action == 'Send') {
-			//TODO: Safe message in database
+			new \wcf\form\ChatForm();
 			exit;
 		}
 		
