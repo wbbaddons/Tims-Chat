@@ -116,14 +116,14 @@
 		}
 
 		#chatUserList > ul > li > .bgFix a {
-			background-image: url("wcf/icon/arrowRight.svg");
+			background-image: url({icon size='S'}arrowRight{/icon});
 			background-position: 15px center;
 			background-repeat: no-repeat;
 			background-size: 16px auto;
 		}
 		
 		#chatUserList > ul > li.activeMenuItem > .bgFix a {
-			background-image: url("wcf/icon/arrowDown.svg");
+			background-image: url({icon size='S'}arrowDown{/icon});
 		}
 		
 		.chatSidebar .chatUserMenu li a {
@@ -149,6 +149,25 @@
 			content: "]";
 		}
 		
+		.chatMessage {
+			padding-left: 16px;
+			min-height: 16px;
+		}
+		{assign var='type' value='\wcf\data\chat\message\ChatMessage::TYPE_'}
+		.chatMessage{$type|concat:'JOIN'|constant}, .chatMessage{$type|concat:'LEAVE'|constant} {
+			background-position: left top;
+			background-repeat: no-repeat;
+			
+		}
+		
+		.chatMessage{$type|concat:'JOIN'|constant} {
+			background-image: url({icon size='S'}toRight1{/icon});
+		}
+		
+		.chatMessage{$type|concat:'LEAVE'|constant} {
+			background-image: url({icon size='S'}toLeft1{/icon});
+		}
+		
 		.chatSidebar a {
 			outline: none;
 		}
@@ -156,7 +175,7 @@
 		.ajaxLoad {
 			background-position: right center;
 			background-repeat: no-repeat;
-			background-image: url({icon}spinner1{/icon});
+			background-image: url({icon size='S'}spinner1{/icon});
 		}
 		
 		.bgFix {

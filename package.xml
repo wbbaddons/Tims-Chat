@@ -5,7 +5,7 @@
 		<packagedescription><![CDATA[Chat for WoltLab Community Framework™]]></packagedescription>
 		<standalone>0</standalone>
 		<isunique>1</isunique>
-		<version>3.0.0 Alpha 1</version>
+		<version>3.0.0 Alpha 2</version>
 		<date>2011-11-26</date>
 		<plugin>com.woltlab.wcf.bbcode</plugin> <!-- TODO: Correct me -->
 	</packageinformation>
@@ -38,7 +38,6 @@
 		<instruction type="language">language/*.xml</instruction>
 		<instruction type="file">file.tar</instruction>
 		<instruction type="template">template.tar</instruction>
-		<instruction type="sql">install.sql</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="pagemenu">pagemenu.xml</instruction>
