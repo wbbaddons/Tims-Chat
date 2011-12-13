@@ -175,7 +175,7 @@
 	</hgroup>
 </header>
 
-<div class="tabMenuContainer" data-active="chatBox" data-store="activeTabMenuItem">
+<div class="tabMenuContainer">
 	<nav class="tabMenu">
 		<ul>
 			<li class="ui-state-active"><a href="{link controller="Chat"}{/link}" title="{lang}wcf.chat.title{/lang}">{lang}wcf.chat.title{/lang}</a></li>
@@ -183,32 +183,30 @@
 		</ul>
 	</nav>
 	
-	<section id="chatBox" class="border tabMenuContent hidden" data-menu-item="chatBox">
+	<section id="chatBox" class="border tabMenuContent hidden">
 		<div>
 			<aside id="chatRoomList" class="chatSidebar left">
-				<div>
-					<h2>{lang}wcf.chat.rooms{/lang}</h2>
-					<ul>
-					{foreach from=$rooms item='roomListRoom'}
-						<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
-							<a id="room-{$roomListRoom->roomID}" href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom->getTitle()}</a>
-						</li>
-					{/foreach}
-					</ul>
-				</div>
+				<h2>{lang}wcf.chat.rooms{/lang}</h2>
+				<ul>
+				{foreach from=$rooms item='roomListRoom'}
+					<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
+						<a href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom}</a>
+					</li>
+				{/foreach}
+				</ul>
 			</aside>
 			<aside id="chatUserList" class="chatSidebar right">
 				<h2>{lang}wcf.chat.users{/lang}</h2>
 				<ul>
 				{section name=user start=1 loop=11}
 					<li id="user-{$user}" class="chatUser">
-						<span class="bgFix"><a class="chatUserLink" href="javascript:void(0)">User {$user}</a></span>
+						<span class="bgFix"><a class="chatUserLink" href="javascript:;">User {$user}</a></span>
 						<ul class="chatUserMenu">
 							<li>
-								<a href="javascript:void(0)">Query</a>
-								<a href="javascript:void(0)">Kick</a>
-								<a href="javascript:void(0)">Ban</a>
-								<a href="{link controller="User" id=$user}{/link}">Profil</a>
+								<a href="javascript:;">Query</a>
+								<a href="javascript:;">Kick</a>
+								<a href="javascript:;">Ban</a>
+								<a href="{link controller="User" id=$user}{/link}">Profile</a>
 							</li>
 						</ul>
 					</li>
@@ -216,7 +214,7 @@
 				</ul>
 			</aside>
 			<div id="chatRoomContent">
-				<div id="topic" class="border">Dieser Raum ist zum Testen da.</div>
+				<div id="topic" class="border">{$room->topic|language}</div>
 				<div class="chatMessageContainer border content">
 					<ul></ul>
 				</div>
@@ -240,23 +238,23 @@
 						<div class="smallButtons">
 							<ul>
 								<li>
-									<a id="chatAutoscrollButton" href="javascript: void(0);">
-										<img alt="" src="{icon}enabled1{/icon}"> <span>Scrollen</span>
+									<a id="chatAutoscrollButton" href="javascript:;">
+										<img alt="" src="{icon}enabled1{/icon}" /> <span>Scroll</span>
 									</a>
 								</li>
 								<li>
-									<a href="javascript: void(0);">
-										<img alt="" src="{icon}disabled1{/icon}"> <span>Benachrichtigen</span>
+									<a href="javascript:;">
+										<img alt="" src="{icon}disabled1{/icon}" /> <span>Notify</span>
 									</a>
 								</li>
 								<li>
-									<a href="javascript: void(0)">
-										<img alt="" src="{icon}delete1{/icon}"> <span>Chat leeren</span>
+									<a href="javascript:;">
+										<img alt="" src="{icon}delete1{/icon}" /> <span>Clear</span>
 									</a>
 								</li>
 								<li>
-									<a href="javascript: void(0)">
-										<img alt="" src="{icon}check1{/icon}"> <span>Markieren</span>
+									<a href="javascript:;">
+										<img alt="" src="{icon}check1{/icon}" /> <span>Mark</span>
 									</a>
 								</li>											
 							</ul>
