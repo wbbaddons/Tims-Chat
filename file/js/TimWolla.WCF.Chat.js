@@ -54,25 +54,24 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			}, this));
 			
 			$('#chatForm').submit($.proxy(function (event) {
-				// check the input, if not empty send it.
+				// break if input contains only whitespace
 				if ($('#chatInput').val().trim().length === 0) return false;
 				
 				event.preventDefault();
-				textInput = $(event.target).find('#chatInput');
 				submitButton = $(event.target).find('input[type=image]');
 				
 				$.ajax('index.php/Chat/Send/', {
 					dataType: 'json',
-					data: { ajax: 1,
-							text: textInput.val()
-						  },
+					data: {
+						text: $('#chatInput').val()
+					},
 					type: 'POST',
 					beforeSend: $.proxy(function (jqXHR) {
 						submitButton.attr('src', WCF.Icon.get('wcf.icon.loading'));
 					}),
 					success: $.proxy(function (data, textStatus, jqXHR) {
 						this.getMessages();
-						textInput.val('').focus();
+						$('#chatInput').val('').focus();
 					}, this),
 					error: function() {
 						// TODO: find a nicer solution.
