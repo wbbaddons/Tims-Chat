@@ -16,14 +16,18 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		messageTemplate: null,
 		init: function(roomID, messageID) {
 			this.bindEvents();
-			$('#chatBox').css('background-color', $('div.main').css('background-color'));
+			//calculate the width for the chatRoomContent, 'cause the styles width isn't fixed.
 			$('#chatRoomContent').width($('#chatBox').width() - 400);
+			//add toRight1.svg to WCF.Icon-storage
+			WCF.Icon.add('wcf.icon.toRight1', $('#chatForm .inputImage').attr('src'));
+			$('#chatInput').focus();
 		},
 		bindEvents: function () {
 			$('.smiley').click($.proxy(function (event) {
 				this.insertText($(event.target).attr('alt'));
 			}, this));
 
+			//recalculate the width of chatRoomContent on resize
 			var chatRoomContent = $('#chatRoomContent');
 			var chatBox = $('#chatBox');
 			$(window).resize(function() {
@@ -45,9 +49,36 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				event.preventDefault();
 				this.toggleUserMenu($(event.target));
 			}, this));
+			
 			$('#chatForm').submit($.proxy(function (event) {
+				//check the input, if not empty send it.
+				if ($('#chatInput').val().trim().length === 0) return false;
+				
 				event.preventDefault();
-				$(event.target).find('input[type=image]').attr('src', WCF.Icon.get('wcf.icon.loading'));
+				textInput = $(event.target).find('#chatInput');
+				submitButton = $(event.target).find('input[type=image]');
+				
+				$.ajax('index.php/Chat/Send/', {
+					dataType: 'json',
+					data: { ajax: 1,
+							text: textInput.val()
+						  },
+					type: 'POST',
+					beforeSend: $.proxy(function (jqXHR) {
+						submitButton.attr('src', WCF.Icon.get('wcf.icon.loading'));
+					}),
+					success: $.proxy(function (data, textStatus, jqXHR) {
+						this.getMessages();
+						textInput.val('').focus();
+					}, this),
+					error: function() {
+						// TODO: find a nicer solution.
+						alert('Error while sending message');
+					},
+					complete: function() {
+						submitButton.attr('src', WCF.Icon.get('wcf.icon.toRight1'));
+					}
+				});
 			}, this));
 		},
 		changeRoom: function (target) {
@@ -99,6 +130,9 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					target.parent().addClass('ajaxLoad');
 				}, this)
 			});
+		},
+		getMessages: function (id) {
+		
 		},
 		handleMessages: function (messages) {
 			for (message in messages) {
