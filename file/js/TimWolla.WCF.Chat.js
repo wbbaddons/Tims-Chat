@@ -54,33 +54,8 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			}, this));
 			
 			$('#chatForm').submit($.proxy(function (event) {
-				// break if input contains only whitespace
-				if ($('#chatInput').val().trim().length === 0) return false;
-				
 				event.preventDefault();
-				submitButton = $(event.target).find('input[type=image]');
-				
-				$.ajax('index.php/Chat/Send/', {
-					dataType: 'json',
-					data: {
-						text: $('#chatInput').val()
-					},
-					type: 'POST',
-					beforeSend: $.proxy(function (jqXHR) {
-						submitButton.attr('src', WCF.Icon.get('wcf.icon.loading'));
-					}),
-					success: $.proxy(function (data, textStatus, jqXHR) {
-						this.getMessages();
-						$('#chatInput').val('').focus();
-					}, this),
-					error: function() {
-						// TODO: find a nicer solution.
-						alert('Error while sending message');
-					},
-					complete: function() {
-						submitButton.attr('src', WCF.Icon.get('wcf.icon.toRight1'));
-					}
-				});
+				this.submit($(event.target));
 			}, this));
 		},
 		/**
@@ -180,6 +155,30 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			if (options.submit) $('#chatForm').submit();
 			else $('#chatInput').focus();
 		},
+		submit: function (target) {
+			// break if input contains only whitespace
+			if ($('#chatInput').val().trim().length === 0) return false;
+			
+			submitButton = target.find('input[type=image]');
+			
+			$.ajax($('#chatForm').attr('action'), {
+				dataType: 'json',
+				data: {
+					text: $('#chatInput').val()
+				},
+				type: 'POST',
+				beforeSend: $.proxy(function (jqXHR) {
+					submitButton.attr('src', WCF.Icon.get('wcf.icon.loading'));
+				}),
+				success: $.proxy(function (data, textStatus, jqXHR) {
+					this.getMessages();
+					$('#chatInput').val('').focus();
+				}, this),
+				complete: function() {
+					submitButton.attr('src', WCF.Icon.get('wcf.icon.toRight1'));
+				}
+			});
+		}
 		toggleUserMenu: function (target) {
 			liUserID = '#' + target.parent().parent().attr('id');
 			if ($(liUserID).hasClass('activeMenuItem')) {
