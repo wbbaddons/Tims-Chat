@@ -162,7 +162,6 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			submitButton = target.find('input[type=image]');
 			
 			$.ajax($('#chatForm').attr('action'), {
-				dataType: 'json',
 				data: {
 					text: $('#chatInput').val()
 				},
