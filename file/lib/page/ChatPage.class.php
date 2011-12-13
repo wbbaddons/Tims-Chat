@@ -148,6 +148,7 @@ class ChatPage extends AbstractPage {
 	 * Reads user data.
 	 */
 	public function readUserData() {
+		// TODO: Move this into ChatUtil
 		$ush = UserStorageHandler::getInstance();
 		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
 		
@@ -166,6 +167,8 @@ class ChatPage extends AbstractPage {
 		}
 		
 		$this->userData['color'] = $data[WCF::getUser()->userID];
+		
+		$ush->update(WCF::getUser()->userID, 'roomID', $this->room->roomID, $packageID);
 	}
 	
 	/**
