@@ -30,7 +30,7 @@ class ChatUtil {
 	 * @returen	string
 	 */
 	public static function gradient($string, $start, $end) {
-		$string = str_split($string);
+		$string = self::str_split($string);
 		$r = (int) ((($start >> 16 & 255) - ($end >> 16 & 255)) / (count($string) - 1));
 		$g = (int) ((($start >> 8 & 255) - ($end >> 8 & 255)) / (count($string) - 1));
 		$b = (int) ((($start & 255) - ($end & 255)) / (count($string) - 1));
@@ -40,6 +40,22 @@ class ChatUtil {
 			$result .= '<span style="color:rgb('.(($start >> 16 & 255) - $i * $r).','.(($start >> 8 & 255) - $i * $g).','.(($start & 255) - $i * $b).')">'.$string[$i].'</span>'; 
 		}
 		
+		return $result;
+	}
+	
+	/**
+	 * Splits a string into smaller chunks.
+	 * UTF-8 safe version of str_split().
+	 *
+	 * @param	string		$string
+	 * @param	integer		$length
+	 * @return	array<string>
+	 */
+	public static function str_split($string, $length = 1) {
+		$result = array();
+		for ($i = 0, $max = StringUtil::length($string); $i < $max; $i += $length) {
+			$result[] = StringUtil::substring($string, $i, $length);
+		}
 		return $result;
 	}
 	
