@@ -88,7 +88,7 @@
 		}	
 		
 		.chatMessageContainer {
-			min-height: 200px;
+			height: 200px;
 			overflow-y: scroll;
 		}
 		
