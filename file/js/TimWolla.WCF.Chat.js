@@ -16,9 +16,9 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		messageTemplate: null,
 		init: function(roomID, messageID) {
 			this.bindEvents();
-			//calculate the width for the chatRoomContent, 'cause the styles width isn't fixed.
+			// calculate the width for the chatRoomContent, 'cause the styles width isn't fixed.
 			$('#chatRoomContent').width($('#chatBox').width() - 400);
-			//add toRight1.svg to WCF.Icon-storage
+			// add toRight1.svg to WCF.Icon-storage
 			WCF.Icon.add('wcf.icon.toRight1', $('#chatForm .inputImage').attr('src'));
 			$('#chatInput').focus();
 		},
@@ -27,7 +27,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				this.insertText($(event.target).attr('alt'));
 			}, this));
 
-			//recalculate the width of chatRoomContent on resize
+			// recalculate the width of chatRoomContent on resize
 			var chatRoomContent = $('#chatRoomContent');
 			var chatBox = $('#chatBox');
 			$(window).resize(function() {
@@ -51,7 +51,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			}, this));
 			
 			$('#chatForm').submit($.proxy(function (event) {
-				//check the input, if not empty send it.
+				// check the input, if not empty send it.
 				if ($('#chatInput').val().trim().length === 0) return false;
 				
 				event.preventDefault();
