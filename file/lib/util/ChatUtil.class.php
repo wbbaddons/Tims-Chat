@@ -31,6 +31,8 @@ class ChatUtil {
 	 */
 	public static function gradient($string, $start, $end) {
 		$string = self::str_split($string);
+		if (count($string) === 0) return '';
+		
 		$r = (int) ((($start >> 16 & 255) - ($end >> 16 & 255)) / (count($string) - 1));
 		$g = (int) ((($start >> 8 & 255) - ($end >> 8 & 255)) / (count($string) - 1));
 		$b = (int) ((($start & 255) - ($end & 255)) / (count($string) - 1));
