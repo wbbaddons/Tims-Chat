@@ -17,7 +17,7 @@ class ChatUtil {
 	 * 
 	 * @see	\wcf\util\ChatUtil::timeModifier()
 	 */
-	const TIME_MODIFIER_REGEX = '((?:[0-9]+[h|d|w|m|y|H|D|W|M|Y]?,?)+)';
+	const TIME_MODIFIER_REGEX = '((?:[0-9]+[s|h|d|w|m|y|S|H|D|W|M|Y]?,?)+)';
 	
 	/**
 	 * Creates a gradient out of two colors represented by an integer.
