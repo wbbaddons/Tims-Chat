@@ -8,6 +8,7 @@
 	<style type="text/css">
 		#chatBox {
 			padding: 0;
+			background-color: #D8E7F5;
 		}
 		
 		#chatBox > div {
