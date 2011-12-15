@@ -13,5 +13,11 @@
 			<eventname>copyright</eventname>
 			<templatecode><![CDATA[{include file='chatCopyright'}]]></templatecode>
 		</templatelistener>
+		<templatelistener name="chatHeaderNavigation">
+			<environment>user</environment>
+			<templatename>header</templatename>
+			<eventname>headerNavigation</eventname>
+			<templatecode><![CDATA[{include file='chatNavigationInclude'}]]></templatecode>
+		</templatelistener>
 	</import>
 </data>

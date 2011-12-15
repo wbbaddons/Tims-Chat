@@ -141,8 +141,6 @@
 <body id="tpl{$templateName|ucfirst}">
 {capture assign='sidebar'}<aside class="sidebar">
 	<div id="sidebar">
-		<button title="{lang}wcf.chat.title{/lang}" value="{link controller="Chat"}{/link}">{lang}wcf.chat.title{/lang}</button>
-		<button title="{lang}wcf.chat.protocol{/lang}" value="{link controller="Chat" action="Log"}{/link}">{lang}wcf.chat.protocol{/lang}</button>
 		<h2>{lang}wcf.chat.users{/lang}</h2>
 			<ul id="chatUserList">
 			{section name=user start=1 loop=11}
