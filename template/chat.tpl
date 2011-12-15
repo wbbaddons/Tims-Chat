@@ -24,13 +24,6 @@
 			width: 190px;
 		}
 		
-		#chatRoomContent:after {
-			clear: both;
-			height: 0;
-			content: "";
-			display: block;
-		}		
-		
 		aside h2 {
 			margin: auto;
 			text-align: center;
@@ -67,7 +60,15 @@
 			margin-top: 15px;
 			white-space: nowrap;
 			margin-top: 10px;
+			/* Fix to align chatInput in center */
+			text-align: center;
 		}
+		
+		#chatInput {
+			background-position: right center;
+			background-repeat: no-repeat;
+		}
+		
 		#chatOptions {
 			display: inline-block;
 		}
@@ -138,88 +139,45 @@
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
-<a id="top"></a>
-<!-- HEADER -->
-<header id="pageHeader" class="pageHeader">
-	<div>
-		{hascontent}
-			<!-- top menu -->
-			<nav id="topMenu" class="topMenu">
-				<div>
-					<ul>
-						{content}{event name='topMenu'}{/content}
+{capture assign='sidebar'}{/capture}
+{capture assign='header'}{include file='header' sandbox=false}{/capture}
+{assign var='header' value='class="main"'|str_replace:'class="main right"':$header}
+{assign var='header' value='<!-- CONTENT -->'|str_replace:$sidebar:$header}
+{assign var='header' value='<section id="content" class="content">'|str_replace:$sidebar:$header}
+{@$header}
+<aside class="sidebar">
+	<div id="sidebar">
+		<button title="{lang}wcf.chat.title{/lang}" value="{link controller="Chat"}{/link}">{lang}wcf.chat.title{/lang}</button>
+		<button title="{lang}wcf.chat.protocol{/lang}" value="{link controller="Chat" action="Log"}{/link}">{lang}wcf.chat.protocol{/lang}</button>
+		<h2>{lang}wcf.chat.users{/lang}</h2>
+			<ul id="chatUserList">
+			{section name=user start=1 loop=11}
+				<li id="user-{$user}" class="chatUser">
+					<span class="bgFix"><a class="chatUserLink" href="javascript:;">User {$user}</a></span>
+					<ul class="chatUserMenu">
+						<li>
+							<a href="javascript:;">Query</a>
+							<a href="javascript:;">Kick</a>
+							<a href="javascript:;">Ban</a>
+							<a href="{link controller="User" id=$user}{/link}">Profile</a>
+						</li>
 					</ul>
-				</div>
-			</nav>
-			<!-- /top menu -->
-		{/hascontent}
-		
-		<!-- logo -->
-		<div id="logo" class="logo">
-			<!-- clickable area -->
-			<a href="{link controller='Index'}{/link}">
-				<!-- *** insert header logo here -->
-			</a>
-			<!-- /clickable area -->
-			
-			<!-- search area -->
-			{event name='searchArea'}
-			<!-- /search area -->
-		</div>
-		<!-- /logo -->
-		
-		<!-- main menu -->
-		{include file='mainMenu'}
-		<!-- /main menu -->
-		
-		<!-- header navigation -->
-		<nav class="headerNavigation">
+				</li>
+			{/section}
+			</ul>
+		<h2>{lang}wcf.chat.rooms{/lang}</h2>
+		<nav class="sidebarMenu">
 			<div>
 				<ul>
-					<li id="toBottomLink" class="toBottomLink"><a href="#bottom" title="{lang}wcf.global.scrollDown{/lang}" class="balloonTooltip"><img src="{icon size='S'}toBottom{/icon}" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
-					{event name='headerNavigation'}
+				{foreach from=$rooms item='roomListRoom'}
+					<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
+						<a href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom}</a>
+					</li>
+				{/foreach}
 				</ul>
 			</div>
 		</nav>
-		<!-- /header navigation -->
 	</div>
-</header>
-<!-- /HEADER -->
-
-<!-- MAIN -->
-<div id="main" class="main right">
-	<div>
-<aside class="sidebar">
-	<button title="{lang}wcf.chat.title{/lang}" value="{link controller="Chat"}{/link}">{lang}wcf.chat.title{/lang}</button>
-	<button title="{lang}wcf.chat.protocol{/lang}" value="{link controller="Chat" action="Log"}{/link}">{lang}wcf.chat.protocol{/lang}</button>
-	<h2>{lang}wcf.chat.users{/lang}</h2>
-		<ul id="chatUserList">
-		{section name=user start=1 loop=11}
-			<li id="user-{$user}" class="chatUser">
-				<span class="bgFix"><a class="chatUserLink" href="javascript:;">User {$user}</a></span>
-				<ul class="chatUserMenu">
-					<li>
-						<a href="javascript:;">Query</a>
-						<a href="javascript:;">Kick</a>
-						<a href="javascript:;">Ban</a>
-						<a href="{link controller="User" id=$user}{/link}">Profile</a>
-					</li>
-				</ul>
-			</li>
-		{/section}
-		</ul>
-	<h2>{lang}wcf.chat.rooms{/lang}</h2>
-	<nav class="sidebarMenu">
-		<div>
-			<ul>
-			{foreach from=$rooms item='roomListRoom'}
-				<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
-					<a href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom}</a>
-				</li>
-			{/foreach}
-			</ul>
-		</div>
-	</nav>
 </aside>
 <!-- CONTENT -->
 <section id="content" class="content">
