@@ -57,6 +57,10 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				event.preventDefault();
 				this.submit($(event.target));
 			}, this));
+			
+			$('button').click(function (event) {
+				window.location.href = $(event.target).attr('value');
+			});
 		},
 		/**
 		 * Changes the chat-room.
