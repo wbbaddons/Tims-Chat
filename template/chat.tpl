@@ -201,22 +201,22 @@
 			<div class="smallButtons">
 				<ul>
 					<li>
-						<a id="chatAutoscrollButton" href="javascript:;">
+						<a class="chatToggle" data-status="1" href="javascript:;">
 							<img alt="" src="{icon}enabled1{/icon}" /> <span>Scroll</span>
 						</a>
 					</li>
 					<li>
-						<a href="javascript:;">
+						<a class="chatToggle" data-status="0" href="javascript:;">
 							<img alt="" src="{icon}disabled1{/icon}" /> <span>Notify</span>
 						</a>
 					</li>
 					<li>
-						<a href="javascript:;">
+						<a id="chatClear" href="javascript:;">
 							<img alt="" src="{icon}delete1{/icon}" /> <span>Clear</span>
 						</a>
 					</li>
 					<li>
-						<a href="javascript:;">
+						<a id="chatMark" href="javascript:;">
 							<img alt="" src="{icon}check1{/icon}" /> <span>Mark</span>
 						</a>
 					</li>											

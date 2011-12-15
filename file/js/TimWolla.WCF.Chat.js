@@ -27,7 +27,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		 */
 		bindEvents: function () {
 			$('.smiley').click($.proxy(function (event) {
-				this.insertText($(event.target).attr('alt'));
+				this.insertText(' '+$(event.target).attr('alt')+' ');
 			}, this));
 
 			// recalculate the width of chatRoomContent on resize
@@ -58,8 +58,10 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				this.submit($(event.target));
 			}, this));
 			
-			$('button').click(function (event) {
-				window.location.href = $(event.target).attr('value');
+			$('#chatClear').click(function () {
+				event.preventDefault();
+				$('.chatMessage').remove();
+				$('#chatInput').focus();
 			});
 		},
 		/**
