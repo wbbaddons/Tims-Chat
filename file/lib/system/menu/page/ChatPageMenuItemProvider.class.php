@@ -38,7 +38,8 @@ class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
 	 * @see \wcf\system\menu\page\PageMenuItemProvider::getLink()
 	 */
 	public function getLink() {
-		\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
+		if (!$this->isVisible()) return parent::getLink();
+		return \wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
 			'object' => ChatRoom::getCache()->search(ChatRoom::getCache()->key())
 		)));
 	}
