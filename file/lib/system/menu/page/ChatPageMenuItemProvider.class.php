@@ -24,7 +24,9 @@ class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
 		if (!\wcf\system\WCF::getUser()->userID) return false;
 		
 		try {
-			ChatRoom::getCache()->seek(0);
+			$cache = ChatRoom::getCache();
+			$cache->seek(0);
+			$this->room = $cache->search($cache->key());
 			return true;
 		}
 		catch (\OutOfBoundsException $e) {
@@ -38,9 +40,8 @@ class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
 	 * @see \wcf\system\menu\page\PageMenuItemProvider::getLink()
 	 */
 	public function getLink() {
-		if (!$this->isVisible()) return parent::getLink();
-		return \wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
-			'object' => ChatRoom::getCache()->search(ChatRoom::getCache()->key())
-		)));
+		return \wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
+			'object' => $this->room
+		));
 	}
 }
