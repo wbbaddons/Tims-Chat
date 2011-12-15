@@ -139,13 +139,7 @@
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
-{capture assign='sidebar'}{/capture}
-{capture assign='header'}{include file='header' sandbox=false}{/capture}
-{assign var='header' value='class="main"'|str_replace:'class="main right"':$header}
-{assign var='header' value='<!-- CONTENT -->'|str_replace:$sidebar:$header}
-{assign var='header' value='<section id="content" class="content">'|str_replace:$sidebar:$header}
-{@$header}
-<aside class="sidebar">
+{capture assign='sidebar'}<aside class="sidebar">
 	<div id="sidebar">
 		<button title="{lang}wcf.chat.title{/lang}" value="{link controller="Chat"}{/link}">{lang}wcf.chat.title{/lang}</button>
 		<button title="{lang}wcf.chat.protocol{/lang}" value="{link controller="Chat" action="Log"}{/link}">{lang}wcf.chat.protocol{/lang}</button>
@@ -179,10 +173,12 @@
 		</nav>
 	</div>
 </aside>
-<!-- CONTENT -->
-<section id="content" class="content">
-			
-{include file='breadcrumbs' sandbox=false}
+<!-- CONTENT -->{/capture}
+{capture assign='header'}{include file='header' sandbox=false}{/capture}
+{assign var='header' value='class="main"'|str_replace:'class="main right"':$header}
+{assign var='header' value='<!-- CONTENT -->'|str_replace:$sidebar:$header}
+{@$header}
+
 <div id="chatRoomContent">
 	<div id="topic" class="border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
 	<div class="chatMessageContainer border content">
