@@ -201,22 +201,22 @@
 			<div class="smallButtons">
 				<ul>
 					<li>
-						<a class="chatToggle" data-status="1" href="javascript:;">
+						<a id="chatAutoscroll" href="javascript:;" class="chatToggle balloonTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
 							<img alt="" src="{icon}enabled1{/icon}" /> <span>Scroll</span>
 						</a>
 					</li>
 					<li>
-						<a class="chatToggle" data-status="0" href="javascript:;">
+						<a id="chatNotify" href="javascript:;" class="chatToggle balloonTooltip" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
 							<img alt="" src="{icon}disabled1{/icon}" /> <span>Notify</span>
 						</a>
 					</li>
 					<li>
-						<a id="chatClear" href="javascript:;">
+						<a id="chatClear" href="javascript:;" class="balloonTooltip" title="Clear the chat">
 							<img alt="" src="{icon}delete1{/icon}" /> <span>Clear</span>
 						</a>
 					</li>
 					<li>
-						<a id="chatMark" href="javascript:;">
+						<a id="chatMark" href="javascript:;" class="balloonTooltip" title="Show checkboxes">
 							<img alt="" src="{icon}check1{/icon}" /> <span>Mark</span>
 						</a>
 					</li>											

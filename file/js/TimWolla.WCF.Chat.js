@@ -58,10 +58,25 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				this.submit($(event.target));
 			}, this));
 			
-			$('#chatClear').click(function () {
+			$('#chatClear').click(function (event) {
 				event.preventDefault();
 				$('.chatMessage').remove();
 				$('#chatInput').focus();
+			});
+			
+			$('.chatToggle').click(function (event) {
+				var element = $(event.target).parent();
+				var icon = $('img', element);
+				if (element.data('status') == '1') {
+					element.data('status', 0);
+					icon.attr('src', icon.attr('src').replace(/enabled(\d?).([a-z]{3})$/, 'disabled$1.$2'));
+					element.attr('title', element.data('enableMessage'));
+				}
+				else {
+					element.data('status', 1);
+					icon.attr('src', icon.attr('src').replace(/disabled(\d?).([a-z]{3})$/, 'enabled$1.$2'));
+					element.attr('title', element.data('disableMessage'));
+				}
 			});
 		},
 		/**
