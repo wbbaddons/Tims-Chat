@@ -64,11 +64,6 @@
 			text-align: center;
 		}
 		
-		#chatInput {
-			background-position: right center;
-			background-repeat: no-repeat;
-		}
-		
 		#chatOptions {
 			display: inline-block;
 		}

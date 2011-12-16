@@ -188,14 +188,14 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				},
 				type: 'POST',
 				beforeSend: $.proxy(function (jqXHR) {
-					submitButton.attr('src', WCF.Icon.get('wcf.icon.loading'));
+					submitButton.addClass('ajaxLoad');
 				}),
 				success: $.proxy(function (data, textStatus, jqXHR) {
 					this.getMessages();
 					$('#chatInput').val('').focus();
 				}, this),
 				complete: function() {
-					submitButton.attr('src', WCF.Icon.get('wcf.icon.toRight1'));
+					submitButton.removeClass('ajaxLoad');
 				}
 			});
 		},
