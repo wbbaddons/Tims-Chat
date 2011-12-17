@@ -75,6 +75,8 @@
 		#chatInput {
 			background-position: right center;
 			background-repeat: no-repeat;
+			position: relative;
+    		z-index: 10;
 		}
 		
 		#chatOptions {
@@ -187,6 +189,27 @@
 		.hidden {
 			display: none;
 		}
+		
+		.textCounter {
+			background: none repeat scroll 0 0 red;
+		    margin-left: -5px;
+		    padding: 5px;
+		    position: relative;
+		    z-index: 0 !important;
+		    border-radius: 0px 5px 5px 0px;
+		    background-color: rgba(0, 0, 0, 0.7);
+    		border: 1px solid rgba(255, 255, 255, 0.3);
+		}
+		
+		.textCounter.color-1 {
+			color: #FFFFFF;
+		}
+		.textCounter.color-2 {
+			color: #AF0002;
+		}
+		.textCounter.color-3 {
+			color: #D40D12;
+		}
 	</style>
 </head>
 
@@ -243,7 +266,8 @@
 	</div>
 	
 	<form id="chatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<input type="text" id="chatInput" class="inputText long" name="text" autocomplete="off" required="required" placeholder="Submit with enter" />
+		<input type="text" id="chatInput" class="inputText long" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
+		<span class="textCounter color-1">{CHAT_LENGTH}</span>
 	</form>
 	
 	<div id="chatControls">
@@ -261,22 +285,22 @@
 				<ul>
 					<li>
 						<a id="chatAutoscroll" href="javascript:;" class="chatToggle balloonTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
-							<img alt="" src="{icon}enabled1{/icon}" /> <span>Scroll</span>
+							<img alt="" src="{icon}enabled1{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
 						</a>
 					</li>
 					<li>
 						<a id="chatNotify" href="javascript:;" class="chatToggle balloonTooltip" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
-							<img alt="" src="{icon}disabled1{/icon}" /> <span>Notify</span>
+							<img alt="" src="{icon}disabled1{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
 						</a>
 					</li>
 					<li>
 						<a id="chatClear" href="javascript:;" class="balloonTooltip" title="Clear the chat">
-							<img alt="" src="{icon}delete1{/icon}" /> <span>Clear</span>
+							<img alt="" src="{icon}delete1{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
 						</a>
 					</li>
 					<li>
 						<a id="chatMark" href="javascript:;" class="balloonTooltip" title="Show checkboxes">
-							<img alt="" src="{icon}check1{/icon}" /> <span>Mark</span>
+							<img alt="" src="{icon}check1{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
 						</a>
 					</li>											
 				</ul>
@@ -296,6 +320,14 @@
 				{@$message->jsonify()}
 			{/implode}
 		]);
+
+		TimWolla.WCF.Chat.config = { 
+					reloadTime: {CHAT_RELOADTIME},
+					animations: {CHAT_ANIMATIONS},
+					maxTextLength: {CHAT_LENGTH}
+		}
+
+		$('#chatInput').jCounter('.textCounter', {CHAT_LENGTH});
 	//]]>
 </script>
 
