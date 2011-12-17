@@ -41,6 +41,11 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				// return false;
 			// });
 			
+			$('.chatSidebarTabs li').click($.proxy(function (event) {
+				event.preventDefault();
+				this.toggleSidebarContent($(event.target));
+			}, this));
+			
 			$('.chatRoom').click($.proxy(function (event) {
 				if (typeof window.history.replaceState != 'undefined') {
 					event.preventDefault();
@@ -209,6 +214,24 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			else {
 				$(liUserID).addClass('activeMenuItem');
 				$(liUserID + ' .chatUserMenu').wcfBlindIn();
+			}
+		},
+		toggleSidebarContent: function (target) {
+			if (target.parent().hasClass('active')) return;
+
+			if (target.parent().attr('id') == "toggleUsers") {
+				$('#toggleUsers').addClass('active');
+				$('#toggleRooms').removeClass('active');
+				
+				$('#chatRoomList').hide();
+				$('#chatUserList').show();
+			} 
+			else if (target.parent().attr('id') == "toggleRooms") {
+				$('#toggleRooms').addClass('active');
+				$('#toggleUsers').removeClass('active');
+				
+				$('#chatUserList').hide();
+				$('#chatRoomList').show();
 			}
 		}
 	};
