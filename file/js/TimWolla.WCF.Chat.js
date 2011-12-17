@@ -16,10 +16,6 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		messageTemplate: null,
 		init: function(roomID, messageID) {
 			this.bindEvents();
-			// calculate the width for the chatRoomContent, 'cause the styles width isn't fixed.
-			$('#chatRoomContent').width($('#chatBox').width() - 400);
-			// add toRight1.svg to WCF.Icon-storage
-			WCF.Icon.add('wcf.icon.toRight1', $('#chatForm .inputImage').attr('src'));
 			$('#chatInput').focus();
 		},
 		/**
@@ -29,13 +25,6 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			$('.smiley').click($.proxy(function (event) {
 				this.insertText(' '+$(event.target).attr('alt')+' ');
 			}, this));
-
-			// recalculate the width of chatRoomContent on resize
-			var chatRoomContent = $('#chatRoomContent');
-			var chatBox = $('#chatBox');
-			$(window).resize(function() {
-				chatRoomContent.width(chatBox.width() - 400);
-			});
 			
 			// $(window).bind('beforeunload', function() {
 				// return false;
@@ -134,12 +123,11 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					if (this.loading || target.parent().hasClass('activeMenuItem')) return false;
 					
 					this.loading = true;
-
 					target.parent().addClass('ajaxLoad');
 				}, this)
 			});
 		},
-		getMessages: function (id) {
+		getMessages: function () {
 		
 		},
 		/**
@@ -159,7 +147,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				
 				$('.chatMessageContainer ul').append(li);
 			}
-			$('.chatMessageContainer').animate({scrollTop: $('.chatMessageContainer ul').height()}, 10000);
+			$('.chatMessageContainer').animate({ scrollTop: $('.chatMessageContainer ul').height() }, 10000);
 		},
 		/**
 		 * Inserts text into the chat-input.
