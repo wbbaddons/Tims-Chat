@@ -39,7 +39,7 @@ class ChatUtil {
 		
 		$result = '';
 		for ($i = 0, $max = count($string); $i < $max; $i++) {
-			$result .= '<span style="color:rgb('.(($start >> 16 & 255) - $i * $r).','.(($start >> 8 & 255) - $i * $g).','.(($start & 255) - $i * $b).')">'.$string[$i].'</span>'; 
+			$result .= '<span style="color:rgb('.(($start >> 16 & 255) - $i * $r).','.(($start >> 8 & 255) - $i * $g).','.(($start & 255) - $i * $b).')">'.StringUtil::encodeHTML($string[$i]).'</span>'; 
 		}
 		
 		return $result;
