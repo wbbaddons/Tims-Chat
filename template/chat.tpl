@@ -228,40 +228,42 @@
 
 <body id="tpl{$templateName|ucfirst}">
 {capture assign='sidebar'}
-<nav class="chatSidebarTabs">
-	<ul>
-		<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang}</a></li>
-		<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang}</a></li>
-	</ul>
-</nav>
-
-<div id="sidebarContainer">
-	<ul id="chatUserList">
-	{section name=user start=1 loop=26}
-		<li id="user-{$user}" class="chatUser">
-			<span class="bgFix"><a class="chatUserLink" href="javascript:;">User {$user}</a></span>
-			<ul class="chatUserMenu">
-				<li>
-					<a href="javascript:;">Query</a>
-					<a href="javascript:;">Kick</a>
-					<a href="javascript:;">Ban</a>
-					<a href="{link controller="User" id=$user}{/link}">Profile</a>
-				</li>
-			</ul>
-		</li>
-	{/section}
-	</ul>
-	<nav id="chatRoomList" class="sidebarMenu hidden">
-		<div>
-			<ul>
-			{foreach from=$rooms item='roomListRoom'}
-				<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
-					<a href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom}</a>
-				</li>
-			{/foreach}
-			</ul>
-		</div>
+<div id="sidebar">
+	<nav class="chatSidebarTabs">
+		<ul>
+			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang}</a></li>
+			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang}</a></li>
+		</ul>
 	</nav>
+	
+	<div id="sidebarContainer">
+		<ul id="chatUserList">
+		{section name=user start=1 loop=26}
+			<li id="user-{$user}" class="chatUser">
+				<span class="bgFix"><a class="chatUserLink" href="javascript:;">User {$user}</a></span>
+				<ul class="chatUserMenu">
+					<li>
+						<a href="javascript:;">Query</a>
+						<a href="javascript:;">Kick</a>
+						<a href="javascript:;">Ban</a>
+						<a href="{link controller="User" id=$user}{/link}">Profile</a>
+					</li>
+				</ul>
+			</li>
+		{/section}
+		</ul>
+		<nav id="chatRoomList" class="sidebarMenu hidden">
+			<div>
+				<ul>
+				{foreach from=$rooms item='roomListRoom'}
+					<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
+						<a href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom}</a>
+					</li>
+				{/foreach}
+				</ul>
+			</div>
+		</nav>
+	</div>
 </div>
 {/capture}
 {include file='header' sandbox=false sidebarDirection='left'}
@@ -337,7 +339,7 @@
 		}
 
 		$('#chatInput').jCounter($('#chatInput').attr('maxlength'), { container: '.counter' });
-		$('.sidebar').wcfSidebar();
+		$('#sidebar').wcfSidebar();
 	//]]>
 </script>
 
