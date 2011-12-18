@@ -17,7 +17,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		init: function(roomID, messageID) {
 			this.bindEvents();
 			this.refreshRoomList();
-			new WCF.PeriodicalExecuter(this.refreshRoomList, 10e3);
+			new WCF.PeriodicalExecuter($.proxy(this.refreshRoomList, this), 10e3);
 			
 			$('#chatInput').focus();
 		},
