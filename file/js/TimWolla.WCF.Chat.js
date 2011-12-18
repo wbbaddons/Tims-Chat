@@ -16,6 +16,8 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		messageTemplate: null,
 		init: function(roomID, messageID) {
 			this.bindEvents();
+			this.refreshRoomList();
+			new WCF.PeriodicalExecuter(this.refreshRoomList, 10e3);
 			
 			$('#chatInput').focus();
 		},
@@ -34,13 +36,6 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			$('.chatSidebarTabs li').click($.proxy(function (event) {
 				event.preventDefault();
 				this.toggleSidebarContent($(event.target));
-			}, this));
-			
-			$('.chatRoom').click($.proxy(function (event) {
-				if (typeof window.history.replaceState != 'undefined') {
-					event.preventDefault();
-					this.changeRoom($(event.target));
-				}
 			}, this));
 			
 			$('.chatUser .chatUserLink').click($.proxy(function (event) {
@@ -173,7 +168,28 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		},
 		refreshRoomList: function() {
 			$('.chatRoom').unbind('click');
+			$('#toggleRooms a').addClass('ajaxLoad');
 			
+			$.ajax($('#toggleRooms a').data('refreshUrl'), {
+				dataType: 'json',
+				type: 'POST',
+				success: $.proxy(function (data, textStatus, jqXHR) {
+					$('#chatRoomList li').remove();
+					$('#toggleRooms a').removeClass('ajaxLoad');
+					for (var room in data) {
+						var li = $('<li></li>');
+						if (data[room].active) li.addClass('activeMenuItem');
+						$('<a href="'+data[room].link+'">'+data[room].title+'</a>').addClass('chatRoom').appendTo(li);
+						$('#chatRoomList ul').append(li);
+					}
+					$('.chatRoom').click($.proxy(function (event) {
+						if (typeof window.history.replaceState != 'undefined') {
+							event.preventDefault();
+							this.changeRoom($(event.target));
+						}
+					}, this));
+				}, this)
+			});
 			
 		},
 		submit: function (target) {

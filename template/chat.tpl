@@ -232,7 +232,7 @@
 		<nav class="chatSidebarTabs">
 			<ul>
 				<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang}</a></li>
-				<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}">{lang}wcf.chat.rooms{/lang}</a></li>
+				<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang}</a></li>
 			</ul>
 		</nav>
 
