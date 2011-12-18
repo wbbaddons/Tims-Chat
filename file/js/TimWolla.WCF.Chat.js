@@ -16,6 +16,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 		messageTemplate: null,
 		init: function(roomID, messageID) {
 			this.bindEvents();
+			
 			$('#chatInput').focus();
 		},
 		/**
@@ -29,6 +30,11 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			// $(window).bind('beforeunload', function() {
 				// return false;
 			// });
+			
+			$('.chatSidebarTabs li').click($.proxy(function (event) {
+				event.preventDefault();
+				this.toggleSidebarContent($(event.target));
+			}, this));
 			
 			$('.chatRoom').click($.proxy(function (event) {
 				if (typeof window.history.replaceState != 'undefined') {
@@ -118,6 +124,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					if (this.loading || target.parent().hasClass('activeMenuItem')) return false;
 					
 					this.loading = true;
+
 					target.parent().addClass('ajaxLoad');
 				}, this)
 			});
@@ -186,6 +193,24 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 					submitButton.removeClass('ajaxLoad');
 				}
 			});
+		},
+		toggleSidebarContent: function (target) {
+			if (target.parent().hasClass('active')) return;
+
+			if (target.parent().attr('id') == "toggleUsers") {
+				$('#toggleUsers').addClass('active');
+				$('#toggleRooms').removeClass('active');
+				
+				$('#chatRoomList').hide();
+				$('#chatUserList').show();
+			} 
+			else if (target.parent().attr('id') == "toggleRooms") {
+				$('#toggleRooms').addClass('active');
+				$('#toggleUsers').removeClass('active');
+				
+				$('#chatUserList').hide();
+				$('#chatRoomList').show();
+			}
 		},
 		toggleUserMenu: function (target) {
 			liUserID = '#' + target.parent().parent().attr('id');
