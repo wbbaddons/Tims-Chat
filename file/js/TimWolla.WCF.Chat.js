@@ -54,7 +54,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			});
 			
 			$('.chatToggle').click(function (event) {
-				var element = $(event.target).parent();
+				var element = $(this);
 				var icon = $('img', element);
 				if (element.data('status') == '1') {
 					element.data('status', 0);
