@@ -171,11 +171,14 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 			if (options.submit) $('#chatForm').submit();
 			else $('#chatInput').focus();
 		},
+		refreshRoomList: function() {
+			$('.chatRoom').unbind('click');
+			
+			
+		},
 		submit: function (target) {
 			// break if input contains only whitespace
 			if ($('#chatInput').val().trim().length === 0) return false;
-			
-			submitButton = target.find('input[type=image]');
 			
 			$.ajax($('#chatForm').attr('action'), {
 				data: {
@@ -183,14 +186,14 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				},
 				type: 'POST',
 				beforeSend: $.proxy(function (jqXHR) {
-					submitButton.addClass('ajaxLoad');
+					$('#chatInput').addClass('ajaxLoad');
 				}),
 				success: $.proxy(function (data, textStatus, jqXHR) {
 					this.getMessages();
 					$('#chatInput').val('').focus();
 				}, this),
 				complete: function() {
-					submitButton.removeClass('ajaxLoad');
+					$('#chatInput').removeClass('ajaxLoad');
 				}
 			});
 		},

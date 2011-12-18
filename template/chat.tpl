@@ -22,10 +22,6 @@
 			margin-bottom: -20px !important;
 		}
 		
-		#sidebar {
-			/*height: 450px;*/
-		}
-		
 		aside {
 			overflow: auto;
 			padding: 0 1px 0 0;
@@ -73,10 +69,8 @@
 		}
 		
 		#chatInput {
-			background-position: right center;
-			background-repeat: no-repeat;
 			position: relative;
-    		z-index: 10;
+			z-index: 10;
 		}
 		
 		#chatOptions {
@@ -192,13 +186,13 @@
 		
 		.textCounter {
 			background: none repeat scroll 0 0 red;
-		    margin-left: -5px;
-		    padding: 5px;
-		    position: relative;
-		    z-index: 0 !important;
-		    border-radius: 0px 5px 5px 0px;
-		    background-color: rgba(0, 0, 0, 0.7);
-    		border: 1px solid rgba(255, 255, 255, 0.3);
+			margin-left: -5px;
+			padding: 5px;
+			position: relative;
+			z-index: 0 !important;
+			border-radius: 0px 5px 5px 0px;
+			background-color: rgba(0, 0, 0, 0.7);
+			border: 1px solid rgba(255, 255, 255, 0.3);
 		}
 		
 		.textCounter.color-1 {
