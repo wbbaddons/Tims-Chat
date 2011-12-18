@@ -107,15 +107,17 @@ class ChatPage extends AbstractPage {
 			//TODO: Initialise LogPage
 			exit;
 		}
+		else if ($this->action == 'RefreshRoomList') {
+			new ChatRefreshRoomListPage();
+			exit;
+		}
 		else if ($this->action == 'Send') {
 			new \wcf\form\ChatForm();
 			exit;
 		}
 		
 		if (isset($_REQUEST['id'])) $this->roomID = (int) $_REQUEST['id'];
-		if (isset($_REQUEST['ajax'])) {
-			$this->useTemplate = false;
-		}
+		if (isset($_REQUEST['ajax'])) $this->useTemplate = false;
 	}
 	
 	/**
@@ -184,8 +186,10 @@ class ChatPage extends AbstractPage {
 		// remove index breadcrumb
 		WCF::getBreadcrumbs()->remove(0);
 		parent::show();
+		// break if not ajax
 		if ($this->useTemplate) exit;
 		@header('Content-type: application/json');
+		
 		echo \wcf\util\JSON::encode(array(
 			'title' => $this->room->getTitle(),
 			'topic' => WCF::getLanguage()->get($this->room->topic)

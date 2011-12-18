@@ -184,24 +184,43 @@
 			display: none;
 		}
 		
-		.textCounter {
-			background: none repeat scroll 0 0 red;
-			margin-left: -5px;
-			padding: 5px;
+		.counterContainer {
+			display: table;
+		}
+		
+		.counterContainer > div {
+			display: table-row;
+		}
+		
+		.counterInput {
+			height: 16px;
+		}
+		
+		.counterInput, .counter {
+			display: table-cell;
+		}
+		
+		.counterInput, .counterContainer {
+			width: 100%;
+		}
+		
+		.counter {
+			background-color: rgba(0, 0, 0, 0.7);
+			padding: 0 5px 0 10px;
 			position: relative;
 			z-index: 0 !important;
 			border-radius: 0px 5px 5px 0px;
-			background-color: rgba(0, 0, 0, 0.7);
 			border: 1px solid rgba(255, 255, 255, 0.3);
+			width: 30px;
 		}
 		
-		.textCounter.color-1 {
+		.counter.color-1 {
 			color: #FFFFFF;
 		}
-		.textCounter.color-2 {
-			color: #AF0002;
+		.counter.color-2 {
+			color: rgba(255,255,255,0.5);
 		}
-		.textCounter.color-3 {
+		.counter.color-3 {
 			color: #D40D12;
 		}
 	</style>
@@ -249,7 +268,7 @@
 </aside>
 <!-- CONTENT -->{/capture}
 {capture assign='header'}{include file='header' sandbox=false}{/capture}
-{assign var='header' value='class="main"'|str_replace:'class="main right"':$header}
+{assign var='header' value='class="main"'|str_replace:'class="main left"':$header}
 {assign var='header' value='<!-- CONTENT -->'|str_replace:$sidebar:$header}
 {@$header}
 
@@ -260,8 +279,10 @@
 	</div>
 	
 	<form id="chatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<input type="text" id="chatInput" class="inputText long" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
-		<span class="textCounter color-1">{CHAT_LENGTH}</span>
+		<div class="counterContainer"><div>
+			<input type="text" id="chatInput" class="inputText long counterInput" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
+			<div class="counter color-1">{CHAT_LENGTH}</div>
+		</div></div>
 	</form>
 	
 	<div id="chatControls">
@@ -321,7 +342,8 @@
 					maxTextLength: {CHAT_LENGTH}
 		}
 
-		$('#chatInput').jCounter('.textCounter', {CHAT_LENGTH});
+		$('#chatInput').jCounter($('#chatInput').attr('maxlength'), { container: '.counter' });
+		$('#sidebar').wcfSidebar();
 	//]]>
 </script>
 

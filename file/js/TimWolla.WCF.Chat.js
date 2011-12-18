@@ -191,6 +191,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				success: $.proxy(function (data, textStatus, jqXHR) {
 					this.getMessages();
 					$('#chatInput').val('').focus();
+					$('#chatForm .counter').text(this.config.maxTextLength);
 				}, this),
 				complete: function() {
 					$('#chatInput').removeClass('ajaxLoad');
