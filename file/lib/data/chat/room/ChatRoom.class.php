@@ -69,4 +69,13 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	public function getID() {
 		return $this->roomID;
 	}
+	
+	/**
+	 * Returns whether the user is allowed to enter the room
+	 *
+	 * @return	boolean
+	 */
+	public function canEnter() {
+		return \wcf\system\chat\permissions\ChatPermissionHandler::getInstance()->getPermission($this, 'canEnter');
+	}
 }
