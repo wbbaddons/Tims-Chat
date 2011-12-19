@@ -160,8 +160,13 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				
 			if (options.append) {
 				text = $('#chatInput').val() + text;
+				if(text.length > this.config.maxTextLength) {
+					$('#chatInput').focus();
+					return;
+				}
 			}
 			$('#chatInput').val(text);
+			$('#chatInput').trigger('keyup');
 			
 			if (options.submit) $('#chatForm').submit();
 			else $('#chatInput').focus();
@@ -207,7 +212,7 @@ if (typeof TimWolla.WCF == 'undefined') TimWolla.WCF = {};
 				success: $.proxy(function (data, textStatus, jqXHR) {
 					this.getMessages();
 					$('#chatInput').val('').focus();
-					$('#chatForm .counter').text(this.config.maxTextLength);
+					$('#chatInput').trigger('keyup');
 				}, this),
 				complete: function() {
 					$('#chatInput').removeClass('ajaxLoad');
