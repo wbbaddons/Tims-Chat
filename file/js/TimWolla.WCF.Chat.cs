@@ -1,10 +1,10 @@
 ###
-TimWolla.WCF.Chat
-  	
-@author  Tim Düsterhus
-@copyright  2010-2011 Tim Düsterhus
-@license  Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
-@package  timwolla.wcf.chat
+# TimWolla.WCF.Chat
+#  	
+# @author  Tim Düsterhus
+# @copyright  2010-2011 Tim Düsterhus
+# @license  Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
+# @package  timwolla.wcf.chat
 ###
 
 TimWolla ?= {}
@@ -20,6 +20,9 @@ TimWolla.WCF ?= {}
 			new WCF.PeriodicalExecuter $.proxy(this.refreshRoomList, this), 10e3
 			
 			$('#chatInput').focus()
+		###
+		# Binds all the events needed for Tims Chat.
+		###
 		bindEvents: () ->
 			$('.smiley').click $.proxy (event) ->
 				this.insertText ' ' + $(event.target).attr('alt') + ' '
@@ -56,6 +59,11 @@ TimWolla.WCF ?= {}
 					element.data 'status', 1
 					icon.attr 'src', icon.attr('src').replace /disabled(\d?).([a-z]{3})$/, 'enabled$1.$2'
 					element.attr 'title', element.data 'disableMessage'
+		###
+		# Changes the chat-room.
+		# 
+		# @param	jQuery-object	target
+		###
 		changeRoom: (target) ->
 			window.history.replaceState {}, '', target.attr('href')
 				
@@ -94,7 +102,15 @@ TimWolla.WCF ?= {}
 					this.loading = true
 					target.parent().addClass 'ajaxLoad'
 				, this)
+		###
+		# Loads new messages.
+		###
 		getMessages: () ->
+		###
+		# Inserts the new messages.
+		#
+		# @param	array<object>	messages
+		###
 		handleMessages: (messages) ->
 			for message in messages
 				output = this.messageTemplate.fetch message
@@ -107,6 +123,12 @@ TimWolla.WCF ?= {}
 			$('.chatMessageContainer').animate 
 				scrollTop: $('.chatMessageContainer ul').height()
 			, 1000
+		###
+		# Inserts text into our input.
+		# 
+		# @param	string	text
+		# @param	object	options
+		###
 		insertText: (text, options) ->
 			options = $.extend
 				append: true
@@ -121,6 +143,9 @@ TimWolla.WCF ?= {}
 				$('#chatForm').submit()
 			else
 				$('#chatInput').focus()
+		###
+		# Refreshes the room-list.
+		###
 		refreshRoomList: () ->
 			$('.chatRoom').unbind 'click'
 			$('#toggleRooms a').addClass 'ajaxLoad'
@@ -142,6 +167,11 @@ TimWolla.WCF ?= {}
 						this.changeRoom $ event.target
 					, this
 				, this)
+		###
+		# Handles submitting of messages.
+		# 
+		# @param	jQuery-object	target
+		###
 		submit: (target) ->
 			# break if input contains only whitespace
 			return false if $('#chatInput').val().trim().length == 0
@@ -159,6 +189,11 @@ TimWolla.WCF ?= {}
 				, this)
 				complete: () ->
 					$('#chatInput').removeClass 'ajaxLoad'
+		###
+		# Toggles between user- and room-list.
+		# 
+		# @param	jQuery-object	target
+		###
 		toggleSidebarContents: (target) ->
 			return if target.parent().hasClass 'active'
 			
@@ -174,6 +209,11 @@ TimWolla.WCF ?= {}
 				
 				$('#chatUserList').hide()
 				$('#chatRoomList').show()
+		###
+		# Toggles the user-menu.
+		#
+		# @param	jQuery-object	target
+		###
 		toggleUserMenu: (target) ->
 			liUserID = '#' + target.parent().parent().attr 'id'
 			
