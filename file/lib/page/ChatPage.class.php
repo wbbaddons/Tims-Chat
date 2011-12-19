@@ -130,7 +130,7 @@ class ChatPage extends AbstractPage {
 				// redirect to first chat-room
 				$this->rooms->seek(0);
 				\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
-					'object' => $this->rooms->search($this->rooms->key())
+					'object' => $this->rooms->current()
 				)));
 				exit;
 			}
