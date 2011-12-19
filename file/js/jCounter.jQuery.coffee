@@ -7,8 +7,7 @@
 # @package	jQuery.jCounter
 ###
 (($) ->
-	$.fn.jCounter = (max, options) ->
-		max ?= 140
+	$.fn.jCounter = (max = 140, options) ->
 		options = $.extend
 			container: '<span></span>'
 			counterClass: 'counter'
