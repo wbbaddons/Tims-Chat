@@ -178,7 +178,8 @@ TimWolla.WCF ?= {}
 			
 			$.ajax $('#chatForm').attr('action'), 
 				data:
-					text: $('#chatInput').val()
+					text: $('#chatInput').val(),
+					smilies: $('#chatSmilies').data('status')
 				type: 'POST',
 				beforeSend: (jqXHR) ->
 					$('#chatInput').addClass 'ajaxLoad'

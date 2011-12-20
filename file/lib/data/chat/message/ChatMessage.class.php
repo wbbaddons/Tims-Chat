@@ -59,7 +59,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			break;
 			case self::TYPE_NORMAL:
 				if (!$this->enableHTML) {
-					$message = \wcf\system\bbcode\SimpleMessageParser::getInstance()->parse($message, $this->enableSmilies);
+					$message = \wcf\system\bbcode\SimpleMessageParser::getInstance()->parse($message, true, $this->enableSmilies);
 				}
 		}
 		return $message;

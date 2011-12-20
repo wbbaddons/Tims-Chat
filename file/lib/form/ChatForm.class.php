@@ -19,6 +19,7 @@ use \wcf\util\StringUtil;
  */
 class ChatForm extends AbstractForm {
 	public $message = '';
+	public $enableSmilies = 1;
 	public $userData = array();
 	public $useTemplate = false;
 	
@@ -37,6 +38,7 @@ class ChatForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		if (isset($_REQUEST['text'])) $this->message = StringUtil::trim($_REQUEST['text']);
+		if (isset($_REQUEST['smilies'])) $this->enableSmilies = intval($_REQUEST['smilies']);
 	}
 	
 	/**
@@ -96,6 +98,7 @@ class ChatForm extends AbstractForm {
 				'time' => TIME_NOW,
 				'type' => chat\message\ChatMessage::TYPE_NORMAL,
 				'message' => $this->message,
+				'enableSmilies' => $this->enableSmilies,
 				'color1' => $this->userData['color'][1],
 				'color2' => $this->userData['color'][2]
 			)
