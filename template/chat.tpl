@@ -275,10 +275,7 @@
 	</div>
 	
 	<form id="chatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<div class="counterContainer"><div>
-			<input type="text" id="chatInput" class="inputText long counterInput" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
-			<div class="counter color-1">{CHAT_LENGTH}</div>
-		</div></div>
+		<input type="text" id="chatInput" class="inputText long counterInput" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
 	<div id="chatControls">
@@ -338,7 +335,7 @@
 					maxTextLength: {CHAT_LENGTH}
 		}
 
-		$('#chatInput').jCounter($('#chatInput').attr('maxlength'), { container: '.counter' });
+		$('#chatInput').jCounter();
 		$('#sidebar').wcfSidebar();
 	//]]>
 </script>
