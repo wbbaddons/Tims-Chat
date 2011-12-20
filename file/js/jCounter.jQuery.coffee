@@ -7,28 +7,38 @@
 # @package	jQuery.jCounter
 ###
 (($) ->
-	$.fn.jCounter = (max, options) ->
-		max ?= 140
+	$.fn.jCounter = (container, options) ->
 		options = $.extend
-			container: '<span></span>'
+			max: 0
 			counterClass: 'counter'
 			countUp: false
 		, options
 		
-		jCounterContainer = $ options.container
+		if this.attr('maxlength')
+			max = this.attr('maxlength')
+		else max = options.max
 		
-		this.on 'keypress keydown keyup', $.proxy () ->
+		if !container
+			this.wrap('<div class="counterContainer"><div></div></div>').parent().append('<div class="' + options.counterClass + ' color-1">' + max + '</div>');
+			jCounterContainer = $(this).parent().children('.' + options.counterClass)
+		else
+			if `typeof container == "object"`
+				jCounterContainer = container
+			else
+				jCounterContainer = $ container
+		
+		this.on 'keypress keyup', $.proxy () ->
 			if options.countUp
 				length = this.val().length
 			else
-				length = maxChars - this.val().length
+				length = max - this.val().length
 			
 			if options.countUp
 				color = 1
 			else
-				if length > maxChars / 2
+				if length > max / 2
 					color = 1
-				else if length <= maxChars / 2 and length >= maxChars / 6
+				else if length <= max / 2 and length >= max / 6
 					color = 2
 				else
 					color = 3
