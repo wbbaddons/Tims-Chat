@@ -145,22 +145,29 @@
 		}
 		
 		.chatSidebarTabs {
-			height: 30px;
-			background-color: #FFFFFF;
+		    height: 30px;
+		    position: absolute;
+		    top: 0;
+		    width: 250px;
+		    z-index: 150;
 		}
 		
 		.chatSidebarTabs ul li {
 			width: 50%;
 			float: left;
 			text-align: center;
-			border-bottom: 1px solid #BBCCDD;
 		}
 		
 		.chatSidebarTabs ul li a {
-			padding: 7px 0px 0px 0px;
+			background-color: rgba(0, 0, 0, 0.2);
+			border-bottom: 1px solid #FFFFFF;
 			color: #666666;
-			height: 23px;
-			background-color: rgba(0, 0, 0, 0.05);
+			height: 17px;
+			padding: 3px 0 0;
+			
+			-moz-transition-property: border-radius, background-color, height, font-size; -moz-transition-duration: .2s; 
+ 			-webkit-transition-property: border-radius, background-color, height, font-size; -webkit-transition-duration: .2s; 
+ 			transition-property: border-radius, background-color, height, font-size; transition-duration: .2s; 
 		}
 		
 		.chatSidebarTabs ul li:first-child a {
@@ -168,10 +175,22 @@
 		}
 		
 		.chatSidebarTabs ul li.active a {
+			background-color: #FFFFFF;
+			border-bottom: 1px solid #BBCCDD;
+			border-radius: 0 0 7px 7px;
+			color: #000000;
 			font-size: 130%;
 			font-weight: bold;
-			color: #000000;
-			background-color: #FFFFFF;
+			height: 23px;
+			padding: 7px 0 0;
+		}
+		
+		.chatSidebarTabs ul li:first-child.active a {
+			border-radius: 0 0 7px 0;
+		}
+		
+		.chatSidebarTabs ul li:last-child.active a {
+			border-radius: 0 0 0 7px;
 		}
 		
 		#chatRoomList {
@@ -182,6 +201,8 @@
 			overflow-y: auto;
 			height: 420px;
 			width: 100%;
+			margin-top: 22px;
+			padding-top: 10px;
 		}
 		
 		.hidden {
