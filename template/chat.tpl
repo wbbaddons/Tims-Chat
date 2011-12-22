@@ -146,10 +146,6 @@
 		
 		.chatSidebarTabs {
 		    height: 30px;
-		    position: absolute;
-		    top: 0;
-		    width: 250px;
-		    z-index: 150;
 		}
 		
 		.chatSidebarTabs ul li {
@@ -161,7 +157,8 @@
 		.chatSidebarTabs ul li a {
 			background-color: rgba(0, 0, 0, 0.2);
 			border-bottom: 1px solid #FFFFFF;
-			color: #666666;
+			color: rgba(0, 0, 0, 0.4);
+			text-shadow: none;
 			height: 17px;
 			padding: 3px 0 0;
 			
@@ -201,8 +198,6 @@
 			overflow-y: auto;
 			height: 420px;
 			width: 100%;
-			margin-top: 22px;
-			padding-top: 10px;
 		}
 		
 		.hidden {
@@ -268,10 +263,10 @@
 				<span class="bgFix"><a class="chatUserLink" href="javascript:;">User {$user}</a></span>
 				<ul class="chatUserMenu">
 					<li>
-						<a href="javascript:;">{lang}wcf.chat.query{/lang}</a>
-						<a href="javascript:;">{lang}wcf.chat.kick{/lang}</a>
-						<a href="javascript:;">{lang}wcf.chat.ban{/lang}</a>
-						<a href="{link controller="User" id=$user}{/link}">{lang}wcf.chat.profile{/lang}</a>
+						<a href="javascript:;">Query</a>
+						<a href="javascript:;">Kick</a>
+						<a href="javascript:;">Ban</a>
+						<a href="{link controller="User" id=$user}{/link}">Profile</a>
 					</li>
 				</ul>
 			</li>
