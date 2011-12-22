@@ -263,10 +263,10 @@
 				<span class="bgFix"><a class="chatUserLink" href="javascript:;">User {$user}</a></span>
 				<ul class="chatUserMenu">
 					<li>
-						<a href="javascript:;">Query</a>
-						<a href="javascript:;">Kick</a>
-						<a href="javascript:;">Ban</a>
-						<a href="{link controller="User" id=$user}{/link}">Profile</a>
+						<a href="javascript:;">{lang}wcf.chat.query{/lang}</a>
+						<a href="javascript:;">{lang}wcf.chat.kick{/lang}</a>
+						<a href="javascript:;">{lang}wcf.chat.ban{/lang}</a>
+						<a href="{link controller="User" id=$user}{/link}">{lang}wcf.chat.profile{/lang}</a>
 					</li>
 				</ul>
 			</li>
