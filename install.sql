@@ -21,7 +21,7 @@ CREATE TABLE wcf1_chat_message (
 DROP TABLE IF EXISTS wcf1_chat_room;
 CREATE TABLE wcf1_chat_room (
   roomID int(10) NOT NULL AUTO_INCREMENT,
-  title varchar(255) NOT NULL,
+  title varchar(25) NOT NULL,
   topic varchar(255) NOT NULL,
   position int(10) NOT NULL DEFAULT 0,
   permanent tinyint(1) NOT NULL DEFAULT 1,
