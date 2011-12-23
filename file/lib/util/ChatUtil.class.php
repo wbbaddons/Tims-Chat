@@ -1,5 +1,8 @@
 <?php
 namespace wcf\util;
+use \wcf\system\user\storage\UserStorageHandler;
+use \wcf\system\package\PackageDependencyHandler;
+use \wcf\system\WCF;
 
 /**
  * Chat utilities
@@ -19,6 +22,8 @@ class ChatUtil {
 	 */
 	const TIME_MODIFIER_REGEX = '((?:[0-9]+[s|h|d|w|m|y|S|H|D|W|M|Y]?,?)+)';
 	
+	public static $serialize = array('color' => true);
+	
 	/**
 	 * Creates a gradient out of two colors represented by an integer.
 	 * The first byte is red, the second byte is green, the third one is blue.
@@ -27,7 +32,7 @@ class ChatUtil {
 	 * @param	string	$string
 	 * @param	integer	$start
 	 * @param	integer	$end
-	 * @returen	string
+	 * @return	string
 	 */
 	public static function gradient($string, $start, $end) {
 		$string = self::str_split($string);
@@ -43,6 +48,47 @@ class ChatUtil {
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * Reads user data.
+	 *
+	 * @param	string $field
+	 * @return	mixed
+	 */
+	public static function readUserData($field) {
+		$ush = UserStorageHandler::getInstance();
+		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		
+		// load storage
+		$ush->loadStorage(array(WCF::getUser()->userID), $packageID);
+		$data = $ush->getStorage(array(WCF::getUser()->userID), $field, $packageID);
+		
+		if ($data[WCF::getUser()->userID] === null) {
+			switch ($field) {
+				case 'color':
+					$data[WCF::getUser()->userID] = array(1 => 0xFF0000, 2 => 0x00FF00);
+				break;
+			}
+			static::writeUserData(array($field => $data[WCF::getUser()->userID]));
+		}
+		
+		if (isset(static::$serialize[$field])) return unserialize($data[WCF::getUser()->userID]);
+		else return $data[WCF::getUser()->userID];
+	}
+	
+	/**
+	 * Writes user data
+	 * 
+	 * @param	array $data
+	 */
+	public static function writeUserData(array $data) {
+		$ush = UserStorageHandler::getInstance();
+		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		
+		foreach($data as $key => $value) {
+			$ush->update(WCF::getUser()->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value, $packageID);
+		}
 	}
 	
 	/**

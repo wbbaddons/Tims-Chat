@@ -31,7 +31,20 @@
 		<item name="wcf.chat.title"><![CDATA[Chat]]></item>
 		<item name="wcf.chat.protocol"><![CDATA[Protokoll]]></item>
 		<item name="wcf.chat.rooms"><![CDATA[Räume]]></item>
+		<item name="wcf.chat.users"><![CDATA[Nutzer]]></item>
 		<item name="wcf.chat.copyright"><![CDATA[<a href="http://timwolla.wbbaddons.de">Chat{if CHAT_SHOW_VERSION == 1} Version {$chatVersion}{/if} entwickelt von TimWolla</a>]]></item>
+		
+		<item name="wcf.chat.submit.default"><![CDATA[Zum Senden Enter drücker]]></item>
+		<item name="wcf.chat.scroll"><![CDATA[Scrollen]]></item>
+		<item name="wcf.chat.notify"><![CDATA[Benachrichtigen]]></item>
+		<item name="wcf.chat.smilies"><![CDATA[Smilies]]></item>
+		<item name="wcf.chat.clear"><![CDATA[Chat leeren]]></item>
+		<item name="wcf.chat.mark"><![CDATA[Markieren]]></item>
+		
+		<item name="wcf.chat.query"><![CDATA[Privates Gespräch]]></item>
+		<item name="wcf.chat.kick"><![CDATA[Kicken]]></item>
+		<item name="wcf.chat.ban"><![CDATA[Bannen]]></item>
+		<item name="wcf.chat.profile"><![CDATA[Profil]]></item>
 	</category>
 	<category name="wcf.chat.message">
 		<!-- 1 = TYPE_JOIN -->

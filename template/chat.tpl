@@ -22,10 +22,14 @@
 			margin-bottom: -20px !important;
 		}
 		
-		aside {
+		.left aside {
 			overflow: auto;
 			padding: 0 1px 0 0;
-			width: 190px;
+		}
+		
+		.right aside {
+			overflow: auto;
+			padding: 0 0 1px 0;
 		}
 		
 		aside h2 {
@@ -130,6 +134,10 @@
 			background-image: url({icon size='S'}toLeft1{/icon});
 		}
 		
+		.chatMessageContainer {
+			padding-left: 7px !important;
+		}
+		
 		.ajaxLoad {
 			background-position: right center;
 			background-repeat: no-repeat;
@@ -141,33 +149,74 @@
 		}
 		
 		.chatSidebarTabs {
-			height: 30px;
-			background-color: #FFFFFF;
+		    height: 32px;
+		    z-index: 101;
+		    position: relative;
 		}
 		
+		.left .chatSidebarTabs {
+			margin-right: 1px;
+		}
+		
+		.right .chatSidebarTabs {
+			margin-left: 1px;
+		}
+		
+		.chatSidebarTabs ul {
+			background-color: rgba(0, 0, 0, 0.2);
+			border-bottom: 1px solid #FFFFFF;
+			height: 31px;
+		}
+
 		.chatSidebarTabs ul li {
 			width: 50%;
 			float: left;
 			text-align: center;
-			border-bottom: 1px solid #BBCCDD;
 		}
 		
 		.chatSidebarTabs ul li a {
-			padding: 7px 0px 0px 0px;
-			color: #666666;
-			height: 23px;
-			background-color: rgba(0, 0, 0, 0.05);
-		}
-		
-		.chatSidebarTabs ul li:first-child a {
-			border-right: 1px solid #BBCCDD;
+			color: rgba(0, 0, 0, 0.4);
+			text-shadow: none;
+			height: 22px;
+			padding: 9px 0 0;
+			
+			-moz-transition-property: border-radius, background-color, font-size; -moz-transition-duration: .2s; 
+ 			-webkit-transition-property: border-radius, background-color, font-size; -webkit-transition-duration: .2s; 
+ 			transition-property: border-radius, background-color, font-size; transition-duration: .2s; 
 		}
 		
 		.chatSidebarTabs ul li.active a {
+			background-color: #FFFFFF;
+			border-bottom: 1px solid #BBCCDD;
+			border-radius: 0 0 7px 7px;
+			color: #000000;
 			font-size: 130%;
 			font-weight: bold;
-			color: #000000;
-			background-color: #FFFFFF;
+			
+			height: 23px;
+			padding: 7px 0 0;
+		}
+		
+		.collapsed .chatSidebarTabs ul li a {
+			border: none !important;
+		}
+		
+		.chatSidebarTabs ul li:first-child.active a {
+			border-radius: 0 0 7px 0;
+			border-right: 1px solid #BBCCDD;
+		}
+		
+		.chatSidebarTabs ul li:last-child.active a {
+			border-radius: 0 0 0 7px;
+			border-left: 1px solid #BBCCDD;
+		}
+		
+		.left .chatSidebarTabs ul li:last-child.active a {
+			margin-right: -1px;
+		}
+		
+		.right .chatSidebarTabs ul li:first-child.active a {
+			margin-left: -1px;
 		}
 		
 		#chatRoomList {
@@ -231,8 +280,8 @@
 <div id="sidebar">
 	<nav class="chatSidebarTabs">
 		<ul>
-			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang}</a></li>
 			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang}</a></li>
+			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang}</a></li>
 		</ul>
 	</nav>
 	
@@ -243,10 +292,10 @@
 				<span class="bgFix"><a class="chatUserLink" href="javascript:;">User {$user}</a></span>
 				<ul class="chatUserMenu">
 					<li>
-						<a href="javascript:;">Query</a>
-						<a href="javascript:;">Kick</a>
-						<a href="javascript:;">Ban</a>
-						<a href="{link controller="User" id=$user}{/link}">Profile</a>
+						<a href="javascript:;">{lang}wcf.chat.query{/lang}</a>
+						<a href="javascript:;">{lang}wcf.chat.kick{/lang}</a>
+						<a href="javascript:;">{lang}wcf.chat.ban{/lang}</a>
+						<a href="{link controller="User" id=$user}{/link}">{lang}wcf.chat.profile{/lang}</a>
 					</li>
 				</ul>
 			</li>
@@ -275,10 +324,7 @@
 	</div>
 	
 	<form id="chatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<div class="counterContainer"><div>
-			<input type="text" id="chatInput" class="inputText long counterInput" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
-			<div class="counter color-1">{CHAT_LENGTH}</div>
-		</div></div>
+		<input type="text" id="chatInput" class="inputText long counterInput" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
 	<div id="chatControls">
@@ -302,6 +348,11 @@
 					<li>
 						<a id="chatNotify" href="javascript:;" class="chatToggle balloonTooltip" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
 							<img alt="" src="{icon}disabled1{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
+						</a>
+					</li>
+					<li>
+						<a id="chatSmilies" href="javascript:;" class="chatToggle balloonTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
+							<img alt="" src="{icon}enabled1{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
 						</a>
 					</li>
 					<li>
@@ -338,7 +389,7 @@
 					maxTextLength: {CHAT_LENGTH}
 		}
 
-		$('#chatInput').jCounter($('#chatInput').attr('maxlength'), { container: '.counter' });
+		$('#chatInput').jCounter();
 		$('#sidebar').wcfSidebar();
 	//]]>
 </script>

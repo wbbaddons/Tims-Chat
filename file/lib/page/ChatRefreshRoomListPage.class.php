@@ -2,8 +2,6 @@
 namespace wcf\page;
 use \wcf\data\chat;
 use \wcf\system\cache\CacheHandler;
-use \wcf\system\package\PackageDependencyHandler;
-use \wcf\system\user\storage\UserStorageHandler;
 use \wcf\system\WCF;
 
 /**
@@ -28,30 +26,11 @@ class ChatRefreshRoomListPage extends AbstractPage {
 	 */
 	public function readData() {
 		parent::readData();
-		$this->readUserData();
+		$this->roomID = \wcf\util\ChatUtil::readUserData('roomID');
 		$this->rooms = chat\room\ChatRoom::getCache();
 		
 		$this->room = $this->rooms->search($this->roomID);
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
-	}
-	
-	/**
-	 * Reads user data.
-	 */
-	public function readUserData() {
-		// TODO: Move this into ChatUtil
-		$ush = UserStorageHandler::getInstance();
-		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
-		
-		// load storage
-		$ush->loadStorage(array(WCF::getUser()->userID), $packageID);
-		$data = $ush->getStorage(array(WCF::getUser()->userID), 'roomID', $packageID);
-		
-		if ($data[WCF::getUser()->userID] === null) {
-			throw new \wcf\system\exception\IllegalLinkException();
-		}
-		
-		$this->roomID = $data[WCF::getUser()->userID];
 	}
 	
 	/**
