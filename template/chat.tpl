@@ -22,10 +22,14 @@
 			margin-bottom: -20px !important;
 		}
 		
-		aside {
+		.left aside {
 			overflow: auto;
 			padding: 0 1px 0 0;
-			width: 190px;
+		}
+		
+		.right aside {
+			overflow: auto;
+			padding: 0 0 1px 0;
 		}
 		
 		aside h2 {
@@ -145,9 +149,25 @@
 		}
 		
 		.chatSidebarTabs {
-		    height: 30px;
+		    height: 32px;
+		    z-index: 101;
+		    position: relative;
 		}
 		
+		.left .chatSidebarTabs {
+			margin-right: 1px;
+		}
+		
+		.right .chatSidebarTabs {
+			margin-left: 1px;
+		}
+		
+		.chatSidebarTabs ul {
+			background-color: rgba(0, 0, 0, 0.2);
+			border-bottom: 1px solid #FFFFFF;
+			height: 31px;
+		}
+
 		.chatSidebarTabs ul li {
 			width: 50%;
 			float: left;
@@ -155,20 +175,14 @@
 		}
 		
 		.chatSidebarTabs ul li a {
-			background-color: rgba(0, 0, 0, 0.2);
-			border-bottom: 1px solid #FFFFFF;
 			color: rgba(0, 0, 0, 0.4);
 			text-shadow: none;
-			height: 17px;
-			padding: 3px 0 0;
+			height: 22px;
+			padding: 9px 0 0;
 			
-			-moz-transition-property: border-radius, background-color, height, font-size; -moz-transition-duration: .2s; 
- 			-webkit-transition-property: border-radius, background-color, height, font-size; -webkit-transition-duration: .2s; 
- 			transition-property: border-radius, background-color, height, font-size; transition-duration: .2s; 
-		}
-		
-		.chatSidebarTabs ul li:first-child a {
-			border-right: 1px solid #BBCCDD;
+			-moz-transition-property: border-radius, background-color, font-size; -moz-transition-duration: .2s; 
+ 			-webkit-transition-property: border-radius, background-color, font-size; -webkit-transition-duration: .2s; 
+ 			transition-property: border-radius, background-color, font-size; transition-duration: .2s; 
 		}
 		
 		.chatSidebarTabs ul li.active a {
@@ -178,16 +192,31 @@
 			color: #000000;
 			font-size: 130%;
 			font-weight: bold;
+			
 			height: 23px;
 			padding: 7px 0 0;
 		}
 		
+		.collapsed .chatSidebarTabs ul li a {
+			border: none !important;
+		}
+		
 		.chatSidebarTabs ul li:first-child.active a {
 			border-radius: 0 0 7px 0;
+			border-right: 1px solid #BBCCDD;
 		}
 		
 		.chatSidebarTabs ul li:last-child.active a {
 			border-radius: 0 0 0 7px;
+			border-left: 1px solid #BBCCDD;
+		}
+		
+		.left .chatSidebarTabs ul li:last-child.active a {
+			margin-right: -1px;
+		}
+		
+		.right .chatSidebarTabs ul li:first-child.active a {
+			margin-left: -1px;
 		}
 		
 		#chatRoomList {
@@ -251,8 +280,8 @@
 <div id="sidebar">
 	<nav class="chatSidebarTabs">
 		<ul>
-			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang}</a></li>
 			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang}</a></li>
+			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang}</a></li>
 		</ul>
 	</nav>
 	
