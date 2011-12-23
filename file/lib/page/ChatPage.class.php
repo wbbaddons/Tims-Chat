@@ -2,8 +2,6 @@
 namespace wcf\page;
 use \wcf\data\chat;
 use \wcf\system\cache\CacheHandler;
-use \wcf\system\package\PackageDependencyHandler;
-use \wcf\system\user\storage\UserStorageHandler;
 use \wcf\system\WCF;
 
 /**
@@ -65,8 +63,10 @@ class ChatPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		$this->readRoom();
-		$this->readUserData();
+		$this->readRoom();		
+		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
+		\wcf\util\ChatUtil::writeUserData(array('roomID' => $this->room->roomID));
+		
 		if (CHAT_DISPLAY_JOIN_LEAVE) {
 			$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
 				'data' => array(
@@ -144,33 +144,6 @@ class ChatPage extends AbstractPage {
 		
 		$this->room = $this->rooms->search($this->roomID);
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
-	}
-	
-	/**
-	 * Reads user data.
-	 */
-	public function readUserData() {
-		// TODO: Move this into ChatUtil
-		$ush = UserStorageHandler::getInstance();
-		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
-		
-		// load storage
-		$ush->loadStorage(array(WCF::getUser()->userID), $packageID);
-		$data = $ush->getStorage(array(WCF::getUser()->userID), 'color', $packageID);
-		
-		if ($data[WCF::getUser()->userID] === null) {
-			// set defaults
-			$data[WCF::getUser()->userID] = array(1 => 0xFF0000, 2 => 0x00FF00); // TODO: Change default values
-			$ush->update(WCF::getUser()->userID, 'color', serialize($data[WCF::getUser()->userID]), $packageID);
-		}
-		else {
-			// load existing data
-			$data[WCF::getUser()->userID] = unserialize($data[WCF::getUser()->userID]);
-		}
-		
-		$this->userData['color'] = $data[WCF::getUser()->userID];
-		
-		$ush->update(WCF::getUser()->userID, 'roomID', $this->room->roomID, $packageID);
 	}
 	
 	/**
