@@ -34,7 +34,7 @@
 		<item name="wcf.chat.users"><![CDATA[Nutzer]]></item>
 		<item name="wcf.chat.copyright"><![CDATA[<a href="http://timwolla.wbbaddons.de">Chat{if CHAT_SHOW_VERSION == 1} Version {$chatVersion}{/if} entwickelt von TimWolla</a>]]></item>
 		
-		<item name="wcf.chat.submit.default"><![CDATA[Zum Senden Enter drücker]]></item>
+		<item name="wcf.chat.submit.default"><![CDATA[Zum Senden Enter drücken]]></item>
 		<item name="wcf.chat.scroll"><![CDATA[Scrollen]]></item>
 		<item name="wcf.chat.notify"><![CDATA[Benachrichtigen]]></item>
 		<item name="wcf.chat.smilies"><![CDATA[Smilies]]></item>
