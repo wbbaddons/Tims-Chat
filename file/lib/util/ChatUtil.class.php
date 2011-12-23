@@ -72,7 +72,10 @@ class ChatUtil {
 	 * @return	integer
 	 */
 	public static function timeModifier($time) {
-		preg_match_all('!([0-9]+[s|h|d|w|m|y]?)!i', $time, $matches);
+		$regex = new \wcf\system\Regex('([0-9]+[s|h|d|w|m|y]?)', \wcf\system\Regex::CASE_INSENSITIVE);
+		if (!$regex->match($time, true)) return 0;
+		$matches = $regex->getMatches();
+		
 		$result = 0;
 		foreach ($matches[1] as $time) {
 			// 60 seconds a minute
