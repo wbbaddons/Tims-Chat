@@ -71,6 +71,8 @@ class ChatUtil {
 				break;
 			}
 			static::writeUserData(array($field => $data[WCF::getUser()->userID]));
+			
+			return $data[WCF::getUser()->userID];
 		}
 		
 		if (isset(static::$serialize[$field])) return unserialize($data[WCF::getUser()->userID]);
