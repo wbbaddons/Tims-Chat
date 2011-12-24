@@ -103,6 +103,32 @@ TimWolla.WCF ?= {}
 					target.parent().addClass 'ajaxLoad'
 				, this)
 		###
+		# Frees the fish
+		###
+		freeTheFish: () ->
+			return if $.wcfIsset('fish')
+			fish = $ '<div id="fish">' + WCF.String.escapeHTML('><((((°>') + '</div>'
+			fish.css
+				position: 'absolute'
+				top: '150px'
+				left: '400px'
+				color: 'black'
+				textShadow: '1px 1px white'
+				zIndex: 9999
+			
+			fish.appendTo $ 'body'
+			new WCF.PeriodicalExecuter(() ->
+				left = (Math.random() * 100 - 50)
+				
+				$('#fish').text('><((((°>') if (left > 0)
+				$('#fish').text('<°))))><') if (left < 0)
+				
+				$('#fish').animate
+					top: '+=' + (Math.random() * 100 - 50)
+					left: '+=' + left
+				, 1000
+			, 3e3);
+		###
 		# Loads new messages.
 		###
 		getMessages: () ->
@@ -175,6 +201,8 @@ TimWolla.WCF ?= {}
 		submit: (target) ->
 			# break if input contains only whitespace
 			return false if $('#chatInput').val().trim().length == 0
+			
+			this.freeTheFish() if $('#chatInput').val().trim() == '/free the fish'
 			
 			$.ajax $('#chatForm').attr('action'), 
 				data:
