@@ -51,7 +51,7 @@ TimWolla.WCF ?= {}
 			$('.chatToggle').click (event) ->
 				element = $ this
 				icon = element.find 'img'
-				if element.data('status') == 1
+				if element.data('status') is 1
 					element.data 'status', 0
 					icon.attr 'src', icon.attr('src').replace /enabled(\d?).([a-z]{3})$/, 'disabled$1.$2'
 					element.attr 'title', element.data 'enableMessage'
@@ -81,14 +81,14 @@ TimWolla.WCF ?= {}
 					target.parent().addClass 'activeMenuItem'
 				
 					# set new topic
-					if data.topic == ''
-						return if $('#topic').text().trim() == ''
+					if data.topic is ''
+						return if $('#topic').text().trim() is ''
 						
 						$('#topic').wcfBlindOut 'vertical', () ->
 							$(this).text ''
 					else
 						$('#topic').text data.topic
-						$('#topic').wcfBlindIn() if $('#topic').text().trim() != ''
+						$('#topic').wcfBlindIn() if $('#topic').text().trim() isnt ''
 					
 					$('title').text @titleTemplate.fetch(data)
 				, this)
@@ -142,7 +142,7 @@ TimWolla.WCF ?= {}
 				output = @messageTemplate.fetch message
 				li = $ '<li></li>'
 				li.addClass 'chatMessage chatMessage'+message.type
-				li.addClass 'ownMessage' if message.sender == WCF.User.userID
+				li.addClass 'ownMessage' if message.sender is WCF.User.userID
 				li.append output
 				
 				li.appendTo $ '.chatMessageContainer ul'
@@ -188,7 +188,7 @@ TimWolla.WCF ?= {}
 						$('<a href="' + room.link + '">' + room.title + '</a>').addClass('chatRoom').appendTo li
 						$('#chatRoomList ul').append li
 					$('.chatRoom').click $.proxy (event) ->
-						return if typeof window.history.replaceState == 'undefined'
+						return if typeof window.history.replaceState is 'undefined'
 						event.preventDefault()
 						@changeRoom $ event.target
 					, this
@@ -200,9 +200,9 @@ TimWolla.WCF ?= {}
 		###
 		submit: (target) ->
 			# break if input contains only whitespace
-			return false if $('#chatInput').val().trim().length == 0
+			return false if $('#chatInput').val().trim().length is 0
 			
-			@freeTheFish() if $('#chatInput').val().trim() == '/free the fish'
+			@freeTheFish() if $('#chatInput').val().trim() is '/free the fish'
 			
 			$.ajax $('#chatForm').attr('action'), 
 				data:
@@ -226,13 +226,13 @@ TimWolla.WCF ?= {}
 		toggleSidebarContents: (target) ->
 			return if target.parent().hasClass 'active'
 			
-			if target.parent().attr('id') == 'toggleUsers'
+			if target.parent().attr('id') is 'toggleUsers'
 				$('#toggleUsers').addClass 'active'
 				$('#toggleRooms').removeClass 'active'
 				
 				$('#chatRoomList').hide()
 				$('#chatUserList').show()
-			else if target.parent().attr('id') == 'toggleRooms'
+			else if target.parent().attr('id') is 'toggleRooms'
 				$('#toggleRooms').addClass 'active'
 				$('#toggleUsers').removeClass 'active'
 				
