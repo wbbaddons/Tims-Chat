@@ -13,7 +13,7 @@
 		<item name="wcf.acp.option.chat_display_clock"><![CDATA[Uhrzeit anzeigen]]></item>
 		<item name="wcf.acp.option.chat_display_clock.description"><![CDATA[Aktiviert die Anzeige der Uhrzeit von Nachrichten]]></item>
 		<item name="wcf.acp.option.chat_animations"><![CDATA[Animationen aktivieren]]></item>
-		<item name="wcf.acp.option.chat_animations.description"><![CDATA[Aktiviert die Animation neuer Nachrichten]]></item>
+		<item name="wcf.acp.option.chat_animations.description"><![CDATA[Aktiviert die Animation neuer Nachrichten.]]></item>
 		<item name="wcf.acp.option.chat_length"><![CDATA[Maximale Textlänge]]></item>
 		<item name="wcf.acp.option.chat_length.description"><![CDATA[Gibt die maximale Länge einer Chatnachricht an.]]></item>
 		<item name="wcf.acp.option.chat_show_version"><![CDATA[Versionsnummer anzeigen]]></item>
@@ -24,15 +24,17 @@
 		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Speicherzeit]]></item>
 		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Gibt die Zeit in Minuten an, die eine Nachricht im Protokoll gespeichert bleibt.]]></item>
 	</category>
+	
 	<category name="wcf.header">
 		<item name="wcf.header.menu.chat"><![CDATA[Chat]]></item>
 	</category>
+	
 	<category name="wcf.chat">
 		<item name="wcf.chat.title"><![CDATA[Chat]]></item>
 		<item name="wcf.chat.protocol"><![CDATA[Protokoll]]></item>
 		<item name="wcf.chat.rooms"><![CDATA[Räume]]></item>
 		<item name="wcf.chat.users"><![CDATA[Nutzer]]></item>
-		<item name="wcf.chat.copyright"><![CDATA[<a href="http://timwolla.wbbaddons.de">Chat{if CHAT_SHOW_VERSION == 1} Version {$chatVersion}{/if} entwickelt von TimWolla</a>]]></item>
+		<item name="wcf.chat.copyright"><![CDATA[<a href="http://timwolla.wbbaddons.de">Chat{if CHAT_SHOW_VERSION} Version {$chatVersion}{/if} entwickelt von TimWolla</a>]]></item>
 		
 		<item name="wcf.chat.submit.default"><![CDATA[Zum Senden Enter drücken]]></item>
 		<item name="wcf.chat.scroll"><![CDATA[Scrollen]]></item>
@@ -46,6 +48,7 @@
 		<item name="wcf.chat.ban"><![CDATA[Bannen]]></item>
 		<item name="wcf.chat.profile"><![CDATA[Profil]]></item>
 	</category>
+	
 	<category name="wcf.chat.message">
 		<!-- 1 = TYPE_JOIN -->
 		<item name="wcf.chat.message.1"><![CDATA[hat den Chat betreten.]]></item>
