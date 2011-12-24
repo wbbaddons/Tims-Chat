@@ -15,9 +15,9 @@ TimWolla.WCF ?= {}
 		titleTemplate: null
 		messageTemplate: null
 		init: (roomID, messageID) ->
-			this.bindEvents()
-			this.refreshRoomList()
-			new WCF.PeriodicalExecuter $.proxy(this.refreshRoomList, this), 10e3
+			@bindEvents()
+			@refreshRoomList()
+			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, this), 10e3
 			
 			$('#chatInput').focus()
 		###
@@ -25,22 +25,22 @@ TimWolla.WCF ?= {}
 		###
 		bindEvents: () ->
 			$('.smiley').click $.proxy (event) ->
-				this.insertText ' ' + $(event.target).attr('alt') + ' '
+				@insertText ' ' + $(event.target).attr('alt') + ' '
 			, this
 	
 			$('.chatSidebarTabs li').click $.proxy (event) ->
 				event.preventDefault()
-				this.toggleSidebarContents $ event.target
+				@toggleSidebarContents $ event.target
 			, this
 	
 			$('.chatUser .chatUserLink').click $.proxy (event) ->
 				event.preventDefault()
-				this.toggleUserMenu $ event.target
+				@toggleUserMenu $ event.target
 			, this
 			
 			$('#chatForm').submit $.proxy (event) ->
 				event.preventDefault()
-				this.submit $ event.target
+				@submit $ event.target
 			, this
 			
 			$('#chatClear').click (event) ->
@@ -73,7 +73,7 @@ TimWolla.WCF ?= {}
 					ajax: 1
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
-					this.loading = false
+					@loading = false
 					target.parent().removeClass 'ajaxLoad'
 					
 					# mark as active
@@ -90,16 +90,16 @@ TimWolla.WCF ?= {}
 						$('#topic').text data.topic
 						$('#topic').wcfBlindIn() if $('#topic').text().trim() != ''
 					
-					$('title').text this.titleTemplate.fetch(data)
+					$('title').text @titleTemplate.fetch(data)
 				, this)
 				error: () ->
 					# reload page to change the room the old fashion-way
 					# inclusive the error-message :)
 					window.location.reload true
 				beforeSend: $.proxy(() ->
-					return false if this.loading or target.parent().hasClass 'activeMenuItem'
+					return false if @loading or target.parent().hasClass 'activeMenuItem'
 					
-					this.loading = true
+					@loading = true
 					target.parent().addClass 'ajaxLoad'
 				, this)
 		###
@@ -139,7 +139,7 @@ TimWolla.WCF ?= {}
 		###
 		handleMessages: (messages) ->
 			for message in messages
-				output = this.messageTemplate.fetch message
+				output = @messageTemplate.fetch message
 				li = $ '<li></li>'
 				li.addClass 'chatMessage chatMessage'+message.type
 				li.addClass 'ownMessage' if message.sender == WCF.User.userID
@@ -190,7 +190,7 @@ TimWolla.WCF ?= {}
 					$('.chatRoom').click $.proxy (event) ->
 						return if typeof window.history.replaceState == 'undefined'
 						event.preventDefault()
-						this.changeRoom $ event.target
+						@changeRoom $ event.target
 					, this
 				, this)
 		###
@@ -202,7 +202,7 @@ TimWolla.WCF ?= {}
 			# break if input contains only whitespace
 			return false if $('#chatInput').val().trim().length == 0
 			
-			this.freeTheFish() if $('#chatInput').val().trim() == '/free the fish'
+			@freeTheFish() if $('#chatInput').val().trim() == '/free the fish'
 			
 			$.ajax $('#chatForm').attr('action'), 
 				data:
@@ -212,7 +212,7 @@ TimWolla.WCF ?= {}
 				beforeSend: (jqXHR) ->
 					$('#chatInput').addClass 'ajaxLoad'
 				success: $.proxy((data, textStatus, jqXHR) ->
-					this.getMessages()
+					@getMessages()
 					$('#chatInput').val('').focus()
 					$('#chatInput').keyup()
 				, this)
