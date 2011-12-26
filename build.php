@@ -3,7 +3,7 @@
 @unlink('file.tar');
 @unlink('template.tar');
 @unlink('timwolla.wcf.chat.tar');
-#exec('coffee -c file/js/*.coffee');
+exec('coffee -cb file/js/*.coffee');
 chdir('file');
 exec('tar cvf ../file.tar * --exclude=*.coffee');
 chdir('..');
