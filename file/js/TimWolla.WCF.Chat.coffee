@@ -135,15 +135,20 @@ TimWolla.WCF ?= {}
 			fish.appendTo $ 'body'
 			new WCF.PeriodicalExecuter(() ->
 				left = (Math.random() * 100 - 50)
+				top = (Math.random() * 100 - 50)
+				fish = $('#fish')
 				
-				$('#fish').text('><((((°>') if (left > 0)
-				$('#fish').text('<°))))><') if (left < 0)
+				left *= -1 if((fish.position().left + left) < (0 + fish.width()) or (fish.position().left + left) > ($(document).width() - fish.width()))
+				top *= -1 if((fish.position().top + top) < (0 + fish.height()) or (fish.position().top + top) > ($(document).height() - fish.height()))
 				
-				$('#fish').animate
-					top: '+=' + (Math.random() * 100 - 50)
+				fish.text('><((((°>') if (left > 0)
+				fish.text('<°))))><') if (left < 0)
+				
+				fish.animate
+					top: '+=' + top
 					left: '+=' + left
 				, 1000
-			, 3e3);
+			, 1.5e3);
 		###
 		# Loads new messages.
 		###
