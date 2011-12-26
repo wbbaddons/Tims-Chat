@@ -96,13 +96,14 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	public function jsonify() {
 		return \wcf\util\JSON::encode(array(
 			'formattedUsername' => $this->getFormattedUsername(),
-			'formattedMessage' => $this->getFormattedMessage(),
+			'formattedMessage' => (string) $this,
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
 			'sender' => $this->sender,
 			'username' => $this->getUsername(),
 			'time' => $this->time,
 			'receiver' => $this->receiver,
-			'type' => $this->type
+			'type' => $this->type,
+			'roomID' => $this->roomID
 		));
 	}
 }

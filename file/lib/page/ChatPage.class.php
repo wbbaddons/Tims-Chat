@@ -81,6 +81,9 @@ class ChatPage extends AbstractPage {
 				)
 			));
 			$messageAction->executeAction();
+			$return = $messageAction->getReturnValues();
+
+			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => $return['returnValues'] -> messageID));
 		}
 		
 		$this->readDefaultSmileys();
