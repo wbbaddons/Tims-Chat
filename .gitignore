@@ -51,3 +51,5 @@ nbactions.xml
 
 # Javascript - CoffeeScript is used instead ;)
 *.js
+.sass-cache
+*.css
