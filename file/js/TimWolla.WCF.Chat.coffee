@@ -14,7 +14,7 @@ TimWolla.WCF ?= {}
 	TimWolla.WCF.Chat =
 		titleTemplate: null
 		messageTemplate: null
-		init: (roomID, messageID) ->
+		init: () ->
 			@bindEvents()
 			@refreshRoomList()
 			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, this), 10e3

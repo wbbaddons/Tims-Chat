@@ -22,14 +22,17 @@
 			margin-bottom: -20px !important;
 		}
 		
-		.left aside {
+		aside {
 			overflow: auto;
-			padding: 0 1px 0 0;
+			padding: 0;
 		}
 		
-		.right aside {
-			overflow: auto;
-			padding: 0 0 1px 0;
+		.left aside {
+			padding-right: 1px;
+		}
+		
+		.left aside {
+			padding-left: 1px;
 		}
 		
 		aside h2 {
@@ -107,6 +110,7 @@
 		.chatMessage time, .chatMessage time::before, .chatMessage time::after {
 			font-size: .8em;
 		}
+		
 		.chatMessage time::before {
 			content: "[";
 		}
@@ -229,10 +233,6 @@
 			width: 100%;
 		}
 		
-		.hidden {
-			display: none;
-		}
-		
 		.counterContainer {
 			display: table;
 		}
@@ -301,7 +301,7 @@
 			</li>
 		{/section}
 		</ul>
-		<nav id="chatRoomList" class="sidebarMenu hidden">
+		<nav id="chatRoomList" class="sidebarMenu" style="display: none;">
 			<div>
 				<ul>
 				{foreach from=$rooms item='roomListRoom'}
@@ -378,18 +378,17 @@
 		TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
 		{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
 		TimWolla.WCF.Chat.messageTemplate = new WCF.Template('{@$chatMessageTemplate|encodeJS}');
-		TimWolla.WCF.Chat.init({$room->roomID}, 1);
-		TimWolla.WCF.Chat.handleMessages([
-			{implode from=$newestMessages item='message'}
-				{@$message->jsonify()}
-			{/implode}
-		]);
-
 		TimWolla.WCF.Chat.config = { 
 			reloadTime: {CHAT_RELOADTIME},
 			animations: {CHAT_ANIMATIONS},
 			maxTextLength: {CHAT_LENGTH}
 		}
+		TimWolla.WCF.Chat.init();
+		TimWolla.WCF.Chat.handleMessages([
+			{implode from=$newestMessages item='message'}
+				{@$message->jsonify()}
+			{/implode}
+		]);
 
 		$('#chatInput').jCounter();
 	//]]>
