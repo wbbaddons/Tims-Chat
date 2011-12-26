@@ -17,7 +17,7 @@ TimWolla.WCF ?= {}
 		init: () ->
 			@bindEvents()
 			@refreshRoomList()
-			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, this), 10e3
+			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, this), 60e3
 			
 			$('#chatInput').focus()
 		###
