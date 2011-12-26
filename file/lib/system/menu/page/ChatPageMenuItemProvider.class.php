@@ -25,8 +25,14 @@ class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
 		
 		try {
 			$cache = ChatRoom::getCache();
-			$cache->seek(0);
-			$this->room = $cache->search($cache->key());
+			$i = 0;
+			
+			do {
+				$cache->seek($i++);
+				$this->room = $cache->search($cache->key());
+			}
+			while (!$this->room->canEnter());
+			
 			return true;
 		}
 		catch (\OutOfBoundsException $e) {
