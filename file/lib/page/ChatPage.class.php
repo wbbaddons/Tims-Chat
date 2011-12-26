@@ -106,7 +106,11 @@ class ChatPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if ($this->action == 'Log') {
+		if ($this->action == 'Message') {
+			new ChatMessagePage();
+			exit;
+		}
+		else if ($this->action == 'Log') {
 			//TODO: Initialise LogPage
 			exit;
 		}

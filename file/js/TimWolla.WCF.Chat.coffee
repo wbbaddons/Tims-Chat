@@ -132,6 +132,12 @@ TimWolla.WCF ?= {}
 		# Loads new messages.
 		###
 		getMessages: () ->
+			$.ajax 'index.php/Chat/Message/',
+				dataType: 'json'
+				type: 'POST'
+				success: $.proxy((data, textStatus, jqXHR) ->
+					@handleMessages(data)
+				, this)
 		###
 		# Inserts the new messages.
 		#
