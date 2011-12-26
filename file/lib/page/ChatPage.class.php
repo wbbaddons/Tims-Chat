@@ -144,6 +144,7 @@ class ChatPage extends AbstractPage {
 		
 		$this->room = $this->rooms->search($this->roomID);
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
+		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 	}
 	
 	/**
