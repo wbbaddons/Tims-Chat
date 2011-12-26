@@ -1,10 +1,10 @@
 ###
 # TimWolla.WCF.Chat
-#  	
-# @author  Tim Düsterhus
-# @copyright  2010-2011 Tim Düsterhus
-# @license  Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
-# @package  timwolla.wcf.chat
+# 
+# @author	Tim Düsterhus
+# @copyright	2010-2011 Tim Düsterhus
+# @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
+# @package	timwolla.wcf.chat
 ###
 
 TimWolla ?= {}
@@ -19,7 +19,7 @@ TimWolla.WCF ?= {}
 			@refreshRoomList()
 			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, this), 60e3
 			new WCF.PeriodicalExecuter $.proxy(@getMessages, this), @config.reloadTime * 1000
-
+			
 			$('#chatInput').focus()
 		###
 		# Binds all the events needed for Tims Chat.
@@ -28,12 +28,12 @@ TimWolla.WCF ?= {}
 			$('.smiley').click $.proxy (event) ->
 				@insertText ' ' + $(event.target).attr('alt') + ' '
 			, this
-	
+			
 			$('.chatSidebarTabs li').click $.proxy (event) ->
 				event.preventDefault()
 				@toggleSidebarContents $ event.target
 			, this
-	
+			
 			$('.chatUser .chatUserLink').click $.proxy (event) ->
 				event.preventDefault()
 				@toggleUserMenu $ event.target
@@ -80,7 +80,7 @@ TimWolla.WCF ?= {}
 					# mark as active
 					$('.activeMenuItem .chatRoom').parent().removeClass 'activeMenuItem'
 					target.parent().addClass 'activeMenuItem'
-				
+					
 					# set new topic
 					if data.topic is ''
 						return if $('#topic').text().trim() is ''
