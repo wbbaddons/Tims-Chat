@@ -305,9 +305,11 @@
 			<div>
 				<ul>
 				{foreach from=$rooms item='roomListRoom'}
-					<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
-						<a href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom}</a>
-					</li>
+					{if $roomListRoom->canEnter()}
+						<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
+							<a href="{link controller='Chat' object=$roomListRoom}{/link}" class="chatRoom">{$roomListRoom}</a>
+						</li>
+					{/if}
 				{/foreach}
 				</ul>
 			</div>
@@ -384,9 +386,9 @@
 		]);
 
 		TimWolla.WCF.Chat.config = { 
-					reloadTime: {CHAT_RELOADTIME},
-					animations: {CHAT_ANIMATIONS},
-					maxTextLength: {CHAT_LENGTH}
+			reloadTime: {CHAT_RELOADTIME},
+			animations: {CHAT_ANIMATIONS},
+			maxTextLength: {CHAT_LENGTH}
 		}
 
 		$('#chatInput').jCounter();
