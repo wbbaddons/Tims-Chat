@@ -13,7 +13,9 @@ TimWolla.WCF ?= {}
 (($) ->
 	TimWolla.WCF.Chat =
 		titleTemplate: null
+		title: document.title
 		messageTemplate: null
+		newMessageCount: null
 		init: () ->
 			@bindEvents()
 			@refreshRoomList()
@@ -25,6 +27,19 @@ TimWolla.WCF ?= {}
 		# Binds all the events needed for Tims Chat.
 		###
 		bindEvents: () ->
+			@isActive = true
+			$(window).focus $.proxy () ->
+				document.title = @title
+				@newMessageCount = 0
+				clearTimeout @timeout
+				@isActive = true
+			, this
+			
+			$(window).blur $.proxy () ->
+				@title = document.title
+				@isActive = false
+			, this
+			
 			$('.smiley').click $.proxy (event) ->
 				@insertText ' ' + $(event.target).attr('alt') + ' '
 			, this
@@ -137,6 +152,15 @@ TimWolla.WCF ?= {}
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
+					if (!@isActive)
+						@newMessageCount += data.length
+						if (@newMessageCount > 0)
+							@timeout = setTimeout $.proxy(() ->
+								document.title = @newMessageCount + WCF.Language.get('wcf.chat.newMessages')
+								setTimeout $.proxy(() ->
+									document.title = @title
+								, this), 3000
+							, this), 1000
 					@handleMessages(data)
 				, this)
 		###
