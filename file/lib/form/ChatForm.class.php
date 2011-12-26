@@ -16,8 +16,9 @@ use \wcf\util\StringUtil;
  * @subpackage	form
  */
 class ChatForm extends AbstractForm {
-	public $message = '';
 	public $enableSmilies = 1;
+	public $message = '';
+	public $room = null;
 	public $userData = array();
 	public $useTemplate = false;
 	
@@ -27,6 +28,10 @@ class ChatForm extends AbstractForm {
 	public function readData() {
 		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
 		$this->userData['roomID'] = \wcf\util\ChatUtil::readUserData('roomID');
+		
+		$this->room = chat\room\ChatRoom::getCache()->search($this->userData['roomID']);
+		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
+		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 		
 		parent::readData();
 	}
@@ -49,9 +54,6 @@ class ChatForm extends AbstractForm {
 		if ($this->message === '') {
 			throw new UserInputException('text');
 		}
-		if ($this->userData['roomID'] === null) {
-			throw new PermissionDeniedException();
-		}
 	}
 	
 	/**
@@ -64,7 +66,7 @@ class ChatForm extends AbstractForm {
 		var_dump($commandHandler->isCommand($this->message));
 		$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
 			'data' => array(
-				'roomID' => $this->userData['roomID'],
+				'roomID' => $this->room->roomID,
 				'sender' => WCF::getUser()->userID,
 				'username' => WCF::getUser()->username,
 				'time' => TIME_NOW,
