@@ -18,7 +18,8 @@ TimWolla.WCF ?= {}
 			@bindEvents()
 			@refreshRoomList()
 			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, this), 60e3
-			
+			new WCF.PeriodicalExecuter $.proxy(@getMessages, this), @config.reloadTime * 1000
+
 			$('#chatInput').focus()
 		###
 		# Binds all the events needed for Tims Chat.
@@ -208,7 +209,7 @@ TimWolla.WCF ?= {}
 			# break if input contains only whitespace
 			return false if $('#chatInput').val().trim().length is 0
 			
-			@freeTheFish() if $('#chatInput').val().trim() is '/free the fish'
+			@freeTheFish() if $('#chatInput').val().trim().toLowerCase() is '/free the fish'
 			
 			$.ajax $('#chatForm').attr('action'), 
 				data:
