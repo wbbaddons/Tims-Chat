@@ -47,6 +47,7 @@ class ChatRefreshRoomListPage extends AbstractPage {
 		@header('Content-type: application/json');
 		$json = array();
 		foreach ($this->rooms as $room) {
+			if (!$room->canEnter()) continue;
 			$json[] = array(
 				'title' => WCF::getLanguage()->get($room->title),
 				'link' => \wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
