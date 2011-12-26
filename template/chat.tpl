@@ -277,7 +277,7 @@
 
 <body id="tpl{$templateName|ucfirst}">
 {capture assign='sidebar'}
-<div id="sidebar">
+<div id="sidebarMenu">
 	<nav class="chatSidebarTabs">
 		<ul>
 			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang}</a></li>
@@ -392,7 +392,6 @@
 		}
 
 		$('#chatInput').jCounter();
-		$('#sidebar').wcfSidebar();
 	//]]>
 </script>
 
