@@ -179,13 +179,13 @@ TimWolla.WCF ?= {}
 		# Refreshes the room-list.
 		###
 		refreshRoomList: () ->
-			$('.chatRoom').unbind 'click'
 			$('#toggleRooms a').addClass 'ajaxLoad'
 			
 			$.ajax $('#toggleRooms a').data('refreshUrl'),
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
+					$('.chatRoom').unbind 'click'
 					$('#chatRoomList li').remove()
 					$('#toggleRooms a').removeClass 'ajaxLoad'
 					for room in data
