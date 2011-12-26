@@ -4,130 +4,20 @@
 	<title>{$room} - {lang}wcf.chat.title{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude' sandbox=false}
-	
 	<style type="text/css">
-		#chatBox {
-			padding: 0;
-		}
-		
-		#chatBox > div {
-			text-align: center;
-		}
-		
-		#chatBox aside, #chatRoomContent {
-			text-align: left;
-		}
-		
-		.sidebar {
-			margin-bottom: -20px !important;
-		}
-		
-		aside {
-			overflow: auto;
-			padding: 0;
-		}
-		
-		.left aside {
-			padding-right: 1px;
-		}
-		
-		.left aside {
-			padding-left: 1px;
-		}
-		
-		aside h2 {
-			margin: auto;
-			text-align: center;
-			font-size: 130%;
-			color: #336699;
-			cursor: default;
-			font-weight: bold;
-			margin-top: 5px;			
-		}
-
-		aside ul li a {
-			color: #6699CC;
-			display: block;
-			padding: 5px 25px 7px 35px;
-			text-shadow: 0 1px 0 #FFFFFF;
-		}
-		
-		#topic, #smileyList, #chatOptions {
-			padding: 5px;
-		}	
-		
-		.chatMessageContainer {
-			height: 200px;
-			overflow-y: scroll;
-		}
-		
-		#smileyList .smilies li, .smallButtons li {
-			display: inline;
-			margin-right: 5px;
-			margin-top: 5px;
-		}
-		
-		#chatForm {
-			margin-top: 15px;
-			white-space: nowrap;
-			margin-top: 10px;
-			/* Fix to align chatInput in center */
-			text-align: center;
-		}
-		
-		#chatInput {
-			position: relative;
-			z-index: 10;
-		}
-		
-		#chatOptions {
-			display: inline-block;
-		}
-
+		@import url("{@RELATIVE_WCF_DIR}style/timwolla.wcf.chat.css");
 		#chatUserList > li > .bgFix a {
 			background-image: url({icon size='S'}arrowRight{/icon});
-			background-position: 15px center;
-			background-repeat: no-repeat;
-			background-size: 16px auto;
 		}
 		
 		#chatUserList > li.activeMenuItem > .bgFix a {
 			background-image: url({icon size='S'}arrowDown{/icon});
 		}
 		
-		#chatUserList .chatUserMenu li a {
-			margin-left: 30px !important;
-		}
-		
-		#chatUserList .chatUserMenu {
-			display: none;
-		}
-		
-		#chatUserList > li a {
-			margin-left: 20px;
-		}
-		
-		.chatMessage time, .chatMessage time::before, .chatMessage time::after {
-			font-size: .8em;
-		}
-		
-		.chatMessage time::before {
-			content: "[";
-		}
-		
-		.chatMessage time::after {
-			content: "]";
-		}
-		
-		.chatMessage {
-			padding-left: 16px;
-			min-height: 16px;
-		}
 		{assign var='type' value='\wcf\data\chat\message\ChatMessage::TYPE_'}
 		.chatMessage{$type|concat:'JOIN'|constant}, .chatMessage{$type|concat:'LEAVE'|constant} {
 			background-position: left top;
 			background-repeat: no-repeat;
-			
 		}
 		
 		.chatMessage{$type|concat:'JOIN'|constant} {
@@ -138,99 +28,8 @@
 			background-image: url({icon size='S'}toLeft1{/icon});
 		}
 		
-		.chatMessageContainer {
-			padding-left: 7px !important;
-		}
-		
 		.ajaxLoad {
-			background-position: right center;
-			background-repeat: no-repeat;
 			background-image: url({icon size='S'}spinner1{/icon});
-		}
-		
-		.bgFix {
-			display: block;
-		}
-		
-		.chatSidebarTabs {
-		    height: 32px;
-		    z-index: 101;
-		    position: relative;
-		}
-		
-		.left .chatSidebarTabs {
-			margin-right: 1px;
-		}
-		
-		.right .chatSidebarTabs {
-			margin-left: 1px;
-		}
-		
-		.chatSidebarTabs ul {
-			background-color: rgba(0, 0, 0, 0.2);
-			border-bottom: 1px solid #FFFFFF;
-			height: 31px;
-		}
-
-		.chatSidebarTabs ul li {
-			width: 50%;
-			float: left;
-			text-align: center;
-		}
-		
-		.chatSidebarTabs ul li a {
-			color: rgba(0, 0, 0, 0.4);
-			text-shadow: none;
-			height: 22px;
-			padding: 9px 0 0;
-			
-			-moz-transition-property: border-radius, background-color, font-size; -moz-transition-duration: .2s; 
- 			-webkit-transition-property: border-radius, background-color, font-size; -webkit-transition-duration: .2s; 
- 			transition-property: border-radius, background-color, font-size; transition-duration: .2s; 
-		}
-		
-		.chatSidebarTabs ul li.active a {
-			background-color: #FFFFFF;
-			border-bottom: 1px solid #BBCCDD;
-			border-radius: 0 0 7px 7px;
-			color: #000000;
-			font-size: 130%;
-			font-weight: bold;
-			
-			height: 23px;
-			padding: 7px 0 0;
-		}
-		
-		.collapsed .chatSidebarTabs ul li a {
-			border: none !important;
-		}
-		
-		.chatSidebarTabs ul li:first-child.active a {
-			border-radius: 0 0 7px 0;
-			border-right: 1px solid #BBCCDD;
-		}
-		
-		.chatSidebarTabs ul li:last-child.active a {
-			border-radius: 0 0 0 7px;
-			border-left: 1px solid #BBCCDD;
-		}
-		
-		.left .chatSidebarTabs ul li:last-child.active a {
-			margin-right: -1px;
-		}
-		
-		.right .chatSidebarTabs ul li:first-child.active a {
-			margin-left: -1px;
-		}
-		
-		#chatRoomList {
-			margin-top: 5px;
-		}
-		
-		#sidebarContainer {
-			overflow-y: auto;
-			height: 420px;
-			width: 100%;
 		}
 		
 		.counterContainer {
