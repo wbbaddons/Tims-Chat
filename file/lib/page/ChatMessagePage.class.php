@@ -32,6 +32,10 @@ class ChatMessagePage extends AbstractPage {
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 		
 		$this->messages = chat\message\ChatMessageList::getMessagesSince($this->room, \wcf\util\ChatUtil::readUserData('lastSeen'));
+		$stmt = WCF::getDB()->prepareStatement("SELECT max(messageID) as messageID FROM wcf".WCF_N."_chat_message");
+		$stmt->execute();
+		$row = $stmt->fetchArray();
+		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => $row['messageID']));
 	}
 	
 	/**
