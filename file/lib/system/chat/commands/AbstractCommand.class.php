@@ -19,4 +19,8 @@ abstract class AbstractCommand implements ICommand {
 		$this->commandHandler = $commandHandler;
 		EventHandler::getInstance()->fireAction($this, 'didInit');
 	}
+	
+	public function getReceiver() {
+		return null;
+	}
 }

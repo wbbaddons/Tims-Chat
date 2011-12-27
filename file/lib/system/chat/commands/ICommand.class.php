@@ -17,4 +17,5 @@ interface ICommand {
 	
 	public function getType();
 	public function getMessage();
+	public function getReceiver();
 }

@@ -70,18 +70,22 @@ class ChatForm extends AbstractForm {
 				if ($command::ENABLE_SMILIES != \wcf\system\chat\commands\ICommand::SMILEY_USER) $this->enableSmilies = $command::ENABLE_SMILIES;
 				$type = $command->getType();
 				$this->message = $command->getMessage();
+				$receiver = $command->getReceiver();
 			}
 			catch (\wcf\system\chat\commands\NotFoundException $e) {
 				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.notFound');
 				$type = chat\message\ChatMessage::TYPE_ERROR;
+				$receiver = WCF::getUser()->userID;
 			}
 			catch (\wcf\system\exception\PermissionDeniedException $e) {
 				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.permissionDenied');
 				$type = chat\message\ChatMessage::TYPE_ERROR;
+				$receiver = WCF::getUser()->userID;
 			}
 		}
 		else {
 			$type = chat\message\ChatMessage::TYPE_NORMAL;
+			$receiver = null;
 		}
 		
 		$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
@@ -89,6 +93,7 @@ class ChatForm extends AbstractForm {
 				'roomID' => $this->room->roomID,
 				'sender' => WCF::getUser()->userID,
 				'username' => WCF::getUser()->username,
+				'receiver' => $receiver,
 				'time' => TIME_NOW,
 				'type' => $type,
 				'message' => $this->message,
