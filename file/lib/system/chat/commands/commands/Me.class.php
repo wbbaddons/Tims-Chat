@@ -25,6 +25,6 @@ class Me extends \wcf\system\chat\commands\AbstractCommand {
 	 * @see	\wcf\system\chat\commands\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return$this->commandHandler->getParameters();
+		return $this->commandHandler->getParameters();
 	}
 }
