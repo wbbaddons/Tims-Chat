@@ -36,9 +36,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	const TYPE_GLOBALMESSAGE = 11;
 	
 	/**
-	 * Returns the message.
-	 *
-	 * @return	string
+	 * @see	\wcf\data\chat\message\ChatMessage::getFormattedMessage()
 	 */
 	public function __toString() {
 		return $this->getFormattedMessage();
