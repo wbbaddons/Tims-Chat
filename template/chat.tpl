@@ -79,8 +79,8 @@
 <div id="sidebarMenu">
 	<nav class="chatSidebarTabs">
 		<ul>
-			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang}</a></li>
 			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang}</a></li>
+			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang}</a></li>
 		</ul>
 	</nav>
 	
@@ -116,7 +116,7 @@
 	</div>
 </div>
 {/capture}
-{include file='header' sandbox=false sidebarDirection='left'}
+{include file='header' sandbox=false sidebarDirection='right'}
 
 <div id="chatRoomContent">
 	<div id="topic" class="border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
