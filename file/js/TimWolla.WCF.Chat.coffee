@@ -13,7 +13,9 @@ TimWolla.WCF ?= {}
 (($) ->
 	TimWolla.WCF.Chat =
 		titleTemplate: null
+		title: document.title
 		messageTemplate: null
+		newMessageCount: null
 		init: () ->
 			@bindEvents()
 			@refreshRoomList()
@@ -25,6 +27,19 @@ TimWolla.WCF ?= {}
 		# Binds all the events needed for Tims Chat.
 		###
 		bindEvents: () ->
+			@isActive = true
+			$(window).focus $.proxy () ->
+				document.title = @title
+				@newMessageCount = 0
+				clearTimeout @timeout
+				@isActive = true
+			, this
+			
+			$(window).blur $.proxy () ->
+				@title = document.title
+				@isActive = false
+			, this
+			
 			$('.smiley').click $.proxy (event) ->
 				@insertText ' ' + $(event.target).attr('alt') + ' '
 			, this
@@ -120,15 +135,20 @@ TimWolla.WCF ?= {}
 			fish.appendTo $ 'body'
 			new WCF.PeriodicalExecuter(() ->
 				left = (Math.random() * 100 - 50)
+				top = (Math.random() * 100 - 50)
+				fish = $('#fish')
 				
-				$('#fish').text('><((((°>') if (left > 0)
-				$('#fish').text('<°))))><') if (left < 0)
+				left *= -1 if((fish.position().left + left) < (0 + fish.width()) or (fish.position().left + left) > ($(document).width() - fish.width()))
+				top *= -1 if((fish.position().top + top) < (0 + fish.height()) or (fish.position().top + top) > ($(document).height() - fish.height()))
 				
-				$('#fish').animate
-					top: '+=' + (Math.random() * 100 - 50)
+				fish.text('><((((°>') if (left > 0)
+				fish.text('<°))))><') if (left < 0)
+				
+				fish.animate
+					top: '+=' + top
 					left: '+=' + left
 				, 1000
-			, 3e3);
+			, 1.5e3);
 		###
 		# Loads new messages.
 		###
@@ -137,6 +157,15 @@ TimWolla.WCF ?= {}
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
+					if (!@isActive)
+						@newMessageCount += data.messages.length
+						if (@newMessageCount > 0)
+							@timeout = setTimeout $.proxy(() ->
+								document.title = @newMessageCount + WCF.Language.get('wcf.chat.newMessages')
+								setTimeout $.proxy(() ->
+									document.title = @title
+								, this), 3000
+							, this), 1000
 					@handleMessages(data.messages)
 				, this)
 		###
