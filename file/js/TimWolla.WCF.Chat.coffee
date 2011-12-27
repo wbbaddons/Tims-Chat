@@ -215,7 +215,6 @@ TimWolla.WCF ?= {}
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
-					$('.chatRoom').unbind 'click'
 					$('#chatRoomList li').remove()
 					$('#toggleRooms a').removeClass 'ajaxLoad'
 					for room in data
