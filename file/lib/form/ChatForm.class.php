@@ -62,15 +62,35 @@ class ChatForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$commandHandler = new \wcf\system\chat\commands\ChatCommandHandler();
-		var_dump($commandHandler->isCommand($this->message));
+		$commandHandler = new \wcf\system\chat\commands\CommandHandler($this->message);
+		if ($commandHandler->isCommand()) {
+			try {
+				$command = $commandHandler->loadCommand();
+				
+				if ($command::ENABLE_SMILIES != \wcf\system\chat\commands\ICommand::SMILEY_USER) $this->enableSmilies = $command::ENABLE_SMILIES;
+				$type = $command->getType();
+				$this->message = $command->getMessage();
+			}
+			catch (\wcf\system\chat\commands\NotFoundException $e) {
+				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.notFound');
+				$type = chat\message\ChatMessage::TYPE_ERROR;
+			}
+			catch (\wcf\system\exception\PermissionDeniedException $e) {
+				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.permissionDenied');
+				$type = chat\message\ChatMessage::TYPE_ERROR;
+			}
+		}
+		else {
+			$type = chat\message\ChatMessage::TYPE_NORMAL;
+		}
+		
 		$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
 			'data' => array(
 				'roomID' => $this->room->roomID,
 				'sender' => WCF::getUser()->userID,
 				'username' => WCF::getUser()->username,
 				'time' => TIME_NOW,
-				'type' => chat\message\ChatMessage::TYPE_NORMAL,
+				'type' => $type,
 				'message' => $this->message,
 				'enableSmilies' => $this->enableSmilies,
 				'color1' => $this->userData['color'][1],
