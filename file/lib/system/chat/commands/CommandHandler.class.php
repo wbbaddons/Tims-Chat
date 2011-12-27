@@ -33,6 +33,17 @@ class CommandHandler {
 	}
 	
 	/**
+	 * Returns the parameter-string.
+	 * 
+	 * @return	string
+	 */
+	public function getParameters() {
+		$parts = explode(' ', StringUtil::substring($this->text, StringUtil::length(static::COMMAND_CHAR)), 2);
+		
+		return $parts[1];
+	}
+	
+	/**
 	 * Loads the command.
 	 */
 	public function loadCommand() {

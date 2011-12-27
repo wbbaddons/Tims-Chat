@@ -1,8 +1,9 @@
 <?php
 namespace wcf\system\chat\commands\commands;
+use \wcf\util\StringUtil;
 
 /**
- * Free-Command
+ * Indicates an action. The message is shown without the colon.
  *
  * @author 	Tim Düsterhus
  * @copyright	2010-2011 Tim Düsterhus
@@ -10,13 +11,20 @@ namespace wcf\system\chat\commands\commands;
  * @package	timwolla.wcf.chat
  * @subpackage	system.chat.commands.commands
  */
-class Free extends Me {
-	const ENABLE_SMILIES = \wcf\system\chat\commands\ICommand::SMILEY_OFF;
+class Me extends \wcf\system\chat\commands\AbstractCommand {
+	const ENABLE_SMILIES = \wcf\system\chat\commands\ICommand::SMILEY_USER;
+	
+	/**
+	 * @see	\wcf\system\chat\commands\ICommand::getType()
+	 */
+	public function getType() {
+		return \wcf\data\chat\message\ChatMessage::TYPE_ME;
+	}
 	
 	/**
 	 * @see	\wcf\system\chat\commands\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return 'freed the fish. OH A NOEZ';
+		return$this->commandHandler->getParameters();
 	}
 }
