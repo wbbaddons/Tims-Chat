@@ -157,7 +157,7 @@ TimWolla.WCF ?= {}
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
-					if (!@isActive)
+					if (!@isActive && $('#chatNotify').data('status') is 1)
 						@newMessageCount += data.messages.length
 						if (@newMessageCount > 0)
 							@timeout = setTimeout $.proxy(() ->
