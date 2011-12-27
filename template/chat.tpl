@@ -121,11 +121,13 @@
 <div id="chatRoomContent">
 	<div id="topic" class="border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
 	<div class="chatMessageContainer border content">
-		<ul></ul>
+		<ul>
+			<noscript><li class="chatMessage">{lang}wcf.chat.noJs{/lang}</li></noscript>
+		</ul>
 	</div>
 	
 	<form id="chatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<input type="text" id="chatInput" class="inputText long counterInput" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
+		<input type="text" id="chatInput" class="inputText long counterInput" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
 	<div id="chatControls">
@@ -188,7 +190,7 @@
 				{@$message->jsonify()}
 			{/implode}
 		]);
-
+		$('#chatInput').enable();
 		$('#chatInput').jCounter();
 	//]]>
 </script>
