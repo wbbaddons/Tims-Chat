@@ -22,7 +22,7 @@
 			this.wrap('<div class="counterContainer"><div></div></div>').parent().append('<div class="' + options.counterClass + ' color-1">' + max + '</div>');
 			jCounterContainer = $(this).parent().children('.' + options.counterClass)
 		else
-			if `typeof container == "object"`
+			if typeof container is 'object'
 				jCounterContainer = container
 			else
 				jCounterContainer = $ container
