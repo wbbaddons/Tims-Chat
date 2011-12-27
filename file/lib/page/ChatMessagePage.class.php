@@ -50,11 +50,12 @@ class ChatMessagePage extends AbstractPage {
 		parent::show();
 		
 		@header('Content-type: application/json');
-		$result = '[';
+		$json = array('users' => array(), 'messages' => array());
+		
 		foreach ($this->messages as $message) {
-			$result .= $message->jsonify().',';
+			$json['messages'][] = $message->jsonify(true);
 		}
-		echo rtrim($result, ',').']';
+		echo \wcf\util\JSON::encode($json);
 		exit;
 	}
 }

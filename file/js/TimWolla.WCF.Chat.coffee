@@ -137,7 +137,7 @@ TimWolla.WCF ?= {}
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
-					@handleMessages(data)
+					@handleMessages(data.messages)
 				, this)
 		###
 		# Inserts the new messages.
