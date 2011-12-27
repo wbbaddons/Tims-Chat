@@ -34,6 +34,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	const TYPE_CLEAR = 9;
 	const TYPE_TEAM = 10;
 	const TYPE_GLOBALMESSAGE = 11;
+	const TYPE_ERROR = 12;
 	
 	/**
 	 * @see	\wcf\data\chat\message\ChatMessage::getFormattedMessage()
