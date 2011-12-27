@@ -103,6 +103,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			'formattedUsername' => $this->getFormattedUsername(),
 			'formattedMessage' => (string) $this,
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
+			'separator' => ($this->type == self::TYPE_NORMAL) ? ': ' : ' ',
 			'sender' => $this->sender,
 			'username' => $this->getUsername(),
 			'time' => $this->time,
