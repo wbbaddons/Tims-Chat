@@ -72,7 +72,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	public function getFormattedUsername() {
 		$username = $this->getUsername();
 		
-		if ($this->type != self::TYPE_INFORMATION) $username = \wcf\util\ChatUtil::gradient($username, $this->color1, $this->color2);
+		if ($this->type != self::TYPE_INFORMATION && $this->type != self::TYPE_ERROR) $username = \wcf\util\ChatUtil::gradient($username, $this->color1, $this->color2);
 		
 		return '<strong>'.$username.'</strong>';
 	}
@@ -84,6 +84,8 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	 */
 	public function getUsername() {
 		if ($this->type == self::TYPE_INFORMATION) return WCF::getLanguage()->get('wcf.chat.information');
+		if ($this->type == self::ERROR) return WCF::getLanguage()->get('wcf.chat.error');
+		
 		return $this->username;
 	}
 	
