@@ -57,9 +57,12 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 				$message = WCF::getLanguage()->get('wcf.chat.message.'.$this->type);
 			break;
 			case self::TYPE_NORMAL:
+			case self::TYPE_ME:
+			case self::TYPE_WHISPER:
 				if (!$this->enableHTML) {
 					$message = \wcf\system\bbcode\SimpleMessageParser::getInstance()->parse($message, true, $this->enableSmilies);
 				}
+			break;
 		}
 		return $message;
 	}
@@ -84,7 +87,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	 */
 	public function getUsername() {
 		if ($this->type == self::TYPE_INFORMATION) return WCF::getLanguage()->get('wcf.chat.information');
-		if ($this->type == self::ERROR) return WCF::getLanguage()->get('wcf.chat.error');
+		if ($this->type == self::TYPE_ERROR) return WCF::getLanguage()->get('wcf.chat.error');
 		
 		return $this->username;
 	}
