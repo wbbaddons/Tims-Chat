@@ -29,7 +29,7 @@ class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
 			
 			do {
 				$cache->seek($i++);
-				$this->room = $cache->search($cache->key());
+				$this->room = $cache->current();
 			}
 			while (!$this->room->canEnter());
 			
