@@ -16,6 +16,7 @@ TimWolla.WCF ?= {}
 		title: document.title
 		messageTemplate: null
 		newMessageCount: null
+		events: { newMessage: $.Callbacks() }
 		init: () ->
 			@bindEvents()
 			@refreshRoomList()
@@ -175,6 +176,8 @@ TimWolla.WCF ?= {}
 		###
 		handleMessages: (messages) ->
 			for message in messages
+				@events.newMessage.fire message
+				
 				output = @messageTemplate.fetch message
 				li = $ '<li></li>'
 				li.addClass 'chatMessage chatMessage'+message.type
