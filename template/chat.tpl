@@ -182,7 +182,9 @@
 			animations: {CHAT_ANIMATIONS},
 			maxTextLength: {CHAT_LENGTH}
 		}
+		{event name='shouldInit'}
 		TimWolla.WCF.Chat.init();
+		{event name='didInit'}
 		TimWolla.WCF.Chat.handleMessages([
 			{implode from=$newestMessages item='message'}
 				{@$message->jsonify()}
