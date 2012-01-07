@@ -196,6 +196,18 @@ aside {
 					margin-right: -1px;
 				}
 			}
+			
+			&.active .badge {
+				font-size: 65% !important;
+				color: #fff;
+				background-color: #369;
+				
+				-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+				-moz-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+				-ms-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+				-o-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+				box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+			}
 		}
 	}
 }
