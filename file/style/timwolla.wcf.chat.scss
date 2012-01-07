@@ -1,20 +1,18 @@
-#chatBox {
-	padding: 0;
-	
-	div {
-		text-align: center;
-	}
-}
+/**
+ * Chat-Styles
+ * 
+ * @author	Tim Düsterhus, Maximilian Mader
+ * @copyright	2010-2011 Tim Düsterhus
+ * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
+ * @package	timwolla.wcf.chat
+ */
 
-#chatBox aside, #chatRoomContent {
+#chatRoomContent {
 	text-align: left;
 }
 
 .sidebar {
 	margin-bottom: -20px !important;
-}
-
-aside {
 	overflow: auto;
 	padding: 0;
 	
@@ -32,17 +30,7 @@ aside {
 			}
 		}
 	}
-	
-	& aside {
-		padding-right: 1px;
-	}
-
-	& aside {
-		padding-left: 1px;
-	}
 }
-
-
 
 #topic, #smileyList, #chatOptions {
 	padding: 5px;
