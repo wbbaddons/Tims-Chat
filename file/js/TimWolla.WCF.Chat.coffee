@@ -220,6 +220,8 @@ TimWolla.WCF ?= {}
 				success: $.proxy((data, textStatus, jqXHR) ->
 					$('#chatRoomList li').remove()
 					$('#toggleRooms a').removeClass 'ajaxLoad'
+					$('#toggleRooms .badge').text(data.length);
+					
 					for room in data
 						li = $ '<li></li>'
 						li.addClass 'activeMenuItem' if room.active
