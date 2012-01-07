@@ -47,7 +47,7 @@ Building file.tar
 
 EOT;
 	chdir('file');
-	passthru('tar cvf ../file.tar * --exclude=*.coffee', $code);
+	passthru('tar cvf ../file.tar * --exclude=*.coffee --exclude=*.scss', $code);
 	if ($code != 0) exit($code);
 echo <<<EOT
 
