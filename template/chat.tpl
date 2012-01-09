@@ -116,7 +116,7 @@
 	</div>
 </div>
 {/capture}
-{include file='header' sandbox=false sidebarDirection='right'}
+{include file='header' sandbox=false sidebarOrientation='right'}
 
 <div id="chatRoomContent">
 	<div id="topic" class="border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
