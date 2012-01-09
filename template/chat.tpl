@@ -76,7 +76,7 @@
 
 <body id="tpl{$templateName|ucfirst}">
 {capture assign='sidebar'}
-<div id="sidebarMenu">
+<div id="sidebarContent">
 	<nav class="chatSidebarTabs">
 		<ul>
 			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang} <span class="badge">25</span></a></li>
