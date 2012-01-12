@@ -79,16 +79,16 @@
 <div id="sidebarContent">
 	<nav class="chatSidebarTabs">
 		<ul>
-			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang} <span class="badge">25</span></a></li>
+			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang} <span class="badge">0</span></a></li>
 			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang} <span class="badge">{#$rooms|count}</span></a></li>
 		</ul>
 	</nav>
 	
 	<div id="sidebarContainer">
 		<ul id="chatUserList">
-		{section name=user start=1 loop=26}
-			<li id="user-{$user}" class="chatUser">
-				<span class="bgFix"><a class="chatUserLink" href="javascript:;">User {$user}</a></span>
+		{*section name=user start=1 loop=26}
+			<li class="chatUser">
+				<a href="javascript:;">User {$user}</a>
 				<ul class="chatUserMenu">
 					<li>
 						<a href="javascript:;">{lang}wcf.chat.query{/lang}</a>
@@ -98,7 +98,7 @@
 					</li>
 				</ul>
 			</li>
-		{/section}
+		{/section*}
 		</ul>
 		<nav id="chatRoomList" class="sidebarMenu" style="display: none;">
 			<div>

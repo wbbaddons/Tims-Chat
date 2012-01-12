@@ -18,6 +18,7 @@ class ChatMessagePage extends AbstractPage {
 	//public $neededPermissions = array('user.chat.canEnter');
 	public $room = null;
 	public $roomID = 0;
+	public $users = array();
 	public $useTemplate = false;
 	
 	/**
@@ -36,6 +37,19 @@ class ChatMessagePage extends AbstractPage {
 		$stmt->execute();
 		$row = $stmt->fetchArray();
 		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => $row['messageID']));
+		
+		$sql = "SELECT userID FROM wcf".WCF_N."_user_storage WHERE field = 'roomID' AND packageID = 16 AND fieldValue = ".intval($this->roomID);
+		$stmt = WCF::getDB()->prepareStatement($sql);
+		$stmt->execute();
+		while ($row = $stmt->fetchArray()) $userIDs[] = $row['userID'];
+		
+		$sql = "SELECT 	u.*
+			FROM 	wcf".WCF_N."_user u
+			WHERE userID IN (".rtrim(str_repeat('?,', count($userIDs)), ',').")
+			ORDER BY u.username ASC";
+		$stmt = WCF::getDB()->prepareStatement($sql);
+		$stmt->execute($userIDs);
+		$this->users = $stmt->fetchObjects('\wcf\data\user\User');
 	}
 	
 	/**
@@ -54,6 +68,12 @@ class ChatMessagePage extends AbstractPage {
 		
 		foreach ($this->messages as $message) {
 			$json['messages'][] = $message->jsonify(true);
+		}
+		foreach ($this->users as $user) {
+			$json['users'][] = array(
+				'userID' => $user->userID,
+				'username' => $user->username
+			);
 		}
 		echo \wcf\util\JSON::encode($json);
 		exit;

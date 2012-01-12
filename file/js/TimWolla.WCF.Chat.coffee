@@ -16,7 +16,9 @@ TimWolla.WCF ?= {}
 		title: document.title
 		messageTemplate: null
 		newMessageCount: null
-		events: { newMessage: $.Callbacks() }
+		events: 
+			newMessage: $.Callbacks()
+			userMenu: $.Callbacks()
 		init: () ->
 			@bindEvents()
 			@refreshRoomList()
@@ -48,11 +50,6 @@ TimWolla.WCF ?= {}
 			$('.chatSidebarTabs li').click $.proxy (event) ->
 				event.preventDefault()
 				@toggleSidebarContents $ event.target
-			, this
-			
-			$('.chatUser .chatUserLink').click $.proxy (event) ->
-				event.preventDefault()
-				@toggleUserMenu $ event.target
 			, this
 			
 			$('#chatForm').submit $.proxy (event) ->
@@ -168,6 +165,7 @@ TimWolla.WCF ?= {}
 								, this), 3000
 							, this), 1000
 					@handleMessages(data.messages)
+					@handleUsers(data.users)
 				, this)
 		###
 		# Inserts the new messages.
@@ -188,6 +186,43 @@ TimWolla.WCF ?= {}
 			$('.chatMessageContainer').animate 
 				scrollTop: $('.chatMessageContainer ul').height()
 			, 1000
+		handleUsers: (users) ->
+			foundUsers = {}
+			for user in users
+				id = 'chatUser-'+user.userID
+				element = $('#'+id)
+				if element[0]
+					console.log('Shifting: ' + user.userID);
+					element = element.detach()
+					$('#chatUserList').append element
+				else
+					console.log('Inserting: ' + user.userID);
+					li = $ '<li></li>'
+					li.attr 'id', id
+					li.addClass 'chatUser'
+					a = $ '<a href="javascript:;">'+user.username+'</a>'
+					a.click $.proxy (event) ->
+						event.preventDefault()
+						@toggleUserMenu $ event.target
+					, this
+					li.append a
+					menu = $ '<ul></ul>'
+					menu.addClass 'chatUserMenu'
+					menu.append $ '<li><a href="javascript:;">{lang}wcf.chat.query{/lang}</a></li>'
+					menu.append $ '<li><a href="javascript:;">{lang}wcf.chat.kick{/lang}</a></li>'
+					menu.append $ '<li><a href="javascript:;">{lang}wcf.chat.ban{/lang}</a></li>'
+					menu.append $ '<li><a href="index.php/User/'+user.userID+'">{lang}wcf.chat.profile{/lang}</a></li>'
+					@events.userMenu.fire user, menu
+					li.append menu
+					li.appendTo $ '#chatUserList'
+				
+				foundUsers[id] = true
+			
+			$('.chatUser').each () ->
+				if typeof foundUsers[$(this).attr('id')] is 'undefined'
+					$(this).remove()
+			
+			$('#toggleUsers .badge').text(users.length);
 		###
 		# Inserts text into our input.
 		# 
@@ -284,12 +319,12 @@ TimWolla.WCF ?= {}
 		# @param	jQuery-object	target
 		###
 		toggleUserMenu: (target) ->
-			liUserID = '#' + target.parent().parent().attr 'id'
+			li = target.parent()
 			
-			if $(liUserID).hasClass 'activeMenuItem'
-				$(liUserID + ' .chatUserMenu').wcfBlindOut 'vertical', () ->
-					$(liUserID).removeClass 'activeMenuItem'
+			if li.hasClass 'activeMenuItem'
+				li.find('.chatUserMenu').wcfBlindOut 'vertical', () ->
+					li.removeClass 'activeMenuItem'
 			else
-				$(liUserID).addClass 'activeMenuItem'
-				$(liUserID + ' .chatUserMenu').wcfBlindIn()
+				li.addClass 'activeMenuItem'
+				li.find('.chatUserMenu').wcfBlindIn 'vertical'
 )(jQuery)
