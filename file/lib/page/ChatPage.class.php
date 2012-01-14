@@ -120,6 +120,10 @@ class ChatPage extends AbstractPage {
 			new \wcf\form\ChatForm();
 			exit;
 		}
+		else if ($this->action == 'Copyright') {
+			new ChatCopyrightPage();
+			exit;
+		}
 		
 		if (isset($_REQUEST['id'])) $this->roomID = (int) $_REQUEST['id'];
 		if (isset($_REQUEST['ajax'])) $this->useTemplate = false;

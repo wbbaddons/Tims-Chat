@@ -6,6 +6,12 @@
 	{include file='headInclude' sandbox=false}
 	<style type="text/css">
 		@import url("{@RELATIVE_WCF_DIR}style/timwolla.wcf.chat.css");
+		#chatCopyrightDialog {
+			background-image: url("{link controller='Chat' action='Copyright' sheep=1}{/link}");
+			background-position: right 45px;
+			background-repeat: no-repeat;
+			min-height: 50%;
+		}
 		#chatUserList > li > .bgFix a {
 			background-image: url({icon size='S'}arrowRight{/icon});
 		}
@@ -171,6 +177,7 @@
 				</ul>
 			</div>
 		</div>
+		{include file='chatCopyright'}
 	</div>
 </div>
 
@@ -194,6 +201,14 @@
 		]);
 		$('#chatInput').enable();
 		$('#chatInput').jCounter();
+		$('#chatControls .copyright').click(function (event) {
+			event.preventDefault();
+			var container = $('<div id="chatCopyrightDialog"></div>');
+			container.load('{link controller='Chat' action='Copyright'}{/link}', function() {
+				$('body').append(container);
+				WCF.showDialog('chatCopyrightDialog', true, { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
+			});
+		});
 	//]]>
 </script>
 

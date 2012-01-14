@@ -18,7 +18,7 @@ class ChatRouteListener implements \wcf\system\event\IEventListener {
 		$route = new \wcf\system\request\Route('chatAction');
 		$route->setSchema('/{controller}/{action}');
 		$route->setParameterOption('controller', null, 'Chat');
-		$route->setParameterOption('action', null, '(Message|Log|Send|RefreshRoomList)');
+		$route->setParameterOption('action', null, '(Message|Log|Send|RefreshRoomList|Copyright)');
 		$eventObj->addRoute($route);
 	}
 }
