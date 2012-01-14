@@ -36,9 +36,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	const TYPE_GLOBALMESSAGE = 11;
 	
 	/**
-	 * Returns the message.
-	 *
-	 * @return	string
+	 * @see	\wcf\data\chat\message\ChatMessage::getFormattedMessage()
 	 */
 	public function __toString() {
 		return $this->getFormattedMessage();
@@ -91,10 +89,11 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	/**
 	 * Converts this message into json-form.
 	 *
+	 * @param	boolean	$raw
 	 * @return	string
 	 */
-	public function jsonify() {
-		return \wcf\util\JSON::encode(array(
+	public function jsonify($raw = false) {
+		$array = array(
 			'formattedUsername' => $this->getFormattedUsername(),
 			'formattedMessage' => (string) $this,
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
@@ -104,6 +103,9 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			'receiver' => $this->receiver,
 			'type' => $this->type,
 			'roomID' => $this->roomID
-		));
+		);
+		
+		if ($raw) return $array;
+		return \wcf\util\JSON::encode($array);
 	}
 }

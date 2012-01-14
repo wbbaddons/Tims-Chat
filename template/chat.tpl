@@ -76,19 +76,19 @@
 
 <body id="tpl{$templateName|ucfirst}">
 {capture assign='sidebar'}
-<div id="sidebarMenu">
+<div id="sidebarContent">
 	<nav class="chatSidebarTabs">
 		<ul>
-			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang}</a></li>
-			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang}</a></li>
+			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang} <span class="badge">0</span></a></li>
+			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang} <span class="badge">{#$rooms|count}</span></a></li>
 		</ul>
 	</nav>
 	
 	<div id="sidebarContainer">
 		<ul id="chatUserList">
-		{section name=user start=1 loop=26}
-			<li id="user-{$user}" class="chatUser">
-				<span class="bgFix"><a class="chatUserLink" href="javascript:;">User {$user}</a></span>
+		{*section name=user start=1 loop=26}
+			<li class="chatUser">
+				<a href="javascript:;">User {$user}</a>
 				<ul class="chatUserMenu">
 					<li>
 						<a href="javascript:;">{lang}wcf.chat.query{/lang}</a>
@@ -98,7 +98,7 @@
 					</li>
 				</ul>
 			</li>
-		{/section}
+		{/section*}
 		</ul>
 		<nav id="chatRoomList" class="sidebarMenu" style="display: none;">
 			<div>
@@ -116,7 +116,7 @@
 	</div>
 </div>
 {/capture}
-{include file='header' sandbox=false sidebarDirection='right'}
+{include file='header' sandbox=false sidebarOrientation='right'}
 
 <div id="chatRoomContent">
 	<div id="topic" class="border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
@@ -167,7 +167,7 @@
 						<a id="chatMark" href="javascript:;" class="balloonTooltip" title="Show checkboxes">
 							<img alt="" src="{icon}check1{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
 						</a>
-					</li>											
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -184,7 +184,9 @@
 			animations: {CHAT_ANIMATIONS},
 			maxTextLength: {CHAT_LENGTH}
 		}
+		{event name='shouldInit'}
 		TimWolla.WCF.Chat.init();
+		{event name='didInit'}
 		TimWolla.WCF.Chat.handleMessages([
 			{implode from=$newestMessages item='message'}
 				{@$message->jsonify()}

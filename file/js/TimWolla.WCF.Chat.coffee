@@ -13,18 +13,39 @@ TimWolla.WCF ?= {}
 (($) ->
 	TimWolla.WCF.Chat =
 		titleTemplate: null
+		title: document.title
 		messageTemplate: null
+		newMessageCount: null
+		events: 
+			newMessage: $.Callbacks()
+			userMenu: $.Callbacks()
 		init: () ->
+			console.log('[TimWolla.WCF.Chat] Initializing');
 			@bindEvents()
 			@refreshRoomList()
 			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, this), 60e3
 			new WCF.PeriodicalExecuter $.proxy(@getMessages, this), @config.reloadTime * 1000
+			@getMessages()
 			
 			$('#chatInput').focus()
+			console.log '[TimWolla.WCF.Chat] Finished initializing'
 		###
 		# Binds all the events needed for Tims Chat.
 		###
 		bindEvents: () ->
+			@isActive = true
+			$(window).focus $.proxy () ->
+				document.title = @title
+				@newMessageCount = 0
+				clearTimeout @timeout
+				@isActive = true
+			, this
+			
+			$(window).blur $.proxy () ->
+				@title = document.title
+				@isActive = false
+			, this
+			
 			$('.smiley').click $.proxy (event) ->
 				@insertText ' ' + $(event.target).attr('alt') + ' '
 			, this
@@ -32,11 +53,6 @@ TimWolla.WCF ?= {}
 			$('.chatSidebarTabs li').click $.proxy (event) ->
 				event.preventDefault()
 				@toggleSidebarContents $ event.target
-			, this
-			
-			$('.chatUser .chatUserLink').click $.proxy (event) ->
-				event.preventDefault()
-				@toggleUserMenu $ event.target
 			, this
 			
 			$('#chatForm').submit $.proxy (event) ->
@@ -108,6 +124,7 @@ TimWolla.WCF ?= {}
 		###
 		freeTheFish: () ->
 			return if $.wcfIsset('fish')
+			console.warn '[TimWolla.WCF.Chat] Freeing the fish'
 			fish = $ '<div id="fish">' + WCF.String.escapeHTML('><((((°>') + '</div>'
 			fish.css
 				position: 'absolute'
@@ -120,15 +137,20 @@ TimWolla.WCF ?= {}
 			fish.appendTo $ 'body'
 			new WCF.PeriodicalExecuter(() ->
 				left = (Math.random() * 100 - 50)
+				top = (Math.random() * 100 - 50)
+				fish = $('#fish')
 				
-				$('#fish').text('><((((°>') if (left > 0)
-				$('#fish').text('<°))))><') if (left < 0)
+				left *= -1 if((fish.position().left + left) < (0 + fish.width()) or (fish.position().left + left) > ($(document).width() - fish.width()))
+				top *= -1 if((fish.position().top + top) < (0 + fish.height()) or (fish.position().top + top) > ($(document).height() - fish.height()))
 				
-				$('#fish').animate
-					top: '+=' + (Math.random() * 100 - 50)
+				fish.text('><((((°>') if (left > 0)
+				fish.text('<°))))><') if (left < 0)
+				
+				fish.animate
+					top: '+=' + top
 					left: '+=' + left
 				, 1000
-			, 3e3);
+			, 1.5e3);
 		###
 		# Loads new messages.
 		###
@@ -137,7 +159,17 @@ TimWolla.WCF ?= {}
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
-					@handleMessages(data)
+					if (!@isActive && $('#chatNotify').data('status') is 1)
+						@newMessageCount += data.messages.length
+						if (@newMessageCount > 0)
+							@timeout = setTimeout $.proxy(() ->
+								document.title = @newMessageCount + WCF.Language.get('wcf.chat.newMessages')
+								setTimeout $.proxy(() ->
+									document.title = @title
+								, this), 3000
+							, this), 1000
+					@handleMessages(data.messages)
+					@handleUsers(data.users)
 				, this)
 		###
 		# Inserts the new messages.
@@ -146,6 +178,8 @@ TimWolla.WCF ?= {}
 		###
 		handleMessages: (messages) ->
 			for message in messages
+				@events.newMessage.fire message
+				
 				output = @messageTemplate.fetch message
 				li = $ '<li></li>'
 				li.addClass 'chatMessage chatMessage'+message.type
@@ -156,6 +190,43 @@ TimWolla.WCF ?= {}
 			$('.chatMessageContainer').animate 
 				scrollTop: $('.chatMessageContainer ul').height()
 			, 1000
+		handleUsers: (users) ->
+			foundUsers = {}
+			for user in users
+				id = 'chatUser-'+user.userID
+				element = $('#'+id)
+				if element[0]
+					console.log '[TimWolla.WCF.Chat] Shifting user ' + user.userID
+					element = element.detach()
+					$('#chatUserList').append element
+				else
+					console.log '[TimWolla.WCF.Chat] Inserting user ' + user.userID
+					li = $ '<li></li>'
+					li.attr 'id', id
+					li.addClass 'chatUser'
+					a = $ '<a href="javascript:;">'+user.username+'</a>'
+					a.click $.proxy (event) ->
+						event.preventDefault()
+						@toggleUserMenu $ event.target
+					, this
+					li.append a
+					menu = $ '<ul></ul>'
+					menu.addClass 'chatUserMenu'
+					menu.append $ '<li><a href="javascript:;">{lang}wcf.chat.query{/lang}</a></li>'
+					menu.append $ '<li><a href="javascript:;">{lang}wcf.chat.kick{/lang}</a></li>'
+					menu.append $ '<li><a href="javascript:;">{lang}wcf.chat.ban{/lang}</a></li>'
+					menu.append $ '<li><a href="index.php/User/'+user.userID+'">{lang}wcf.chat.profile{/lang}</a></li>'
+					@events.userMenu.fire user, menu
+					li.append menu
+					li.appendTo $ '#chatUserList'
+				
+				foundUsers[id] = true
+			
+			$('.chatUser').each () ->
+				if typeof foundUsers[$(this).attr('id')] is 'undefined'
+					$(this).remove()
+			
+			$('#toggleUsers .badge').text(users.length);
 		###
 		# Inserts text into our input.
 		# 
@@ -180,25 +251,30 @@ TimWolla.WCF ?= {}
 		# Refreshes the room-list.
 		###
 		refreshRoomList: () ->
+			console.log '[TimWolla.WCF.Chat] Refreshing the room-list'
 			$('#toggleRooms a').addClass 'ajaxLoad'
 			
 			$.ajax $('#toggleRooms a').data('refreshUrl'),
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
-					$('.chatRoom').unbind 'click'
 					$('#chatRoomList li').remove()
 					$('#toggleRooms a').removeClass 'ajaxLoad'
+					$('#toggleRooms .badge').text(data.length);
+					
 					for room in data
 						li = $ '<li></li>'
 						li.addClass 'activeMenuItem' if room.active
 						$('<a href="' + room.link + '">' + room.title + '</a>').addClass('chatRoom').appendTo li
 						$('#chatRoomList ul').append li
+						
 					$('.chatRoom').click $.proxy (event) ->
 						return if typeof window.history.replaceState is 'undefined'
 						event.preventDefault()
 						@changeRoom $ event.target
 					, this
+					
+					console.log '[TimWolla.WCF.Chat] Found ' + data.length + ' rooms'
 				, this)
 		###
 		# Handles submitting of messages.
@@ -251,12 +327,12 @@ TimWolla.WCF ?= {}
 		# @param	jQuery-object	target
 		###
 		toggleUserMenu: (target) ->
-			liUserID = '#' + target.parent().parent().attr 'id'
+			li = target.parent()
 			
-			if $(liUserID).hasClass 'activeMenuItem'
-				$(liUserID + ' .chatUserMenu').wcfBlindOut 'vertical', () ->
-					$(liUserID).removeClass 'activeMenuItem'
+			if li.hasClass 'activeMenuItem'
+				li.find('.chatUserMenu').wcfBlindOut 'vertical', () ->
+					li.removeClass 'activeMenuItem'
 			else
-				$(liUserID).addClass 'activeMenuItem'
-				$(liUserID + ' .chatUserMenu').wcfBlindIn()
+				li.addClass 'activeMenuItem'
+				li.find('.chatUserMenu').wcfBlindIn 'vertical'
 )(jQuery)

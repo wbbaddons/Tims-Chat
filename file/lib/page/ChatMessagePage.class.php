@@ -18,24 +18,68 @@ class ChatMessagePage extends AbstractPage {
 	//public $neededPermissions = array('user.chat.canEnter');
 	public $room = null;
 	public $roomID = 0;
+	public $users = array();
 	public $useTemplate = false;
 	
 	/**
-	 * Reads room data.
+	 * @see \wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
+		
+		$this->readRoom();
+		$this->readMessages();
+		$this->readUsers();
+	}
+	
+	public function readMessages() {
+		$this->messages = chat\message\ChatMessageList::getMessagesSince($this->room, \wcf\util\ChatUtil::readUserData('lastSeen'));
+		
+		// update last seen message
+		$sql = "SELECT
+				max(messageID) as messageID
+			FROM 
+				wcf".WCF_N."_chat_message";
+		$stmt = WCF::getDB()->prepareStatement($sql);
+		$stmt->execute();
+		$row = $stmt->fetchArray();
+		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => $row['messageID']));
+	}
+	
+	public function readRoom() {
 		$this->roomID = \wcf\util\ChatUtil::readUserData('roomID');
 		
 		$this->room = chat\room\ChatRoom::getCache()->search($this->roomID);
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
+	}
+	
+	public function readUsers() {
+		$packageID = \wcf\system\package\PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
 		
-		$this->messages = chat\message\ChatMessageList::getMessagesSince($this->room, \wcf\util\ChatUtil::readUserData('lastSeen'));
-		$stmt = WCF::getDB()->prepareStatement("SELECT max(messageID) as messageID FROM wcf".WCF_N."_chat_message");
+		$sql = "SELECT
+				userID
+			FROM
+				wcf".WCF_N."_user_storage 
+			WHERE
+					field = 'roomID' 
+				AND	packageID = ".intval($packageID)."
+				AND 	fieldValue = ".intval($this->roomID);
+		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
-		$row = $stmt->fetchArray();
-		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => $row['messageID']));
+		while ($row = $stmt->fetchArray()) $userIDs[] = $row['userID'];
+		
+		$sql = "SELECT
+				*
+			FROM
+				wcf".WCF_N."_user
+			WHERE
+				userID IN (".rtrim(str_repeat('?,', count($userIDs)), ',').")
+			ORDER BY
+				username ASC";
+		$stmt = WCF::getDB()->prepareStatement($sql);
+		$stmt->execute($userIDs);
+		$this->users = $stmt->fetchObjects('\wcf\data\user\User');
 	}
 	
 	/**
@@ -50,11 +94,19 @@ class ChatMessagePage extends AbstractPage {
 		parent::show();
 		
 		@header('Content-type: application/json');
-		$result = '[';
+		$json = array('users' => array(), 'messages' => array());
+		
 		foreach ($this->messages as $message) {
-			$result .= $message->jsonify().',';
+			$json['messages'][] = $message->jsonify(true);
 		}
-		echo rtrim($result, ',').']';
+		foreach ($this->users as $user) {
+			$json['users'][] = array(
+				'userID' => $user->userID,
+				'username' => $user->username
+			);
+		}
+		
+		echo \wcf\util\JSON::encode($json);
 		exit;
 	}
 }
