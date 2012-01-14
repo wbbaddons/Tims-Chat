@@ -20,12 +20,15 @@ TimWolla.WCF ?= {}
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
 		init: () ->
+			console.log('[TimWolla.WCF.Chat] Initializing');
 			@bindEvents()
 			@refreshRoomList()
 			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, this), 60e3
 			new WCF.PeriodicalExecuter $.proxy(@getMessages, this), @config.reloadTime * 1000
+			@getMessages()
 			
 			$('#chatInput').focus()
+			console.log '[TimWolla.WCF.Chat] Finished initializing'
 		###
 		# Binds all the events needed for Tims Chat.
 		###
@@ -121,6 +124,7 @@ TimWolla.WCF ?= {}
 		###
 		freeTheFish: () ->
 			return if $.wcfIsset('fish')
+			console.warn '[TimWolla.WCF.Chat] Freeing the fish'
 			fish = $ '<div id="fish">' + WCF.String.escapeHTML('><((((°>') + '</div>'
 			fish.css
 				position: 'absolute'
@@ -192,11 +196,11 @@ TimWolla.WCF ?= {}
 				id = 'chatUser-'+user.userID
 				element = $('#'+id)
 				if element[0]
-					console.log('Shifting: ' + user.userID);
+					console.log '[TimWolla.WCF.Chat] Shifting user ' + user.userID
 					element = element.detach()
 					$('#chatUserList').append element
 				else
-					console.log('Inserting: ' + user.userID);
+					console.log '[TimWolla.WCF.Chat] Inserting user ' + user.userID
 					li = $ '<li></li>'
 					li.attr 'id', id
 					li.addClass 'chatUser'
@@ -247,6 +251,7 @@ TimWolla.WCF ?= {}
 		# Refreshes the room-list.
 		###
 		refreshRoomList: () ->
+			console.log '[TimWolla.WCF.Chat] Refreshing the room-list'
 			$('#toggleRooms a').addClass 'ajaxLoad'
 			
 			$.ajax $('#toggleRooms a').data('refreshUrl'),
@@ -262,11 +267,14 @@ TimWolla.WCF ?= {}
 						li.addClass 'activeMenuItem' if room.active
 						$('<a href="' + room.link + '">' + room.title + '</a>').addClass('chatRoom').appendTo li
 						$('#chatRoomList ul').append li
+						
 					$('.chatRoom').click $.proxy (event) ->
 						return if typeof window.history.replaceState is 'undefined'
 						event.preventDefault()
 						@changeRoom $ event.target
 					, this
+					
+					console.log '[TimWolla.WCF.Chat] Found ' + data.length + ' rooms'
 				, this)
 		###
 		# Handles submitting of messages.
