@@ -122,7 +122,7 @@
 	<div id="topic" class="border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
 	<div class="chatMessageContainer border content">
 		<ul>
-			<noscript><li class="chatMessage">{lang}wcf.chat.noJs{/lang}</li></noscript>
+			<noscript><li class="error">{lang}wcf.chat.noJs{/lang}</li></noscript>
 		</ul>
 	</div>
 	
