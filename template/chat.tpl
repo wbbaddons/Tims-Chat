@@ -203,6 +203,7 @@
 		$('#chatInput').jCounter();
 		$('#chatControls .copyright').click(function (event) {
 			event.preventDefault();
+			if ($.wcfIsset('chatCopyrightDialog')) return WCF.showDialog('chatCopyrightDialog', true, { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
 			var container = $('<div id="chatCopyrightDialog"></div>');
 			container.load('{link controller='Chat' action='Copyright'}{/link}', function() {
 				$('body').append(container);
