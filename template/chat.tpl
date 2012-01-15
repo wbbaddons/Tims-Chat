@@ -12,11 +12,13 @@
 			background-repeat: no-repeat;
 			min-height: 50%;
 		}
-		#chatUserList > li > .bgFix a {
+		#chatUserList > li > a {
 			background-image: url({icon size='S'}arrowRight{/icon});
+			background-position: 15px center;
+			background-repeat: no-repeat;
 		}
 		
-		#chatUserList > li.activeMenuItem > .bgFix a {
+		#chatUserList > li.activeMenuItem > a {
 			background-image: url({icon size='S'}arrowDown{/icon});
 		}
 		
@@ -82,7 +84,7 @@
 
 <body id="tpl{$templateName|ucfirst}">
 {capture assign='sidebar'}
-<div id="sidebarContent">
+<div id="sidebarContent" class="sidebarContent">
 	<nav class="chatSidebarTabs">
 		<ul>
 			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang} <span class="badge">0</span></a></li>
@@ -191,6 +193,10 @@
 			animations: {CHAT_ANIMATIONS},
 			maxTextLength: {CHAT_LENGTH}
 		}
+		WCF.Language.add('wcf.chat.query', '{lang}wcf.chat.query{/lang}');
+		WCF.Language.add('wcf.chat.kick', '{lang}wcf.chat.kick{/lang}');
+		WCF.Language.add('wcf.chat.ban', '{lang}wcf.chat.ban{/lang}');
+		WCF.Language.add('wcf.chat.profile', '{lang}wcf.chat.profile{/lang}');
 		{event name='shouldInit'}
 		TimWolla.WCF.Chat.init();
 		{event name='didInit'}

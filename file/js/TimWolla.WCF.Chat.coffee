@@ -212,10 +212,10 @@ TimWolla.WCF ?= {}
 					li.append a
 					menu = $ '<ul></ul>'
 					menu.addClass 'chatUserMenu'
-					menu.append $ '<li><a href="javascript:;">{lang}wcf.chat.query{/lang}</a></li>'
-					menu.append $ '<li><a href="javascript:;">{lang}wcf.chat.kick{/lang}</a></li>'
-					menu.append $ '<li><a href="javascript:;">{lang}wcf.chat.ban{/lang}</a></li>'
-					menu.append $ '<li><a href="index.php/User/'+user.userID+'">{lang}wcf.chat.profile{/lang}</a></li>'
+					menu.append $ '<li><a href="javascript:;">' + WCF.Language.get('wcf.chat.query') + '</a></li>'
+					menu.append $ '<li><a href="javascript:;">' + WCF.Language.get('wcf.chat.kick') + '</a></li>'
+					menu.append $ '<li><a href="javascript:;">' + WCF.Language.get('wcf.chat.ban') + '</a></li>'
+					menu.append $ '<li><a href="index.php/User/' + user.userID + '">' + WCF.Language.get('wcf.chat.profile') + '</a></li>'
 					@events.userMenu.fire user, menu
 					li.append menu
 					li.appendTo $ '#chatUserList'
@@ -307,15 +307,15 @@ TimWolla.WCF ?= {}
 		# @param	jQuery-object	target
 		###
 		toggleSidebarContents: (target) ->
-			return if target.parent().hasClass 'active'
+			return if target.parents('li').hasClass 'active'
 			
-			if target.parent().attr('id') is 'toggleUsers'
+			if target.parents('li').attr('id') is 'toggleUsers'
 				$('#toggleUsers').addClass 'active'
 				$('#toggleRooms').removeClass 'active'
 				
 				$('#chatRoomList').hide()
 				$('#chatUserList').show()
-			else if target.parent().attr('id') is 'toggleRooms'
+			else if target.parents('li').attr('id') is 'toggleRooms'
 				$('#toggleRooms').addClass 'active'
 				$('#toggleUsers').removeClass 'active'
 				
