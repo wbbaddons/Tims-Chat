@@ -10,7 +10,7 @@
 TimWolla ?= {}
 TimWolla.WCF ?= {}
 
-(($) ->
+(($, window, undefined) ->
 	TimWolla.WCF.Chat =
 		titleTemplate: null
 		title: document.title
@@ -335,4 +335,4 @@ TimWolla.WCF ?= {}
 			else
 				li.addClass 'activeMenuItem'
 				li.find('.chatUserMenu').wcfBlindIn 'vertical'
-)(jQuery)
+)(jQuery, this)
