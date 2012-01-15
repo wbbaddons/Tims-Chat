@@ -10,7 +10,7 @@
 TimWolla ?= {}
 TimWolla.WCF ?= {}
 
-(($, window, undefined) ->
+(($, window) ->
 	TimWolla.WCF.Chat =
 		titleTemplate: null
 		title: document.title
