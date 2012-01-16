@@ -27,7 +27,6 @@ TimWolla.WCF ?= {}
 			new WCF.PeriodicalExecuter $.proxy(@getMessages, this), @config.reloadTime * 1000
 			@getMessages()
 			
-			$('#chatInput').focus()
 			console.log '[TimWolla.WCF.Chat] Finished initializing'
 		###
 		# Binds all the events needed for Tims Chat.

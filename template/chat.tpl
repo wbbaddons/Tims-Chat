@@ -199,7 +199,7 @@
 				{@$message->jsonify()}
 			{/implode}
 		]);
-		$('#chatInput').enable().jCounter();
+		$('#chatInput').enable().jCounter().focus();
 		$('#chatControls .copyright').click(function (event) {
 			event.preventDefault();
 			if ($.wcfIsset('chatCopyrightDialog')) return WCF.showDialog('chatCopyrightDialog', true, { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
