@@ -185,36 +185,38 @@
 
 <script type="text/javascript">
 	//<![CDATA[
-		TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
-		{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
-		TimWolla.WCF.Chat.messageTemplate = new WCF.Template('{@$chatMessageTemplate|encodeJS}');
-		TimWolla.WCF.Chat.config = { 
-			reloadTime: {CHAT_RELOADTIME},
-			animations: {CHAT_ANIMATIONS},
-			maxTextLength: {CHAT_LENGTH}
-		}
-		WCF.Language.add('wcf.chat.query', '{lang}wcf.chat.query{/lang}');
-		WCF.Language.add('wcf.chat.kick', '{lang}wcf.chat.kick{/lang}');
-		WCF.Language.add('wcf.chat.ban', '{lang}wcf.chat.ban{/lang}');
-		WCF.Language.add('wcf.chat.profile', '{lang}wcf.chat.profile{/lang}');
-		{event name='shouldInit'}
-		TimWolla.WCF.Chat.init();
-		{event name='didInit'}
-		TimWolla.WCF.Chat.handleMessages([
-			{implode from=$newestMessages item='message'}
-				{@$message->jsonify()}
-			{/implode}
-		]);
-		$('#chatInput').enable().jCounter().focus();
-		$('#chatControls .copyright').click(function (event) {
-			event.preventDefault();
-			if ($.wcfIsset('chatCopyrightDialog')) return WCF.showDialog('chatCopyrightDialog', true, { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
-			var container = $('<div id="chatCopyrightDialog"></div>');
-			container.load('{link controller='Chat' action='Copyright'}{/link}', function() {
-				$('body').append(container);
-				WCF.showDialog('chatCopyrightDialog', true, { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
+		(function ($, window) {
+			TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
+			{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
+			TimWolla.WCF.Chat.messageTemplate = new WCF.Template('{@$chatMessageTemplate|encodeJS}');
+			TimWolla.WCF.Chat.config = { 
+				reloadTime: {CHAT_RELOADTIME},
+				animations: {CHAT_ANIMATIONS},
+				maxTextLength: {CHAT_LENGTH}
+			}
+			WCF.Language.add('wcf.chat.query', '{lang}wcf.chat.query{/lang}');
+			WCF.Language.add('wcf.chat.kick', '{lang}wcf.chat.kick{/lang}');
+			WCF.Language.add('wcf.chat.ban', '{lang}wcf.chat.ban{/lang}');
+			WCF.Language.add('wcf.chat.profile', '{lang}wcf.chat.profile{/lang}');
+			{event name='shouldInit'}
+			TimWolla.WCF.Chat.init();
+			{event name='didInit'}
+			TimWolla.WCF.Chat.handleMessages([
+				{implode from=$newestMessages item='message'}
+					{@$message->jsonify()}
+				{/implode}
+			]);
+			$('#chatInput').enable().jCounter().focus();
+			$('#chatControls .copyright').click(function (event) {
+				event.preventDefault();
+				if ($.wcfIsset('chatCopyrightDialog')) return WCF.showDialog('chatCopyrightDialog', true, { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
+				var container = $('<div id="chatCopyrightDialog"></div>');
+				container.load('{link controller='Chat' action='Copyright'}{/link}', function() {
+					$('body').append(container);
+					WCF.showDialog('chatCopyrightDialog', true, { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
+				});
 			});
-		});
+		})(jQuery, this)
 	//]]>
 </script>
 
