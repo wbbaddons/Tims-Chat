@@ -210,3 +210,37 @@
 	height: 420px;
 	width: 100%;
 }
+
+#sidebarContainer a {
+	outline: none;
+}
+
+#chatCopyright {
+	bottom: 5px;
+	position: absolute;
+}
+
+.sidebarContent {
+	> div {
+		 ul {
+			> li {
+				margin-top: 5px;
+				background-color: transparent !important;
+				box-shadow: none !important;
+			}
+		}
+	}
+}
+
+.sidebarContent {
+	> div {
+		 ul {
+			> li.activeMenuItem {
+				> a {
+				    background-color: #FFFFFF;
+				    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+				}
+			}
+		}
+	}
+}
