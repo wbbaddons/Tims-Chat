@@ -67,7 +67,7 @@ class ChatPage extends AbstractPage {
 		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
 		\wcf\util\ChatUtil::writeUserData(array('roomID' => $this->room->roomID));
 		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
-		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => end($this->newestMessages)->messageID));
+		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => count($this->newestMessages) ? end($this->newestMessages)->messageID : 0));
 		
 		if (CHAT_DISPLAY_JOIN_LEAVE) {
 			$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
