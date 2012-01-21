@@ -183,13 +183,17 @@
 	</div>
 </div>
 
+{include file='chatJavascriptInclude'}
 <script type="text/javascript">
 	//<![CDATA[
 		(function ($, window) {
+			// populate templates
 			TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
 			{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
 			TimWolla.WCF.Chat.messageTemplate = new WCF.Template('{@$chatMessageTemplate|encodeJS}');
-			TimWolla.WCF.Chat.config = { 
+			
+			// populate config
+			TimWolla.WCF.Chat.config = {
 				reloadTime: {CHAT_RELOADTIME},
 				animations: {CHAT_ANIMATIONS},
 				maxTextLength: {CHAT_LENGTH}
@@ -199,13 +203,18 @@
 			WCF.Language.add('wcf.chat.ban', '{lang}wcf.chat.ban{/lang}');
 			WCF.Language.add('wcf.chat.profile', '{lang}wcf.chat.profile{/lang}');
 			{event name='shouldInit'}
+			// Boot the that
 			TimWolla.WCF.Chat.init();
 			{event name='didInit'}
+			
+			// show the last X messages
 			TimWolla.WCF.Chat.handleMessages([
 				{implode from=$newestMessages item='message'}
 					{@$message->jsonify()}
 				{/implode}
 			]);
+			
+			// enable user-interface
 			$('#chatInput').enable().jCounter().focus();
 			$('#chatControls .copyright').click(function (event) {
 				event.preventDefault();

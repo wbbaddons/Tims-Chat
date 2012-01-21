@@ -63,7 +63,7 @@ class ChatPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		$this->readRoom();		
+		$this->readRoom();
 		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
 		\wcf\util\ChatUtil::writeUserData(array('roomID' => $this->room->roomID));
 		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);

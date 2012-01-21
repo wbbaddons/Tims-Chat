@@ -23,8 +23,8 @@ TimWolla.WCF ?= {}
 			console.log('[TimWolla.WCF.Chat] Initializing');
 			@bindEvents()
 			@refreshRoomList()
-			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, this), 60e3
-			new WCF.PeriodicalExecuter $.proxy(@getMessages, this), @config.reloadTime * 1000
+			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, @), 60e3
+			new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1000
 			@getMessages()
 			
 			console.log '[TimWolla.WCF.Chat] Finished initializing'
@@ -38,26 +38,26 @@ TimWolla.WCF ?= {}
 				@newMessageCount = 0
 				clearTimeout @timeout
 				@isActive = true
-			, this
+			, @
 			
 			$(window).blur $.proxy () ->
 				@title = document.title
 				@isActive = false
-			, this
+			, @
 			
 			$('.smiley').click $.proxy (event) ->
 				@insertText ' ' + $(event.target).attr('alt') + ' '
-			, this
+			, @
 			
 			$('.chatSidebarTabs li').click $.proxy (event) ->
 				event.preventDefault()
 				@toggleSidebarContents $ event.target
-			, this
+			, @
 			
 			$('#chatForm').submit $.proxy (event) ->
 				event.preventDefault()
 				@submit $ event.target
-			, this
+			, @
 			
 			$('#chatClear').click (event) ->
 				event.preventDefault()
@@ -65,7 +65,7 @@ TimWolla.WCF ?= {}
 				$('#chatInput').focus()
 				
 			$('.chatToggle').click (event) ->
-				element = $ this
+				element = $ @
 				icon = element.find 'img'
 				if element.data('status') is 1
 					element.data 'status', 0
@@ -101,13 +101,14 @@ TimWolla.WCF ?= {}
 						return if $('#topic').text().trim() is ''
 						
 						$('#topic').wcfBlindOut 'vertical', () ->
-							$(this).text ''
+							$(@).text ''
 					else
 						$('#topic').text data.topic
 						$('#topic').wcfBlindIn() if $('#topic').text().trim() isnt '' and $('#topic').is(':hidden')
 					
 					$('title').text @titleTemplate.fetch(data)
-				, this)
+					@getMessages()
+				, @)
 				error: () ->
 					# reload page to change the room the old fashion-way
 					# inclusive the error-message :)
@@ -117,7 +118,7 @@ TimWolla.WCF ?= {}
 					
 					@loading = true
 					target.parent().addClass 'ajaxLoad'
-				, this)
+				, @)
 		###
 		# Frees the fish
 		###
@@ -165,11 +166,11 @@ TimWolla.WCF ?= {}
 								document.title = @newMessageCount + WCF.Language.get('wcf.chat.newMessages')
 								setTimeout $.proxy(() ->
 									document.title = @title
-								, this), 3000
-							, this), 1000
+								, @), 3000
+							, @), 1000
 					@handleMessages(data.messages)
 					@handleUsers(data.users)
-				, this)
+				, @)
 		###
 		# Inserts the new messages.
 		#
@@ -207,7 +208,7 @@ TimWolla.WCF ?= {}
 					a.click $.proxy (event) ->
 						event.preventDefault()
 						@toggleUserMenu $ event.target
-					, this
+					, @
 					li.append a
 					menu = $ '<ul></ul>'
 					menu.addClass 'chatUserMenu'
@@ -222,8 +223,8 @@ TimWolla.WCF ?= {}
 				foundUsers[id] = true
 			
 			$('.chatUser').each () ->
-				if typeof foundUsers[$(this).attr('id')] is 'undefined'
-					$(this).remove()
+				if typeof foundUsers[$(@).attr('id')] is 'undefined'
+					$(@).remove()
 			
 			$('#toggleUsers .badge').text(users.length);
 		###
@@ -271,10 +272,10 @@ TimWolla.WCF ?= {}
 						return if typeof window.history.replaceState is 'undefined'
 						event.preventDefault()
 						@changeRoom $ event.target
-					, this
+					, @
 					
 					console.log '[TimWolla.WCF.Chat] Found ' + data.length + ' rooms'
-				, this)
+				, @)
 		###
 		# Handles submitting of messages.
 		# 
@@ -297,7 +298,7 @@ TimWolla.WCF ?= {}
 					@getMessages()
 					$('#chatInput').val('').focus()
 					$('#chatInput').keyup()
-				, this)
+				, @)
 				complete: () ->
 					$('#chatInput').removeClass 'ajaxLoad'
 		###
@@ -334,4 +335,4 @@ TimWolla.WCF ?= {}
 			else
 				li.addClass 'activeMenuItem'
 				li.find('.chatUserMenu').wcfBlindIn 'vertical'
-)(jQuery, this)
+)(jQuery, @)
