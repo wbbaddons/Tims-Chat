@@ -47,7 +47,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	 *
 	 * @return	string
 	 */
-	public function getFormattedMessage() {
+	public function getFormattedMessage($outputType = 'text/html') {
 		$message = $this->message;
 		switch ($this->type) {
 			case self::TYPE_JOIN:
@@ -56,7 +56,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 				$message = WCF::getLanguage()->get('wcf.chat.message.'.$this->type);
 			break;
 			case self::TYPE_NORMAL:
-				if (!$this->enableHTML) {
+				if (!$this->enableHTML && $outputType == 'text/html') {
 					$message = \wcf\system\bbcode\SimpleMessageParser::getInstance()->parse($message, true, $this->enableSmilies);
 				}
 		}
@@ -97,6 +97,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			'formattedUsername' => $this->getFormattedUsername(),
 			'formattedMessage' => (string) $this,
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
+			'message' => $this->getFormattedMessage('text/plain'),
 			'sender' => $this->sender,
 			'username' => $this->getUsername(),
 			'time' => $this->time,

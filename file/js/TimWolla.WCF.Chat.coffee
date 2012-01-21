@@ -253,7 +253,7 @@ TimWolla.WCF ?= {}
 			
 			if typeof window.webkitNotifications isnt 'undefined'
 				if window.webkitNotifications.checkPermission() is 0
-					notification = window.webkitNotifications.createNotification WCF.Icon.get('timwolla.wcf.chat.chat'), WCF.Language.get('wcf.chat.newMessages'), 'New message by' + message.username
+					notification = window.webkitNotifications.createNotification WCF.Icon.get('timwolla.wcf.chat.chat'), WCF.Language.get('wcf.chat.newMessages'), message.username + ' ' + message.message
 					notification.show()
 					setTimeout(() ->
 						notification.cancel()
