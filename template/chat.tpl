@@ -198,10 +198,12 @@
 				animations: {CHAT_ANIMATIONS},
 				maxTextLength: {CHAT_LENGTH}
 			}
-			WCF.Language.add('wcf.chat.query', '{lang}wcf.chat.query{/lang}');
-			WCF.Language.add('wcf.chat.kick', '{lang}wcf.chat.kick{/lang}');
-			WCF.Language.add('wcf.chat.ban', '{lang}wcf.chat.ban{/lang}');
-			WCF.Language.add('wcf.chat.profile', '{lang}wcf.chat.profile{/lang}');
+			WCF.Language.addObject({
+				'wcf.chat.query': '{lang}wcf.chat.query{/lang}'),
+				'wcf.chat.kick': '{lang}wcf.chat.kick{/lang}'),
+				'wcf.chat.ban': '{lang}wcf.chat.ban{/lang}'),
+				'wcf.chat.profile': '{lang}wcf.chat.profile{/lang}'
+			});
 			{event name='shouldInit'}
 			// Boot the that
 			TimWolla.WCF.Chat.init();
