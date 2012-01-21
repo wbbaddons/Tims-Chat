@@ -199,13 +199,17 @@
 				maxTextLength: {CHAT_LENGTH}
 			}
 			WCF.Language.addObject({
-				'wcf.chat.query': '{lang}wcf.chat.query{/lang}'),
-				'wcf.chat.kick': '{lang}wcf.chat.kick{/lang}'),
-				'wcf.chat.ban': '{lang}wcf.chat.ban{/lang}'),
-				'wcf.chat.profile': '{lang}wcf.chat.profile{/lang}'
+				'wcf.chat.query': '{lang}wcf.chat.query{/lang}',
+				'wcf.chat.kick': '{lang}wcf.chat.kick{/lang}',
+				'wcf.chat.ban': '{lang}wcf.chat.ban{/lang}',
+				'wcf.chat.profile': '{lang}wcf.chat.profile{/lang}',
+				'wcf.chat.newMessages': '{lang}wcf.chat.newMessages{/lang}'
+			});
+			WCF.Icon.addObject({
+				'timwolla.wcf.chat.chat': '{icon size='L'}chat1{/icon}'
 			});
 			{event name='shouldInit'}
-			// Boot the that
+			// Boot the chat
 			TimWolla.WCF.Chat.init();
 			{event name='didInit'}
 			

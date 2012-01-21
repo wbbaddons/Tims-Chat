@@ -13,7 +13,6 @@ TimWolla.WCF ?= {}
 (($, window) ->
 	TimWolla.WCF.Chat =
 		titleTemplate: null
-		title: document.title
 		messageTemplate: null
 		newMessageCount: null
 		events: 
@@ -34,14 +33,12 @@ TimWolla.WCF ?= {}
 		bindEvents: () ->
 			@isActive = true
 			$(window).focus $.proxy () ->
-				document.title = @title
+				document.title = @titleTemplate.fetch({ title: $('#chatRoomList .activeMenuItem a').text() })
 				@newMessageCount = 0
-				clearTimeout @timeout
 				@isActive = true
 			, @
 			
 			$(window).blur $.proxy () ->
-				@title = document.title
 				@isActive = false
 			, @
 			
@@ -75,6 +72,10 @@ TimWolla.WCF ?= {}
 					element.data 'status', 1
 					icon.attr 'src', icon.attr('src').replace /disabled(\d?).([a-z]{3})$/, 'enabled$1.$2'
 					element.attr 'title', element.data 'disableMessage'
+			if typeof window.webkitNotifications isnt 'undefined'
+				$('#chatNotify').click (event) ->
+					window.webkitNotifications.requestPermission()
+					
 		###
 		# Changes the chat-room.
 		# 
@@ -159,15 +160,6 @@ TimWolla.WCF ?= {}
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
-					if (!@isActive and $('#chatNotify').data('status') is 1)
-						@newMessageCount += data.messages.length
-						if (@newMessageCount > 0)
-							@timeout = setTimeout $.proxy(() ->
-								document.title = @newMessageCount + WCF.Language.get('wcf.chat.newMessages')
-								setTimeout $.proxy(() ->
-									document.title = @title
-								, @), 3000
-							, @), 1000
 					@handleMessages(data.messages)
 					@handleUsers(data.users)
 				, @)
@@ -179,6 +171,7 @@ TimWolla.WCF ?= {}
 		handleMessages: (messages) ->
 			for message in messages
 				@events.newMessage.fire message
+				@notify message
 				
 				output = @messageTemplate.fetch message
 				li = $ '<li></li>'
@@ -247,6 +240,24 @@ TimWolla.WCF ?= {}
 				$('#chatForm').submit()
 			else
 				$('#chatInput').focus()
+		###
+		# Sends a notification about a message.
+		#
+		# @param	object	message
+		###
+		notify: (message) ->
+			#return if (@isActive or $('#chatNotify').data('status') is 0)
+			@newMessageCount++
+			
+			document.title = @newMessageCount + ' ' + WCF.Language.get('wcf.chat.newMessages') + ' - ' + @titleTemplate.fetch({ title: $('#chatRoomList .activeMenuItem a').text() })
+			
+			if typeof window.webkitNotifications isnt 'undefined'
+				if window.webkitNotifications.checkPermission() is 0
+					notification = window.webkitNotifications.createNotification WCF.Icon.get('timwolla.wcf.chat.chat'), WCF.Language.get('wcf.chat.newMessages'), 'New message by' + message.username
+					notification.show()
+					setTimeout(() ->
+						notification.cancel()
+					, 5000)
 		###
 		# Refreshes the room-list.
 		###
