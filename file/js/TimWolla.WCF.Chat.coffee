@@ -21,9 +21,11 @@ TimWolla.WCF ?= {}
 		init: () ->
 			console.log('[TimWolla.WCF.Chat] Initializing');
 			@bindEvents()
-			@refreshRoomList()
+			@events.newMessage.add $.proxy @notify, @
+			
 			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, @), 60e3
 			new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1000
+			@refreshRoomList()
 			@getMessages()
 			
 			console.log '[TimWolla.WCF.Chat] Finished initializing'
@@ -171,7 +173,6 @@ TimWolla.WCF ?= {}
 		handleMessages: (messages) ->
 			for message in messages
 				@events.newMessage.fire message
-				@notify message
 				
 				output = @messageTemplate.fetch message
 				li = $ '<li></li>'
@@ -246,7 +247,7 @@ TimWolla.WCF ?= {}
 		# @param	object	message
 		###
 		notify: (message) ->
-			#return if (@isActive or $('#chatNotify').data('status') is 0)
+			return if (@isActive or $('#chatNotify').data('status') is 0)
 			@newMessageCount++
 			
 			document.title = @newMessageCount + ' ' + WCF.Language.get('wcf.chat.newMessages') + ' - ' + @titleTemplate.fetch({ title: $('#chatRoomList .activeMenuItem a').text() })
