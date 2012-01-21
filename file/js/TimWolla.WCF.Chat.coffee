@@ -104,7 +104,7 @@ TimWolla.WCF ?= {}
 							$(this).text ''
 					else
 						$('#topic').text data.topic
-						$('#topic').wcfBlindIn() if $('#topic').text().trim() isnt ''
+						$('#topic').wcfBlindIn() if $('#topic').text().trim() isnt '' and $('#topic').is(':hidden')
 					
 					$('title').text @titleTemplate.fetch(data)
 				, this)
@@ -158,7 +158,7 @@ TimWolla.WCF ?= {}
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
-					if (!@isActive && $('#chatNotify').data('status') is 1)
+					if (!@isActive and $('#chatNotify').data('status') is 1)
 						@newMessageCount += data.messages.length
 						if (@newMessageCount > 0)
 							@timeout = setTimeout $.proxy(() ->
