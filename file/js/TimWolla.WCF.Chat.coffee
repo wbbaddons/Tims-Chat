@@ -250,7 +250,7 @@ TimWolla.WCF ?= {}
 			return if (@isActive or $('#chatNotify').data('status') is 0)
 			@newMessageCount++
 			
-			document.title = @newMessageCount + ' ' + WCF.Language.get('wcf.chat.newMessages') + ' - ' + @titleTemplate.fetch({ title: $('#chatRoomList .activeMenuItem a').text() })
+			document.title = '(' + @newMessageCount + ') ' + @titleTemplate.fetch({ title: $('#chatRoomList .activeMenuItem a').text() })
 			
 			if typeof window.webkitNotifications isnt 'undefined'
 				if window.webkitNotifications.checkPermission() is 0
