@@ -76,7 +76,7 @@ TimWolla.WCF ?= {}
 					element.attr 'title', element.data 'disableMessage'
 			if typeof window.webkitNotifications isnt 'undefined'
 				$('#chatNotify').click (event) ->
-					window.webkitNotifications.requestPermission()
+					window.webkitNotifications.requestPermission() if $(this).data 'status'
 					
 		###
 		# Changes the chat-room.
