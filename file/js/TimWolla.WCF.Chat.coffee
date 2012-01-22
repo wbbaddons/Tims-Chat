@@ -19,7 +19,7 @@ TimWolla.WCF ?= {}
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
 		init: () ->
-			console.log('[TimWolla.WCF.Chat] Initializing');
+			console.log '[TimWolla.WCF.Chat] Initializing'
 			@bindEvents()
 			@events.newMessage.add $.proxy @notify, @
 			
@@ -35,7 +35,8 @@ TimWolla.WCF ?= {}
 		bindEvents: () ->
 			@isActive = true
 			$(window).focus $.proxy () ->
-				document.title = @titleTemplate.fetch({ title: $('#chatRoomList .activeMenuItem a').text() })
+				document.title = @titleTemplate.fetch
+					title: $('#chatRoomList .activeMenuItem a').text()
 				@newMessageCount = 0
 				@isActive = true
 			, @
@@ -109,7 +110,7 @@ TimWolla.WCF ?= {}
 						$('#topic').text data.topic
 						$('#topic').wcfBlindIn() if $('#topic').text().trim() isnt '' and $('#topic').is(':hidden')
 					
-					$('title').text @titleTemplate.fetch(data)
+					$('title').text @titleTemplate.fetch data
 					@getMessages()
 				, @)
 				error: () ->
@@ -250,11 +251,15 @@ TimWolla.WCF ?= {}
 			return if (@isActive or $('#chatNotify').data('status') is 0)
 			@newMessageCount++
 			
-			document.title = '(' + @newMessageCount + ') ' + @titleTemplate.fetch({ title: $('#chatRoomList .activeMenuItem a').text() })
+			document.title = '(' + @newMessageCount + ') ' + @titleTemplate.fetch
+				 title: $('#chatRoomList .activeMenuItem a').text()
 			
 			if typeof window.webkitNotifications isnt 'undefined'
 				if window.webkitNotifications.checkPermission() is 0
-					notification = window.webkitNotifications.createNotification WCF.Icon.get('timwolla.wcf.chat.chat'), WCF.Language.get('wcf.chat.newMessages'), message.username + ' ' + message.message
+					title = WCF.Language.get('wcf.chat.newMessages')
+					icon = WCF.Icon.get('timwolla.wcf.chat.chat')
+					content = message.username + message.separator + ' ' + message.message
+					notification = window.webkitNotifications.createNotification icon, title, content
 					notification.show()
 					setTimeout(() ->
 						notification.cancel()
