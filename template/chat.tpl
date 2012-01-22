@@ -6,11 +6,19 @@
 	{include file='headInclude' sandbox=false}
 	<style type="text/css">
 		@import url("{@RELATIVE_WCF_DIR}style/timwolla.wcf.chat.css");
-		#chatUserList > li > .bgFix a {
+		#chatCopyrightDialog {
+			background-image: url("{link controller='Chat' action='Copyright' sheep=1}{/link}");
+			background-position: right 45px;
+			background-repeat: no-repeat;
+			min-height: 50%;
+		}
+		#chatUserList > li > a {
 			background-image: url({icon size='S'}arrowRight{/icon});
+			background-position: 15px center;
+			background-repeat: no-repeat;
 		}
 		
-		#chatUserList > li.activeMenuItem > .bgFix a {
+		#chatUserList > li.activeMenuItem > a {
 			background-image: url({icon size='S'}arrowDown{/icon});
 		}
 		
@@ -76,19 +84,19 @@
 
 <body id="tpl{$templateName|ucfirst}">
 {capture assign='sidebar'}
-<div id="sidebarMenu">
+<div id="sidebarContent" class="sidebarContent">
 	<nav class="chatSidebarTabs">
 		<ul>
-			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang}</a></li>
-			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang}</a></li>
+			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang} <span class="badge">0</span></a></li>
+			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang} <span class="badge">{#$rooms|count}</span></a></li>
 		</ul>
 	</nav>
 	
 	<div id="sidebarContainer">
 		<ul id="chatUserList">
-		{section name=user start=1 loop=26}
-			<li id="user-{$user}" class="chatUser">
-				<span class="bgFix"><a class="chatUserLink" href="javascript:;">User {$user}</a></span>
+		{*section name=user start=1 loop=26}
+			<li class="chatUser">
+				<a href="javascript:;">User {$user}</a>
 				<ul class="chatUserMenu">
 					<li>
 						<a href="javascript:;">{lang}wcf.chat.query{/lang}</a>
@@ -98,7 +106,7 @@
 					</li>
 				</ul>
 			</li>
-		{/section}
+		{/section*}
 		</ul>
 		<nav id="chatRoomList" class="sidebarMenu" style="display: none;">
 			<div>
@@ -116,16 +124,18 @@
 	</div>
 </div>
 {/capture}
-{include file='header' sandbox=false sidebarDirection='right'}
+{include file='header' sandbox=false sidebarOrientation='right'}
 
 <div id="chatRoomContent">
 	<div id="topic" class="border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
 	<div class="chatMessageContainer border content">
-		<ul></ul>
+		<ul>
+			<noscript><li class="error">{lang}wcf.chat.noJs{/lang}</li></noscript>
+		</ul>
 	</div>
 	
 	<form id="chatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<input type="text" id="chatInput" class="inputText long counterInput" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
+		<input type="text" id="chatInput" class="inputText long counterInput" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
 	<div id="chatControls">
@@ -165,31 +175,63 @@
 						<a id="chatMark" href="javascript:;" class="balloonTooltip" title="Show checkboxes">
 							<img alt="" src="{icon}check1{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
 						</a>
-					</li>											
+					</li>
 				</ul>
 			</div>
 		</div>
+		{include file='chatCopyright'}
 	</div>
 </div>
 
+{include file='chatJavascriptInclude'}
 <script type="text/javascript">
 	//<![CDATA[
-		TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
-		{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
-		TimWolla.WCF.Chat.messageTemplate = new WCF.Template('{@$chatMessageTemplate|encodeJS}');
-		TimWolla.WCF.Chat.config = { 
-			reloadTime: {CHAT_RELOADTIME},
-			animations: {CHAT_ANIMATIONS},
-			maxTextLength: {CHAT_LENGTH}
-		}
-		TimWolla.WCF.Chat.init();
-		TimWolla.WCF.Chat.handleMessages([
-			{implode from=$newestMessages item='message'}
-				{@$message->jsonify()}
-			{/implode}
-		]);
-
-		$('#chatInput').jCounter();
+		(function ($, window) {
+			// populate templates
+			TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
+			{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
+			TimWolla.WCF.Chat.messageTemplate = new WCF.Template('{@$chatMessageTemplate|encodeJS}');
+			
+			// populate config
+			TimWolla.WCF.Chat.config = {
+				reloadTime: {CHAT_RELOADTIME},
+				animations: {CHAT_ANIMATIONS},
+				maxTextLength: {CHAT_LENGTH}
+			}
+			WCF.Language.addObject({
+				'wcf.chat.query': '{lang}wcf.chat.query{/lang}',
+				'wcf.chat.kick': '{lang}wcf.chat.kick{/lang}',
+				'wcf.chat.ban': '{lang}wcf.chat.ban{/lang}',
+				'wcf.chat.profile': '{lang}wcf.chat.profile{/lang}',
+				'wcf.chat.newMessages': '{lang}wcf.chat.newMessages{/lang}'
+			});
+			WCF.Icon.addObject({
+				'timwolla.wcf.chat.chat': '{icon size='L'}chat1{/icon}'
+			});
+			{event name='shouldInit'}
+			// Boot the chat
+			TimWolla.WCF.Chat.init();
+			{event name='didInit'}
+			
+			// show the last X messages
+			TimWolla.WCF.Chat.handleMessages([
+				{implode from=$newestMessages item='message'}
+					{@$message->jsonify()}
+				{/implode}
+			]);
+			
+			// enable user-interface
+			$('#chatInput').enable().jCounter().focus();
+			$('#chatControls .copyright').click(function (event) {
+				event.preventDefault();
+				if ($.wcfIsset('chatCopyrightDialog')) return WCF.showDialog('chatCopyrightDialog', true, { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
+				var container = $('<div id="chatCopyrightDialog"></div>');
+				container.load('{link controller='Chat' action='Copyright'}{/link}', function() {
+					$('body').append(container);
+					WCF.showDialog('chatCopyrightDialog', true, { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
+				});
+			});
+		})(jQuery, this)
 	//]]>
 </script>
 

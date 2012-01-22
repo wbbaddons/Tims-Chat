@@ -1,20 +1,18 @@
-#chatBox {
-	padding: 0;
-	
-	div {
-		text-align: center;
-	}
-}
+/**
+ * Chat-Styles
+ * 
+ * @author	Tim Düsterhus, Maximilian Mader
+ * @copyright	2010-2011 Tim Düsterhus
+ * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
+ * @package	timwolla.wcf.chat
+ */
 
-#chatBox aside, #chatRoomContent {
+#chatRoomContent {
 	text-align: left;
 }
 
 .sidebar {
 	margin-bottom: -20px !important;
-}
-
-aside {
 	overflow: auto;
 	padding: 0;
 	
@@ -32,17 +30,7 @@ aside {
 			}
 		}
 	}
-	
-	& aside {
-		padding-right: 1px;
-	}
-
-	& aside {
-		padding-left: 1px;
-	}
 }
-
-
 
 #topic, #smileyList, #chatOptions {
 	padding: 5px;
@@ -51,6 +39,7 @@ aside {
 .chatMessageContainer {
 	height: 200px;
 	overflow-y: scroll;
+	overflow-x: hidden;
 	padding-left: 7px !important;
 }
 
@@ -196,6 +185,18 @@ aside {
 					margin-right: -1px;
 				}
 			}
+			
+			&.active .badge {
+				font-size: 65% !important;
+				color: #fff;
+				background-color: #369;
+				
+				-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+				-moz-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+				-ms-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+				-o-box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+				box-shadow: 0 0 1px rgba(255, 255, 255, 1);
+			}
 		}
 	}
 }
@@ -208,4 +209,38 @@ aside {
 	overflow-y: auto;
 	height: 420px;
 	width: 100%;
+}
+
+#sidebarContainer a {
+	outline: none;
+}
+
+#chatCopyright {
+	bottom: 5px;
+	position: absolute;
+}
+
+.sidebarContent {
+	> div {
+		 ul {
+			> li {
+				margin-top: 5px;
+				background-color: transparent !important;
+				box-shadow: none !important;
+			}
+		}
+	}
+}
+
+.sidebarContent {
+	> div {
+		 ul {
+			> li.activeMenuItem {
+				> a {
+				    background-color: #FFFFFF;
+				    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+				}
+			}
+		}
+	}
 }

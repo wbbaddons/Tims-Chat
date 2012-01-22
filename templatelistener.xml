@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/templatelistener.xsd">
 	<import>
-		<templatelistener name="chatJavascriptInclude">
-			<environment>user</environment>
-			<templatename>headInclude</templatename>
-			<eventname>javascriptInclude</eventname>
-			<templatecode><![CDATA[{include file='chatJavascriptInclude'}]]></templatecode>
-		</templatelistener>
-		<templatelistener name="chatCopyright">
-			<environment>user</environment>
-			<templatename>footer</templatename>
-			<eventname>copyright</eventname>
-			<templatecode><![CDATA[{include file='chatCopyright'}]]></templatecode>
-		</templatelistener>
 		<templatelistener name="chatHeaderNavigation">
 			<environment>user</environment>
 			<templatename>header</templatename>
