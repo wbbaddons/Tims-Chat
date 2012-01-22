@@ -2,7 +2,7 @@
 namespace wcf\system\chat\commands\commands;
 
 /**
- * Free-Command
+ * Informs everyone that the fish was freed. OH A NOEZ.
  *
  * @author 	Tim Düsterhus
  * @copyright	2010-2011 Tim Düsterhus
