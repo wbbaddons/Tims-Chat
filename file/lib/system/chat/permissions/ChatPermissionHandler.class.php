@@ -7,7 +7,7 @@ use \wcf\system\WCF;
 /**
  * Handles chat-permissions.
  *
- * @author 	Tim D�sterhus, Marcel Werk
+ * @author 	Tim Düsterhus, Marcel Werk
  * @copyright	2010-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	timwolla.wcf.chat
