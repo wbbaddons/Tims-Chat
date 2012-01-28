@@ -18,6 +18,7 @@ TimWolla.WCF ?= {}
 		isActive: true
 		autocompleteOffset: 0
 		autocompleteValue: null
+		scrollHeightTopDiff: null
 		events: 
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
@@ -72,6 +73,7 @@ TimWolla.WCF ?= {}
 			, @
 			
 			$('#chatInput').keydown $.proxy (event) ->
+				# tab key
 				if event.keyCode is 9
 					event.preventDefault()
 					if @autocompleteValue is null
@@ -104,6 +106,12 @@ TimWolla.WCF ?= {}
 					element.data 'status', 1
 					icon.attr 'src', icon.attr('src').replace /disabled(\d?).([a-z]{3})$/, 'enabled$1.$2'
 					element.attr 'title', element.data 'disableMessage'
+					
+			$('#chatAutoscroll').click (event) ->
+				$(this).removeClass('hot')
+				if $(this).data 'status'
+					$('.chatMessageContainer').scrollTop $('.chatMessageContainer ul').height()
+					
 			if typeof window.webkitNotifications isnt 'undefined'
 				$('#chatNotify').click (event) ->
 					window.webkitNotifications.requestPermission() if $(this).data 'status'
@@ -182,7 +190,7 @@ TimWolla.WCF ?= {}
 				fish.animate
 					top: '+=' + top
 					left: '+=' + left
-				, 1000
+				, 1e3
 			, 1.5e3);
 		###
 		# Loads new messages.
@@ -201,6 +209,13 @@ TimWolla.WCF ?= {}
 		# @param	array<object>	messages
 		###
 		handleMessages: (messages) ->
+			# disable scrolling automagically when user manually scrolled
+			if @scrollHeightTopDiff isnt null
+				if @scrollHeightTopDiff isnt $('.chatMessageContainer ul').height() - $('.chatMessageContainer').scrollTop()
+					if $('#chatAutoscroll').data('status') is 1
+						$('#chatAutoscroll').click()
+						$('#chatAutoscroll').addClass('hot').fadeOut('slow').fadeIn('slow')
+						
 			for message in messages
 				@events.newMessage.fire message
 				
@@ -211,9 +226,11 @@ TimWolla.WCF ?= {}
 				li.append output
 				
 				li.appendTo $ '.chatMessageContainer ul'
-			$('.chatMessageContainer').animate 
-				scrollTop: $('.chatMessageContainer ul').height()
-			, 1000
+				
+			# autoscroll down
+			if $('#chatAutoscroll').data('status') is 1
+				$('.chatMessageContainer').scrollTop $('.chatMessageContainer ul').height()
+				@scrollHeightTopDiff = $('.chatMessageContainer ul').height() - $('.chatMessageContainer').scrollTop()
 		handleUsers: (users) ->
 			foundUsers = {}
 			for user in users
