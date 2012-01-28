@@ -5,7 +5,7 @@ namespace wcf\system\event\listener;
  * Adds a new route to RouteHandler
  *
  * @author 	Maximilian Mader
- * @copyright	2010-2011 Tim Düsterhus
+ * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	timwolla.wcf.chat
  * @subpackage system.event.listener
