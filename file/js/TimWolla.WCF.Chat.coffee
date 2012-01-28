@@ -15,6 +15,9 @@ TimWolla.WCF ?= {}
 		titleTemplate: null
 		messageTemplate: null
 		newMessageCount: null
+		isActive: true
+		autocompleteOffset: 0
+		autocompleteValue: null
 		events: 
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
@@ -30,10 +33,20 @@ TimWolla.WCF ?= {}
 			
 			console.log '[TimWolla.WCF.Chat] Finished initializing'
 		###
+		# Autocompletes a username
+		###
+		autocomplete: (firstChars, offset = @autocompleteOffset) ->
+			users = []
+			for user in $ '.chatUser'
+				username = $(user).data('username');
+				if username.indexOf(firstChars) is 0
+					users.push username
+			
+			return if users.length is 0 then firstChars else users[offset % users.length]
+		###
 		# Binds all the events needed for Tims Chat.
 		###
 		bindEvents: () ->
-			@isActive = true
 			$(window).focus $.proxy () ->
 				document.title = @titleTemplate.fetch({ title: $('#chatRoomList .activeMenuItem a').text() })
 				@newMessageCount = 0
@@ -58,6 +71,23 @@ TimWolla.WCF ?= {}
 				@submit $ event.target
 			, @
 			
+			$('#chatInput').keydown $.proxy (event) ->
+				if event.keyCode is 9
+					event.preventDefault()
+					if @autocompleteValue is null
+						@autocompleteValue = $('#chatInput').val()
+					
+					firstChars = @autocompleteValue.substring(@autocompleteValue.lastIndexOf(' ')+1)
+					
+					console.log '[TimWolla.WCF.Chat] Autocompleting "' + firstChars + '"'
+					return if firstChars.length is 0
+					
+					$('#chatInput').val(@autocompleteValue.substring(0, @autocompleteValue.lastIndexOf(' ')+1) + @autocomplete(firstChars) + ', ')
+					@autocompleteOffset++
+				else
+					@autocompleteOffset = 0
+					@autocompleteValue = null
+			, @
 			$('#chatClear').click (event) ->
 				event.preventDefault()
 				$('.chatMessage').remove()
@@ -198,6 +228,7 @@ TimWolla.WCF ?= {}
 					li = $ '<li></li>'
 					li.attr 'id', id
 					li.addClass 'chatUser'
+					li.data 'username', user.username
 					a = $ '<a href="javascript:;">'+user.username+'</a>'
 					a.click $.proxy (event) ->
 						event.preventDefault()
