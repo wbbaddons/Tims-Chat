@@ -173,8 +173,8 @@ TimWolla.WCF ?= {}
 						$('#topic').text data.topic
 						$('#topic').wcfBlindIn() if $('#topic').text().trim() isnt '' and $('#topic').is(':hidden')
 					
-					$('title').text @titleTemplate.fetch(data)
-					@getMessages()
+					@handleMessages(data.messages)
+					document.title = @titleTemplate.fetch(data)
 				, @)
 				error: () ->
 					# Reload the page to change the room the old fashion-way
