@@ -12,13 +12,22 @@ TimWolla.WCF ?= {}
 
 (($, window) ->
 	TimWolla.WCF.Chat =
+		# Templates
 		titleTemplate: null
 		messageTemplate: null
+		
+		# Notifications
 		newMessageCount: null
 		isActive: true
+		
+		# Autocompleter
 		autocompleteOffset: 0
 		autocompleteValue: null
+		
+		# Autoscroll
 		scrollHeightTopDiff: null
+		
+		# Events
 		events: 
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
@@ -28,7 +37,7 @@ TimWolla.WCF ?= {}
 			@events.newMessage.add $.proxy @notify, @
 			
 			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, @), 60e3
-			new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1000
+			new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1e3
 			@refreshRoomList()
 			@getMessages()
 			
@@ -126,7 +135,7 @@ TimWolla.WCF ?= {}
 					$('.chatMessageContainer').scrollTop $('.chatMessageContainer ul').height()
 				
 			# Desktop Notifications
-			if typeof window.webkitNotifications isnt 'undefined'
+			unless typeof window.webkitNotifications is 'undefined'
 				$('#chatNotify').click (event) ->
 					window.webkitNotifications.requestPermission() if $(this).data 'status'
 					
@@ -191,15 +200,15 @@ TimWolla.WCF ?= {}
 			
 			fish.appendTo $ 'body'
 			new WCF.PeriodicalExecuter(() ->
-				left = (Math.random() * 100 - 50)
-				top = (Math.random() * 100 - 50)
+				left = Math.random() * 100 - 50
+				top = Math.random() * 100 - 50
 				fish = $('#fish')
 				
-				left *= -1 if ((fish.position().left + left) < (0 + fish.width()) or (fish.position().left + left) > ($(document).width() - fish.width()))
-				top *= -1 if ((fish.position().top + top) < (0 + fish.height()) or (fish.position().top + top) > ($(document).height() - fish.height()))
+				left *= -1 unless fish.width() < (fish.position().left + left) < ($(document).width() - fish.width()))
+				top *= -1 unless fish.height() < (fish.position().top + top) < ($(document).height() - fish.height()))
 				
-				fish.text('><((((\u00B0>') if (left > 0)
-				fish.text('<\u00B0))))><') if (left < 0)
+				fish.text('><((((\u00B0>') if left > 0
+				fish.text('<\u00B0))))><') if left < 0
 				
 				fish.animate
 					top: '+=' + top
@@ -224,8 +233,8 @@ TimWolla.WCF ?= {}
 		###
 		handleMessages: (messages) ->
 			# Disable scrolling automagically when user manually scrolled
-			if @scrollHeightTopDiff isnt null
-				if @scrollHeightTopDiff isnt $('.chatMessageContainer ul').height() - $('.chatMessageContainer').scrollTop()
+			unless @scrollHeightTopDiff is null
+				if $('.chatMessageContainer ul').height() - $('.chatMessageContainer').scrollTop() isnt @scrollHeighTopDiff
 					if $('#chatAutoscroll').data('status') is 1
 						$('#chatAutoscroll').click()
 						$('#chatAutoscroll').addClass('hot').fadeOut('slow').fadeIn('slow')
@@ -318,7 +327,7 @@ TimWolla.WCF ?= {}
 		# @param	object	message
 		###
 		notify: (message) ->
-			return if (@isActive or $('#chatNotify').data('status') is 0)
+			return if @isActive or $('#chatNotify').data('status') is 0
 			@newMessageCount++
 			
 			document.title = '(' + @newMessageCount + ') ' + @titleTemplate.fetch({ title: $('#chatRoomList .activeMenuItem a').text() })
