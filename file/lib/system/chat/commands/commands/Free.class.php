@@ -17,6 +17,9 @@ class Free extends Me {
 	 * @see	\wcf\system\chat\commands\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return 'freed the fish. OH A NOEZ';
+		if (\wcf\util\StringUtil::toLowerCase($this->commandHandler->getParameters()) == 'the fish')
+			return 'freed the fish. OH A NOEZ';
+		else
+			throw new \wcf\system\chat\commands\NotFoundException();
 	}
 }
