@@ -136,7 +136,8 @@ TimWolla.WCF ?= {}
 				$(this).removeClass('hot')
 				if $(this).data 'status'
 					$('.chatMessageContainer').scrollTop $('.chatMessageContainer ul').height()
-				
+					@oldScrollTop = $('.chatMessageContainer').scrollTop()
+					
 			# Desktop Notifications
 			unless typeof window.webkitNotifications is 'undefined'
 				$('#chatNotify').click (event) ->
@@ -237,7 +238,7 @@ TimWolla.WCF ?= {}
 		handleMessages: (messages) ->
 			# Disable scrolling automagically when user manually scrolled
 			unless @oldScrollTop is null
-				if $('.chatMessageContainer').scrollTop() isnt @oldScrollTop
+				if $('.chatMessageContainer').scrollTop() < @oldScrollTop
 					if $('#chatAutoscroll').data('status') is 1
 						$('#chatAutoscroll').click()
 						$('#chatAutoscroll').addClass('hot').fadeOut('slow').fadeIn('slow')
@@ -257,7 +258,7 @@ TimWolla.WCF ?= {}
 			# Autoscroll down
 			if $('#chatAutoscroll').data('status') is 1
 				$('.chatMessageContainer').scrollTop $('.chatMessageContainer ul').height()
-				@oldScrollTop = $('.chatMessageContainer').scrollTop()
+			@oldScrollTop = $('.chatMessageContainer').scrollTop()
 		###
 		# Builds the userlist.
 		#
