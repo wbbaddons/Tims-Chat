@@ -25,7 +25,7 @@ TimWolla.WCF ?= {}
 		autocompleteValue: null
 		
 		# Autoscroll
-		scrollHeightTopDiff: null
+		oldScrollTop: null
 		
 		# Events
 		events: 
@@ -204,8 +204,8 @@ TimWolla.WCF ?= {}
 				top = Math.random() * 100 - 50
 				fish = $('#fish')
 				
-				left *= -1 unless fish.width() < (fish.position().left + left) < ($(document).width() - fish.width()))
-				top *= -1 unless fish.height() < (fish.position().top + top) < ($(document).height() - fish.height()))
+				left *= -1 unless fish.width() < (fish.position().left + left) < ($(document).width() - fish.width())
+				top *= -1 unless fish.height() < (fish.position().top + top) < ($(document).height() - fish.height())
 				
 				fish.text('><((((\u00B0>') if left > 0
 				fish.text('<\u00B0))))><') if left < 0
@@ -233,8 +233,8 @@ TimWolla.WCF ?= {}
 		###
 		handleMessages: (messages) ->
 			# Disable scrolling automagically when user manually scrolled
-			unless @scrollHeightTopDiff is null
-				if $('.chatMessageContainer ul').height() - $('.chatMessageContainer').scrollTop() isnt @scrollHeighTopDiff
+			unless @oldScrollTop is null
+				if $('.chatMessageContainer').scrollTop() isnt @oldScrollTop
 					if $('#chatAutoscroll').data('status') is 1
 						$('#chatAutoscroll').click()
 						$('#chatAutoscroll').addClass('hot').fadeOut('slow').fadeIn('slow')
@@ -254,7 +254,7 @@ TimWolla.WCF ?= {}
 			# Autoscroll down
 			if $('#chatAutoscroll').data('status') is 1
 				$('.chatMessageContainer').scrollTop $('.chatMessageContainer ul').height()
-				@scrollHeightTopDiff = $('.chatMessageContainer ul').height() - $('.chatMessageContainer').scrollTop()
+				@oldScrollTop = $('.chatMessageContainer').scrollTop()
 		###
 		# Builds the userlist.
 		#
