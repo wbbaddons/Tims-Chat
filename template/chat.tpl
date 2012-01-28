@@ -119,6 +119,7 @@
 					{/if}
 				{/foreach}
 				</ul>
+				<div style="text-align: center;"><button type="button">Force Refresh</button></div>
 			</div>
 		</nav>
 	</div>

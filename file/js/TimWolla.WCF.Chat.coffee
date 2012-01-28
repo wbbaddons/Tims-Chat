@@ -109,6 +109,9 @@ TimWolla.WCF ?= {}
 					@autocompleteValue = null
 			, @
 			
+			# Refreshes the roomlist
+			$('#chatRoomList button').click $.proxy(@refreshRoomList, @)
+			
 			# Clears the stream
 			$('#chatClear').click (event) ->
 				event.preventDefault()
