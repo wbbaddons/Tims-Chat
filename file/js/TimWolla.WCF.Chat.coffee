@@ -116,6 +116,8 @@ TimWolla.WCF ?= {}
 			$('#chatClear').click (event) ->
 				event.preventDefault()
 				$('.chatMessage').remove()
+				@oldScrollTop = $('.chatMessageContainer').scrollTop()
+				$('.chatMessageContainer').scrollTop $('.chatMessageContainer ul').height()
 				$('#chatInput').focus()
 			
 			# Toggle Buttons
@@ -343,7 +345,7 @@ TimWolla.WCF ?= {}
 					notification.show()
 					setTimeout(() ->
 						notification.cancel()
-					, 5000)
+					, 5e3)
 		###
 		# Refreshes the room-list.
 		###
