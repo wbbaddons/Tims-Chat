@@ -32,7 +32,7 @@ TimWolla.WCF ?= {}
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
 		init: () ->
-			console.log('[TimWolla.WCF.Chat] Initializing');
+			console.log '[TimWolla.WCF.Chat] Initializing'
 			@bindEvents()
 			@events.newMessage.add $.proxy @notify, @
 			
