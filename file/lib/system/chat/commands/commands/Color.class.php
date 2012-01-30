@@ -14,26 +14,27 @@ use \wcf\util\StringUtil;
 class Color extends \wcf\system\chat\commands\AbstractCommand {
 	const ENABLE_SMILIES = \wcf\system\chat\commands\ICommand::SMILEY_OFF;
 	public static $colors = array(
-		'red' => 0xFF0000,
-		'blue' => 0x0000FF,
-		'green' => 0x00FF00,
-		'yellow' => 0xFFFF00,
-		'black' => 0x000000,
-		'white' => 0xFFFFFF,
-		'orange' => 0xFFA500,
-		'purple' => 0xA020F0,
-		'weed' => 0xF5DEB3,
-		'pink' => 0xFFC0CB,
-		'grey' => 0xBEBEBE,
-		'khaki' => 0xF0E68C,
-		'lavender' => 0xE6E6FA,
-		'maroon' => 0xB03060,
-		'gold' => 0xFFD700,
-		'navyblue' => 0x000080,
-		'royalblue' => 0x4169E1,
-		'aquamarine' => 0x7FFFD4,
-		'cyan' => 0x00FFFF,
-		'magenta' => 0x00FFFF
+		'red'		=> 0xFF0000,
+		'blue'		=> 0x0000FF,
+		'green'		=> 0x00FF00,
+		'yellow'	=> 0xFFFF00,
+		'black'		=> 0x000000,
+		'white'		=> 0xFFFFFF,
+		'orange'	=> 0xFFA500,
+		'purple'	=> 0xA020F0,
+		'weed'		=> 0xF5DEB3,
+		'pink'		=> 0xFFC0CB,
+		'grey'		=> 0xBEBEBE,
+		'khaki'		=> 0xF0E68C,
+		'lavender'	=> 0xE6E6FA,
+		'maroon'	=> 0xB03060,
+		'gold'		=> 0xFFD700,
+		'navyblue'	=> 0x000080,
+		'royalblue'	=> 0x4169E1,
+		'aquamarine'	=> 0x7FFFD4,
+		'cyan'		=> 0x00FFFF,
+		'magenta'	=> 0x00FFFF,
+		'oxford'	=> 0xF02D // looks like green
 	);
 	
 	public function __construct(\wcf\system\chat\commands\CommandHandler $commandHandler) {
