@@ -8,7 +8,7 @@ use \wcf\system\WCF;
  * Shows the chat-interface
  *
  * @author 	Tim Düsterhus
- * @copyright	2010-2011 Tim Düsterhus
+ * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	timwolla.wcf.chat
  * @subpackage	page
@@ -66,8 +66,6 @@ class ChatPage extends AbstractPage {
 		$this->readRoom();
 		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
 		\wcf\util\ChatUtil::writeUserData(array('roomID' => $this->room->roomID));
-		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
-		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => count($this->newestMessages) ? end($this->newestMessages)->messageID : 0));
 		
 		if (CHAT_DISPLAY_JOIN_LEAVE) {
 			$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
@@ -85,6 +83,9 @@ class ChatPage extends AbstractPage {
 			$messageAction->executeAction();
 			$return = $messageAction->getReturnValues();
 		}
+		
+		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
+		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => end($this->newestMessages)->messageID));
 		
 		$this->readDefaultSmileys();
 		$this->readChatVersion();
@@ -173,9 +174,12 @@ class ChatPage extends AbstractPage {
 		if ($this->useTemplate) exit;
 		@header('Content-type: application/json');
 		
+		$messages = array();
+		foreach ($this->newestMessages as $message) $messages[] = $message->jsonify(true);
 		echo \wcf\util\JSON::encode(array(
 			'title' => $this->room->getTitle(),
-			'topic' => WCF::getLanguage()->get($this->room->topic)
+			'topic' => WCF::getLanguage()->get($this->room->topic),
+			'messages' => $messages
 		));
 		exit;
 	}

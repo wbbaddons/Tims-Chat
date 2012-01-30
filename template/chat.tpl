@@ -119,6 +119,7 @@
 					{/if}
 				{/foreach}
 				</ul>
+				<div style="text-align: center;"><button type="button">Force Refresh</button></div>
 			</div>
 		</nav>
 	</div>
@@ -153,27 +154,27 @@
 				<ul>
 					<li>
 						<a id="chatAutoscroll" href="javascript:;" class="chatToggle balloonTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
-							<img alt="" src="{icon}enabled1{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
+							<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
 						</a>
 					</li>
 					<li>
 						<a id="chatNotify" href="javascript:;" class="chatToggle balloonTooltip" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
-							<img alt="" src="{icon}disabled1{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
+							<img alt="" src="{icon size='S'}disabled1{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
 						</a>
 					</li>
 					<li>
 						<a id="chatSmilies" href="javascript:;" class="chatToggle balloonTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
-							<img alt="" src="{icon}enabled1{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
+							<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
 						</a>
 					</li>
 					<li>
-						<a id="chatClear" href="javascript:;" class="balloonTooltip" title="Clear the chat">
-							<img alt="" src="{icon}delete1{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
+						<a id="chatClear" href="javascript:;" class="balloonTooltip" title="{lang}wcf.chat.clear.description{/lang}">
+							<img alt="" src="{icon size='S'}delete1{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
 						</a>
 					</li>
 					<li>
-						<a id="chatMark" href="javascript:;" class="balloonTooltip" title="Show checkboxes">
-							<img alt="" src="{icon}check1{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
+						<a id="chatMark" href="javascript:;" class="balloonTooltip" title="{lang}wcf.chat.mark.description{/lang}">
+							<img alt="" src="{icon size='S'}check1{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
 						</a>
 					</li>
 				</ul>
@@ -182,21 +183,20 @@
 		{include file='chatCopyright'}
 	</div>
 </div>
-
 {include file='chatJavascriptInclude'}
 <script type="text/javascript">
 	//<![CDATA[
 		(function ($, window) {
 			// populate templates
-			TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
+			TimWolla.WCF.Chat.titleTemplate = (new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile();
 			{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
-			TimWolla.WCF.Chat.messageTemplate = new WCF.Template('{@$chatMessageTemplate|encodeJS}');
+			TimWolla.WCF.Chat.messageTemplate = (new WCF.Template('{@$chatMessageTemplate|encodeJS}')).compile();
 			
 			// populate config
 			TimWolla.WCF.Chat.config = {
-				reloadTime: {CHAT_RELOADTIME},
-				animations: {CHAT_ANIMATIONS},
-				maxTextLength: {CHAT_LENGTH}
+				reloadTime: {@CHAT_RELOADTIME},
+				animations: {@CHAT_ANIMATIONS},
+				maxTextLength: {@CHAT_LENGTH}
 			}
 			WCF.Language.addObject({
 				'wcf.chat.query': '{lang}wcf.chat.query{/lang}',
