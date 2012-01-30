@@ -9,8 +9,11 @@
 
 TimWolla ?= {}
 TimWolla.WCF ?= {}
+consoleMock ?= 
+	log: () ->,
+	warn: () ->
 
-(($, window) ->
+(($, window, console) ->
 	TimWolla.WCF.Chat =
 		# Templates
 		titleTemplate: null
@@ -267,19 +270,19 @@ TimWolla.WCF ?= {}
 		# @param	array<object>	users
 		###
 		handleUsers: (users) ->
-			foundUsers = {}
+			foundUsers = { }
 			for user in users
 				id = 'chatUser-'+user.userID
 				element = $('#'+id)
 				
 				# Move the user to the correct position
 				if element[0]
-					console.log '[TimWolla.WCF.Chat] Shifting user ' + user.userID
+					console.log '[TimWolla.WCF.Chat] Moving User: "' + user.username + '"'
 					element = element.detach()
 					$('#chatUserList').append element
 				# Insert the user
 				else
-					console.log '[TimWolla.WCF.Chat] Inserting user ' + user.userID
+					console.log '[TimWolla.WCF.Chat] Inserting User: "' + user.username + '"'
 					li = $ '<li></li>'
 					li.attr 'id', id
 					li.addClass 'chatUser'
@@ -302,9 +305,12 @@ TimWolla.WCF ?= {}
 				
 				foundUsers[id] = true
 			
+			# Remove users that were not found
 			$('.chatUser').each () ->
 				if typeof foundUsers[$(@).attr('id')] is 'undefined'
-					$(@).remove()
+					console.log '[TimWolla.WCF.Chat] Removing User: "' + $(@).data('username') + '"'
+					$(@).remove();
+					
 			
 			$('#toggleUsers .badge').text(users.length);
 		###
@@ -435,4 +441,4 @@ TimWolla.WCF ?= {}
 			else
 				li.addClass 'activeMenuItem'
 				li.find('.chatUserMenu').wcfBlindIn 'vertical'
-)(jQuery, @)
+)(jQuery, @, consoleMock)

@@ -183,7 +183,6 @@
 		{include file='chatCopyright'}
 	</div>
 </div>
-
 {include file='chatJavascriptInclude'}
 <script type="text/javascript">
 	//<![CDATA[
@@ -195,9 +194,9 @@
 			
 			// populate config
 			TimWolla.WCF.Chat.config = {
-				reloadTime: {CHAT_RELOADTIME},
-				animations: {CHAT_ANIMATIONS},
-				maxTextLength: {CHAT_LENGTH}
+				reloadTime: {@CHAT_RELOADTIME},
+				animations: {@CHAT_ANIMATIONS},
+				maxTextLength: {@CHAT_LENGTH}
 			}
 			WCF.Language.addObject({
 				'wcf.chat.query': '{lang}wcf.chat.query{/lang}',
