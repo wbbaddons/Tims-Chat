@@ -105,7 +105,7 @@ consoleMock ?=
 					return if firstChars.length is 0
 					
 					# Insert name and increment offset
-					$('#chatInput').val(@autocompleteValue.substring(0, @autocompleteValue.lastIndexOf(' ')+1) + @autocomplete(firstChars) + ', ')
+					$('#chatInput').val(@autocompleteValue.substring(0, @autocompleteValue.lastIndexOf(' ') + 1) + @autocomplete(firstChars) + ', ')
 					@autocompleteOffset++
 				else
 					@autocompleteOffset = 0
