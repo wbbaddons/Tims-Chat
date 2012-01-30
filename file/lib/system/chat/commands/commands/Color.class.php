@@ -38,19 +38,25 @@ class Color extends \wcf\system\chat\commands\AbstractCommand {
 	
 	public function __construct(\wcf\system\chat\commands\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
-		list($color1, $color2) = explode(' ', $commandHandler->getParameters());
-		if (isset(self::$colors[$color1])) $color1 = self::$colors[$color1];
-		else {
-			if (strlen($color1) == 3) $color1 = $color1[0].$color1[0].$color1[1].$color1[1].$color1[2].$color1[2];
-			$color1 = hexdec($color1);
+		try {
+			list($color[1], $color[2]) = explode(' ', $commandHandler->getParameters());
 		}
-		if (isset(self::$colors[$color2])) $color2 = self::$colors[$color2];
-		else {
-			if (strlen($color2) == 3) $color2 = $color2[0].$color2[0].$color2[1].$color2[1].$color2[2].$color2[2];
-			$color2 = hexdec($color2);
+		catch (\wcf\system\exception\SystemException $e) {
+			$color[1] = $color[2] = $commandHandler->getParameters();
 		}
 		
-		\wcf\util\ChatUtil::writeUserData(array('color' => array(1 => $color1, 2 => $color2)));
+		$regex = new \wcf\system\Regex('^#?([a-f0-9]{3}|[a-f0-9]{6})$', \wcf\system\Regex::CASE_INSENSITIVE);
+		foreach ($color as $key => $val) {
+			if (isset(self::$colors[$val])) $color[$key] = self::$colors[$val];
+			else {
+				if (!$regex->match($val)) throw new \wcf\system\chat\commands\NotFoundException();
+				$matches = $regex->getMatches();
+				$val = $matches[1];
+				if (strlen($val) == 3) $val = $val[0].$val[0].$val[1].$val[1].$val[2].$val[2];
+				$color[$key] = hexdec($val);
+			}
+		}
+		\wcf\util\ChatUtil::writeUserData(array('color' => $color));
 	}
 	
 	/**
