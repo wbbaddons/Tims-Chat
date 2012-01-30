@@ -168,12 +168,12 @@
 						</a>
 					</li>
 					<li>
-						<a id="chatClear" href="javascript:;" class="balloonTooltip" title="Clear the chat">
+						<a id="chatClear" href="javascript:;" class="balloonTooltip" title="{lang}wcf.chat.clear.description{/lang}">
 							<img alt="" src="{icon size='S'}delete1{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
 						</a>
 					</li>
 					<li>
-						<a id="chatMark" href="javascript:;" class="balloonTooltip" title="Show checkboxes">
+						<a id="chatMark" href="javascript:;" class="balloonTooltip" title="{lang}wcf.chat.mark.description{/lang}">
 							<img alt="" src="{icon size='S'}check1{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
 						</a>
 					</li>
@@ -189,9 +189,9 @@
 	//<![CDATA[
 		(function ($, window) {
 			// populate templates
-			TimWolla.WCF.Chat.titleTemplate = new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}');
+			TimWolla.WCF.Chat.titleTemplate = (new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile();
 			{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
-			TimWolla.WCF.Chat.messageTemplate = new WCF.Template('{@$chatMessageTemplate|encodeJS}');
+			TimWolla.WCF.Chat.messageTemplate = (new WCF.Template('{@$chatMessageTemplate|encodeJS}')).compile();
 			
 			// populate config
 			TimWolla.WCF.Chat.config = {
