@@ -15,6 +15,7 @@ Cleaning up
 EOT;
 	if (file_exists('file.tar')) unlink('file.tar');
 	if (file_exists('template.tar')) unlink('template.tar');
+	if (file_exists('acptemplate.tar')) unlink('acptemplate.tar');
 	foreach (glob('file/js/*.js') as $jsFile) unlink($jsFile);
 	foreach (glob('file/style/*.css') as $cssFile) unlink($cssFile);
 	if (file_exists('timwolla.wcf.chat.tar')) unlink('timwolla.wcf.chat.tar');
@@ -60,15 +61,25 @@ EOT;
 	if ($code != 0) exit($code);
 echo <<<EOT
 
+Building acptemplate.tar
+---------------------
+
+EOT;
+	chdir('../acptemplate');
+	passthru('tar cvf ../acptemplate.tar *', $code);
+	if ($code != 0) exit($code);
+echo <<<EOT
+
 Building timwolla.wcf.chat.tar
 ------------------------------
 
 EOT;
 	chdir('..');
-	passthru('tar cvf timwolla.wcf.chat.tar * --exclude=file --exclude=template --exclude=build.php', $code);
+	passthru('tar cvf timwolla.wcf.chat.tar * --exclude=file --exclude=template --exclude=acptemplate --exclude=build.php', $code);
 	if ($code != 0) exit($code);
 
 if (file_exists('file.tar')) unlink('file.tar');
 if (file_exists('template.tar')) unlink('template.tar');
+if (file_exists('acptemplate.tar')) unlink('acptemplate.tar');
 foreach (glob('file/js/*.js') as $jsFile) unlink($jsFile);
 foreach (glob('file/style/*.css') as $cssFile) unlink($cssFile);
