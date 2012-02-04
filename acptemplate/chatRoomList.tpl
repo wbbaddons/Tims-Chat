@@ -9,7 +9,7 @@
 	<script type="text/javascript">
 		//<![CDATA[
 		$(function() {
-			new WCF.Action.Delete('wcf\\data\\chat\\room\\ChatRoomAction', $('.chatRoomRow'));
+			new WCF.Action.Delete('wcf\\data\\chat\\room\\ChatRoomAction', $('.chatRoomRow'), $('.wcf-content .wcf-badge'));
 			new WCF.Action.Toggle('wcf\\data\\chat\\room\\ChatRoomAction', $('.chatRoomRow'));
 		});
 		//]]>
