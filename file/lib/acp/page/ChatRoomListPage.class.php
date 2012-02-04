@@ -40,7 +40,7 @@ class ChatRoomListPage extends \wcf\page\MultipleLinkPage {
 	 */
 	public function show() {
 		// set active menu item.
-		\wcf\system\menu\acp\ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.chat.list');
+		\wcf\system\menu\acp\ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.chat.room.list');
 		
 		parent::show();
 	}

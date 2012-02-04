@@ -5,14 +5,14 @@
 			<parent>wcf.acp.menu.link.content</parent>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.chat.list">
+		<acpmenuitem name="wcf.acp.menu.link.chat.room.list">
 			<link>index.php/ChatRoomList/</link>
 			<parent>wcf.acp.menu.link.chat</parent>
 			<permissions>admin.content.chat.canEditRoom,admin.content.chat.canDeleteRoom</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 
-		<acpmenuitem name="wcf.acp.menu.link.chat.add">
+		<acpmenuitem name="wcf.acp.menu.link.chat.room.add">
 			<link>index.php/ChatRoomAdd/</link>
 			<parent>wcf.acp.menu.link.chat</parent>
 			<permissions>admin.content.chat.canAddRoom</permissions>
