@@ -4,12 +4,11 @@ namespace wcf\acp\page;
 /**
  * Lists available chatrooms.
  * 
- * @author	Tim DÃ¼sterhus
- * @copyright	2011-2012 Tim DÃ¼sterhus
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @author 	Tim Düsterhus
+ * @copyright	2010-2012 Tim Düsterhus
+ * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
+ * @package	timwolla.wcf.chat
  * @subpackage	acp.page
- * @category 	Community Framework
  */
 class ChatRoomListPage extends \wcf\page\MultipleLinkPage {
 	/**
