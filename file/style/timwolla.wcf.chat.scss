@@ -67,14 +67,6 @@
 }
 
 #chatUserList {
-	> li > .bgFix a { 
-		background: {
-			position: 15px center;
-			repeat: no-repeat;
-			size: 16px auto;
-		}
-	}
-	
 	.chatUserMenu {
 		display: none;
 		li {
@@ -114,10 +106,6 @@
 		position: right center;
 		repeat: no-repeat;
 	}
-}
-
-.bgFix {
-	display: block;
 }
 
 .chatSidebarTabs {
@@ -213,6 +201,7 @@
 
 #sidebarContainer a {
 	outline: none;
+	overflow: hidden;
 }
 
 #chatCopyright {
