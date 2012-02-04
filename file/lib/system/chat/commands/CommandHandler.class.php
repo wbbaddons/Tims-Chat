@@ -11,9 +11,9 @@ use \wcf\util\StringUtil;
  * @package	timwolla.wcf.chat
  * @subpackage	system.chat.commands
  */
-class CommandHandler {
+final class CommandHandler {
 	const COMMAND_CHAR = '/';
-	public $text = '';
+	private $text = '';
 	
 	/**
 	 * Initialises the CommandHandler
@@ -33,6 +33,15 @@ class CommandHandler {
 	}
 	
 	/**
+	 * Returns the whole message.
+	 *
+	 * @return	string
+	 */
+	public function getText() {
+		return $this->text;
+	}
+	
+	/**
 	 * Returns the parameter-string.
 	 * 
 	 * @return	string
@@ -40,6 +49,7 @@ class CommandHandler {
 	public function getParameters() {
 		$parts = explode(' ', StringUtil::substring($this->text, StringUtil::length(static::COMMAND_CHAR)), 2);
 		
+		if (!isset($parts[1])) return '';
 		return $parts[1];
 	}
 	
@@ -50,7 +60,7 @@ class CommandHandler {
 		$parts = explode(' ', StringUtil::substring($this->text, StringUtil::length(static::COMMAND_CHAR)), 2);
 		
 		if ($this->isCommand($parts[0])) {
-			return new commands\commands\PlainCommand($this);
+			return new commands\Plain($this);
 		}
 		
 		$class = '\wcf\system\chat\commands\commands\\'.ucfirst($parts[0]);
