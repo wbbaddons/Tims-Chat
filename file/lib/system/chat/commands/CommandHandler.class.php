@@ -50,7 +50,7 @@ class CommandHandler {
 		$parts = explode(' ', StringUtil::substring($this->text, StringUtil::length(static::COMMAND_CHAR)), 2);
 		
 		if ($this->isCommand($parts[0])) {
-			return new \wcf\system\chat\commands\PlainCommand();
+			return new commands\commands\PlainCommand($this);
 		}
 		
 		$class = '\wcf\system\chat\commands\commands\\'.ucfirst($parts[0]);

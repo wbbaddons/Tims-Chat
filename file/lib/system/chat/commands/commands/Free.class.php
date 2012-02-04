@@ -11,7 +11,7 @@ namespace wcf\system\chat\commands\commands;
  * @subpackage	system.chat.commands.commands
  */
 class Free extends Me {
-	const ENABLE_SMILIES = \wcf\system\chat\commands\ICommand::SMILEY_OFF;
+	public $enableSmilies = \wcf\system\chat\commands\ICommand::SMILEY_OFF;
 	
 	/**
 	 * @see	\wcf\system\chat\commands\ICommand::getMessage()

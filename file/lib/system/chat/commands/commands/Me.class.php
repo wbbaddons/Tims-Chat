@@ -12,7 +12,7 @@ use \wcf\util\StringUtil;
  * @subpackage	system.chat.commands.commands
  */
 class Me extends \wcf\system\chat\commands\AbstractCommand {
-	const ENABLE_SMILIES = \wcf\system\chat\commands\ICommand::SMILEY_USER;
+	public $enableSmilies = \wcf\system\chat\commands\ICommand::SMILEY_USER;
 	
 	/**
 	 * @see	\wcf\system\chat\commands\ICommand::getType()

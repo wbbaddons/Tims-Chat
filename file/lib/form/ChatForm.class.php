@@ -51,6 +51,7 @@ class ChatForm extends AbstractForm {
 	 */
 	public function validate() {
 		parent::validate();
+		
 		if ($this->message === '') {
 			throw new UserInputException('text');
 		}
@@ -67,7 +68,7 @@ class ChatForm extends AbstractForm {
 			try {
 				$command = $commandHandler->loadCommand();
 				
-				if ($command::ENABLE_SMILIES != \wcf\system\chat\commands\ICommand::SMILEY_USER) $this->enableSmilies = $command::ENABLE_SMILIES;
+				if ($command->enableSmilies != \wcf\system\chat\commands\ICommand::SMILEY_USER) $this->enableSmilies = $command->enableSmilies;
 				$type = $command->getType();
 				$this->message = $command->getMessage();
 				$receiver = $command->getReceiver();
