@@ -63,6 +63,9 @@
 		<item name="wcf.chat.message.2"><![CDATA[hat den Chat verlassen.]]></item>
 	</category>
 	
+	<!-- I18N Values -->
+	<category name="wcf.chat.room" />
+		
 	<category name="wcf.header">
 		<item name="wcf.header.menu.chat"><![CDATA[Chat]]></item>
 	</category>

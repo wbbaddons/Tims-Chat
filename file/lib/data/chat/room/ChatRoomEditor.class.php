@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\chat\room;
+use \wcf\system\WCF;
 
 /**
  * Provides functions to edit chat rooms.
@@ -22,5 +23,25 @@ class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data
 	public static function resetCache() {
 		ChatRoom::getCache();
 		\wcf\system\cache\CacheHandler::getInstance()->clearResource('chatrooms');
+	}
+	
+	/**
+	 * @see \wcf\data\DatabaseObjectEditor::deleteAll()
+	 */
+	public static function deleteAll(array $objectIDs = array()) {
+		parent::deleteAll($objectIDs);
+		$packageID = \wcf\system\package\PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		$sql = "DELETE FROM wcf".WCF_N."_language_item
+			WHERE languageItem = ? AND packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($objectIDs as $objectID) {
+			$statement->execute(array('wcf.chat.room.title.room'.$objectID, $packageID));
+			$statement->execute(array('wcf.chat.room.topic.room'.$objectID, $packageID));
+		}
+		WCF::getDB()->commitTransaction();
+		
+		return count($objectIDs);
 	}
 }
