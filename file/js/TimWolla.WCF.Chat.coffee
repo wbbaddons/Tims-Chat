@@ -118,11 +118,11 @@ consoleMock ?=
 			
 			# Clears the stream
 			$('#timsChatClear').click (event) ->
-			      event.preventDefault()
-			      $('.timsChatMessage').remove()
-			      @oldScrollTop = $('.timsChatMessageContainer').scrollTop()
-			      $('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
-			      $('#timsChatInput').focus()
+				event.preventDefault()
+				$('.timsChatMessage').remove()
+				@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
+				$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
+				$('#timsChatInput').focus()
 			
 			# Toggle Buttons
 			$('.timsChatToggle').click (event) ->
@@ -252,10 +252,12 @@ consoleMock ?=
 			
 			# Insert the messages
 			for message in messages
+				continue if $.wcfIsset 'timsChatMessage'+message.messageID # Prevent problems with race condition
 				@events.newMessage.fire message
 				
 				output = @messageTemplate.fetch message
 				li = $ '<li></li>'
+				li.attr 'id', 'timsChatMessage'+message.messageID
 				li.addClass 'timsChatMessage timsChatMessage'+message.type
 				li.addClass 'ownMessage' if message.sender is WCF.User.userID
 				li.append output

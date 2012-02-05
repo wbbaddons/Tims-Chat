@@ -103,7 +103,8 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			'time' => $this->time,
 			'receiver' => $this->receiver,
 			'type' => $this->type,
-			'roomID' => $this->roomID
+			'roomID' => $this->roomID,
+			'messageID' => $this->messageID
 		);
 		
 		if ($raw) return $array;
