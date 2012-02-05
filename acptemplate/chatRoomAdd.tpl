@@ -1,7 +1,7 @@
 {include file='header'}
 
 <header class="wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/{$action}1.svg" alt="" />
+	<img src="{@$__wcf->getPath('wcf')}icon/{$action}1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.chat.room.{$action}{/lang}</h1>
 	</hgroup>
@@ -18,7 +18,7 @@
 <div class="wcf-contentHeader">
 	<nav>
 		<ul class="wcf-largeButtons">
-			<li><a href="{link controller='ChatRoomList'}{/link}" title="{lang}wcf.acp.menu.link.chat.room.list{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/chat1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.chat.room.list{/lang}</span></a></li>
+			<li><a href="{link controller='ChatRoomList'}{/link}" title="{lang}wcf.acp.menu.link.chat.room.list{/lang}" class="wcf-button"><img src="{@$__wcf->getPath('wcf')}icon/chat1.svg" alt="" /> <span>{lang}wcf.acp.menu.link.chat.room.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>

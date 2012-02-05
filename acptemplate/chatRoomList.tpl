@@ -1,7 +1,7 @@
 {include file='header'}
 
 <header class="wcf-mainHeading">
-	<img src="{@RELATIVE_WCF_DIR}icon/chat1.svg" alt="" />
+	<img src="{@$__wcf->getPath('wcf')}icon/chat1.svg" alt="" />
 	<hgroup>
 		<h1>{lang}wcf.acp.chat.room.list{/lang}</h1>
 	</hgroup>
@@ -22,7 +22,7 @@
 	{if $__wcf->session->getPermission('admin.content.chat.canAddRoom')}
 		<nav>
 			<ul class="wcf-largeButtons">
-				<li><a href="{link controller='ChatRoomAdd'}{/link}" title="{lang}wcf.acp.chat.room.add{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.chat.room.add{/lang}</span></a></li>
+				<li><a href="{link controller='ChatRoomAdd'}{/link}" title="{lang}wcf.acp.chat.room.add{/lang}" class="wcf-button"><img src="{@$__wcf->getPath('wcf')}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.chat.room.add{/lang}</span></a></li>
 			</ul>
 		</nav>
 	{/if}
@@ -50,14 +50,14 @@
 						<tr class="chatRoomRow">
 							<td class="columnIcon">
 								{if $__wcf->session->getPermission('admin.content.chat.canEditRoom')}
-									<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}"><img src="{@RELATIVE_WCF_DIR}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
+									<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}"><img src="{@$__wcf->getPath('wcf')}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
 								{else}
-									<img src="{@RELATIVE_WCF_DIR}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" />
+									<img src="{@$__wcf->getPath('wcf')}icon/edit1D.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" />
 								{/if}
 								{if $__wcf->session->getPermission('admin.content.chat.canDeleteRoom')}
-									<img src="{@RELATIVE_WCF_DIR}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="deleteButton balloonTooltip" data-object-id="{@$chatRoom->roomID}" data-confirm-message="{lang}wcf.acp.bbcode.delete.sure{/lang}" />
+									<img src="{@$__wcf->getPath('wcf')}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="deleteButton balloonTooltip" data-object-id="{@$chatRoom->roomID}" data-confirm-message="{lang}wcf.acp.bbcode.delete.sure{/lang}" />
 								{else}
-									<img src="{@RELATIVE_WCF_DIR}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
+									<img src="{@$__wcf->getPath('wcf')}icon/delete1D.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" />
 								{/if}
 								
 								{event name='buttons'}
@@ -80,7 +80,7 @@
 		{if $__wcf->session->getPermission('admin.content.chat.canAddRoom')}
 			<nav>
 				<ul class="wcf-largeButtons">
-					<li><a href="{link controller='ChatRoomAdd'}{/link}" title="{lang}wcf.acp.chat.room.add{/lang}" class="wcf-button"><img src="{@RELATIVE_WCF_DIR}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.chat.room.add{/lang}</span></a></li>
+					<li><a href="{link controller='ChatRoomAdd'}{/link}" title="{lang}wcf.acp.chat.room.add{/lang}" class="wcf-button"><img src="{@$__wcf->getPath('wcf')}icon/add1.svg" alt="" /> <span>{lang}wcf.acp.chat.room.add{/lang}</span></a></li>
 				</ul>
 			</nav>
 		{/if}

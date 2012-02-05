@@ -5,7 +5,7 @@
 	
 	{include file='headInclude' sandbox=false}
 	<style type="text/css">
-		@import url("{@RELATIVE_WCF_DIR}style/timwolla.wcf.chat.css");
+		@import url("{@$__wcf->getPath('wcf')}style/timwolla.wcf.chat.css");
 		#timsChatCopyrightDialog {
 			background-image: url("{link controller='Chat' action='Copyright' sheep=1}{/link}");
 			background-position: right 45px;
