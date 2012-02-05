@@ -178,7 +178,7 @@ consoleMock ?=
 							$(@).text ''
 					else
 						$('#timsChatTopic').text data.topic
-						$('#timsChatTopic').wcfBlindIn() if $('#timsChatTopic').text().trim() isnt '' and $('#topic').is(':hidden')
+						$('#timsChatTopic').wcfBlindIn() if $('#timsChatTopic').text().trim() isnt '' and $('#timsChatTopic').is(':hidden')
 					
 					$('.timsChatMessage').animate('opacity', .8);
 					@handleMessages data.messages
