@@ -172,13 +172,13 @@ consoleMock ?=
 					
 					# Set new topic
 					if data.topic is ''
-						return if $('#topic').text().trim() is ''
+						return if $('#timsChatTopic').text().trim() is ''
 						
-						$('#topic').wcfBlindOut 'vertical', () ->
+						$('#timsChatTopic').wcfBlindOut 'vertical', () ->
 							$(@).text ''
 					else
-						$('#topic').text data.topic
-						$('#topic').wcfBlindIn() if $('#topic').text().trim() isnt '' and $('#topic').is(':hidden')
+						$('#timsChatTopic').text data.topic
+						$('#timsChatTopic').wcfBlindIn() if $('#timsChatTopic').text().trim() isnt '' and $('#topic').is(':hidden')
 					
 					$('.timsChatMessage').animate('opacity', .8);
 					@handleMessages data.messages
