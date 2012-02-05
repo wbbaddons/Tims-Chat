@@ -67,7 +67,10 @@ class ChatMessagePage extends AbstractPage {
 				AND 	fieldValue = ".intval($this->roomID);
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
+		$userIDs = array();
 		while ($row = $stmt->fetchArray()) $userIDs[] = $row['userID'];
+		
+		if (!count($userIDs)) return;
 		
 		$sql = "SELECT
 				*
