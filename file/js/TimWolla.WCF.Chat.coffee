@@ -180,7 +180,7 @@ consoleMock ?=
 						$('#timsChatTopic').text data.topic
 						$('#timsChatTopic').wcfBlindIn() if $('#timsChatTopic').text().trim() isnt '' and $('#timsChatTopic').is(':hidden')
 					
-					$('.timsChatMessage').animate('opacity', .8);
+					$('.timsChatMessage').addClass('unloaded', 800);
 					@handleMessages data.messages
 					document.title = @titleTemplate.fetch data
 				, @)
