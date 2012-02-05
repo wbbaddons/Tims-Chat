@@ -120,7 +120,7 @@ consoleMock ?=
 			$('#timsChatClear').click (event) ->
 				event.preventDefault()
 				$('.timsChatMessage').remove()
-				@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
+				@oldScrollTop = null
 				$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
 				$('#timsChatInput').focus()
 			
