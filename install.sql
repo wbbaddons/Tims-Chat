@@ -52,7 +52,7 @@ ALTER TABLE wcf1_chat_room ADD FOREIGN KEY (owner) REFERENCES wcf1_user (userID)
 ALTER TABLE wcf1_chat_room_suspension ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_chat_room_suspension ADD FOREIGN KEY (roomID) REFERENCES wcf1_chat_room (roomID) ON DELETE CASCADE;
 
-INSERT INTO wcf1_chat_room (title, topic, position) VALUES ('Testroom 1', 'Topic of Testroom 1', 1);
+INSERT INTO wcf1_chat_room (title, topic, position) VALUES ('wcf.chat.room.title1', 'wcf.chat.room.topic1', 1);
 INSERT INTO wcf1_chat_room (title, topic, position) VALUES ('Testroom 2', 'Topic of Testroom 2', 2);
 INSERT INTO wcf1_chat_room (title, topic, position) VALUES ('Testroom with a very long', 'The topic of this room is rather loing as well!', 3);
 INSERT INTO wcf1_chat_room (title, topic, position) VALUES ('Room w/o topic', '', 4);
