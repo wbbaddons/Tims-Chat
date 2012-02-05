@@ -1,8 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\label\Label;
-use wcf\data\label\LabelAction;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
 use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
