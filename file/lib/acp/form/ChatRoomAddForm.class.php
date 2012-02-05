@@ -16,12 +16,12 @@ use \wcf\system\WCF;
  */
 class ChatRoomAddForm extends ACPForm {
 	/**
-	 * @see wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see \wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.chat.room.add';
 	
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see \wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.content.chat.canAddRoom');
 	
@@ -105,21 +105,20 @@ class ChatRoomAddForm extends ACPForm {
 		$roomID = $returnValues['returnValues']->roomID;
 		
 		if (!I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->save('title', 'wcf.chat.room.title.room'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('title', 'wcf.chat.room.title'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
 		
 			// update title
-			
 			$chatRoomEditor->update(array(
-				'title' => 'wcf.chat.room.title.room'.$roomID
+				'title' => 'wcf.chat.room.title'.$roomID
 			));
 		}
 
 		if (!I18nHandler::getInstance()->isPlainValue('topic')) {
-			I18nHandler::getInstance()->save('title', 'wcf.chat.room.topic.room'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('topic', 'wcf.chat.room.topic'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
 
 			// update topic
 			$chatRoomEditor->update(array(
-				'title' => 'wcf.chat.room.topic.room'.$roomID
+				'topic' => 'wcf.chat.room.topic'.$roomID
 			));
 		}
 

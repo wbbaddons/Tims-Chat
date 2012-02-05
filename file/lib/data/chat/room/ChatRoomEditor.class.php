@@ -31,14 +31,11 @@ class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data
 	public static function deleteAll(array $objectIDs = array()) {
 		parent::deleteAll($objectIDs);
 		$packageID = \wcf\system\package\PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
-		$sql = "DELETE FROM wcf".WCF_N."_language_item
-			WHERE languageItem = ? AND packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {
-			$statement->execute(array('wcf.chat.room.title.room'.$objectID, $packageID));
-			$statement->execute(array('wcf.chat.room.topic.room'.$objectID, $packageID));
+			\wcf\system\language\I18nHandler::getInstance()->remove('wcf.chat.room.title'.$objectID, $packageID);
+			\wcf\system\language\I18nHandler::getInstance()->remove('wcf.chat.room.topic'.$objectID, $packageID);
 		}
 		WCF::getDB()->commitTransaction();
 		
