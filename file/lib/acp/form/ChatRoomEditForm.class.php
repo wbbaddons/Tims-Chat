@@ -82,7 +82,7 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 		
 		
 		// update room
-		$chatRoomAction = new LabelAction(array($this->roomID), 'update', array('data' => array(
+		$chatRoomAction = new \wcf\data\chat\room\ChatRoomEditor(array($this->roomID), 'update', array('data' => array(
 			'title' => $this->title,
 			'topic' => $this->topic
 		)));
