@@ -10,7 +10,7 @@
 	$.fn.jCounter = (container, options) ->
 		options = $.extend
 			max: 0
-			counterClass: 'counter'
+			counterClass: 'jsCounter'
 			countUp: false
 		, options
 		
@@ -19,7 +19,7 @@
 		else max = options.max
 		
 		if !container
-			this.wrap('<div class="counterContainer"><div></div></div>').parent().append('<div class="' + options.counterClass + ' color-1">' + max + '</div>');
+			this.wrap('<div class="jsCounterContainer"><div></div></div>').parent().append('<div class="' + options.counterClass + ' color-1">' + max + '</div>');
 			jCounterContainer = $(this).parent().children('.' + options.counterClass)
 		else
 			if typeof container is 'object'

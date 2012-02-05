@@ -7,7 +7,7 @@
  * @package	timwolla.wcf.chat
  */
 
-#chatRoomContent {
+#timsChatRoomContent {
 	text-align: left;
 }
 
@@ -32,11 +32,11 @@
 	}
 }
 
-#topic, #smileyList, #chatOptions {
+#timsChatTopic, #smileyList, #timsChatOptions {
 	padding: 5px;
 }
 
-.chatMessageContainer {
+.timsChatMessageContainer {
 	height: 200px;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -50,32 +50,24 @@
 	}
 }
 
-#chatForm {
+#timsChatForm {
 	white-space: nowrap;
 	margin-top: 10px;
 	// Fix to align chatInput in center
 	text-align: center;
 }
 
-#chatInput {
+#timsChatInput {
 	position: relative;
 	z-index: 10;
 }
 
-#chatOptions {
+#timsChatOptions {
 	display: inline-block;
 }
 
-#chatUserList {
-	> li > .bgFix a { 
-		background: {
-			position: 15px center;
-			repeat: no-repeat;
-			size: 16px auto;
-		}
-	}
-	
-	.chatUserMenu {
+#timsChatUserList {
+	.timsChatUserMenu {
 		display: none;
 		li {
 			a {
@@ -91,7 +83,7 @@
 	}
 }
 
-.chatMessage {
+.timsChatMessage {
 	padding-left: 16px;
 	min-height: 16px;
 	
@@ -107,6 +99,10 @@
 			content: "]";
 		}
 	}
+	
+	.unloaded {
+	  opacity: 0.4;
+	}
 }
 
 .ajaxLoad {
@@ -116,11 +112,7 @@
 	}
 }
 
-.bgFix {
-	display: block;
-}
-
-.chatSidebarTabs {
+.timsChatSidebarTabs {
 	height: 32px;
 	z-index: 101;
 	position: relative;
@@ -201,7 +193,7 @@
 	}
 }
 
-#chatRoomList {
+#timsChatRoomList {
 	margin-top: 5px;
 }
 
@@ -213,9 +205,10 @@
 
 #sidebarContainer a {
 	outline: none;
+	overflow: hidden;
 }
 
-#chatCopyright {
+#timsChatCopyright {
 	bottom: 5px;
 	position: absolute;
 }
