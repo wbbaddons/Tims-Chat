@@ -52,7 +52,7 @@ consoleMock ?=
 			users = []
 			
 			# Search all matching users
-			for user in $ '.chatUser'
+			for user in $ '.timsChatUser'
 				username = $(user).data('username');
 				if username.indexOf(firstChars) is 0
 					users.push username
@@ -65,7 +65,8 @@ consoleMock ?=
 		###
 		bindEvents: () ->
 			$(window).focus $.proxy () ->
-				document.title = @titleTemplate.fetch({ title: $('#chatRoomList .activeMenuItem a').text() })
+				document.title = @titleTemplate.fetch
+					title: $('#timsChatRoomList .activeMenuItem a').text()
 				@newMessageCount = 0
 				@isActive = true
 			, @
@@ -80,24 +81,24 @@ consoleMock ?=
 			, @
 			
 			# Switch sidebar tab
-			$('.chatSidebarTabs li').click $.proxy (event) ->
+			$('.timsChatSidebarTabs li').click $.proxy (event) ->
 				event.preventDefault()
 				@toggleSidebarContents $ event.target
 			, @
 			
 			# Submit Handler
-			$('#chatForm').submit $.proxy (event) ->
+			$('#timsChatForm').submit $.proxy (event) ->
 				event.preventDefault()
 				@submit $ event.target
 			, @
 			
 			# Autocompleter
-			$('#chatInput').keydown $.proxy (event) ->
+			$('#timsChatInput').keydown $.proxy (event) ->
 				# tab key
 				if event.keyCode is 9
 					event.preventDefault()
 					if @autocompleteValue is null
-						@autocompleteValue = $('#chatInput').val()
+						@autocompleteValue = $('#timsChatInput').val()
 					
 					firstChars = @autocompleteValue.substring(@autocompleteValue.lastIndexOf(' ')+1)
 					
@@ -105,7 +106,7 @@ consoleMock ?=
 					return if firstChars.length is 0
 					
 					# Insert name and increment offset
-					$('#chatInput').val(@autocompleteValue.substring(0, @autocompleteValue.lastIndexOf(' ') + 1) + @autocomplete(firstChars) + ', ')
+					$('#timsChatInput').val(@autocompleteValue.substring(0, @autocompleteValue.lastIndexOf(' ') + 1) + @autocomplete(firstChars) + ', ')
 					@autocompleteOffset++
 				else
 					@autocompleteOffset = 0
@@ -113,18 +114,18 @@ consoleMock ?=
 			, @
 			
 			# Refreshes the roomlist
-			$('#chatRoomList button').click $.proxy(@refreshRoomList, @)
+			$('#timsChatRoomList button').click $.proxy(@refreshRoomList, @)
 			
 			# Clears the stream
-			$('#chatClear').click (event) ->
-				event.preventDefault()
-				$('.chatMessage').remove()
-				@oldScrollTop = $('.chatMessageContainer').scrollTop()
-				$('.chatMessageContainer').scrollTop $('.chatMessageContainer ul').height()
-				$('#chatInput').focus()
+			$('#timsChatClear').click (event) ->
+			      event.preventDefault()
+			      $('.timsChatMessage').remove()
+			      @oldScrollTop = $('.timsChatMessageContainer').scrollTop()
+			      $('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
+			      $('#timsChatInput').focus()
 			
 			# Toggle Buttons
-			$('.chatToggle').click (event) ->
+			$('.timsChatToggle').click (event) ->
 				element = $ @
 				icon = element.find 'img'
 				if element.data('status') is 1
@@ -137,15 +138,15 @@ consoleMock ?=
 					element.attr 'title', element.data 'disableMessage'
 					
 			# Immediatly scroll down when activating autoscroll
-			$('#chatAutoscroll').click (event) ->
+			$('#timsChatAutoscroll').click (event) ->
 				$(this).removeClass('hot')
 				if $(this).data 'status'
-					$('.chatMessageContainer').scrollTop $('.chatMessageContainer ul').height()
-					@oldScrollTop = $('.chatMessageContainer').scrollTop()
+					$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
+					@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
 					
 			# Desktop Notifications
 			unless typeof window.webkitNotifications is 'undefined'
-				$('#chatNotify').click (event) ->
+				$('#timsChatNotify').click (event) ->
 					window.webkitNotifications.requestPermission() if $(this).data 'status'
 					
 		###
@@ -166,7 +167,7 @@ consoleMock ?=
 					target.parent().removeClass 'ajaxLoad'
 					
 					# Mark as active
-					$('.activeMenuItem .chatRoom').parent().removeClass 'activeMenuItem'
+					$('.activeMenuItem .timsChatRoom').parent().removeClass 'activeMenuItem'
 					target.parent().addClass 'activeMenuItem'
 					
 					# Set new topic
@@ -179,8 +180,9 @@ consoleMock ?=
 						$('#topic').text data.topic
 						$('#topic').wcfBlindIn() if $('#topic').text().trim() isnt '' and $('#topic').is(':hidden')
 					
-					@handleMessages(data.messages)
-					document.title = @titleTemplate.fetch(data)
+					$('.timsChatMessage').animate('opacity', .8);
+					@handleMessages data.messages
+					document.title = @titleTemplate.fetch data
 				, @)
 				error: () ->
 					# Reload the page to change the room the old fashion-way
@@ -243,10 +245,10 @@ consoleMock ?=
 		handleMessages: (messages) ->
 			# Disable scrolling automagically when user manually scrolled
 			unless @oldScrollTop is null
-				if $('.chatMessageContainer').scrollTop() < @oldScrollTop
-					if $('#chatAutoscroll').data('status') is 1
-						$('#chatAutoscroll').click()
-						$('#chatAutoscroll').addClass('hot').fadeOut('slow').fadeIn('slow')
+				if $('.timsChatMessageContainer').scrollTop() < @oldScrollTop
+					if $('#timsChatAutoscroll').data('status') is 1
+						$('#timsChatAutoscroll').click()
+						$('#timsChatAutoscroll').addClass('hot').fadeOut('slow').fadeIn('slow')
 			
 			# Insert the messages
 			for message in messages
@@ -254,16 +256,16 @@ consoleMock ?=
 				
 				output = @messageTemplate.fetch message
 				li = $ '<li></li>'
-				li.addClass 'chatMessage chatMessage'+message.type
+				li.addClass 'timsChatMessage timsChatMessage'+message.type
 				li.addClass 'ownMessage' if message.sender is WCF.User.userID
 				li.append output
 				
-				li.appendTo $ '.chatMessageContainer ul'
+				li.appendTo $ '.timsChatMessageContainer ul'
 				
 			# Autoscroll down
-			if $('#chatAutoscroll').data('status') is 1
-				$('.chatMessageContainer').scrollTop $('.chatMessageContainer ul').height()
-			@oldScrollTop = $('.chatMessageContainer').scrollTop()
+			if $('#timsChatAutoscroll').data('status') is 1
+				$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
+			@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
 		###
 		# Builds the userlist.
 		#
@@ -272,20 +274,20 @@ consoleMock ?=
 		handleUsers: (users) ->
 			foundUsers = { }
 			for user in users
-				id = 'chatUser-'+user.userID
+				id = 'timsChatUser-'+user.userID
 				element = $('#'+id)
 				
 				# Move the user to the correct position
 				if element[0]
 					console.log '[TimWolla.WCF.Chat] Moving User: "' + user.username + '"'
 					element = element.detach()
-					$('#chatUserList').append element
+					$('#timsChatUserList').append element
 				# Insert the user
 				else
 					console.log '[TimWolla.WCF.Chat] Inserting User: "' + user.username + '"'
 					li = $ '<li></li>'
 					li.attr 'id', id
-					li.addClass 'chatUser'
+					li.addClass 'timsChatUser'
 					li.data 'username', user.username
 					a = $ '<a href="javascript:;">'+user.username+'</a>'
 					a.click $.proxy (event) ->
@@ -294,19 +296,19 @@ consoleMock ?=
 					, @
 					li.append a
 					menu = $ '<ul></ul>'
-					menu.addClass 'chatUserMenu'
+					menu.addClass 'timsChatUserMenu'
 					menu.append $ '<li><a href="javascript:;">' + WCF.Language.get('wcf.chat.query') + '</a></li>'
 					menu.append $ '<li><a href="javascript:;">' + WCF.Language.get('wcf.chat.kick') + '</a></li>'
 					menu.append $ '<li><a href="javascript:;">' + WCF.Language.get('wcf.chat.ban') + '</a></li>'
 					menu.append $ '<li><a href="index.php/User/' + user.userID + '">' + WCF.Language.get('wcf.chat.profile') + '</a></li>'
 					@events.userMenu.fire user, menu
 					li.append menu
-					li.appendTo $ '#chatUserList'
+					li.appendTo $ '#timsChatUserList'
 				
 				foundUsers[id] = true
 			
 			# Remove users that were not found
-			$('.chatUser').each () ->
+			$('.timsChatUser').each () ->
 				if typeof foundUsers[$(@).attr('id')] is 'undefined'
 					console.log '[TimWolla.WCF.Chat] Removing User: "' + $(@).data('username') + '"'
 					$(@).remove();
@@ -325,29 +327,33 @@ consoleMock ?=
 				submit: false
 			, options or {}
 			
-			text = $('#chatInput').val() + text if options.append
-			$('#chatInput').val(text)
-			$('#chatInput').keyup()
+			text = $('#timsChatInput').val() + text if options.append
+			$('#timsChatInput').val(text)
+			$('#timsChatInput').keyup()
 			
 			if (options.submit)
-				$('#chatForm').submit()
+				$('#timsChatForm').submit()
 			else
-				$('#chatInput').focus()
+				$('#timsChatInput').focus()
 		###
 		# Sends a notification about a message.
 		#
 		# @param	object	message
 		###
 		notify: (message) ->
-			return if @isActive or $('#chatNotify').data('status') is 0
+			return if @isActive or $('#timsChatNotify').data('status') is 0
 			@newMessageCount++
 			
-			document.title = '(' + @newMessageCount + ') ' + @titleTemplate.fetch({ title: $('#chatRoomList .activeMenuItem a').text() })
+			document.title = '(' + @newMessageCount + ') ' + @titleTemplate.fetch
+				 title: $('#timsChatRoomList .activeMenuItem a').text()
 			
 			# Desktop Notifications
 			if typeof window.webkitNotifications isnt 'undefined'
 				if window.webkitNotifications.checkPermission() is 0
-					notification = window.webkitNotifications.createNotification WCF.Icon.get('timwolla.wcf.chat.chat'), WCF.Language.get('wcf.chat.newMessages'), message.username + ' ' + message.message
+					title = WCF.Language.get('wcf.chat.newMessages')
+					icon = WCF.Icon.get('timwolla.wcf.chat.chat')
+					content = message.username + message.separator + ' ' + message.message
+					notification = window.webkitNotifications.createNotification icon, title, content
 					notification.show()
 					setTimeout(() ->
 						notification.cancel()
@@ -363,17 +369,17 @@ consoleMock ?=
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
-					$('#chatRoomList li').remove()
+					$('#timsChatRoomList li').remove()
 					$('#toggleRooms a').removeClass 'ajaxLoad'
 					$('#toggleRooms .badge').text(data.length);
 					
 					for room in data
 						li = $ '<li></li>'
 						li.addClass 'activeMenuItem' if room.active
-						$('<a href="' + room.link + '">' + room.title + '</a>').addClass('chatRoom').appendTo li
-						$('#chatRoomList ul').append li
+						$('<a href="' + room.link + '">' + room.title + '</a>').addClass('timsChatRoom').appendTo li
+						$('#timsChatRoomList ul').append li
 						
-					$('.chatRoom').click $.proxy (event) ->
+					$('.timsChatRoom').click $.proxy (event) ->
 						return if typeof window.history.replaceState is 'undefined'
 						event.preventDefault()
 						@changeRoom $ event.target
@@ -388,25 +394,25 @@ consoleMock ?=
 		###
 		submit: (target) ->
 			# Break if input contains only whitespace
-			return false if $('#chatInput').val().trim().length is 0
+			return false if $('#timsChatInput').val().trim().length is 0
 			
 			# Finally free the fish
-			@freeTheFish() if $('#chatInput').val().trim().toLowerCase() is '/free the fish'
+			@freeTheFish() if $('#timsChatInput').val().trim().toLowerCase() is '/free the fish'
 			
-			$.ajax $('#chatForm').attr('action'), 
+			$.ajax $('#timsChatForm').attr('action'), 
 				data:
-					text: $('#chatInput').val(),
-					smilies: $('#chatSmilies').data('status')
+					text: $('#timsChatInput').val(),
+					smilies: $('#timsChatSmilies').data('status')
 				type: 'POST',
 				beforeSend: (jqXHR) ->
-					$('#chatInput').addClass 'ajaxLoad'
+					$('#timsChatInput').addClass 'ajaxLoad'
 				success: $.proxy((data, textStatus, jqXHR) ->
 					@getMessages()
-					$('#chatInput').val('').focus()
-					$('#chatInput').keyup()
+					$('#timsChatInput').val('').focus()
+					$('#timsChatInput').keyup()
 				, @)
 				complete: () ->
-					$('#chatInput').removeClass 'ajaxLoad'
+					$('#timsChatInput').removeClass 'ajaxLoad'
 		###
 		# Toggles between user- and room-list.
 		# 
@@ -419,14 +425,14 @@ consoleMock ?=
 				$('#toggleUsers').addClass 'active'
 				$('#toggleRooms').removeClass 'active'
 				
-				$('#chatRoomList').hide()
-				$('#chatUserList').show()
+				$('#timsChatRoomList').hide()
+				$('#timsChatUserList').show()
 			else if target.parents('li').attr('id') is 'toggleRooms'
 				$('#toggleRooms').addClass 'active'
 				$('#toggleUsers').removeClass 'active'
 				
-				$('#chatUserList').hide()
-				$('#chatRoomList').show()
+				$('#timsChatUserList').hide()
+				$('#timsChatRoomList').show()
 		###
 		# Toggles the user-menu.
 		#
@@ -436,9 +442,9 @@ consoleMock ?=
 			li = target.parent()
 			
 			if li.hasClass 'activeMenuItem'
-				li.find('.chatUserMenu').wcfBlindOut 'vertical', () ->
+				li.find('.timsChatUserMenu').wcfBlindOut 'vertical', () ->
 					li.removeClass 'activeMenuItem'
 			else
 				li.addClass 'activeMenuItem'
-				li.find('.chatUserMenu').wcfBlindIn 'vertical'
+				li.find('.timsChatUserMenu').wcfBlindIn 'vertical'
 )(jQuery, @, consoleMock)
