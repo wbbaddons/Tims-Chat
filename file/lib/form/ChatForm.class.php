@@ -1,7 +1,6 @@
 <?php
 namespace wcf\form;
 use \wcf\data\chat;
-use \wcf\system\exception\PermissionDeniedException;
 use \wcf\system\exception\UserInputException;
 use \wcf\system\WCF;
 use \wcf\util\StringUtil;
@@ -23,7 +22,7 @@ class ChatForm extends AbstractForm {
 	public $useTemplate = false;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
@@ -37,7 +36,7 @@ class ChatForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -47,7 +46,7 @@ class ChatForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -57,13 +56,12 @@ class ChatForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
 		
 		$commandHandler = new \wcf\system\chat\commands\ChatCommandHandler();
-		var_dump($commandHandler->isCommand($this->message));
 		$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
 			'data' => array(
 				'roomID' => $this->room->roomID,
@@ -80,5 +78,13 @@ class ChatForm extends AbstractForm {
 		$messageAction->executeAction();
 		
 		$this->saved();
+	}
+	
+	/**
+	 * @see \wcf\page\IPage::show()
+	 */
+	public function show() {
+		header("HTTP/1.0 204 No Content");
+		parent::show();
 	}
 }
