@@ -33,12 +33,12 @@ CREATE TABLE wcf1_chat_room (
 
 DROP TABLE IF EXISTS wcf1_chat_room_suspension;
 CREATE TABLE wcf1_chat_room_suspension (
-	roomID int(10) NOT NULL,
 	userID int(10) NOT NULL,
+	roomID int(10) DEFAULT NULL,
 	type tinyint(3) NOT NULL,
 	time int(10) NOT NULL,
-	PRIMARY KEY (roomID, userID),
-	KEY userID (userID),
+	UNIQUE KEY main (userID, roomID),
+	KEY roomID (roomID),
 	KEY type (type, time),
 	KEY time (time)
 );
