@@ -68,23 +68,8 @@ class ChatRoomAddForm extends ACPForm {
 		parent::validate();
 		
 		// validate title
-		try {
-			if (!I18nHandler::getInstance()->validateValue('title')) {
-				throw new UserInputException('title');
-			}
-		}
-		catch (UserInputException $e) {
-			$this->errorType[$e->getField()] = $e->getType();
-		}
-		
-		// validate topic
-		try {
-			if (!I18nHandler::getInstance()->validateValue('topic')) {
-				throw new UserInputException('topic');
-			}
-		}
-		catch (UserInputException $e) {
-			$this->errorType[$e->getField()] = $e->getType();
+		if (!I18nHandler::getInstance()->validateValue('title')) {
+			throw new UserInputException('title');
 		}
 	}
 	
