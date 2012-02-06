@@ -90,7 +90,7 @@
 
 <body id="tpl{$templateName|ucfirst}">
 {capture assign='sidebar'}
-<div id="sidebarContent" class="sidebarContent">
+<div id="sidebarContent" class="wcf-sidebarContent">
 	<nav class="timsChatSidebarTabs">
 		<ul>
 			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang} <span class="badge">0</span></a></li>
@@ -100,21 +100,8 @@
 	
 	<div id="sidebarContainer">
 		<ul id="timsChatUserList">
-		{*section name=user start=1 loop=26}
-			<li class="timsChatUser">
-				<a href="javascript:;">User {$user}</a>
-				<ul class="timsChatUserMenu">
-					<li>
-						<a href="javascript:;">{lang}wcf.chat.query{/lang}</a>
-						<a href="javascript:;">{lang}wcf.chat.kick{/lang}</a>
-						<a href="javascript:;">{lang}wcf.chat.ban{/lang}</a>
-						<a href="{link controller="User" id=$user}{/link}">{lang}wcf.chat.profile{/lang}</a>
-					</li>
-				</ul>
-			</li>
-		{/section*}
 		</ul>
-		<nav id="timsChatRoomList" class="sidebarMenu" style="display: none;">
+		<nav id="timsChatRoomList" class="wcf-sidebarMenu" style="display: none;">
 			<div>
 				<ul>
 				{foreach from=$rooms item='roomListRoom'}
@@ -134,19 +121,19 @@
 {include file='header' sandbox=false sidebarOrientation='right'}
 
 <div id="timsChatRoomContent">
-	<div id="timsChatTopic" class="border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
-	<div class="timsChatMessageContainer border content">
+	<div id="timsChatTopic" class="wcf-border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
+	<div class="timsChatMessageContainer wcf-border wcf-content">
 		<ul>
-			<noscript><li class="error">{lang}wcf.chat.noJs{/lang}</li></noscript>
+			<noscript><li class="wcf-error">{lang}wcf.chat.noJs{/lang}</li></noscript>
 		</ul>
 	</div>
 	
 	<form id="timsChatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<input type="text" id="timsChatInput" class="inputText long jsCounterInput" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
+		<input type="text" id="timsChatInput" class="inputText long jsCounterInput" name="text" autocomplete="off" maxlength="{@CHAT_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
-	<div id="timsChatControls">
-		<div id="smileyList" class="border">
+	<div id="timsChatControls" class="wcf-border">
+		<div id="smileyList">
 			<ul class="smilies">
 				{foreach from=$smilies item='smiley'}
 					<li>
@@ -155,37 +142,35 @@
 				{/foreach}
 			</ul>
 		</div>
-		<div id="timsChatOptions" class="border">
-			<div class="smallButtons">
-				<ul>
-					<li>
-						<a id="timsChatAutoscroll" href="javascript:;" class="timsChatToggle balloonTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
-							<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatNotify" href="javascript:;" class="timsChatToggle balloonTooltip" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
-							<img alt="" src="{icon size='S'}disabled1{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatSmilies" href="javascript:;" class="timsChatToggle balloonTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
-							<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatClear" href="javascript:;" class="balloonTooltip" title="{lang}wcf.chat.clear.description{/lang}">
-							<img alt="" src="{icon size='S'}delete1{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatMark" href="javascript:;" class="balloonTooltip" title="{lang}wcf.chat.mark.description{/lang}">
-							<img alt="" src="{icon size='S'}check1{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+		<nav id="timsChatOptions">
+			<ul class="wcf-smallButtons">
+				<li>
+					<a id="timsChatAutoscroll" href="javascript:;" class="timsChatToggle wcf-balloonTooltip wcf-button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
+						<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
+					</a>
+				</li>
+				<li>
+					<a id="timsChatNotify" href="javascript:;" class="timsChatToggle wcf-balloonTooltip wcf-button" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
+						<img alt="" src="{icon size='S'}disabled1{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
+					</a>
+				</li>
+				<li>
+					<a id="timsChatSmilies" href="javascript:;" class="timsChatToggle wcf-balloonTooltip wcf-button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
+						<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
+					</a>
+				</li>
+				<li>
+					<a id="timsChatClear" href="javascript:;" class="wcf-balloonTooltip wcf-button" title="{lang}wcf.chat.clear.description{/lang}">
+						<img alt="" src="{icon size='S'}delete1{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
+					</a>
+				</li>
+				<li>
+					<a id="timsChatMark" href="javascript:;" class="wcf-balloonTooltip wcf-button" title="{lang}wcf.chat.mark.description{/lang}">
+						<img alt="" src="{icon size='S'}check1{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
 		{include file='chatCopyright'}
 	</div>
 </div>
