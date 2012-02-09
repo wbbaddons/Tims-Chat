@@ -145,27 +145,27 @@
 		<nav id="timsChatOptions">
 			<ul class="wcf-smallButtons">
 				<li>
-					<a id="timsChatAutoscroll" href="javascript:;" class="timsChatToggle wcf-balloonTooltip wcf-button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
+					<a id="timsChatAutoscroll" href="javascript:;" class="timsChatToggle jsTooltipwcf-button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
 						<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatNotify" href="javascript:;" class="timsChatToggle wcf-balloonTooltip wcf-button" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
+					<a id="timsChatNotify" href="javascript:;" class="timsChatToggle jsTooltipwcf-button" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
 						<img alt="" src="{icon size='S'}disabled1{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatSmilies" href="javascript:;" class="timsChatToggle wcf-balloonTooltip wcf-button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
+					<a id="timsChatSmilies" href="javascript:;" class="timsChatToggle jsTooltipwcf-button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
 						<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatClear" href="javascript:;" class="wcf-balloonTooltip wcf-button" title="{lang}wcf.chat.clear.description{/lang}">
+					<a id="timsChatClear" href="javascript:;" class="jsTooltipwcf-button" title="{lang}wcf.chat.clear.description{/lang}">
 						<img alt="" src="{icon size='S'}delete1{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatMark" href="javascript:;" class="wcf-balloonTooltip wcf-button" title="{lang}wcf.chat.mark.description{/lang}">
+					<a id="timsChatMark" href="javascript:;" class="jsTooltipwcf-button" title="{lang}wcf.chat.mark.description{/lang}">
 						<img alt="" src="{icon size='S'}check1{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
 					</a>
 				</li>
