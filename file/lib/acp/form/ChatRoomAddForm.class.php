@@ -80,12 +80,12 @@ class ChatRoomAddForm extends ACPForm {
 		parent::save();
 
 		// save room
-		$chatRoomAction = new \wcf\data\chat\room\ChatRoomAction(array(), 'create', array('data' => array(
+		$this->objectAction = new \wcf\data\chat\room\ChatRoomAction(array(), 'create', array('data' => array(
 			'title' => $this->title,
 			'topic' => $this->topic
 		)));
-		$chatRoomAction->executeAction();
-		$returnValues = $chatRoomAction->getReturnValues();
+		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->getReturnValues();
 		$chatRoomEditor = new \wcf\data\chat\room\ChatRoomEditor($returnValues['returnValues']);
 		$roomID = $returnValues['returnValues']->roomID;
 		
