@@ -137,7 +137,7 @@
 			<ul class="smilies">
 				{foreach from=$smilies item='smiley'}
 					<li>
-						<img src="{$smiley->getURL()}" alt="{$smiley->smileyCode}" title="{$smiley->smileyCode}" class="smiley" />
+						<img src="{$smiley->getURL()}" alt="{$smiley->smileyCode}" title="{$smiley->smileyCode}" class="jsSmiley" />
 					</li>
 				{/foreach}
 			</ul>
