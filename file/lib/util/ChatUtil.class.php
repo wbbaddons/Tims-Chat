@@ -67,7 +67,7 @@ class ChatUtil {
 		if ($data[WCF::getUser()->userID] === null) {
 			switch ($field) {
 				case 'color':
-					$data[WCF::getUser()->userID] = array(1 => 0xFF0000, 2 => 0x00FF00);
+					$data[WCF::getUser()->userID] = array(1 => self::getRandomNumber(), 2 => self::getRandomNumber() * 0xFFFF);
 				break;
 			}
 			static::writeUserData(array($field => $data[WCF::getUser()->userID]));
@@ -77,6 +77,16 @@ class ChatUtil {
 		
 		if (isset(static::$serialize[$field])) return unserialize($data[WCF::getUser()->userID]);
 		else return $data[WCF::getUser()->userID];
+	}
+	
+	/**
+	 * Returns a random number.
+	 * 
+	 * @return	integer
+	 */
+	public static /* int */ getRandomNumber() {
+		return 4; // chosen by a fair dice roll
+			  // guaranteed to be random
 	}
 	
 	/**
