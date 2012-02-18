@@ -186,8 +186,7 @@
 			// populate config
 			TimWolla.WCF.Chat.config = {
 				reloadTime: {@CHAT_RELOADTIME},
-				animations: {@CHAT_ANIMATIONS},
-				maxTextLength: {@CHAT_LENGTH}
+				unloadURL: '{link controller='Chat' action='Leave'}{/link}'
 			}
 			WCF.Language.addObject({
 				'wcf.chat.query': '{lang}wcf.chat.query{/lang}',

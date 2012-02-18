@@ -64,6 +64,7 @@ consoleMock ?=
 		# Binds all the events needed for Tims Chat.
 		###
 		bindEvents: () ->
+			# Mark window as focused
 			$(window).focus $.proxy () ->
 				document.title = @titleTemplate.fetch
 					title: $('#timsChatRoomList .activeMenuItem a').text()
@@ -71,8 +72,14 @@ consoleMock ?=
 				@isActive = true
 			, @
 			
+			# Mark window as blurred
 			$(window).blur $.proxy () ->
 				@isActive = false
+			, @
+			
+			# Unload the chat
+			$(window).unload $.proxy () ->
+				@unload()
 			, @
 			
 			# Insert a smiley
@@ -449,4 +456,11 @@ consoleMock ?=
 			else
 				li.addClass 'activeMenuItem'
 				li.find('.timsChatUserMenu').wcfBlindIn 'vertical'
+		###
+		# Unloads the chat.
+		###
+		unload: () ->
+			$.ajax @config.unloadURL,
+				type: 'POST'
+				async: false
 )(jQuery, @, consoleMock)
