@@ -83,7 +83,7 @@ consoleMock ?=
 			, @
 			
 			# Insert a smiley
-			$('.smiley').click $.proxy (event) ->
+			$('.jsSmiley').click $.proxy (event) ->
 				@insertText ' ' + $(event.target).attr('alt') + ' '
 			, @
 			
