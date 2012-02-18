@@ -84,7 +84,7 @@ class ChatUtil {
 	 * 
 	 * @return	integer
 	 */
-	public static /* int */ getRandomNumber() {
+	public static function /* int */ getRandomNumber() {
 		return 4; // chosen by a fair dice roll
 			  // guaranteed to be random
 	}
