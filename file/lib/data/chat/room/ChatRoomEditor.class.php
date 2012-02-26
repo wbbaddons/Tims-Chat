@@ -21,8 +21,7 @@ class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data
 	 * Clears the room cache.
 	 */
 	public static function resetCache() {
-		ChatRoom::getCache();
-		\wcf\system\cache\CacheHandler::getInstance()->clearResource('chatrooms');
+		\wcf\system\cache\CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.chatrooms.php');
 	}
 	
 	/**

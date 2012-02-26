@@ -14,7 +14,7 @@
 			'wcf.icon.users': '{@$__wcf->getPath('wcf')}icon/users1.svg'
 		});
 		
-		new WCF.ACL.List($('#groupPermissions'), {@$objectTypeID}{if $groupID|isset}, {@$groupID}{/if});
+		new WCF.ACL.List($('#groupPermissions'), {@$objectTypeID});
 	});
 	//]]>
 </script>

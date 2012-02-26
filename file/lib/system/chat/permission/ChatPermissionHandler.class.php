@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\chat\permission;
 use \wcf\system\acl\ACLHandler;
+use \wcf\system\cache\CacheHandler;
 use \wcf\system\package\PackageDependencyHandler;
 use \wcf\system\WCF;
 
@@ -22,7 +23,12 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	protected function init() {
 		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
-		// TODO: get groups permissions
+		
+		// get groups permissions
+		$groups = implode(',', WCF::getUser()->getGroupIDs());
+		$groupsFileName = \wcf\util\StringUtil::getHash(implode('-', WCF::getUser()->getGroupIDs()));
+		CacheHandler::getInstance()->addResource('chatPermission-'.$groups, WCF_DIR.'cache/cache.chatPermission-'.$groupsFileName.'.php', 'wcf\system\cache\builder\ChatPermissionCacheBuilder');
+		$this->chatPermissions = CacheHandler::getInstance()->get('chatPermission-'.$groups);
 		
 		// get user permissions
 		if (WCF::getUser()->userID) {
@@ -87,5 +93,6 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
 		$ush->resetAll('chatUserPermissions', $packageID);
+		\wcf\system\cache\CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.chatPermission-[a-f0-9]{40}.php');
 	}
 }
