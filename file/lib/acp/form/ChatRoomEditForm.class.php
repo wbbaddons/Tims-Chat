@@ -15,17 +15,17 @@ use wcf\system\WCF;
  */
 class ChatRoomEditForm extends ChatRoomAddForm {
 	/**
-	 * @see \wcf\page\AbstractPage::$templateName
+	 * @see	\wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'chatRoomAdd';
 	
 	/**
-	 * @see \wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	\wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.chat.room.list';
 	
 	/**
-	 * @see \wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.content.chat.canEditRoom');
 	
@@ -44,7 +44,7 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 	public $roomObj = null;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -57,7 +57,7 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		ACPForm::save();
@@ -80,6 +80,8 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 			I18nHandler::getInstance()->save('topic', $this->topic, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
 		}
 		
+		\wcf\system\acl\ACLHandler::getInstance()->save($this->roomID, $this->objectTypeID);
+		\wcf\system\chat\permission\ChatPermissionHandler::clearCache();
 		
 		// update room
 		$this->objectAction = new \wcf\data\chat\room\ChatRoomAction(array($this->roomID), 'update', array('data' => array(
@@ -97,7 +99,7 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -112,7 +114,7 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

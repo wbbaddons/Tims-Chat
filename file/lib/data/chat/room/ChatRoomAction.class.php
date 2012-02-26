@@ -12,17 +12,17 @@ namespace wcf\data\chat\room;
  */
 class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = '\wcf\data\chat\room\ChatRoomEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.content.chat.canDeleteRoom');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.content.chat.canEditRoom');
 }

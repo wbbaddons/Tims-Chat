@@ -13,13 +13,16 @@ use \wcf\system\WCF;
  * @subpackage	action
  */
 class ChatLeaveAction extends AbstractAction {
+	/**
+	 * @see	\wcf\action\AbstractAction::$neededModules
+	 */
 	public $neededModules = array('CHAT_ACTIVE');
 	//public $neededPermissions = array('user.chat.canEnter');
 	public $room = null;
 	public $userData = array();
 	
 	/**
-	 * @see wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();

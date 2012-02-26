@@ -12,7 +12,7 @@ namespace wcf\system\event\listener;
  */
 class ChatRouteListener implements \wcf\system\event\IEventListener {
 	/**
-	 * @see wcf\system\event\IEventListener::execute()
+	 * @see	\wcf\system\event\IEventListener::execute()
 	 */
 	public function execute($eventObj, $className, $eventName) {
 		$route = new \wcf\system\request\Route('chatAction');

@@ -78,8 +78,9 @@ consoleMock ?=
 			, @
 			
 			# Unload the chat
-			$(window).unload $.proxy () ->
+			window.onbeforeunload = $.proxy () ->
 				@unload()
+				return undefined
 			, @
 			
 			# Insert a smiley

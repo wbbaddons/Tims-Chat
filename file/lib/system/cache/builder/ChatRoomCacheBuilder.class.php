@@ -12,7 +12,7 @@ namespace wcf\system\cache\builder;
  */
 class ChatRoomCacheBuilder implements ICacheBuilder {
 	/**
-	 * @see wcf\system\cache\ICacheBuilder::getData()
+	 * @see	\wcf\system\cache\ICacheBuilder::getData()
 	 */
 	public function getData(array $cacheResource) {
 		// get all chat rooms

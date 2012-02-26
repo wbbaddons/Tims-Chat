@@ -7,8 +7,8 @@ use \wcf\util\StringUtil;
 
 /**
  * Inserts a message
- *
- * @author 	Tim Düsterhus
+ * 
+ * @author	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	timwolla.wcf.chat
@@ -19,6 +19,10 @@ class ChatForm extends AbstractForm {
 	public $message = '';
 	public $room = null;
 	public $userData = array();
+	
+	/**
+	 * @see	\wcf\page\AbstractForm::$useTemplate
+	 */
 	public $useTemplate = false;
 	
 	/**
@@ -81,7 +85,7 @@ class ChatForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see \wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		header("HTTP/1.0 204 No Content");

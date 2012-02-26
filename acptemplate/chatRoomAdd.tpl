@@ -1,5 +1,24 @@
 {include file='header'}
 
+<!-- ToDo: DEBUG ONLY -->
+<link rel="stylesheet" type="text/css" href="{@$__wcf->getPath('wcf')}style/acl.css" />
+<!-- /DEBUG ONLY -->
+
+<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.ACL.js"></script>
+<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		WCF.Icon.addObject({
+			'wcf.icon.delete': '{@$__wcf->getPath('wcf')}icon/delete1.svg',
+			'wcf.icon.user': '{@$__wcf->getPath('wcf')}icon/user1.svg',
+			'wcf.icon.users': '{@$__wcf->getPath('wcf')}icon/users1.svg'
+		});
+		
+		new WCF.ACL.List($('#groupPermissions'), {@$objectTypeID}{if $groupID|isset}, {@$groupID}{/if});
+	});
+	//]]>
+</script>
+
 <header class="wcf-mainHeading">
 	<img src="{@$__wcf->getPath('wcf')}icon/{$action}1.svg" alt="" />
 	<hgroup>
@@ -63,6 +82,11 @@
 			</dl>
 			
 			{include file='multipleLanguageInputJavascript' elementIdentifier='topic'}
+			
+			<dl id="groupPermissions">
+				<dt>{lang}wcf.acp.acl.permissions{/lang}</dt>
+				<dd></dd>
+			</dl>
 		</fieldset>
 	</div>
 	

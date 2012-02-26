@@ -13,7 +13,7 @@ use \wcf\system\WCF;
  */
 class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data\IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = '\wcf\data\chat\room\ChatRoom';
 	
@@ -26,7 +26,7 @@ class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data
 	}
 	
 	/**
-	 * @see \wcf\data\DatabaseObjectEditor::deleteAll()
+	 * @see	\wcf\data\DatabaseObjectEditor::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		parent::deleteAll($objectIDs);

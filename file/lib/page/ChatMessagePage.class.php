@@ -22,7 +22,7 @@ class ChatMessagePage extends AbstractPage {
 	public $useTemplate = false;
 	
 	/**
-	 * @see \wcf\page\Page::readData()
+	 * @see	\wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();

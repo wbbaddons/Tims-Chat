@@ -13,12 +13,12 @@ use \wcf\system\WCF;
  */
 class ChatMessage extends \wcf\data\DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'chat_message';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'messageID';
 	

@@ -8,7 +8,7 @@ use \wcf\system\WCF;
 /**
  * Shows the chatroom add form.
  *
- * @author 	Tim Düsterhus
+ * @author	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	timwolla.wcf.chat
@@ -16,12 +16,12 @@ use \wcf\system\WCF;
  */
 class ChatRoomAddForm extends ACPForm {
 	/**
-	 * @see \wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	\wcf\acp\form\ACPForm::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.chat.room.add';
 	
 	/**
-	 * @see \wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.content.chat.canAddRoom');
 	
@@ -40,7 +40,16 @@ class ChatRoomAddForm extends ACPForm {
 	public $topic = '';
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\AbstractPage::__construct()
+	 */
+	public function __construct() {
+		$this->objectTypeID = \wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('timwolla.wcf.chat.room');
+		
+		parent::__construct();
+	}
+	
+	/**
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -50,7 +59,7 @@ class ChatRoomAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -62,7 +71,7 @@ class ChatRoomAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -74,7 +83,7 @@ class ChatRoomAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -97,22 +106,25 @@ class ChatRoomAddForm extends ACPForm {
 				'title' => 'wcf.chat.room.title'.$roomID
 			));
 		}
-
+		
 		if (!I18nHandler::getInstance()->isPlainValue('topic')) {
 			I18nHandler::getInstance()->save('topic', 'wcf.chat.room.topic'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
-
+		
 			// update topic
 			$chatRoomEditor->update(array(
 				'topic' => 'wcf.chat.room.topic'.$roomID
 			));
 		}
-
+		
+		\wcf\system\acl\ACLHandler::getInstance()->save($roomID, $this->objectTypeID);
+		\wcf\system\chat\permissions\ChatPermissionHandler::clearCache();
+		
 		$this->saved();
-
+		
 		// reset values
 		$this->topic = $this->title = '';
 		I18nHandler::getInstance()->disableAssignValueVariables();
-
+		
 		// show success
 		WCF::getTPL()->assign(array(
 			'success' => true
@@ -120,7 +132,7 @@ class ChatRoomAddForm extends ACPForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -130,7 +142,8 @@ class ChatRoomAddForm extends ACPForm {
 		WCF::getTPL()->assign(array(
 			'action' => 'add',
 			'title' => $this->title,
-			'topic' => $this->topic
+			'topic' => $this->topic,
+			'objectTypeID' => $this->objectTypeID
 		));
 	}
 }

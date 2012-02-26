@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\permissions;
+namespace wcf\system\chat\permission;
 use \wcf\system\acl\ACLHandler;
 use \wcf\system\package\PackageDependencyHandler;
 use \wcf\system\WCF;
@@ -17,7 +17,7 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	protected $chatPermissions = array();
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
@@ -77,5 +77,15 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	public function getPermission(\wcf\data\chat\room\ChatRoom $room, $permission) {
 		if (!isset($this->chatPermissions[$room->roomID][$permission])) return true;
 		return (boolean) $this->chatPermissions[$room->roomID][$permission];
+	}
+	
+	/**
+	 * Clears the cache.
+	 */
+	public static function clearCache() {
+		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
+		
+		$ush->resetAll('chatUserPermissions', $packageID);
 	}
 }

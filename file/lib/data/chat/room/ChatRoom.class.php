@@ -13,12 +13,12 @@ use \wcf\system\cache\CacheHandler;
  */
 class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\IRouteController {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'chat_room';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'roomID';
 		
@@ -76,6 +76,6 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	 * @return	boolean
 	 */
 	public function canEnter() {
-		return \wcf\system\chat\permissions\ChatPermissionHandler::getInstance()->getPermission($this, 'canEnter');
+		return \wcf\system\chat\permission\ChatPermissionHandler::getInstance()->getPermission($this, 'canEnter');
 	}
 }

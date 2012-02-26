@@ -12,14 +12,14 @@ namespace wcf\system\option;
  */
 class TimeIntervalOptionType extends TextOptionType {
 	/**
-	 * @see wcf\system\option\IOptionType::getData()
+	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(\wcf\data\option\Option $option, $newValue) {
 		return \wcf\util\ChatUtil::timeModifier($newValue);
 	}
 	
 	/**
-	 * @see wcf\system\option\TextOptionType::getFormElement()
+	 * @see	\wcf\system\option\TextOptionType::getFormElement()
 	 */
 	public function getFormElement(\wcf\data\option\Option $option, $value) {
 		$tmp = (int) ($value / 60);

@@ -12,7 +12,7 @@ namespace wcf\acp\page;
  */
 class ChatRoomListPage extends \wcf\page\MultipleLinkPage {
 	/**
-	 * @see wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array(
 		'admin.content.chat.canEditRoom',
@@ -20,22 +20,22 @@ class ChatRoomListPage extends \wcf\page\MultipleLinkPage {
 	);
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = '\wcf\data\chat\room\ChatRoomList';
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$sortField
+	 * @see	\wcf\page\MultipleLinkPage::$sortField
 	 */
 	public $sortField = 'position';
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$sortOrder
+	 * @see	\wcf\page\MultipleLinkPage::$sortOrder
 	 */
 	public $sortOrder = 'ASC';
 	
 	/**
-	 * @see wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		// set active menu item.
