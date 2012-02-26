@@ -3,6 +3,7 @@
 	<category name="wcf.acp.chat">
 		<item name="wcf.acp.chat.room.list"><![CDATA[Chaträume]]></item>
 		<item name="wcf.acp.chat.room.add"><![CDATA[Chatraum hinzufügen]]></item>
+		<item name="wcf.acp.chat.room.edit"><![CDATA[Chatraum bearbeiten]]></item>
 	</category>
 	
 	<category name="wcf.acp.menu">
