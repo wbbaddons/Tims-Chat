@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\chat\room;
 use \wcf\system\cache\CacheHandler;
+use \wcf\system\WCF;
 
 /**
  * Represents a chat room.
