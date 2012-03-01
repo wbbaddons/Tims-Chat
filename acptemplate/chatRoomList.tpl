@@ -1,8 +1,8 @@
 {include file='header'}
 
-<header class="wcf-mainHeading">
-	<img src="{@$__wcf->getPath('wcf')}icon/chat1.svg" alt="" />
-	<hgroup>
+<header class="wcf-mainHeading wcf-container">
+	<img src="{@$__wcf->getPath('wcf')}icon/chat1.svg" alt="" class="wcf-containerIcon" />
+	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.acp.chat.room.list{/lang}</h1>
 	</hgroup>
 	

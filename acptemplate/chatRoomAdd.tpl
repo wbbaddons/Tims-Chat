@@ -19,9 +19,9 @@
 	//]]>
 </script>
 
-<header class="wcf-mainHeading">
-	<img src="{@$__wcf->getPath('wcf')}icon/{$action}1.svg" alt="" />
-	<hgroup>
+<header class="wcf-mainHeading wcf-container">
+	<img src="{@$__wcf->getPath('wcf')}icon/{$action}1.svg" alt="" class="wcf-containerIcon" />
+	<hgroup class="wcf-containerContent">
 		<h1>{lang}wcf.acp.chat.room.{$action}{/lang}</h1>
 	</hgroup>
 </header>
