@@ -29,7 +29,7 @@ class ChatMessagePage extends AbstractPage {
 		
 		$this->readRoom();
 		$this->readMessages();
-		$this->readUsers();
+		$this->users = $this->room->getUsers();
 	}
 	
 	public function readMessages() {
@@ -52,37 +52,6 @@ class ChatMessagePage extends AbstractPage {
 		$this->room = chat\room\ChatRoom::getCache()->search($this->roomID);
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
-	}
-	
-	public function readUsers() {
-		$packageID = \wcf\system\package\PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
-		
-		$sql = "SELECT
-				userID
-			FROM
-				wcf".WCF_N."_user_storage 
-			WHERE
-					field = 'roomID' 
-				AND	packageID = ".intval($packageID)."
-				AND 	fieldValue = ".intval($this->roomID);
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute();
-		$userIDs = array();
-		while ($row = $stmt->fetchArray()) $userIDs[] = $row['userID'];
-		
-		if (!count($userIDs)) return;
-		
-		$sql = "SELECT
-				*
-			FROM
-				wcf".WCF_N."_user
-			WHERE
-				userID IN (".rtrim(str_repeat('?,', count($userIDs)), ',').")
-			ORDER BY
-				username ASC";
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute($userIDs);
-		$this->users = $stmt->fetchObjects('\wcf\data\user\User');
 	}
 	
 	/**
