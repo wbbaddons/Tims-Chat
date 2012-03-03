@@ -59,6 +59,7 @@ class ChatLeaveAction extends AbstractAction {
 		\wcf\util\ChatUtil::writeUserData(array('roomID' => null));
 		
 		$this->executed();
+		header("HTTP/1.0 204 No Content");
 		exit;
 	}
 }
