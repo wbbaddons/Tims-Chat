@@ -117,7 +117,7 @@ class ChatRoomAddForm extends ACPForm {
 		}
 		
 		\wcf\system\acl\ACLHandler::getInstance()->save($roomID, $this->objectTypeID);
-		\wcf\system\chat\permissions\ChatPermissionHandler::clearCache();
+		\wcf\system\chat\permission\ChatPermissionHandler::clearCache();
 		
 		$this->saved();
 		
