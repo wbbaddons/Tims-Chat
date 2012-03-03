@@ -85,7 +85,9 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$i = 0;
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'][0] as $roomID) {
-			$editor = new ChatRoomEditor($roomList->search($roomID));
+			$room = $roomList->search($roomID);
+			if ($room === null) continue;
+			$editor = new ChatRoomEditor($room);
 			$editor->update(array('position' => $i++));
 		}
 		WCF::getDB()->commitTransaction();
