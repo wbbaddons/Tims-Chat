@@ -56,6 +56,7 @@
 		
 		.jsCounterInput {
 			height: 16px;
+			box-sizing: content-box !important;
 		}
 		
 		.jsCounterInput, .jsCounter {
