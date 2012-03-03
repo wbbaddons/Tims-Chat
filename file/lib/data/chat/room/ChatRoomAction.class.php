@@ -34,15 +34,16 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$room = parent::create();
 		
 		WCF::getDB()->beginTransaction();
-		$sql = "SELECT	max(position) as max
-			FROM	wcf".WCF_N."_chat_room";
+		$sql = "SELECT		max(position) as max
+			FROM		wcf".WCF_N."_chat_room
+			FOR UPDATE";
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
 		$row = $stmt->fetchArray();
 		
-		$sql = "UPDATE wcf".WCF_N."_chat_room
-			SET position = ".($row['max'] + 1)."
-			WHERE roomID = ?";
+		$sql = "UPDATE	wcf".WCF_N."_chat_room
+			SET	position = ".($row['max'] + 1)."
+			WHERE	roomID = ?";
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute(array($room->roomID));
 		WCF::getDB()->commitTransaction();
