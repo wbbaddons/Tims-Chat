@@ -16,6 +16,12 @@ use \wcf\system\WCF;
  */
 class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	protected $chatPermissions = array();
+	protected static $defaults = array(
+		'user.canEnter' => true,
+		'user.canWrite' => true,
+		'mod.canAlwaysEnter' => false,
+		'mod.canAlwaysWrite' => false
+	);
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -81,7 +87,9 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	 * @return	boolean
 	 */
 	public function getPermission(\wcf\data\chat\room\ChatRoom $room, $permission) {
-		if (!isset($this->chatPermissions[$room->roomID][$permission])) return true;
+		if (!isset($this->chatPermissions[$room->roomID][$permission])) {
+			return isset(self::$defaults[$permission]) ? self::$defaults[$permission] : false;
+		}
 		return (boolean) $this->chatPermissions[$room->roomID][$permission];
 	}
 	
