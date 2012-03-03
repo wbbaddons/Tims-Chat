@@ -9,12 +9,18 @@
 
 TimWolla ?= {}
 TimWolla.WCF ?= {}
+consoleMock = console
 consoleMock ?= 
 	log: () ->,
-	warn: () ->
+	warn: () ->,
+	error: () ->
 
 (($, window, console) ->
 	TimWolla.WCF.Chat =
+		# Tims Chat stops loading when this reaches zero
+		# TODO: We need an explosion animation
+		shields: 3
+		
 		# Templates
 		titleTemplate: null
 		messageTemplate: null
@@ -34,17 +40,21 @@ consoleMock ?=
 		events: 
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
+		pe:
+			getMessages: null
+			refreshRoomList: null
+			fish: null
 		init: () ->
 			console.log '[TimWolla.WCF.Chat] Initializing'
 			@bindEvents()
 			@events.newMessage.add $.proxy @notify, @
 			
-			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, @), 60e3
-			new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1e3
+			@pe.refreshRoomList = new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, @), 60e3
+			@pe.getMessages = new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1e3
 			@refreshRoomList()
 			@getMessages()
 			
-			console.log '[TimWolla.WCF.Chat] Finished initializing'
+			console.log '[TimWolla.WCF.Chat] Finished initializing - Shields at 104 percent'
 		###
 		# Autocompletes a username
 		###
@@ -206,7 +216,7 @@ consoleMock ?=
 		# Frees the fish
 		###
 		freeTheFish: () ->
-			return if $.wcfIsset('fish')
+			return if $.wcfIsset 'fish'
 			console.warn '[TimWolla.WCF.Chat] Freeing the fish'
 			fish = $ '<div id="fish">' + WCF.String.escapeHTML('><((((\u00B0>') + '</div>'
 			fish.css
@@ -218,16 +228,16 @@ consoleMock ?=
 				zIndex: 9999
 			
 			fish.appendTo $ 'body'
-			new WCF.PeriodicalExecuter(() ->
+			@pe.fish = new WCF.PeriodicalExecuter(() ->
 				left = Math.random() * 100 - 50
 				top = Math.random() * 100 - 50
-				fish = $('#fish')
+				fish = $ '#fish'
 				
 				left *= -1 unless fish.width() < (fish.position().left + left) < ($(document).width() - fish.width())
 				top *= -1 unless fish.height() < (fish.position().top + top) < ($(document).height() - fish.height())
 				
-				fish.text('><((((\u00B0>') if left > 0
-				fish.text('<\u00B0))))><') if left < 0
+				fish.text '><((((\u00B0>' if left > 0
+				fish.text '<\u00B0))))><' if left < 0
 				
 				fish.animate
 					top: '+=' + top
@@ -244,6 +254,15 @@ consoleMock ?=
 				success: $.proxy((data, textStatus, jqXHR) ->
 					@handleMessages(data.messages)
 					@handleUsers(data.users)
+				, @)
+				error: $.proxy((jqXHR, textStatus, errorThrown) ->
+					console.error '[TimWolla.WCF.Chat] Battle Station hit - shields at ' + (--@shields / 3 * 104) + ' percent'
+					if @shields is 0
+						@pe.refreshRoomList.stop()
+						@pe.getMessages.stop()
+						@freeTheFish()
+						console.error '[TimWolla.WCF.Chat] We got destroyed, but could free our friend the fish before he was killed as well. Have a nice life in freedom!'
+						alert 'herp i cannot load messages'
 				, @)
 		###
 		# Inserts the new messages.
