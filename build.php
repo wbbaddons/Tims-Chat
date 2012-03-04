@@ -75,9 +75,13 @@ Building timwolla.wcf.chat.tar
 
 EOT;
 	chdir('..');
-	passthru('tar cvf timwolla.wcf.chat.tar * --exclude=file --exclude=template --exclude=acptemplate --exclude=build.php', $code);
+	file_put_contents('package.xml.bak', file_get_contents('package.xml'));
+	file_put_contents('package.xml', str_replace('</version>', '.'.time().'</version>', file_get_contents('package.xml')));
+	passthru('tar cvf timwolla.wcf.chat.tar * --exclude=*.bak --exclude=file --exclude=template --exclude=acptemplate --exclude=build.php', $code);
+	file_put_contents('package.xml', file_get_contents('package.xml.bak'));
 	if ($code != 0) exit($code);
 
+if (file_exists('package.xml.bak')) unlink('package.xml.bak');
 if (file_exists('file.tar')) unlink('file.tar');
 if (file_exists('template.tar')) unlink('template.tar');
 if (file_exists('acptemplate.tar')) unlink('acptemplate.tar');
