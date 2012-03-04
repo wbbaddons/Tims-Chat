@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/acpMenu.xsd">
+	<import>
+		<acpmenuitem name="wcf.acp.menu.link.chat">
+			<parent>wcf.acp.menu.link.content</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.chat.room.list">
+			<link>index.php/ChatRoomList/</link>
+			<parent>wcf.acp.menu.link.chat</parent>
+			<permissions>admin.content.chat.canEditRoom,admin.content.chat.canDeleteRoom</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+
+		<acpmenuitem name="wcf.acp.menu.link.chat.room.add">
+			<link>index.php/ChatRoomAdd/</link>
+			<parent>wcf.acp.menu.link.chat</parent>
+			<permissions>admin.content.chat.canAddRoom</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+	</import>
+</data>

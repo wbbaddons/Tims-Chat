@@ -17,7 +17,7 @@ class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
 	/**
 	 * Hides the button when there is no valid room
 	 *
-	 * @see \wcf\system\menu\page\PageMenuItemProvider::isVisible()
+	 * @see	\wcf\system\menu\page\PageMenuItemProvider::isVisible()
 	 */
 	public function isVisible() {
 		// guests are not supported
@@ -43,7 +43,7 @@ class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
 	/**
 	 * Modifies the link to show the Link we would be redirect to.
 	 * 
-	 * @see \wcf\system\menu\page\PageMenuItemProvider::getLink()
+	 * @see	\wcf\system\menu\page\PageMenuItemProvider::getLink()
 	 */
 	public function getLink() {
 		return \wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(

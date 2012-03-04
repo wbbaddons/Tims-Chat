@@ -9,12 +9,18 @@
 
 TimWolla ?= {}
 TimWolla.WCF ?= {}
+consoleMock = console
 consoleMock ?= 
 	log: () ->,
-	warn: () ->
+	warn: () ->,
+	error: () ->
 
 (($, window, console) ->
 	TimWolla.WCF.Chat =
+		# Tims Chat stops loading when this reaches zero
+		# TODO: We need an explosion animation
+		shields: 3
+		
 		# Templates
 		titleTemplate: null
 		messageTemplate: null
@@ -34,17 +40,21 @@ consoleMock ?=
 		events: 
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
+		pe:
+			getMessages: null
+			refreshRoomList: null
+			fish: null
 		init: () ->
 			console.log '[TimWolla.WCF.Chat] Initializing'
 			@bindEvents()
 			@events.newMessage.add $.proxy @notify, @
 			
-			new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, @), 60e3
-			new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1e3
+			@pe.refreshRoomList = new WCF.PeriodicalExecuter $.proxy(@refreshRoomList, @), 60e3
+			@pe.getMessages = new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1e3
 			@refreshRoomList()
 			@getMessages()
 			
-			console.log '[TimWolla.WCF.Chat] Finished initializing'
+			console.log '[TimWolla.WCF.Chat] Finished initializing - Shields at 104 percent'
 		###
 		# Autocompletes a username
 		###
@@ -64,6 +74,7 @@ consoleMock ?=
 		# Binds all the events needed for Tims Chat.
 		###
 		bindEvents: () ->
+			# Mark window as focused
 			$(window).focus $.proxy () ->
 				document.title = @titleTemplate.fetch
 					title: $('#timsChatRoomList .activeMenuItem a').text()
@@ -71,12 +82,19 @@ consoleMock ?=
 				@isActive = true
 			, @
 			
+			# Mark window as blurred
 			$(window).blur $.proxy () ->
 				@isActive = false
 			, @
 			
+			# Unload the chat
+			window.onbeforeunload = $.proxy () ->
+				@unload()
+				return undefined
+			, @
+			
 			# Insert a smiley
-			$('.smiley').click $.proxy (event) ->
+			$('.jsSmiley').click $.proxy (event) ->
 				@insertText ' ' + $(event.target).attr('alt') + ' '
 			, @
 			
@@ -118,11 +136,11 @@ consoleMock ?=
 			
 			# Clears the stream
 			$('#timsChatClear').click (event) ->
-			      event.preventDefault()
-			      $('.timsChatMessage').remove()
-			      @oldScrollTop = $('.timsChatMessageContainer').scrollTop()
-			      $('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
-			      $('#timsChatInput').focus()
+				event.preventDefault()
+				$('.timsChatMessage').remove()
+				@oldScrollTop = null
+				$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
+				$('#timsChatInput').focus()
 			
 			# Toggle Buttons
 			$('.timsChatToggle').click (event) ->
@@ -139,7 +157,7 @@ consoleMock ?=
 					
 			# Immediatly scroll down when activating autoscroll
 			$('#timsChatAutoscroll').click (event) ->
-				$(this).removeClass('hot')
+				$(this).parent().removeClass('default')
 				if $(this).data 'status'
 					$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
 					@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
@@ -172,15 +190,15 @@ consoleMock ?=
 					
 					# Set new topic
 					if data.topic is ''
-						return if $('#topic').text().trim() is ''
+						return if $('#timsChatTopic').text().trim() is ''
 						
-						$('#topic').wcfBlindOut 'vertical', () ->
+						$('#timsChatTopic').wcfBlindOut 'vertical', () ->
 							$(@).text ''
 					else
-						$('#topic').text data.topic
-						$('#topic').wcfBlindIn() if $('#topic').text().trim() isnt '' and $('#topic').is(':hidden')
+						$('#timsChatTopic').text data.topic
+						$('#timsChatTopic').wcfBlindIn() if $('#timsChatTopic').text().trim() isnt '' and $('#timsChatTopic').is(':hidden')
 					
-					$('.timsChatMessage').animate('opacity', .8);
+					$('.timsChatMessage').addClass('unloaded', 800);
 					@handleMessages data.messages
 					document.title = @titleTemplate.fetch data
 				, @)
@@ -198,7 +216,7 @@ consoleMock ?=
 		# Frees the fish
 		###
 		freeTheFish: () ->
-			return if $.wcfIsset('fish')
+			return if $.wcfIsset 'fish'
 			console.warn '[TimWolla.WCF.Chat] Freeing the fish'
 			fish = $ '<div id="fish">' + WCF.String.escapeHTML('><((((\u00B0>') + '</div>'
 			fish.css
@@ -210,16 +228,16 @@ consoleMock ?=
 				zIndex: 9999
 			
 			fish.appendTo $ 'body'
-			new WCF.PeriodicalExecuter(() ->
+			@pe.fish = new WCF.PeriodicalExecuter(() ->
 				left = Math.random() * 100 - 50
 				top = Math.random() * 100 - 50
-				fish = $('#fish')
+				fish = $ '#fish'
 				
 				left *= -1 unless fish.width() < (fish.position().left + left) < ($(document).width() - fish.width())
 				top *= -1 unless fish.height() < (fish.position().top + top) < ($(document).height() - fish.height())
 				
-				fish.text('><((((\u00B0>') if left > 0
-				fish.text('<\u00B0))))><') if left < 0
+				fish.text '><((((\u00B0>' if left > 0
+				fish.text '<\u00B0))))><' if left < 0
 				
 				fish.animate
 					top: '+=' + top
@@ -237,6 +255,15 @@ consoleMock ?=
 					@handleMessages(data.messages)
 					@handleUsers(data.users)
 				, @)
+				error: $.proxy((jqXHR, textStatus, errorThrown) ->
+					console.error '[TimWolla.WCF.Chat] Battle Station hit - shields at ' + (--@shields / 3 * 104) + ' percent'
+					if @shields is 0
+						@pe.refreshRoomList.stop()
+						@pe.getMessages.stop()
+						@freeTheFish()
+						console.error '[TimWolla.WCF.Chat] We got destroyed, but could free our friend the fish before he was killed as well. Have a nice life in freedom!'
+						alert 'herp i cannot load messages'
+				, @)
 		###
 		# Inserts the new messages.
 		#
@@ -248,14 +275,16 @@ consoleMock ?=
 				if $('.timsChatMessageContainer').scrollTop() < @oldScrollTop
 					if $('#timsChatAutoscroll').data('status') is 1
 						$('#timsChatAutoscroll').click()
-						$('#timsChatAutoscroll').addClass('hot').fadeOut('slow').fadeIn('slow')
+						$('#timsChatAutoscroll').parent().addClass('default').fadeOut('slow').fadeIn('slow')
 			
 			# Insert the messages
 			for message in messages
+				continue if $.wcfIsset 'timsChatMessage'+message.messageID # Prevent problems with race condition
 				@events.newMessage.fire message
 				
 				output = @messageTemplate.fetch message
 				li = $ '<li></li>'
+				li.attr 'id', 'timsChatMessage'+message.messageID
 				li.addClass 'timsChatMessage timsChatMessage'+message.type
 				li.addClass 'ownMessage' if message.sender is WCF.User.userID
 				li.append output
@@ -314,7 +343,7 @@ consoleMock ?=
 					$(@).remove();
 					
 			
-			$('#toggleUsers .badge').text(users.length);
+			$('#toggleUsers .wcf-badge').text(users.length);
 		###
 		# Inserts text into our input.
 		# 
@@ -371,7 +400,7 @@ consoleMock ?=
 				success: $.proxy((data, textStatus, jqXHR) ->
 					$('#timsChatRoomList li').remove()
 					$('#toggleRooms a').removeClass 'ajaxLoad'
-					$('#toggleRooms .badge').text(data.length);
+					$('#toggleRooms .wcf-badge').text(data.length);
 					
 					for room in data
 						li = $ '<li></li>'
@@ -447,4 +476,11 @@ consoleMock ?=
 			else
 				li.addClass 'activeMenuItem'
 				li.find('.timsChatUserMenu').wcfBlindIn 'vertical'
+		###
+		# Unloads the chat.
+		###
+		unload: () ->
+			$.ajax @config.unloadURL,
+				type: 'POST'
+				async: false
 )(jQuery, @, consoleMock)

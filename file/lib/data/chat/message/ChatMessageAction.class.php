@@ -12,7 +12,7 @@ namespace wcf\data\chat\message;
  */
 class ChatMessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	/**
-	 * @see wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = '\wcf\data\chat\message\ChatMessageEditor';
 }

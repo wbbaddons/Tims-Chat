@@ -5,7 +5,7 @@
 	
 	{include file='headInclude' sandbox=false}
 	<style type="text/css">
-		@import url("{@RELATIVE_WCF_DIR}style/timwolla.wcf.chat.css");
+		@import url("{@$__wcf->getPath('wcf')}style/timwolla.wcf.chat.css");
 		#timsChatCopyrightDialog {
 			background-image: url("{link controller='Chat' action='Copyright' sheep=1}{/link}");
 			background-position: right 45px;
@@ -56,6 +56,7 @@
 		
 		.jsCounterInput {
 			height: 16px;
+			box-sizing: content-box !important;
 		}
 		
 		.jsCounterInput, .jsCounter {
@@ -89,103 +90,63 @@
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
-{capture assign='sidebar'}
-<div id="sidebarContent" class="sidebarContent">
-	<nav class="timsChatSidebarTabs">
-		<ul>
-			<li id="toggleUsers" class="active"><a href="javascript:;" title="{lang}wcf.chat.users{/lang}">{lang}wcf.chat.users{/lang} <span class="badge">0</span></a></li>
-			<li id="toggleRooms"><a href="javascript:;" title="{lang}wcf.chat.rooms{/lang}" data-refresh-url="{link controller="Chat" action="RefreshRoomList"}{/link}">{lang}wcf.chat.rooms{/lang} <span class="badge">{#$rooms|count}</span></a></li>
-		</ul>
-	</nav>
-	
-	<div id="sidebarContainer">
-		<ul id="timsChatUserList">
-		{*section name=user start=1 loop=26}
-			<li class="timsChatUser">
-				<a href="javascript:;">User {$user}</a>
-				<ul class="timsChatUserMenu">
-					<li>
-						<a href="javascript:;">{lang}wcf.chat.query{/lang}</a>
-						<a href="javascript:;">{lang}wcf.chat.kick{/lang}</a>
-						<a href="javascript:;">{lang}wcf.chat.ban{/lang}</a>
-						<a href="{link controller="User" id=$user}{/link}">{lang}wcf.chat.profile{/lang}</a>
-					</li>
-				</ul>
-			</li>
-		{/section*}
-		</ul>
-		<nav id="timsChatRoomList" class="sidebarMenu" style="display: none;">
-			<div>
-				<ul>
-				{foreach from=$rooms item='roomListRoom'}
-					{if $roomListRoom->canEnter()}
-						<li{if $roomListRoom->roomID == $room->roomID} class="activeMenuItem"{/if}>
-							<a href="{link controller='Chat' object=$roomListRoom}{/link}" class="timsChatRoom">{$roomListRoom}</a>
-						</li>
-					{/if}
-				{/foreach}
-				</ul>
-				<div style="text-align: center;"><button type="button">Force Refresh</button></div>
-			</div>
-		</nav>
-	</div>
-</div>
-{/capture}
+{capture assign='sidebar'}{include file='chatSidebar'}{/capture}
+{capture assign='headerNavigation'}{include file='chatNavigationInclude'}{/capture}
 {include file='header' sandbox=false sidebarOrientation='right'}
 
 <div id="timsChatRoomContent">
-	<div id="timsChatTopic" class="border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
-	<div class="timsChatMessageContainer border content">
+	<div id="timsChatTopic" class="wcf-border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
+	<div class="timsChatMessageContainer wcf-border wcf-content">
 		<ul>
-			<noscript><li class="error">{lang}wcf.chat.noJs{/lang}</li></noscript>
+			<noscript><li class="wcf-error">{lang}wcf.chat.noJs{/lang}</li></noscript>
 		</ul>
 	</div>
 	
 	<form id="timsChatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<input type="text" id="timsChatInput" class="inputText long jsCounterInput" name="text" autocomplete="off" maxlength="{CHAT_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
+		<input type="text" id="timsChatInput" class="inputText long jsCounterInput" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
-	<div id="timsChatControls">
-		<div id="smileyList" class="border">
-			<ul class="smilies">
-				{foreach from=$smilies item='smiley'}
-					<li>
-						<img src="{$smiley->getURL()}" alt="{$smiley->smileyCode}" title="{$smiley->smileyCode}" class="smiley" />
-					</li>
-				{/foreach}
-			</ul>
-		</div>
-		<div id="timsChatOptions" class="border">
-			<div class="smallButtons">
-				<ul>
-					<li>
-						<a id="timsChatAutoscroll" href="javascript:;" class="timsChatToggle balloonTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
-							<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatNotify" href="javascript:;" class="timsChatToggle balloonTooltip" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
-							<img alt="" src="{icon size='S'}disabled1{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatSmilies" href="javascript:;" class="timsChatToggle balloonTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
-							<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatClear" href="javascript:;" class="balloonTooltip" title="{lang}wcf.chat.clear.description{/lang}">
-							<img alt="" src="{icon size='S'}delete1{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatMark" href="javascript:;" class="balloonTooltip" title="{lang}wcf.chat.mark.description{/lang}">
-							<img alt="" src="{icon size='S'}check1{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
-						</a>
-					</li>
+	<div id="timsChatControls" class="wcf-border">
+		{if MODULE_SMILEY}
+			<div id="smileyList">
+				<ul class="smilies">
+					{foreach from=$smilies item='smiley'}
+						<li>
+							<img src="{$smiley->getURL()}" alt="{$smiley->smileyCode}" title="{$smiley->smileyTitle}" class="jsSmiley jsTooltip" />
+						</li>
+					{/foreach}
 				</ul>
 			</div>
-		</div>
+		{/if}
+		<nav id="timsChatOptions">
+			<ul class="wcf-smallButtons">
+				<li>
+					<a id="timsChatAutoscroll" href="javascript:;" class="timsChatToggle jsTooltip wcf-button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
+						<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
+					</a>
+				</li>
+				<li>
+					<a id="timsChatNotify" href="javascript:;" class="timsChatToggle jsTooltip wcf-button" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
+						<img alt="" src="{icon size='S'}disabled1{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
+					</a>
+				</li>
+				<li{if !MODULE_SMILEY} style="display: none;"{/if}>
+					<a id="timsChatSmilies" href="javascript:;" class="timsChatToggle jsTooltip wcf-button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
+						<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
+					</a>
+				</li>
+				<li>
+					<a id="timsChatClear" href="javascript:;" class="jsTooltip wcf-button" title="{lang}wcf.chat.clear.description{/lang}">
+						<img alt="" src="{icon size='S'}delete1{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
+					</a>
+				</li>
+				<li>
+					<a id="timsChatMark" href="javascript:;" class="jsTooltip wcf-button" title="{lang}wcf.chat.mark.description{/lang}">
+						<img alt="" src="{icon size='S'}check1{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
 		{include file='chatCopyright'}
 	</div>
 </div>
@@ -201,8 +162,7 @@
 			// populate config
 			TimWolla.WCF.Chat.config = {
 				reloadTime: {@CHAT_RELOADTIME},
-				animations: {@CHAT_ANIMATIONS},
-				maxTextLength: {@CHAT_LENGTH}
+				unloadURL: '{link controller='Chat' action='Leave'}{/link}'
 			}
 			WCF.Language.addObject({
 				'wcf.chat.query': '{lang}wcf.chat.query{/lang}',

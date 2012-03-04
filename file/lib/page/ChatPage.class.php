@@ -105,25 +105,24 @@ class ChatPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if ($this->action == 'Message') {
-			new ChatMessagePage();
-			exit;
-		}
-		else if ($this->action == 'Log') {
-			//TODO: Initialise LogPage
-			exit;
-		}
-		else if ($this->action == 'RefreshRoomList') {
-			new ChatRefreshRoomListPage();
-			exit;
-		}
-		else if ($this->action == 'Send') {
-			new \wcf\form\ChatForm();
-			exit;
-		}
-		else if ($this->action == 'Copyright') {
-			new ChatCopyrightPage();
-			exit;
+		switch ($this->action) {
+			case 'Message':
+				new ChatMessagePage();
+				exit;
+			case 'Log':
+				exit;
+			case 'RefreshRoomList':
+				new ChatRefreshRoomListPage();
+				exit;
+			case 'Send':
+				new \wcf\form\ChatForm();
+				exit;
+			case 'Leave':
+				new \wcf\action\ChatLeaveAction();
+				exit;
+			case 'Copyright':
+				new ChatCopyrightPage();
+				exit;
 		}
 		
 		if (isset($_REQUEST['id'])) $this->roomID = (int) $_REQUEST['id'];

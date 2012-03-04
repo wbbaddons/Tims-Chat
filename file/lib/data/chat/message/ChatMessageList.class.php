@@ -12,7 +12,7 @@ namespace wcf\data\chat\message;
  */
 class ChatMessageList extends \wcf\data\DatabaseObjectList {
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$className
+	 * @see	\wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\chat\message\ChatMessage';
 	

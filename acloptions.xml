@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/aclOption.xsd">
 	<import>
-		<option name="canEnter">
-			<objecttype>timwolla.wcf.chat.room</objecttype>
-		</option>
+		<categories>
+			<category name="user">
+				<objecttype>timwolla.wcf.chat.room</objecttype>
+			</category>
+			<category name="mod">
+				<objecttype>timwolla.wcf.chat.room</objecttype>
+			</category>
+		</categories>
+		
+		<options>
+			<option name="user.canEnter">
+				<objecttype>timwolla.wcf.chat.room</objecttype>
+				<categoryname>user</categoryname>
+			</option>
+			<option name="user.canWrite">
+				<objecttype>timwolla.wcf.chat.room</objecttype>
+				<categoryname>user</categoryname>
+			</option>
+			
+			
+			<option name="mod.canAlwaysEnter">
+				<objecttype>timwolla.wcf.chat.room</objecttype>
+				<categoryname>mod</categoryname>
+			</option>
+			<option name="mod.canAlwaysWrite">
+				<objecttype>timwolla.wcf.chat.room</objecttype>
+				<categoryname>mod</categoryname>
+			</option>
+		</options>
 	</import>
 </data>

@@ -1,15 +1,14 @@
 <?php
 namespace wcf\form;
 use \wcf\data\chat;
-use \wcf\system\exception\PermissionDeniedException;
 use \wcf\system\exception\UserInputException;
 use \wcf\system\WCF;
 use \wcf\util\StringUtil;
 
 /**
  * Inserts a message
- *
- * @author 	Tim Düsterhus
+ * 
+ * @author	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	timwolla.wcf.chat
@@ -20,10 +19,14 @@ class ChatForm extends AbstractForm {
 	public $message = '';
 	public $room = null;
 	public $userData = array();
+	
+	/**
+	 * @see	\wcf\page\AbstractForm::$useTemplate
+	 */
 	public $useTemplate = false;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
@@ -37,17 +40,17 @@ class ChatForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_REQUEST['text'])) $this->message = StringUtil::trim($_REQUEST['text']);
+		if (isset($_REQUEST['text'])) $this->message = \wcf\util\MessageUtil::stripCrap(StringUtil::trim($_REQUEST['text']));
 		if (isset($_REQUEST['smilies'])) $this->enableSmilies = intval($_REQUEST['smilies']);
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -55,10 +58,14 @@ class ChatForm extends AbstractForm {
 		if ($this->message === '') {
 			throw new UserInputException('text');
 		}
+		
+		if (strlen($this->message) > CHAT_MAX_LENGTH) {
+			throw new UserInputException('text', 'tooLong');
+		}
 	}
 	
 	/**
-	 * @see	\wcf\form\AbstractForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -106,5 +113,13 @@ class ChatForm extends AbstractForm {
 		$messageAction->executeAction();
 		
 		$this->saved();
+	}
+	
+	/**
+	 * @see	\wcf\page\IPage::show()
+	 */
+	public function show() {
+		header("HTTP/1.0 204 No Content");
+		parent::show();
 	}
 }

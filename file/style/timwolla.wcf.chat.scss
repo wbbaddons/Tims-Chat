@@ -11,7 +11,7 @@
 	text-align: left;
 }
 
-.sidebar {
+.wcf-sidebar {
 	margin-bottom: -20px !important;
 	overflow: auto;
 	padding: 0;
@@ -32,7 +32,7 @@
 	}
 }
 
-#timsChatTopic, #smileyList, #timsChatOptions {
+#timsChatTopic, #smileyList {
 	padding: 5px;
 }
 
@@ -43,7 +43,7 @@
 	padding-left: 7px !important;
 }
 
-#smileyList .smilies, .smallButtons {
+#smileyList .smilies {
 	li {
 		display: inline;
 		margin: 5px 5px 0 0;
@@ -63,7 +63,9 @@
 }
 
 #timsChatOptions {
-	display: inline-block;
+	> ul {
+		text-align: right;
+	}
 }
 
 #timsChatUserList {
@@ -100,7 +102,7 @@
 		}
 	}
 	
-	.unloaded {
+	&.unloaded {
 	  opacity: 0.4;
 	}
 }
@@ -178,7 +180,7 @@
 				}
 			}
 			
-			&.active .badge {
+			&.active .wcf-badge {
 				font-size: 65% !important;
 				color: #fff;
 				background-color: #369;

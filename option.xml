@@ -49,7 +49,7 @@
 				<defaultvalue>1</defaultvalue>
 				<showorder>7</showorder>
 			</option>
-			<option name="chat_length">
+			<option name="chat_max_length">
 				<categoryname>chat.general</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>500</defaultvalue>

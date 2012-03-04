@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/userGroupOption.xsd">
+	<import>
+		<categories>
+			<category name="admin.content.chat">
+				<parent>admin.content</parent>
+			</category>
+		</categories>
+		
+		<options>
+			<option name="admin.content.chat.canAddRoom">
+				<categoryname>admin.content.chat</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.content.chat.canEditRoom">
+				<categoryname>admin.content.chat</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.content.chat.canDeleteRoom">
+				<categoryname>admin.content.chat</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+		</options>
+	</import>
+</data>

@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de">
+	<category name="wcf.acp.chat">
+		<item name="wcf.acp.chat.room.list"><![CDATA[Chaträume]]></item>
+		<item name="wcf.acp.chat.room.add"><![CDATA[Chatraum hinzufügen]]></item>
+		<item name="wcf.acp.chat.room.edit"><![CDATA[Chatraum bearbeiten]]></item>
+	</category>
+	
+	<category name="wcf.acp.menu">
+		<item name="wcf.acp.menu.link.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.acp.menu.link.chat.room.list"><![CDATA[Chaträume auflisten]]></item>
+		<item name="wcf.acp.menu.link.chat.room.add"><![CDATA[Chatraum hinzufügen]]></item>
+	</category>
+	
 	<category name="wcf.acp.option">
 		<item name="wcf.acp.option.category.chat"><![CDATA[Chat]]></item>
 		<item name="wcf.acp.option.category.chat.general"><![CDATA[Allgemein]]></item>
@@ -14,8 +26,8 @@
 		<item name="wcf.acp.option.chat_display_clock.description"><![CDATA[Aktiviert die Anzeige der Uhrzeit von Nachrichten]]></item>
 		<item name="wcf.acp.option.chat_animations"><![CDATA[Animationen aktivieren]]></item>
 		<item name="wcf.acp.option.chat_animations.description"><![CDATA[Aktiviert die Animation neuer Nachrichten.]]></item>
-		<item name="wcf.acp.option.chat_length"><![CDATA[Maximale Textlänge]]></item>
-		<item name="wcf.acp.option.chat_length.description"><![CDATA[Gibt die maximale Länge einer Chatnachricht an.]]></item>
+		<item name="wcf.acp.option.chat_max_length"><![CDATA[Maximale Textlänge]]></item>
+		<item name="wcf.acp.option.chat_max_length.description"><![CDATA[Gibt die maximale Länge einer Chatnachricht an.]]></item>
 		<item name="wcf.acp.option.chat_show_version"><![CDATA[Versionsnummer anzeigen]]></item>
 		<item name="wcf.acp.option.chat_show_version.description"><![CDATA[Zeigt die Versionsnummer im Copyrighthinweis an.]]></item>
 		
@@ -24,11 +36,7 @@
 		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Speicherzeit]]></item>
 		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Gibt die Zeit in Minuten an, die eine Nachricht im Protokoll gespeichert bleibt.]]></item>
 	</category>
-	
-	<category name="wcf.header">
-		<item name="wcf.header.menu.chat"><![CDATA[Chat]]></item>
-	</category>
-	
+		
 	<category name="wcf.chat">
 		<item name="wcf.chat.title"><![CDATA[Chat]]></item>
 		<item name="wcf.chat.protocol"><![CDATA[Protokoll]]></item>
@@ -54,5 +62,15 @@
 		<item name="wcf.chat.message.1"><![CDATA[hat den Chat betreten.]]></item>
 		<!-- 2 = TYPE_LEAVE -->
 		<item name="wcf.chat.message.2"><![CDATA[hat den Chat verlassen.]]></item>
+	</category>
+	
+	<!-- I18N Values -->
+	<category name="wcf.chat.room">
+		<item name="wcf.chat.room.title1"><![CDATA[Hauptchat]]></item>
+		<item name="wcf.chat.room.topic1"><![CDATA[Vielen Dank, dass Sie sich für Tims Chat entschieden haben. Bitte besuchen Sie das ACP um diesen Text anzupassen.]]></item>
+	</category>
+		
+	<category name="wcf.header">
+		<item name="wcf.header.menu.chat"><![CDATA[Chat]]></item>
 	</category>
 </language>

@@ -22,14 +22,14 @@ class ChatMessagePage extends AbstractPage {
 	public $useTemplate = false;
 	
 	/**
-	 * @see \wcf\page\Page::readData()
+	 * @see	\wcf\page\Page::readData()
 	 */
 	public function readData() {
 		parent::readData();
 		
 		$this->readRoom();
 		$this->readMessages();
-		$this->readUsers();
+		$this->users = $this->room->getUsers();
 	}
 	
 	public function readMessages() {
@@ -54,34 +54,6 @@ class ChatMessagePage extends AbstractPage {
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 	}
 	
-	public function readUsers() {
-		$packageID = \wcf\system\package\PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
-		
-		$sql = "SELECT
-				userID
-			FROM
-				wcf".WCF_N."_user_storage 
-			WHERE
-					field = 'roomID' 
-				AND	packageID = ".intval($packageID)."
-				AND 	fieldValue = ".intval($this->roomID);
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute();
-		while ($row = $stmt->fetchArray()) $userIDs[] = $row['userID'];
-		
-		$sql = "SELECT
-				*
-			FROM
-				wcf".WCF_N."_user
-			WHERE
-				userID IN (".rtrim(str_repeat('?,', count($userIDs)), ',').")
-			ORDER BY
-				username ASC";
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute($userIDs);
-		$this->users = $stmt->fetchObjects('\wcf\data\user\User');
-	}
-	
 	/**
 	 * @see	\wcf\page\IPage::show()
 	 */
@@ -94,6 +66,11 @@ class ChatMessagePage extends AbstractPage {
 		parent::show();
 		
 		@header('Content-type: application/json');
+		// enable gzip compression
+		if (HTTP_ENABLE_GZIP && HTTP_GZIP_LEVEL > 0 && HTTP_GZIP_LEVEL < 10 && !defined('HTTP_DISABLE_GZIP')) {
+			\wcf\util\HeaderUtil::compressOutput();
+		}
+		
 		$json = array('users' => array(), 'messages' => array());
 		
 		foreach ($this->messages as $message) {

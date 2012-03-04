@@ -1,6 +1,7 @@
 <?php
-namespace wcf\system\chat\permissions;
+namespace wcf\system\chat\permission;
 use \wcf\system\acl\ACLHandler;
+use \wcf\system\cache\CacheHandler;
 use \wcf\system\package\PackageDependencyHandler;
 use \wcf\system\WCF;
 
@@ -15,14 +16,25 @@ use \wcf\system\WCF;
  */
 class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	protected $chatPermissions = array();
+	protected static $defaults = array(
+		'user.canEnter' => true,
+		'user.canWrite' => true,
+		'mod.canAlwaysEnter' => false,
+		'mod.canAlwaysWrite' => false
+	);
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
-		// TODO: get groups permissions
+		
+		// get groups permissions
+		$groups = implode(',', WCF::getUser()->getGroupIDs());
+		$groupsFileName = \wcf\util\StringUtil::getHash(implode('-', WCF::getUser()->getGroupIDs()));
+		CacheHandler::getInstance()->addResource('chatPermission-'.$groups, WCF_DIR.'cache/cache.chatPermission-'.$groupsFileName.'.php', 'wcf\system\cache\builder\ChatPermissionCacheBuilder');
+		$this->chatPermissions = CacheHandler::getInstance()->get('chatPermission-'.$groups);
 		
 		// get user permissions
 		if (WCF::getUser()->userID) {
@@ -75,7 +87,20 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	 * @return	boolean
 	 */
 	public function getPermission(\wcf\data\chat\room\ChatRoom $room, $permission) {
-		if (!isset($this->chatPermissions[$room->roomID][$permission])) return true;
+		if (!isset($this->chatPermissions[$room->roomID][$permission])) {
+			return isset(self::$defaults[$permission]) ? self::$defaults[$permission] : false;
+		}
 		return (boolean) $this->chatPermissions[$room->roomID][$permission];
+	}
+	
+	/**
+	 * Clears the cache.
+	 */
+	public static function clearCache() {
+		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
+		
+		$ush->resetAll('chatUserPermissions', $packageID);
+		\wcf\system\cache\CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.chatPermission-[a-f0-9]{40}.php');
 	}
 }
