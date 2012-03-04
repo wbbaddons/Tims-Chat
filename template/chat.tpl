@@ -103,7 +103,7 @@
 	</div>
 	
 	<form id="timsChatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<input type="text" id="timsChatInput" class="inputText long jsCounterInput" name="text" autocomplete="off" maxlength="{@CHAT_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
+		<input type="text" id="timsChatInput" class="inputText long jsCounterInput" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
 	<div id="timsChatControls" class="wcf-border">

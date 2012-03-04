@@ -26,8 +26,8 @@
 		<item name="wcf.acp.option.chat_display_clock.description"><![CDATA[Aktiviert die Anzeige der Uhrzeit von Nachrichten]]></item>
 		<item name="wcf.acp.option.chat_animations"><![CDATA[Animationen aktivieren]]></item>
 		<item name="wcf.acp.option.chat_animations.description"><![CDATA[Aktiviert die Animation neuer Nachrichten.]]></item>
-		<item name="wcf.acp.option.chat_length"><![CDATA[Maximale Textlänge]]></item>
-		<item name="wcf.acp.option.chat_length.description"><![CDATA[Gibt die maximale Länge einer Chatnachricht an.]]></item>
+		<item name="wcf.acp.option.chat_max_length"><![CDATA[Maximale Textlänge]]></item>
+		<item name="wcf.acp.option.chat_max_length.description"><![CDATA[Gibt die maximale Länge einer Chatnachricht an.]]></item>
 		<item name="wcf.acp.option.chat_show_version"><![CDATA[Versionsnummer anzeigen]]></item>
 		<item name="wcf.acp.option.chat_show_version.description"><![CDATA[Zeigt die Versionsnummer im Copyrighthinweis an.]]></item>
 		
