@@ -22,6 +22,7 @@ final class Update {
 					'roomID' => $room->roomID,
 					'time' => TIME_NOW,
 					'type' => \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION,
+					// TODO: Language item
 					'message' => 'Tims Chat was updated. Please refresh the page.'
 				)
 			));
