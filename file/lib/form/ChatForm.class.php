@@ -45,7 +45,7 @@ class ChatForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_REQUEST['text'])) $this->message = StringUtil::trim($_REQUEST['text']);
+		if (isset($_REQUEST['text'])) $this->message = \wcf\util\MessageUtil::stripCrap(StringUtil::trim($_REQUEST['text']));
 		if (isset($_REQUEST['smilies'])) $this->enableSmilies = intval($_REQUEST['smilies']);
 	}
 	
