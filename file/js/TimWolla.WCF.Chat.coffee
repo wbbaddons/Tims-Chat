@@ -428,17 +428,17 @@ consoleMock ?=
 			# Finally free the fish
 			@freeTheFish() if $('#timsChatInput').val().trim().toLowerCase() is '/free the fish'
 			
+			text = $('#timsChatInput').val()
+			$('#timsChatInput').val('').focus().keyup()
 			$.ajax $('#timsChatForm').attr('action'), 
 				data:
-					text: $('#timsChatInput').val(),
+					text: text
 					smilies: $('#timsChatSmilies').data('status')
 				type: 'POST',
 				beforeSend: (jqXHR) ->
 					$('#timsChatInput').addClass 'ajaxLoad'
 				success: $.proxy((data, textStatus, jqXHR) ->
 					@getMessages()
-					$('#timsChatInput').val('').focus()
-					$('#timsChatInput').keyup()
 				, @)
 				complete: () ->
 					$('#timsChatInput').removeClass 'ajaxLoad'
