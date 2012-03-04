@@ -138,6 +138,6 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	public function canEnter() {
 		$ph = \wcf\system\chat\permission\ChatPermissionHandler::getInstance();
 		
-		return $ph->getPermission($this, 'canEnter') || $ph->getPermission($this, 'canAlwaysEnter');
+		return $ph->getPermission($this, 'user.canEnter') || $ph->getPermission($this, 'mod.canAlwaysEnter');
 	}
 }
