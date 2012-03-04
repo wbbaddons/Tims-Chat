@@ -54,8 +54,13 @@ class ChatForm extends AbstractForm {
 	 */
 	public function validate() {
 		parent::validate();
+		
 		if ($this->message === '') {
 			throw new UserInputException('text');
+		}
+		
+		if (strlen($this->message) > CHAT_MAX_LENGTH) {
+			throw new UserInputException('text', 'tooLong');
 		}
 	}
 	
