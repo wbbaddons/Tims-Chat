@@ -134,15 +134,17 @@
 	</form>
 	
 	<div id="timsChatControls" class="wcf-border">
-		<div id="smileyList">
-			<ul class="smilies">
-				{foreach from=$smilies item='smiley'}
-					<li>
-						<img src="{$smiley->getURL()}" alt="{$smiley->smileyCode}" title="{$smiley->smileyCode}" class="jsSmiley" />
-					</li>
-				{/foreach}
-			</ul>
-		</div>
+		{if MODULE_SMILEY}
+			<div id="smileyList">
+				<ul class="smilies">
+					{foreach from=$smilies item='smiley'}
+						<li>
+							<img src="{$smiley->getURL()}" alt="{$smiley->smileyCode}" title="{$smiley->smileyTitle}" class="jsSmiley jsTooltip" />
+						</li>
+					{/foreach}
+				</ul>
+			</div>
+		{/if}
 		<nav id="timsChatOptions">
 			<ul class="wcf-smallButtons">
 				<li>
@@ -155,7 +157,7 @@
 						<img alt="" src="{icon size='S'}disabled1{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
 					</a>
 				</li>
-				<li>
+				<li{if !MODULE_SMILEY} style="display: none;"{/if}>
 					<a id="timsChatSmilies" href="javascript:;" class="timsChatToggle jsTooltip wcf-button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
 						<img alt="" src="{icon size='S'}enabled1{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
 					</a>
