@@ -5,7 +5,7 @@
 		<packagedescription><![CDATA[Chat for WoltLab Community Framework™]]></packagedescription>
 		<standalone>0</standalone>
 		<isunique>1</isunique>
-		<version>3.0.0 Alpha 7</version>
+		<version>3.0.0 Alpha 8</version>
 		<date>2011-11-26</date>
 		<plugin>com.woltlab.wcf.bbcode</plugin> <!-- TODO: Correct me -->
 	</packageinformation>
@@ -50,5 +50,6 @@
 		<instruction type="aclOption">acloptions.xml</instruction>
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+		<instruction type="script">acp/timwolla.wcf.chat.update.php</instruction>
 	</instructions>
 </package>
