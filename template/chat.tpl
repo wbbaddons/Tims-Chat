@@ -113,7 +113,7 @@
 					{/if}
 				{/foreach}
 				</ul>
-				<div style="text-align: center;"><button type="button">Force Refresh</button></div>
+				<div style="text-align: center;"><button type="button">{lang}wcf.chat.forceRefresh{/lang}</button></div>
 			</div>
 		</nav>
 	</div>
