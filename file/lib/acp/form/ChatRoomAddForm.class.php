@@ -99,7 +99,7 @@ class ChatRoomAddForm extends ACPForm {
 		$roomID = $returnValues['returnValues']->roomID;
 		
 		if (!I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->save('title', 'wcf.chat.room.title'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('title', 'wcf.chat.room.title'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat'));
 		
 			// update title
 			$chatRoomEditor->update(array(
@@ -108,7 +108,7 @@ class ChatRoomAddForm extends ACPForm {
 		}
 		
 		if (!I18nHandler::getInstance()->isPlainValue('topic')) {
-			I18nHandler::getInstance()->save('topic', 'wcf.chat.room.topic'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('topic', 'wcf.chat.room.topic'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat'));
 		
 			// update topic
 			$chatRoomEditor->update(array(

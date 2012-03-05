@@ -27,13 +27,13 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		$packageID = PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
 		// get groups permissions
 		$groups = implode(',', WCF::getUser()->getGroupIDs());
 		$groupsFileName = \wcf\util\StringUtil::getHash(implode('-', WCF::getUser()->getGroupIDs()));
-		CacheHandler::getInstance()->addResource('chatPermission-'.$groups, WCF_DIR.'cache/cache.chatPermission-'.$groupsFileName.'.php', 'wcf\system\cache\builder\ChatPermissionCacheBuilder');
+		CacheHandler::getInstance()->addResource('chatPermission-'.$groups, WCF_DIR.'cache/cache.chatPermission-'.$groupsFileName.'.php', '\wcf\system\cache\builder\ChatPermissionCacheBuilder');
 		$this->chatPermissions = CacheHandler::getInstance()->get('chatPermission-'.$groups);
 		
 		// get user permissions
@@ -49,7 +49,7 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 				$userPermissions = array();
 				
 				$conditionBuilder = new \wcf\system\database\util\PreparedStatementConditionBuilder();
-				$conditionBuilder->add('acl_option.packageID IN (?)', array(PackageDependencyHandler::getDependencies()));
+				$conditionBuilder->add('acl_option.packageID IN (?)', array(PackageDependencyHandler::getInstance()->getDependencies()));
 				$conditionBuilder->add('acl_option.objectTypeID = ?', array(ACLHandler::getInstance()->getObjectTypeID('timwolla.wcf.chat.room')));
 				$conditionBuilder->add('option_to_user.optionID = acl_option.optionID');
 				$conditionBuilder->add('option_to_user.userID = ?', array(WCF::getUser()->userID));
@@ -97,7 +97,7 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	 * Clears the cache.
 	 */
 	public static function clearCache() {
-		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		$packageID = PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
 		$ush->resetAll('chatUserPermissions', $packageID);

@@ -1,8 +1,8 @@
 <?php
 namespace wcf\acp\form;
-use wcf\system\language\I18nHandler;
-use wcf\system\package\PackageDependencyHandler;
-use wcf\system\WCF;
+use \wcf\system\language\I18nHandler;
+use \wcf\system\package\PackageDependencyHandler;
+use \wcf\system\WCF;
 
 /**
  * Shows the chatroom edit form.
@@ -64,20 +64,20 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 		
 		$this->title = 'wcf.chat.room.title'.$this->roomObj->roomID;
 		if (I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->remove($this->title, PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->remove($this->title, PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat'));
 			$this->title = I18nHandler::getInstance()->getValue('title');
 		}
 		else {
-			I18nHandler::getInstance()->save('title', $this->title, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('title', $this->title, 'wcf.chat.room', PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat'));
 		}
 		
 		$this->topic = 'wcf.chat.room.topic'.$this->roomObj->roomID;
 		if (I18nHandler::getInstance()->isPlainValue('topic')) {
-			I18nHandler::getInstance()->remove($this->topic, PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->remove($this->topic, PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat'));
 			$this->topic = I18nHandler::getInstance()->getValue('topic');
 		}
 		else {
-			I18nHandler::getInstance()->save('topic', $this->topic, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('topic', $this->topic, 'wcf.chat.room', PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat'));
 		}
 		
 		\wcf\system\acl\ACLHandler::getInstance()->save($this->roomID, $this->objectTypeID);
@@ -105,8 +105,8 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 		parent::readData();
 		
 		if (!count($_POST)) {
-			I18nHandler::getInstance()->setOptions('title', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'), $this->roomObj->title, 'wcf.chat.room.title\d+');
-			I18nHandler::getInstance()->setOptions('topic', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'), $this->roomObj->topic, 'wcf.chat.room.topic\d+');
+			I18nHandler::getInstance()->setOptions('title', PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat'), $this->roomObj->title, 'wcf.chat.room.title\d+');
+			I18nHandler::getInstance()->setOptions('topic', PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat'), $this->roomObj->topic, 'wcf.chat.room.topic\d+');
 			
 			$this->title = $this->roomObj->title;
 			$this->topic = $this->roomObj->topic;

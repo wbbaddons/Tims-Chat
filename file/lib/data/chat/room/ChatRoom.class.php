@@ -43,7 +43,7 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	 * @return	integer
 	 */
 	public function countUsers() {
-		$packageID = \wcf\system\package\PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		$packageID = \wcf\system\package\PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
 
 		$sql = "SELECT
 				count(*) as count
@@ -100,7 +100,7 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	 * @return	array<\wcf\data\user\User>
 	 */
 	public function getUsers() {
-		$packageID = \wcf\system\package\PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		$packageID = \wcf\system\package\PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
 
 		$sql = "SELECT
 				userID

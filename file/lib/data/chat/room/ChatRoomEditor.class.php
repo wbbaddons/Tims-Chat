@@ -29,7 +29,7 @@ class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		parent::deleteAll($objectIDs);
-		$packageID = \wcf\system\package\PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		$packageID = \wcf\system\package\PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {

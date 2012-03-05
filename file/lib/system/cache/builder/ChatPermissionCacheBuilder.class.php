@@ -22,7 +22,7 @@ class ChatPermissionCacheBuilder implements ICacheBuilder {
 		
 		if (count($groupIDs)) {
 			$conditionBuilder = new \wcf\system\database\util\PreparedStatementConditionBuilder();
-			$conditionBuilder->add('acl_option.packageID IN (?)', array(\wcf\system\package\PackageDependencyHandler::getDependencies()));
+			$conditionBuilder->add('acl_option.packageID IN (?)', array(\wcf\system\package\PackageDependencyHandler::getInstance()->getDependencies()));
 			$conditionBuilder->add('acl_option.objectTypeID = ?', array(\wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('timwolla.wcf.chat.room')));
 			$conditionBuilder->add('option_to_group.optionID = acl_option.optionID');
 			$conditionBuilder->add('option_to_group.groupID IN (?)', array($groupIDs));

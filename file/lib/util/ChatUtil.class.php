@@ -58,7 +58,7 @@ class ChatUtil {
 	 */
 	public static function readUserData($field) {
 		$ush = UserStorageHandler::getInstance();
-		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		$packageID = PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
 		
 		// load storage
 		$ush->loadStorage(array(WCF::getUser()->userID), $packageID);
@@ -96,7 +96,7 @@ class ChatUtil {
 	 */
 	public static function writeUserData(array $data) {
 		$ush = UserStorageHandler::getInstance();
-		$packageID = PackageDependencyHandler::getPackageID('timwolla.wcf.chat');
+		$packageID = PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
 		
 		foreach($data as $key => $value) {
 			$ush->update(WCF::getUser()->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value, $packageID);
