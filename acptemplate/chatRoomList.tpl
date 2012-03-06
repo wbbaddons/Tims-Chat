@@ -33,7 +33,7 @@
 	<ol class="wcf-sortableList" data-object-id="0">
 		{content}
 			{foreach from=$objects item=chatRoom}
-				<li class="wcf-sortableNode  wcf-sortableNoNestingchatRoomRow" data-object-id="{@$chatRoom->roomID}">
+				<li class="wcf-sortableNode wcf-sortableNoNesting chatRoomRow" data-object-id="{@$chatRoom->roomID}">
 					<span class="wcf-sortableNodeLabel">
 						<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}">{$chatRoom->title|language}</a>
 						
