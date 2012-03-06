@@ -33,7 +33,7 @@
 	<ol class="wcf-sortableList" data-object-id="0">
 		{content}
 			{foreach from=$objects item=chatRoom}
-				<li class="wcf-sortableNode chatRoomRow" data-object-id="{@$chatRoom->roomID}">
+				<li class="wcf-sortableNode  wcf-sortableNoNestingchatRoomRow" data-object-id="{@$chatRoom->roomID}">
 					<span class="wcf-sortableNodeLabel">
 						<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}">{$chatRoom->title|language}</a>
 						
@@ -46,13 +46,19 @@
 							{/if}
 						</span>
 					</span>
+					<ol class="wcf-sortableList" data-object-id="{@$chatRoom->roomID}"></ol></li>
 				</li>
 			{/foreach}
 		{/content}
 	</ol>
+	<div class="wcf-formSubmit">
+		<button class="wcf-button" data-type="reset">{lang}wcf.global.button.reset{/lang}</button>
+		<button class="wcf-button default" data-type="submit">{lang}wcf.global.button.submit{/lang}</button>
+	</div>
 	{hascontentelse}
 		<p class="wcf-warning">{lang}wcf.acp.chat.room.noneAvailable{/lang}</p>
 	{/hascontent}
 </section>
+
 
 {include file='footer'}
