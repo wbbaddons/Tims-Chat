@@ -63,7 +63,7 @@ consoleMock ?=
 			
 			# Search all matching users
 			for user in $ '.timsChatUser'
-				username = $(user).data('username');
+				username = $(user).data 'username'
 				if username.indexOf(firstChars) is 0
 					users.push username
 			
@@ -198,7 +198,7 @@ consoleMock ?=
 						$('#timsChatTopic').text data.topic
 						$('#timsChatTopic').wcfBlindIn() if $('#timsChatTopic').text().trim() isnt '' and $('#timsChatTopic').is(':hidden')
 					
-					$('.timsChatMessage').addClass('unloaded', 800);
+					$('.timsChatMessage').addClass 'unloaded', 800
 					@handleMessages data.messages
 					document.title = @titleTemplate.fetch data
 				, @)
@@ -243,7 +243,7 @@ consoleMock ?=
 					top: '+=' + top
 					left: '+=' + left
 				, 1e3
-			, 1.5e3);
+			, 1.5e3)
 		###
 		# Loads new messages.
 		###
@@ -273,13 +273,13 @@ consoleMock ?=
 			# Disable scrolling automagically when user manually scrolled
 			unless @oldScrollTop is null
 				if $('.timsChatMessageContainer').scrollTop() < @oldScrollTop
-					if $('#timsChatAutoscroll').data('status') is 1
+					if $('#timsChatAutoscroll').data 'status' is 1
 						$('#timsChatAutoscroll').click()
 						$('#timsChatAutoscroll').parent().addClass('default').fadeOut('slow').fadeIn('slow')
 			
 			# Insert the messages
 			for message in messages
-				continue if $.wcfIsset 'timsChatMessage'+message.messageID # Prevent problems with race condition
+				continue if $.wcfIsset 'timsChatMessage' + message.messageID # Prevent problems with race condition
 				@events.newMessage.fire message
 				
 				output = @messageTemplate.fetch message
@@ -304,7 +304,7 @@ consoleMock ?=
 			foundUsers = { }
 			for user in users
 				id = 'timsChatUser-'+user.userID
-				element = $('#'+id)
+				element = $ '#'+id
 				
 				# Move the user to the correct position
 				if element[0]
@@ -370,7 +370,7 @@ consoleMock ?=
 		# @param	object	message
 		###
 		notify: (message) ->
-			return if @isActive or $('#timsChatNotify').data('status') is 0
+			return if @isActive or $('#timsChatNotify').data 'status' is 0
 			@newMessageCount++
 			
 			document.title = '(' + @newMessageCount + ') ' + @titleTemplate.fetch
@@ -379,8 +379,8 @@ consoleMock ?=
 			# Desktop Notifications
 			if typeof window.webkitNotifications isnt 'undefined'
 				if window.webkitNotifications.checkPermission() is 0
-					title = WCF.Language.get('wcf.chat.newMessages')
-					icon = WCF.Icon.get('timwolla.wcf.chat.chat')
+					title = WCF.Language.get 'wcf.chat.newMessages'
+					icon = WCF.Icon.get 'timwolla.wcf.chat.chat'
 					content = message.username + message.separator + ' ' + message.message
 					notification = window.webkitNotifications.createNotification icon, title, content
 					notification.show()
@@ -400,7 +400,7 @@ consoleMock ?=
 				success: $.proxy((data, textStatus, jqXHR) ->
 					$('#timsChatRoomList li').remove()
 					$('#toggleRooms a').removeClass 'ajaxLoad'
-					$('#toggleRooms .wcf-badge').text(data.length);
+					$('#toggleRooms .wcf-badge').text data.length
 					
 					for room in data
 						li = $ '<li></li>'
@@ -433,7 +433,7 @@ consoleMock ?=
 			$.ajax $('#timsChatForm').attr('action'), 
 				data:
 					text: text
-					smilies: $('#timsChatSmilies').data('status')
+					smilies: $('#timsChatSmilies').data 'status'
 				type: 'POST',
 				beforeSend: (jqXHR) ->
 					$('#timsChatInput').addClass 'ajaxLoad'
@@ -450,13 +450,13 @@ consoleMock ?=
 		toggleSidebarContents: (target) ->
 			return if target.parents('li').hasClass 'active'
 			
-			if target.parents('li').attr('id') is 'toggleUsers'
+			if target.parents('li').attr 'id' is 'toggleUsers'
 				$('#toggleUsers').addClass 'active'
 				$('#toggleRooms').removeClass 'active'
 				
 				$('#timsChatRoomList').hide()
 				$('#timsChatUserList').show()
-			else if target.parents('li').attr('id') is 'toggleRooms'
+			else if target.parents('li').attr 'id' is 'toggleRooms'
 				$('#toggleRooms').addClass 'active'
 				$('#toggleUsers').removeClass 'active'
 				
