@@ -95,8 +95,8 @@
 {include file='header' sandbox=false sidebarOrientation='right'}
 
 <div id="timsChatRoomContent">
-	<div id="timsChatTopic" class="wcf-border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
-	<div class="timsChatMessageContainer wcf-border wcf-content">
+	<div id="timsChatTopic" class="wcf-box wcf-marginBottom"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
+	<div class="timsChatMessageContainer wcf-box wcf-shadow1 wcf-boxPadding">
 		<ul>
 			<noscript><li class="wcf-error">{lang}wcf.chat.noJs{/lang}</li></noscript>
 		</ul>
@@ -106,7 +106,7 @@
 		<input type="text" id="timsChatInput" class="inputText long jsCounterInput" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
-	<div id="timsChatControls" class="wcf-border">
+	<div id="timsChatControls" class="wcf-box wcf-marginTop">
 		{if MODULE_SMILEY}
 			<div id="smileyList">
 				<ul class="smilies">
