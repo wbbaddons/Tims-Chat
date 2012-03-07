@@ -28,7 +28,7 @@
 	{/if}
 </div>
 
-<section id="chatRoomList" class="wcf-border wcf-sortableListContainer">
+<section id="chatRoomList" class="wcf-box wcf-marginTop wcf-boxPadding wcf-shadow1 wcf-sortableListContainer">
 	{hascontent}
 	<ol class="wcf-sortableList" data-object-id="0">
 		{content}
@@ -37,7 +37,7 @@
 					<span class="wcf-sortableNodeLabel">
 						<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}">{$chatRoom->title|language}</a>
 						
-						<span class="wcf-sortableButtonContainer">
+						<span class="wcf-statusDisplay wcf-sortableButtonContainer">
 							{if $__wcf->session->getPermission('admin.content.chat.canEditRoom')}
 								<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}"><img src="{@$__wcf->getPath('wcf')}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
 							{/if}
