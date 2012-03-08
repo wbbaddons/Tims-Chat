@@ -85,7 +85,12 @@ class ChatPage extends AbstractPage {
 		}
 		
 		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
-		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => end($this->newestMessages)->messageID));
+		try {
+			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => end($this->newestMessages)->messageID));
+		}
+		catch (SystemException $e) {
+			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => 0));
+		}
 		
 		$this->smilies = \wcf\data\smiley\SmileyCache::getInstance()->getCategorySmilies();
 		$this->readChatVersion();
