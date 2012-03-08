@@ -88,7 +88,7 @@ class ChatPage extends AbstractPage {
 		try {
 			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => end($this->newestMessages)->messageID));
 		}
-		catch (SystemException $e) {
+		catch (\wcf\system\SystemException $e) {
 			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => 0));
 		}
 		
