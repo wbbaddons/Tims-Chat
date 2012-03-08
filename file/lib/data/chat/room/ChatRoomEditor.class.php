@@ -17,19 +17,13 @@ class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data
 	 */
 	protected static $baseClass = '\wcf\data\chat\room\ChatRoom';
 	
-	/**
-	 * Clears the room cache.
-	 */
-	public static function resetCache() {
-		\wcf\system\cache\CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.chatrooms.php');
-	}
-	
+		
 	/**
 	 * @see	\wcf\data\DatabaseObjectEditor::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		parent::deleteAll($objectIDs);
-		$packageID = \wcf\system\package\PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
+		$packageID = \wcf\util\ChatUtil::getPackageID();
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {
@@ -39,5 +33,41 @@ class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data
 		WCF::getDB()->commitTransaction();
 		
 		return count($objectIDs);
+	}
+	
+	/**
+	 * Deletes temporary rooms that are unused.
+	 * 
+	 * @return	integer		Number of deleted rooms
+	 */
+	public static function prune() {
+		$baseClass = self::$baseClass;
+		$sql = "SELECT
+				".$baseClass::getDatabaseTableIndexName()."
+			FROM
+				".$baseClass::getDatabaseTableName()."
+			WHERE
+				permanent = ?
+				AND roomID NOT IN(
+					SELECT
+						fieldValue AS roomID 
+					FROM
+						wcf".WCF_N."_user_storage
+					WHERE
+							packageID = ?
+						AND	field = ?)";
+		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
+		$stmt->execute(array(0, \wcf\util\ChatUtil::getPackageID(), 'roomID'));
+		$objectIDs = array();
+		
+		while ($objectIDs[] = $stmt->fetchColumn());
+		return self::deleteAll($objectIDs);
+	}
+	
+	/**
+	 * Clears the room cache.
+	 */
+	public static function resetCache() {
+		\wcf\system\cache\CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.chatrooms.php');
 	}
 }

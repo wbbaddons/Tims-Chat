@@ -2,7 +2,6 @@
 namespace wcf\acp\form;
 use \wcf\system\exception\UserInputException;
 use \wcf\system\language\I18nHandler;
-use \wcf\system\package\PackageDependencyHandler;
 use \wcf\system\WCF;
 
 /**
@@ -99,7 +98,7 @@ class ChatRoomAddForm extends ACPForm {
 		$roomID = $returnValues['returnValues']->roomID;
 		
 		if (!I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->save('title', 'wcf.chat.room.title'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('title', 'wcf.chat.room.title'.$roomID, 'wcf.chat.room', \wcf\util\ChatUtil::getPackageID());
 		
 			// update title
 			$chatRoomEditor->update(array(
@@ -108,7 +107,7 @@ class ChatRoomAddForm extends ACPForm {
 		}
 		
 		if (!I18nHandler::getInstance()->isPlainValue('topic')) {
-			I18nHandler::getInstance()->save('topic', 'wcf.chat.room.topic'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('topic', 'wcf.chat.room.topic'.$roomID, 'wcf.chat.room', \wcf\util\ChatUtil::getPackageID());
 		
 			// update topic
 			$chatRoomEditor->update(array(

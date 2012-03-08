@@ -27,7 +27,7 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		$packageID = PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
+		$packageID = \wcf\util\ChatUtil::getPackageID();
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
 		// get groups permissions
@@ -58,9 +58,9 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 					FROM		wcf".WCF_N."_acl_option acl_option,
 							wcf".WCF_N."_acl_option_to_user option_to_user
 							".$conditionBuilder;
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute($conditionBuilder->getParameters());
-				while ($row = $statement->fetchArray()) {
+				$stmt = WCF::getDB()->prepareStatement($sql);
+				$stmt->execute($conditionBuilder->getParameters());
+				while ($row = $stmt->fetchArray()) {
 					$userPermissions[$row['roomID']][$row['permission']] = $row['optionValue'];
 				}
 				
@@ -97,7 +97,7 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	 * Clears the cache.
 	 */
 	public static function clearCache() {
-		$packageID = PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
+		$packageID = \wcf\util\ChatUtil::getPackageID();
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
 		$ush->resetAll('chatUserPermissions', $packageID);

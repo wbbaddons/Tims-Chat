@@ -31,9 +31,9 @@ class ChatPermissionCacheBuilder implements ICacheBuilder {
 				FROM		wcf".WCF_N."_acl_option acl_option,
 						wcf".WCF_N."_acl_option_to_group option_to_group
 						".$conditionBuilder;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditionBuilder->getParameters());
-			while ($row = $statement->fetchArray()) {
+			$stmt = WCF::getDB()->prepareStatement($sql);
+			$stmt->execute($conditionBuilder->getParameters());
+			while ($row = $stmt->fetchArray()) {
 				if (!isset($data[$row['roomID']][$row['permission']])) $data[$row['roomID']][$row['permission']] = $row['optionValue'];
 				else $data[$row['roomID']][$row['permission']] = $row['optionValue'] || $data[$row['roomID']][$row['permission']];
 			}

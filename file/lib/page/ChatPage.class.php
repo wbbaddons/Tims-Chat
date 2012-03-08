@@ -88,7 +88,7 @@ class ChatPage extends AbstractPage {
 		try {
 			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => end($this->newestMessages)->messageID));
 		}
-		catch (\wcf\system\SystemException $e) {
+		catch (\wcf\system\exception\SystemException $e) {
 			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => 0));
 		}
 		
@@ -161,12 +161,15 @@ class ChatPage extends AbstractPage {
 		if (!WCF::getUser()->userID) {
 			throw new \wcf\system\exception\PermissionDeniedException();
 		}
+		
 		\wcf\system\menu\page\PageMenu::getInstance()->setActiveMenuItem('wcf.header.menu.chat');
 		
 		// remove index breadcrumb
 		WCF::getBreadcrumbs()->remove(0);
+		
 		parent::show();
-		// break if not ajax
+		
+		// break if not using ajax
 		if ($this->useTemplate) exit;
 		@header('Content-type: application/json');
 		

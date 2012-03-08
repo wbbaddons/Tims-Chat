@@ -22,7 +22,42 @@ class ChatUtil {
 	 */
 	const TIME_MODIFIER_REGEX = '((?:[0-9]+[s|h|d|w|m|y|S|H|D|W|M|Y]?,?)+)';
 	
+	/**
+	 * Package identifier of Tims Chat.
+	 * 
+	 * @var	string
+	 */
+	const PACKAGE_IDENTIFIER = 'timwolla.wcf.chat';
+	
 	public static $serialize = array('color' => true);
+	
+	/**
+	 * Cached packageID of Tims Chat.
+	 * 
+	 * @var	integer
+	 */
+	private static $packageID = null;
+	
+	/**
+	 * Returns the packageID of Tims Chat.
+	 */
+	public static function getPackageID() {
+		if (self::$packageID === null) {
+			self::$packageID = PackageDependencyHandler::getInstance()->getPackageID(self::PACKAGE_IDENTIFIER);
+		}
+		
+		return self::$packageID;
+	}
+	
+	/**
+	 * Returns a random number.
+	 * 
+	 * @return	integer
+	 */
+	public static function /* int */ getRandomNumber() {
+		return 4; // chosen by a fair dice roll
+			  // guaranteed to be random
+	}
 	
 	/**
 	 * Creates a gradient out of two colors represented by an integer.
@@ -58,7 +93,7 @@ class ChatUtil {
 	 */
 	public static function readUserData($field) {
 		$ush = UserStorageHandler::getInstance();
-		$packageID = PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
+		$packageID = self::getPackageID();
 		
 		// load storage
 		$ush->loadStorage(array(WCF::getUser()->userID), $packageID);
@@ -77,30 +112,6 @@ class ChatUtil {
 		
 		if (isset(static::$serialize[$field])) return unserialize($data[WCF::getUser()->userID]);
 		else return $data[WCF::getUser()->userID];
-	}
-	
-	/**
-	 * Returns a random number.
-	 * 
-	 * @return	integer
-	 */
-	public static function /* int */ getRandomNumber() {
-		return 4; // chosen by a fair dice roll
-			  // guaranteed to be random
-	}
-	
-	/**
-	 * Writes user data
-	 * 
-	 * @param	array $data
-	 */
-	public static function writeUserData(array $data) {
-		$ush = UserStorageHandler::getInstance();
-		$packageID = PackageDependencyHandler::getInstance()->getPackageID('timwolla.wcf.chat');
-		
-		foreach($data as $key => $value) {
-			$ush->update(WCF::getUser()->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value, $packageID);
-		}
 	}
 	
 	/**
@@ -174,5 +185,19 @@ class ChatUtil {
 		}
 		
 		return (int) round($result, 0);
+	}
+	
+	/**
+	 * Writes user data
+	 * 
+	 * @param	array $data
+	 */
+	public static function writeUserData(array $data) {
+		$ush = UserStorageHandler::getInstance();
+		$packageID = self::getPackageID();
+		
+		foreach($data as $key => $value) {
+			$ush->update(WCF::getUser()->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value, $packageID);
+		}
 	}
 }
