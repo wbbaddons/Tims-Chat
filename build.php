@@ -43,12 +43,34 @@ foreach (glob('file/style/*.scss') as $sassFile) {
 }
 echo <<<EOT
 
+Checking PHP for Syntax Errors
+------------------------------
+
+EOT;
+	chdir('file');
+	$check = null;
+	$check = function ($folder) use (&$check) {
+		if (is_file($folder)) {
+			if (substr($folder, -4) === '.php') {
+				passthru('php -l '.escapeshellarg($folder), $code);
+				if ($code != 0) exit($code);
+			}
+			
+			return;
+		}
+		$files = glob($folder.'/*');
+		foreach ($files as $file) {
+			$check($file);
+		}
+	};
+	$check('.');
+echo <<<EOT
+
 Building file.tar
 -----------------
 
 EOT;
-	chdir('file');
-	passthru('tar cvf ../file.tar * --exclude=*.coffee --exclude=*.scss', $code);
+	passthru('tar cvf ../file.tar * --exclude=*.coffee --exclude=*.scss --exclude=.sass-cache', $code);
 	if ($code != 0) exit($code);
 echo <<<EOT
 
