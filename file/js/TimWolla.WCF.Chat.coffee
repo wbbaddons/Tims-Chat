@@ -450,13 +450,13 @@ consoleMock ?=
 		toggleSidebarContents: (target) ->
 			return if target.parents('li').hasClass 'active'
 			
-			if target.parents('li').attr 'id' is 'toggleUsers'
+			if target.parents('li').attr('id') is 'toggleUsers'
 				$('#toggleUsers').addClass 'active'
 				$('#toggleRooms').removeClass 'active'
 				
 				$('#timsChatRoomList').hide()
 				$('#timsChatUserList').show()
-			else if target.parents('li').attr 'id' is 'toggleRooms'
+			else if target.parents('li').attr('id') is 'toggleRooms'
 				$('#toggleRooms').addClass 'active'
 				$('#toggleUsers').removeClass 'active'
 				
