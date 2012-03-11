@@ -1,0 +1,42 @@
+.jCounterContainer {
+	display: table;
+	
+	> div {
+		display: table-row;
+	}
+}
+
+.jCounterInput {
+	height: 16px;
+	width: 100%;
+	position: relative;
+	z-index: 9999;
+	box-sizing: content-box !important;
+}
+
+.jCounterInput, .jCounter {
+	display: table-cell;
+}
+
+.jCounter {
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.7);
+	padding: 0 5px 0 10px;
+	position: relative;
+	z-index: 0 !important;
+	border-radius: 0px 5px 5px 0px;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	width: 30px;
+	
+	&.color-1 {
+		color: #FFFFFF;
+	}
+	
+	&.color-2 {
+		color: rgba(255,255,255,0.5);
+	}
+	
+	&.color-3 {
+		color: #D40D12;
+	}
+}

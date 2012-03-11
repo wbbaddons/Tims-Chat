@@ -40,52 +40,6 @@
 		.ajaxLoad {
 			background-image: url({icon size='S'}spinner1{/icon});
 		}
-
-		/*
-		 * jCounter CSS
-		 * 
-		 * TODO: Seperate jCounter completely from Tims-Chat
-		 */
-		.jsCounterContainer {
-			display: table;
-		}
-		
-		.jsCounterContainer > div {
-			display: table-row;
-		}
-		
-		.jsCounterInput {
-			height: 16px;
-			box-sizing: content-box !important;
-		}
-		
-		.jsCounterInput, .jsCounter {
-			display: table-cell;
-		}
-		
-		.jsCounterInput, .jsCounterContainer {
-			width: 100%;
-		}
-		
-		.jsCounter {
-			background-color: rgba(0, 0, 0, 0.7);
-			padding: 0 5px 0 10px;
-			position: relative;
-			z-index: 0 !important;
-			border-radius: 0px 5px 5px 0px;
-			border: 1px solid rgba(255, 255, 255, 0.3);
-			width: 30px;
-		}
-		
-		.jsCounter.color-1 {
-			color: #FFFFFF;
-		}
-		.jsCounter.color-2 {
-			color: rgba(255,255,255,0.5);
-		}
-		.jsCounter.color-3 {
-			color: #D40D12;
-		}
 	</style>
 </head>
 
@@ -103,7 +57,7 @@
 	</div>
 	
 	<form id="timsChatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<input type="text" id="timsChatInput" class="inputText long jsCounterInput" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
+		<input type="text" id="timsChatInput" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
 	<div id="timsChatControls" class="wcf-box wcf-marginTop">
