@@ -42,7 +42,7 @@
 		<item name="wcf.chat.protocol"><![CDATA[Protokoll]]></item>
 		<item name="wcf.chat.rooms"><![CDATA[Räume]]></item>
 		<item name="wcf.chat.users"><![CDATA[Nutzer]]></item>
-		<item name="wcf.chat.copyright"><![CDATA[<a href="http://timwolla.wbbaddons.de">Chat: <strong>Tims Chat</strong>{if CHAT_SHOW_VERSION} {$chatVersion}{/if}, entwickelt von <strong>TimWolla</strong></a>]]></item>
+		<item name="wcf.chat.copyright"><![CDATA[<a href="http://tims.bastelstu.be">Chat: <strong>Tims Chat</strong>{if CHAT_SHOW_VERSION} {$chatVersion}{/if}, entwickelt von <strong>TimWolla</strong></a>]]></item>
 		
 		<item name="wcf.chat.submit.default"><![CDATA[Zum Senden Enter drücken]]></item>
 		<item name="wcf.chat.scroll"><![CDATA[Scrollen]]></item>

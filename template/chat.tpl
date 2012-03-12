@@ -5,7 +5,7 @@
 	
 	{include file='headInclude' sandbox=false}
 	<style type="text/css">
-		@import url("{@$__wcf->getPath('wcf')}style/timwolla.wcf.chat.css");
+		@import url("{@$__wcf->getPath('wcf')}style/be.bastelstu.chat.css");
 		#timsChatCopyrightDialog {
 			background-image: url("{link controller='Chat' action='Copyright' sheep=1}{/link}");
 			background-position: right 45px;
@@ -109,12 +109,12 @@
 	//<![CDATA[
 		(function ($, window) {
 			// populate templates
-			TimWolla.WCF.Chat.titleTemplate = (new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile();
+			be.bastelstu.WCF.Chat.titleTemplate = (new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile();
 			{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
-			TimWolla.WCF.Chat.messageTemplate = (new WCF.Template('{@$chatMessageTemplate|encodeJS}')).compile();
+			be.bastelstu.WCF.Chat.messageTemplate = (new WCF.Template('{@$chatMessageTemplate|encodeJS}')).compile();
 			
 			// populate config
-			TimWolla.WCF.Chat.config = {
+			be.bastelstu.WCF.Chat.config = {
 				reloadTime: {@CHAT_RELOADTIME},
 				unloadURL: '{link controller='Chat' action='Leave'}{/link}'
 			}
@@ -126,15 +126,15 @@
 				'wcf.chat.newMessages': '{lang}wcf.chat.newMessages{/lang}'
 			});
 			WCF.Icon.addObject({
-				'timwolla.wcf.chat.chat': '{icon size='L'}chat1{/icon}'
+				'be.bastelstu.wcf.chat.chat': '{icon size='L'}chat1{/icon}'
 			});
 			{event name='shouldInit'}
 			// Boot the chat
-			TimWolla.WCF.Chat.init();
+			be.bastelstu.WCF.Chat.init();
 			{event name='didInit'}
 			
 			// show the last X messages
-			TimWolla.WCF.Chat.handleMessages([
+			be.bastelstu.WCF.Chat.handleMessages([
 				{implode from=$newestMessages item='message'}
 					{@$message->jsonify()}
 				{/implode}

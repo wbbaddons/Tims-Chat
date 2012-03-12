@@ -2,7 +2,7 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/object-type.xsd">
 	<import>
 		<type>
-			<name>timwolla.wcf.chat.room</name>
+			<name>be.bastelstu.wcf.chat.room</name>
 			<definitionname>com.woltlab.wcf.acl</definitionname>
 		</type>
 	</import>

@@ -10,7 +10,7 @@ use \wcf\system\WCF;
  * @author	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	timwolla.wcf.chat
+ * @package	be.bastelstu.wcf.chat
  * @subpackage	util
  */
 class ChatUtil {
@@ -27,7 +27,7 @@ class ChatUtil {
 	 * 
 	 * @var	string
 	 */
-	const PACKAGE_IDENTIFIER = 'timwolla.wcf.chat';
+	const PACKAGE_IDENTIFIER = 'be.bastelstu.wcf.chat';
 	
 	public static $serialize = array('color' => true);
 	

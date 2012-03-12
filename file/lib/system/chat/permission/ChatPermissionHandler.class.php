@@ -11,7 +11,7 @@ use \wcf\system\WCF;
  * @author 	Tim Düsterhus, Marcel Werk
  * @copyright	2010-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	timwolla.wcf.chat
+ * @package	be.bastelstu.wcf.chat
  * @subpackage	system.chat.permissions
  */
 class ChatPermissionHandler extends \wcf\system\SingletonFactory {
@@ -50,7 +50,7 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 				
 				$conditionBuilder = new \wcf\system\database\util\PreparedStatementConditionBuilder();
 				$conditionBuilder->add('acl_option.packageID IN (?)', array(PackageDependencyHandler::getInstance()->getDependencies()));
-				$conditionBuilder->add('acl_option.objectTypeID = ?', array(ACLHandler::getInstance()->getObjectTypeID('timwolla.wcf.chat.room')));
+				$conditionBuilder->add('acl_option.objectTypeID = ?', array(ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.wcf.chat.room')));
 				$conditionBuilder->add('option_to_user.optionID = acl_option.optionID');
 				$conditionBuilder->add('option_to_user.userID = ?', array(WCF::getUser()->userID));
 				$sql = "SELECT		option_to_user.objectID AS roomID, option_to_user.optionValue,

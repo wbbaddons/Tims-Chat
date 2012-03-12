@@ -10,7 +10,7 @@ use \wcf\system\WCF;
  * @author	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	timwolla.wcf.chat
+ * @package	be.bastelstu.wcf.chat
  * @subpackage	acp.form
  */
 class ChatRoomAddForm extends ACPForm {
@@ -42,7 +42,7 @@ class ChatRoomAddForm extends ACPForm {
 	 * @see	\wcf\page\AbstractPage::__construct()
 	 */
 	public function __construct() {
-		$this->objectTypeID = \wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('timwolla.wcf.chat.room');
+		$this->objectTypeID = \wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.wcf.chat.room');
 		
 		parent::__construct();
 	}
