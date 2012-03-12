@@ -13,7 +13,7 @@ use \wcf\system\WCF;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	util
  */
-class ChatUtil {
+final class ChatUtil {
 	/**
 	 * Matches a time-interval with modifiers.
 	 * Each part may be optionally separated by a comma
@@ -200,4 +200,6 @@ class ChatUtil {
 			$ush->update(WCF::getUser()->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value, $packageID);
 		}
 	}
+	
+	private function __construct() { }
 }
