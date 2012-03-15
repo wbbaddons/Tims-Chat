@@ -8,7 +8,7 @@ use \wcf\system\WCF;
  * @author 	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	be.bastelstu.wcf.chat
+ * @package	timwolla.wcf.chat
  * @subpackage	data.chat.room
  */
 class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
@@ -28,7 +28,7 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.content.chat.canEditRoom');
 	
 	/**
-	 * Fixes create to append new boards.
+	 * Fixes create to append new rooms.
 	 */
 	public function create() {
 		$room = parent::create();
