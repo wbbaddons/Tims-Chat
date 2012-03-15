@@ -35,7 +35,11 @@
 			{foreach from=$objects item=chatRoom}
 				<li class="wcf-sortableNode wcf-sortableNoNesting chatRoomRow" data-object-id="{@$chatRoom->roomID}">
 					<span class="wcf-sortableNodeLabel">
-						<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}">{$chatRoom->title|language}</a>
+						{if $__wcf->session->getPermission('admin.content.chat.canEditRoom')}
+							<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}">{$chatRoom->title|language}</a>
+						{else}
+							{$chatRoom->title|language}
+						{/if}
 						
 						<span class="wcf-statusDisplay wcf-sortableButtonContainer">
 							{if $__wcf->session->getPermission('admin.content.chat.canEditRoom')}
