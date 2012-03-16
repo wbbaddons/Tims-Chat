@@ -4,6 +4,8 @@
 		<item name="wcf.acp.chat.room.list"><![CDATA[Chaträume]]></item>
 		<item name="wcf.acp.chat.room.add"><![CDATA[Chatraum hinzufügen]]></item>
 		<item name="wcf.acp.chat.room.edit"><![CDATA[Chatraum bearbeiten]]></item>
+		
+		<item name="wcf.acp.chat.delete.sure"><![CDATA[Möchten Sie den Raum &bdquo;{$chatRoom->title|language}&ldquo; wirklich löschen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.menu">
