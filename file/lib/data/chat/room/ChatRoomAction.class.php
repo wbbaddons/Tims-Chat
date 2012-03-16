@@ -71,6 +71,8 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
 		if (!isset($this->parameters['data']['structure'])) {
 			throw new ValidateActionException('Missing parameter structure');
 		}
+		
+		if (!isset($this->parameters['data']['offset'])) $this->parameters['data']['offset'] = 0;
 	}
 	
 	/**
@@ -82,7 +84,7 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$roomList->sqlLimit = 0;
 		$roomList->readObjects();
 		
-		$i = 0;
+		$i = $this->parameters['data']['offset'];
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'][0] as $roomID) {
 			$room = $roomList->search($roomID);
