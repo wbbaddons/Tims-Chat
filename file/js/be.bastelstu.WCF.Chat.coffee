@@ -275,7 +275,7 @@ consoleMock ?=
 			# Disable scrolling automagically when user manually scrolled
 			unless @oldScrollTop is null
 				if $('.timsChatMessageContainer').scrollTop() < @oldScrollTop
-					if $('#timsChatAutoscroll').data 'status' is 1
+					if $('#timsChatAutoscroll').data('status') is 1
 						$('#timsChatAutoscroll').click()
 						$('#timsChatAutoscroll').parent().addClass('default').fadeOut('slow').fadeIn('slow')
 			
