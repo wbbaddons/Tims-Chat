@@ -31,6 +31,7 @@ class ChatForm extends AbstractForm {
 	public function readData() {
 		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
 		$this->userData['roomID'] = \wcf\util\ChatUtil::readUserData('roomID');
+		$this->userData['away'] = \wcf\util\ChatUtil::readUserData('away');
 		
 		$this->room = chat\room\ChatRoom::getCache()->search($this->userData['roomID']);
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
@@ -70,6 +71,7 @@ class ChatForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
+		\wcf\util\ChatUtil::writeUserData(array('away' => null));
 		$commandHandler = new \wcf\system\chat\commands\CommandHandler($this->message);
 		if ($commandHandler->isCommand()) {
 			try {
@@ -101,6 +103,23 @@ class ChatForm extends AbstractForm {
 			$receiver = null;
 		}
 		
+		// mark user as back
+		if ($this->userData['away'] !== null) {
+			$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
+				'data' => array(
+					'roomID' => $this->room->roomID,
+					'sender' => WCF::getUser()->userID,
+					'username' => WCF::getUser()->username,
+					'time' => TIME_NOW,
+					'type' => chat\message\ChatMessage::TYPE_BACK,
+					'message' => '',
+					'color1' => $this->userData['color'][1],
+					'color2' => $this->userData['color'][2]
+				)
+			));
+			$messageAction->executeAction();
+		}
+		
 		$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
 			'data' => array(
 				'roomID' => $this->room->roomID,
@@ -124,7 +143,7 @@ class ChatForm extends AbstractForm {
 	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
-		header("HTTP/1.0 204 No Content");
+		//header("HTTP/1.0 204 No Content");
 		parent::show();
 	}
 }

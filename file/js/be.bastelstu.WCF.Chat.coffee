@@ -312,6 +312,13 @@ consoleMock ?=
 				if element[0]
 					console.log '[be.bastelstu.WCF.Chat Moving User: "' + user.username + '"'
 					element = element.detach()
+					if user.awayStatus?
+						element.addClass 'timsChatAway'
+						element.attr 'title', user.awayStatus
+					else
+						element.removeClass 'timsChatAway'
+						element.removeAttr 'title'
+						element.data 'tooltip', ''
 					$('#timsChatUserList').append element
 				# Insert the user
 				else
@@ -319,6 +326,10 @@ consoleMock ?=
 					li = $ '<li></li>'
 					li.attr 'id', id
 					li.addClass 'timsChatUser'
+					li.addClass 'jsTooltip'
+					if user.awayStatus?
+						li.addClass 'timsChatAway'
+						li.attr 'title', user.awayStatus
 					li.data 'username', user.username
 					a = $ '<a href="javascript:;">'+user.username+'</a>'
 					a.click $.proxy (event) ->

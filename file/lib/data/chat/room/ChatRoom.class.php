@@ -22,7 +22,7 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'roomID';
-		
+	
 	/**
 	 * Caches rooms.
 	 * 
@@ -43,21 +43,18 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	 * @return	integer
 	 */
 	public function countUsers() {
-		$packageID = \wcf\util\ChatUtil::getPackageID();
-
 		$sql = "SELECT
-				count(*) as count
+				COUNT(*)
 			FROM
 				wcf".WCF_N."_user_storage 
 			WHERE
-					field = 'roomID' 
-				AND	packageID = ".intval($packageID)."
-				AND 	fieldValue = ".intval($this->roomID);
+					field = ?
+				AND	packageID = ?
+				AND 	fieldValue = ?";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute();
-		$row = $stmt->fetchArray();
+		$stmt->execute(array('roomID', \wcf\util\ChatUtil::getPackageID(), $this->roomID));
 		
-		return $row['count'];
+		return $stmt->fetchColumn();
 	}
 	
 	/**
@@ -101,32 +98,42 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	 */
 	public function getUsers() {
 		$packageID = \wcf\util\ChatUtil::getPackageID();
-
+		
 		$sql = "SELECT
 				userID
 			FROM
 				wcf".WCF_N."_user_storage 
 			WHERE
-					field = 'roomID' 
-				AND	packageID = ".intval($packageID)."
-				AND 	fieldValue = ".intval($this->roomID);
+					field = ?
+				AND	packageID = ?
+				AND 	fieldValue = ?";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute();
+		$stmt->execute(array('roomID', $packageID, $this->roomID));
 		$userIDs = array();
-		while ($row = $stmt->fetchArray()) $userIDs[] = $row['userID'];
-
-		if (!count($userIDs)) return;
-
+		while ($userIDs[] = $stmt->fetchColumn());
+		
+		if (!count($userIDs)) return array();
+		
 		$sql = "SELECT
-				*
+				u.*,
+				s.fieldValue AS awayStatus
 			FROM
-				wcf".WCF_N."_user
+				wcf".WCF_N."_user u
+			LEFT JOIN
+				wcf".WCF_N."_user_storage s 
+				ON (
+						u.userID = s.userID 
+					AND s.field = ? 
+					AND s.packageID = ?
+				)
 			WHERE
-				userID IN (".rtrim(str_repeat('?,', count($userIDs)), ',').")
+				u.userID IN (".rtrim(str_repeat('?,', count($userIDs)), ',').")
 			ORDER BY
-				username ASC";
+				u.username ASC";
 		$stmt = WCF::getDB()->prepareStatement($sql);
+		array_unshift($userIDs, 'away', $packageID);
 		$stmt->execute($userIDs);
+		
 		return $stmt->fetchObjects('\wcf\data\user\User');
 	}
 	
