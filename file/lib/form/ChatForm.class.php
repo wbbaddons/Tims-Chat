@@ -90,6 +90,11 @@ class ChatForm extends AbstractForm {
 				$type = chat\message\ChatMessage::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 			}
+			catch (\Exception $e) {
+				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.exception');
+				$type = chat\message\ChatMessage::TYPE_ERROR;
+				$receiver = WCF::getUser()->userID;
+			}
 		}
 		else {
 			$type = chat\message\ChatMessage::TYPE_NORMAL;
