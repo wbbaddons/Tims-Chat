@@ -5,7 +5,7 @@
 	
 	{include file='headInclude' sandbox=false}
 	<style type="text/css">
-		@import url("{@$__wcf->getPath('wcf')}style/timwolla.wcf.chat.css");
+		@import url("{@$__wcf->getPath('wcf')}style/be.bastelstu.chat.css");
 		#timsChatCopyrightDialog {
 			background-image: url("{link controller='Chat' action='Copyright' sheep=1}{/link}");
 			background-position: right 45px;
@@ -40,52 +40,6 @@
 		.ajaxLoad {
 			background-image: url({icon size='S'}spinner1{/icon});
 		}
-
-		/*
-		 * jCounter CSS
-		 * 
-		 * TODO: Seperate jCounter completely from Tims-Chat
-		 */
-		.jsCounterContainer {
-			display: table;
-		}
-		
-		.jsCounterContainer > div {
-			display: table-row;
-		}
-		
-		.jsCounterInput {
-			height: 16px;
-			box-sizing: content-box !important;
-		}
-		
-		.jsCounterInput, .jsCounter {
-			display: table-cell;
-		}
-		
-		.jsCounterInput, .jsCounterContainer {
-			width: 100%;
-		}
-		
-		.jsCounter {
-			background-color: rgba(0, 0, 0, 0.7);
-			padding: 0 5px 0 10px;
-			position: relative;
-			z-index: 0 !important;
-			border-radius: 0px 5px 5px 0px;
-			border: 1px solid rgba(255, 255, 255, 0.3);
-			width: 30px;
-		}
-		
-		.jsCounter.color-1 {
-			color: #FFFFFF;
-		}
-		.jsCounter.color-2 {
-			color: rgba(255,255,255,0.5);
-		}
-		.jsCounter.color-3 {
-			color: #D40D12;
-		}
 	</style>
 </head>
 
@@ -95,18 +49,18 @@
 {include file='header' sandbox=false sidebarOrientation='right'}
 
 <div id="timsChatRoomContent">
-	<div id="timsChatTopic" class="wcf-border"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
-	<div class="timsChatMessageContainer wcf-border wcf-content">
+	<div id="timsChatTopic" class="wcf-box wcf-marginBottom"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
+	<div class="timsChatMessageContainer wcf-box wcf-shadow1 wcf-boxPadding">
 		<ul>
 			<noscript><li class="wcf-error">{lang}wcf.chat.noJs{/lang}</li></noscript>
 		</ul>
 	</div>
 	
 	<form id="timsChatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<input type="text" id="timsChatInput" class="inputText long jsCounterInput" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
+		<input type="text" id="timsChatInput" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
-	<div id="timsChatControls" class="wcf-border">
+	<div id="timsChatControls" class="wcf-box wcf-marginTop">
 		{if MODULE_SMILEY}
 			<div id="smileyList">
 				<ul class="smilies">
@@ -155,12 +109,12 @@
 	//<![CDATA[
 		(function ($, window) {
 			// populate templates
-			TimWolla.WCF.Chat.titleTemplate = (new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile();
+			be.bastelstu.WCF.Chat.titleTemplate = (new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile();
 			{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
-			TimWolla.WCF.Chat.messageTemplate = (new WCF.Template('{@$chatMessageTemplate|encodeJS}')).compile();
+			be.bastelstu.WCF.Chat.messageTemplate = (new WCF.Template('{@$chatMessageTemplate|encodeJS}')).compile();
 			
 			// populate config
-			TimWolla.WCF.Chat.config = {
+			be.bastelstu.WCF.Chat.config = {
 				reloadTime: {@CHAT_RELOADTIME},
 				unloadURL: '{link controller='Chat' action='Leave'}{/link}'
 			}
@@ -172,15 +126,15 @@
 				'wcf.chat.newMessages': '{lang}wcf.chat.newMessages{/lang}'
 			});
 			WCF.Icon.addObject({
-				'timwolla.wcf.chat.chat': '{icon size='L'}chat1{/icon}'
+				'be.bastelstu.wcf.chat.chat': '{icon size='L'}chat1{/icon}'
 			});
 			{event name='shouldInit'}
 			// Boot the chat
-			TimWolla.WCF.Chat.init();
+			be.bastelstu.WCF.Chat.init();
 			{event name='didInit'}
 			
 			// show the last X messages
-			TimWolla.WCF.Chat.handleMessages([
+			be.bastelstu.WCF.Chat.handleMessages([
 				{implode from=$newestMessages item='message'}
 					{@$message->jsonify()}
 				{/implode}

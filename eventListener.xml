@@ -2,11 +2,11 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/eventListener.xsd">
 	<import>
 		<eventlistener>
-			<eventclassname>wcf\system\request\RouteHandler</eventclassname>
+			<eventclassname>\wcf\system\request\RouteHandler</eventclassname>
 			<eventname>didInit</eventname>
 			<environment>user</environment>
 			<inherit>0</inherit>
-			<listenerclassname>wcf\system\event\listener\ChatRouteListener</listenerclassname>
+			<listenerclassname>\wcf\system\event\listener\ChatRouteListener</listenerclassname>
 		</eventlistener>
 	</import>
 </data>

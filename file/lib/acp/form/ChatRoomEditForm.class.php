@@ -1,8 +1,7 @@
 <?php
 namespace wcf\acp\form;
-use wcf\system\language\I18nHandler;
-use wcf\system\package\PackageDependencyHandler;
-use wcf\system\WCF;
+use \wcf\system\language\I18nHandler;
+use \wcf\system\WCF;
 
 /**
  * Shows the chatroom edit form.
@@ -10,7 +9,7 @@ use wcf\system\WCF;
  * @author 	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	timwolla.wcf.chat
+ * @package	be.bastelstu.wcf.chat
  * @subpackage	acp.form
  */
 class ChatRoomEditForm extends ChatRoomAddForm {
@@ -64,20 +63,20 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 		
 		$this->title = 'wcf.chat.room.title'.$this->roomObj->roomID;
 		if (I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->remove($this->title, PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->remove($this->title, \wcf\util\ChatUtil::getPackageID());
 			$this->title = I18nHandler::getInstance()->getValue('title');
 		}
 		else {
-			I18nHandler::getInstance()->save('title', $this->title, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('title', $this->title, 'wcf.chat.room', \wcf\util\ChatUtil::getPackageID());
 		}
 		
 		$this->topic = 'wcf.chat.room.topic'.$this->roomObj->roomID;
 		if (I18nHandler::getInstance()->isPlainValue('topic')) {
-			I18nHandler::getInstance()->remove($this->topic, PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->remove($this->topic, \wcf\util\ChatUtil::getPackageID());
 			$this->topic = I18nHandler::getInstance()->getValue('topic');
 		}
 		else {
-			I18nHandler::getInstance()->save('topic', $this->topic, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('topic', $this->topic, 'wcf.chat.room', \wcf\util\ChatUtil::getPackageID());
 		}
 		
 		\wcf\system\acl\ACLHandler::getInstance()->save($this->roomID, $this->objectTypeID);
@@ -105,8 +104,8 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 		parent::readData();
 		
 		if (!count($_POST)) {
-			I18nHandler::getInstance()->setOptions('title', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'), $this->roomObj->title, 'wcf.chat.room.title\d+');
-			I18nHandler::getInstance()->setOptions('topic', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'), $this->roomObj->topic, 'wcf.chat.room.topic\d+');
+			I18nHandler::getInstance()->setOptions('title', \wcf\util\ChatUtil::getPackageID(), $this->roomObj->title, 'wcf.chat.room.title\d+');
+			I18nHandler::getInstance()->setOptions('topic', \wcf\util\ChatUtil::getPackageID(), $this->roomObj->topic, 'wcf.chat.room.topic\d+');
 			
 			$this->title = $this->roomObj->title;
 			$this->topic = $this->roomObj->topic;

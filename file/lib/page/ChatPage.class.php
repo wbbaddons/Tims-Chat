@@ -10,7 +10,7 @@ use \wcf\system\WCF;
  * @author 	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	timwolla.wcf.chat
+ * @package	be.bastelstu.wcf.chat
  * @subpackage	page
  */
 class ChatPage extends AbstractPage {
@@ -51,7 +51,7 @@ class ChatPage extends AbstractPage {
 		);
 		$packages = CacheHandler::getInstance()->get('packages');
 		foreach ($packages as $package) {
-			if ($package->package != 'timwolla.wcf.chat') continue;
+			if ($package->package != \wcf\util\ChatUtil::PACKAGE_IDENTIFIER) continue;
 			$this->chatVersion = $package->packageVersion;
 			return;
 		}
@@ -85,18 +85,15 @@ class ChatPage extends AbstractPage {
 		}
 		
 		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
-		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => end($this->newestMessages)->messageID));
+		try {
+			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => end($this->newestMessages)->messageID));
+		}
+		catch (\wcf\system\exception\SystemException $e) {
+			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => 0));
+		}
 		
-		$this->readDefaultSmileys();
+		$this->smilies = \wcf\data\smiley\SmileyCache::getInstance()->getCategorySmilies();
 		$this->readChatVersion();
-	}
-	
-	/**
-	 * Reads the smilies in the default category.
-	 */
-	public function readDefaultSmileys() {
-		$smilies = \wcf\data\smiley\SmileyCache::getInstance()->getSmilies();
-		$this->smilies = $smilies[null];
 	}
 	
 	/**
@@ -164,12 +161,15 @@ class ChatPage extends AbstractPage {
 		if (!WCF::getUser()->userID) {
 			throw new \wcf\system\exception\PermissionDeniedException();
 		}
+		
 		\wcf\system\menu\page\PageMenu::getInstance()->setActiveMenuItem('wcf.header.menu.chat');
 		
 		// remove index breadcrumb
 		WCF::getBreadcrumbs()->remove(0);
+		
 		parent::show();
-		// break if not ajax
+		
+		// break if not using ajax
 		if ($this->useTemplate) exit;
 		@header('Content-type: application/json');
 		

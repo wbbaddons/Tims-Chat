@@ -4,7 +4,7 @@
 		<pagemenuitem name="wcf.header.menu.chat">
 			<link>index.php/Chat</link>
 			<position>header</position>
-			<classname>wcf\system\menu\page\ChatPageMenuItemProvider</classname>
+			<classname>\wcf\system\menu\page\ChatPageMenuItemProvider</classname>
 		</pagemenuitem>
 	</import>
 </data>

@@ -4,6 +4,8 @@
 		<item name="wcf.acp.chat.room.list"><![CDATA[Chaträume]]></item>
 		<item name="wcf.acp.chat.room.add"><![CDATA[Chatraum hinzufügen]]></item>
 		<item name="wcf.acp.chat.room.edit"><![CDATA[Chatraum bearbeiten]]></item>
+		
+		<item name="wcf.acp.chat.delete.sure"><![CDATA[Möchten Sie den Raum &bdquo;{$chatRoom->title|language}&ldquo; wirklich löschen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.menu">
@@ -42,7 +44,7 @@
 		<item name="wcf.chat.protocol"><![CDATA[Protokoll]]></item>
 		<item name="wcf.chat.rooms"><![CDATA[Räume]]></item>
 		<item name="wcf.chat.users"><![CDATA[Nutzer]]></item>
-		<item name="wcf.chat.copyright"><![CDATA[<a href="http://timwolla.wbbaddons.de">Chat: <strong>Tims Chat</strong>{if CHAT_SHOW_VERSION} {$chatVersion}{/if}, entwickelt von <strong>TimWolla</strong></a>]]></item>
+		<item name="wcf.chat.copyright"><![CDATA[<a href="http://tims.bastelstu.be">Chat: <strong>Tims Chat</strong>{if CHAT_SHOW_VERSION} {$chatVersion}{/if}, entwickelt von <strong>TimWolla</strong></a>]]></item>
 		
 		<item name="wcf.chat.submit.default"><![CDATA[Zum Senden Enter drücken]]></item>
 		<item name="wcf.chat.scroll"><![CDATA[Scrollen]]></item>

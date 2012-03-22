@@ -2,7 +2,6 @@
 namespace wcf\acp\form;
 use \wcf\system\exception\UserInputException;
 use \wcf\system\language\I18nHandler;
-use \wcf\system\package\PackageDependencyHandler;
 use \wcf\system\WCF;
 
 /**
@@ -11,7 +10,7 @@ use \wcf\system\WCF;
  * @author	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	timwolla.wcf.chat
+ * @package	be.bastelstu.wcf.chat
  * @subpackage	acp.form
  */
 class ChatRoomAddForm extends ACPForm {
@@ -43,7 +42,7 @@ class ChatRoomAddForm extends ACPForm {
 	 * @see	\wcf\page\AbstractPage::__construct()
 	 */
 	public function __construct() {
-		$this->objectTypeID = \wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('timwolla.wcf.chat.room');
+		$this->objectTypeID = \wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.wcf.chat.room');
 		
 		parent::__construct();
 	}
@@ -99,7 +98,7 @@ class ChatRoomAddForm extends ACPForm {
 		$roomID = $returnValues['returnValues']->roomID;
 		
 		if (!I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->save('title', 'wcf.chat.room.title'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('title', 'wcf.chat.room.title'.$roomID, 'wcf.chat.room', \wcf\util\ChatUtil::getPackageID());
 		
 			// update title
 			$chatRoomEditor->update(array(
@@ -108,7 +107,7 @@ class ChatRoomAddForm extends ACPForm {
 		}
 		
 		if (!I18nHandler::getInstance()->isPlainValue('topic')) {
-			I18nHandler::getInstance()->save('topic', 'wcf.chat.room.topic'.$roomID, 'wcf.chat.room', PackageDependencyHandler::getPackageID('timwolla.wcf.chat'));
+			I18nHandler::getInstance()->save('topic', 'wcf.chat.room.topic'.$roomID, 'wcf.chat.room', \wcf\util\ChatUtil::getPackageID());
 		
 			// update topic
 			$chatRoomEditor->update(array(

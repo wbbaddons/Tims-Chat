@@ -3,30 +3,30 @@
 	<import>
 		<categories>
 			<category name="user">
-				<objecttype>timwolla.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
 			</category>
 			<category name="mod">
-				<objecttype>timwolla.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
 			</category>
 		</categories>
 		
 		<options>
 			<option name="user.canEnter">
-				<objecttype>timwolla.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
 				<categoryname>user</categoryname>
 			</option>
 			<option name="user.canWrite">
-				<objecttype>timwolla.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
 				<categoryname>user</categoryname>
 			</option>
 			
 			
 			<option name="mod.canAlwaysEnter">
-				<objecttype>timwolla.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
 				<categoryname>mod</categoryname>
 			</option>
 			<option name="mod.canAlwaysWrite">
-				<objecttype>timwolla.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
 				<categoryname>mod</categoryname>
 			</option>
 		</options>

@@ -1,14 +1,16 @@
 ###
-# TimWolla.WCF.Chat
+# be.bastelstu.WCF.Chat
 # 
 # @author	Tim Düsterhus
 # @copyright	2010-2012 Tim Düsterhus
 # @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
-# @package	timwolla.wcf.chat
+# @package	be.bastelstu.wcf.chat
 ###
 
-TimWolla ?= {}
-TimWolla.WCF ?= {}
+be ?= {}
+be.bastelstu ?= {}
+be.bastelstu.WCF ?= {}
+
 consoleMock = console
 consoleMock ?= 
 	log: () ->,
@@ -16,7 +18,7 @@ consoleMock ?=
 	error: () ->
 
 (($, window, console) ->
-	TimWolla.WCF.Chat =
+	be.bastelstu.WCF.Chat =
 		# Tims Chat stops loading when this reaches zero
 		# TODO: We need an explosion animation
 		shields: 3
@@ -45,7 +47,7 @@ consoleMock ?=
 			refreshRoomList: null
 			fish: null
 		init: () ->
-			console.log '[TimWolla.WCF.Chat] Initializing'
+			console.log '[be.bastelstu.WCF.Chat Initializing'
 			@bindEvents()
 			@events.newMessage.add $.proxy @notify, @
 			
@@ -54,7 +56,7 @@ consoleMock ?=
 			@refreshRoomList()
 			@getMessages()
 			
-			console.log '[TimWolla.WCF.Chat] Finished initializing - Shields at 104 percent'
+			console.log '[be.bastelstu.WCF.Chat Finished initializing - Shields at 104 percent'
 		###
 		# Autocompletes a username
 		###
@@ -63,7 +65,7 @@ consoleMock ?=
 			
 			# Search all matching users
 			for user in $ '.timsChatUser'
-				username = $(user).data('username');
+				username = $(user).data 'username'
 				if username.indexOf(firstChars) is 0
 					users.push username
 			
@@ -120,7 +122,7 @@ consoleMock ?=
 					
 					firstChars = @autocompleteValue.substring(@autocompleteValue.lastIndexOf(' ')+1)
 					
-					console.log '[TimWolla.WCF.Chat] Autocompleting "' + firstChars + '"'
+					console.log '[be.bastelstu.WCF.Chat Autocompleting "' + firstChars + '"'
 					return if firstChars.length is 0
 					
 					# Insert name and increment offset
@@ -198,7 +200,7 @@ consoleMock ?=
 						$('#timsChatTopic').text data.topic
 						$('#timsChatTopic').wcfBlindIn() if $('#timsChatTopic').text().trim() isnt '' and $('#timsChatTopic').is(':hidden')
 					
-					$('.timsChatMessage').addClass('unloaded', 800);
+					$('.timsChatMessage').addClass 'unloaded', 800
 					@handleMessages data.messages
 					document.title = @titleTemplate.fetch data
 				, @)
@@ -217,7 +219,7 @@ consoleMock ?=
 		###
 		freeTheFish: () ->
 			return if $.wcfIsset 'fish'
-			console.warn '[TimWolla.WCF.Chat] Freeing the fish'
+			console.warn '[be.bastelstu.WCF.Chat Freeing the fish'
 			fish = $ '<div id="fish">' + WCF.String.escapeHTML('><((((\u00B0>') + '</div>'
 			fish.css
 				position: 'absolute'
@@ -243,7 +245,7 @@ consoleMock ?=
 					top: '+=' + top
 					left: '+=' + left
 				, 1e3
-			, 1.5e3);
+			, 1.5e3)
 		###
 		# Loads new messages.
 		###
@@ -256,12 +258,12 @@ consoleMock ?=
 					@handleUsers(data.users)
 				, @)
 				error: $.proxy((jqXHR, textStatus, errorThrown) ->
-					console.error '[TimWolla.WCF.Chat] Battle Station hit - shields at ' + (--@shields / 3 * 104) + ' percent'
+					console.error '[be.bastelstu.WCF.Chat Battle Station hit - shields at ' + (--@shields / 3 * 104) + ' percent'
 					if @shields is 0
 						@pe.refreshRoomList.stop()
 						@pe.getMessages.stop()
 						@freeTheFish()
-						console.error '[TimWolla.WCF.Chat] We got destroyed, but could free our friend the fish before he was killed as well. Have a nice life in freedom!'
+						console.error '[be.bastelstu.WCF.Chat We got destroyed, but could free our friend the fish before he was killed as well. Have a nice life in freedom!'
 						alert 'herp i cannot load messages'
 				, @)
 		###
@@ -279,7 +281,7 @@ consoleMock ?=
 			
 			# Insert the messages
 			for message in messages
-				continue if $.wcfIsset 'timsChatMessage'+message.messageID # Prevent problems with race condition
+				continue if $.wcfIsset 'timsChatMessage' + message.messageID # Prevent problems with race condition
 				@events.newMessage.fire message
 				
 				output = @messageTemplate.fetch message
@@ -304,16 +306,16 @@ consoleMock ?=
 			foundUsers = { }
 			for user in users
 				id = 'timsChatUser-'+user.userID
-				element = $('#'+id)
+				element = $ '#'+id
 				
 				# Move the user to the correct position
 				if element[0]
-					console.log '[TimWolla.WCF.Chat] Moving User: "' + user.username + '"'
+					console.log '[be.bastelstu.WCF.Chat Moving User: "' + user.username + '"'
 					element = element.detach()
 					$('#timsChatUserList').append element
 				# Insert the user
 				else
-					console.log '[TimWolla.WCF.Chat] Inserting User: "' + user.username + '"'
+					console.log '[be.bastelstu.WCF.Chat Inserting User: "' + user.username + '"'
 					li = $ '<li></li>'
 					li.attr 'id', id
 					li.addClass 'timsChatUser'
@@ -339,7 +341,7 @@ consoleMock ?=
 			# Remove users that were not found
 			$('.timsChatUser').each () ->
 				if typeof foundUsers[$(@).attr('id')] is 'undefined'
-					console.log '[TimWolla.WCF.Chat] Removing User: "' + $(@).data('username') + '"'
+					console.log '[be.bastelstu.WCF.Chat Removing User: "' + $(@).data('username') + '"'
 					$(@).remove();
 					
 			
@@ -370,7 +372,7 @@ consoleMock ?=
 		# @param	object	message
 		###
 		notify: (message) ->
-			return if @isActive or $('#timsChatNotify').data('status') is 0
+			return if @isActive or $('#timsChatNotify').data 'status' is 0
 			@newMessageCount++
 			
 			document.title = '(' + @newMessageCount + ') ' + @titleTemplate.fetch
@@ -379,8 +381,8 @@ consoleMock ?=
 			# Desktop Notifications
 			if typeof window.webkitNotifications isnt 'undefined'
 				if window.webkitNotifications.checkPermission() is 0
-					title = WCF.Language.get('wcf.chat.newMessages')
-					icon = WCF.Icon.get('timwolla.wcf.chat.chat')
+					title = WCF.Language.get 'wcf.chat.newMessages'
+					icon = WCF.Icon.get 'be.bastelstu.wcf.chat.chat'
 					content = message.username + message.separator + ' ' + message.message
 					notification = window.webkitNotifications.createNotification icon, title, content
 					notification.show()
@@ -391,7 +393,7 @@ consoleMock ?=
 		# Refreshes the room-list.
 		###
 		refreshRoomList: () ->
-			console.log '[TimWolla.WCF.Chat] Refreshing the roomlist'
+			console.log '[be.bastelstu.WCF.Chat Refreshing the roomlist'
 			$('#toggleRooms a').addClass 'ajaxLoad'
 			
 			$.ajax $('#toggleRooms a').data('refreshUrl'),
@@ -400,7 +402,7 @@ consoleMock ?=
 				success: $.proxy((data, textStatus, jqXHR) ->
 					$('#timsChatRoomList li').remove()
 					$('#toggleRooms a').removeClass 'ajaxLoad'
-					$('#toggleRooms .wcf-badge').text(data.length);
+					$('#toggleRooms .wcf-badge').text data.length
 					
 					for room in data
 						li = $ '<li></li>'
@@ -414,7 +416,7 @@ consoleMock ?=
 						@changeRoom $ event.target
 					, @
 					
-					console.log '[TimWolla.WCF.Chat] Found ' + data.length + ' rooms'
+					console.log '[be.bastelstu.WCF.Chat Found ' + data.length + ' rooms'
 				, @)
 		###
 		# Handles submitting of messages.
@@ -428,17 +430,17 @@ consoleMock ?=
 			# Finally free the fish
 			@freeTheFish() if $('#timsChatInput').val().trim().toLowerCase() is '/free the fish'
 			
+			text = $('#timsChatInput').val()
+			$('#timsChatInput').val('').focus().keyup()
 			$.ajax $('#timsChatForm').attr('action'), 
 				data:
-					text: $('#timsChatInput').val(),
-					smilies: $('#timsChatSmilies').data('status')
+					text: text
+					smilies: $('#timsChatSmilies').data 'status'
 				type: 'POST',
 				beforeSend: (jqXHR) ->
 					$('#timsChatInput').addClass 'ajaxLoad'
 				success: $.proxy((data, textStatus, jqXHR) ->
 					@getMessages()
-					$('#timsChatInput').val('').focus()
-					$('#timsChatInput').keyup()
 				, @)
 				complete: () ->
 					$('#timsChatInput').removeClass 'ajaxLoad'

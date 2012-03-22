@@ -6,7 +6,7 @@
  * @author 	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	timwolla.wcf.chat
+ * @package	be.bastelstu.wcf.chat
  */
 echo <<<EOT
 Cleaning up
@@ -18,7 +18,7 @@ EOT;
 	if (file_exists('acptemplate.tar')) unlink('acptemplate.tar');
 	foreach (glob('file/js/*.js') as $jsFile) unlink($jsFile);
 	foreach (glob('file/style/*.css') as $cssFile) unlink($cssFile);
-	if (file_exists('timwolla.wcf.chat.tar')) unlink('timwolla.wcf.chat.tar');
+	if (file_exists('be.bastelstu.wcf.chat.tar')) unlink('be.bastelstu.wcf.chat.tar');
 echo <<<EOT
 
 Building JavaScript
@@ -43,12 +43,34 @@ foreach (glob('file/style/*.scss') as $sassFile) {
 }
 echo <<<EOT
 
+Checking PHP for Syntax Errors
+------------------------------
+
+EOT;
+	chdir('file');
+	$check = null;
+	$check = function ($folder) use (&$check) {
+		if (is_file($folder)) {
+			if (substr($folder, -4) === '.php') {
+				passthru('php -l '.escapeshellarg($folder), $code);
+				if ($code != 0) exit($code);
+			}
+			
+			return;
+		}
+		$files = glob($folder.'/*');
+		foreach ($files as $file) {
+			$check($file);
+		}
+	};
+	$check('.');
+echo <<<EOT
+
 Building file.tar
 -----------------
 
 EOT;
-	chdir('file');
-	passthru('tar cvf ../file.tar * --exclude=*.coffee --exclude=*.scss', $code);
+	passthru('tar cvf ../file.tar * --exclude=*.coffee --exclude=*.scss --exclude=.sass-cache', $code);
 	if ($code != 0) exit($code);
 echo <<<EOT
 
@@ -70,12 +92,12 @@ EOT;
 	if ($code != 0) exit($code);
 echo <<<EOT
 
-Building timwolla.wcf.chat.tar
-------------------------------
+Building be.bastelstu.wcf.chat.tar
+----------------------------------
 
 EOT;
 	chdir('..');
-	passthru('tar cvf timwolla.wcf.chat.tar * --exclude=file --exclude=template --exclude=acptemplate --exclude=build.php', $code);
+	passthru('tar cvf be.bastelstu.wcf.chat.tar * --exclude=file --exclude=template --exclude=acptemplate --exclude=build.php', $code);
 	if ($code != 0) exit($code);
 
 if (file_exists('file.tar')) unlink('file.tar');

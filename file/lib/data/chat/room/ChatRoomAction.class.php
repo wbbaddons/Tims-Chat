@@ -8,7 +8,7 @@ use \wcf\system\WCF;
  * @author 	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	timwolla.wcf.chat
+ * @package	be.bastelstu.wcf.chat
  * @subpackage	data.chat.room
  */
 class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
@@ -28,21 +28,20 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.content.chat.canEditRoom');
 	
 	/**
-	 * Fixes create to append new boards.
+	 * Fixes create to append new rooms.
 	 */
 	public function create() {
 		$room = parent::create();
 		
 		WCF::getDB()->beginTransaction();
-		$sql = "SELECT		max(position) as max
-			FROM		wcf".WCF_N."_chat_room
+		$sql = "SELECT	MAX(position)
+			FROM	wcf".WCF_N."_chat_room
 			FOR UPDATE";
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
-		$row = $stmt->fetchArray();
 		
 		$sql = "UPDATE	wcf".WCF_N."_chat_room
-			SET	position = ".($row['max'] + 1)."
+			SET	position = ".($stmt->fetchColumn() + 1)."
 			WHERE	roomID = ?";
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute(array($room->roomID));
@@ -71,6 +70,8 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
 		if (!isset($this->parameters['data']['structure'])) {
 			throw new ValidateActionException('Missing parameter structure');
 		}
+		
+		if (!isset($this->parameters['data']['offset'])) $this->parameters['data']['offset'] = 0;
 	}
 	
 	/**
@@ -82,7 +83,7 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$roomList->sqlLimit = 0;
 		$roomList->readObjects();
 		
-		$i = 0;
+		$i = $this->parameters['data']['offset'];
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'][0] as $roomID) {
 			$room = $roomList->search($roomID);

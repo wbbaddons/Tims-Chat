@@ -1,2 +1,2 @@
-<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/TimWolla.WCF.Chat.js{if $chatVersion|isset}?version={$chatVersion|urlencode}{/if}"></script>
+<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/be.bastelstu.WCF.Chat.js{if $chatVersion|isset}?version={$chatVersion|urlencode}{/if}"></script>
 <script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/jCounter.jQuery.js"></script>

@@ -7,7 +7,7 @@ namespace wcf\system\event\listener;
  * @author 	Maximilian Mader
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	timwolla.wcf.chat
+ * @package	be.bastelstu.wcf.chat
  * @subpackage	system.event.listener
  */
 class ChatRouteListener implements \wcf\system\event\IEventListener {
