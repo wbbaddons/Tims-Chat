@@ -64,6 +64,8 @@
 		<item name="wcf.chat.message.1"><![CDATA[hat den Chat betreten.]]></item>
 		<!-- 2 = TYPE_LEAVE -->
 		<item name="wcf.chat.message.2"><![CDATA[hat den Chat verlassen.]]></item>
+		<!-- 4 = TYPE_BACK -->
+		<item name="wcf.chat.message.4"><![CDATA[ist jetzt wieder da.]]></item>
 	</category>
 	
 	<!-- I18N Values -->
