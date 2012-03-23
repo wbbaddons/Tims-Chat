@@ -32,6 +32,7 @@ class ChatForm extends AbstractForm {
 	public function readData() {
 		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
 		$this->userData['roomID'] = \wcf\util\ChatUtil::readUserData('roomID');
+		$this->userData['away'] = \wcf\util\ChatUtil::readUserData('away');
 		
 		$this->room = chat\room\ChatRoom::getCache()->search($this->userData['roomID']);
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
@@ -71,14 +72,63 @@ class ChatForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$commandHandler = new \wcf\system\chat\commands\ChatCommandHandler();
+		\wcf\util\ChatUtil::writeUserData(array('away' => null));
+		$commandHandler = new \wcf\system\chat\commands\CommandHandler($this->message);
+		if ($commandHandler->isCommand()) {
+			try {
+				$command = $commandHandler->loadCommand();
+				
+				if ($command->enableSmilies != \wcf\system\chat\commands\ICommand::SMILEY_USER) $this->enableSmilies = $command->enableSmilies;
+				$type = $command->getType();
+				$this->message = $command->getMessage();
+				$receiver = $command->getReceiver();
+			}
+			catch (\wcf\system\chat\commands\NotFoundException $e) {
+				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.notFound');
+				$type = chat\message\ChatMessage::TYPE_ERROR;
+				$receiver = WCF::getUser()->userID;
+			}
+			catch (\wcf\system\exception\PermissionDeniedException $e) {
+				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.permissionDenied');
+				$type = chat\message\ChatMessage::TYPE_ERROR;
+				$receiver = WCF::getUser()->userID;
+			}
+			catch (\Exception $e) {
+				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.exception');
+				$type = chat\message\ChatMessage::TYPE_ERROR;
+				$receiver = WCF::getUser()->userID;
+			}
+		}
+		else {
+			$type = chat\message\ChatMessage::TYPE_NORMAL;
+			$receiver = null;
+		}
+		
+		// mark user as back
+		if ($this->userData['away'] !== null) {
+			$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
+				'data' => array(
+					'roomID' => $this->room->roomID,
+					'sender' => WCF::getUser()->userID,
+					'username' => WCF::getUser()->username,
+					'time' => TIME_NOW,
+					'type' => chat\message\ChatMessage::TYPE_BACK,
+					'message' => '',
+					'color1' => $this->userData['color'][1],
+					'color2' => $this->userData['color'][2]
+				)
+			));
+			$messageAction->executeAction();
+		}
+		
 		$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
 			'data' => array(
 				'roomID' => $this->room->roomID,
 				'sender' => WCF::getUser()->userID,
 				'username' => WCF::getUser()->username,
+				'receiver' => $receiver,
 				'time' => TIME_NOW,
-				'type' => chat\message\ChatMessage::TYPE_NORMAL,
+				'type' => $type,
 				'message' => $this->message,
 				'enableSmilies' => $this->enableSmilies,
 				'color1' => $this->userData['color'][1],
@@ -94,7 +144,7 @@ class ChatForm extends AbstractForm {
 	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
-		header("HTTP/1.0 204 No Content");
+		//header("HTTP/1.0 204 No Content");
 		parent::show();
 	}
 }

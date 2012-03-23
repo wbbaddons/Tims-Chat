@@ -34,6 +34,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	const TYPE_CLEAR = 9;
 	const TYPE_TEAM = 10;
 	const TYPE_GLOBALMESSAGE = 11;
+	const TYPE_ERROR = 12;
 	
 	/**
 	 * @see	\wcf\data\chat\message\ChatMessage::getFormattedMessage()
@@ -56,9 +57,12 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 				$message = WCF::getLanguage()->get('wcf.chat.message.'.$this->type);
 			break;
 			case self::TYPE_NORMAL:
+			case self::TYPE_ME:
+			case self::TYPE_WHISPER:
 				if (!$this->enableHTML && $outputType == 'text/html') {
 					$message = \wcf\system\bbcode\SimpleMessageParser::getInstance()->parse($message, true, $this->enableSmilies);
 				}
+			break;
 		}
 		return $message;
 	}
@@ -71,7 +75,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	public function getFormattedUsername() {
 		$username = $this->getUsername();
 		
-		if ($this->type != self::TYPE_INFORMATION) $username = \wcf\util\ChatUtil::gradient($username, $this->color1, $this->color2);
+		if ($this->type != self::TYPE_INFORMATION && $this->type != self::TYPE_ERROR) $username = \wcf\util\ChatUtil::gradient($username, $this->color1, $this->color2);
 		
 		return '<strong>'.$username.'</strong>';
 	}
@@ -83,6 +87,8 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	 */
 	public function getUsername() {
 		if ($this->type == self::TYPE_INFORMATION) return WCF::getLanguage()->get('wcf.chat.information');
+		if ($this->type == self::TYPE_ERROR) return WCF::getLanguage()->get('wcf.chat.error');
+		
 		return $this->username;
 	}
 	
@@ -97,6 +103,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			'formattedUsername' => $this->getFormattedUsername(),
 			'formattedMessage' => (string) $this,
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
+			'separator' => ($this->type == self::TYPE_NORMAL) ? ': ' : ' ',
 			'message' => $this->getFormattedMessage('text/plain'),
 			'sender' => $this->sender,
 			'username' => $this->getUsername(),

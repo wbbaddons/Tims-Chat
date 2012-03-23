@@ -79,7 +79,8 @@ class ChatMessagePage extends AbstractPage {
 		foreach ($this->users as $user) {
 			$json['users'][] = array(
 				'userID' => $user->userID,
-				'username' => $user->username
+				'username' => $user->username,
+				'awayStatus' => $user->awayStatus
 			);
 		}
 		
