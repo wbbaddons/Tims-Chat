@@ -88,30 +88,32 @@ final class ChatUtil {
 	/**
 	 * Reads user data.
 	 *
-	 * @param	string $field
+	 * @param	string 			$field
+	 * @param	\wcf\data\user\User	$user
 	 * @return	mixed
 	 */
-	public static function readUserData($field) {
+	public static function readUserData($field, \wcf\data\user\User $user = null) {
+		if ($user === null) $user = WCF::getUser();
 		$ush = UserStorageHandler::getInstance();
 		$packageID = self::getPackageID();
 		
 		// load storage
-		$ush->loadStorage(array(WCF::getUser()->userID), $packageID);
-		$data = $ush->getStorage(array(WCF::getUser()->userID), $field, $packageID);
+		$ush->loadStorage(array($user->userID), $packageID);
+		$data = $ush->getStorage(array($user->userID), $field, $packageID);
 		
-		if ($data[WCF::getUser()->userID] === null) {
+		if ($data[$user->userID] === null) {
 			switch ($field) {
 				case 'color':
-					$data[WCF::getUser()->userID] = array(1 => self::getRandomNumber(), 2 => self::getRandomNumber() * 0xFFFF);
+					$data[$user->userID] = array(1 => self::getRandomNumber(), 2 => self::getRandomNumber() * 0xFFFF);
 				break;
 			}
-			static::writeUserData(array($field => $data[WCF::getUser()->userID]));
+			static::writeUserData(array($field => $data[$user->userID]));
 			
-			return $data[WCF::getUser()->userID];
+			return $data[$user->userID];
 		}
 		
-		if (isset(static::$serialize[$field])) return unserialize($data[WCF::getUser()->userID]);
-		else return $data[WCF::getUser()->userID];
+		if (isset(static::$serialize[$field])) return unserialize($data[$user->userID]);
+		else return $data[$user->userID];
 	}
 	
 	/**

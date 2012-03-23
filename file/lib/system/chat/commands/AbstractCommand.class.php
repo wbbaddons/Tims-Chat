@@ -13,6 +13,7 @@ use \wcf\system\event\EventHandler;
  */
 abstract class AbstractCommand implements ICommand {
 	public $commandHandler = null;
+	public $enableHTML = 0;
 	
 	public function __construct(CommandHandler $commandHandler) {
 		EventHandler::getInstance()->fireAction($this, 'shouldInit');

@@ -15,6 +15,7 @@ use \wcf\util\StringUtil;
  * @subpackage	form
  */
 class ChatForm extends AbstractForm {
+	public $enableHTML = 0;
 	public $enableSmilies = 1;
 	public $neededPermissions = array('user.chat.canEnter');
 	public $message = '';
@@ -79,12 +80,18 @@ class ChatForm extends AbstractForm {
 				$command = $commandHandler->loadCommand();
 				
 				if ($command->enableSmilies != \wcf\system\chat\commands\ICommand::SMILEY_USER) $this->enableSmilies = $command->enableSmilies;
+				$this->enableHTML = $command->enableHTML;
 				$type = $command->getType();
 				$this->message = $command->getMessage();
 				$receiver = $command->getReceiver();
 			}
 			catch (\wcf\system\chat\commands\NotFoundException $e) {
 				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.notFound');
+				$type = chat\message\ChatMessage::TYPE_ERROR;
+				$receiver = WCF::getUser()->userID;
+			}
+			catch (\wcf\system\chat\commands\UserNotFoundException $e) {
+				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.userNotFound');
 				$type = chat\message\ChatMessage::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 			}
@@ -131,6 +138,7 @@ class ChatForm extends AbstractForm {
 				'type' => $type,
 				'message' => $this->message,
 				'enableSmilies' => $this->enableSmilies,
+				'enableHTML' => $this->enableHTML,
 				'color1' => $this->userData['color'][1],
 				'color2' => $this->userData['color'][2]
 			)
@@ -144,7 +152,7 @@ class ChatForm extends AbstractForm {
 	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
-		//header("HTTP/1.0 204 No Content");
+		header("HTTP/1.0 204 No Content");
 		parent::show();
 	}
 }
