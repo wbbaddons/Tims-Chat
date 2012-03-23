@@ -17,7 +17,7 @@ class ChatLeaveAction extends AbstractAction {
 	 * @see	\wcf\action\AbstractAction::$neededModules
 	 */
 	public $neededModules = array('CHAT_ACTIVE');
-	//public $neededPermissions = array('user.chat.canEnter');
+	public $neededPermissions = array('user.chat.canEnter');
 	public $room = null;
 	public $userData = array();
 	

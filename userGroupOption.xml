@@ -2,12 +2,42 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/userGroupOption.xsd">
 	<import>
 		<categories>
+			<category name="user.chat">
+				<parent>user</parent>
+			</category>
+			<category name="mod.chat">
+				<parent>mod</parent>
+			</category>
 			<category name="admin.content.chat">
 				<parent>admin.content</parent>
 			</category>
 		</categories>
 		
 		<options>
+			<option name="user.chat.canEnter">
+				<categoryname>user.chat</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>0</admindefaultvalue>
+			</option>
+			<option name="user.chat.canWrite">
+				<categoryname>user.chat</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>0</admindefaultvalue>
+			</option>
+			<option name="mod.chat.canAlwaysEnter">
+				<categoryname>mod.chat</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>0</admindefaultvalue>
+			</option>
+			<option name="mod.chat.canAlwaysWrite">
+				<categoryname>mod.chat</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>0</admindefaultvalue>
+			</option>
 			<option name="admin.content.chat.canAddRoom">
 				<categoryname>admin.content.chat</categoryname>
 				<optiontype>boolean</optiontype>

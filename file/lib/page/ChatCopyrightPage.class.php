@@ -13,7 +13,7 @@ use \wcf\system\WCF;
  */
 class ChatCopyrightPage extends AbstractPage {
 	public $neededModules = array('CHAT_ACTIVE');
-	//public $neededPermissions = array('user.chat.canEnter');
+	public $neededPermissions = array('user.chat.canEnter');
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()

@@ -88,7 +88,8 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	 */
 	public function getPermission(\wcf\data\chat\room\ChatRoom $room, $permission) {
 		if (!isset($this->chatPermissions[$room->roomID][$permission])) {
-			return isset(self::$defaults[$permission]) ? self::$defaults[$permission] : false;
+			$permission = str_replace(array('user.', 'mod.'), array('user.chat.', 'mod.chat.'), $permission);
+			return WCF::getUser()->getPermission($permission);
 		}
 		return (boolean) $this->chatPermissions[$room->roomID][$permission];
 	}

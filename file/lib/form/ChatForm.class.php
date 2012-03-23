@@ -16,6 +16,7 @@ use \wcf\util\StringUtil;
  */
 class ChatForm extends AbstractForm {
 	public $enableSmilies = 1;
+	public $neededPermissions = array('user.chat.canEnter');
 	public $message = '';
 	public $room = null;
 	public $userData = array();

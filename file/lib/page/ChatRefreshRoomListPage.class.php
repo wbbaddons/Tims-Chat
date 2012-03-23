@@ -15,7 +15,7 @@ use \wcf\system\WCF;
  */
 class ChatRefreshRoomListPage extends AbstractPage {
 	public $neededModules = array('CHAT_ACTIVE');
-	//public $neededPermissions = array('user.chat.canEnter');
+	public $neededPermissions = array('user.chat.canEnter');
 	public $room = null;
 	public $roomID = 0;
 	public $rooms = array();
