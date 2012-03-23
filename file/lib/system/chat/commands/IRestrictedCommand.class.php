@@ -11,5 +11,5 @@ namespace wcf\system\chat\commands;
  * @subpackage	system.chat.commands
  */
 interface IRestrictedCommand {
-	protected function checkPermission();
+	function checkPermission();
 }
