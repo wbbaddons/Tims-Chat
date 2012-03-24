@@ -291,7 +291,7 @@ consoleMock ?=
 				li.addClass 'ownMessage' if message.sender is WCF.User.userID
 				li.append output
 				
-				li.appendTo $ '.timsChatMessageContainer ul'
+				li.appendTo $ '.timsChatMessageContainer > ul'
 				
 			# Autoscroll down
 			if $('#timsChatAutoscroll').data('status') is 1
