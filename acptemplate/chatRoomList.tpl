@@ -43,7 +43,7 @@
 						
 						<span class="wcf-statusDisplay wcf-sortableButtonContainer">
 							{if $__wcf->session->getPermission('admin.content.chat.canEditRoom')}
-								<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}"><img src="{@$__wcf->getPath('wcf')}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="balloonTooltip" /></a>
+								<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}"><img src="{@$__wcf->getPath('wcf')}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip" /></a>
 							{/if}
 							{if $__wcf->session->getPermission('admin.content.chat.canDeleteRoom')}
 								<img src="{@$__wcf->getPath('wcf')}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip" data-object-id="{@$chatRoom->roomID}" data-confirm-message="{lang}wcf.acp.chat.delete.sure{/lang}" />
