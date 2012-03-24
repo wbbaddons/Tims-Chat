@@ -37,6 +37,29 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 		return $this->getTitle();
 	}
 	
+	
+	/**
+	 * Returns whether the user is allowed to enter the room.
+	 *
+	 * @return	boolean
+	 */
+	public function canEnter() {
+		$ph = \wcf\system\chat\permission\ChatPermissionHandler::getInstance();
+		
+		return $ph->getPermission($this, 'user.canEnter') || $ph->getPermission($this, 'mod.canAlwaysEnter');
+	}
+	
+	/**
+	 * Returns whether the user is allowed to write messages in this room.
+	 *
+	 * @return	boolean
+	 */
+	public function canWrite() {
+		$ph = \wcf\system\chat\permission\ChatPermissionHandler::getInstance();
+		
+		return $ph->getPermission($this, 'user.canWrite') || $ph->getPermission($this, 'mod.canAlwaysWrite');
+	}
+	
 	/**
 	 * Returns the number of users currently active in this room.
 	 * 
@@ -135,16 +158,5 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 		$stmt->execute($userIDs);
 		
 		return $stmt->fetchObjects('\wcf\data\user\User');
-	}
-	
-	/**
-	 * Returns whether the user is allowed to enter the room
-	 *
-	 * @return	boolean
-	 */
-	public function canEnter() {
-		$ph = \wcf\system\chat\permission\ChatPermissionHandler::getInstance();
-		
-		return $ph->getPermission($this, 'user.canEnter') || $ph->getPermission($this, 'mod.canAlwaysEnter');
 	}
 }

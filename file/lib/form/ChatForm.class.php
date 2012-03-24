@@ -38,7 +38,7 @@ class ChatForm extends AbstractForm {
 		$this->room = chat\room\ChatRoom::getCache()->search($this->userData['roomID']);
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
-		
+		if (!$this->room->canWrite()) throw new \wcf\system\exception\PermissionDeniedException();
 		parent::readData();
 	}
 	
