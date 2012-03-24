@@ -74,23 +74,23 @@ class ChatForm extends AbstractForm {
 		parent::save();
 		
 		\wcf\util\ChatUtil::writeUserData(array('away' => null));
-		$commandHandler = new \wcf\system\chat\commands\CommandHandler($this->message);
+		$commandHandler = new \wcf\system\chat\command\CommandHandler($this->message);
 		if ($commandHandler->isCommand()) {
 			try {
 				$command = $commandHandler->loadCommand();
 				
-				if ($command->enableSmilies != \wcf\system\chat\commands\ICommand::SMILEY_USER) $this->enableSmilies = $command->enableSmilies;
+				if ($command->enableSmilies != \wcf\system\chat\command\ICommand::SMILEY_USER) $this->enableSmilies = $command->enableSmilies;
 				$this->enableHTML = $command->enableHTML;
 				$type = $command->getType();
 				$this->message = $command->getMessage();
 				$receiver = $command->getReceiver();
 			}
-			catch (\wcf\system\chat\commands\NotFoundException $e) {
+			catch (\wcf\system\chat\command\NotFoundException $e) {
 				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.notFound');
 				$type = chat\message\ChatMessage::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 			}
-			catch (\wcf\system\chat\commands\UserNotFoundException $e) {
+			catch (\wcf\system\chat\command\UserNotFoundException $e) {
 				$this->message = WCF::getLanguage()->get('wcf.chat.command.error.userNotFound');
 				$type = chat\message\ChatMessage::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;

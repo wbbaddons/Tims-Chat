@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\commands\commands;
+namespace wcf\system\chat\command\commands;
 use \wcf\util\StringUtil;
 
 /**
@@ -9,12 +9,12 @@ use \wcf\util\StringUtil;
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	timwolla.wcf.chat
- * @subpackage	system.chat.commands.commands
+ * @subpackage	system.chat.command.commands
  */
-class Away extends \wcf\system\chat\commands\AbstractCommand {
-	public $enableSmilies = \wcf\system\chat\commands\ICommand::SMILEY_OFF;
+class Away extends \wcf\system\chat\command\AbstractCommand {
+	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_OFF;
 	
-	public function __construct(\wcf\system\chat\commands\CommandHandler $commandHandler) {
+	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
 		\wcf\util\ChatUtil::writeUserData(array('away' => $commandHandler->getParameters()));
@@ -22,21 +22,21 @@ class Away extends \wcf\system\chat\commands\AbstractCommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\commands\ICommand::getType()
+	 * @see	\wcf\system\chat\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_AWAY;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\commands\ICommand::getMessage()
+	 * @see	\wcf\system\chat\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return $this->commandHandler->getParameters();
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\commands\ICommand::getReceiver()
+	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
 		return \wcf\system\WCF::getUser()->userID;

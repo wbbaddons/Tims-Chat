@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\commands;
+namespace wcf\system\chat\command;
 use \wcf\util\StringUtil;
 
 /**
@@ -9,7 +9,7 @@ use \wcf\util\StringUtil;
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	timwolla.wcf.chat
- * @subpackage	system.chat.commands
+ * @subpackage	system.chat.command
  */
 final class CommandHandler {
 	const COMMAND_CHAR = '/';
@@ -63,7 +63,7 @@ final class CommandHandler {
 			return new commands\Plain($this);
 		}
 		
-		$class = '\wcf\system\chat\commands\commands\\'.ucfirst($parts[0]);
+		$class = '\wcf\system\chat\command\commands\\'.ucfirst($parts[0]);
 		if (!class_exists($class)) {
 			throw new NotFoundException();
 		}

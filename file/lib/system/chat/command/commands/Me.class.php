@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\commands\commands;
+namespace wcf\system\chat\command\commands;
 use \wcf\util\StringUtil;
 
 /**
@@ -9,26 +9,26 @@ use \wcf\util\StringUtil;
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	timwolla.wcf.chat
- * @subpackage	system.chat.commands.commands
+ * @subpackage	system.chat.command.commands
  */
-class Me extends \wcf\system\chat\commands\AbstractCommand {
-	public $enableSmilies = \wcf\system\chat\commands\ICommand::SMILEY_USER;
+class Me extends \wcf\system\chat\command\AbstractCommand {
+	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_USER;
 	
-	public function __construct(\wcf\system\chat\commands\CommandHandler $commandHandler) {
+	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
 		$this->didInit();
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\commands\ICommand::getType()
+	 * @see	\wcf\system\chat\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_ME;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\commands\ICommand::getMessage()
+	 * @see	\wcf\system\chat\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return $this->commandHandler->getParameters();

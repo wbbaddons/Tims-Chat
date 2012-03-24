@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\commands\commands;
+namespace wcf\system\chat\command\commands;
 use \wcf\util\StringUtil;
 
 /**
@@ -9,10 +9,10 @@ use \wcf\util\StringUtil;
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	timwolla.wcf.chat
- * @subpackage	system.chat.commands.commands
+ * @subpackage	system.chat.command.commands
  */
-class Color extends \wcf\system\chat\commands\AbstractCommand {
-	public $enableSmilies = \wcf\system\chat\commands\ICommand::SMILEY_OFF;
+class Color extends \wcf\system\chat\command\AbstractCommand {
+	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_OFF;
 	public static $colors = array(
 		'red'		=> 0xFF0000,
 		'blue'		=> 0x0000FF,
@@ -37,7 +37,7 @@ class Color extends \wcf\system\chat\commands\AbstractCommand {
 		'oxford'	=> 0xF02D // looks like green
 	);
 	
-	public function __construct(\wcf\system\chat\commands\CommandHandler $commandHandler) {
+	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		try {
 			list($color[1], $color[2]) = explode(' ', $commandHandler->getParameters());
@@ -50,7 +50,7 @@ class Color extends \wcf\system\chat\commands\AbstractCommand {
 		foreach ($color as $key => $val) {
 			if (isset(self::$colors[$val])) $color[$key] = self::$colors[$val];
 			else {
-				if (!$regex->match($val)) throw new \wcf\system\chat\commands\NotFoundException();
+				if (!$regex->match($val)) throw new \wcf\system\chat\command\NotFoundException();
 				$matches = $regex->getMatches();
 				$val = $matches[1];
 				if (strlen($val) == 3) $val = $val[0].$val[0].$val[1].$val[1].$val[2].$val[2];
@@ -62,21 +62,21 @@ class Color extends \wcf\system\chat\commands\AbstractCommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\commands\ICommand::getType()
+	 * @see	\wcf\system\chat\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\commands\ICommand::getMessage()
+	 * @see	\wcf\system\chat\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return 'color changed';
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\commands\ICommand::getReceiver()
+	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
 		return \wcf\system\WCF::getUser()->userID;

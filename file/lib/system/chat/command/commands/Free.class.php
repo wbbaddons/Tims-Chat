@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\commands\commands;
+namespace wcf\system\chat\command\commands;
 
 /**
  * Informs everyone that the fish was freed. OH A NOEZ.
@@ -8,23 +8,23 @@ namespace wcf\system\chat\commands\commands;
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	timwolla.wcf.chat
- * @subpackage	system.chat.commands.commands
+ * @subpackage	system.chat.command.commands
  */
 class Free extends Me {
-	public $enableSmilies = \wcf\system\chat\commands\ICommand::SMILEY_OFF;
+	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_OFF;
 	
-	public function __construct(\wcf\system\chat\commands\CommandHandler $commandHandler) {
+	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
 		if (\wcf\util\StringUtil::toLowerCase($this->commandHandler->getParameters()) != 'the fish') {
-			throw new \wcf\system\chat\commands\NotFoundException();
+			throw new \wcf\system\chat\command\NotFoundException();
 		}
 		
 		$this->didInit();
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\commands\ICommand::getMessage()
+	 * @see	\wcf\system\chat\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return 'freed the fish. OH A NOEZ';
