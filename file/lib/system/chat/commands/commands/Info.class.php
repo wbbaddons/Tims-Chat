@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\chat\commands\commands;
 use \wcf\system\WCF;
+use \wcf\util\ChatUtil;
 use \wcf\util\StringUtil;
 
 /**
@@ -22,8 +23,16 @@ class Info extends \wcf\system\chat\commands\AbstractCommand {
 		
 		$user = \wcf\data\user\User::getUserByUsername(rtrim($commandHandler->getParameters(), ','));
 		if (!$user->userID) throw new \wcf\system\chat\commands\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
-		$color = \wcf\util\ChatUtil::readUserData('color', $user);
-		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = \wcf\util\ChatUtil::gradient($user->username, $color[1], $color[2]);
+		$room = new \wcf\data\chat\room\ChatRoom(ChatUtil::readUserData('roomID', $user));
+		$color = ChatUtil::readUserData('color', $user);
+		
+		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = ChatUtil::gradient($user->username, $color[1], $color[2]);
+		if (ChatUtil::readUserData('away', $user) !== null) {
+			$this->lines[WCF::getLanguage()->get('wcf.chat.away')] = ChatUtil::readUserData('away', $user);
+		}
+		if ($room->roomID && $room->canEnter()) {
+			$this->lines[WCF::getLanguage()->get('wcf.chat.room')] = $room->getTitle();
+		}
 	}
 	
 	/**
