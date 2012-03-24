@@ -33,6 +33,8 @@ class Info extends \wcf\system\chat\commands\AbstractCommand {
 		if ($room->roomID && $room->canEnter()) {
 			$this->lines[WCF::getLanguage()->get('wcf.chat.room')] = $room->getTitle();
 		}
+		
+		$this->didInit();
 	}
 	
 	/**

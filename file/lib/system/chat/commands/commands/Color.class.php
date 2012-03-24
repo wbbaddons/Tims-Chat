@@ -58,6 +58,7 @@ class Color extends \wcf\system\chat\commands\AbstractCommand {
 			}
 		}
 		\wcf\util\ChatUtil::writeUserData(array('color' => $color));
+		$this->didInit();
 	}
 	
 	/**

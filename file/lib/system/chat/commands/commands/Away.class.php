@@ -18,6 +18,7 @@ class Away extends \wcf\system\chat\commands\AbstractCommand {
 		parent::__construct($commandHandler);
 		
 		\wcf\util\ChatUtil::writeUserData(array('away' => $commandHandler->getParameters()));
+		$this->didInit();
 	}
 	
 	/**

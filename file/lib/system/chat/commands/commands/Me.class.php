@@ -14,6 +14,12 @@ use \wcf\util\StringUtil;
 class Me extends \wcf\system\chat\commands\AbstractCommand {
 	public $enableSmilies = \wcf\system\chat\commands\ICommand::SMILEY_USER;
 	
+	public function __construct(\wcf\system\chat\commands\CommandHandler $commandHandler) {
+		parent::__construct($commandHandler);
+		
+		$this->didInit();
+	}
+	
 	/**
 	 * @see	\wcf\system\chat\commands\ICommand::getType()
 	 */
