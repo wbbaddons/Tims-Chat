@@ -383,7 +383,7 @@ consoleMock ?=
 		# @param	object	message
 		###
 		notify: (message) ->
-			return if @isActive or $('#timsChatNotify').data 'status' is 0
+			return if @isActive or $('#timsChatNotify').data('status') is 0
 			@newMessageCount++
 			
 			document.title = '(' + @newMessageCount + ') ' + @titleTemplate.fetch
