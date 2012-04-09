@@ -88,7 +88,7 @@ EOT;
 echo <<<EOT
 
 Building acptemplate.tar
----------------------
+------------------------
 
 EOT;
 	chdir('../acptemplate');
