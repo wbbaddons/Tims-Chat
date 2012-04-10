@@ -36,14 +36,10 @@ class ChatMessagePage extends AbstractPage {
 		$this->messages = chat\message\ChatMessageList::getMessagesSince($this->room, \wcf\util\ChatUtil::readUserData('lastSeen'));
 		
 		// update last seen message
-		$sql = "SELECT
-				max(messageID) as messageID
-			FROM 
-				wcf".WCF_N."_chat_message";
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute();
-		$row = $stmt->fetchArray();
-		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => $row['messageID']));
+		if (count($this->messages)) {
+			$lastSeen = $this->messages[count($this->messages)-1]->messageID;
+			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => $lastSeen));
+		}
 	}
 	
 	public function readRoom() {
