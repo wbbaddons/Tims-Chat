@@ -7,11 +7,15 @@
  * @package	be.bastelstu.wcf.chat
  */
 
+#content {
+	position: relative;
+}
+
 #timsChatRoomContent {
 	text-align: left;
 }
 
-.wcf-sidebar {
+.sidebar {
 	margin-bottom: -20px !important;
 	overflow: auto;
 	padding: 0;
@@ -62,9 +66,45 @@
 	z-index: 10;
 }
 
+#timsChatControls {
+	position: relative;
+	border-radius: 5px 5px 0 5px;
+}
+
 #timsChatOptions {
+	bottom: -29px;
+	margin-left: 0;
+	position: absolute;
+	width: 100%;
+	
 	> ul {
+		margin-right: -1px;
 		text-align: right;
+		
+		> li {
+			> a {
+				&.button {
+					    border-radius: 0 0 0 0;
+					    margin: 0;
+					    padding-right: 7px;
+				}
+			}
+			
+			display: inline-block;
+			margin-left: -5px;
+		}
+		
+		> li:first-child {
+			> a {
+				border-bottom-left-radius: 14px;
+			}
+		}
+		
+		> li:last-child {
+			> a {
+				border-bottom-right-radius: 14px;
+			}
+		}
 	}
 }
 
@@ -184,7 +224,7 @@
 				}
 			}
 			
-			&.active .wcf-badge {
+			&.active .badge {
 				font-size: 65% !important;
 				color: #fff;
 				background-color: #369;
@@ -220,6 +260,7 @@
 }
 
 .sidebarContent {
+	padding-top: 0px;
 	> div {
 		 ul {
 			> li {
@@ -227,13 +268,7 @@
 				background-color: transparent !important;
 				box-shadow: none !important;
 			}
-		}
-	}
-}
-
-.sidebarContent {
-	> div {
-		 ul {
+			
 			> li.activeMenuItem {
 				> a {
 					background-color: #FFFFFF;
