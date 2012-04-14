@@ -13,6 +13,10 @@ Cleaning up
 -----------
 
 EOT;
+	if (file_exists('package.xml.old')) {
+		file_put_contents('package.xml', file_get_contents('package.xml.old'));
+		unlink('package.xml.old');
+	}
 	if (file_exists('file.tar')) unlink('file.tar');
 	if (file_exists('template.tar')) unlink('template.tar');
 	if (file_exists('acptemplate.tar')) unlink('acptemplate.tar');
@@ -84,7 +88,7 @@ EOT;
 echo <<<EOT
 
 Building acptemplate.tar
----------------------
+------------------------
 
 EOT;
 	chdir('../acptemplate');
@@ -97,7 +101,13 @@ Building be.bastelstu.wcf.chat.tar
 
 EOT;
 	chdir('..');
-	passthru('tar cvf be.bastelstu.wcf.chat.tar * --exclude=file --exclude=template --exclude=acptemplate --exclude=build.php', $code);
+	file_put_contents('package.xml.old', file_get_contents('package.xml'));
+	file_put_contents('package.xml', preg_replace('~<date>\d{4}-\d{2}-\d{2}</date>~', '<date>'.date('Y-m-d').'</date>', file_get_contents('package.xml')));
+	passthru('tar cvf be.bastelstu.wcf.chat.tar * --exclude=*.old --exclude=file --exclude=template --exclude=acptemplate --exclude=build.php', $code);
+	if (file_exists('package.xml.old')) {
+		file_put_contents('package.xml', file_get_contents('package.xml.old'));
+		unlink('package.xml.old');
+	}
 	if ($code != 0) exit($code);
 
 if (file_exists('file.tar')) unlink('file.tar');
