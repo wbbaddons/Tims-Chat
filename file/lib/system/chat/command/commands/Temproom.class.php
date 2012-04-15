@@ -30,7 +30,7 @@ class Temproom extends \wcf\system\chat\command\AbstractRestrictedCommand {
 		$returnValues = $this->objectAction->getReturnValues();
 		$chatRoomEditor = new \wcf\data\chat\room\ChatRoomEditor($returnValues['returnValues']);
 		$roomID = $returnValues['returnValues']->roomID;
-		$this->roomName = WCF::getLanguage()->getDynamicVariable('wcf.chat.room.titleTemp', array('$roomID' => $roomID));
+		$this->roomName = WCF::getLanguage()->getDynamicVariable('wcf.chat.room.titleTemp', array('roomID' => $roomID));
 		
 		// set accurate title
 		$chatRoomEditor->update(array(
