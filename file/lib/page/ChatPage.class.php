@@ -65,7 +65,7 @@ class ChatPage extends AbstractPage {
 		
 		$this->readRoom();
 		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
-		\wcf\util\ChatUtil::writeUserData(array('roomID' => $this->room->roomID));
+		\wcf\util\ChatUtil::writeUserData(array('roomID' => $this->room->roomID, 'away' => null));
 		
 		if (CHAT_DISPLAY_JOIN_LEAVE) {
 			$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
