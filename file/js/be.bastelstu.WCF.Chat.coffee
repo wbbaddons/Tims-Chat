@@ -356,7 +356,7 @@ consoleMock ?=
 					$(@).remove();
 					
 			
-			$('#toggleUsers .wcf-badge').text(users.length);
+			$('#toggleUsers .badge').text(users.length);
 		###
 		# Inserts text into our input.
 		# 
@@ -413,7 +413,7 @@ consoleMock ?=
 				success: $.proxy((data, textStatus, jqXHR) ->
 					$('#timsChatRoomList li').remove()
 					$('#toggleRooms a').removeClass 'ajaxLoad'
-					$('#toggleRooms .wcf-badge').text data.length
+					$('#toggleRooms .badge').text data.length
 					
 					for room in data
 						li = $ '<li></li>'
