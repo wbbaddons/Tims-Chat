@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\chat\command\commands;
+use \wcf\data\user\User;
 use \wcf\system\WCF;
 use \wcf\util\ChatUtil;
 use \wcf\util\StringUtil;
@@ -21,7 +22,7 @@ class Info extends \wcf\system\chat\command\AbstractCommand {
 	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
-		$user = \wcf\data\user\User::getUserByUsername(rtrim($commandHandler->getParameters(), ','));
+		$user = User::getUserByUsername(rtrim($commandHandler->getParameters(), ','));
 		if (!$user->userID) throw new \wcf\system\chat\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
 		$room = new \wcf\data\chat\room\ChatRoom(ChatUtil::readUserData('roomID', $user));
 		$color = ChatUtil::readUserData('color', $user);
@@ -33,8 +34,28 @@ class Info extends \wcf\system\chat\command\AbstractCommand {
 		if ($room->roomID && $room->canEnter()) {
 			$this->lines[WCF::getLanguage()->get('wcf.chat.room')] = $room->getTitle();
 		}
+		$session = $this->fetchSession($user);
+		if ($session) {
+			// TODO: Check permission
+			$this->lines['IP_ADDRESS'] = $session->ipAddress;
+		}
 		
 		$this->didInit();
+	}
+	
+	public function fetchSession(User $user) {
+		$sql = "SELECT
+				*
+			FROM
+				wcf".WCF_N."_session
+			WHERE
+				userID = ?";
+		$stmt = WCF::getDB()->prepareStatement($sql);
+		$stmt->execute(array($user->userID));
+		$row = $stmt->fetchArray();
+		if (!$row) return false;
+		
+		return new \wcf\data\session\Session(null, $row);
 	}
 	
 	/**
