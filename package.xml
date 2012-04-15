@@ -5,7 +5,7 @@
 		<packagedescription><![CDATA[Chat for WoltLab Community Framework™]]></packagedescription>
 		<standalone>0</standalone>
 		<isunique>1</isunique>
-		<version>3.0.0 Alpha 9</version>
+		<version>3.0.0 Alpha 11</version>
 		<date>2011-11-26</date>
 		<plugin>com.woltlab.wcf.message</plugin> <!-- TODO: Correct me -->
 	</packageinformation>
@@ -35,6 +35,7 @@
 		<instruction type="aclOption">acloptions.xml</instruction>
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+		<instruction type="cronjob">cronjob.xml</instruction>
 	</instructions>
 	
 	<instructions type="update" fromversion="3.0.0 Alpha *">
@@ -49,6 +50,7 @@
 		<instruction type="aclOption">acloptions.xml</instruction>
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+		<instruction type="cronjob">cronjob.xml</instruction>
 		<instruction type="script">acp/be.bastelstu.wcf.chat.update.php</instruction>
 	</instructions>
 </package>
