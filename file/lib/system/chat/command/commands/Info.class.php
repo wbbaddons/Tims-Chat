@@ -24,16 +24,26 @@ class Info extends \wcf\system\chat\command\AbstractCommand {
 		
 		$user = User::getUserByUsername(rtrim($commandHandler->getParameters(), ','));
 		if (!$user->userID) throw new \wcf\system\chat\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
-		$room = new \wcf\data\chat\room\ChatRoom(ChatUtil::readUserData('roomID', $user));
-		$color = ChatUtil::readUserData('color', $user);
 		
-		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = ChatUtil::gradient($user->username, $color[1], $color[2]);
+		// Username + link to profile
+		$color = ChatUtil::readUserData('color', $user);
+		$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
+			'object' => $user
+		));
+		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = '<a href="'.$profile.'">'.ChatUtil::gradient($user->username, $color[1], $color[2]).'</a>';
+		
+		// Away-Status
 		if (ChatUtil::readUserData('away', $user) !== null) {
 			$this->lines[WCF::getLanguage()->get('wcf.chat.away')] = ChatUtil::readUserData('away', $user);
 		}
+		
+		// Room
+		$room = new \wcf\data\chat\room\ChatRoom(ChatUtil::readUserData('roomID', $user));
 		if ($room->roomID && $room->canEnter()) {
 			$this->lines[WCF::getLanguage()->get('wcf.chat.room')] = $room->getTitle();
 		}
+		
+		// IP-Address
 		$session = $this->fetchSession($user);
 		if ($session) {
 			// TODO: Check permission
