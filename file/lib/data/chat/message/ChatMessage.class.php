@@ -56,6 +56,12 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			case self::TYPE_BACK:
 				$message = WCF::getLanguage()->get('wcf.chat.message.'.$this->type);
 			break;
+			case self::TYPE_AWAY:
+				WCF::getTPL()->assign(array(
+					'message' => $message
+				));
+				$message = WCF::getLanguage()->getDynamicVariable('wcf.chat.message.'.$this->type);
+			break;
 			case self::TYPE_NORMAL:
 			case self::TYPE_ME:
 			case self::TYPE_WHISPER:
