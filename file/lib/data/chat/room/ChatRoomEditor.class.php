@@ -41,21 +41,22 @@ class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data
 	 * @return	integer		Number of deleted rooms
 	 */
 	public static function prune() {
-		$baseClass = self::$baseClass;
 		$sql = "SELECT
-				".$baseClass::getDatabaseTableIndexName()."
+				".static::getDatabaseTableIndexName()."
 			FROM
-				".$baseClass::getDatabaseTableName()."
+				".static::getDatabaseTableName()."
 			WHERE
-				permanent = ?
-				AND roomID NOT IN(
+					permanent = ?
+				AND 	roomID NOT IN (
 					SELECT
 						fieldValue AS roomID 
 					FROM
 						wcf".WCF_N."_user_storage
 					WHERE
 							packageID = ?
-						AND	field = ?)";
+						AND	field = ?
+						AND 	fieldValue IS NOT NULL
+				)";
 		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
 		$stmt->execute(array(0, \wcf\util\ChatUtil::getPackageID(), 'roomID'));
 		$objectIDs = array();
