@@ -39,6 +39,37 @@ final class ChatUtil {
 	private static $packageID = null;
 	
 	/**
+	 * Fetches the userIDs of died users.
+	 * 
+	 * @return array
+	 */
+	public static function getDiedUsers() {
+		$packageID = \wcf\util\ChatUtil::getPackageID();
+		$sql = "SELECT
+				r.userID, r.fieldValue AS roomID
+			FROM
+				wcf".WCF_N."_user_storage r
+			LEFT JOIN
+				wcf".WCF_N."_user_storage a
+				ON		a.userID = r.userID 
+					AND	a.field = ? 
+					AND	a.packageID = ?
+			WHERE
+					r.field = ?
+				AND	r.packageID = ?
+				AND	a.fieldValue IS NOT NULL
+				AND	(
+						a.fieldValue < ?
+						OR a.fieldValue IS NULL
+				)";
+		$stmt = WCF::getDB()->prepareStatement($sql);
+		$stmt->execute(array('lastActivity', $packageID, 'roomID', $packageID, TIME_NOW - 30));
+		$users = array();
+		while ($users[] = $stmt->fetchArray());
+		
+		return $users;
+	}
+	/**
 	 * Returns the packageID of Tims Chat.
 	 */
 	public static function getPackageID() {

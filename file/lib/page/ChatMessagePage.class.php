@@ -32,6 +32,9 @@ class ChatMessagePage extends AbstractPage {
 		$this->users = $this->room->getUsers();
 	}
 	
+	/**
+	 * Fetches the new messages
+	 */
 	public function readMessages() {
 		$this->messages = chat\message\ChatMessageList::getMessagesSince($this->room, \wcf\util\ChatUtil::readUserData('lastSeen'));
 		
@@ -43,9 +46,16 @@ class ChatMessagePage extends AbstractPage {
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
 		$row = $stmt->fetchArray();
-		\wcf\util\ChatUtil::writeUserData(array('lastSeen' => $row['messageID']));
+		
+		\wcf\util\ChatUtil::writeUserData(array(
+			'lastSeen' => $row['messageID'],
+			'lastActivity' => TIME_NOW
+		));
 	}
 	
+	/**
+	 * Initializes the room databaseobject.
+	 */
 	public function readRoom() {
 		$this->roomID = \wcf\util\ChatUtil::readUserData('roomID');
 		
