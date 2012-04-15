@@ -23,7 +23,7 @@ class ChatMessageEditor extends \wcf\data\DatabaseObjectEditor {
 	 * @param	integer	$lifetime	Delete messages older that this time.
 	 * @return	integer			Number of deleted messages.
 	 */
-	public static function prune($lifetime = CHAT_ARCHIVETIME) {
+	public static function prune($lifetime = CHAT_LOG_ARCHIVETIME) {
 		$baseClass = self::$baseClass;
 		$sql = "SELECT
 				".$baseClass::getDatabaseTableIndexName()."
