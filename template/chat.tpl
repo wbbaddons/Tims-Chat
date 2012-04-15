@@ -24,7 +24,8 @@
 		}
 		
 		{assign var='type' value='\wcf\data\chat\message\ChatMessage::TYPE_'}
-		.timsChatMessage{$type|concat:'JOIN'|constant}, .timsChatMessage{$type|concat:'LEAVE'|constant} {
+		.timsChatMessage{$type|concat:'JOIN'|constant}, .timsChatMessage{$type|concat:'LEAVE'|constant},
+		.timsChatMessage{$type|concat:'INFORMATION'|constant}, .timsChatMessage{$type|concat:'ERROR'|constant} {
 			background-position: left top;
 			background-repeat: no-repeat;
 		}
@@ -35,6 +36,14 @@
 		
 		.timsChatMessage{$type|concat:'LEAVE'|constant} {
 			background-image: url({icon size='S'}toLeft1{/icon});
+		}
+		
+		.timsChatMessage{$type|concat:'INFORMATION'|constant} {
+			background-image: url({icon size='S'}systemInfo{/icon});
+		}
+		
+		.timsChatMessage{$type|concat:'ERROR'|constant} {
+			background-image: url({icon size='S'}systemError{/icon});
 		}
 		
 		.ajaxLoad {
