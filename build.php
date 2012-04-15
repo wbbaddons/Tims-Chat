@@ -8,6 +8,11 @@
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.wcf.chat
  */
+$packageXML = file_get_contents('package.xml');
+preg_match('/<version>(.*?)<\/version>/', $packageXML, $matches);
+echo "Building Tims Chat $matches[1]\n";
+echo str_repeat("=", strlen("Building Tims Chat $matches[1]"))."\n";
+
 echo <<<EOT
 Cleaning up
 -----------
