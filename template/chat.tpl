@@ -28,6 +28,7 @@
 		.timsChatMessage{$type|concat:'INFORMATION'|constant}, .timsChatMessage{$type|concat:'ERROR'|constant} {
 			background-position: left top;
 			background-repeat: no-repeat;
+			background-size: 16px 16px;
 		}
 		
 		.timsChatMessage{$type|concat:'JOIN'|constant} {
