@@ -30,6 +30,28 @@ class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data
 			\wcf\system\language\I18nHandler::getInstance()->remove('wcf.chat.room.topic'.$objectID, $packageID);
 		}
 		
+		$sql = "SELECT
+				position
+			FROM
+				wcf".WCF_N."_chat_room
+			WHERE
+				roomID = ?
+			FOR UPDATE";
+		$select = WCF::getDB()->prepareStatement($sql);
+		
+		$sql = "UPDATE
+				wcf".WCF_N."_chat_room
+			SET
+				position = position - 1
+			WHERE
+				position > ?";
+		$update = WCF::getDB()->prepareStatement($sql);
+		
+		foreach ($objectIDs as $objectID) {
+			$select->execute(array($objectID));
+			$update->execute(array($select->fetchColumn()));
+		}
+		
 		// The transaction is being committed in parent::deleteAll()
 		// The beginTransaction() call in there is simply ignored.
 		return parent::deleteAll($objectIDs);
