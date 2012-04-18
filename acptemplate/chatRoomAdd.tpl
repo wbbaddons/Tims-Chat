@@ -15,8 +15,7 @@
 	//]]>
 </script>
 
-<header class="box48 boxHeadline">
-	<img src="{@$__wcf->getPath('wcf')}icon/{$action}1.svg" alt="" class="icon48" />
+<header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.chat.room.{$action}{/lang}</h1>
 	</hgroup>
