@@ -57,7 +57,7 @@ final class ChatUtil {
 			WHERE
 					r.field = ?
 				AND	r.packageID = ?
-				AND	a.fieldValue IS NOT NULL
+				AND	r.fieldValue IS NOT NULL
 				AND	(
 						a.fieldValue < ?
 						OR a.fieldValue IS NULL
