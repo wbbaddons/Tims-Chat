@@ -223,14 +223,16 @@ final class ChatUtil {
 	/**
 	 * Writes user data
 	 * 
+	 * @param	\wcf\data\user\User	$user
 	 * @param	array $data
 	 */
-	public static function writeUserData(array $data) {
+	public static function writeUserData(array $data, \wcf\data\user\User $user = null) {
+		if ($user === null) $user = WCF::getUser();
 		$ush = UserStorageHandler::getInstance();
 		$packageID = self::getPackageID();
 		
 		foreach($data as $key => $value) {
-			$ush->update(WCF::getUser()->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value, $packageID);
+			$ush->update($user->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value, $packageID);
 		}
 	}
 	
