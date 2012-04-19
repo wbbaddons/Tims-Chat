@@ -17,5 +17,31 @@ class ChatCleanupCronjob implements ICronjob {
 	public function execute(\wcf\data\cronjob\Cronjob $cronjob) {
 		\wcf\data\chat\message\ChatMessageEditor::prune();
 		\wcf\data\chat\room\ChatRoomEditor::prune();
+		
+		// kill dead users
+		$deadUsers = \wcf\util\ChatUtil::getDiedUsers();
+		foreach ($deadUsers as $deadUser) {
+			if (!$deadUser) continue;
+			
+			$user = new \wcf\data\user\User($deadUser['userID']);
+			if (CHAT_DISPLAY_JOIN_LEAVE) {
+				$userData['color'] = \wcf\util\ChatUtil::readUserData('color', $user);
+			
+				$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
+					'data' => array(
+						'roomID' => $deadUser['roomID'],
+						'sender' => $user->userID,
+						'username' => $user->username,
+						'time' => TIME_NOW,
+						'type' => chat\message\ChatMessage::TYPE_LEAVE,
+						'message' => '',
+						'color1' => $userData['color'][1],
+						'color2' => $userData['color'][2]
+					)
+				));
+				$messageAction->executeAction();
+			}
+			\wcf\util\ChatUtil::writeUserData(array('roomID' => null), $user);
+		}
 	}
 }

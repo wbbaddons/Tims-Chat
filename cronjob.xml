@@ -4,7 +4,7 @@
 		<cronjob>
 			<classname>wcf\system\cronjob\ChatCleanupCronjob</classname>
 			<description>Cleans up Tims Chat</description>
-			<startminute>*/30</startminute>
+			<startminute>*/15</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
