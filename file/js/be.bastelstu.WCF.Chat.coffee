@@ -23,6 +23,9 @@ consoleMock ?=
 		# TODO: We need an explosion animation
 		shields: 3
 		
+		# Are we currently loading messages?
+		loading: false
+		
 		# Templates
 		titleTemplate: null
 		messageTemplate: null
@@ -209,7 +212,7 @@ consoleMock ?=
 					# inclusive the error-message :)
 					window.location.reload true
 				beforeSend: $.proxy(() ->
-					return false if @loading or target.parent().hasClass 'activeMenuItem'
+					return false if target.parent().hasClass('ajaxLoad') or target.parent().hasClass 'activeMenuItem'
 					
 					@loading = true
 					target.parent().addClass 'ajaxLoad'
@@ -254,6 +257,7 @@ consoleMock ?=
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
+					@loading = false
 					@handleMessages(data.messages)
 					@handleUsers(data.users)
 				, @)
@@ -265,6 +269,11 @@ consoleMock ?=
 						@freeTheFish()
 						console.error '[be.bastelstu.WCF.Chat] We got destroyed, but could free our friend the fish before he was killed as well. Have a nice life in freedom!'
 						alert 'herp i cannot load messages'
+				, @)
+				beforeSend: $.proxy(() ->
+					return false if @loading
+					
+					@loading = true
 				, @)
 		###
 		# Inserts the new messages.
