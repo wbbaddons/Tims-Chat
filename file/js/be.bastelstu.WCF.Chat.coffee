@@ -403,7 +403,7 @@ consoleMock ?=
 				if window.webkitNotifications.checkPermission() is 0
 					title = WCF.Language.get 'wcf.chat.newMessages'
 					icon = WCF.Icon.get 'be.bastelstu.wcf.chat.chat'
-					content = message.username + message.separator + ' ' + message.message
+					content = message.username + message.separator + (message.separator is ' ' ? '' : ' ') + message.message
 					notification = window.webkitNotifications.createNotification icon, title, content
 					notification.show()
 					setTimeout(() ->
