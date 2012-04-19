@@ -51,6 +51,7 @@ class Temproom extends \wcf\system\chat\command\AbstractRestrictedCommand {
 		);
 		
 		\wcf\system\acl\ACLHandler::getInstance()->save($roomID, \wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.wcf.chat.room'));
+		\wcf\system\chat\permission\ChatPermissionHandler::clearCache();
 		$this->didInit();
 	}
 	
