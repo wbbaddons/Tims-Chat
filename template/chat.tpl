@@ -60,11 +60,11 @@
 
 <div id="timsChatRoomContent">
 	<div id="timsChatTopic" class="container box16"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
-	<div class="timsChatMessageContainer container box shadow1 containerPadding marginTop">
+	<fieldset class="timsChatMessageContainer container box shadow1 containerPadding marginTop">
 		<ul>
 			<noscript><li class="error">{lang}wcf.chat.noJs{/lang}</li></noscript>
 		</ul>
-	</div>
+	</fieldset>
 	
 	<form id="timsChatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
 		<input type="text" id="timsChatInput" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
