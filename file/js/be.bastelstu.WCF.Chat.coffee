@@ -7,17 +7,16 @@
 # @package	be.bastelstu.wcf.chat
 ###
 
-be ?= {}
-be.bastelstu ?= {}
-be.bastelstu.WCF ?= {}
-
-consoleMock = console
-consoleMock ?= 
+window.consoleMock = console
+window.consoleMock ?= 
 	log: () ->,
 	warn: () ->,
 	error: () ->
-
 (($, window, console) ->
+	window.be ?= {}
+	be.bastelstu ?= {}
+	be.bastelstu.WCF ?= {}
+	
 	be.bastelstu.WCF.Chat =
 		# Tims Chat stops loading when this reaches zero
 		# TODO: We need an explosion animation
