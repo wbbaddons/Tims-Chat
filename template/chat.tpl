@@ -155,7 +155,7 @@
 			$('#timsChatCopyright').click(function (event) {
 				event.preventDefault();
 				if ($.wcfIsset('timsChatCopyrightDialog')) return WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
-				var container = $('<div id="timsChatCopyrightDialog"></div>');
+				var container = $('<fieldset id="timsChatCopyrightDialog"></fieldset>');
 				container.load('{link controller='Chat' action='Copyright'}{/link}', function() {
 					$('body').append(container);
 					WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
