@@ -10,6 +10,7 @@ process.title = 'Tims Chat Pushserver'
 
 io = require 'socket.io'
 net = require 'net'
+fs = require 'fs'
 
 config = require('../config.js').config
 
@@ -47,5 +48,6 @@ class Server
 		).bind(@)
 		
 		socket.listen process.cwd() + '/../data.sock'
+		fs.chmod process.cwd() + '/../data.sock', '777'
 
 new Server()
