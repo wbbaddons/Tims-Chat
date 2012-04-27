@@ -21,6 +21,17 @@ class Server
 		
 		@socket = io.listen config.port
 		
+		@socket.set 'log level', 1
+		@socket.set 'browser client etag', true
+		@socket.set 'browser client minification', true
+		@socket.set 'browser client gzig', true
+		
+		@socket.configure 'development', (() ->
+			@socket.set 'log level', 3
+			@socket.set 'browser client etag', false
+			@socket.set 'browser client minification', false
+		).bind(@)
+		
 		setInterval((() ->
 			@socket.sockets.emit 'newMessage'
 		).bind(@), 5000)
