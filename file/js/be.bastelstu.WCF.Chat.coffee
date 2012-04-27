@@ -7,15 +7,23 @@
 # @package	be.bastelstu.wcf.chat
 ###
 
-window.consoleMock = console
-window.consoleMock ?= 
+window.console ?= 
 	log: () ->,
 	warn: () ->,
 	error: () ->
-(($, window, console) ->
+(($, window, windowConsole) ->
 	window.be ?= {}
 	be.bastelstu ?= {}
 	be.bastelstu.WCF ?= {}
+	
+	console =
+		log: (message) ->
+			windowConsole.log '[be.bastelstu.WCF.Chat] '+message
+		warn: (message) ->
+			windowConsole.warn '[be.bastelstu.WCF.Chat] '+message
+		error: (message) ->
+			windowConsole.error '[be.bastelstu.WCF.Chat] '+message
+		
 	
 	be.bastelstu.WCF.Chat =
 		# Tims Chat stops loading when this reaches zero
@@ -44,12 +52,16 @@ window.consoleMock ?=
 		events: 
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
+			
+		# socket.io
+		socket: null
+		
 		pe:
 			getMessages: null
 			refreshRoomList: null
 			fish: null
 		init: () ->
-			console.log '[be.bastelstu.WCF.Chat] Initializing'
+			console.log 'Initializing'
 			@bindEvents()
 			@events.newMessage.add $.proxy @notify, @
 			
@@ -57,8 +69,9 @@ window.consoleMock ?=
 			@pe.getMessages = new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1e3
 			@refreshRoomList()
 			@getMessages()
+			@initPush()
 			
-			console.log '[be.bastelstu.WCF.Chat] Finished initializing - Shields at 104 percent'
+			console.log 'Finished initializing - Shields at 104 percent'
 		###
 		# Autocompletes a username
 		###
@@ -124,7 +137,7 @@ window.consoleMock ?=
 					
 					firstChars = @autocompleteValue.substring(@autocompleteValue.lastIndexOf(' ')+1)
 					
-					console.log '[be.bastelstu.WCF.Chat] Autocompleting "' + firstChars + '"'
+					console.log 'Autocompleting "' + firstChars + '"'
 					return if firstChars.length is 0
 					
 					# Insert name and increment offset
@@ -221,7 +234,7 @@ window.consoleMock ?=
 		###
 		freeTheFish: () ->
 			return if $.wcfIsset 'fish'
-			console.warn '[be.bastelstu.WCF.Chat] Freeing the fish'
+			console.warn 'Freeing the fish'
 			fish = $ '<div id="fish">' + WCF.String.escapeHTML('><((((\u00B0>') + '</div>'
 			fish.css
 				position: 'absolute'
@@ -261,12 +274,12 @@ window.consoleMock ?=
 					@handleUsers(data.users)
 				, @)
 				error: $.proxy((jqXHR, textStatus, errorThrown) ->
-					console.error '[be.bastelstu.WCF.Chat] Battle Station hit - shields at ' + (--@shields / 3 * 104) + ' percent'
+					console.error 'Battle Station hit - shields at ' + (--@shields / 3 * 104) + ' percent'
 					if @shields is 0
 						@pe.refreshRoomList.stop()
 						@pe.getMessages.stop()
 						@freeTheFish()
-						console.error '[be.bastelstu.WCF.Chat] We got destroyed, but could free our friend the fish before he was killed as well. Have a nice life in freedom!'
+						console.error 'We got destroyed, but could free our friend the fish before he was killed as well. Have a nice life in freedom!'
 						alert 'herp i cannot load messages'
 				, @)
 				beforeSend: $.proxy(() ->
@@ -318,7 +331,7 @@ window.consoleMock ?=
 				
 				# Move the user to the correct position
 				if element[0]
-					console.log '[be.bastelstu.WCF.Chat] Moving User: "' + user.username + '"'
+					console.log 'Moving User: "' + user.username + '"'
 					element = element.detach()
 					if user.awayStatus?
 						element.addClass 'timsChatAway'
@@ -330,7 +343,7 @@ window.consoleMock ?=
 					$('#timsChatUserList').append element
 				# Insert the user
 				else
-					console.log '[be.bastelstu.WCF.Chat] Inserting User: "' + user.username + '"'
+					console.log 'Inserting User: "' + user.username + '"'
 					li = $ '<li></li>'
 					li.attr 'id', id
 					li.addClass 'timsChatUser'
@@ -360,11 +373,29 @@ window.consoleMock ?=
 			# Remove users that were not found
 			$('.timsChatUser').each () ->
 				if typeof foundUsers[$(@).attr('id')] is 'undefined'
-					console.log '[be.bastelstu.WCF.Chat] Removing User: "' + $(@).data('username') + '"'
+					console.log 'Removing User: "' + $(@).data('username') + '"'
 					$(@).remove();
 					
 			
 			$('#toggleUsers .badge').text(users.length);
+		###
+		# Initializes Server-Push
+		###
+		initPush: () ->
+			if typeof window.io isnt 'undefined'
+				console.log 'Initializing socket.io'
+				@socket = io.connect @config.socketIOPath
+				@socket.on 'connect', $.proxy((data) ->
+					console.log 'Connected on socket.io'
+					@pe.getMessages.stop()
+				, @)
+				@socket.on 'disconnect', $.proxy((data) ->
+					console.log 'Losing connection to socket.io'
+					@pe.getMessages = new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1e3
+				, @)
+				@socket.on 'newMessage', $.proxy((data) ->
+					@getMessages()
+				, @)
 		###
 		# Inserts text into our input.
 		# 
@@ -412,7 +443,7 @@ window.consoleMock ?=
 		# Refreshes the room-list.
 		###
 		refreshRoomList: () ->
-			console.log '[be.bastelstu.WCF.Chat] Refreshing the roomlist'
+			console.log 'Refreshing the roomlist'
 			$('#toggleRooms a').addClass 'ajaxLoad'
 			
 			$.ajax $('#toggleRooms a').data('refreshUrl'),
@@ -435,7 +466,7 @@ window.consoleMock ?=
 						@changeRoom $ event.target
 					, @
 					
-					console.log '[be.bastelstu.WCF.Chat] Found ' + data.length + ' rooms'
+					console.log 'Found ' + data.length + ' rooms'
 				, @)
 		###
 		# Handles submitting of messages.
@@ -504,4 +535,4 @@ window.consoleMock ?=
 			$.ajax @config.unloadURL,
 				type: 'POST'
 				async: false
-)(jQuery, @, consoleMock)
+)(jQuery, @, console)

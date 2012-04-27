@@ -16,6 +16,22 @@ class ChatMessageEditor extends \wcf\data\DatabaseObjectEditor {
 	 */
 	protected static $baseClass = '\wcf\data\chat\message\ChatMessage';
 	
+	/**
+	 * Notify the Push-Server.
+	 */
+	public static function create(array $parameters = array()) {
+		try {
+			if (CHAT_SOCKET_IO_PATH) {
+				if (file_exists(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock')) {
+					$sock = stream_socket_client('unix://data.sock', $errno, $errstr, 1);
+					fclose($sock);
+				}
+			}
+		}
+		catch (\Exception $e) { }
+		
+		return parent::create($parameters);
+	}
 	
 	/**
 	 * Removes old messages.

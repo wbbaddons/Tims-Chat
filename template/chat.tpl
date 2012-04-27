@@ -126,7 +126,8 @@
 			// populate config
 			be.bastelstu.WCF.Chat.config = {
 				reloadTime: {@CHAT_RELOADTIME},
-				unloadURL: '{link controller='Chat' action='Leave'}{/link}'
+				unloadURL: '{link controller='Chat' action='Leave'}{/link}',
+				socketIOPath: '{@CHAT_SOCKET_IO_PATH|encodeJS}'
 			}
 			WCF.Language.addObject({
 				'wcf.chat.query': '{lang}wcf.chat.query{/lang}',
@@ -155,7 +156,7 @@
 			$('#timsChatCopyright').click(function (event) {
 				event.preventDefault();
 				if ($.wcfIsset('timsChatCopyrightDialog')) return WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });
-				var container = $('<fieldset id="timsChatCopyrightDialog"></fieldset>');
+				var container = $('<div id="timsChatCopyrightDialog"></div>');
 				container.load('{link controller='Chat' action='Copyright'}{/link}', function() {
 					$('body').append(container);
 					WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION} {$chatVersion}{/if}' });

@@ -61,6 +61,12 @@
 				<defaultvalue>1</defaultvalue>
 				<showorder>9</showorder>
 			</option>
+			<option name="chat_socket_io_path">
+				<categoryname>chat.general</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue><![CDATA[]]></defaultvalue>
+				<showorder>10</showorder>
+			</option>
 			<!-- general chat options end -->
 			
 			<!--log options-->
