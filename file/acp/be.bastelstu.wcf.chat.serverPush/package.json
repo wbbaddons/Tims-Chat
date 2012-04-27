@@ -1,0 +1,19 @@
+{
+  "name"           : "be.bastelstu.wcf.chat.serverPush",
+  "description"    : "Server-Pushing for Tims Chat",
+  "homepage"       : "https://github.com/wbbaddons/Tims-Chat",
+  "keywords"       : ["chat"],
+  "author"         : "Tim Düsterhus <timwolla@googlemail.com>",
+  "contributors"   : [
+                     ],
+  "dependencies"   : {
+                      "socket.io"           : "0.8.7"
+                     },
+  "devDependencies": {
+                      "jshint"  : "*"
+                     },
+  "engines"        : { "node" : ">=0.6.0",
+                       "npm"  : ">=1.0"
+                     }, 
+  "version"        : "1.0.0"
+}
