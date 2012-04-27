@@ -115,7 +115,6 @@
 	{include file='chatCopyright'}
 </div>
 {include file='chatJavascriptInclude'}
-{if CHAT_SOCKET_IO_PATH}<script type="text/javascript" src="{CHAT_SOCKET_IO_PATH}/socket.io/socket.io.js"></script>{/if}
 <script type="text/javascript">
 	//<![CDATA[
 		(function ($, window) {
