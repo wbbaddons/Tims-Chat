@@ -23,7 +23,7 @@ class ChatMessageEditor extends \wcf\data\DatabaseObjectEditor {
 		try {
 			if (CHAT_SOCKET_IO_PATH) {
 				if (file_exists(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock')) {
-					$sock = stream_socket_client('unix://data.sock', $errno, $errstr, 1);
+					$sock = stream_socket_client('unix://'.WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock', $errno, $errstr, 1);
 					fclose($sock);
 				}
 			}
