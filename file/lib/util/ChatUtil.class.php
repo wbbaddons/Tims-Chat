@@ -45,6 +45,21 @@ final class ChatUtil {
 	 */
 	public static function getDiedUsers() {
 		$packageID = \wcf\util\ChatUtil::getPackageID();
+		if (CHAT_SOCKET_IO_PATH && file_exists(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock')) {
+			$sql = "SELECT
+					time
+				FROM
+					wcf".WCF_N."_chat_message
+				ORDER BY
+					messageID DESC";
+			$stmt = WCF::getDB()->prepareStatement($sql, 1);
+			$stmt->execute();
+			$time = $stmt->fetchColumn();
+		}
+		else {
+			$time = TIME_NOW;
+		}
+		
 		$sql = "SELECT
 				r.userID, r.fieldValue AS roomID
 			FROM
@@ -63,7 +78,7 @@ final class ChatUtil {
 						OR a.fieldValue IS NULL
 				)";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array('lastActivity', $packageID, 'roomID', $packageID, TIME_NOW - 30));
+		$stmt->execute(array('lastActivity', $packageID, 'roomID', $packageID, $time - 30));
 		$users = array();
 		while ($users[] = $stmt->fetchArray());
 		
