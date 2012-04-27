@@ -40,7 +40,9 @@ class Server
 	initUnixSocket: () ->
 		log 'Initializing Unix-Socket'
 		socket = net.createServer ((c) ->
-			@socket.sockets.emit 'newMessage'
+			setTimeout (() ->
+				@socket.sockets.emit 'newMessage'
+			).bind(@), 20
 			c.end()
 		).bind(@)
 		
