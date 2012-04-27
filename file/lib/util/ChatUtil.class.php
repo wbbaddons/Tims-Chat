@@ -50,10 +50,12 @@ final class ChatUtil {
 					time
 				FROM
 					wcf".WCF_N."_chat_message
+				WHERE
+					time < ?
 				ORDER BY
 					messageID DESC";
 			$stmt = WCF::getDB()->prepareStatement($sql, 1, 1);
-			$stmt->execute();
+			$stmt->execute(array(TIME_NOW - 10));
 			$time = $stmt->fetchColumn();
 		}
 		else {
