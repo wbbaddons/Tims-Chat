@@ -52,7 +52,7 @@ final class ChatUtil {
 					wcf".WCF_N."_chat_message
 				ORDER BY
 					messageID DESC";
-			$stmt = WCF::getDB()->prepareStatement($sql, 1);
+			$stmt = WCF::getDB()->prepareStatement($sql, 1, 1);
 			$stmt->execute();
 			$time = $stmt->fetchColumn();
 		}
