@@ -45,7 +45,7 @@ final class ChatUtil {
 	 */
 	public static function getDiedUsers() {
 		$packageID = \wcf\util\ChatUtil::getPackageID();
-		if (CHAT_SOCKET_IO_PATH && file_exists(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock')) {
+		if (CHAT_SOCKET_IO_PATH && file_exists(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock') && is_writable(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock')) {
 			$sql = "SELECT
 					time
 				FROM
