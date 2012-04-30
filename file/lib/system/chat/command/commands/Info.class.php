@@ -47,7 +47,7 @@ class Info extends \wcf\system\chat\command\AbstractCommand {
 		$session = $this->fetchSession($user);
 		if ($session) {
 			// TODO: Check permission
-			$this->lines['IP_ADDRESS'] = $session->ipAddress;
+			$this->lines[WCF::getLanguage()->get('wcf.user.ipAddress')] = $session->ipAddress;
 		}
 		
 		$this->didInit();
