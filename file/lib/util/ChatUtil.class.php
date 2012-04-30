@@ -45,7 +45,7 @@ final class ChatUtil {
 	 */
 	public static function getDiedUsers() {
 		$packageID = \wcf\util\ChatUtil::getPackageID();
-		if (CHAT_SOCKET_IO_PATH && file_exists(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock') && is_writable(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock')) {
+		if (self::nodePushRunning()) {
 			$sql = "SELECT
 					time
 				FROM
@@ -131,6 +131,19 @@ final class ChatUtil {
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * Checks whether nodePush is running.
+	 * 
+	 * @return	boolean
+	 */
+	public static function nodePushRunning() {
+		if (!CHAT_SOCKET_IO_PATH) return false;
+		if (!file_exists(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock')) return false;
+		if (!is_writable(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock')) return false;
+		
+		return true;
 	}
 	
 	/**

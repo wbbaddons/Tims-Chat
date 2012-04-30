@@ -5,8 +5,9 @@
 # @copyright	2010-2012 Tim Düsterhus
 # @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
 # @package	be.bastelstu.wcf.chat
+# @subpackage	nodePush
 ###
-process.title = 'Tims Chat Pushserver'
+process.title = 'nodePush - Tims Chat'
 
 io = require 'socket.io'
 net = require 'net'
@@ -15,7 +16,7 @@ fs = require 'fs'
 config = require('../config.js').config
 
 log = (message) ->
-	console.log '[be.bastelstu.wcf.chat.serverPush] '+message
+	console.log '[be.bastelstu.wcf.chat.nodePush] '+message
 
 class Server
 	constructor: () ->
@@ -26,6 +27,7 @@ class Server
 		@initUnixSocket()
 		@initSocketIO()
 	initSocketIO: () ->
+		log 'Initializing socket.io'
 		@socket = io.listen config.port
 		
 		@socket.set 'log level', 1

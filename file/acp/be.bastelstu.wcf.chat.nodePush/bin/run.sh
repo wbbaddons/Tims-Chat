@@ -6,12 +6,12 @@ if [ -d "bin" ]; then
 fi
 
 if [ "$(id -u)" -eq 0 ]; then
-	echo "You may not start the Push-Server as root!"
+	echo "You may not start nodePush as root!"
 	exit 1
 fi
 
 echo "Installing dependencies"
-npm install
+/usr/bin/env npm install
 
 cd "../lib"
 

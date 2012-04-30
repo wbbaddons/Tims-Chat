@@ -21,11 +21,9 @@ class ChatMessageEditor extends \wcf\data\DatabaseObjectEditor {
 	 */
 	public static function create(array $parameters = array()) {
 		try {
-			if (CHAT_SOCKET_IO_PATH) {
-				if (file_exists(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock') && is_writable(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock')) {
-					$sock = stream_socket_client('unix://'.WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock', $errno, $errstr, 1);
-					fclose($sock);
-				}
+			if (\wcf\util\ChatUtil::nodePushRunning())
+				$sock = stream_socket_client('unix://'.WCF_DIR.'acp/be.bastelstu.wcf.chat.nodePush/data.sock', $errno, $errstr, 1);
+				fclose($sock);
 			}
 		}
 		catch (\Exception $e) { }

@@ -25,7 +25,7 @@ EOT;
 	if (file_exists('file.tar')) unlink('file.tar');
 	if (file_exists('template.tar')) unlink('template.tar');
 	if (file_exists('acptemplate.tar')) unlink('acptemplate.tar');
-	foreach (glob('file/acp/be.bastelstu.wcf.chat.serverPush/lib/*.js') as $nodeFile) unlink($nodeFile);
+	foreach (glob('file/acp/be.bastelstu.wcf.chat.nodePush/lib/*.js') as $nodeFile) unlink($nodeFile);
 	foreach (glob('file/js/*.js') as $jsFile) unlink($jsFile);
 	foreach (glob('file/style/*.css') as $cssFile) unlink($cssFile);
 	if (file_exists('be.bastelstu.wcf.chat.tar')) unlink('be.bastelstu.wcf.chat.tar');
@@ -40,7 +40,7 @@ foreach (glob('file/js/*.coffee') as $coffeeFile) {
 	passthru('coffee -cb '.escapeshellarg($coffeeFile), $code);
 	if ($code != 0) exit($code);
 }
-foreach (glob('file/acp/be.bastelstu.wcf.chat.serverPush/lib/*.coffee') as $coffeeFile) {
+foreach (glob('file/acp/be.bastelstu.wcf.chat.nodePush/lib/*.coffee') as $coffeeFile) {
 	echo $coffeeFile."\n";
 	passthru('coffee -cb '.escapeshellarg($coffeeFile), $code);
 	if ($code != 0) exit($code);
@@ -124,6 +124,6 @@ EOT;
 if (file_exists('file.tar')) unlink('file.tar');
 if (file_exists('template.tar')) unlink('template.tar');
 if (file_exists('acptemplate.tar')) unlink('acptemplate.tar');
-foreach (glob('file/acp/be.bastelstu.wcf.chat.serverPush/lib/*.js') as $nodeFile) unlink($nodeFile);
+foreach (glob('file/acp/be.bastelstu.wcf.chat.nodePush/lib/*.js') as $nodeFile) unlink($nodeFile);
 foreach (glob('file/js/*.js') as $jsFile) unlink($jsFile);
 foreach (glob('file/style/*.css') as $cssFile) unlink($cssFile);
