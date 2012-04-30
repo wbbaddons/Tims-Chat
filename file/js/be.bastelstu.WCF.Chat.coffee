@@ -86,7 +86,7 @@ window.console ?=
 			
 			# None found -> return firstChars
 			# otherwise return the user at the current offset
-			return if users.length is 0 then firstChars else users[offset % users.length]
+			return if users.length is 0 then firstChars else users[offset % users.length] + ', '
 		###
 		# Binds all the events needed for Tims Chat.
 		###
@@ -141,7 +141,7 @@ window.console ?=
 					return if firstChars.length is 0
 					
 					# Insert name and increment offset
-					$('#timsChatInput').val(@autocompleteValue.substring(0, @autocompleteValue.lastIndexOf(' ') + 1) + @autocomplete(firstChars) + ', ')
+					$('#timsChatInput').val(@autocompleteValue.substring(0, @autocompleteValue.lastIndexOf(' ') + 1) + @autocomplete(firstChars))
 					@autocompleteOffset++
 				else
 					@autocompleteOffset = 0

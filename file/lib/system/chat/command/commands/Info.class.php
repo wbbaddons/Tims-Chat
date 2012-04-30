@@ -53,6 +53,11 @@ class Info extends \wcf\system\chat\command\AbstractCommand {
 		$this->didInit();
 	}
 	
+	/**
+	 * Fetches the session-databaseobject for the specified user.
+	 * 
+	 * @return	\wcf\data\session\Session
+	 */
 	public function fetchSession(User $user) {
 		$sql = "SELECT
 				*
