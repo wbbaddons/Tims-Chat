@@ -111,13 +111,13 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
 			'separator' => ($this->type == self::TYPE_NORMAL) ? ': ' : ' ',
 			'message' => $this->getFormattedMessage('text/plain'),
-			'sender' => $this->sender,
+			'sender' => (int) $this->sender,
 			'username' => $this->getUsername(),
-			'time' => $this->time,
-			'receiver' => $this->receiver,
-			'type' => $this->type,
-			'roomID' => $this->roomID,
-			'messageID' => $this->messageID
+			'time' => (int) $this->time,
+			'receiver' => (int) $this->receiver,
+			'type' => (int) $this->type,
+			'roomID' => (int) $this->roomID,
+			'messageID' => (int) $this->messageID
 		);
 		
 		if ($raw) return $array;
