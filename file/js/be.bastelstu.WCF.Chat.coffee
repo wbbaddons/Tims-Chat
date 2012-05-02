@@ -174,7 +174,7 @@ window.console ?=
 					
 			# Immediatly scroll down when activating autoscroll
 			$('#timsChatAutoscroll').click (event) ->
-				$(this).parent().removeClass('default')
+				$(this).parent().removeClass('active')
 				if $(this).data 'status'
 					$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
 					@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
@@ -298,7 +298,7 @@ window.console ?=
 				if $('.timsChatMessageContainer').scrollTop() < @oldScrollTop
 					if $('#timsChatAutoscroll').data('status') is 1
 						$('#timsChatAutoscroll').click()
-						$('#timsChatAutoscroll').parent().addClass('default').fadeOut('slow').fadeIn('slow')
+						$('#timsChatAutoscroll').parent().addClass('active').fadeOut('slow').fadeIn('slow')
 			
 			# Insert the messages
 			for message in messages
