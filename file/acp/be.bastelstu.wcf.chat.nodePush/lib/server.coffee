@@ -20,6 +20,9 @@ log = (message) ->
 
 class Server
 	constructor: () ->
+		if process.cwd().substring(process.cwd().length - 3) isnt 'lib'
+			console.error 'Please run me via bin/run.sh'
+			process.exit 1
 		log 'Starting Pushserver for Tims Chat'
 		log 'PID is ' + process.pid
 		log 'Using port: ' + config.port
