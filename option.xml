@@ -43,12 +43,6 @@
 				<defaultvalue>1</defaultvalue>
 				<showorder>6</showorder>
 			</option>
-			<option name="chat_animations">
-				<categoryname>chat.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<showorder>7</showorder>
-			</option>
 			<option name="chat_max_length">
 				<categoryname>chat.general</categoryname>
 				<optiontype>integer</optiontype>

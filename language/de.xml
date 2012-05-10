@@ -4,6 +4,9 @@
 		<item name="wcf.acp.chat.room.list"><![CDATA[Chaträume]]></item>
 		<item name="wcf.acp.chat.room.add"><![CDATA[Chatraum hinzufügen]]></item>
 		<item name="wcf.acp.chat.room.edit"><![CDATA[Chatraum bearbeiten]]></item>
+		<item name="wcf.acp.chat.room.data"><![CDATA[Daten des Raumes]]></item>
+		<item name="wcf.acp.chat.room.title"><![CDATA[Titel]]></item>
+		<item name="wcf.acp.chat.room.topic"><![CDATA[Thema]]></item>
 		
 		<item name="wcf.acp.chat.delete.sure"><![CDATA[Möchten Sie den Raum &bdquo;{$chatRoom->title|language}&ldquo; wirklich löschen?]]></item>
 	</category>
@@ -12,6 +15,19 @@
 		<item name="wcf.acp.menu.link.chat"><![CDATA[Chat]]></item>
 		<item name="wcf.acp.menu.link.chat.room.list"><![CDATA[Chaträume auflisten]]></item>
 		<item name="wcf.acp.menu.link.chat.room.add"><![CDATA[Chatraum hinzufügen]]></item>
+	</category>
+	
+	<category name="wcf.acp.group">
+		<item name="wcf.acp.group.option.category.user.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.acp.group.option.user.chat.canEnter"><![CDATA[Kann Chat betreten]]></item>
+		<item name="wcf.acp.group.option.user.chat.canWrite"><![CDATA[Kann im Chat schreiben]]></item>
+		<item name="wcf.acp.group.option.user.chat.canTempRoom"><![CDATA[Kann temporäre Räume erstellen]]></item>
+		
+		<item name="wcf.acp.group.option.category.mod.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter"><![CDATA[Kann jeden Raum betreten]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter.description"><![CDATA[Setzt Banns außer Kraft.]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysWrite"><![CDATA[Kann in jedem Raum schreiben]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter.description"><![CDATA[Setzt Knebel außer Kraft.]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -26,12 +42,14 @@
 		<item name="wcf.acp.option.chat_display_join_leave.description"><![CDATA[Gibt an, ob eine Nachricht angezeigt werden soll, wenn ein Nutzer den Chat betritt oder verlässt.]]></item>
 		<item name="wcf.acp.option.chat_display_clock"><![CDATA[Uhrzeit anzeigen]]></item>
 		<item name="wcf.acp.option.chat_display_clock.description"><![CDATA[Aktiviert die Anzeige der Uhrzeit von Nachrichten]]></item>
-		<item name="wcf.acp.option.chat_animations"><![CDATA[Animationen aktivieren]]></item>
-		<item name="wcf.acp.option.chat_animations.description"><![CDATA[Aktiviert die Animation neuer Nachrichten.]]></item>
 		<item name="wcf.acp.option.chat_max_length"><![CDATA[Maximale Textlänge]]></item>
 		<item name="wcf.acp.option.chat_max_length.description"><![CDATA[Gibt die maximale Länge einer Chatnachricht an.]]></item>
 		<item name="wcf.acp.option.chat_show_version"><![CDATA[Versionsnummer anzeigen]]></item>
 		<item name="wcf.acp.option.chat_show_version.description"><![CDATA[Zeigt die Versionsnummer im Copyrighthinweis an.]]></item>
+		
+		<item name="wcf.acp.option.chat_socket_io_path"><![CDATA[Push-Server-Adresse (nodePush)]]></item>
+		<item name="wcf.acp.option.chat_socket_io_path.description"><![CDATA[Der Push-Server dient dazu das Chat-Backend zu entlasten.
+Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt.]]></item>
 		
 		<item name="wcf.acp.option.category.chat.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.option.chat_log_active"><![CDATA[Protokoll aktivieren]]></item>
@@ -59,6 +77,7 @@
 		<item name="wcf.chat.smilies"><![CDATA[Smilies]]></item>
 		<item name="wcf.chat.clear"><![CDATA[Chat leeren]]></item>
 		<item name="wcf.chat.mark"><![CDATA[Markieren]]></item>
+		<item name="wcf.chat.forceRefresh"><![CDATA[Räume neu laden]]></item>
 		
 		<item name="wcf.chat.query"><![CDATA[Privates Gespräch]]></item>
 		<item name="wcf.chat.kick"><![CDATA[Kicken]]></item>
@@ -75,6 +94,8 @@
 		<item name="wcf.chat.message.3"><![CDATA[ist jetzt abwesend{if $message}: {$message}{else}.{/if}]]></item>
 		<!-- 4 = TYPE_BACK -->
 		<item name="wcf.chat.message.4"><![CDATA[ist jetzt wieder da.]]></item>
+		<!-- 7 = TYPE_WHISPER -->
+		<item name="wcf.chat.message.7"><![CDATA[flüstert{if $showReceiver} an {$username}{/if}:]]></item>
 	</category>
 	
 	<!-- I18N Values -->
