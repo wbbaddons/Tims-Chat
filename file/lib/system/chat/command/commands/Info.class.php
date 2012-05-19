@@ -17,34 +17,35 @@ use \wcf\util\StringUtil;
 class Info extends \wcf\system\chat\command\AbstractCommand {
 	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_OFF;
 	public $enableHTML = 1;
-	private $lines = array();
+	public $lines = array();
+	public $user = null;
 	
 	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
-		$user = User::getUserByUsername(rtrim($commandHandler->getParameters(), ','));
-		if (!$user->userID) throw new \wcf\system\chat\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
+		$this->user = User::getUserByUsername(rtrim($commandHandler->getParameters(), ','));
+		if (!$this->user->userID) throw new \wcf\system\chat\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
 		
 		// Username + link to profile
-		$color = ChatUtil::readUserData('color', $user);
+		$color = ChatUtil::readUserData('color', $this->user);
 		$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
-			'object' => $user
+			'object' => $this->user
 		));
-		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = '<a href="'.$profile.'">'.ChatUtil::gradient($user->username, $color[1], $color[2]).'</a>';
+		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = '<a href="'.$profile.'">'.ChatUtil::gradient($this->user->username, $color[1], $color[2]).'</a>';
 		
 		// Away-Status
-		if (ChatUtil::readUserData('away', $user) !== null) {
-			$this->lines[WCF::getLanguage()->get('wcf.chat.away')] = ChatUtil::readUserData('away', $user);
+		if (ChatUtil::readUserData('away', $this->user) !== null) {
+			$this->lines[WCF::getLanguage()->get('wcf.chat.away')] = ChatUtil::readUserData('away', $this->user);
 		}
 		
 		// Room
-		$room = new \wcf\data\chat\room\ChatRoom(ChatUtil::readUserData('roomID', $user));
+		$room = new \wcf\data\chat\room\ChatRoom(ChatUtil::readUserData('roomID', $this->user));
 		if ($room->roomID && $room->canEnter()) {
 			$this->lines[WCF::getLanguage()->get('wcf.chat.room')] = $room->getTitle();
 		}
 		
 		// IP-Address
-		$session = $this->fetchSession($user);
+		$session = $this->fetchSession();
 		if ($session) {
 			// TODO: Check permission
 			$this->lines[WCF::getLanguage()->get('wcf.user.ipAddress')] = $session->ipAddress;
@@ -58,7 +59,7 @@ class Info extends \wcf\system\chat\command\AbstractCommand {
 	 * 
 	 * @return	\wcf\data\session\Session
 	 */
-	public function fetchSession(User $user) {
+	public function fetchSession() {
 		$sql = "SELECT
 				*
 			FROM
@@ -66,7 +67,7 @@ class Info extends \wcf\system\chat\command\AbstractCommand {
 			WHERE
 				userID = ?";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array($user->userID));
+		$stmt->execute(array($this->user->userID));
 		$row = $stmt->fetchArray();
 		if (!$row) return false;
 		
