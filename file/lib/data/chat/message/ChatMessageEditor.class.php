@@ -30,25 +30,4 @@ class ChatMessageEditor extends \wcf\data\DatabaseObjectEditor {
 		
 		return parent::create($parameters);
 	}
-	
-	/**
-	 * Removes old messages.
-	 *
-	 * @param	integer	$lifetime	Delete messages older that this time.
-	 * @return	integer			Number of deleted messages.
-	 */
-	public static function prune($lifetime = CHAT_LOG_ARCHIVETIME) {
-		$sql = "SELECT
-				".static::getDatabaseTableIndexName()."
-			FROM
-				".static::getDatabaseTableName()."
-			WHERE
-				time < ?";
-		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array(TIME_NOW - $lifetime));
-		$objectIDs = array();
-		while ($objectIDs[] = $stmt->fetchColumn());
-		
-		return self::deleteAll($objectIDs);
-	}
 }

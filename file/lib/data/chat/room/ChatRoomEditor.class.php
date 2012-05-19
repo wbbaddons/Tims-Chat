@@ -58,36 +58,6 @@ class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data
 	}
 	
 	/**
-	 * Deletes temporary rooms that are unused.
-	 * 
-	 * @return	integer		Number of deleted rooms
-	 */
-	public static function prune() {
-		$sql = "SELECT
-				".static::getDatabaseTableIndexName()."
-			FROM
-				".static::getDatabaseTableName()."
-			WHERE
-					permanent = ?
-				AND 	roomID NOT IN (
-					SELECT
-						fieldValue AS roomID 
-					FROM
-						wcf".WCF_N."_user_storage
-					WHERE
-							packageID = ?
-						AND	field = ?
-						AND 	fieldValue IS NOT NULL
-				)";
-		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array(0, \wcf\util\ChatUtil::getPackageID(), 'roomID'));
-		$objectIDs = array();
-		
-		while ($objectIDs[] = $stmt->fetchColumn());
-		return self::deleteAll($objectIDs);
-	}
-	
-	/**
 	 * Clears the room cache.
 	 */
 	public static function resetCache() {

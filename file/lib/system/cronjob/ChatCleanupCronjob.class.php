@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
+use \wcf\data\chat;
 
 /**
  * Vaporizes unneeded data.
@@ -15,8 +16,10 @@ class ChatCleanupCronjob implements ICronjob {
 	 * @see wcf\system\ICronjob::execute()
 	 */
 	public function execute(\wcf\data\cronjob\Cronjob $cronjob) {
-		\wcf\data\chat\message\ChatMessageEditor::prune();
-		\wcf\data\chat\room\ChatRoomEditor::prune();
+		$messageAction = new chat\message\ChatMessageAction(array(), 'prune');
+		$messageAction->executeAction();
+		$roomAction = new chat\room\ChatRoomAction(array(), 'prune');
+		$roomAction->executeAction();
 		
 		// kill dead users
 		$deadUsers = \wcf\util\ChatUtil::getDiedUsers();

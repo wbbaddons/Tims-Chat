@@ -35,19 +35,47 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
 		
 		WCF::getDB()->beginTransaction();
 		$sql = "SELECT	MAX(position)
-			FROM	wcf".WCF_N."_chat_room
+			FROM	".call_user_func(array($this->className, 'getDatabaseTableName'))."
 			FOR UPDATE";
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
-		
-		$sql = "UPDATE	wcf".WCF_N."_chat_room
-			SET	position = ".($stmt->fetchColumn() + 1)."
-			WHERE	roomID = ?";
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array($room->roomID));
+
+		$editor = new ChatRoomEditor($room);
+		$editor->update(array('position' => ($stmt->fetchColumn() + 1)));
 		WCF::getDB()->commitTransaction();
 		
 		return $room;
+	}
+	
+	/**
+	 * Deletes temporary rooms that are unused.
+	 * 
+	 * @return	integer		Number of deleted rooms
+	 */
+	public function prune() {
+		$sql = "SELECT
+				".call_user_func(array($this->className, 'getDatabaseTableIndexName'))."
+			FROM
+				".call_user_func(array($this->className, 'getDatabaseTableName'))."
+			WHERE
+					permanent = ?
+				AND 	roomID NOT IN (
+					SELECT
+						fieldValue AS roomID 
+					FROM
+						wcf".WCF_N."_user_storage
+					WHERE
+							packageID = ?
+						AND	field = ?
+						AND 	fieldValue IS NOT NULL
+				)";
+		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
+		$stmt->execute(array(0, \wcf\util\ChatUtil::getPackageID(), 'roomID'));
+		$objectIDs = array();
+		
+		while ($objectIDs[] = $stmt->fetchColumn());
+		
+		return call_user_func(array($this->className, 'deleteAll'), $objectIDs);
 	}
 	
 	/**
