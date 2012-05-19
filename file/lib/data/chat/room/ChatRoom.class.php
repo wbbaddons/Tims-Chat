@@ -166,22 +166,31 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 		
 		$sql = "SELECT
 				u.*,
-				s.fieldValue AS awayStatus
+				st.fieldValue AS awayStatus,
+				su.suspensionID AS suspended
 			FROM
 				wcf".WCF_N."_user u
 			LEFT JOIN
-				wcf".WCF_N."_user_storage s 
+				wcf".WCF_N."_user_storage st
 				ON (
-						u.userID = s.userID 
-					AND s.field = ? 
-					AND s.packageID = ?
+						u.userID = st.userID 
+					AND	st.field = ? 
+					AND	st.packageID = ?
+				)
+			LEFT JOIN
+				wcf".WCF_N."_chat_suspension su
+				ON (
+						u.userID = su.userID
+					AND	(	su.roomID IS NULL
+						OR	su.roomID = ?)
+					AND	time > ?
 				)
 			WHERE
 				u.userID IN (".rtrim(str_repeat('?,', count($userIDs)), ',').")
 			ORDER BY
 				u.username ASC";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		array_unshift($userIDs, 'away', $packageID);
+		array_unshift($userIDs, 'away', $packageID, $this->roomID, TIME_NOW);
 		$stmt->execute($userIDs);
 		
 		return $stmt->fetchObjects('\wcf\data\user\User');

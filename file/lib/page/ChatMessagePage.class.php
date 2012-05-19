@@ -115,7 +115,8 @@ class ChatMessagePage extends AbstractPage {
 			$json['users'][] = array(
 				'userID' => $user->userID,
 				'username' => $user->username,
-				'awayStatus' => $user->awayStatus
+				'awayStatus' => $user->awayStatus,
+				'suspended' => $user->suspended
 			);
 		}
 		
