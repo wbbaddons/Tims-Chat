@@ -60,10 +60,12 @@
 
 <div id="timsChatRoomContent">
 	<div id="timsChatTopic" class="container box16"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
-	<fieldset class="timsChatMessageContainer container box shadow1 containerPadding marginTop">
-		<ul>
-			<noscript><li class="error">{lang}wcf.chat.noJs{/lang}</li></noscript>
-		</ul>
+	<fieldset>
+		<div class="timsChatMessageContainer container box shadow1 containerPadding marginTop">
+			<ul>
+				<noscript><li class="error">{lang}wcf.chat.noJs{/lang}</li></noscript>
+			</ul>
+		</div>
 	</fieldset>
 	
 	<form id="timsChatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
