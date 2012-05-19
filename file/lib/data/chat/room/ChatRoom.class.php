@@ -135,7 +135,7 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 		$userIDs = array();
 		while ($userIDs[] = $stmt->fetchColumn());
 		
-		if (!count($userIDs)) return array();
+		if (empty($userIDs)) return array();
 		
 		$sql = "SELECT
 				u.*,
@@ -146,16 +146,15 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 				wcf".WCF_N."_user_storage s 
 				ON (
 						u.userID = s.userID 
-					AND s.field = ? 
-					AND s.packageID = ?
+					AND	s.field = ? 
+					AND	s.packageID = ?
 				)
 			WHERE
-				u.userID IN (".rtrim(str_repeat('?,', count($userIDs)), ',').")
+				u.userID IN (?)
 			ORDER BY
 				u.username ASC";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		array_unshift($userIDs, 'away', $packageID);
-		$stmt->execute($userIDs);
+		$stmt->execute(array('away', $packageID, $userIDs));
 		
 		return $stmt->fetchObjects('\wcf\data\user\User');
 	}
