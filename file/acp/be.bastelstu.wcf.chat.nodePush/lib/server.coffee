@@ -29,6 +29,10 @@ class Server
 		
 		@initUnixSocket()
 		@initSocketIO()
+		
+		setInterval (() ->
+			@socket.sockets.emit 'newMessage'
+		).bind(@), 60e3
 	initSocketIO: () ->
 		log 'Initializing socket.io'
 		@socket = io.listen config.port

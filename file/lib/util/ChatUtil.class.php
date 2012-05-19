@@ -46,17 +46,7 @@ final class ChatUtil {
 	public static function getDiedUsers() {
 		$packageID = \wcf\util\ChatUtil::getPackageID();
 		if (self::nodePushRunning()) {
-			$sql = "SELECT
-					time
-				FROM
-					wcf".WCF_N."_chat_message
-				WHERE
-					time < ?
-				ORDER BY
-					messageID DESC";
-			$stmt = WCF::getDB()->prepareStatement($sql, 1, 1);
-			$stmt->execute(array(TIME_NOW - 10));
-			$time = $stmt->fetchColumn();
+			$time = TIME_NOW - 120;
 		}
 		else {
 			$time = TIME_NOW;
