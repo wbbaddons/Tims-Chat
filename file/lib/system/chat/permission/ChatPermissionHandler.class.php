@@ -16,12 +16,6 @@ use \wcf\system\WCF;
  */
 class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	protected $chatPermissions = array();
-	protected static $defaults = array(
-		'user.canEnter' => true,
-		'user.canWrite' => true,
-		'mod.canAlwaysEnter' => false,
-		'mod.canAlwaysWrite' => false
-	);
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()

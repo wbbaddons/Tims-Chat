@@ -29,7 +29,7 @@ final class ChatUtil {
 	 */
 	const PACKAGE_IDENTIFIER = 'be.bastelstu.wcf.chat';
 	
-	public static $serialize = array('color' => true);
+	public static $serialize = array('color' => true, 'suspensions' => true);
 	
 	/**
 	 * Cached packageID of Tims Chat.
@@ -158,7 +158,7 @@ final class ChatUtil {
 					$data[$user->userID] = array(1 => self::getRandomNumber(), 2 => self::getRandomNumber() * 0xFFFF);
 				break;
 			}
-			static::writeUserData(array($field => $data[$user->userID]));
+			if ($data[$user->userID] !== null) static::writeUserData(array($field => $data[$user->userID]));
 			
 			return $data[$user->userID];
 		}
