@@ -49,11 +49,17 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 		$suspensions = ChatSuspension::getSuspensionsForUser();
 		
 		$canEnter = $ph->getPermission($this, 'user.canEnter');
-		if (isset($suspensions[$this->roomID][ChatSuspension::TYPE_BAN])) {
+		if ($canEnter && isset($suspensions[$this->roomID][ChatSuspension::TYPE_BAN])) {
 			if ($suspensions[$this->roomID][ChatSuspension::TYPE_BAN]['time'] > TIME_NOW) {
 				$canEnter = false;
 			}
 		}
+		if ($canEnter && isset($suspensions[null][ChatSuspension::TYPE_BAN])) {
+			if ($suspensions[null][ChatSuspension::TYPE_BAN]['time'] > TIME_NOW) {
+				$canEnter = false;
+			}
+		}
+		
 		return $canEnter || $ph->getPermission($this, 'mod.canAlwaysEnter');
 	}
 	
@@ -67,8 +73,13 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 		$suspensions = ChatSuspension::getSuspensionsForUser();
 		
 		$canWrite = $ph->getPermission($this, 'user.canWrite');
-		if (isset($suspensions[$this->roomID][ChatSuspension::TYPE_MUTE])) {
+		if ($canWrite && isset($suspensions[$this->roomID][ChatSuspension::TYPE_MUTE])) {
 			if ($suspensions[$this->roomID][ChatSuspension::TYPE_MUTE]['time'] > TIME_NOW) {
+				$canWrite = false;
+			}
+		}
+		if ($canWrite && isset($suspensions[null][ChatSuspension::TYPE_MUTE])) {
+			if ($suspensions[null][ChatSuspension::TYPE_MUTE]['time'] > TIME_NOW) {
 				$canWrite = false;
 			}
 		}
