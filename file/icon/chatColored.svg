@@ -25,11 +25,11 @@
 				}		
 				.Upper .bubble {
 					fill:none;
-					stroke:#666666;
+					stroke:#336699;
 					stroke-opacity:1;
 				}		
 				.Upper .leaderLine {
-					fill:#666666;
+					fill:#336699;
 					fill-opacity:1;
 					stroke:none;
 				}
