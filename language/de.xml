@@ -27,7 +27,9 @@
 		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter"><![CDATA[Kann jeden Raum betreten]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter.description"><![CDATA[Setzt Banns außer Kraft.]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canAlwaysWrite"><![CDATA[Kann in jedem Raum schreiben]]></item>
-		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter.description"><![CDATA[Setzt Knebel außer Kraft.]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysWrite.description"><![CDATA[Setzt Knebel außer Kraft.]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canRestore"><![CDATA[Kann User zurücksetzen]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canRestore.description"><![CDATA[Setzt Nutzerdaten (Farbe) zurück.]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
