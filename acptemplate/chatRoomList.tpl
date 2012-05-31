@@ -21,7 +21,7 @@
 	{if $__wcf->session->getPermission('admin.content.chat.canAddRoom')}
 		<nav>
 			<ul>
-				<li><a href="{link controller='ChatRoomAdd'}{/link}" title="{lang}wcf.acp.chat.room.add{/lang}" class="button"><img src="{@$__wcf->getPath('wcf')}icon/add1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.chat.room.add{/lang}</span></a></li>
+				<li><a href="{link controller='ChatRoomAdd'}{/link}" title="{lang}wcf.acp.chat.room.add{/lang}" class="button"><img src="{@$__wcf->getPath('wcf')}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.chat.room.add{/lang}</span></a></li>
 			</ul>
 		</nav>
 	{/if}
@@ -41,10 +41,10 @@
 							
 							<span class="statusDisplay sortableButtonContainer">
 								{if $__wcf->session->getPermission('admin.content.chat.canEditRoom')}
-									<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}"><img src="{@$__wcf->getPath('wcf')}icon/edit1.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon16" /></a>
+									<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}"><img src="{@$__wcf->getPath('wcf')}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon16" /></a>
 								{/if}
 								{if $__wcf->session->getPermission('admin.content.chat.canDeleteRoom')}
-									<img src="{@$__wcf->getPath('wcf')}icon/delete1.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon16" data-object-id="{@$chatRoom->roomID}" data-confirm-message="{lang}wcf.acp.chat.delete.sure{/lang}" />
+									<img src="{@$__wcf->getPath('wcf')}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon16" data-object-id="{@$chatRoom->roomID}" data-confirm-message="{lang}wcf.acp.chat.delete.sure{/lang}" />
 								{/if}
 							</span>
 						</span>

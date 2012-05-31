@@ -53,3 +53,5 @@ nbactions.xml
 *.js
 .sass-cache
 *.css
+
+*.bak
