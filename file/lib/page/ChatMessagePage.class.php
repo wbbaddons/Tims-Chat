@@ -13,12 +13,40 @@ use \wcf\system\WCF;
  * @subpackage	page
  */
 class ChatMessagePage extends AbstractPage {
+	/**
+	 * The new and unseen messages.
+	 * 
+	 * @var array<\wcf\data\chat\message\ChatMessage>
+	 */
 	public $messages = array();
+	
+	/**
+	 * @see \wcf\page\AbstractPage::$neededModules
+	 */
 	public $neededModules = array('CHAT_ACTIVE');
+	
+	/**
+	 * @see \wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('user.chat.canEnter');
+	
+	/**
+	 * The room the user joined.
+	 * 
+	 * @var \wcf\data\chat\room\ChatRoom
+	 */
 	public $room = null;
-	public $roomID = 0;
+	
+	/**
+	 * All the users that are currently in the room $this->room.
+	 * 
+	 * @var array<\wcf\data\user\User>
+	 */
 	public $users = array();
+	
+	/**
+	 * @see \wcf\page\AbstractPage::$useTemplate
+	 */
 	public $useTemplate = false;
 	
 	/**
@@ -82,9 +110,9 @@ class ChatMessagePage extends AbstractPage {
 	 * Initializes the room databaseobject.
 	 */
 	public function readRoom() {
-		$this->roomID = \wcf\util\ChatUtil::readUserData('roomID');
+		$roomID = \wcf\util\ChatUtil::readUserData('roomID');
 		
-		$this->room = chat\room\ChatRoom::getCache()->search($this->roomID);
+		$this->room = chat\room\ChatRoom::getCache()->search($roomID);
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 	}

@@ -14,23 +14,33 @@ use \wcf\system\WCF;
  * @subpackage	page
  */
 class ChatRefreshRoomListPage extends AbstractPage {
+	/**
+	 * @see \wcf\page\AbstractPage::$neededModules
+	 */
 	public $neededModules = array('CHAT_ACTIVE');
+	
+	/**
+	 * @see \wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('user.chat.canEnter');
-	public $room = null;
-	public $roomID = 0;
 	public $rooms = array();
+	
+	/**
+	 * @see \wcf\page\AbstractPage::$useTemplate
+	 */
 	public $useTemplate = false;
 	
 	/**
-	 * Reads room data.
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
-		$this->roomID = \wcf\util\ChatUtil::readUserData('roomID');
+		
 		$this->rooms = chat\room\ChatRoom::getCache();
 		
-		$this->room = $this->rooms->search($this->roomID);
-		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
+		$roomID = \wcf\util\ChatUtil::readUserData('roomID');
+		$room = $this->rooms->search($roomID);
+		if (!$room) throw new \wcf\system\exception\IllegalLinkException();
 	}
 	
 	/**

@@ -15,7 +15,14 @@ use \wcf\system\WCF;
  */
 class ChatPage extends AbstractPage {
 	public $chatVersion = '';
+	/**
+	 * @see \wcf\page\AbstractPage::$neededModules
+	 */
 	public $neededModules = array('CHAT_ACTIVE');
+	
+	/**
+	 * @see \wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('user.chat.canEnter');
 	public $newestMessages = array();
 	public $room = null;

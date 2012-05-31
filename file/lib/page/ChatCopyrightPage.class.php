@@ -12,7 +12,14 @@ use \wcf\system\WCF;
  * @subpackage	page
  */
 class ChatCopyrightPage extends AbstractPage {
+	/**
+	 * @see \wcf\page\AbstractPage::$neededModules
+	 */
 	public $neededModules = array('CHAT_ACTIVE');
+	
+	/**
+	 * @see \wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('user.chat.canEnter');
 	
 	/**
