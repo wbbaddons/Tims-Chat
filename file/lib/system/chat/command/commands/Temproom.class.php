@@ -13,7 +13,6 @@ use \wcf\util\StringUtil;
  * @subpackage	system.chat.command.commands
  */
 class Temproom extends \wcf\system\chat\command\AbstractRestrictedCommand {
-	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_OFF;
 	public $roomName = '';
 	
 	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {

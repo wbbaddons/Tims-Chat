@@ -11,7 +11,6 @@ namespace wcf\system\chat\command\commands;
  * @subpackage	system.chat.command.commands
  */
 class Where extends \wcf\system\chat\command\AbstractCommand {
-	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_OFF;
 	public $enableHTML = 1;
 	
 	/**

@@ -12,7 +12,6 @@ use \wcf\util\StringUtil;
  * @subpackage	system.chat.command.commands
  */
 class Color extends \wcf\system\chat\command\AbstractCommand {
-	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_OFF;
 	public static $colors = array(
 		'red'		=> 0xFF0000,
 		'blue'		=> 0x0000FF,

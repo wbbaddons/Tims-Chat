@@ -13,7 +13,6 @@ use \wcf\util\ChatUtil;
  * @subpackage	system.chat.command.commands
  */
 class Restore extends \wcf\system\chat\command\AbstractRestrictedCommand {
-	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_OFF;
 	public $enableHTML = 1;
 	public $user = null;
 	public $link = '';
