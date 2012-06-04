@@ -17,8 +17,24 @@ class ChatLeaveAction extends AbstractAction {
 	 * @see	\wcf\action\AbstractAction::$neededModules
 	 */
 	public $neededModules = array('CHAT_ACTIVE');
+	
+	/**
+	 * @see \wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('user.chat.canEnter');
+	
+	/**
+	 * The current room.
+	 * 
+	 * @var \wcf\data\chat\room\ChatRoom
+	 */
 	public $room = null;
+	
+	/**
+	 * Values read from the UserStorage of the current user.
+	 * 
+	 * @var array
+	 */
 	public $userData = array();
 	
 	/**
@@ -27,7 +43,6 @@ class ChatLeaveAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
-		// validate
 		if (!WCF::getUser()->userID) {
 			throw new IllegalLinkException();
 		}
@@ -41,6 +56,7 @@ class ChatLeaveAction extends AbstractAction {
 		if (CHAT_DISPLAY_JOIN_LEAVE) {
 			$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
 			
+			// leave message
 			$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
 				'data' => array(
 					'roomID' => $this->room->roomID,
@@ -56,6 +72,7 @@ class ChatLeaveAction extends AbstractAction {
 			$messageAction->executeAction();
 		}
 		
+		// set current room to null
 		\wcf\util\ChatUtil::writeUserData(array('roomID' => null));
 		
 		$this->executed();

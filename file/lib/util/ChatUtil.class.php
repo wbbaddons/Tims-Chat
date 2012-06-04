@@ -29,7 +29,13 @@ final class ChatUtil {
 	 */
 	const PACKAGE_IDENTIFIER = 'be.bastelstu.wcf.chat';
 	
-	public static $serialize = array('color' => true, 'suspensions' => true);
+	/**
+	 * Which user-storage-keys need serialization.
+	 * The value should always be true.
+	 * 
+	 * @var array<boolean>
+	 */
+	private static $serialize = array('color' => true, 'suspensions' => true);
 	
 	/**
 	 * Cached packageID of Tims Chat.
@@ -242,9 +248,8 @@ final class ChatUtil {
 	
 	/**
 	 * Writes user data
-	 * 
-	 * @param	\wcf\data\user\User	$user
 	 * @param	array $data
+	 * @param	\wcf\data\user\User	$user
 	 */
 	public static function writeUserData(array $data, \wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
@@ -256,5 +261,8 @@ final class ChatUtil {
 		}
 	}
 	
+	/**
+	 * Disables the constructor.
+	 */
 	private function __construct() { }
 }
