@@ -5,9 +5,9 @@
 	//<![CDATA[
 	$(function() {
 		WCF.Icon.addObject({
-			'wcf.icon.delete': '{@$__wcf->getPath('wcf')}icon/delete1.svg',
-			'wcf.icon.user': '{@$__wcf->getPath('wcf')}icon/user1.svg',
-			'wcf.icon.users': '{@$__wcf->getPath('wcf')}icon/users1.svg'
+			'wcf.icon.delete': '{@$__wcf->getPath('wcf')}icon/delete.svg',
+			'wcf.icon.user': '{@$__wcf->getPath('wcf')}icon/user.svg',
+			'wcf.icon.users': '{@$__wcf->getPath('wcf')}icon/users.svg'
 		});
 		
 		new WCF.ACL.List($('#groupPermissions'), {@$objectTypeID}, ''{if $roomID|isset}, {@$roomID}{/if});
@@ -32,7 +32,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='ChatRoomList'}{/link}" title="{lang}wcf.acp.menu.link.chat.room.list{/lang}" class="button"><img src="{@$__wcf->getPath('wcf')}icon/chat1.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.chat.room.list{/lang}</span></a></li>
+			<li><a href="{link controller='ChatRoomList'}{/link}" title="{lang}wcf.acp.menu.link.chat.room.list{/lang}" class="button"><img src="{@$__wcf->getPath('wcf')}icon/chat.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.chat.room.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
