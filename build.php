@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+namespace be\bastelstu\wcf\chat;
 /**
  * Builds the Chat
  *
