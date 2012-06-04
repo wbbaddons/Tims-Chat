@@ -14,6 +14,11 @@ use \wcf\system\WCF;
  * @subpackage	page
  */
 class ChatPage extends AbstractPage {
+	/**
+	 * The version of this installation of Tims Chat 3.
+	 * 
+	 * @var string
+	 */
 	public $chatVersion = '';
 	/**
 	 * @see \wcf\page\AbstractPage::$neededModules
@@ -24,11 +29,48 @@ class ChatPage extends AbstractPage {
 	 * @see \wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('user.chat.canEnter');
+	
+	/**
+	 * The last X messages for the current room.
+	 * 
+	 * @var array<\wcf\data\chat\message\ChatMessage>
+	 */
 	public $newestMessages = array();
+	
+	/**
+	 * The current room.
+	 * 
+	 * @var \wcf\data\chat\room\ChatRoom
+	 */
 	public $room = null;
+	
+	/**
+	 * The given roomID.
+	 * 
+	 * @var integer
+	 */
 	public $roomID = 0;
+	
+	/**
+	 * List of accessible rooms.
+	 * 
+	 * @var \wcf\data\chat\room\ChatRoomList
+	 */
 	public $rooms = array();
+	
+	/**
+	 * List of smilies in the default category.
+	 * 
+	 * @var array<\wcf\data\smiley\Smiley>
+	 * @see \wcf\data\smiley\SmileyCache
+	 */
 	public $smilies = array();
+	
+	/**
+	 * Values read from the UserStorage of the current user.
+	 * 
+	 * @var array
+	 */
 	public $userData = array();
 	
 	/**
@@ -92,7 +134,7 @@ class ChatPage extends AbstractPage {
 				)
 			));
 			$messageAction->executeAction();
-			$return = $messageAction->getReturnValues();
+			$messageAction->getReturnValues();
 		}
 		
 		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
