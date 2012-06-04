@@ -15,11 +15,49 @@ use \wcf\util\StringUtil;
  * @subpackage	form
  */
 class ChatForm extends AbstractForm {
+	/**
+	 * Should HTML be enabled for this message.
+	 * 
+	 * @var integer
+	 */
 	public $enableHTML = 0;
+	
+	/**
+	 * Should smilies be enabled for this message.
+	 * 
+	 * @var integer
+	 */
 	public $enableSmilies = 1;
+	
+	/**
+	 * @see \wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('CHAT_ACTIVE');
+	
+	/**
+	 * @see \wcf\page\AbstractPage::$neededPermissions
+	 */
 	public $neededPermissions = array('user.chat.canEnter');
+	
+	/**
+	 * The given message-string.
+	 * 
+	 * @var string
+	 */
 	public $message = '';
+	
+	/**
+	 * The current room.
+	 * 
+	 * @var \wcf\data\chat\room\ChatRoom
+	 */
 	public $room = null;
+	
+	/**
+	 * Values read from the UserStorage of the current user.
+	 * 
+	 * @var array
+	 */
 	public $userData = array();
 	
 	/**

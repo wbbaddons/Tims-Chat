@@ -17,7 +17,7 @@ class ChatRoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data
 	 */
 	protected static $baseClass = '\wcf\data\chat\room\ChatRoom';
 	
-		
+	
 	/**
 	 * @see	\wcf\data\DatabaseObjectEditor::deleteAll()
 	 */

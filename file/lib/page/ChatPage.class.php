@@ -20,6 +20,7 @@ class ChatPage extends AbstractPage {
 	 * @var string
 	 */
 	public $chatVersion = '';
+	
 	/**
 	 * @see \wcf\page\AbstractPage::$neededModules
 	 */
