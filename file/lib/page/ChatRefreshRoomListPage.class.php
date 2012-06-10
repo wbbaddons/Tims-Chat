@@ -23,6 +23,7 @@ class ChatRefreshRoomListPage extends AbstractPage {
 	 * @see \wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('user.chat.canEnter');
+	public $room = null;
 	public $rooms = array();
 	
 	/**
@@ -39,8 +40,8 @@ class ChatRefreshRoomListPage extends AbstractPage {
 		$this->rooms = chat\room\ChatRoom::getCache();
 		
 		$roomID = \wcf\util\ChatUtil::readUserData('roomID');
-		$room = $this->rooms->search($roomID);
-		if (!$room) throw new \wcf\system\exception\IllegalLinkException();
+		$this->room = $this->rooms->search($roomID);
+		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
 	}
 	
 	/**
