@@ -158,21 +158,26 @@ class ChatPage extends AbstractPage {
 		
 		switch ($this->action) {
 			case 'Message':
-				new ChatMessagePage();
+				$page = new ChatMessagePage();
+				$page->__run();
 				exit;
 			case 'Log':
 				exit;
 			case 'RefreshRoomList':
-				new ChatRefreshRoomListPage();
+				$page = new ChatRefreshRoomListPage();
+				$page->__run();
 				exit;
 			case 'Send':
-				new \wcf\form\ChatForm();
+				$form = new \wcf\form\ChatForm();
+				$form->__run();
 				exit;
 			case 'Leave':
-				new \wcf\action\ChatLeaveAction();
+				$action = new \wcf\action\ChatLeaveAction();
+				$action->__run();
 				exit;
 			case 'Copyright':
-				new ChatCopyrightPage();
+				$page = new ChatCopyrightPage();
+				$page->__run();
 				exit;
 		}
 		
