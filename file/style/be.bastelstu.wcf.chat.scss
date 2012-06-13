@@ -278,3 +278,30 @@
 		}
 	}
 }
+
+#tplChat {
+	#main:-moz-full-screen {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		> div, aside {
+			height: 100%;
+		}
+	}
+	#main:-webkit-full-screen {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		> div, aside {
+			height: 100%;
+		}
+	}
+	#main:fullscreen {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		> div, aside {
+			height: 100%;
+		}
+	}
+}
