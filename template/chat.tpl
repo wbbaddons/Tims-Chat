@@ -92,6 +92,11 @@
 					</a>
 				</li>
 				<li>
+					<a id="timsChatFullscreen" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
+						<img alt="" src="{icon size='S'}enabled{/icon}" /> <span>{lang}wcf.chat.fullscreen{/lang}</span>
+					</a>
+				</li>
+				<li>
 					<a id="timsChatNotify" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
 						<img alt="" src="{icon size='S'}disabled{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
 					</a>
