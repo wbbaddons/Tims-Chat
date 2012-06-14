@@ -181,7 +181,7 @@ window.console ?=
 					else if typeof main.mozRequestFullScreen isnt 'undefined'
 						main.mozRequestFullScreen()
 					else if typeof main.webkitRequestFullScreen isnt 'undefined'
-						main.webkitRequestFullScreen()
+						main.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
 				else
 					if typeof document.exitFullscreen isnt 'undefined'
 						document.exitFullscreen()
