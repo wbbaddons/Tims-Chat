@@ -41,10 +41,10 @@ class ChatRoomAddForm extends ACPForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::__construct()
 	 */
-	public function __construct() {
+	public function __run() {
 		$this->objectTypeID = \wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.wcf.chat.room');
 		
-		parent::__construct();
+		parent::__run();
 	}
 	
 	/**
