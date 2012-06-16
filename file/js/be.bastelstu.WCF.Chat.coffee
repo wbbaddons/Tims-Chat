@@ -165,16 +165,16 @@ window.console ?=
 				icon = element.find 'img'
 				if element.data('status') is 1
 					element.data 'status', 0
-					icon.attr 'src', icon.attr('src').replace /enabled(\d?).([a-z]{3})$/, 'disabled$1.$2'
+					icon.attr 'src', icon.attr('src').replace /enabled(Inverse)?.([a-z]{3})$/, 'disabled$1.$2'
 					element.attr 'title', element.data 'enableMessage'
 				else
 					element.data 'status', 1
-					icon.attr 'src', icon.attr('src').replace /disabled(\d?).([a-z]{3})$/, 'enabled$1.$2'
+					icon.attr 'src', icon.attr('src').replace /disabled(Inverse)?.([a-z]{3})$/, 'enabled$1.$2'
 					element.attr 'title', element.data 'disableMessage'
 			
 			# Enable fullscreen-mode on #main
 			$('#timsChatFullscreen').click (event) ->
-				if $(this).data 'status'
+				if $(@).data 'status'
 					main = $('#main')[0]
 					if typeof main.requestFullscreen isnt 'undefined'
 						main.requestFullscreen()
@@ -190,17 +190,23 @@ window.console ?=
 					else if typeof document.webkitCancelFullScreen isnt 'undefined'
 						document.webkitCancelFullScreen()
 			
+			# Bind Fullscreen-change event
+			$(document).on 'fullscreenchange mozfullscreenchange webkitfullscreenchange', (event) ->
+				if $('#timsChatFullscreen').data 'status'
+					unless document.fullscreen or document.mozFullScreen or document.webkitIsFullScreen
+						$('#timsChatFullscreen').click();
+			
 			# Immediatly scroll down when activating autoscroll
 			$('#timsChatAutoscroll').click (event) ->
-				$(this).removeClass 'active'
-				if $(this).data 'status'
+				$(@).removeClass 'active'
+				if $(@).data 'status'
 					$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
 					@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
 					
 			# Desktop Notifications
 			unless typeof window.webkitNotifications is 'undefined'
 				$('#timsChatNotify').click (event) ->
-					window.webkitNotifications.requestPermission() if $(this).data 'status'
+					window.webkitNotifications.requestPermission() if $(@).data 'status'
 					
 		###
 		# Changes the chat-room.
