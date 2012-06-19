@@ -11,18 +11,19 @@ window.console ?=
 	log: () ->,
 	warn: () ->,
 	error: () ->
-(($, window, windowConsole) ->
+
+(($, window, _console) ->
 	window.be ?= {}
 	be.bastelstu ?= {}
 	be.bastelstu.WCF ?= {}
 	
 	console =
 		log: (message) ->
-			windowConsole.log '[be.bastelstu.WCF.Chat] '+message
+			_console.log '[be.bastelstu.WCF.Chat] '+message
 		warn: (message) ->
-			windowConsole.warn '[be.bastelstu.WCF.Chat] '+message
+			_console.warn '[be.bastelstu.WCF.Chat] '+message
 		error: (message) ->
-			windowConsole.error '[be.bastelstu.WCF.Chat] '+message
+			_console.error '[be.bastelstu.WCF.Chat] '+message
 		
 	
 	be.bastelstu.WCF.Chat =
