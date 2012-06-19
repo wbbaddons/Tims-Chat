@@ -53,6 +53,7 @@ window.console ?=
 		events: 
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
+			submit: $.Callbacks()
 			
 		# socket.io
 		socket: null
@@ -411,15 +412,15 @@ window.console ?=
 		# Initializes Server-Push
 		###
 		initPush: () ->
-			if typeof window.io isnt 'undefined'
-				console.log 'Initializing socket.io'
+			unless typeof window.io is 'undefined'
+				console.log 'Initializing nodePush'
 				@socket = io.connect @config.socketIOPath
 				@socket.on 'connect', $.proxy((data) ->
-					console.log 'Connected on socket.io'
+					console.log 'Connected to nodePush'
 					@pe.getMessages.stop()
 				, @)
 				@socket.on 'disconnect', $.proxy((data) ->
-					console.log 'Losing connection to socket.io'
+					console.log 'Lost connection to nodePush'
 					@pe.getMessages = new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1e3
 				, @)
 				@socket.on 'newMessage', $.proxy((data) ->
@@ -510,6 +511,10 @@ window.console ?=
 			@freeTheFish() if $('#timsChatInput').val().trim().toLowerCase() is '/free the fish'
 			
 			text = $('#timsChatInput').val()
+			
+			# call submit event
+			text = @events.submit.fire text
+			
 			$('#timsChatInput').val('').focus().keyup()
 			$.ajax $('#timsChatForm').attr('action'), 
 				data:
