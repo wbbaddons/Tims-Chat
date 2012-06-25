@@ -174,7 +174,7 @@ window.console ?=
 					icon.attr 'src', icon.attr('src').replace /disabled(Inverse)?.([a-z]{3})$/, 'enabled$1.$2'
 					element.attr 'title', element.data 'disableMessage'
 			
-			if document.fullscreen or document.mozFullScreen or document.webkitIsFullScreen
+			if document.requestFullscreen or document.mozRequestFullScreen or document.webkitRequestFullScreen
 				# Enable fullscreen-mode on #main
 				$('#timsChatFullscreen').click (event) ->
 					if $(@).data 'status'
@@ -199,7 +199,7 @@ window.console ?=
 						unless document.fullscreen or document.mozFullScreen or document.webkitIsFullScreen
 							$('#timsChatFullscreen').click()
 			else
-				$('#timsChatFullscreen').remove()
+				$('#timsChatFullscreen').parent().remove()
 			
 			# Immediatly scroll down when activating autoscroll
 			$('#timsChatAutoscroll').click (event) ->
