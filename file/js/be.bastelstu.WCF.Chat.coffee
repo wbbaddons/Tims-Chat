@@ -174,11 +174,11 @@ window.console ?=
 					icon.attr 'src', icon.attr('src').replace /disabled(Inverse)?.([a-z]{3})$/, 'enabled$1.$2'
 					element.attr 'title', element.data 'disableMessage'
 			
-			if document.requestFullscreen or document.mozRequestFullScreen or document.webkitRequestFullScreen
+			main = $('#main')[0]
+			if typeof main.requestFullscreen isnt 'undefined' or typeof main.mozRequestFullScreen isnt 'undefined' or typeof main.webkitRequestFullScreen isnt 'undefined'
 				# Enable fullscreen-mode on #main
 				$('#timsChatFullscreen').click (event) ->
 					if $(@).data 'status'
-						main = $('#main')[0]
 						if typeof main.requestFullscreen isnt 'undefined'
 							main.requestFullscreen()
 						else if typeof main.mozRequestFullScreen isnt 'undefined'
