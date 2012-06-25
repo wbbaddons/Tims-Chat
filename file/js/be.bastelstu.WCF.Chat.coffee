@@ -513,7 +513,8 @@ window.console ?=
 			text = $('#timsChatInput').val()
 			
 			# call submit event
-			text = @events.submit.fire text
+			# TODO: Fix this
+			# text = @events.submit.fire text
 			
 			$('#timsChatInput').val('').focus().keyup()
 			$.ajax $('#timsChatForm').attr('action'), 
