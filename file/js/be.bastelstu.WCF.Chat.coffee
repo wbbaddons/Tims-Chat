@@ -278,7 +278,6 @@ window.console ?=
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
-					@loading = false
 					@handleMessages(data.messages)
 					@handleUsers(data.users)
 				, @)
@@ -290,6 +289,9 @@ window.console ?=
 						@freeTheFish()
 						console.error 'We got destroyed, but could free our friend the fish before he was killed as well. Have a nice life in freedom!'
 						alert 'herp i cannot load messages'
+				, @),
+				complete: $.proxy(() ->
+					@loading = false
 				, @)
 				beforeSend: $.proxy(() ->
 					return false if @loading
