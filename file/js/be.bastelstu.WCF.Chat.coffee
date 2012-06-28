@@ -107,7 +107,7 @@ window.console ?=
 			, @
 			
 			# Unload the chat
-			window.onbeforeunload = $.proxy () ->
+			$(window).on 'beforeunload', $.proxy () ->
 				@unload()
 				return undefined
 			, @
