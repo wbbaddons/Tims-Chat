@@ -174,32 +174,12 @@ window.console ?=
 					icon.attr 'src', icon.attr('src').replace /disabled(Inverse)?.([a-z]{3})$/, 'enabled$1.$2'
 					element.attr 'title', element.data 'disableMessage'
 			
-			main = $('#main')[0]
-			if typeof main.requestFullscreen isnt 'undefined' or typeof main.mozRequestFullScreen isnt 'undefined' or typeof main.webkitRequestFullScreen isnt 'undefined'
-				# Enable fullscreen-mode on #main
-				$('#timsChatFullscreen').click (event) ->
-					if $(@).data 'status'
-						if typeof main.requestFullscreen isnt 'undefined'
-							main.requestFullscreen()
-						else if typeof main.mozRequestFullScreen isnt 'undefined'
-							main.mozRequestFullScreen()
-						else if typeof main.webkitRequestFullScreen isnt 'undefined'
-							main.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
-					else
-						if typeof document.exitFullscreen isnt 'undefined'
-							document.exitFullscreen()
-						else if typeof document.mozCancelFullScreen isnt 'undefined'
-							document.mozCancelFullScreen()
-						else if typeof document.webkitCancelFullScreen isnt 'undefined'
-							document.webkitCancelFullScreen()
-				
-				# Bind Fullscreen-change event
-				$(document).on 'fullscreenchange mozfullscreenchange webkitfullscreenchange', (event) ->
-					if $('#timsChatFullscreen').data 'status'
-						unless document.fullscreen or document.mozFullScreen or document.webkitIsFullScreen
-							$('#timsChatFullscreen').click()
-			else
-				$('#timsChatFullscreen').parent().remove()
+			# Enable fullscreen-mode
+			$('#timsChatFullscreen').click (event) ->
+				if $(@).data 'status'
+					$('html').addClass('fullscreen');
+				else
+					$('html').removeClass('fullscreen');
 			
 			# Immediatly scroll down when activating autoscroll
 			$('#timsChatAutoscroll').click (event) ->
