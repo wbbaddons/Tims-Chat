@@ -63,7 +63,7 @@
 	<fieldset>
 		<div class="timsChatMessageContainer container box shadow1 containerPadding marginTop">
 			<ul>
-				<noscript><li class="error">{lang}wcf.chat.noJs{/lang}</li></noscript>
+				<li class="error">{lang}wcf.chat.noJs{/lang}</li>
 			</ul>
 		</div>
 	</fieldset>
@@ -125,6 +125,9 @@
 <script type="text/javascript">
 	//<![CDATA[
 		(function ($, window) {
+			// remove noscript message
+			$('.timsChatMessageContainer .error').remove();
+			
 			// populate templates
 			be.bastelstu.WCF.Chat.titleTemplate = (new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile();
 			{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
