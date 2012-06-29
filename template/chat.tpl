@@ -59,9 +59,9 @@
 {include file='header' sandbox=false sidebarOrientation='right'}
 
 <div id="timsChatRoomContent">
-	<div id="timsChatTopic" class="container box16"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
+	<div id="timsChatTopic" class="container"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
 	<fieldset>
-		<div class="timsChatMessageContainer container box shadow1 containerPadding marginTop">
+		<div class="timsChatMessageContainer container box shadow1">
 			<ul>
 				<li class="error">{lang}wcf.chat.noJs{/lang}</li>
 			</ul>
