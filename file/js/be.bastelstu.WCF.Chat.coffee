@@ -192,8 +192,9 @@ window.console ?=
 			# Desktop Notifications
 			unless typeof window.webkitNotifications is 'undefined'
 				$('#timsChatNotify').click (event) ->
-					window.webkitNotifications.requestPermission() if $(@).data 'status'
-					
+					if $(@).data 'status' and window.webkitNotifications.checkPermission() isnt 0
+						window.webkitNotifications.requestPermission()
+			
 		###
 		# Changes the chat-room.
 		# 
