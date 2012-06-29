@@ -159,7 +159,6 @@ window.console ?=
 				$('.timsChatMessage').remove()
 				@oldScrollTop = null
 				$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
-				$('#timsChatInput').focus()
 			
 			# Toggle Buttons
 			$('.timsChatToggle').click (event) ->
@@ -173,6 +172,8 @@ window.console ?=
 					element.data 'status', 1
 					icon.attr 'src', icon.attr('src').replace /disabled(Inverse)?.([a-z]{3})$/, 'enabled$1.$2'
 					element.attr 'title', element.data 'disableMessage'
+					
+				$('#timsChatInput').focus()
 			
 			# Enable fullscreen-mode
 			$('#timsChatFullscreen').click (event) ->
