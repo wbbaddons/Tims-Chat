@@ -72,7 +72,7 @@
 		<input type="text" id="timsChatInput" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
-	<div id="timsChatControls" class="box24 marginTop container">
+	<div id="timsChatControls" class="marginTop container">
 		{if MODULE_SMILEY}
 			<div id="smileyList">
 				<ul class="smilies">
