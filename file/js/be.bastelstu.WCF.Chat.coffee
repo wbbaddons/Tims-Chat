@@ -366,7 +366,7 @@ window.console ?=
 						li.addClass 'timsChatAway'
 						li.attr 'title', user.awayStatus
 					li.data 'username', user.username
-					a = $ '<a href="javascript:;">'+user.username+'</a>'
+					a = $ '<a href="javascript:;">' + WCF.String.escapeHTML(user.username) + '</a>'
 					a.click $.proxy (event) ->
 						event.preventDefault()
 						@toggleUserMenu $ event.target
