@@ -72,7 +72,7 @@
 }
 
 #timsChatOptions {
-	bottom: -29px;
+	bottom: -28px;
 	margin-left: 0;
 	position: absolute;
 	width: 100%;
@@ -111,16 +111,22 @@
 #timsChatUserList {
 	.timsChatUserMenu {
 		display: none;
-		li {
-			a {
-				margin-left: 30px !important;
-			}
-		}
-		
+		background-color: rgba(0, 0, 0, 0.1);
+		margin-bottom: -5px;
+		padding: 1px 0 6px;
+		box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1) inset;
+		border-bottom: 1px solid #FFFFFF;
+		color: rgba(0, 0, 0, 0.4);
+		text-shadow: none;
+
 		> li {
 			a {
-				margin-left: 20px;
-			}
+          background-color: rgba(255, 255, 255, 0.22);
+          border-radius: 5px 0 0 5px;
+          margin-left: 35px;
+          padding: 1px 0 1px 15px;
+          color: #555;
+  			}
 		}
 	}
 	.timsChatAway {
@@ -160,9 +166,10 @@
 }
 
 .timsChatSidebarTabs {
-	height: 32px;
-	z-index: 101;
+	height: 34px;
+	z-index: 131;
 	position: relative;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
 	
 	.left & {
 		margin-right: 1px;
@@ -174,14 +181,13 @@
 	
 	ul {
 		background-color: rgba(0, 0, 0, 0.2);
-		border-bottom: 1px solid #FFFFFF;
-		height: 31px;
-		
+		height: 33px;
+
 		li {
 			width: 50%;
 			float: left;
 			text-align: center;
-			
+
 			a {
 				color: rgba(0, 0, 0, 0.4);
 				text-shadow: none;
@@ -190,9 +196,10 @@
 				
 				-moz-transition-property: border-radius, background-color, font-size; -moz-transition-duration: .2s; 
 				-webkit-transition-property: border-radius, background-color, font-size; -webkit-transition-duration: .2s; 
-				.collapsed & {
-					border: none !important;
-				}
+
+        .collapsed & {
+          border: none !important;
+        }        
 			}
 			
 			&.active a {
@@ -225,6 +232,11 @@
 				}
 			}
 			
+			& .badge {
+			  position: relative;
+        top: -1px;
+			}
+			
 			&.active .badge {
 				font-size: 65% !important;
 				color: #fff;
@@ -242,12 +254,19 @@
 
 #timsChatRoomList {
 	margin-top: 5px;
+	
+	> div > div {
+	  margin-top: 10px;
+	}
 }
 
 #sidebarContainer {
 	overflow-y: auto;
 	height: 420px;
 	width: 100%;
+	border-top: 1px solid #B8D3ED;
+	z-index: 131;
+	position: relative;
 }
 
 #sidebarContainer a {
@@ -268,11 +287,21 @@
 				margin-top: 5px;
 				background-color: transparent !important;
 				box-shadow: none !important;
+				
+				> a {
+          background-color: rgba(255, 255, 255, 0.3);
+          -moz-transition-property: background-color; -moz-transition-duration: .2s;
+          -webkit-transition-property: background-color; -webkit-transition-duration: .2s;
+        }
+        
+        > a:hover {
+          background-color: rgb(255, 255, 255);
+        } 
 			}
 			
 			> li.activeMenuItem {
 				> a {
-					background-color: #FFFFFF;
+					background-color: #FFFFFF !important;
 					box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 				}
 			}
