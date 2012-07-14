@@ -36,7 +36,7 @@
 	}
 }
 
-#timsChatTopic, #smileyList {
+#timsChatTopic {
 	padding: 5px;
 }
 
@@ -47,11 +47,21 @@
 	padding-left: 7px !important;
 }
 
-#smileyList .smilies {
-	li {
-		display: inline;
-		margin: 5px 5px 0 0;
-	}
+#smilies {
+  padding: 14px 21px 7px;
+  border-bottom-right-radius: 0px;
+  
+  > div {
+    li {
+      display: inline;
+      margin: 5px 5px 0 0;
+        
+      .icon24 {
+        //width: 16px;
+        //height: 16px;
+      }
+    }
+  }
 }
 
 #timsChatForm {
@@ -72,9 +82,10 @@
 }
 
 #timsChatOptions {
-	bottom: -28px;
+	top: -1px;
+	right: 1px;
 	margin-left: 0;
-	position: absolute;
+	position: relative;
 	width: 100%;
 	
 	> ul {

@@ -65,7 +65,15 @@ class ChatPage extends AbstractPage {
 	 * @var array<\wcf\data\smiley\Smiley>
 	 * @see \wcf\data\smiley\SmileyCache
 	 */
-	public $smilies = array();
+	public $defaultSmilies = array();
+	
+	/**
+	 * List of all smiley categories.
+	 * 
+	 * @var array<\wcf\data\smiley\SmileyCategory>
+	 * @see \wcf\data\smiley\SmileyCache
+	 */
+	public $smileyCategories = array();
 	
 	/**
 	 * Values read from the UserStorage of the current user.
@@ -79,14 +87,15 @@ class ChatPage extends AbstractPage {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-		
+
 		WCF::getTPL()->assign(array(
 			'chatVersion' => $this->chatVersion,
 			'newestMessages' => $this->newestMessages,
 			'room' => $this->room,
 			'roomID' => $this->roomID,
 			'rooms' => $this->rooms,
-			'smilies' => $this->smilies
+			'defaultSmilies' => $this->defaultSmilies,
+			'smileyCategories' => $this->smileyCategories
 		));
 	}
 	
@@ -146,7 +155,13 @@ class ChatPage extends AbstractPage {
 			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => 0));
 		}
 		
-		$this->smilies = \wcf\data\smiley\SmileyCache::getInstance()->getCategorySmilies();
+		$smileyCategories = \wcf\data\smiley\SmileyCache::getInstance()->getCategories();
+		
+		foreach($smileyCategories as $category) {
+			if(!$category->disabled) $this->smileyCategories[] = $category;
+		}
+		
+		$this->defaultSmilies = \wcf\data\smiley\SmileyCache::getInstance()->getCategorySmilies();
 		$this->readChatVersion();
 	}
 	

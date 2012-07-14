@@ -72,16 +72,33 @@
 		<input type="text" id="timsChatInput" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
-	<div id="timsChatControls" class="marginTop container">
+	<div id="timsChatControls" class="marginTop">
 		{if MODULE_SMILEY}
-			<div id="smileyList">
-				<ul class="smilies">
-					{foreach from=$smilies item='smiley'}
-						<li>
-							<img src="{$smiley->getURL()}" alt="{$smiley->smileyCode}" title="{$smiley->smileyTitle}" class="jsSmiley jsTooltip" />
-						</li>
-					{/foreach}
-				</ul>
+                        {capture assign=__defaultSmilies}
+                                {include file='__messageFormSmilies' smilies=$defaultSmilies}
+                        {/capture}
+                        
+                        <div id="smilies" class="smiliesContent tabMenuContent container {if $smileyCategories|count} tabMenuContainer{/if} data-store="activeTabMenuItem" data-active="smilies-default">
+                                {if $smileyCategories|count}
+                                        <nav class="menu">
+                                                <ul>
+                                                        <li><a href="#smilies-default">{lang}wcf.smilies.default{/lang}</a></li>
+                                                        {foreach from=$smileyCategories item=smileyCategory}
+                                                                <li><a href="#smilies-{@$smileyCategory->smileyCategoryID}" data-smiley-category-id="{@$smileyCategory->smileyCategoryID}">{$smileyCategory->title|language}</a></li>
+                                                        {/foreach}
+                                                </ul>
+                                        </nav>
+                                        
+                                        <div id="smilies-default" class="hidden">
+                                                {@$__defaultSmilies}
+                                        </div>
+                                        
+        				{foreach from=$smileyCategories  item='smileyCategory'}
+        				   <div id="smilies-{$smileyCategory->smileyCategoryID}" class="hidden"></div>
+        				{/foreach}
+        			{else}
+        			     {@$__defaultSmilies}
+        			{/if}
 			</div>
 		{/if}
 		<nav id="timsChatOptions">
@@ -151,6 +168,8 @@
 			});
 			{event name='shouldInit'}
 			// Boot the chat
+			WCF.TabMenu.init();
+			new WCF.Message.Smilies();
 			be.bastelstu.WCF.Chat.init();
 			{event name='didInit'}
 			
