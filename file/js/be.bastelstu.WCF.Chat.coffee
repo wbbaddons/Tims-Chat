@@ -178,9 +178,9 @@ window.console ?=
 			# Enable fullscreen-mode
 			$('#timsChatFullscreen').click (event) ->
 				if $(@).data 'status'
-					$('html').addClass('fullscreen');
+					$('html').addClass 'fullscreen'
 				else
-					$('html').removeClass('fullscreen');
+					$('html').removeClass 'fullscreen'
 			
 			# Immediatly scroll down when activating autoscroll
 			$('#timsChatAutoscroll').click (event) ->
@@ -391,7 +391,7 @@ window.console ?=
 					$(@).remove();
 					
 			
-			$('#toggleUsers .badge').text(users.length);
+			$('#toggleUsers .badge').text users.length
 		###
 		# Initializes Server-Push
 		###
@@ -423,7 +423,7 @@ window.console ?=
 			, options or {}
 			
 			text = $('#timsChatInput').val() + text if options.append
-			$('#timsChatInput').val(text)
+			$('#timsChatInput').val text
 			$('#timsChatInput').keyup()
 			
 			if (options.submit)
