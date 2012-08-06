@@ -113,7 +113,7 @@ window.console ?=
 			, @
 			
 			# Insert a smiley
-			$('.jsSmiley').click $.proxy (event) ->
+			$('#smilies').on 'click', 'img', $.proxy (event) ->
 				@insertText ' ' + $(event.target).attr('alt') + ' '
 			, @
 			
