@@ -30,7 +30,7 @@ class Away extends \wcf\system\chat\command\AbstractCommand {
 	 * @see	\wcf\system\chat\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return $this->commandHandler->getParameters();
+		return serialize(array('message' => $this->commandHandler->getParameters()));
 	}
 	
 	/**
