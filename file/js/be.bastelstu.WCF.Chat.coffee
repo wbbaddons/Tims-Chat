@@ -192,7 +192,7 @@ window.console ?=
 			# Desktop Notifications
 			unless typeof window.webkitNotifications is 'undefined'
 				$('#timsChatNotify').click (event) ->
-					if $(@).data 'status' and window.webkitNotifications.checkPermission() isnt 0
+					if $(@).data('status') and window.webkitNotifications.checkPermission() isnt 0
 						window.webkitNotifications.requestPermission()
 			
 		###
@@ -280,8 +280,10 @@ window.console ?=
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
+					WCF.DOMNodeInsertedHandler.enable()
 					@handleMessages(data.messages)
 					@handleUsers(data.users)
+					WCF.DOMNodeInsertedHandler.disable()
 				, @)
 				error: $.proxy((jqXHR, textStatus, errorThrown) ->
 					console.error 'Battle Station hit - shields at ' + (--@shields / 3 * 104) + ' percent'

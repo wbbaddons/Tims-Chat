@@ -84,19 +84,14 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction {
 	public function validateUpdatePosition() {
 		// validate permissions
 		if (is_array($this->permissionsUpdate) && count($this->permissionsUpdate)) {
-			try {
-				WCF::getSession()->checkPermissions($this->permissionsUpdate);
-			}
-			catch (\wcf\system\exception\PermissionDeniedException $e) {
-				throw new ValidateActionException('Insufficient permissions');
-			}
+			WCF::getSession()->checkPermissions($this->permissionsUpdate);
 		}
 		else {
-			throw new ValidateActionException('Insufficient permissions');
+			throw new PermissionDeniedException();
 		}
 		
 		if (!isset($this->parameters['data']['structure'])) {
-			throw new ValidateActionException('Missing parameter structure');
+			throw new UserInputException('structure');
 		}
 		
 		if (!isset($this->parameters['data']['offset'])) $this->parameters['data']['offset'] = 0;
