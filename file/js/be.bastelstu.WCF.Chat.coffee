@@ -369,6 +369,9 @@ window.console ?=
 						li.attr 'title', user.awayStatus
 					li.data 'username', user.username
 					a = $ '<a href="javascript:;">' + WCF.String.escapeHTML(user.username) + '</a>'
+					a.addClass 'userLink'
+					a.data 'userID', user.userID
+					
 					a.click $.proxy (event) ->
 						event.preventDefault()
 						@toggleUserMenu $ event.target
