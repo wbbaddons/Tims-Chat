@@ -69,57 +69,57 @@
 	</fieldset>
 	
 	<form id="timsChatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
-		<input type="text" id="timsChatInput" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
+		<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
 	<div id="timsChatControls" class="marginTop">
 		{if MODULE_SMILEY}
-                        {capture assign=__defaultSmilies}
-                                {include file='__messageFormSmilies' smilies=$defaultSmilies}
-                        {/capture}
-                        
-                        <div id="smilies" class="smiliesContent tabMenuContent container {if $smileyCategories|count} tabMenuContainer{/if} data-store="activeTabMenuItem" data-active="smilies-default">
-                                {if $smileyCategories|count}
-                                        <nav class="menu">
-                                                <ul>
-                                                        <li><a href="#smilies-default">{lang}wcf.smilies.default{/lang}</a></li>
-                                                        {foreach from=$smileyCategories item=smileyCategory}
-                                                                <li><a href="#smilies-{@$smileyCategory->smileyCategoryID}" data-smiley-category-id="{@$smileyCategory->smileyCategoryID}">{$smileyCategory->title|language}</a></li>
-                                                        {/foreach}
-                                                </ul>
-                                        </nav>
-                                        
-                                        <div id="smilies-default" class="hidden">
-                                                {@$__defaultSmilies}
-                                        </div>
-                                        
-        				{foreach from=$smileyCategories  item='smileyCategory'}
-        				   <div id="smilies-{$smileyCategory->smileyCategoryID}" class="hidden"></div>
-        				{/foreach}
-        			{else}
-        			     {@$__defaultSmilies}
-        			{/if}
+			{capture assign=__defaultSmilies}
+				{include file='__messageFormSmilies' smilies=$defaultSmilies}
+			{/capture}
+			
+			<div id="smilies" class="smiliesContent tabMenuContent container {if $smileyCategories|count} tabMenuContainer{/if} data-store="activeTabMenuItem" data-active="smilies-default">
+				{if $smileyCategories|count}
+					<nav class="menu">
+						<ul>
+							<li><a href="#smilies-default">{lang}wcf.smilies.default{/lang}</a></li>
+							{foreach from=$smileyCategories item=smileyCategory}
+								<li><a href="#smilies-{@$smileyCategory->smileyCategoryID}" data-smiley-category-id="{@$smileyCategory->smileyCategoryID}">{$smileyCategory->title|language}</a></li>
+							{/foreach}
+						</ul>
+					</nav>
+					
+					<div id="smilies-default" class="hidden">
+						{@$__defaultSmilies}
+					</div>
+					
+					{foreach from=$smileyCategories  item='smileyCategory'}
+						<div id="smilies-{$smileyCategory->smileyCategoryID}" class="hidden"></div>
+					{/foreach}
+				{else}
+					{@$__defaultSmilies}
+				{/if}
 			</div>
 		{/if}
 		<nav id="timsChatOptions">
 			<ul class="smallButtons">
 				<li>
-					<a id="timsChatAutoscroll" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
+					<a id="timsChatAutoscroll" accesskey="d" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
 						<img alt="" src="{icon size='S'}enabled{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatFullscreen" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
+					<a id="timsChatFullscreen" accesskey="f" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
 						<img alt="" src="{icon size='S'}disabled{/icon}" /> <span>{lang}wcf.chat.fullscreen{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatNotify" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
+					<a id="timsChatNotify" accesskey="n" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
 						<img alt="" src="{icon size='S'}disabled{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
 					</a>
 				</li>
 				<li{if !MODULE_SMILEY} style="display: none;"{/if}>
-					<a id="timsChatSmilies" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
+					<a id="timsChatSmilies" accesskey="e" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
 						<img alt="" src="{icon size='S'}enabled{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
 					</a>
 				</li>
