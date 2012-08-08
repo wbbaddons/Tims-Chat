@@ -22,6 +22,11 @@ class ChatPage extends AbstractPage {
 	public $chatVersion = '';
 	
 	/**
+	 * @see wcf\page\AbstractPage::$loginRequired
+	 */
+	public $loginRequired = true;
+	
+	/**
 	 * @see \wcf\page\AbstractPage::$neededModules
 	 */
 	public $neededModules = array('CHAT_ACTIVE');
@@ -231,11 +236,6 @@ class ChatPage extends AbstractPage {
 	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
-		// guests are not supported
-		if (!WCF::getUser()->userID) {
-			throw new \wcf\system\exception\PermissionDeniedException();
-		}
-		
 		\wcf\system\menu\page\PageMenu::getInstance()->setActiveMenuItem('wcf.header.menu.chat');
 		
 		// remove index breadcrumb

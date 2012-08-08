@@ -30,6 +30,11 @@ class ChatForm extends AbstractForm {
 	public $enableSmilies = 1;
 	
 	/**
+	 * @see wcf\page\AbstractPage::$loginRequired
+	 */
+	public $loginRequired = true;
+	
+	/**
 	 * @see \wcf\page\AbstractPage::$neededModules
 	 */
 	public $neededModules = array('CHAT_ACTIVE');

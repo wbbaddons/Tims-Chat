@@ -14,6 +14,11 @@ use \wcf\system\WCF;
  */
 class ChatLeaveAction extends AbstractAction {
 	/**
+	 * @see wcf\action\AbstractAction::$loginRequired
+	 */
+	public $loginRequired = true;
+	
+	/**
 	 * @see	\wcf\action\AbstractAction::$neededModules
 	 */
 	public $neededModules = array('CHAT_ACTIVE');
@@ -42,10 +47,6 @@ class ChatLeaveAction extends AbstractAction {
 	 */
 	public function execute() {
 		parent::execute();
-		
-		if (!WCF::getUser()->userID) {
-			throw new IllegalLinkException();
-		}
 		
 		$this->userData['roomID'] = \wcf\util\ChatUtil::readUserData('roomID');
 		

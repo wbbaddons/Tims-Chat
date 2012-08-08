@@ -15,6 +15,11 @@ use \wcf\system\WCF;
  */
 class ChatRefreshRoomListPage extends AbstractPage {
 	/**
+	 * @see wcf\page\AbstractPage::$loginRequired
+	 */
+	public $loginRequired = true;
+	
+	/**
 	 * @see \wcf\page\AbstractPage::$neededModules
 	 */
 	public $neededModules = array('CHAT_ACTIVE');
@@ -48,11 +53,6 @@ class ChatRefreshRoomListPage extends AbstractPage {
 	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
-		// guests are not supported
-		if (!WCF::getUser()->userID) {
-			throw new \wcf\system\exception\PermissionDeniedException();
-		}
-		
 		parent::show();
 		
 		@header('Content-type: application/json');

@@ -14,6 +14,11 @@ use \wcf\system\WCF;
  */
 class ChatMessagePage extends AbstractPage {
 	/**
+	 * @see wcf\page\AbstractPage::$loginRequired
+	 */
+	public $loginRequired = true;
+	
+	/**
 	 * The new and unseen messages.
 	 * 
 	 * @var array<\wcf\data\chat\message\ChatMessage>
@@ -121,11 +126,6 @@ class ChatMessagePage extends AbstractPage {
 	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
-		// guests are not supported
-		if (!WCF::getUser()->userID) {
-			throw new \wcf\system\exception\PermissionDeniedException();
-		}
-		
 		parent::show();
 		
 		@header('Content-type: application/json');
