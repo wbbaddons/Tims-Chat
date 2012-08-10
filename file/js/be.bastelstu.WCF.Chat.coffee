@@ -364,10 +364,12 @@ window.console ?=
 					li.attr 'id', id
 					li.addClass 'timsChatUser'
 					li.addClass 'jsTooltip'
+					li.addClass 'you' if user.userID is WCF.User.userID
 					if user.awayStatus?
 						li.addClass 'timsChatAway'
 						li.attr 'title', user.awayStatus
 					li.data 'username', user.username
+					
 					a = $ '<a href="javascript:;">' + WCF.String.escapeHTML(user.username) + '</a>'
 					a.addClass 'userLink'
 					a.data 'userID', user.userID
@@ -377,6 +379,7 @@ window.console ?=
 						@toggleUserMenu $ event.target
 					, @
 					li.append a
+					
 					menu = $ '<ul></ul>'
 					menu.addClass 'timsChatUserMenu'
 					menu.append $ '<li><a href="javascript:;">' + WCF.Language.get('wcf.chat.query') + '</a></li>'
@@ -385,6 +388,7 @@ window.console ?=
 					menu.append $ '<li><a href="index.php/User/' + user.userID + '-' + encodeURI(user.username) + '/">' + WCF.Language.get('wcf.chat.profile') + '</a></li>'
 					@events.userMenu.fire user, menu
 					li.append menu
+					
 					li.appendTo $ '#timsChatUserList'
 				
 				foundUsers[id] = true
