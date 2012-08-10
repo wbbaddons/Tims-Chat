@@ -171,7 +171,7 @@ class ChatForm extends AbstractForm {
 			$messageAction->executeAction();
 		}
 		
-		$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
+		$this->objectAction = new chat\message\ChatMessageAction(array(), 'create', array(
 			'data' => array(
 				'roomID' => $this->room->roomID,
 				'sender' => WCF::getUser()->userID,
@@ -186,7 +186,7 @@ class ChatForm extends AbstractForm {
 				'color2' => $this->userData['color'][2]
 			)
 		));
-		$messageAction->executeAction();
+		$this->objectAction->executeAction();
 		
 		$this->saved();
 	}
