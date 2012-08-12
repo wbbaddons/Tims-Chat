@@ -71,6 +71,23 @@ class ChatForm extends AbstractForm {
 	public $useTemplate = false;
 	
 	/**
+	 * shortcut for the active request
+	 * @see wcf\system\request\Request::getRequestObject()
+	 */
+	public $request = null;
+	
+	/**
+	 * Disallows direct access.
+	 * 
+	 * @see wcf\page\IPage::__run()
+	 */
+	public function __run() {
+		if (($this->request = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()) === $this) throw new IllegalLinkException();
+		
+		parent::__run();
+	}
+	
+	/**
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
