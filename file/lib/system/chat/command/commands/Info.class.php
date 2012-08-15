@@ -30,7 +30,7 @@ class Info extends \wcf\system\chat\command\AbstractCommand {
 		$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
 			'object' => $this->user
 		));
-		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = '<a href="'.$profile.'">'.ChatUtil::gradient($this->user->username, $color[1], $color[2]).'</a>';
+		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = '<a href="'.$profile.'" class="userLink" data-user-id="'.$this->user->userID.'">'.ChatUtil::gradient($this->user->username, $color[1], $color[2]).'</a>';
 		
 		// Away-Status
 		if (ChatUtil::readUserData('away', $this->user) !== null) {
@@ -54,7 +54,7 @@ class Info extends \wcf\system\chat\command\AbstractCommand {
 	}
 	
 	/**
-	 * Fetches the session-databaseobject for the specified user.
+	 * Fetches the sessiondatabase object for the specified user.
 	 * 
 	 * @return	\wcf\data\session\Session
 	 */
