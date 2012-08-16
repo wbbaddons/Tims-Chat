@@ -21,6 +21,6 @@ class ChatRoomCacheBuilder implements ICacheBuilder {
 		$roomList->sqlLimit = 0;
 		$roomList->readObjects();
 		
-		return $roomList;
+		return $roomList->getObjects();
 	}
 }
