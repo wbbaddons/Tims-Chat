@@ -48,7 +48,7 @@ class ChatRefreshRoomListPage extends AbstractPage {
 	 * @see wcf\page\IPage::__run()
 	 */
 	public function __run() {
-		if (($this->request = RequestHandler::getInstance()->getActiveRequest()->getRequestObject()) === $this) throw new IllegalLinkException();
+		if (($this->request = \wcf\system\request\RequestHandler::getInstance()->getActiveRequest()->getRequestObject()) === $this) throw new IllegalLinkException();
 		
 		parent::__run();
 	}
