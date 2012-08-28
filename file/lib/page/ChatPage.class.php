@@ -143,7 +143,7 @@ class ChatPage extends AbstractPage {
 					'username' => WCF::getUser()->username,
 					'time' => TIME_NOW,
 					'type' => chat\message\ChatMessage::TYPE_JOIN,
-					'message' => '',
+					'message' => serialize(array('ipAddress' => \wcf\util\UserUtil::convertIPv6To4(\wcf\util\UserUtil::getIpAddress()))),
 					'color1' => $this->userData['color'][1],
 					'color2' => $this->userData['color'][2]
 				)

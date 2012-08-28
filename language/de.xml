@@ -89,7 +89,7 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 	
 	<category name="wcf.chat.message">
 		<!-- 1 = TYPE_JOIN -->
-		<item name="wcf.chat.message.1"><![CDATA[hat den Chat betreten.]]></item>
+		<item name="wcf.chat.message.1"><![CDATA[hat den Chat betreten.{if true} ({$ipAddress}){/if}]]></item><!-- todo: check rights -->
 		<!-- 2 = TYPE_LEAVE -->
 		<item name="wcf.chat.message.2"><![CDATA[hat den Chat verlassen.]]></item>
 		<!-- 3 = TYPE_AWAY -->
