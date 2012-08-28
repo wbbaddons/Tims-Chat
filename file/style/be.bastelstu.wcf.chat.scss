@@ -48,20 +48,20 @@
 }
 
 #smilies {
-  padding: 14px 21px 7px;
-  border-bottom-right-radius: 0px;
-  
-  > div {
-    li {
-      display: inline;
-      margin: 5px 5px 0 0;
-        
-      .icon24 {
-        //width: 16px;
-        //height: 16px;
-      }
-    }
-  }
+	padding: 14px 21px 7px;
+	border-bottom-right-radius: 0px;
+	
+	> div {
+		li {
+			display: inline;
+			margin: 5px 5px 0 0;
+			
+			.icon24 {
+				//width: 16px;
+				//height: 16px;
+			}
+		}
+	}
 }
 
 #timsChatForm {
@@ -95,9 +95,9 @@
 		> li {
 			> a {
 				&.button {
-					    border-radius: 0 0 0 0;
-					    margin: 0;
-					    padding-right: 7px;
+					border-radius: 0 0 0 0;
+					margin: 0;
+					padding-right: 7px;
 				}
 			}
 			
@@ -129,15 +129,15 @@
 		border-bottom: 1px solid #FFFFFF;
 		color: rgba(0, 0, 0, 0.4);
 		text-shadow: none;
-
+		
 		> li {
 			a {
-          background-color: rgba(255, 255, 255, 0.22);
-          border-radius: 5px 0 0 5px;
-          margin-left: 35px;
-          padding: 1px 0 1px 15px;
-          color: #555;
-  			}
+				background-color: rgba(255, 255, 255, 0.22);
+				border-radius: 5px 0 0 5px;
+				margin-left: 35px;
+				padding: 1px 0 1px 15px;
+				color: #555;
+			}
 		}
 	}
 	.timsChatAway {
@@ -193,12 +193,12 @@
 	ul {
 		background-color: rgba(0, 0, 0, 0.2);
 		height: 33px;
-
+		
 		li {
 			width: 50%;
 			float: left;
 			text-align: center;
-
+			
 			a {
 				color: rgba(0, 0, 0, 0.4);
 				text-shadow: none;
@@ -207,10 +207,10 @@
 				
 				-moz-transition-property: border-radius, background-color, font-size; -moz-transition-duration: .2s; 
 				-webkit-transition-property: border-radius, background-color, font-size; -webkit-transition-duration: .2s; 
-
-        .collapsed & {
-          border: none !important;
-        }        
+				
+				.collapsed & {
+					border: none !important;
+				}
 			}
 			
 			&.active a {
@@ -244,8 +244,8 @@
 			}
 			
 			& .badge {
-			  position: relative;
-        top: -1px;
+				position: relative;
+				top: -1px;
 			}
 			
 			&.active .badge {
@@ -300,14 +300,14 @@
 				box-shadow: none !important;
 				
 				> a {
-          background-color: rgba(255, 255, 255, 0.3);
-          -moz-transition-property: background-color; -moz-transition-duration: .2s;
-          -webkit-transition-property: background-color; -webkit-transition-duration: .2s;
-        }
-        
-        > a:hover {
-          background-color: rgb(255, 255, 255);
-        } 
+					background-color: rgba(255, 255, 255, 0.3);
+					-moz-transition-property: background-color; -moz-transition-duration: .2s;
+					-webkit-transition-property: background-color; -webkit-transition-duration: .2s;
+					
+					&:hover {
+						background-color: rgb(255, 255, 255);
+					}
+				}
 			}
 			
 			> li.activeMenuItem {
