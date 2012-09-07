@@ -26,7 +26,7 @@ class ChatLeaveAction extends AbstractAction {
 	/**
 	 * @see \wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('user.chat.canEnter');
+	public $neededPermissions = array();
 	
 	/**
 	 * The current room.

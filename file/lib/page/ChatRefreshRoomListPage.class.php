@@ -27,7 +27,7 @@ class ChatRefreshRoomListPage extends AbstractPage {
 	/**
 	 * @see \wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('user.chat.canEnter');
+	public $neededPermissions = array();
 	public $room = null;
 	public $rooms = array();
 	

@@ -42,7 +42,7 @@ class ChatForm extends AbstractForm {
 	/**
 	 * @see \wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('user.chat.canEnter');
+	public $neededPermissions = array();
 	
 	/**
 	 * The given message-string.
