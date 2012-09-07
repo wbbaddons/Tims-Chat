@@ -11,7 +11,7 @@ use \wcf\util\StringUtil;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	system.chat.command.commands
  */
-class Color extends \wcf\system\chat\command\AbstractCommand {
+class ColorCommand extends \wcf\system\chat\command\AbstractCommand {
 	public static $colors = array(
 		'red'		=> 0xFF0000,
 		'blue'		=> 0x0000FF,

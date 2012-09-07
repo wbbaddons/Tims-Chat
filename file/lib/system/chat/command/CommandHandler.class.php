@@ -63,7 +63,7 @@ final class CommandHandler {
 			return new commands\Plain($this);
 		}
 		
-		$class = '\wcf\system\chat\command\commands\\'.ucfirst(strtolower($parts[0]));
+		$class = '\wcf\system\chat\command\commands\\'.ucfirst(strtolower($parts[0])).'Command';
 		if (!class_exists($class)) {
 			throw new NotFoundException();
 		}

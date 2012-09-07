@@ -1,8 +1,9 @@
 <?php
 namespace wcf\system\chat\command\commands;
+use \wcf\util\StringUtil;
 
 /**
- * Shows the users that are online
+ * Marks the user as away.
  *
  * @author 	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
@@ -10,36 +11,26 @@ namespace wcf\system\chat\command\commands;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	system.chat.command.commands
  */
-class Where extends \wcf\system\chat\command\AbstractCommand {
-	public $enableHTML = 1;
+class AwayCommand extends \wcf\system\chat\command\AbstractCommand {
+	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
+		parent::__construct($commandHandler);
+		
+		\wcf\util\ChatUtil::writeUserData(array('away' => $commandHandler->getParameters()));
+		$this->didInit();
+	}
 	
 	/**
 	 * @see	\wcf\system\chat\command\ICommand::getType()
 	 */
 	public function getType() {
-		return \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION;
+		return \wcf\data\chat\message\ChatMessage::TYPE_AWAY;
 	}
 	
 	/**
 	 * @see	\wcf\system\chat\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		$rooms = \wcf\data\chat\room\ChatRoom::getCache();
-		
-		foreach ($rooms as $room) {
-			$users = $room->getUsers();
-			$tmp = array();
-			foreach ($users as $user) {
-				$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
-					'object' => $user
-				));
-				
-				$tmp[] = '<a href="'.$profile.'">'.$user.'</a>';
-			}
-			if (!empty($tmp)) $lines[] = '<strong>'.$room.':</strong> '.implode(', ', $tmp);
-		}
-		
-		return '<ul><li>'.implode('</li><li>', $lines).'</li></ul>';
+		return serialize(array('message' => $this->commandHandler->getParameters()));
 	}
 	
 	/**

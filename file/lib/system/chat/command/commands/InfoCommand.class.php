@@ -14,7 +14,7 @@ use \wcf\util\StringUtil;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	system.chat.command.commands
  */
-class Info extends \wcf\system\chat\command\AbstractCommand {
+class InfoCommand extends \wcf\system\chat\command\AbstractCommand {
 	public $enableHTML = 1;
 	public $lines = array();
 	public $user = null;

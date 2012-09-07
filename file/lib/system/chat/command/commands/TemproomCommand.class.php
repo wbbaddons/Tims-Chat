@@ -12,7 +12,7 @@ use \wcf\util\StringUtil;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	system.chat.command.commands
  */
-class Temproom extends \wcf\system\chat\command\AbstractRestrictedCommand {
+class TemproomCommand extends \wcf\system\chat\command\AbstractRestrictedCommand {
 	public $roomName = '';
 	
 	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {

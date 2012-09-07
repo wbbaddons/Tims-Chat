@@ -12,7 +12,7 @@ use \wcf\util\ChatUtil;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	system.chat.command.commands
  */
-class Restore extends \wcf\system\chat\command\AbstractRestrictedCommand {
+class RestoreCommand extends \wcf\system\chat\command\AbstractRestrictedCommand {
 	public $enableHTML = 1;
 	public $user = null;
 	public $link = '';

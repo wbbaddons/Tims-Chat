@@ -3,7 +3,7 @@ namespace wcf\system\chat\command\commands;
 use \wcf\util\StringUtil;
 
 /**
- * Marks the user as away.
+ * Indicates an action. The message is shown without the colon.
  *
  * @author 	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
@@ -11,11 +11,12 @@ use \wcf\util\StringUtil;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	system.chat.command.commands
  */
-class Away extends \wcf\system\chat\command\AbstractCommand {
+class MeCommand extends \wcf\system\chat\command\AbstractCommand {
+	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_USER;
+	
 	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
-		\wcf\util\ChatUtil::writeUserData(array('away' => $commandHandler->getParameters()));
 		$this->didInit();
 	}
 	
@@ -23,20 +24,13 @@ class Away extends \wcf\system\chat\command\AbstractCommand {
 	 * @see	\wcf\system\chat\command\ICommand::getType()
 	 */
 	public function getType() {
-		return \wcf\data\chat\message\ChatMessage::TYPE_AWAY;
+		return \wcf\data\chat\message\ChatMessage::TYPE_ME;
 	}
 	
 	/**
 	 * @see	\wcf\system\chat\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return serialize(array('message' => $this->commandHandler->getParameters()));
-	}
-	
-	/**
-	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
-	 */
-	public function getReceiver() {
-		return \wcf\system\WCF::getUser()->userID;
+		return $this->commandHandler->getParameters();
 	}
 }

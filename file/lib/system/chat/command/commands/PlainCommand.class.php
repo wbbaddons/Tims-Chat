@@ -1,9 +1,8 @@
 <?php
 namespace wcf\system\chat\command\commands;
-use \wcf\util\StringUtil;
 
 /**
- * Indicates an action. The message is shown without the colon.
+ * Sends a message that starts with a slash.
  *
  * @author 	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
@@ -11,26 +10,27 @@ use \wcf\util\StringUtil;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	system.chat.command.commands
  */
-class Me extends \wcf\system\chat\command\AbstractCommand {
+class PlainCommand extends \wcf\system\chat\command\AbstractCommand {
 	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_USER;
-	
-	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
-		parent::__construct($commandHandler);
-		
-		$this->didInit();
-	}
 	
 	/**
 	 * @see	\wcf\system\chat\command\ICommand::getType()
 	 */
 	public function getType() {
-		return \wcf\data\chat\message\ChatMessage::TYPE_ME;
+		return \wcf\data\chat\message\ChatMessage::TYPE_NORMAL;
 	}
 	
 	/**
 	 * @see	\wcf\system\chat\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return $this->commandHandler->getParameters();
+		return \wcf\util\StringUtil::substring($this->commandHandler->getText(), 1);
+	}
+	
+	/**
+	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
+	 */
+	public function getReceiver() {
+		return null;
 	}
 }
