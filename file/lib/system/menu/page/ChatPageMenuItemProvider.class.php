@@ -23,21 +23,15 @@ class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
 		// guests are not supported
 		if (!\wcf\system\WCF::getUser()->userID) return false;
 		
-		try {
-			$cache = ChatRoom::getCache();
-			$i = 0;
-			
-			do {
-				$cache->seek($i++);
-				$this->room = $cache->current();
+		$cache = ChatRoom::getCache();
+		
+		foreach ($cache as $this->room) {
+			if ($this->room->canEnter()) {
+				return true;
 			}
-			while (!$this->room->canEnter());
-			
-			return true;
 		}
-		catch (\OutOfBoundsException $e) {
-			return false;
-		}
+		
+		return false;
 	}
 	
 	/**
