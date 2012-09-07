@@ -133,9 +133,10 @@ class ChatMessagePage extends AbstractPage {
 	 */
 	public function readRoom() {
 		$roomID = \wcf\util\ChatUtil::readUserData('roomID');
+		$cache = chat\room\ChatRoom::getCache();
+		if (!isset($cache[$roomID])) throw new \wcf\system\exception\IllegalLinkException();
 		
-		$this->room = chat\room\ChatRoom::getCache()->search($roomID);
-		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
+		$this->room = $cache[$roomID];
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 	}
 	

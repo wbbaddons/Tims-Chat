@@ -213,22 +213,20 @@ class ChatPage extends AbstractPage {
 		
 		if ($this->roomID === 0) {
 			// no room given
-			try {
-				// redirect to first chat-room
-				$this->rooms->seek(0);
-				\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
-					'object' => $this->rooms->current()
-				)));
-				exit;
-			}
-			catch (\OutOfBoundsException $e) {
+			$room = reset($this->rooms);
+			if ($room === null) {
 				// no valid room found
 				throw new \wcf\system\exception\IllegalLinkException();
 			}
+			// redirect to first chat-room
+			\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
+				'object' => $room
+			)));
+			exit;
 		}
 		
-		$this->room = $this->rooms->search($this->roomID);
-		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
+		if (!isset($this->rooms[$this->roomID])) throw new \wcf\system\exception\IllegalLinkException();
+		$this->room = $this->rooms[$this->roomID];
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 	}
 	

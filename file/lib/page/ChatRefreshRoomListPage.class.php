@@ -62,8 +62,8 @@ class ChatRefreshRoomListPage extends AbstractPage {
 		$this->rooms = chat\room\ChatRoom::getCache();
 		
 		$roomID = \wcf\util\ChatUtil::readUserData('roomID');
-		$this->room = $this->rooms->search($roomID);
-		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
+		if (!isset($this->rooms[$roomID])) throw new \wcf\system\exception\IllegalLinkException();
+		$this->room = $this->rooms[$roomID];
 	}
 	
 	/**
