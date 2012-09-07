@@ -58,9 +58,11 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 				WCF::getTPL()->assign(@unserialize($message));
 				$message = WCF::getLanguage()->getDynamicVariable('wcf.chat.message.'.$this->type);
 			break;
+			case self::TYPE_WHISPER:
+				$message = @unserialize($message);
+				$message = $message['message'];
 			case self::TYPE_NORMAL:
 			case self::TYPE_ME:
-			case self::TYPE_WHISPER:
 				if (!$this->enableHTML && $outputType == 'text/html') {
 					$message = \wcf\system\bbcode\SimpleMessageParser::getInstance()->parse($message, true, $this->enableSmilies);
 				}
@@ -78,6 +80,10 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 		$username = $this->getUsername();
 		
 		if ($this->type != self::TYPE_INFORMATION && $this->type != self::TYPE_ERROR) $username = \wcf\util\ChatUtil::gradient($username, $this->color1, $this->color2);
+		if ($this->type == self::TYPE_WHISPER) {
+			$message = @unserialize($this->message);
+			$username .= ' -> '.$message['username'];
+		}
 		
 		return '<strong>'.$username.'</strong>';
 	}
