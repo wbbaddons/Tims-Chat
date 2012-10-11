@@ -12,33 +12,29 @@
 			max: 0
 			counterClass: 'jCounter'
 			countUp: false
-			cssFile: 'wcf/style/jCounter.css'
 			width: '100%'
 		, options
 		
-		if this.attr('maxlength')
-			max = this.attr('maxlength')
+		if @.attr('maxlength')
+			max = @.attr('maxlength')
 		else max = options.max
-		
-		if $('#jCounterCSS').length == 0
-			$('head').append('<link id="jCounterCSS" rel="stylesheet" type="text/css" href="' + options.cssFile + '" >')
 
 		if !container
-			if !this.hasClass('jCounterInput')
-				this.addClass('jCounterInput')
-			this.wrap('<div class="jCounterContainer" style="width: ' + options.width + '"><div></div></div>').parent().append('<div class="' + options.counterClass + ' color-1">' + max + '</div>');
-			jCounterContainer = $(this).parent().children('.' + options.counterClass)
+			if !@.hasClass('jCounterInput')
+				@.addClass('jCounterInput')
+			@.wrap('<div class="jCounterContainer" style="width: ' + options.width + '"><div></div></div>').parent().append('<div class="' + options.counterClass + ' color-1">' + max + '</div>');
+			jCounterContainer = $(@).parent().children('.' + options.counterClass)
 		else
 			if typeof container is 'object'
 				jCounterContainer = container
 			else
 				jCounterContainer = $ container
-		
-		this.on 'keypress keyup', $.proxy () ->
+
+		@.on 'keypress keyup', $.proxy () ->
 			if options.countUp
-				length = this.val().length
+				length = @.val().length
 			else
-				length = max - this.val().length
+				length = max - @.val().length
 			
 			if options.countUp && max > 0
 				if length < max / 2
@@ -58,5 +54,5 @@
 					color = 3
 			
 			jCounterContainer.text(length).attr('class', '').addClass(options.counterClass + ' color-'+color)
-		, this
+		, @
 )(jQuery)
