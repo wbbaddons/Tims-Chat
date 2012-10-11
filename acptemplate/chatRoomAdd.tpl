@@ -32,7 +32,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='ChatRoomList'}{/link}" title="{lang}wcf.acp.menu.link.chat.room.list{/lang}" class="button"><img src="{@$__wcf->getPath('wcf')}icon/chat.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.chat.room.list{/lang}</span></a></li>
+			<li><a href="{link controller='ChatRoomList'}{/link}" title="{lang}wcf.acp.menu.link.chat.room.list{/lang}" class="button"><img src="{@$__wcf->getPath('wcf')}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.chat.room.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
