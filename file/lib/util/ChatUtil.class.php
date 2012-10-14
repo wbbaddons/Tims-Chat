@@ -136,8 +136,8 @@ final class ChatUtil {
 	 */
 	public static function nodePushRunning() {
 		if (!CHAT_SOCKET_IO_PATH) return false;
-		if (!file_exists(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock')) return false;
-		if (!is_writable(WCF_DIR.'acp/be.bastelstu.wcf.chat.serverPush/data.sock')) return false;
+		if (!file_exists(WCF_DIR.'acp/be.bastelstu.wcf.chat.nodePush/data.sock')) return false;
+		if (!is_writable(WCF_DIR.'acp/be.bastelstu.wcf.chat.nodePush/data.sock')) return false;
 		
 		return true;
 	}
