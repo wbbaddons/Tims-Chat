@@ -30,6 +30,11 @@ class Server
 		@initUnixSocket()
 		@initSocketIO()
 		
+		process.on 'exit', @shutdown.bind @
+		process.on 'uncaughtException', @shutdown.bind @
+		process.on 'SIGINT', @shutdown.bind @
+		process.on 'SIGTERM', @shutdown.bind @
+		
 		setInterval (() ->
 			@socket.sockets.emit 'newMessage'
 		).bind(@), 60e3
@@ -58,5 +63,11 @@ class Server
 		
 		socket.listen process.cwd() + '/../data.sock'
 		fs.chmod process.cwd() + '/../data.sock', '777'
+	shutdown: () ->
+		return unless fs.existsSync process.cwd() + '/../data.sock'
+		
+		log 'Shutting down'
+		fs.unlinkSync process.cwd() + '/../data.sock'
+		process.exit()
 
 new Server()
