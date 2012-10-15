@@ -17,12 +17,21 @@ final class Update {
 	 */
 	private $rooms = null;
 	
+	/**
+	 * Contains all the styles the current installation has.
+	 * 
+	 * @var array<\wcf\data\style\Style>
+	 */
+	private $styles = null;
+	
 	public function __construct() {
 		$this->rooms = \wcf\data\chat\room\ChatRoom::getCache();
+		$this->styles = \wcf\system\style\StyleHandler::getInstance()->getAvailableStyles();
 	}
 	
 	/**
 	 * Notifies users to refresh the chat as the JS may no longer be fully compatible with the PHP code.
+	 * Resets styles.
 	 */
 	public function execute() {
 		foreach ($this->rooms as $room) {
@@ -36,6 +45,10 @@ final class Update {
 				)
 			));
 			$messageAction->executeAction();
+		}
+		
+		foreach ($this->styles as $style) {
+			\wcf\system\style\StyleHandler::getInstance()->resetStylesheet($style);
 		}
 	}
 }
