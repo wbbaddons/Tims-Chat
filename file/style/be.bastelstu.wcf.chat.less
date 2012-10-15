@@ -336,30 +336,6 @@
 		}
 	}
 	
-	html.fullscreen {
-		height: 100%;
-		overflow: hidden;
-		
-		#pageHeader, #pageFooter {
-			display: none;
-		}
-		
-		body {
-			height: 100%;
-			overflow: hidden;
-			
-			#main {
-				height: 100%;
-				margin: 0;
-				padding: 0;
-				
-				> div, .sidebar, #sidebarContainer {
-					height: 100%;
-				}
-			}
-		}
-	}
-	
 	.badgeBG(@backgroundColor) when (lightness(@backgroundColor) < 50%) {
 		background-color: lighten(@backgroundColor, lightness(@backgroundColor) / 2);
 	}
@@ -370,5 +346,29 @@
 	
 	.badgeBG(@backgroundColor) when (lightness(@backgroundColor) >= 50%) {
 		background-color: darken(@backgroundColor, lightness(@backgroundColor) / 2);
+	}
+}
+
+html.fullscreen {
+	height: 100%;
+	overflow: hidden;
+	
+	#tplChat {
+		height: 100%;
+		overflow: hidden;
+		
+		#pageHeader, #pageFooter {
+			display: none;
+		}
+		
+		#main {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			
+			> div, .sidebar, #sidebarContainer {
+				height: 100%;
+			}
+		}
 	}
 }
