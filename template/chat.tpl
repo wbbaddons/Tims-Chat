@@ -7,19 +7,6 @@
 	<style type="text/css">
 		#timsChatCopyrightDialog {
 			background-image: url("{link controller='Chat' action='Copyright' sheep=1}{/link}");
-			background-position: right 45px;
-			background-repeat: no-repeat;
-			min-height: 50%;
-		}
-		
-		#timsChatUserList > li > a {
-			background-image: url({icon size='S'}arrowRight{/icon});
-			background-position: 15px center;
-			background-repeat: no-repeat;
-		}
-		
-		#timsChatUserList > li.activeMenuItem > a {
-			background-image: url({icon size='S'}arrowDown{/icon});
 		}
 		
 		{assign var='type' value='\wcf\data\chat\message\ChatMessage::TYPE_'}
@@ -44,10 +31,6 @@
 		
 		.timsChatMessage{$type|concat:'ERROR'|constant} {
 			background-image: url({icon size='S'}systemError{/icon});
-		}
-		
-		.ajaxLoad {
-			background-image: url({icon size='S'}spinner{/icon});
 		}
 	</style>
 </head>
