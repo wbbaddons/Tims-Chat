@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.chat.room.'|concat:$action}
 
 <script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.ACL.js"></script>
 <script type="text/javascript">
@@ -37,7 +37,7 @@
 	</nav>
 </div>
 
-<form method="post" action="{if $action == 'add'}{link controller='ChatRoomAdd'}{/link}{else}{link controller='ChatRoomEdit'}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link controller='ChatRoomAdd'}{/link}{else}{link controller='ChatRoomEdit' id=$roomID}{/link}{/if}">
 	<div class="container containerPadding sortableListContainer marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.acp.chat.room.data{/lang}</legend>
@@ -87,7 +87,6 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
- 		{if $roomID|isset}<input type="hidden" name="id" value="{@$roomID}" />{/if}
 	</div>
 </form>
 
