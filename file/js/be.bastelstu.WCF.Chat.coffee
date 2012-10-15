@@ -276,7 +276,7 @@ window.console ?=
 		# Loads new messages.
 		###
 		getMessages: () ->
-			$.ajax 'index.php/Chat/Message/',
+			$.ajax @config.messageURL,
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->

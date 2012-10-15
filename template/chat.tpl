@@ -67,7 +67,7 @@
 		</div>
 	</fieldset>
 	
-	<form id="timsChatForm" action="{link controller="Chat" action="Send"}{/link}" method="post">
+	<form id="timsChatForm" action="{link controller='Chat' action='Send'}{/link}" method="post">
 		<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
@@ -77,7 +77,7 @@
 				{include file='__messageFormSmilies' smilies=$defaultSmilies}
 			{/capture}
 			
-			<div id="smilies" class="smiliesContent tabMenuContent container {if $smileyCategories|count} tabMenuContainer{/if} data-store="activeTabMenuItem" data-active="smilies-default">
+			<div id="smilies" class="smiliesContent tabMenuContent container {if $smileyCategories|count} tabMenuContainer{/if}" data-store="activeTabMenuItem" data-active="smilies-default">
 				{if $smileyCategories|count}
 					<nav class="menu">
 						<ul>
@@ -152,7 +152,8 @@
 			// populate config
 			be.bastelstu.WCF.Chat.config = {
 				reloadTime: {@CHAT_RELOADTIME},
-				unloadURL: '{link controller='Chat' action='Leave'}{/link}',
+				unloadURL: '{link controller="Chat" action="Leave"}{/link}',
+				messageURL: '{link controller="Chat" action="Message"}{/link}',
 				socketIOPath: '{@CHAT_SOCKET_IO_PATH|encodeJS}'
 			}
 			WCF.Language.addObject({
