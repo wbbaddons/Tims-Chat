@@ -13,7 +13,7 @@ io = require 'socket.io'
 net = require 'net'
 fs = require 'fs'
 
-config = require('../config.js').config
+config = require('../config.js')
 
 log = (message) ->
 	console.log '[be.bastelstu.wcf.chat.nodePush] '+message
