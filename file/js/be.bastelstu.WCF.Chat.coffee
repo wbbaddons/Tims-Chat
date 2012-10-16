@@ -370,7 +370,7 @@ window.console ?=
 						li.attr 'title', user.awayStatus
 					li.data 'username', user.username
 					
-					a = $ '<a href="javascript:;">' + WCF.String.escapeHTML(user.username) + '</a>'
+					a = $ '<a>' + WCF.String.escapeHTML(user.username) + '</a>'
 					a.addClass 'userLink'
 					a.data 'userID', user.userID
 					
@@ -382,9 +382,9 @@ window.console ?=
 					
 					menu = $ '<ul></ul>'
 					menu.addClass 'timsChatUserMenu'
-					menu.append $ '<li><a href="javascript:;">' + WCF.Language.get('wcf.chat.query') + '</a></li>'
-					menu.append $ '<li><a href="javascript:;">' + WCF.Language.get('wcf.chat.kick') + '</a></li>'
-					menu.append $ '<li><a href="javascript:;">' + WCF.Language.get('wcf.chat.ban') + '</a></li>'
+					menu.append $ '<li><a>' + WCF.Language.get('wcf.chat.query') + '</a></li>'
+					menu.append $ '<li><a>' + WCF.Language.get('wcf.chat.kick') + '</a></li>'
+					menu.append $ '<li><a>' + WCF.Language.get('wcf.chat.ban') + '</a></li>'
 					menu.append $ '<li><a href="index.php/User/' + user.userID + '-' + encodeURI(user.username) + '/">' + WCF.Language.get('wcf.chat.profile') + '</a></li>'
 					@events.userMenu.fire user, menu
 					li.append menu
