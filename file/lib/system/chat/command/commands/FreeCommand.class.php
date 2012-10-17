@@ -10,7 +10,7 @@ namespace wcf\system\chat\command\commands;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	system.chat.command.commands
  */
-class FreeCommand extends Me {
+class FreeCommand extends MeCommand {
 	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
