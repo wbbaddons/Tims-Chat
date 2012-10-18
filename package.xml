@@ -19,6 +19,7 @@
 		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.bbcode</requiredpackage>
 		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.acl</requiredpackage>
 		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.message</requiredpackage>
+		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.user</requiredpackage>
 	</requiredpackages>
 	
 	<instructions type="install">
