@@ -159,10 +159,10 @@ class ChatMessagePage extends AbstractPage {
 		}
 		foreach ($this->users as $user) {
 			$json['users'][] = array(
-				'userID' => $user->userID,
+				'userID' => (int) $user->userID,
 				'username' => $user->username,
 				'awayStatus' => $user->awayStatus,
-				'suspended' => !$this->room->canWrite($user)
+				'suspended' => (boolean) !$this->room->canWrite($user)
 			);
 		}
 		

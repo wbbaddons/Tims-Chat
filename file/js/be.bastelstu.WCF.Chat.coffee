@@ -356,6 +356,11 @@ window.console ?=
 						element.removeClass 'timsChatAway'
 						element.removeAttr 'title'
 						element.data 'tooltip', ''
+					if user.suspended
+						element.addClass 'suspended'
+					else
+						element.removeClass 'suspended'
+					
 					$('#timsChatUserList').append element
 				# Insert the user
 				else
@@ -365,6 +370,7 @@ window.console ?=
 					li.addClass 'timsChatUser'
 					li.addClass 'jsTooltip'
 					li.addClass 'you' if user.userID is WCF.User.userID
+					li.addClass 'suspended' if user.suspended
 					if user.awayStatus?
 						li.addClass 'timsChatAway'
 						li.attr 'title', user.awayStatus
