@@ -115,8 +115,8 @@ class ChatMessagePage extends AbstractPage {
 		
 		// update last seen message
 		$sql = "SELECT
-				max(messageID) as messageID
-			FROM 
+				MAX(messageID) as messageID
+			FROM
 				wcf".WCF_N."_chat_message";
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
@@ -162,7 +162,24 @@ class ChatMessagePage extends AbstractPage {
 				'userID' => $user->userID,
 				'username' => $user->username,
 				'awayStatus' => $user->awayStatus,
-				'suspended' => $user->suspended
+				'suspended' => !$this->room->canWrite($user)
+			);
+		}
+		
+		if (ENABLE_BENCHMARK) {
+			$b = \wcf\system\benchmark\Benchmark::getInstance();
+			$items = array();
+			if (ENABLE_DEBUG_MODE) {
+				foreach ($b->getItems() as $item) {
+					$items[] = array('text' => $item['text'], 'use' => $item['use']);
+				}
+			}
+			
+			$json['benchmark'] = array(
+				'time' => $b->getExecutionTime(),
+				'queryTime' => $b->getQueryExecutionTime(),
+				'queryPercent' => $b->getQueryExecutionTime() / $b->getExecutionTime(),
+				'items' => $items
 			);
 		}
 		

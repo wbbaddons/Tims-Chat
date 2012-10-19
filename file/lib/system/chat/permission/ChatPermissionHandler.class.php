@@ -14,39 +14,41 @@ use \wcf\system\WCF;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	system.chat.permissions
  */
-class ChatPermissionHandler extends \wcf\system\SingletonFactory {
+class ChatPermissionHandler {
 	protected $chatPermissions = array();
+	protected $user = null, $userProfile = null;
 	
-	/**
-	 * @see	\wcf\system\SingletonFactory::init()
-	 */
-	protected function init() {
+	public function __construct(\wcf\data\user\User $user = null) {
+		if ($user === null) $user = WCF::getUser();
+		$this->user = $user;
+		$this->userProfile = new \wcf\data\user\UserProfile($this->user);
+		
 		$packageID = \wcf\util\ChatUtil::getPackageID();
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
 		// get groups permissions
-		$groups = implode(',', WCF::getUser()->getGroupIDs());
-		$groupsFileName = \wcf\util\StringUtil::getHash(implode('-', WCF::getUser()->getGroupIDs()));
+		$groups = implode(',', $user->getGroupIDs());
+		$groupsFileName = \wcf\util\StringUtil::getHash(implode('-', $user->getGroupIDs()));
 		CacheHandler::getInstance()->addResource('chatPermission-'.$groups, WCF_DIR.'cache/cache.chatPermission-'.$groupsFileName.'.php', '\wcf\system\cache\builder\ChatPermissionCacheBuilder');
 		$this->chatPermissions = CacheHandler::getInstance()->get('chatPermission-'.$groups);
 		
 		// get user permissions
-		if (WCF::getUser()->userID) {
+		if ($user->userID) {
 			// get data from storage
-			$ush->loadStorage(array(WCF::getUser()->userID), $packageID);
-					
+			$ush->loadStorage(array($user->userID), $packageID);
+			
 			// get ids
-			$data = $ush->getStorage(array(WCF::getUser()->userID), 'chatUserPermissions', $packageID);
-				
+			$data = $ush->getStorage(array($user->userID), 'chatUserPermissions', $packageID);
+			
 			// cache does not exist or is outdated
-			if ($data[WCF::getUser()->userID] === null) {
+			if ($data[$user->userID] === null) {
 				$userPermissions = array();
 				
 				$conditionBuilder = new \wcf\system\database\util\PreparedStatementConditionBuilder();
 				$conditionBuilder->add('acl_option.packageID IN (?)', array(PackageDependencyHandler::getInstance()->getDependencies()));
 				$conditionBuilder->add('acl_option.objectTypeID = ?', array(ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.wcf.chat.room')));
 				$conditionBuilder->add('option_to_user.optionID = acl_option.optionID');
-				$conditionBuilder->add('option_to_user.userID = ?', array(WCF::getUser()->userID));
+				$conditionBuilder->add('option_to_user.userID = ?', array($user->userID));
 				$sql = "SELECT		option_to_user.objectID AS roomID, option_to_user.optionValue,
 							acl_option.optionName AS permission
 					FROM		wcf".WCF_N."_acl_option acl_option,
@@ -59,10 +61,10 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 				}
 				
 				// update cache
-				$ush->update(WCF::getUser()->userID, 'chatUserPermissions', serialize($userPermissions), $packageID);
+				$ush->update($user->userID, 'chatUserPermissions', serialize($userPermissions), $packageID);
 			}
 			else {
-				$userPermissions = unserialize($data[WCF::getUser()->userID]);
+				$userPermissions = unserialize($data[$user->userID]);
 			}
 			
 			foreach ($userPermissions as $roomID => $permissions) {
@@ -83,7 +85,8 @@ class ChatPermissionHandler extends \wcf\system\SingletonFactory {
 	public function getPermission(\wcf\data\chat\room\ChatRoom $room, $permission) {
 		if (!isset($this->chatPermissions[$room->roomID][$permission])) {
 			$permission = str_replace(array('user.', 'mod.'), array('user.chat.', 'mod.chat.'), $permission);
-			return WCF::getSession()->getPermission($permission);
+			
+			return $this->userProfile->getPermission($permission);
 		}
 		return (boolean) $this->chatPermissions[$room->roomID][$permission];
 	}

@@ -43,9 +43,11 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	 *
 	 * @return	boolean
 	 */
-	public function canEnter() {
-		$ph = \wcf\system\chat\permission\ChatPermissionHandler::getInstance();
-		$suspensions = ChatSuspension::getSuspensionsForUser();
+	public function canEnter(\wcf\data\user\User $user = null) {
+		if ($user === null) $user = WCF::getUser();
+		
+		$ph = new \wcf\system\chat\permission\ChatPermissionHandler($user);
+		$suspensions = ChatSuspension::getSuspensionsForUser($user);
 		
 		$canEnter = $ph->getPermission($this, 'user.canEnter');
 		// room suspension
@@ -70,9 +72,11 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	 *
 	 * @return	boolean
 	 */
-	public function canWrite() {
-		$ph = \wcf\system\chat\permission\ChatPermissionHandler::getInstance();
-		$suspensions = ChatSuspension::getSuspensionsForUser();
+	public function canWrite(\wcf\data\user\User $user = null) {
+		if ($user === null) $user = WCF::getUser();
+		
+		$ph = new \wcf\system\chat\permission\ChatPermissionHandler($user);
+		$suspensions = ChatSuspension::getSuspensionsForUser($user);
 		
 		$canWrite = $ph->getPermission($this, 'user.canWrite');
 		// room suspension
@@ -171,8 +175,7 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 		
 		$sql = "SELECT
 				u.*,
-				st.fieldValue AS awayStatus,
-				su.suspensionID AS suspended
+				st.fieldValue AS awayStatus
 			FROM
 				wcf".WCF_N."_user u
 			LEFT JOIN
@@ -182,20 +185,12 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 					AND	st.field = ? 
 					AND	st.packageID = ?
 				)
-			LEFT JOIN
-				wcf".WCF_N."_chat_suspension su
-				ON (
-						u.userID = su.userID
-					AND	(	su.roomID IS NULL
-						OR	su.roomID = ?)
-					AND	time > ?
-				)
 			WHERE
 				u.userID IN (".rtrim(str_repeat('?,', count($userIDs)), ',').")
 			ORDER BY
 				u.username ASC";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		array_unshift($userIDs, 'away', $packageID, $this->roomID, TIME_NOW);
+		array_unshift($userIDs, 'away', $packageID);
 		$stmt->execute($userIDs);
 		
 		return $stmt->fetchObjects('\wcf\data\user\User');
