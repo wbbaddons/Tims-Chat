@@ -10,10 +10,44 @@
 #tplChat {
 	#content {
 		position: relative;
-	}
-	
-	#timsChatRoomContent {
-		text-align: left;
+		
+		#timsChatRoomContent {
+			text-align: left;
+			
+			#timsChatTopic {
+				padding: 5px;
+			}
+			
+			.timsChatMessageContainer {
+				height: 200px;
+				overflow-y: scroll;
+				overflow-x: hidden;
+				padding-left: 7px !important;
+				
+				.timsChatMessage {
+					padding-left: 16px;
+					min-height: 16px;
+					clear: both;
+					
+					time {
+						font-size: .8em;
+						&::before, &::after {
+							font-size: .8em;
+						}
+						&::before {
+							content: "[";
+						}
+						&::after {
+							content: "]";
+						}
+					}
+					
+					&.unloaded {
+						opacity: 0.4;
+					}
+				}
+			}
+		}
 	}
 	
 	.sidebar {
@@ -36,149 +70,74 @@
 		}
 	}
 	
-	#timsChatTopic {
-		padding: 5px;
-	}
-	
-	.timsChatMessageContainer {
-		height: 200px;
-		overflow-y: scroll;
-		overflow-x: hidden;
-		padding-left: 7px !important;
-	}
-	
-	#smilies {
-		padding: 14px 21px 7px;
-		border-bottom-right-radius: 0px;
-		
-		> div {
-			li {
-				display: inline;
-				margin: 5px 5px 0 0;
-				
-				.icon24 {
-					//.square(16px);
-				}
-			}
-		}
-	}
-	
 	#timsChatForm {
 		white-space: nowrap;
 		margin-top: 10px;
 		// Fix to align chatInput in center
 		text-align: center;
-	}
-	
-	#timsChatInput {
-		position: relative;
-		z-index: 10;
+		
+		#timsChatInput {
+			position: relative;
+			z-index: 10;
+		}
 	}
 	
 	#timsChatControls {
 		position: relative;
 		.borderRadius(5px, 5px, 0, 5px);
-	}
-	
-	#timsChatOptions {
-		top: -1px;
-		right: 1px;
-		margin-left: 0;
-		position: relative;
-		width: 100%;
 		
-		> ul {
-			margin-right: -1px;
-			text-align: right;
+		#smilies {
+			padding: 14px 21px 7px;
+			border-bottom-right-radius: 0px;
 			
-			> li {
-				> a {
-					&.button {
-						.borderRadius(0);
-						margin: 0;
-						padding-right: 7px;
+			> div {
+				li {
+					display: inline;
+					margin: 5px 5px 0 0;
+					
+					.icon24 {
+						//.square(16px);
+					}
+				}
+			}
+		}
+		
+		#timsChatOptions {
+			top: -1px;
+			right: 1px;
+			margin-left: 0;
+			position: relative;
+			width: 100%;
+			
+			> ul {
+				margin-right: -1px;
+				text-align: right;
+				
+				> li {
+					> a {
+						&.button {
+							.borderRadius(0);
+							margin: 0;
+							padding-right: 7px;
+						}
+					}
+					
+					display: inline-block;
+					margin-left: -5px;
+				}
+				
+				> li:first-child {
+					> a {
+						border-bottom-left-radius: 14px;
 					}
 				}
 				
-				display: inline-block;
-				margin-left: -5px;
-			}
-			
-			> li:first-child {
-				> a {
-					border-bottom-left-radius: 14px;
+				> li:last-child {
+					> a {
+						border-bottom-right-radius: 14px;
+					}
 				}
 			}
-			
-			> li:last-child {
-				> a {
-					border-bottom-right-radius: 14px;
-				}
-			}
-		}
-	}
-	
-	#timsChatUserList {
-		.timsChatUserMenu {
-			display: none;
-			background-color: rgba(0, 0, 0, 0.1);
-			margin-bottom: -5px;
-			padding: 1px 0 6px;
-			.boxShadowNative(0px 0px 5px 0px rgba(0, 0, 0, 0.1) inset);
-			border-bottom: 1px solid @wcfContentBackgroundColor;
-			color: rgba(0, 0, 0, 0.4);
-					
-			> li {
-				a {
-					background-color: rgba(255, 255, 255, 0.22);
-					.textShadow(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.1) + rgba(255, 255, 255, 0.22)) !important;
-					.borderRadius(5px, 0, 0, 5px);
-					margin-left: 35px;
-					padding: 1px 0 1px 15px;
-					color: @wcfColor;
-				}
-			}
-		}
-		
-		.timsChatAway {
-			opacity: .5;
-		}
-		
-		> li {
-			> a {
-				background-image: url("../icon/arrowRight.svg");
-				background-position: 15px center;
-				background-repeat: no-repeat;
-			}
-			
-			&.activeMenuItem {
-				> a {
-					background-image: url("../icon/arrowDown.svg");
-				}
-			}
-		}
-	}
-	
-	.timsChatMessage {
-		padding-left: 16px;
-		min-height: 16px;
-		clear: both;
-		
-		time {
-			font-size: .8em;
-			&::before, &::after {
-				font-size: .8em;
-			}
-			&::before {
-				content: "[";
-			}
-			&::after {
-				content: "]";
-			}
-		}
-		
-		&.unloaded {
-			opacity: 0.4;
 		}
 	}
 	
@@ -187,111 +146,6 @@
 		background-repeat: no-repeat;
 		background-size: auto 100%;
 		background-image: url("../icon/spinner.svg");
-	}
-	
-	.timsChatSidebarTabs {
-		height: 34px;
-		z-index: 131;
-		position: relative;
-		.boxShadowNative(0 0 5px 0 rgba(0, 0, 0, 0.1));
-		
-		.left & {
-			margin-right: 1px;
-		}
-		
-		.right & {
-			margin-left: 1px;
-		}
-		
-		ul {
-			background-color: rgba(0, 0, 0, 0.2);
-			height: 33px;
-			
-			li {
-				width: 50%;
-				float: left;
-				text-align: center;
-				
-				a {
-					color: fade(@wcfColor, 80%);
-					.textShadow(@wcfContentBackgroundColor);
-					height: 22px;
-					padding: 9px 0 0;
-					
-					.transition(~"border-radius .2s linear 0s, background-color .2s linear 0s, font-size", .2s);
-					
-					.collapsed & {
-						border: none !important;
-					}
-				}
-				
-				&.active a {
-					background-color: @wcfContentBackgroundColor;
-					border-bottom: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
-					.borderRadius(0, 7px);
-					color: @wcfColor;
-					font-size: 130%;
-					font-weight: bold;
-					
-					height: 23px;
-					padding: 7px 0 0;
-				}
-						
-				&:first-child.active a {
-					.borderRadius(0, 0, 7px, 0);
-					border-right: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
-					
-					.right & {
-						margin-left: -1px;
-					}
-				}
-				
-				&:last-child.active a {
-					.borderRadius(0, 0, 0, 7px);
-					border-left: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
-					
-					.left & {
-						margin-right: -1px;
-					}
-				}
-				
-				& .badge {
-					.badgeBG(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.2));
-					.badgeShadow(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.2));
-					position: relative;
-					top: -1px;
-					color: #fff;
-				}
-				
-				&.active .badge {
-					font-size: 65% !important;
-					.badgeBG(@wcfContentBackgroundColor);
-					.badgeShadow(@wcfContentBackgroundColor);
-				}
-			}
-		}
-	}
-	
-	#timsChatRoomList {
-		margin-top: 5px;
-		
-		> div > div {
-		  margin-top: 10px;
-		}
-	}
-	
-	#sidebarContainer {
-		overflow-y: auto;
-		height: 420px;
-		width: 100%;
-		border-top: 1px solid darken(@wcfSidebarBackgroundColor, 8%);
-		z-index: 131;
-		position: relative;
-	}
-	
-	#sidebarContainer a {
-		outline: none;
-		overflow: hidden;
 	}
 	
 	#timsChatCopyright {
@@ -306,10 +160,103 @@
 		min-height: 50%;
 	}
 	
-	.sidebarContent {
+	#sidebarContent {
 		padding-top: 0px;
-		> div {
-			 ul {
+		
+		.timsChatSidebarTabs {
+			height: 34px;
+			z-index: 131;
+			position: relative;
+			.boxShadowNative(0 0 5px 0 rgba(0, 0, 0, 0.1));
+			
+			.left & {
+				margin-right: 1px;
+			}
+			
+			.right & {
+				margin-left: 1px;
+			}
+			
+			ul {
+				background-color: rgba(0, 0, 0, 0.2);
+				height: 33px;
+				
+				li {
+					width: 50%;
+					float: left;
+					text-align: center;
+					
+					a {
+						color: fade(@wcfColor, 80%);
+						.textShadow(@wcfContentBackgroundColor);
+						height: 22px;
+						padding: 9px 0 0;
+						
+						.transition(~"border-radius .2s linear 0s, background-color .2s linear 0s, font-size", .2s);
+						
+						.collapsed & {
+							border: none !important;
+						}
+					}
+					
+					&.active a {
+						background-color: @wcfContentBackgroundColor;
+						border-bottom: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
+						.borderRadius(0, 7px);
+						color: @wcfColor;
+						font-size: 130%;
+						font-weight: bold;
+					}
+					
+					&:first-child.active a {
+						.borderRadius(0, 0, 7px, 0);
+						border-right: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
+						
+						.right & {
+							margin-left: -1px;
+						}
+					}
+					
+					&:last-child.active a {
+						.borderRadius(0, 0, 0, 7px);
+						border-left: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
+						
+						.left & {
+							margin-right: -1px;
+						}
+					}
+					
+					.badge {
+						.badgeBG(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.2));
+						.badgeShadow(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.2));
+						position: relative;
+						top: -1px;
+						color: #fff;
+					}
+					
+					&.active .badge {
+						font-size: 65% !important;
+						.badgeBG(@wcfContentBackgroundColor);
+						.badgeShadow(@wcfContentBackgroundColor);
+					}
+				}
+			}
+		}
+		
+		#sidebarContainer {
+			overflow-y: auto;
+			height: 420px;
+			width: 100%;
+			border-top: 1px solid darken(@wcfSidebarBackgroundColor, 8%);
+			z-index: 131;
+			position: relative;
+			
+			a {
+				outline: none;
+				overflow: hidden;
+			}
+			
+			ul:not(.dropdownMenu) {
 				> li {
 					margin-top: 5px;
 					background-color: transparent !important;
@@ -319,18 +266,49 @@
 						background-color: fade(@wcfContentBackgroundColor, 33.33%);
 						.textShadow(fade(@wcfContentBackgroundColor, 33.33%));
 						.transition(background-color, .2s);
-						
-						&:hover {
-							background-color: @wcfContentBackgroundColor;
+					}
+					
+					&.activeMenuItem, &.dropdownOpen, &:hover {
+						> a {
+							background-color: @wcfContentBackgroundColor !important;
+							.boxShadowNative(0 0 5px rgba(0, 0, 0, 0.1));
+						}
+					}
+				}
+			}
+			
+			#timsChatRoomList {
+				margin-top: 5px;
+				
+				> div {
+					> div {
+						text-align: center;
+						margin-top: 10px;
+					}
+				}
+			}
+			
+			#timsChatUserList {
+				.timsChatUserMenu {
+					display: none;
+					background-color: rgba(0, 0, 0, 0.1);
+					border-bottom: 1px solid @wcfContentBackgroundColor;
+					color: rgba(0, 0, 0, 0.4);
+							
+					> li {
+						a {
+							background-color: rgba(255, 255, 255, 0.22);
+							.textShadow(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.1) + rgba(255, 255, 255, 0.22)) !important;
+							.borderRadius(5px, 0, 0, 5px);
+							margin-left: 35px;
+							padding: 1px 0 1px 15px;
+							color: @wcfColor;
 						}
 					}
 				}
 				
-				> li.activeMenuItem {
-					> a {
-						background-color: @wcfContentBackgroundColor !important;
-						.boxShadowNative(0 0 5px rgba(0, 0, 0, 0.1));
-					}
+				.timsChatAway {
+					opacity: .5;
 				}
 			}
 		}

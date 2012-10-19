@@ -369,6 +369,7 @@ window.console ?=
 					li.attr 'id', id
 					li.addClass 'timsChatUser'
 					li.addClass 'jsTooltip'
+					li.addClass 'dropdown'
 					li.addClass 'you' if user.userID is WCF.User.userID
 					li.addClass 'suspended' if user.suspended
 					if user.awayStatus?
@@ -378,16 +379,15 @@ window.console ?=
 					
 					a = $ '<a>' + WCF.String.escapeHTML(user.username) + '</a>'
 					a.addClass 'userLink'
+					a.addClass 'dropdownToggle'
 					a.data 'userID', user.userID
+					a.data 'toggle', id
 					
-					a.click $.proxy (event) ->
-						event.preventDefault()
-						@toggleUserMenu $ event.target
-					, @
 					li.append a
 					
 					menu = $ '<ul></ul>'
-					menu.addClass 'timsChatUserMenu'
+					#menu.addClass 'timsChatUserMenu'
+					menu.addClass 'dropdownMenu'
 					menu.append $ '<li><a>' + WCF.Language.get('wcf.chat.query') + '</a></li>'
 					menu.append $ '<li><a>' + WCF.Language.get('wcf.chat.kick') + '</a></li>'
 					menu.append $ '<li><a>' + WCF.Language.get('wcf.chat.ban') + '</a></li>'
@@ -548,20 +548,6 @@ window.console ?=
 				
 				$('#timsChatUserList').hide()
 				$('#timsChatRoomList').show()
-		###
-		# Toggles the user-menu.
-		#
-		# @param	jQuery-object	target
-		###
-		toggleUserMenu: (target) ->
-			li = target.parent()
-			
-			if li.hasClass 'activeMenuItem'
-				li.find('.timsChatUserMenu').wcfBlindOut 'vertical', () ->
-					li.removeClass 'activeMenuItem'
-			else
-				li.addClass 'activeMenuItem'
-				li.find('.timsChatUserMenu').wcfBlindIn 'vertical'
 		###
 		# Unloads the chat.
 		###
