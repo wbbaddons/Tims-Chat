@@ -101,8 +101,8 @@
 					</a>
 				</li>
 				<li{if !MODULE_SMILEY} style="display: none;"{/if}>
-					<a id="timsChatSmilies" accesskey="e" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
-						<img alt="" src="{icon size='S'}enabled{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
+					<a id="timsChatSmilies" accesskey="e" href="javascript:;" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.{if ENABLE_SMILIES_DEFAULT_VALUE}dis{else}en{/if}able{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="{@ENABLE_SMILIES_DEFAULT_VALUE}">
+						<img alt="" src="{icon size='S'}{if ENABLE_SMILIES_DEFAULT_VALUE}en{else}dis{/if}abled{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
 					</a>
 				</li>
 				<li>
