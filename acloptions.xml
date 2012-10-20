@@ -29,6 +29,14 @@
 				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
 				<categoryname>mod</categoryname>
 			</option>
+			<option name="mod.canMute">
+				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
+				<categoryname>mod</categoryname>
+			</option>
+			<option name="mod.canBan">
+				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
+				<categoryname>mod</categoryname>
+			</option>
 		</options>
 	</import>
 </data>

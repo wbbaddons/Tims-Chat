@@ -76,6 +76,7 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<item name="wcf.chat.submit.default"><![CDATA[Zum Senden Enter drücken]]></item>
 		<item name="wcf.chat.scroll"><![CDATA[Scrollen]]></item>
 		<item name="wcf.chat.notify"><![CDATA[Benachrichtigen]]></item>
+		<item name="wcf.chat.notify.title"><![CDATA[Neue Nachrichten]]></item>
 		<item name="wcf.chat.smilies"><![CDATA[Smilies]]></item>
 		<item name="wcf.chat.clear"><![CDATA[Chat leeren]]></item>
 		<item name="wcf.chat.mark"><![CDATA[Markieren]]></item>

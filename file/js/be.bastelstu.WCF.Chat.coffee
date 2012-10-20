@@ -480,14 +480,16 @@ window.console ?=
 			# Desktop Notifications
 			if typeof window.webkitNotifications isnt 'undefined'
 				if window.webkitNotifications.checkPermission() is 0
-					title = WCF.Language.get 'wcf.chat.newMessages'
+					title = WCF.Language.get 'wcf.chat.notify.title'
 					icon = WCF.Icon.get 'be.bastelstu.wcf.chat.chat'
 					content = message.username + message.separator + (if message.separator is ' ' then '' else ' ') + message.message
 					notification = window.webkitNotifications.createNotification icon, title, content
 					notification.show()
-					setTimeout(() ->
+					
+					# Hide notification after 10 seconds
+					setTimeout () ->
 						notification.cancel()
-					, 5e3)
+					, 10e3
 		###
 		# Refreshes the room-list.
 		###

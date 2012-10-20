@@ -144,7 +144,7 @@
 				'wcf.chat.kick': '{lang}wcf.chat.kick{/lang}',
 				'wcf.chat.ban': '{lang}wcf.chat.ban{/lang}',
 				'wcf.chat.profile': '{lang}wcf.chat.profile{/lang}',
-				'wcf.chat.newMessages': '{lang}wcf.chat.newMessages{/lang}'
+				'wcf.chat.notify.title': '{lang}wcf.chat.notify.title{/lang}'
 			});
 			WCF.Icon.addObject({
 				'be.bastelstu.wcf.chat.chat': '{icon size='L'}chat{/icon}'
