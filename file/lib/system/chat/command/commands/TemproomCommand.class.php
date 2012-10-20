@@ -55,7 +55,7 @@ class TemproomCommand extends \wcf\system\chat\command\AbstractRestrictedCommand
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\AbstractRestrictedCommand::checkPermission()
+	 * @see	\wcf\system\chat\command\IRestrictedCommand::checkPermission()
 	 */
 	public function checkPermission() {
 		parent::checkPermission();

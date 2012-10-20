@@ -40,7 +40,9 @@ class RestoreCommand extends \wcf\system\chat\command\AbstractRestrictedCommand 
 	 * @see	\wcf\system\chat\command\IRestrictedChatCommand::checkPermission()
 	 */
 	public function checkPermission() {
-		WCF::getSession()->checkPermission('mod.chat.canRestore');
+		parent::checkPermissions();
+		
+		WCF::getSession()->checkPermissions(array('mod.chat.canRestore'));
 	}
 	
 	/**
