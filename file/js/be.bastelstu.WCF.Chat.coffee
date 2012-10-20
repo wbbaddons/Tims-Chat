@@ -45,6 +45,7 @@ window.console ?=
 		# Autocompleter
 		autocompleteOffset: 0
 		autocompleteValue: null
+		autocompleteCaret: 0
 		
 		# Autoscroll
 		oldScrollTop: null
@@ -88,7 +89,7 @@ window.console ?=
 			
 			# None found -> return firstChars
 			# otherwise return the user at the current offset
-			return if users.length is 0 then firstChars else users[offset % users.length] + ', '
+			return if users.length is 0 then firstChars else users[offset % users.length] + ','
 		###
 		# Binds all the events needed for Tims Chat.
 		###
@@ -134,20 +135,39 @@ window.console ?=
 				# tab key
 				if event.keyCode is 9
 					event.preventDefault()
-					if @autocompleteValue is null
-						@autocompleteValue = $('#timsChatInput').val()
+					@autocompleteValue = $('#timsChatInput').val() if @autocompleteValue is null
+					@autocompleteCaret = $('#timsChatInput').getCaret() if @autocompleteCaret is null
 					
-					firstChars = @autocompleteValue.substring(@autocompleteValue.lastIndexOf(' ')+1)
+					beforeCaret = @autocompleteValue.substring 0, @autocompleteCaret
+					lastSpace = beforeCaret.lastIndexOf ' '
+					beforeComplete = @autocompleteValue.substring 0, lastSpace + 1
+					toComplete = @autocompleteValue.substring lastSpace + 1
+					nextSpace = toComplete.indexOf ' '
+					if nextSpace is -1
+						afterComplete = '';
+					else
+						afterComplete = toComplete.substring nextSpace + 1
+						toComplete = toComplete.substring 0, nextSpace
 					
-					console.log 'Autocompleting "' + firstChars + '"'
-					return if firstChars.length is 0
+					return if toComplete.length is 0
+					console.log 'Autocompleting "' + toComplete + '"'
 					
 					# Insert name and increment offset
-					$('#timsChatInput').val(@autocompleteValue.substring(0, @autocompleteValue.lastIndexOf(' ') + 1) + @autocomplete(firstChars))
+					name = @autocomplete toComplete
+					
+					$('#timsChatInput').val beforeComplete + name + ' ' + afterComplete
+					$('#timsChatInput').setCaret((beforeComplete + name).length + 1);
 					@autocompleteOffset++
 				else
 					@autocompleteOffset = 0
 					@autocompleteValue = null
+					@autocompleteCaret = null
+			, @
+			
+			$('#timsChatInput').click $.proxy (event) ->
+				@autocompleteOffset = 0
+				@autocompleteValue = null
+				@autocompleteCaret = null
 			, @
 			
 			# Refreshes the roomlist
