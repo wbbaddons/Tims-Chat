@@ -59,8 +59,13 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 				WCF::getTPL()->assign(@unserialize($message));
 				$message = WCF::getLanguage()->getDynamicVariable('wcf.chat.message.'.$this->type);
 			break;
-			case self::TYPE_WHISPER:
+			case self::TYPE_MODERATE:
 				$message = @unserialize($message);
+				WCF::getTPL()->assign($message);
+				$message = WCF::getLanguage()->getDynamicVariable('wcf.chat.message.'.$this->type.'.'.$message['type']);
+			break;
+			case self::TYPE_WHISPER:
+				
 				$message = $message['message'];
 			case self::TYPE_NORMAL:
 			case self::TYPE_ME:
@@ -112,7 +117,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			'formattedUsername' => $this->getFormattedUsername(),
 			'formattedMessage' => (string) $this,
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
-			'separator' => ($this->type == self::TYPE_NORMAL) ? ': ' : ' ',
+			'separator' => ($this->type == self::TYPE_NORMAL || $this->type == self::TYPE_ERROR || $this->type == self::TYPE_INFORMATION) ? ': ' : ' ',
 			'message' => $this->getFormattedMessage('text/plain'),
 			'sender' => (int) $this->sender,
 			'username' => $this->getUsername(),

@@ -86,6 +86,15 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<item name="wcf.chat.kick"><![CDATA[Kicken]]></item>
 		<item name="wcf.chat.ban"><![CDATA[Bannen]]></item>
 		<item name="wcf.chat.profile"><![CDATA[Profil]]></item>
+		
+		<item name="wcf.chat.information"><![CDATA[Information]]></item>
+		<item name="wcf.chat.information.chatUpdate"><![CDATA[Der Chat wurde aktualisiert. Bitte lade die Seite neu, da es sonst zu Fehlern kommen kann.]]></item>
+		
+		<item name="wcf.chat.error"><![CDATA[Fehler]]></item>
+		<item name="wcf.chat.error.notFound"><![CDATA[Der Befehl wurde nicht gefunden.]]></item>
+		<item name="wcf.chat.error.userNotFound"><![CDATA[Der Benutzer &bdquo;{$username}&ldquo; wurde nicht gefunden.]]></item>
+		<item name="wcf.chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
+		<item name="wcf.chat.error.exception"><![CDATA[Es gab ein Problem bei der Ausführung dieses Befehls. Bitte wenden Sie sich an einen Administrator.]]></item>
 	</category>
 	
 	<category name="wcf.chat.message">
@@ -97,6 +106,10 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<item name="wcf.chat.message.3"><![CDATA[ist jetzt abwesend{if $message}: {$message}{else}.{/if}]]></item>
 		<!-- 4 = TYPE_BACK -->
 		<item name="wcf.chat.message.4"><![CDATA[ist jetzt wieder da.]]></item>
+		<!-- 4 = TYPE_MODERATE -->
+		<item name="wcf.chat.message.5.restore"><![CDATA[hat {@$link} zurückgesetzt.]]></item>
+		<item name="wcf.chat.message.5.mute"><![CDATA[hat {@$link} bis {@$until|time} geknebelt.]]></item>
+		
 		<!-- 7 = TYPE_WHISPER -->
 		<item name="wcf.chat.message.7"><![CDATA[flüstert{if $showReceiver} an {$username}{/if}:]]></item>
 	</category>

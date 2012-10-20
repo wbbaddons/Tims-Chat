@@ -31,7 +31,7 @@ class RestoreCommand extends \wcf\system\chat\command\AbstractRestrictedCommand 
 		$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
 			'object' => $this->user
 		));
-		$this->link = '<a href="'.$profile.'">'.ChatUtil::gradient($this->user->username, $color[1], $color[2]).'</a>';
+		$this->link = '<a href="'.$profile.'" class="userLink" data-user-id="'.$this->user->userID.'">'.ChatUtil::gradient($this->user->username, $color[1], $color[2]).'</a>';
 		
 		$this->didInit();
 	}
@@ -40,7 +40,7 @@ class RestoreCommand extends \wcf\system\chat\command\AbstractRestrictedCommand 
 	 * @see	\wcf\system\chat\command\IRestrictedChatCommand::checkPermission()
 	 */
 	public function checkPermission() {
-		parent::checkPermissions();
+		parent::checkPermission();
 		
 		WCF::getSession()->checkPermissions(array('mod.chat.canRestore'));
 	}
@@ -49,13 +49,16 @@ class RestoreCommand extends \wcf\system\chat\command\AbstractRestrictedCommand 
 	 * @see	\wcf\system\chat\command\ICommand::getType()
 	 */
 	public function getType() {
-		return \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION;
+		return \wcf\data\chat\message\ChatMessage::TYPE_MODERATE;
 	}
 	
 	/**
 	 * @see	\wcf\system\chat\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return 'restored '.$this->link;
+		return serialize(array(
+			'link' => $this->link,
+			'type' => str_replace(array('wcf\system\chat\command\commands\\', 'command'), '', strtolower(get_class($this)))
+		));
 	}
 }
