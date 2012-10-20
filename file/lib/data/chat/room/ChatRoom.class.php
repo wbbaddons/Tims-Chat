@@ -40,7 +40,8 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	
 	/**
 	 * Returns whether the user is allowed to enter the room.
-	 *
+	 * 
+	 * @param	\wcf\data\user\User	$user
 	 * @return	boolean
 	 */
 	public function canEnter(\wcf\data\user\User $user = null) {
@@ -70,6 +71,7 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	/**
 	 * Returns whether the user is allowed to write messages in this room.
 	 *
+	 * @param	\wcf\data\user\User	$user
 	 * @return	boolean
 	 */
 	public function canWrite(\wcf\data\user\User $user = null) {

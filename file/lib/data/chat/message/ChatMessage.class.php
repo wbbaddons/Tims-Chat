@@ -45,7 +45,8 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	
 	/**
 	 * Returns the formatted message.
-	 *
+	 * 
+	 * @param	string	$outputType	outputtype for messageparser
 	 * @return	string
 	 */
 	public function getFormattedMessage($outputType = 'text/html') {

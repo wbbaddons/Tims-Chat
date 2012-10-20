@@ -11,12 +11,21 @@ namespace wcf\system\chat\command;
  * @subpackage	system.chat.command
  */
 class UserNotFoundException extends \Exception {
+	/**
+	 * given username
+	 * @var string
+	 */
 	private $username = '';
 	
 	public function __construct($username) {
 		$this->username = $username;
 	}
 	
+	/**
+	 * Returns the given username
+	 * 
+	 * @return string
+	 */
 	public function getUsername() {
 		return $this->username;
 	}

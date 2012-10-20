@@ -18,6 +18,11 @@ abstract class AbstractRestrictedCommand extends AbstractCommand implements IRes
 		$this->checkPermission();
 	}
 	
+	/**
+	 * Fires checkPermission event.
+	 * 
+	 * @see \wcf\system\chat\command\IRestrictedCommand
+	 */
 	public function checkPermission() {
 		EventHandler::getInstance()->fireAction($this, 'checkPermission');
 	}

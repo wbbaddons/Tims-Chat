@@ -15,13 +15,21 @@ use \wcf\system\WCF;
  * @subpackage	system.chat.permissions
  */
 class ChatPermissionHandler {
+	/**
+	 * permissions set for the active user
+	 * @var array<boolean>
+	 */
 	protected $chatPermissions = array();
-	protected $user = null, $userProfile = null;
+	
+	/**
+	 * given user decorated in a user profile
+	 * @var \wcf\data\user\UserProfile
+	 */
+	protected $user = null;
 	
 	public function __construct(\wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
-		$this->user = $user;
-		$this->userProfile = new \wcf\data\user\UserProfile($this->user);
+		$this->user = new \wcf\data\user\UserProfile($this->user);
 		
 		$packageID = \wcf\util\ChatUtil::getPackageID();
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
@@ -86,7 +94,7 @@ class ChatPermissionHandler {
 		if (!isset($this->chatPermissions[$room->roomID][$permission])) {
 			$permission = str_replace(array('user.', 'mod.'), array('user.chat.', 'mod.chat.'), $permission);
 			
-			return $this->userProfile->getPermission($permission);
+			return $this->user->getPermission($permission);
 		}
 		return (boolean) $this->chatPermissions[$room->roomID][$permission];
 	}

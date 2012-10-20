@@ -11,5 +11,10 @@ namespace wcf\system\chat\command;
  * @subpackage	system.chat.command
  */
 interface IRestrictedCommand {
-	function checkPermission();
+	/** 
+	 * Checks the permission to use this command. Has to throw
+	 * \wcf\system\exception\PermissionDeniedException when the 
+	 * user is not allowed to use the command.
+	 */
+	public function checkPermission();
 }

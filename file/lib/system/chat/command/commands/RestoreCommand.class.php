@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\chat\command\commands;
 use \wcf\data\user\User;
+use \wcf\system\WCF;
 use \wcf\util\ChatUtil;
 
 /**
@@ -36,6 +37,13 @@ class RestoreCommand extends \wcf\system\chat\command\AbstractRestrictedCommand 
 	}
 	
 	/**
+	 * @see	\wcf\system\chat\command\IRestrictedChatCommand::checkPermission()
+	 */
+	public function checkPermission() {
+		WCF::getSession()->checkPermission('mod.chat.canRestore');
+	}
+	
+	/**
 	 * @see	\wcf\system\chat\command\ICommand::getType()
 	 */
 	public function getType() {
@@ -47,12 +55,5 @@ class RestoreCommand extends \wcf\system\chat\command\AbstractRestrictedCommand 
 	 */
 	public function getMessage() {
 		return 'restored '.$this->link;
-	}
-	
-	/**
-	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
-	 */
-	public function getReceiver() {
-		return \wcf\system\WCF::getUser()->userID;
 	}
 }

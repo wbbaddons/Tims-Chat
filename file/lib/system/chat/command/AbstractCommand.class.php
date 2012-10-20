@@ -52,7 +52,6 @@ abstract class AbstractCommand implements ICommand {
 	/**
 	 * Default-Receiver: Everyone
 	 * 
-	 * @return	null
 	 * @see \wcf\system\chat\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {

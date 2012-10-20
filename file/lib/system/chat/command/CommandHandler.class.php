@@ -12,7 +12,16 @@ use \wcf\util\StringUtil;
  * @subpackage	system.chat.command
  */
 final class CommandHandler {
+	/**
+	 * char that indicates a command
+	 * @var string
+	 */
 	const COMMAND_CHAR = '/';
+	
+	/**
+	 * message text
+	 * @var string
+	 */
 	private $text = '';
 	
 	/**
@@ -29,7 +38,8 @@ final class CommandHandler {
 	 */
 	public function isCommand($text = null) {
 		if ($text === null) $text = $this->text;
-		return StringUtil::substring($text, 0, StringUtil::length(static::COMMAND_CHAR)) == static::COMMAND_CHAR;
+		
+		return StringUtil::startsWith($text, static::COMMAND_CHAR);
 	}
 	
 	/**
