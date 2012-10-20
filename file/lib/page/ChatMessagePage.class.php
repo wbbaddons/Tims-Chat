@@ -1,6 +1,7 @@
 <?php
 namespace wcf\page;
 use \wcf\data\chat;
+use \wcf\system\exception\IllegalLinkException;
 use \wcf\system\WCF;
 
 /**
@@ -134,7 +135,7 @@ class ChatMessagePage extends AbstractPage {
 	public function readRoom() {
 		$roomID = \wcf\util\ChatUtil::readUserData('roomID');
 		$cache = chat\room\ChatRoom::getCache();
-		if (!isset($cache[$roomID])) throw new \wcf\system\exception\IllegalLinkException();
+		if (!isset($cache[$roomID])) throw new IllegalLinkException();
 		
 		$this->room = $cache[$roomID];
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();

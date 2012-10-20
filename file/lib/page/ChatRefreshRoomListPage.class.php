@@ -2,6 +2,7 @@
 namespace wcf\page;
 use \wcf\data\chat;
 use \wcf\system\cache\CacheHandler;
+use \wcf\ystem\exception\IllegalLinkException;
 use \wcf\system\WCF;
 
 /**
@@ -28,7 +29,17 @@ class ChatRefreshRoomListPage extends AbstractPage {
 	 * @see \wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array();
+	
+	/**
+	 * the room the user current is in
+	 * @var \wcf\data\chat\room\ChatRoom
+	 */
 	public $room = null;
+	
+	/**
+	 * all rooms in the current installation
+	 * @var array<\wcf\data\chat\room\ChatRoom>
+	 */
 	public $rooms = array();
 	
 	/**
@@ -62,7 +73,7 @@ class ChatRefreshRoomListPage extends AbstractPage {
 		$this->rooms = chat\room\ChatRoom::getCache();
 		
 		$roomID = \wcf\util\ChatUtil::readUserData('roomID');
-		if (!isset($this->rooms[$roomID])) throw new \wcf\system\exception\IllegalLinkException();
+		if (!isset($this->rooms[$roomID])) throw new IllegalLinkException();
 		$this->room = $this->rooms[$roomID];
 	}
 	
@@ -76,6 +87,7 @@ class ChatRefreshRoomListPage extends AbstractPage {
 		$json = array();
 		foreach ($this->rooms as $room) {
 			if (!$room->canEnter()) continue;
+			
 			$json[] = array(
 				'title' => WCF::getLanguage()->get($room->title),
 				'link' => \wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\action;
 use \wcf\data\chat;
+use \wcf\system\exception\IllegalLinkException;
 use \wcf\system\WCF;
 
 /**
@@ -68,7 +69,7 @@ class ChatLeaveAction extends AbstractAction {
 		$this->userData['roomID'] = \wcf\util\ChatUtil::readUserData('roomID');
 		
 		$cache = chat\room\ChatRoom::getCache();
-		if (!isset($cache[$this->userData['roomID']])) throw new \wcf\system\exception\IllegalLinkException();
+		if (!isset($cache[$this->userData['roomID']])) throw new IllegalLinkException();
 		$this->room = $cache[$this->userData['roomID']];
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 		
