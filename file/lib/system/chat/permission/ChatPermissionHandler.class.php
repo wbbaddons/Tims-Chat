@@ -29,7 +29,7 @@ class ChatPermissionHandler {
 	
 	public function __construct(\wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
-		$this->user = new \wcf\data\user\UserProfile($this->user);
+		$this->user = new \wcf\data\user\UserProfile($user);
 		
 		$packageID = \wcf\util\ChatUtil::getPackageID();
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
