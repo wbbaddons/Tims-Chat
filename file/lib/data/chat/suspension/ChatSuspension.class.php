@@ -49,4 +49,29 @@ class ChatSuspension extends \wcf\data\DatabaseObject {
 		
 		return $suspensions;
 	}
+	
+	/**
+	 * Returns the appropriate suspension for user, room and type.
+	 * 
+	 * @param	\wcf\data\user\User		$user
+	 * @param	\wcf\data\chat\room\ChatRoom	$room
+	 * @param	integer				$type
+	 * @return	\wcf\data\chat\suspension\ChatSuspension
+	 */
+	public static function getSuspensionByUserRoomAndType(\wcf\data\user\User $user, \wcf\data\chat\room\ChatRoom $room, $type) {
+		$sql = "SELECT
+				*
+			FROM
+				wcf".WCF_N."_user_group_application
+			WHERE	
+					userID = ?
+				AND	roomID = ?
+				AND	type = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($user->userID, $room->roomID, $type));
+		$row = $statement->fetchArray();
+		if(!$row) $row = array();
+		
+		return new self(null, $row);
+	}
 }

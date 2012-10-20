@@ -20,6 +20,9 @@ class ChatCleanupCronjob implements ICronjob {
 		$messageAction->executeAction();
 		$roomAction = new chat\room\ChatRoomAction(array(), 'prune');
 		$roomAction->executeAction();
+		$suspensionAction = new chat\suspension\ChatSuspensionAction(array(), 'prune');
+		$suspensionAction->executeAction();
+		
 		
 		// kill dead users
 		$deadUsers = \wcf\util\ChatUtil::getDiedUsers();
