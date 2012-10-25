@@ -9,8 +9,6 @@
 
 #tplChat {
 	#content {
-		position: relative;
-		
 		#timsChatRoomContent {
 			text-align: left;
 			
@@ -52,8 +50,162 @@
 	
 	.sidebar {
 		margin-bottom: -20px !important;
-		overflow: auto;
 		padding: 0;
+		
+		#sidebarContent {
+			padding-top: 0px;
+			overflow: hidden;
+			
+			.timsChatSidebarTabs {
+				height: 34px;
+				z-index: 131;
+				position: relative;
+				.boxShadowNative(0 0 5px 0 rgba(0, 0, 0, 0.1));
+				
+				.left & {
+					margin-right: 1px;
+				}
+				
+				.right & {
+					margin-left: 1px;
+				}
+				
+				ul {
+					background-color: rgba(0, 0, 0, 0.2);
+					height: 33px;
+					
+					li {
+						width: 50%;
+						float: left;
+						text-align: center;
+						
+						a {
+							color: fade(@wcfColor, 80%);
+							.textShadow(@wcfContentBackgroundColor);
+							height: 22px;
+							padding: 9px 0 0;
+							
+							.transition(~"border-radius .2s linear 0s, background-color .2s linear 0s, font-size", .2s);
+							
+							.collapsed & {
+								border: none !important;
+							}
+						}
+						
+						&.active a {
+							background-color: @wcfContentBackgroundColor;
+							border-bottom: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
+							.borderRadius(0, 7px);
+							color: @wcfColor;
+							font-size: 130%;
+							font-weight: bold;
+						}
+						
+						&:first-child.active a {
+							.borderRadius(0, 0, 7px, 0);
+							border-right: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
+							
+							.right & {
+								margin-left: -1px;
+							}
+						}
+						
+						&:last-child.active a {
+							.borderRadius(0, 0, 0, 7px);
+							border-left: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
+							
+							.left & {
+								margin-right: -1px;
+							}
+						}
+						
+						.badge {
+							.badgeBG(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.2));
+							.badgeShadow(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.2));
+							position: relative;
+							top: -1px;
+							color: #fff;
+						}
+						
+						&.active .badge {
+							font-size: 65% !important;
+							.badgeBG(@wcfContentBackgroundColor);
+							.badgeShadow(@wcfContentBackgroundColor);
+						}
+					}
+				}
+			}
+			
+			#sidebarContainer {
+				overflow-y: auto;
+				height: 420px;
+				width: 100%;
+				border-top: 1px solid darken(@wcfSidebarBackgroundColor, 8%);
+				z-index: 131;
+				position: relative;
+				
+				a {
+					outline: none;
+					overflow: hidden;
+				}
+				
+				ul:not(.dropdownMenu) {
+					> li {
+						margin-top: 5px;
+						background-color: transparent !important;
+						box-shadow: none !important;
+						
+						> a {
+							background-color: fade(@wcfContentBackgroundColor, 33.33%);
+							.textShadow(fade(@wcfContentBackgroundColor, 33.33%));
+							.transition(background-color, .2s);
+						}
+						
+						&.activeMenuItem, &.dropdownOpen, &:hover {
+							> a {
+								background-color: @wcfContentBackgroundColor !important;
+								.boxShadowNative(0 0 5px rgba(0, 0, 0, 0.1));
+							}
+						}
+					}
+				}
+				
+				#timsChatRoomList {
+					margin-top: 5px;
+					
+					> div {
+						> div {
+							text-align: center;
+							margin-top: 10px;
+						}
+					}
+				}
+				
+				#timsChatUserList {
+					.timsChatUserMenu {
+						display: none;
+						background-color: rgba(0, 0, 0, 0.1);
+						border-bottom: 1px solid @wcfContentBackgroundColor;
+						color: rgba(0, 0, 0, 0.4);
+								
+						> li {
+							a {
+								background-color: rgba(255, 255, 255, 0.22);
+								.textShadow(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.1) + rgba(255, 255, 255, 0.22)) !important;
+								.borderRadius(5px, 0, 0, 5px);
+								margin-left: 35px;
+								padding: 1px 0 1px 15px;
+								color: @wcfColor;
+							}
+						}
+					}
+					
+					.timsChatAway {
+						opacity: .5;
+					}
+				}
+			}
+		}
 		
 		h2 {
 			margin: auto;
@@ -149,8 +301,6 @@
 	}
 	
 	#timsChatCopyright {
-		bottom: 5px;
-		position: absolute;
 		.textShadow(@wcfContentBackgroundColor);
 	}
 	
@@ -158,160 +308,6 @@
 		background-position: right 45px;
 		background-repeat: no-repeat;
 		min-height: 50%;
-	}
-	
-	#sidebarContent {
-		padding-top: 0px;
-		
-		.timsChatSidebarTabs {
-			height: 34px;
-			z-index: 131;
-			position: relative;
-			.boxShadowNative(0 0 5px 0 rgba(0, 0, 0, 0.1));
-			
-			.left & {
-				margin-right: 1px;
-			}
-			
-			.right & {
-				margin-left: 1px;
-			}
-			
-			ul {
-				background-color: rgba(0, 0, 0, 0.2);
-				height: 33px;
-				
-				li {
-					width: 50%;
-					float: left;
-					text-align: center;
-					
-					a {
-						color: fade(@wcfColor, 80%);
-						.textShadow(@wcfContentBackgroundColor);
-						height: 22px;
-						padding: 9px 0 0;
-						
-						.transition(~"border-radius .2s linear 0s, background-color .2s linear 0s, font-size", .2s);
-						
-						.collapsed & {
-							border: none !important;
-						}
-					}
-					
-					&.active a {
-						background-color: @wcfContentBackgroundColor;
-						border-bottom: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
-						.borderRadius(0, 7px);
-						color: @wcfColor;
-						font-size: 130%;
-						font-weight: bold;
-					}
-					
-					&:first-child.active a {
-						.borderRadius(0, 0, 7px, 0);
-						border-right: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
-						
-						.right & {
-							margin-left: -1px;
-						}
-					}
-					
-					&:last-child.active a {
-						.borderRadius(0, 0, 0, 7px);
-						border-left: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
-						
-						.left & {
-							margin-right: -1px;
-						}
-					}
-					
-					.badge {
-						.badgeBG(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.2));
-						.badgeShadow(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.2));
-						position: relative;
-						top: -1px;
-						color: #fff;
-					}
-					
-					&.active .badge {
-						font-size: 65% !important;
-						.badgeBG(@wcfContentBackgroundColor);
-						.badgeShadow(@wcfContentBackgroundColor);
-					}
-				}
-			}
-		}
-		
-		#sidebarContainer {
-			overflow-y: auto;
-			height: 420px;
-			width: 100%;
-			border-top: 1px solid darken(@wcfSidebarBackgroundColor, 8%);
-			z-index: 131;
-			position: relative;
-			
-			a {
-				outline: none;
-				overflow: hidden;
-			}
-			
-			ul:not(.dropdownMenu) {
-				> li {
-					margin-top: 5px;
-					background-color: transparent !important;
-					box-shadow: none !important;
-					
-					> a {
-						background-color: fade(@wcfContentBackgroundColor, 33.33%);
-						.textShadow(fade(@wcfContentBackgroundColor, 33.33%));
-						.transition(background-color, .2s);
-					}
-					
-					&.activeMenuItem, &.dropdownOpen, &:hover {
-						> a {
-							background-color: @wcfContentBackgroundColor !important;
-							.boxShadowNative(0 0 5px rgba(0, 0, 0, 0.1));
-						}
-					}
-				}
-			}
-			
-			#timsChatRoomList {
-				margin-top: 5px;
-				
-				> div {
-					> div {
-						text-align: center;
-						margin-top: 10px;
-					}
-				}
-			}
-			
-			#timsChatUserList {
-				.timsChatUserMenu {
-					display: none;
-					background-color: rgba(0, 0, 0, 0.1);
-					border-bottom: 1px solid @wcfContentBackgroundColor;
-					color: rgba(0, 0, 0, 0.4);
-							
-					> li {
-						a {
-							background-color: rgba(255, 255, 255, 0.22);
-							.textShadow(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.1) + rgba(255, 255, 255, 0.22)) !important;
-							.borderRadius(5px, 0, 0, 5px);
-							margin-left: 35px;
-							padding: 1px 0 1px 15px;
-							color: @wcfColor;
-						}
-					}
-				}
-				
-				.timsChatAway {
-					opacity: .5;
-				}
-			}
-		}
 	}
 	
 	.badgeBG(@backgroundColor) when (lightness(@backgroundColor) < 50%) {

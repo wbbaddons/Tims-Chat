@@ -100,7 +100,9 @@ class ChatPage extends AbstractPage {
 			'roomID' => $this->roomID,
 			'rooms' => $this->rooms,
 			'defaultSmilies' => $this->defaultSmilies,
-			'smileyCategories' => $this->smileyCategories
+			'smileyCategories' => $this->smileyCategories,
+			'sidebarCollapsed' => \wcf\system\user\collapsible\content\UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'be.bastelstu.wcf.chat.ChatPage'),
+			'sidebarName' => 'be.bastelstu.wcf.chat.ChatPage'
 		));
 	}
 	
