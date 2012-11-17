@@ -62,7 +62,7 @@ class ChatSuspension extends \wcf\data\DatabaseObject {
 		$sql = "SELECT
 				*
 			FROM
-				wcf".WCF_N."_user_group_application
+				wcf".WCF_N."_chat_suspension
 			WHERE	
 					userID = ?
 				AND	roomID = ?

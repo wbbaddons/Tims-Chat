@@ -88,6 +88,13 @@ class ChatPage extends AbstractPage {
 	public $userData = array();
 	
 	/**
+	 * The request that is actually handled.
+	 * 
+	 * @var mixed
+	 */
+	public $request = null;
+	
+	/**
 	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
@@ -178,28 +185,29 @@ class ChatPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
+		$this->request = $this;
 		switch ($this->action) {
 			case 'Message':
-				$page = new ChatMessagePage();
-				$page->__run();
+				$this->request = new ChatMessagePage();
+				$this->request->__run();
 				exit;
 			case 'Log':
 				exit;
 			case 'RefreshRoomList':
-				$page = new ChatRefreshRoomListPage();
-				$page->__run();
+				$this->request = new ChatRefreshRoomListPage();
+				$this->request->__run();
 				exit;
 			case 'Send':
-				$form = new \wcf\form\ChatForm();
-				$form->__run();
+				$this->request = new \wcf\form\ChatForm();
+				$this->request->__run();
 				exit;
 			case 'Leave':
-				$action = new \wcf\action\ChatLeaveAction();
-				$action->__run();
+				$this->request = new \wcf\action\ChatLeaveAction();
+				$this->request->__run();
 				exit;
 			case 'Copyright':
-				$page = new ChatCopyrightPage();
-				$page->__run();
+				$this->request = new ChatCopyrightPage();
+				$this->request->__run();
 				exit;
 		}
 		

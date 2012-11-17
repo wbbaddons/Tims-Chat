@@ -106,7 +106,7 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<item name="wcf.chat.message.3"><![CDATA[ist jetzt abwesend{if $message}: {$message}{else}.{/if}]]></item>
 		<!-- 4 = TYPE_BACK -->
 		<item name="wcf.chat.message.4"><![CDATA[ist jetzt wieder da.]]></item>
-		<!-- 4 = TYPE_MODERATE -->
+		<!-- 5 = TYPE_MODERATE -->
 		<item name="wcf.chat.message.5.restore"><![CDATA[hat {@$link} zurückgesetzt.]]></item>
 		<item name="wcf.chat.message.5.mute"><![CDATA[hat {@$link} bis {@$until|time} geknebelt.]]></item>
 		
