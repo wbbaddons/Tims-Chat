@@ -61,6 +61,7 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<item name="wcf.chat.title"><![CDATA[Chat]]></item>
 		<item name="wcf.chat.protocol"><![CDATA[Protokoll]]></item>
 		
+		<item name="wcf.chat.room"><![CDATA[Raum]]></item>
 		<item name="wcf.chat.rooms"><![CDATA[Räume]]></item>
 		<item name="wcf.chat.users"><![CDATA[Nutzer]]></item>
 		
@@ -106,7 +107,7 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<item name="wcf.chat.message.4"><![CDATA[ist jetzt wieder da.]]></item>
 		<!-- 5 = TYPE_MODERATE -->
 		<item name="wcf.chat.message.5.restore"><![CDATA[hat {@$link} zurückgesetzt.]]></item>
-		<item name="wcf.chat.message.5.mute"><![CDATA[hat {@$link} bis {@$until|time} geknebelt.]]></item>
+		<item name="wcf.chat.message.5.mute"><![CDATA[hat {@$link} bis {@$until|plainTime} geknebelt.]]></item>
 		
 		<!-- 7 = TYPE_WHISPER -->
 		<item name="wcf.chat.message.7"><![CDATA[flüstert{if $showReceiver} an {$username}{/if}:]]></item>

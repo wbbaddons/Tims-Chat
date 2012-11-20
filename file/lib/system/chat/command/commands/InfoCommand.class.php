@@ -28,9 +28,9 @@ class InfoCommand extends \wcf\system\chat\command\AbstractCommand {
 		// Username + link to profile
 		$color = ChatUtil::readUserData('color', $this->user);
 		$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
-			'object' => $this->user
+				'object' => $this->user
 		));
-		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = '<a href="'.$profile.'" class="userLink" data-user-id="'.$this->user->userID.'">'.ChatUtil::gradient($this->user->username, $color[1], $color[2]).'</a>';
+		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = '<span class="userLink" data-user-id="'.$this->user->userID.'" />';
 		
 		// Away-Status
 		if (ChatUtil::readUserData('away', $this->user) !== null) {

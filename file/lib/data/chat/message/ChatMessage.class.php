@@ -1,11 +1,13 @@
 <?php
 namespace wcf\data\chat\message;
+use \wcf\system\Regex;
 use \wcf\system\WCF;
+use \wcf\util\ChatUtil;
 
 /**
  * Represents a chat message.
  *
- * @author 	Tim Düsterhus
+ * @author	Tim Düsterhus
  * @copyright	2010-2012 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.wcf.chat
@@ -37,6 +39,12 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	const TYPE_ERROR = 12;
 	
 	/**
+	 * cache for users
+	 * @var array<\wcf\data\user\User>
+	 */
+	protected static $users = array();
+	
+	/**
 	 * @see	\wcf\data\chat\message\ChatMessage::getFormattedMessage()
 	 */
 	public function __toString() {
@@ -51,21 +59,21 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	 */
 	public function getFormattedMessage($outputType = 'text/html') {
 		$message = $this->message;
+		
 		switch ($this->type) {
 			case self::TYPE_JOIN:
 			case self::TYPE_LEAVE:
 			case self::TYPE_BACK:
 			case self::TYPE_AWAY:
-				WCF::getTPL()->assign(@unserialize($message));
-				$message = WCF::getLanguage()->getDynamicVariable('wcf.chat.message.'.$this->type);
+				$message = WCF::getLanguage()->getDynamicVariable('wcf.chat.message.'.$this->type, unserialize($message) ?: array());
 			break;
 			case self::TYPE_MODERATE:
-				$message = @unserialize($message);
-				WCF::getTPL()->assign($message);
-				$message = WCF::getLanguage()->getDynamicVariable('wcf.chat.message.'.$this->type.'.'.$message['type']);
+				$message = unserialize($message);
+				$message = WCF::getLanguage()->getDynamicVariable('wcf.chat.message.'.$this->type.'.'.$message['type'], $message ?: array());
+				$message = self::replaceUserLink($message, $outputType);
 			break;
 			case self::TYPE_WHISPER:
-				$message = @unserialize($message);
+				$message = unserialize($message);
 				$message = $message['message'];
 			case self::TYPE_NORMAL:
 			case self::TYPE_ME:
@@ -73,21 +81,33 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 					$message = \wcf\system\bbcode\SimpleMessageParser::getInstance()->parse($message, true, $this->enableSmilies);
 				}
 			break;
+			default:
+				if ($this->enableHTML) {
+					$message = self::replaceUserLink($message, $outputType);
+				}
+			break;
 		}
+		
 		return $message;
 	}
 	
 	/**
-	 * Returns the formatted username
-	 *
+	 * Returns the username.
+	 * 
+	 * @param	boolean		$colored
 	 * @return	string
 	 */
-	public function getFormattedUsername() {
-		$username = $this->getUsername();
+	public function getUsername($colored = false) {
+		$username = $this->username;
+		if ($this->type == self::TYPE_INFORMATION) return WCF::getLanguage()->get('wcf.chat.information');
+		if ($this->type == self::TYPE_ERROR) return WCF::getLanguage()->get('wcf.chat.error');
 		
-		if ($this->type != self::TYPE_INFORMATION && $this->type != self::TYPE_ERROR) $username = \wcf\util\ChatUtil::gradient($username, $this->color1, $this->color2);
+		if ($colored) {
+			$username = \wcf\util\ChatUtil::gradient($username, $this->color1, $this->color2);
+		}
+		
 		if ($this->type == self::TYPE_WHISPER) {
-			$message = @unserialize($this->message);
+			$message = unserialize($this->message);
 			$username .= ' -> '.$message['username'];
 		}
 		
@@ -95,15 +115,42 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	}
 	
 	/**
-	 * Returns the unformatted username.
-	 *
-	 * @return	string
+	 * Replaces a userLink in a message.
 	 */
-	public function getUsername() {
-		if ($this->type == self::TYPE_INFORMATION) return WCF::getLanguage()->get('wcf.chat.information');
-		if ($this->type == self::TYPE_ERROR) return WCF::getLanguage()->get('wcf.chat.error');
+	public static function replaceUserLink($message, $outputType) {
+		static $regex = null;
+		if ($regex === null) $regex = new Regex('<span class="userLink" data-user-id="(\d+)" />');
 		
-		return $this->username;
+		if ($outputType === 'text/html') {
+			return $regex->replace($message, new \wcf\system\Callback(function ($matches) {
+				return self::getUserLink($matches[1]);
+			}));
+		}
+		else {
+			return $regex->replace($message, new \wcf\system\Callback(function ($matches) {
+				self::getUserLink($matches[1]);
+				
+				return self::$users[$matches[1]]->username;
+			}));
+		}
+	}
+	
+	/**
+	 * Returns a fully colored userlink.
+	 */
+	public static function getUserLink($userID) {
+		if (!isset(self::$users[$userID])) {
+			self::$users[$userID] = $user = new \wcf\data\user\User($userID);
+			
+			// Username + link to profile
+			$color = ChatUtil::readUserData('color', $user);
+			$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
+				'object' => $user
+			));
+			self::$users[$userID]->userLink = '<a href="'.$profile.'" class="userLink" data-user-id="'.$user->userID.'">'.ChatUtil::gradient($user->username, $color[1], $color[2]).'</a>';
+		}
+		
+		return self::$users[$userID]->userLink;
 	}
 	
 	/**
@@ -113,11 +160,23 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 	 * @return	string
 	 */
 	public function jsonify($raw = false) {
+		switch ($this->type) {
+			case self::TYPE_NORMAL:
+			case self::TYPE_ERROR:
+			case self::TYPE_INFORMATION:
+			case self::TYPE_WHISPER:
+				$separator = ':';
+			break;
+			default:
+				$separator = ' ';
+			break;
+		}
+		
 		$array = array(
-			'formattedUsername' => $this->getFormattedUsername(),
-			'formattedMessage' => (string) $this,
+			'formattedUsername' => $this->getUsername(true),
+			'formattedMessage' => $this->getFormattedMessage(),
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
-			'separator' => ($this->type == self::TYPE_NORMAL || $this->type == self::TYPE_ERROR || $this->type == self::TYPE_INFORMATION) ? ': ' : ' ',
+			'separator' => $separator,
 			'message' => $this->getFormattedMessage('text/plain'),
 			'sender' => (int) $this->sender,
 			'username' => $this->getUsername(),

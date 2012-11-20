@@ -145,7 +145,7 @@ final class ChatUtil {
 	/**
 	 * Reads user data.
 	 *
-	 * @param	string 			$field
+	 * @param	string			$field
 	 * @param	\wcf\data\user\User	$user
 	 * @return	mixed
 	 */
