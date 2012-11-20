@@ -2,7 +2,7 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/acpMenu.xsd">
 	<import>
 		<acpmenuitem name="wcf.acp.menu.link.chat">
-			<parent>wcf.acp.menu.link.content</parent>
+			<parent>wcf.acp.menu.link.community</parent>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.chat.room.list">
