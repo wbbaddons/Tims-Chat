@@ -91,7 +91,7 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 			$username .= ' -> '.$message['username'];
 		}
 		
-		return '<strong>'.$username.'</strong>';
+		return $username;
 	}
 	
 	/**
