@@ -370,7 +370,7 @@ window.console ?=
 					console.log 'Moving User: "' + user.username + '"'
 					element = element.detach()
 					if user.awayStatus?
-						element.addClass 'timsChatAway'
+						element.addClass 'away'
 						element.attr 'title', user.awayStatus
 					else
 						element.removeClass 'timsChatAway'
