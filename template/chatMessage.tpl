@@ -1,1 +1,1 @@
-{if CHAT_DISPLAY_CLOCK}<time>{ldelim}@$formattedTime}</time> {/if}{literal}{@$formattedUsername}{$separator} {@$formattedMessage}{/literal}
+{literal}<time>{@$formattedTime}</time> <span class="username">{@$formattedUsername}</span><span class="separator">{$separator}</span> <span class="text">{@$formattedMessage}</span>{/literal}
