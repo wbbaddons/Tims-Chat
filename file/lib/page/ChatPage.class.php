@@ -192,6 +192,8 @@ class ChatPage extends AbstractPage {
 				$this->request->__run();
 				exit;
 			case 'Log':
+				$this->request = new ChatLogPage();
+				$this->request->__run();
 				exit;
 			case 'RefreshRoomList':
 				$this->request = new ChatRefreshRoomListPage();

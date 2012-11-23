@@ -65,7 +65,7 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<item name="wcf.chat.rooms"><![CDATA[Räume]]></item>
 		<item name="wcf.chat.users"><![CDATA[Nutzer]]></item>
 		
-		<item name="wcf.chat.copyright"><![CDATA[<a href="http://tims.bastelstu.be">Chat: <strong>Tims Chat</strong>{if CHAT_SHOW_VERSION} {$chatVersion}{/if}, entwickelt von <strong>TimWolla</strong></a>]]></item>
+		<item name="wcf.chat.copyright"><![CDATA[<a href="http://tims.bastelstu.be">Chat: <strong>Tims Chat</strong>{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}, entwickelt von <strong>TimWolla</strong></a>]]></item>
 		<item name="wcf.chat.copyright.leader"><![CDATA[Projektleiter]]></item>
 		<item name="wcf.chat.copyright.developer"><![CDATA[Entwickler]]></item>
 		<item name="wcf.chat.copyright.graphics"><![CDATA[Grafisches]]></item>
