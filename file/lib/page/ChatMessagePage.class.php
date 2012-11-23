@@ -116,15 +116,14 @@ class ChatMessagePage extends AbstractPage {
 		
 		// update last seen message
 		$sql = "SELECT
-				MAX(messageID) as messageID
+				MAX(messageID)
 			FROM
 				wcf".WCF_N."_chat_message";
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
-		$row = $stmt->fetchArray();
 		
 		\wcf\util\ChatUtil::writeUserData(array(
-			'lastSeen' => $row['messageID'],
+			'lastSeen' => $stmt->fetchColumn(),
 			'lastActivity' => TIME_NOW
 		));
 	}
