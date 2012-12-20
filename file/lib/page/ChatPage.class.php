@@ -171,8 +171,8 @@ class ChatPage extends AbstractPage {
 		
 		$smileyCategories = \wcf\data\smiley\SmileyCache::getInstance()->getCategories();
 		
-		foreach($smileyCategories as $category) {
-			if(!$category->disabled) $this->smileyCategories[] = $category;
+		foreach ($smileyCategories as $category) {
+			if (!$category->disabled) $this->smileyCategories[] = $category;
 		}
 		
 		$this->defaultSmilies = \wcf\data\smiley\SmileyCache::getInstance()->getCategorySmilies();

@@ -9,6 +9,7 @@ namespace be\bastelstu\wcf\chat;
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.wcf.chat
  */
+// @codingStandardsIgnoreFile
 final class Install {
 	/**
 	 * Contains all the styles the current installation has.

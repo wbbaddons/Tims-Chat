@@ -99,8 +99,8 @@ final class ChatUtil {
 	 * @return	integer
 	 */
 	public static function /* int */ getRandomNumber() {
-		return 4; // chosen by a fair dice roll
-			  // guaranteed to be random
+		return 4;	// chosen by a fair dice roll
+				// guaranteed to be random
 	}
 	
 	/**
@@ -256,7 +256,7 @@ final class ChatUtil {
 		$ush = UserStorageHandler::getInstance();
 		$packageID = self::getPackageID();
 		
-		foreach($data as $key => $value) {
+		foreach ($data as $key => $value) {
 			$ush->update($user->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value, $packageID);
 		}
 	}
