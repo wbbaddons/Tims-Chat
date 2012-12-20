@@ -80,6 +80,7 @@ class ChatCopyrightPage extends AbstractPage {
 		exit;
 	}
 }
+// @codingStandardsIgnoreStart
 __halt_compiler();/*iVBORw0KGgoAAAANSUhEUgAAAJAAAACQCAYAAADnRuK4AAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A
 /wD/oL2nkwAAAAlwSFlzAAAOwgAADsIBFShKgAAAAAd0SU1FB9wBEhQiMYMbjeYAAARlSURBVHja
 7d2/i5RHHMfxfS6b+AO54qocYrBQPAMxXSBF2hRiYWEl6QzBSmyMleBhFUNyxBQGNRDwR6O1iK1d
