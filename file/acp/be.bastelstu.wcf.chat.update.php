@@ -9,6 +9,7 @@ namespace be\bastelstu\wcf\chat;
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.wcf.chat
  */
+ // @codingStandardsIgnoreFile
 final class Update {
 	/**
 	 * Contains all the rooms the current installation has.
