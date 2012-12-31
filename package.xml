@@ -6,7 +6,6 @@
 		<standalone>0</standalone>
 		<version>3.0.0 Alpha 19</version>
 		<date>2011-11-26</date>
-		<plugin>com.woltlab.wcf.user</plugin> <!-- TODO: Correct me -->
 	</packageinformation>
 	
 	<authorinformation>
@@ -17,7 +16,6 @@
 	<requiredpackages>
 		<requiredpackage minversion="2.0.0 Alpha 1">com.woltlab.wcf</requiredpackage>
 		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.bbcode</requiredpackage>
-		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.acl</requiredpackage>
 		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.message</requiredpackage>
 		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.user</requiredpackage>
 	</requiredpackages>
