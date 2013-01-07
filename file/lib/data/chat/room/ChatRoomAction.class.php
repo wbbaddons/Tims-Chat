@@ -11,7 +11,7 @@ use \wcf\system\WCF;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	data.chat.room
  */
-class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\data\IPositionAction {
+class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\data\ISortableAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
@@ -79,7 +79,7 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \
 	}
 	
 	/**
-	 * @see wcf\data\IPositionAction
+	 * @see wcf\data\ISortableAction
 	 */
 	public function validateUpdatePosition() {
 		// validate permissions
@@ -98,7 +98,7 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \
 	}
 	
 	/**
-	 * @see wcf\data\IPositionAction
+	 * @see wcf\data\ISortableAction
 	 */
 	public function updatePosition() {
 		$roomList = new \wcf\data\chat\room\ChatRoomList();
