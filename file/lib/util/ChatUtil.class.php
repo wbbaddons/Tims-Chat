@@ -50,7 +50,7 @@ final class ChatUtil {
 	 * @return array
 	 */
 	public static function getDiedUsers() {
-		$packageID = \wcf\util\ChatUtil::getPackageID();
+		$packageID = self::getPackageID();
 		if (self::nodePushRunning()) {
 			$time = TIME_NOW - 120;
 		}
