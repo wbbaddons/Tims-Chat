@@ -12,6 +12,11 @@ namespace wcf\acp\page;
  */
 class ChatRoomListPage extends \wcf\page\MultipleLinkPage {
 	/**
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.chat.room.list';
+	
+	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array(
@@ -33,14 +38,4 @@ class ChatRoomListPage extends \wcf\page\MultipleLinkPage {
 	 * @see	\wcf\page\MultipleLinkPage::$sortOrder
 	 */
 	public $sortOrder = 'ASC';
-	
-	/**
-	 * @see	\wcf\page\IPage::show()
-	 */
-	public function show() {
-		// set active menu item.
-		\wcf\system\menu\acp\ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.chat.room.list');
-		
-		parent::show();
-	}
 }

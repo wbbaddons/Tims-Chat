@@ -13,9 +13,9 @@ use \wcf\system\WCF;
  * @package	be.bastelstu.wcf.chat
  * @subpackage	acp.form
  */
-class ChatRoomAddForm extends ACPForm {
+class ChatRoomAddForm extends \wcf\form\AbstractForm {
 	/**
-	 * @see	\wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	\wcf\acp\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.chat.room.add';
 	
