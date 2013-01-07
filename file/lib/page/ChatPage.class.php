@@ -117,17 +117,7 @@ class ChatPage extends AbstractPage {
 	 * Reads chat-version. Used to avoid caching of JS-File when Tims Chat is updated.
 	 */
 	public function readChatVersion() {
-		CacheHandler::getInstance()->addResource(
-			'packages',
-			WCF_DIR.'cache/cache.packages.php',
-			'wcf\system\cache\builder\PackageCacheBuilder'
-		);
-		$packages = CacheHandler::getInstance()->get('packages');
-		foreach ($packages as $package) {
-			if ($package->package != \wcf\util\ChatUtil::PACKAGE_IDENTIFIER) continue;
-			$this->chatVersion = $package->packageVersion;
-			return;
-		}
+		return $this->chatVersion = \wcf\data\package\PackageCache::getInstance()->getPackage(\wcf\util\ChatUtil::getPackageID())->packageVersion;
 	}
 	
 	/**

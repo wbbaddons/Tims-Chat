@@ -1,7 +1,7 @@
 <?php
 namespace wcf\util;
+use \wcf\data\package\PackageCache;
 use \wcf\system\user\storage\UserStorageHandler;
-use \wcf\system\package\PackageDependencyHandler;
 use \wcf\system\WCF;
 
 /**
@@ -87,7 +87,7 @@ final class ChatUtil {
 	 */
 	public static function getPackageID() {
 		if (self::$packageID === null) {
-			self::$packageID = PackageDependencyHandler::getInstance()->getPackageID(self::PACKAGE_IDENTIFIER);
+			self::$packageID = PackageCache::getInstance()->getPackageID(self::PACKAGE_IDENTIFIER);
 		}
 		
 		return self::$packageID;

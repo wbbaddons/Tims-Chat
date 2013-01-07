@@ -147,7 +147,7 @@
 				'wcf.chat.notify.title': '{lang}wcf.chat.notify.title{/lang}'
 			});
 			WCF.Icon.addObject({
-				'be.bastelstu.wcf.chat.chat': '{icon size='L'}chat{/icon}'
+				'be.bastelstu.wcf.chat.chat': '{icon}chat{/icon}'
 			});
 			{event name='shouldInit'}
 			// Boot the chat

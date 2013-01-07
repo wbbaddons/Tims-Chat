@@ -53,7 +53,6 @@ class ChatPermissionHandler {
 				$userPermissions = array();
 				
 				$conditionBuilder = new \wcf\system\database\util\PreparedStatementConditionBuilder();
-				$conditionBuilder->add('acl_option.packageID IN (?)', array(PackageDependencyHandler::getInstance()->getDependencies()));
 				$conditionBuilder->add('acl_option.objectTypeID = ?', array(ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.wcf.chat.room')));
 				$conditionBuilder->add('option_to_user.optionID = acl_option.optionID');
 				$conditionBuilder->add('option_to_user.userID = ?', array($user->userID));
