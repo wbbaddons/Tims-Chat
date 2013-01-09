@@ -110,10 +110,9 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 				wcf".WCF_N."_user_storage 
 			WHERE
 					field = ?
-				AND	packageID = ?
 				AND 	fieldValue = ?";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array('roomID', \wcf\util\ChatUtil::getPackageID(), $this->roomID));
+		$stmt->execute(array('roomID', $this->roomID));
 		
 		return $stmt->fetchColumn();
 	}
@@ -158,18 +157,15 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 	 * @return	array<\wcf\data\user\User>
 	 */
 	public function getUsers() {
-		$packageID = \wcf\util\ChatUtil::getPackageID();
-		
 		$sql = "SELECT
 				userID
 			FROM
 				wcf".WCF_N."_user_storage 
 			WHERE
 					field = ?
-				AND	packageID = ?
 				AND 	fieldValue = ?";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array('roomID', $packageID, $this->roomID));
+		$stmt->execute(array('roomID', $this->roomID));
 		$userIDs = array();
 		while ($userIDs[] = $stmt->fetchColumn());
 		
@@ -184,15 +180,14 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 				wcf".WCF_N."_user_storage st
 				ON (
 						u.userID = st.userID 
-					AND	st.field = ? 
-					AND	st.packageID = ?
+					AND	st.field = ?
 				)
 			WHERE
 				u.userID IN (".rtrim(str_repeat('?,', count($userIDs)), ',').")
 			ORDER BY
 				u.username ASC";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		array_unshift($userIDs, 'away', $packageID);
+		array_unshift($userIDs, 'away');
 		$stmt->execute($userIDs);
 		
 		return $stmt->fetchObjects('\wcf\data\user\User');
