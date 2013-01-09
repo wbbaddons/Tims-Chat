@@ -23,18 +23,30 @@ abstract class AbstractCommand implements ICommand {
 	 * Should HTML be enabled?
 	 * 
 	 * @var integer
+	 * @see \wcf\system\chat\command\ICommand::SETTING_OFF
+	 * @see \wcf\system\chat\command\ICommand::SETTING_ON
 	 */
-	public $enableHTML = 0;
+	public $enableHTML = ICommand::SETTING_OFF;
+	
+	/**
+	 * Should BBCodes be enabled?
+	 *
+	 * @var integer
+	 * @see \wcf\system\chat\command\ICommand::SETTING_OFF
+	 * @see \wcf\system\chat\command\ICommand::SETTING_ON
+	 * @see \wcf\system\chat\command\ICommand::SETTING_USER
+	 */
+	public $enableBBCodes = ICommand::SETTING_OFF;
 	
 	/**
 	 * Should smilies be enabled?
 	 * 
 	 * @var integer
-	 * @see \wcf\system\chat\command\ICommand::SMILEY_OFF
-	 * @see \wcf\system\chat\command\ICommand::SMILEY_ON
-	 * @see \wcf\system\chat\command\ICommand::SMILEY_USER
+	 * @see \wcf\system\chat\command\ICommand::SETTING_OFF
+	 * @see \wcf\system\chat\command\ICommand::SETTING_ON
+	 * @see \wcf\system\chat\command\ICommand::SETTING_USER
 	 */
-	public $enableSmilies = ICommand::SMILEY_OFF;
+	public $enableSmilies = ICommand::SETTING_OFF;
 	
 	public function __construct(CommandHandler $commandHandler) {
 		EventHandler::getInstance()->fireAction($this, 'shouldInit');

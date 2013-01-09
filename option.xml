@@ -37,6 +37,12 @@
 				<defaultvalue>1</defaultvalue>
 				<showorder>5</showorder>
 			</option>
+			<option name="chat_enable_bbcodes">
+				<categoryname>chat.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<showorder>6</showorder>
+			</option>
 			<option name="chat_max_length">
 				<categoryname>chat.general</categoryname>
 				<optiontype>integer</optiontype>

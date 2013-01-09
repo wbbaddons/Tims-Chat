@@ -11,7 +11,8 @@ namespace wcf\system\chat\command\commands;
  * @subpackage	system.chat.command.commands
  */
 class WhereCommand extends \wcf\system\chat\command\AbstractCommand {
-	public $enableHTML = 1;
+	public $enableHTML = self::SETTING_ON;
+	public $enableBBCodes = self::SETTING_ON;
 	
 	/**
 	 * @see	\wcf\system\chat\command\ICommand::getType()
@@ -30,16 +31,12 @@ class WhereCommand extends \wcf\system\chat\command\AbstractCommand {
 			$users = $room->getUsers();
 			$tmp = array();
 			foreach ($users as $user) {
-				$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
-					'object' => $user
-				));
-				
-				$tmp[] = '<a href="'.$profile.'">'.$user.'</a>';
+				$tmp[] = '<span class="userLink" data-user-id="'.$user->userID.'" />';
 			}
-			if (!empty($tmp)) $lines[] = '<strong>'.$room.':</strong> '.implode(', ', $tmp);
+			if (!empty($tmp)) $lines[] = '[b]'.$room.':[/b] '.implode(', ', $tmp);
 		}
 		
-		return '<ul><li>'.implode('</li><li>', $lines).'</li></ul>';
+		return '[list][*]'.implode('[*]', $lines).'[/list]';
 	}
 	
 	/**

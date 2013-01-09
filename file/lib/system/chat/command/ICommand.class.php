@@ -12,25 +12,25 @@ namespace wcf\system\chat\command;
  */
 interface ICommand {
 	/**
-	 * Smilies are forced to be disabled.
+	 * Setting is forced to be disabled.
 	 * 
 	 * @var integer
 	 */
-	const SMILEY_OFF = 0;
+	const SETTING_OFF = 0;
 	
 	/**
-	 * Smilies are forced to be enabled.
+	 * Setting is forced to be enabled.
 	 * 
 	 * @var integer
 	 */
-	const SMILEY_ON = 1;
+	const SETTING_ON = 1;
 	
 	/**
-	 * The user may decide whether smilies are on or off.
+	 * The user may decide whether this setting is on or off.
 	 * 
 	 * @var integer
 	 */
-	const SMILEY_USER = 2;
+	const SETTING_USER = 2;
 	
 	/**
 	 * Returns the message-type for this command.

@@ -15,7 +15,8 @@ use \wcf\util\StringUtil;
  * @subpackage	system.chat.command.commands
  */
 class InfoCommand extends \wcf\system\chat\command\AbstractCommand {
-	public $enableHTML = 1;
+	public $enableBBCodes = self::SETTING_ON;
+	public $enableHTML = self::SETTING_ON;	
 	public $lines = array();
 	public $user = null;
 	
@@ -86,9 +87,9 @@ class InfoCommand extends \wcf\system\chat\command\AbstractCommand {
 	public function getMessage() {
 		$lines = array();
 		foreach ($this->lines as $key => $val) {
-			$lines[] = '<strong>'.$key.':</strong> '.$val;
+			$lines[] = '[b]'.$key.':[/b] '.$val;
 		}
-		return '<ul><li>'.implode('</li><li>', $lines).'</li></ul>';
+		return '[list][*]'.implode('[*]', $lines).'[/list]';
 	}
 	
 	/**

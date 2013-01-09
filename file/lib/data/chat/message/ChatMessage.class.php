@@ -77,13 +77,24 @@ class ChatMessage extends \wcf\data\DatabaseObject {
 				$message = $message['message'];
 			case self::TYPE_NORMAL:
 			case self::TYPE_ME:
-				if (!$this->enableHTML && $outputType == 'text/html') {
+				if ($this->enableBBCodes) {
+					$messageParser = \wcf\system\bbcode\MessageParser::getInstance();
+					$messageParser->setOutputType($outputType);
+					$message = $messageParser->parse($message, $this->enableSmilies, $this->enableHTML, true, false);
+				}
+				else if (!$this->enableHTML && $outputType == 'text/html') {
 					$message = \wcf\system\bbcode\SimpleMessageParser::getInstance()->parse($message, true, $this->enableSmilies);
 				}
 			break;
 			default:
 				if ($this->enableHTML) {
 					$message = self::replaceUserLink($message, $outputType);
+				}
+				
+				if ($this->enableBBCodes) {
+					$messageParser = \wcf\system\bbcode\MessageParser::getInstance();
+					$messageParser->setOutputType($outputType);
+					$message = $messageParser->parse($message, $this->enableSmilies, $this->enableHTML, true, false);
 				}
 			break;
 		}

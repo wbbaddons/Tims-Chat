@@ -24,14 +24,7 @@ class RestoreCommand extends \wcf\system\chat\command\AbstractRestrictedCommand 
 		$this->user = User::getUserByUsername(rtrim($commandHandler->getParameters(), ','));
 		if (!$this->user->userID) throw new \wcf\system\chat\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
 		
-		// Username + link to profile
-		$color = array(1 => ChatUtil::getRandomNumber(), 2 => ChatUtil::getRandomNumber() * 0xFFFF);
-		ChatUtil::writeUserData(array('color' => $color), $this->user);
-		
-		$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
-			'object' => $this->user
-		));
-		$this->link = '<a href="'.$profile.'" class="userLink" data-user-id="'.$this->user->userID.'">'.ChatUtil::gradient($this->user->username, $color[1], $color[2]).'</a>';
+		$this->link = '<span class="userLink" data-user-id="'.$this->user->userID.'" />';
 		
 		$this->didInit();
 	}

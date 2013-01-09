@@ -23,6 +23,13 @@ class ChatForm extends AbstractForm {
 	public $enableHTML = 0;
 	
 	/**
+	 * Should bbcodes be enabled for this message.
+	 *
+	 * @var integer
+	 */
+	public $enableBBCodes = CHAT_ENABLE_BBCODES;
+	
+	/**
 	 * Should smilies be enabled for this message.
 	 * 
 	 * @var integer
@@ -82,7 +89,7 @@ class ChatForm extends AbstractForm {
 	 * @see wcf\page\IPage::__run()
 	 */
 	public function __run() {
-		if (($this->request = \wcf\system\request\RequestHandler::getInstance()->getActiveRequest()->getRequestObject()) === $this) throw new IllegalLinkException();
+		if (($this->request = \wcf\system\request\RequestHandler::getInstance()->getActiveRequest()->getRequestObject()) === $this) throw new \wcf\system\exception\IllegalLinkException();
 		
 		parent::__run();
 	}
@@ -141,8 +148,10 @@ class ChatForm extends AbstractForm {
 			try {
 				$command = $commandHandler->loadCommand();
 				
-				if ($command->enableSmilies != \wcf\system\chat\command\ICommand::SMILEY_USER) $this->enableSmilies = $command->enableSmilies;
+				if ($command->enableSmilies != \wcf\system\chat\command\ICommand::SETTING_USER) $this->enableSmilies = $command->enableSmilies;
 				$this->enableHTML = $command->enableHTML;
+				if ($command->enableBBCodes != \wcf\system\chat\command\ICommand::SETTING_USER) $this->enableBBCodes = $command->enableBBCodes;
+				
 				$type = $command->getType();
 				$this->message = $command->getMessage();
 				$receiver = $command->getReceiver();
@@ -202,6 +211,7 @@ class ChatForm extends AbstractForm {
 				'message' => $this->message,
 				'enableSmilies' => $this->enableSmilies,
 				'enableHTML' => $this->enableHTML,
+				'enableBBCodes' => $this->enableBBCodes,
 				'color1' => $this->userData['color'][1],
 				'color2' => $this->userData['color'][2]
 			)
