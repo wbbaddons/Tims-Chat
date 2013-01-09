@@ -26,7 +26,7 @@ window.console ?=
 			_console.error '[be.bastelstu.WCF.Chat] '+message
 		
 	
-	be.bastelstu.WCF.Chat =
+	be.bastelstu.WCF.Chat = Class.extend
 		# Tims Chat stops loading when this reaches zero
 		# TODO: We need an explosion animation
 		shields: 3
@@ -63,7 +63,7 @@ window.console ?=
 			getMessages: null
 			refreshRoomList: null
 			fish: null
-		init: () ->
+		init: (@config, @titleTemplate, @messageTemplate) ->
 			console.log 'Initializing'
 			@bindEvents()
 			@events.newMessage.add $.proxy @notify, @
@@ -178,7 +178,7 @@ window.console ?=
 				event.preventDefault()
 				$('.timsChatMessage').remove()
 				@oldScrollTop = null
-				$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
+				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height()
 			
 			# Toggle Buttons
 			$('.timsChatToggle').click (event) ->
@@ -206,7 +206,7 @@ window.console ?=
 			$('#timsChatAutoscroll').click (event) ->
 				$(@).removeClass 'active'
 				if $(@).data 'status'
-					$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
+					$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height()
 					@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
 					
 			# Desktop Notifications
@@ -299,13 +299,13 @@ window.console ?=
 			$.ajax @config.messageURL,
 				dataType: 'json'
 				type: 'POST'
-				success: $.proxy((data, textStatus, jqXHR) ->
+				success: $.proxy (data, textStatus, jqXHR) ->
 					WCF.DOMNodeInsertedHandler.enable()
 					@handleMessages(data.messages)
 					@handleUsers(data.users)
 					WCF.DOMNodeInsertedHandler.disable()
-				, @)
-				error: $.proxy((jqXHR, textStatus, errorThrown) ->
+				, @
+				error: $.proxy (jqXHR, textStatus, errorThrown) ->
 					console.error 'Battle Station hit - shields at ' + (--@shields / 3 * 104) + ' percent'
 					if @shields is 0
 						@pe.refreshRoomList.stop()
@@ -313,15 +313,15 @@ window.console ?=
 						@freeTheFish()
 						console.error 'We got destroyed, but could free our friend the fish before he was killed as well. Have a nice life in freedom!'
 						alert 'herp i cannot load messages'
-				, @),
-				complete: $.proxy(() ->
+				, @
+				complete: $.proxy () ->
 					@loading = false
-				, @)
-				beforeSend: $.proxy(() ->
+				, @
+				beforeSend: $.proxy () ->
 					return false if @loading
 					
 					@loading = true
-				, @)
+				, @
 		###
 		# Inserts the new messages.
 		#
@@ -330,7 +330,7 @@ window.console ?=
 		handleMessages: (messages) ->
 			# Disable scrolling automagically when user manually scrolled
 			unless @oldScrollTop is null
-				if $('.timsChatMessageContainer').scrollTop() < @oldScrollTop
+				if $('#timsChatMessageContainer').scrollTop() < @oldScrollTop
 					if $('#timsChatAutoscroll').data('status') is 1
 						$('#timsChatAutoscroll').click()
 						$('#timsChatAutoscroll').addClass 'active'
@@ -348,12 +348,11 @@ window.console ?=
 				li.addClass 'ownMessage' if message.sender is WCF.User.userID
 				li.append output
 				
-				li.appendTo $ '.timsChatMessageContainer > ul'
+				li.appendTo $ '#timsChatMessageContainer > ul'
 				
 			# Autoscroll down
-			if $('#timsChatAutoscroll').data('status') is 1
-				$('.timsChatMessageContainer').scrollTop $('.timsChatMessageContainer ul').height()
-			@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
+			$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height() if $('#timsChatAutoscroll').data('status') is 1
+			@oldScrollTop = $('#timsChatMessageContainer').scrollTop()
 		###
 		# Builds the userlist.
 		#

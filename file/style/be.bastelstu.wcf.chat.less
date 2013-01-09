@@ -7,7 +7,7 @@
  * @package	be.bastelstu.wcf.chat
  */
 
-#tplChat, #tplChatLog {
+#tplChat {
 	#content {
 		#timsChatRoomContent {
 			text-align: left;
@@ -15,41 +15,46 @@
 			#timsChatTopic {
 				padding: 5px;
 			}
+		}
+	}
+	
+	.timsChatMessageContainer {
+		height: 200px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		padding-left: 7px !important;
+		
+		.timsChatMessage {
+			padding-left: 16px;
+			min-height: 16px;
+			clear: both;
 			
-			.timsChatMessageContainer {
-				height: 200px;
-				overflow-y: scroll;
-				overflow-x: hidden;
-				padding-left: 7px !important;
-				
-				.timsChatMessage {
-					padding-left: 16px;
-					min-height: 16px;
-					clear: both;
-					
-					time:first-child {
-						font-size: .8em;
-						&::before, &::after {
-							font-size: .8em;
-						}
-						&::before {
-							content: "[";
-						}
-						&::after {
-							content: "]";
-						}
-					}
-					
-					.username {
-						font-weight: bold;
-					}
-					
-					&.unloaded {
-						opacity: 0.4;
-					}
+			time:first-child {
+				font-size: .8em;
+				&::before, &::after {
+					font-size: .8em;
+				}
+				&::before {
+					content: "[";
+				}
+				&::after {
+					content: "]";
 				}
 			}
+			
+			.username {
+				font-weight: bold;
+			}
+			
+			&.unloaded {
+				opacity: 0.4;
+			}
 		}
+	}
+	
+	#timsChatLog .timsChatMessageContainer {
+		height: auto;
+		overflow: visible;
 	}
 	
 	.sidebar {
