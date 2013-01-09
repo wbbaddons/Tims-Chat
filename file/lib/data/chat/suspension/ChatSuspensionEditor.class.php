@@ -21,9 +21,8 @@ class ChatSuspensionEditor extends \wcf\data\DatabaseObjectEditor implements \wc
 	 * Clears the suspension cache.
 	 */
 	public static function resetCache() {
-		$packageID = \wcf\util\ChatUtil::getPackageID();
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
-		$ush->resetAll('suspensions', $packageID);
+		$ush->resetAll('suspensions');
 	}
 }

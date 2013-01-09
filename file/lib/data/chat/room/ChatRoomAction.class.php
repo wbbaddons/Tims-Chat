@@ -65,12 +65,11 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \
 					FROM
 						wcf".WCF_N."_user_storage
 					WHERE
-							packageID = ?
 						AND	field = ?
 						AND 	fieldValue IS NOT NULL
 				)";
 		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array(0, \wcf\util\ChatUtil::getPackageID(), 'roomID'));
+		$stmt->execute(array(0, 'roomID'));
 		$objectIDs = array();
 		
 		while ($objectIDs[] = $stmt->fetchColumn());

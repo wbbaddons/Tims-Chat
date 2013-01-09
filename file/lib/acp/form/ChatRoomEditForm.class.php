@@ -63,7 +63,7 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 		
 		$this->title = 'wcf.chat.room.title'.$this->roomObj->roomID;
 		if (I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->remove($this->title, \wcf\util\ChatUtil::getPackageID());
+			I18nHandler::getInstance()->remove($this->title);
 			$this->title = I18nHandler::getInstance()->getValue('title');
 		}
 		else {
@@ -72,7 +72,7 @@ class ChatRoomEditForm extends ChatRoomAddForm {
 		
 		$this->topic = 'wcf.chat.room.topic'.$this->roomObj->roomID;
 		if (I18nHandler::getInstance()->isPlainValue('topic')) {
-			I18nHandler::getInstance()->remove($this->topic, \wcf\util\ChatUtil::getPackageID());
+			I18nHandler::getInstance()->remove($this->topic);
 			$this->topic = I18nHandler::getInstance()->getValue('topic');
 		}
 		else {

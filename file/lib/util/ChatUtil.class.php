@@ -50,7 +50,6 @@ final class ChatUtil {
 	 * @return array
 	 */
 	public static function getDiedUsers() {
-		$packageID = self::getPackageID();
 		if (self::nodePushRunning()) {
 			$time = TIME_NOW - 120;
 		}
@@ -66,17 +65,15 @@ final class ChatUtil {
 				wcf".WCF_N."_user_storage a
 				ON		a.userID = r.userID 
 					AND	a.field = ? 
-					AND	a.packageID = ?
 			WHERE
 					r.field = ?
-				AND	r.packageID = ?
 				AND	r.fieldValue IS NOT NULL
 				AND	(
 						a.fieldValue < ?
 						OR a.fieldValue IS NULL
 				)";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array('lastActivity', $packageID, 'roomID', $packageID, $time - 30));
+		$stmt->execute(array('lastActivity', 'roomID', $time - 30));
 		$users = array();
 		while ($users[] = $stmt->fetchArray());
 		
@@ -152,11 +149,10 @@ final class ChatUtil {
 	public static function readUserData($field, \wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
 		$ush = UserStorageHandler::getInstance();
-		$packageID = self::getPackageID();
 		
 		// load storage
-		$ush->loadStorage(array($user->userID), $packageID);
-		$data = $ush->getStorage(array($user->userID), $field, $packageID);
+		$ush->loadStorage(array($user->userID));
+		$data = $ush->getStorage(array($user->userID), $field);
 		
 		if ($data[$user->userID] === null) {
 			switch ($field) {
@@ -254,10 +250,9 @@ final class ChatUtil {
 	public static function writeUserData(array $data, \wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
 		$ush = UserStorageHandler::getInstance();
-		$packageID = self::getPackageID();
-		
+
 		foreach ($data as $key => $value) {
-			$ush->update($user->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value, $packageID);
+			$ush->update($user->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value);
 		}
 	}
 	
