@@ -65,6 +65,12 @@ window.console ?=
 			fish: null
 		init: (@config, @titleTemplate, @messageTemplate) ->
 			console.log 'Initializing'
+			
+			@events = 
+				newMessage: $.Callbacks()
+				userMenu: $.Callbacks()
+				submit: $.Callbacks()
+			
 			@bindEvents()
 			@events.newMessage.add $.proxy @notify, @
 			
@@ -186,11 +192,11 @@ window.console ?=
 				icon = element.find 'img'
 				if element.data('status') is 1
 					element.data 'status', 0
-					icon.attr 'src', icon.attr('src').replace /enabled(Inverse)?.([a-z]{3})$/, 'disabled$1.$2'
+					icon.attr 'src', icon.attr('src').replace /enabled(.*).svg$/, 'disabled$1.svg'
 					element.attr 'title', element.data 'enableMessage'
 				else
 					element.data 'status', 1
-					icon.attr 'src', icon.attr('src').replace /disabled(Inverse)?.([a-z]{3})$/, 'enabled$1.$2'
+					icon.attr 'src', icon.attr('src').replace /disabled(.*).svg$/, 'enabled$1.svg'
 					element.attr 'title', element.data 'disableMessage'
 					
 				$('#timsChatInput').focus()

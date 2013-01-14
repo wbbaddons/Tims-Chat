@@ -108,6 +108,7 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<!-- 5 = TYPE_MODERATE -->
 		<item name="wcf.chat.message.5.restore"><![CDATA[hat {@$link} zurückgesetzt.]]></item>
 		<item name="wcf.chat.message.5.mute"><![CDATA[hat {@$link} bis {@$until|plainTime} geknebelt.]]></item>
+		<item name="wcf.chat.message.5.ban"><![CDATA[hat {@$link} bis {@$until|plainTime} gebannt.]]></item>
 		
 		<!-- 7 = TYPE_WHISPER -->
 		<item name="wcf.chat.message.7"><![CDATA[flüstert{if $showReceiver} an {$username}{/if}:]]></item>
