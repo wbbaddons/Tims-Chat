@@ -167,9 +167,9 @@ class ChatRoom extends \wcf\data\DatabaseObject implements \wcf\system\request\I
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute(array('roomID', $this->roomID));
 		$userIDs = array();
-		while ($userIDs[] = $stmt->fetchColumn());
+		while ($userID = $stmt->fetchColumn()) $userIDs[] = $userID;
 		
-		if (!count($userIDs)) return array();
+		if (empty($userIDs)) return array();
 		
 		$sql = "SELECT
 				u.*,
