@@ -5,5 +5,17 @@
 			<name>be.bastelstu.wcf.chat.room</name>
 			<definitionname>com.woltlab.wcf.acl</definitionname>
 		</type>
+		<type>
+			<name>be.bastelstu.wcf.chat.activityPointEvent.join</name>
+			<definitionname>com.woltlab.wcf.user.activityPointEvent</definitionname>
+			<points>0</points>
+			<classname>wcf\system\user\activity\point\DefaultUserActivityPointObjectProcessor</classname><!-- We are unable to recalc those points -->
+		</type>
+		<type>
+			<name>be.bastelstu.wcf.chat.activityPointEvent.message</name>
+			<definitionname>com.woltlab.wcf.user.activityPointEvent</definitionname>
+			<points>0</point>
+			<classname>wcf\system\user\activity\point\DefaultUserActivityPointObjectProcessor</classname><!-- We are unable to recalc those points -->
+		</type>
 	</import>
 </data>

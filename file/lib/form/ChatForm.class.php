@@ -218,6 +218,9 @@ class ChatForm extends AbstractForm {
 		));
 		$this->objectAction->executeAction();
 		
+		// add activity points
+		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.wcf.chat.activityPointEvent.message', TIME_NOW, WCF::getUser()->userID);
+		
 		$this->saved();
 	}
 	

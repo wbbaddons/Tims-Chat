@@ -243,6 +243,9 @@ class ChatPage extends AbstractPage {
 		
 		parent::show();
 		
+		// add activity points
+		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.wcf.chat.activityPointEvent.join', TIME_NOW, WCF::getUser()->userID);
+		
 		// break if not using ajax
 		if ($this->useTemplate) exit;
 		@header('Content-type: application/json');
