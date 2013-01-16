@@ -102,7 +102,6 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \
 	public function updatePosition() {
 		$roomList = new \wcf\data\chat\room\ChatRoomList();
 		$roomList->sqlOrderBy = "chat_room.position";
-		$roomList->sqlLimit = 0;
 		$roomList->readObjects();
 		
 		$i = $this->parameters['data']['offset'];

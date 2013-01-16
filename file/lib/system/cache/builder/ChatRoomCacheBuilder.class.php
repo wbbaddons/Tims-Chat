@@ -18,7 +18,6 @@ class ChatRoomCacheBuilder implements ICacheBuilder {
 		// get all chat rooms
 		$roomList = new \wcf\data\chat\room\ChatRoomList();
 		$roomList->sqlOrderBy = "chat_room.position";
-		$roomList->sqlLimit = 0;
 		$roomList->readObjects();
 		
 		return $roomList->getObjects();
