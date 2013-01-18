@@ -86,11 +86,11 @@ class ChatRoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \
 			WCF::getSession()->checkPermissions($this->permissionsUpdate);
 		}
 		else {
-			throw new PermissionDeniedException();
+			throw new \wcf\system\exception\PermissionDeniedException();
 		}
 		
 		if (!isset($this->parameters['data']['structure'])) {
-			throw new UserInputException('structure');
+			throw new \wcf\system\exception\UserInputException('structure');
 		}
 		
 		if (!isset($this->parameters['data']['offset'])) $this->parameters['data']['offset'] = 0;
