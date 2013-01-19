@@ -7,9 +7,9 @@ use \wcf\util\StringUtil;
  * Creates a temporary room
  *
  * @author 	Tim Düsterhus
- * @copyright	2010-2012 Tim Düsterhus
+ * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	be.bastelstu.wcf.chat
+ * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
 class TemproomCommand extends \wcf\system\chat\command\AbstractRestrictedCommand {
@@ -37,7 +37,7 @@ class TemproomCommand extends \wcf\system\chat\command\AbstractRestrictedCommand
 		));
 		
 		// set permissions
-		$options = \wcf\data\acl\option\ACLOption::getOptions(\wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.wcf.chat.room'))->getObjects();
+		$options = \wcf\data\acl\option\ACLOption::getOptions(\wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.chat.room'))->getObjects();
 		$_POST['aclValues'] = array(
 			'user' => array(
 				// creators may do everything
@@ -49,7 +49,7 @@ class TemproomCommand extends \wcf\system\chat\command\AbstractRestrictedCommand
 			)
 		);
 		
-		\wcf\system\acl\ACLHandler::getInstance()->save($roomID, \wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.wcf.chat.room'));
+		\wcf\system\acl\ACLHandler::getInstance()->save($roomID, \wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.chat.room'));
 		\wcf\system\chat\permission\ChatPermissionHandler::clearCache();
 		$this->didInit();
 	}

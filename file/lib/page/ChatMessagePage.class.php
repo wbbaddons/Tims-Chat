@@ -1,6 +1,6 @@
 <?php
-namespace wcf\page;
-use \wcf\data\chat;
+namespace chat\page;
+use \chat\data;
 use \wcf\system\exception\IllegalLinkException;
 use \wcf\system\WCF;
 
@@ -8,12 +8,12 @@ use \wcf\system\WCF;
  * Loads new messages.
  *
  * @author 	Tim Düsterhus
- * @copyright	2010-2012 Tim Düsterhus
+ * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	be.bastelstu.wcf.chat
+ * @package	be.bastelstu.chat
  * @subpackage	page
  */
-class ChatMessagePage extends AbstractPage {
+class ChatMessagePage extends \wcf\page\AbstractPage {
 	/**
 	 * @see wcf\page\AbstractPage::$loginRequired
 	 */
@@ -39,7 +39,7 @@ class ChatMessagePage extends AbstractPage {
 	/**
 	 * The room the user joined.
 	 * 
-	 * @var \wcf\data\chat\room\ChatRoom
+	 * @var \chat\data\room\Room
 	 */
 	public $room = null;
 	
@@ -82,15 +82,15 @@ class ChatMessagePage extends AbstractPage {
 		$this->readMessages();
 		$this->users = $this->room->getUsers();
 		
-		$deadUsers = \wcf\util\ChatUtil::getDiedUsers();
+		$deadUsers = \chat\util\ChatUtil::getDiedUsers();
 		foreach ($deadUsers as $deadUser) {
 			if (!$deadUser) continue;
 			
 			$user = new \wcf\data\user\User($deadUser['userID']);
 			if (CHAT_DISPLAY_JOIN_LEAVE) {
-				$userData['color'] = \wcf\util\ChatUtil::readUserData('color', $user);
+				$userData['color'] = \chat\util\ChatUtil::readUserData('color', $user);
 			
-				$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
+				$messageAction = new data\message\MessageAction(array(), 'create', array(
 					'data' => array(
 						'roomID' => $deadUser['roomID'],
 						'sender' => $user->userID,
@@ -104,7 +104,7 @@ class ChatMessagePage extends AbstractPage {
 				));
 				$messageAction->executeAction();
 			}
-			\wcf\util\ChatUtil::writeUserData(array('roomID' => null), $user);
+			\chat\util\ChatUtil::writeUserData(array('roomID' => null), $user);
 		}
 	}
 	
@@ -112,7 +112,7 @@ class ChatMessagePage extends AbstractPage {
 	 * Fetches the new messages
 	 */
 	public function readMessages() {
-		$this->messages = chat\message\ChatMessageList::getMessagesSince($this->room, \wcf\util\ChatUtil::readUserData('lastSeen'));
+		$this->messages = data\message\MessageList::getMessagesSince($this->room, \chat\util\ChatUtil::readUserData('lastSeen'));
 		
 		// update last seen message
 		$sql = "SELECT
@@ -122,7 +122,7 @@ class ChatMessagePage extends AbstractPage {
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
 		
-		\wcf\util\ChatUtil::writeUserData(array(
+		\chat\util\ChatUtil::writeUserData(array(
 			'lastSeen' => $stmt->fetchColumn(),
 			'lastActivity' => TIME_NOW
 		));
@@ -132,8 +132,8 @@ class ChatMessagePage extends AbstractPage {
 	 * Initializes the room databaseobject.
 	 */
 	public function readRoom() {
-		$roomID = \wcf\util\ChatUtil::readUserData('roomID');
-		$cache = chat\room\ChatRoom::getCache();
+		$roomID = \chat\util\ChatUtil::readUserData('roomID');
+		$cache = data\room\Room::getCache();
 		if (!isset($cache[$roomID])) throw new IllegalLinkException();
 		
 		$this->room = $cache[$roomID];

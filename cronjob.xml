@@ -2,7 +2,7 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/cronjob.xsd">
 	<import>
 		<cronjob>
-			<classname>wcf\system\cronjob\ChatCleanupCronjob</classname>
+			<classname>chat\system\cronjob\CleanupCronjob</classname>
 			<description>Cleans up Tims Chat</description>
 			<startminute>*/15</startminute>
 			<starthour>*</starthour>

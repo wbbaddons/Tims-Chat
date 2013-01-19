@@ -1,17 +1,16 @@
 <?php
-namespace wcf\system\menu\page;
-use \wcf\data\chat\room\ChatRoom;
+namespace chat\system\menu\page;
 
 /**
  * PageMenuItemProvider for chat.
  *
  * @author 	Tim Düsterhus
- * @copyright	2010-2012 Tim Düsterhus
+ * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	be.bastelstu.wcf.chat
+ * @package	be.bastelstu.chat
  * @subpackage	system.menu.page
  */
-class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
+class ChatPageMenuItemProvider extends \wcf\system\menu\page\DefaultPageMenuItemProvider {
 	protected $room = null;
 	
 	/**
@@ -23,7 +22,7 @@ class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
 		// guests are not supported
 		if (!\wcf\system\WCF::getUser()->userID) return false;
 		
-		$cache = ChatRoom::getCache();
+		$cache = \chat\data\room\Room::getCache();
 		
 		foreach ($cache as $this->room) {
 			if ($this->room->canEnter()) {
@@ -41,6 +40,7 @@ class ChatPageMenuItemProvider extends DefaultPageMenuItemProvider {
 	 */
 	public function getLink() {
 		return \wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
+			'application' => 'chat',
 			'object' => $this->room
 		));
 	}

@@ -2,13 +2,13 @@
 # be.bastelstu.WCF.Chat.Log
 # 
 # @author	Tim Düsterhus
-# @copyright	2010-2012 Tim Düsterhus
+# @copyright	2010-2013 Tim Düsterhus
 # @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
-# @package	be.bastelstu.wcf.chat
+# @package	be.bastelstu.chat
 ###
 
 (($, window) ->
-	be.bastelstu.WCF.Chat.Log = be.bastelstu.WCF.Chat.extend
+	be.bastelstu.WCF.Chat.Log = be.bastelstu.Chat.extend
 		init: (@chat) ->
 		handleMessages: (messages) ->
 			# Insert the messages
@@ -27,7 +27,8 @@
 		if !$.wcfIsset 'timsChatLogDialog'
 			container = $ '<fieldset id="timsChatLogDialog"></fieldset>'
 			$('#content').append container
-			
+		
+		# TODO: Proper path
 		$('#timsChatLogDialog').load 'http://127.0.0.1/wbb/wbb4/index.php/Chat/Log/1-Hauptchat/', () ->
 			WCF.showDialog 'timsChatLogDialog', 
 				title: 'Log'

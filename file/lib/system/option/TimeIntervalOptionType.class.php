@@ -1,21 +1,21 @@
 <?php
-namespace wcf\system\option;
+namespace chat\system\option;
 
 /**
  * TimeIntervalOptionType is an implementation of IOptionType for time intervals.
  *
  * @author	Tim Düsterhus
- * @copyright	2010-2012 Tim Düsterhus
+ * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	be.bastelstu.wcf.chat
+ * @package	be.bastelstu.chat
  * @subpackage	system.option
  */
-class TimeIntervalOptionType extends TextOptionType {
+class TimeIntervalOptionType extends \wcf\system\option\TextOptionType {
 	/**
 	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(\wcf\data\option\Option $option, $newValue) {
-		return \wcf\util\ChatUtil::timeModifier($newValue);
+		return \chat\util\ChatUtil::timeModifier($newValue);
 	}
 	
 	/**

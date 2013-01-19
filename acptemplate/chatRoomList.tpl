@@ -1,10 +1,10 @@
-{include file='header' pageTitle='wcf.acp.chat.room.list'}
+{include file='header' pageTitle='chat.acp.room.list'}
 	
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		new WCF.Action.Delete('\\wcf\\data\\chat\\room\\ChatRoomAction', $('.chatRoomRow'));
-		new WCF.Sortable.List('chatRoomList', '\\wcf\\data\\chat\\room\\ChatRoomAction', {@$startIndex-1});
+		new WCF.Action.Delete('\\chat\\data\\room\\RoomAction', $('.chatRoomRow'));
+		new WCF.Sortable.List('chatRoomList', '\\chat\\data\\room\\RoomAction', {@$startIndex-1});
 	});
 	//]]>
 </script>
@@ -16,12 +16,10 @@
 </header>
 
 <div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="ChatRoomList" link="pageNo=%d"}
-	
-	{if $__wcf->session->getPermission('admin.content.chat.canAddRoom')}
+	{if $__wcf->session->getPermission('admin.chat.canAddRoom')}
 		<nav>
 			<ul>
-				<li><a href="{link controller='ChatRoomAdd'}{/link}" title="{lang}wcf.acp.chat.room.add{/lang}" class="button"><img src="{@$__wcf->getPath('wcf')}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.chat.room.add{/lang}</span></a></li>
+				<li><a href="{link application='chat' controller='ChatRoomAdd'}{/link}" title="{lang}chat.acp.room.add{/lang}" class="button"><img src="{@$__wcf->getPath('wcf')}icon/add.svg" alt="" class="icon24" /> <span>{lang}chat.acp.room.add{/lang}</span></a></li>
 			</ul>
 		</nav>
 	{/if}
@@ -33,18 +31,18 @@
 				{foreach from=$objects item=chatRoom}
 					<li class="sortableNode sortableNoNesting chatRoomRow" data-object-id="{@$chatRoom->roomID}">
 						<span class="sortableNodeLabel">
-							{if $__wcf->session->getPermission('admin.content.chat.canEditRoom')}
-								<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}">{$chatRoom->title|language}</a>
+							{if $__wcf->session->getPermission('admin.chat.canEditRoom')}
+								<a href="{link  application='chat'controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}">{$chatRoom->title|language}</a>
 							{else}
 								{$chatRoom->title|language}
 							{/if}
 							
 							<span class="statusDisplay sortableButtonContainer">
 								{if $__wcf->session->getPermission('admin.content.chat.canEditRoom')}
-									<a href="{link controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}"><img src="{@$__wcf->getPath('wcf')}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon16" /></a>
+									<a href="{link application='chat' controller='ChatRoomEdit' id=$chatRoom->roomID}{/link}"><img src="{@$__wcf->getPath('wcf')}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon16" /></a>
 								{/if}
 								{if $__wcf->session->getPermission('admin.content.chat.canDeleteRoom')}
-									<img src="{@$__wcf->getPath('wcf')}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon16" data-object-id="{@$chatRoom->roomID}" data-confirm-message="{lang}wcf.acp.chat.delete.sure{/lang}" />
+									<img src="{@$__wcf->getPath('wcf')}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon16" data-object-id="{@$chatRoom->roomID}" data-confirm-message="{lang}chat.acp.room.delete.sure{/lang}" />
 								{/if}
 							</span>
 						</span>
@@ -58,8 +56,7 @@
 		</div>
 	</section>
 {hascontentelse}
-	<p class="warning">{lang}wcf.acp.chat.room.noneAvailable{/lang}</p>
+	<p class="warning">{lang}chat.acp.room.noneAvailable{/lang}</p>
 {/hascontent}
-
 
 {include file='footer'}

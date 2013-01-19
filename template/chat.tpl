@@ -6,10 +6,10 @@
 	{include file='headInclude' sandbox=false}
 	<style type="text/css">
 		#timsChatCopyrightDialog {
-			background-image: url("{link controller='Chat' action='Copyright' sheep=1}{/link}");
+			background-image: url("{link application='chat' controller='Chat' action='Copyright' sheep=1}{/link}");
 		}
 		
-		{assign var='type' value='\wcf\data\chat\message\ChatMessage::TYPE_'}
+		{assign var='type' value='\chat\data\message\Message::TYPE_'}
 		.timsChatMessage{$type|concat:'JOIN'|constant}, .timsChatMessage{$type|concat:'LEAVE'|constant},
 		.timsChatMessage{$type|concat:'INFORMATION'|constant}, .timsChatMessage{$type|concat:'ERROR'|constant} {
 			background-position: left top;
@@ -18,26 +18,26 @@
 		}
 		
 		.timsChatMessage{$type|concat:'JOIN'|constant} {
-			background-image: url({icon size='S'}circleArrowRight{/icon});
+			background-image: url({icon}circleArrowRight{/icon});
 		}
 		
 		.timsChatMessage{$type|concat:'LEAVE'|constant} {
-			background-image: url({icon size='S'}circleArrowLeft{/icon});
+			background-image: url({icon}circleArrowLeft{/icon});
 		}
 		
 		.timsChatMessage{$type|concat:'INFORMATION'|constant} {
-			background-image: url({icon size='S'}systemInfo{/icon});
+			background-image: url({icon}systemInfo{/icon});
 		}
 		
 		.timsChatMessage{$type|concat:'ERROR'|constant} {
-			background-image: url({icon size='S'}systemError{/icon});
+			background-image: url({icon}systemError{/icon});
 		}
 	</style>
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
-{capture assign='sidebar'}{include file='chatSidebar'}{/capture}
-{capture assign='headerNavigation'}{include file='chatNavigationInclude'}{/capture}
+{capture assign='sidebar'}{include application='chat' file='chatSidebar'}{/capture}
+{capture assign='headerNavigation'}{include application='chat' file='chatNavigationInclude'}{/capture}
 {include file='header' sandbox=false sidebarOrientation='right'}
 
 <div id="timsChatRoomContent">
@@ -50,7 +50,7 @@
 		</div>
 	</fieldset>
 	
-	<form id="timsChatForm" action="{link controller='Chat' action='Send'}{/link}" method="post">
+	<form id="timsChatForm" action="{link application='chat' controller='Chat' action='Send'}{/link}" method="post">
 		<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
 	</form>
 	
@@ -87,32 +87,32 @@
 			<ul class="smallButtons">
 				<li>
 					<a id="timsChatAutoscroll" accesskey="d" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
-						<img alt="" src="{icon size='S'}enabled{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
+						<img alt="" src="{icon}enabled{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
 					</a>
 				</li>
 				<li>
 					<a id="timsChatFullscreen" accesskey="f" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
-						<img alt="" src="{icon size='S'}disabled{/icon}" /> <span>{lang}wcf.chat.fullscreen{/lang}</span>
+						<img alt="" src="{icon}disabled{/icon}" /> <span>{lang}wcf.chat.fullscreen{/lang}</span>
 					</a>
 				</li>
 				<li>
 					<a id="timsChatNotify" accesskey="n" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
-						<img alt="" src="{icon size='S'}disabled{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
+						<img alt="" src="{icon}disabled{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
 					</a>
 				</li>
 				<li{if !MODULE_SMILEY} style="display: none;"{/if}>
 					<a id="timsChatSmilies" accesskey="e" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.{if ENABLE_SMILIES_DEFAULT_VALUE}dis{else}en{/if}able{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="{@ENABLE_SMILIES_DEFAULT_VALUE}">
-						<img alt="" src="{icon size='S'}{if ENABLE_SMILIES_DEFAULT_VALUE}en{else}dis{/if}abled{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
+						<img alt="" src="{icon}{if ENABLE_SMILIES_DEFAULT_VALUE}en{else}dis{/if}abled{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
 					</a>
 				</li>
 				<li>
 					<a id="timsChatClear" class="jsTooltip button" title="{lang}wcf.chat.clear.description{/lang}">
-						<img alt="" src="{icon size='S'}delete{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
+						<img alt="" src="{icon}delete{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
 					</a>
 				</li>
 				<li>
 					<a id="timsChatMark" class="jsTooltip button" title="{lang}wcf.chat.mark.description{/lang}">
-						<img alt="" src="{icon size='S'}check{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
+						<img alt="" src="{icon}check{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
 					</a>
 				</li>
 			</ul>
@@ -142,7 +142,7 @@
 			// Boot the chat
 			WCF.TabMenu.init();
 			new WCF.Message.Smilies();{*
-			*}{capture assign='chatMessageTemplate'}{include file='chatMessage'}{/capture}
+			*}{capture assign='chatMessageTemplate'}{include application='chat' file='chatMessage'}{/capture}
 			
 			
 			chat = new be.bastelstu.WCF.Chat({
@@ -165,7 +165,7 @@
 				event.preventDefault();
 				if ($.wcfIsset('timsChatCopyrightDialog')) return WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}' });
 				var container = $('<fieldset id="timsChatCopyrightDialog"></fieldset>');
-				container.load('{link controller='Chat' action='Copyright'}{/link}', function() {
+				container.load('{link application='chat' controller='Chat' action='Copyright'}{/link}', function() {
 					$('body').append(container);
 					WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}' });
 				});

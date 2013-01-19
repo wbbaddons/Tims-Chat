@@ -6,9 +6,9 @@ use \wcf\data\user\User;
  * Whispers a message.
  *
  * @author 	Tim Düsterhus
- * @copyright	2010-2012 Tim Düsterhus
+ * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	be.bastelstu.wcf.chat
+ * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
 class WhisperCommand extends \wcf\system\chat\command\AbstractCommand {

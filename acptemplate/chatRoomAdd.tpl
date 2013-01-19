@@ -32,12 +32,12 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='ChatRoomList'}{/link}" title="{lang}wcf.acp.menu.link.chat.room.list{/lang}" class="button"><img src="{@$__wcf->getPath('wcf')}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.chat.room.list{/lang}</span></a></li>
+			<li><a href="{link application='chat' controller='ChatRoomList'}{/link}" title="{lang}wcf.acp.menu.link.chat.room.list{/lang}" class="button"><img src="{@$__wcf->getPath('wcf')}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.chat.room.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
 
-<form method="post" action="{if $action == 'add'}{link controller='ChatRoomAdd'}{/link}{else}{link controller='ChatRoomEdit' id=$roomID}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link application='chat' controller='ChatRoomAdd'}{/link}{else}{link application='chat' controller='ChatRoomEdit' id=$roomID}{/link}{/if}">
 	<div class="container containerPadding sortableListContainer marginTop shadow">
 		<fieldset>
 			<legend>{lang}wcf.acp.chat.room.data{/lang}</legend>

@@ -6,9 +6,9 @@ use \wcf\util\StringUtil;
  * Indicates an action. The message is shown without the colon.
  *
  * @author 	Tim Düsterhus
- * @copyright	2010-2012 Tim Düsterhus
+ * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	be.bastelstu.wcf.chat
+ * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
 class MeCommand extends \wcf\system\chat\command\AbstractCommand {

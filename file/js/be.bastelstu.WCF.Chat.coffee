@@ -2,9 +2,9 @@
 # be.bastelstu.WCF.Chat
 # 
 # @author	Tim Düsterhus
-# @copyright	2010-2012 Tim Düsterhus
+# @copyright	2010-2013 Tim Düsterhus
 # @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
-# @package	be.bastelstu.wcf.chat
+# @package	be.bastelstu.chat
 ###
 
 window.console ?= 
@@ -15,18 +15,17 @@ window.console ?=
 (($, window, _console) ->
 	window.be ?= {}
 	be.bastelstu ?= {}
-	be.bastelstu.WCF ?= {}
 	
 	console =
 		log: (message) ->
-			_console.log '[be.bastelstu.WCF.Chat] '+message
+			_console.log '[be.bastelstu.Chat] '+message
 		warn: (message) ->
-			_console.warn '[be.bastelstu.WCF.Chat] '+message
+			_console.warn '[be.bastelstu.Chat] '+message
 		error: (message) ->
-			_console.error '[be.bastelstu.WCF.Chat] '+message
+			_console.error '[be.bastelstu.Chat] '+message
 		
 	
-	be.bastelstu.WCF.Chat = Class.extend
+	be.bastelstu.Chat = Class.extend
 		# Tims Chat stops loading when this reaches zero
 		# TODO: We need an explosion animation
 		shields: 3
@@ -413,9 +412,10 @@ window.console ?=
 					menu = $ '<ul></ul>'
 					#menu.addClass 'timsChatUserMenu'
 					menu.addClass 'dropdownMenu'
-					menu.append $ '<li><a>' + WCF.Language.get('wcf.chat.query') + '</a></li>'
-					menu.append $ '<li><a>' + WCF.Language.get('wcf.chat.kick') + '</a></li>'
-					menu.append $ '<li><a>' + WCF.Language.get('wcf.chat.ban') + '</a></li>'
+					menu.append $ '<li><a>' + WCF.Language.get('chat.query') + '</a></li>'
+					menu.append $ '<li><a>' + WCF.Language.get('chat.kick') + '</a></li>'
+					menu.append $ '<li><a>' + WCF.Language.get('chat.ban') + '</a></li>'
+					# TODO: SID and co
 					menu.append $ '<li><a href="index.php/User/' + user.userID + '-' + encodeURI(user.username) + '/">' + WCF.Language.get('wcf.chat.profile') + '</a></li>'
 					@events.userMenu.fire user, menu
 					li.append menu
@@ -485,8 +485,8 @@ window.console ?=
 			# Desktop Notifications
 			if typeof window.webkitNotifications isnt 'undefined'
 				if window.webkitNotifications.checkPermission() is 0
-					title = WCF.Language.get 'wcf.chat.notify.title'
-					icon = WCF.Icon.get 'be.bastelstu.wcf.chat.chat'
+					title = WCF.Language.get 'chat.notify.title'
+					icon = WCF.Icon.get 'be.bastelstu.chat.chat'
 					content = message.username + message.separator + (if message.separator is ' ' then '' else ' ') + message.message
 					notification = window.webkitNotifications.createNotification icon, title, content
 					notification.show()

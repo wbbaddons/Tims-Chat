@@ -3,42 +3,42 @@
 	<import>
 		<categories>
 			<category name="user">
-				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.chat.room</objecttype>
 			</category>
 			<category name="mod">
-				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.chat.room</objecttype>
 			</category>
 		</categories>
 		
 		<options>
 			<option name="user.canEnter">
-				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.chat.room</objecttype>
 				<categoryname>user</categoryname>
 			</option>
 			<option name="user.canWrite">
-				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.chat.room</objecttype>
 				<categoryname>user</categoryname>
 			</option>
 			
 			
 			<option name="mod.canAlwaysEnter">
-				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.chat.room</objecttype>
 				<categoryname>mod</categoryname>
 			</option>
 			<option name="mod.canAlwaysWrite">
-				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.chat.room</objecttype>
 				<categoryname>mod</categoryname>
 			</option>
 			<option name="mod.canMute">
-				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.chat.room</objecttype>
 				<categoryname>mod</categoryname>
 			</option>
 			<option name="mod.canBan">
-				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.chat.room</objecttype>
 				<categoryname>mod</categoryname>
 			</option>
 			<option name="mod.canReadLog">
-				<objecttype>be.bastelstu.wcf.chat.room</objecttype>
+				<objecttype>be.bastelstu.chat.room</objecttype>
 				<categoryname>mod</categoryname>
 			</option>
 		</options>

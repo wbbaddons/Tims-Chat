@@ -1,6 +1,6 @@
 <?php
-namespace wcf\form;
-use \wcf\data\chat;
+namespace chat\form;
+use \chat\data;
 use \wcf\system\exception\UserInputException;
 use \wcf\system\WCF;
 use \wcf\util\StringUtil;
@@ -9,9 +9,9 @@ use \wcf\util\StringUtil;
  * Inserts a message
  * 
  * @author	Tim Düsterhus
- * @copyright	2010-2012 Tim Düsterhus
+ * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	be.bastelstu.wcf.chat
+ * @package	be.bastelstu.chat
  * @subpackage	form
  */
 class ChatForm extends AbstractForm {
@@ -98,11 +98,11 @@ class ChatForm extends AbstractForm {
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
-		$this->userData['roomID'] = \wcf\util\ChatUtil::readUserData('roomID');
-		$this->userData['away'] = \wcf\util\ChatUtil::readUserData('away');
+		$this->userData['color'] = \chat\util\ChatUtil::readUserData('color');
+		$this->userData['roomID'] = \chat\util\ChatUtil::readUserData('roomID');
+		$this->userData['away'] = \chat\util\ChatUtil::readUserData('away');
 		
-		$cache = chat\room\ChatRoom::getCache();
+		$cache = data\room\Room::getCache();
 		if (!isset($cache[$this->userData['roomID']])) throw new \wcf\system\exception\IllegalLinkException();
 		$this->room = $cache[$this->userData['roomID']];
 		
@@ -142,15 +142,15 @@ class ChatForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		\wcf\util\ChatUtil::writeUserData(array('away' => null));
+		\chat\util\ChatUtil::writeUserData(array('away' => null));
 		$commandHandler = new \wcf\system\chat\command\CommandHandler($this->message);
 		if ($commandHandler->isCommand()) {
 			try {
 				$command = $commandHandler->loadCommand();
 				
-				if ($command->enableSmilies != \wcf\system\chat\command\ICommand::SETTING_USER) $this->enableSmilies = $command->enableSmilies;
+				if ($command->enableSmilies != \chat\system\command\ICommand::SETTING_USER) $this->enableSmilies = $command->enableSmilies;
 				$this->enableHTML = $command->enableHTML;
-				if ($command->enableBBCodes != \wcf\system\chat\command\ICommand::SETTING_USER) $this->enableBBCodes = $command->enableBBCodes;
+				if ($command->enableBBCodes != \chat\system\command\ICommand::SETTING_USER) $this->enableBBCodes = $command->enableBBCodes;
 				
 				$type = $command->getType();
 				$this->message = $command->getMessage();
@@ -158,40 +158,40 @@ class ChatForm extends AbstractForm {
 			}
 			catch (\wcf\system\chat\command\NotFoundException $e) {
 				$this->message = WCF::getLanguage()->get('wcf.chat.error.notFound');
-				$type = chat\message\ChatMessage::TYPE_ERROR;
+				$type = data\message\Message::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 			}
 			catch (\wcf\system\chat\command\UserNotFoundException $e) {
 				$this->message = WCF::getLanguage()->getDynamicVariable('wcf.chat.error.userNotFound', array('username' => $e->getUsername()));
-				$type = chat\message\ChatMessage::TYPE_ERROR;
+				$type = data\message\Message::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 				$this->enableHTML = 1;
 			}
 			catch (\wcf\system\exception\PermissionDeniedException $e) {
 				$this->message = WCF::getLanguage()->get('wcf.chat.error.permissionDenied');
-				$type = chat\message\ChatMessage::TYPE_ERROR;
+				$type = data\message\Message::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 			}
 			catch (\Exception $e) {
 				$this->message = WCF::getLanguage()->get('wcf.chat.error.exception');
-				$type = chat\message\ChatMessage::TYPE_ERROR;
+				$type = data\message\Message::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 			}
 		}
 		else {
-			$type = chat\message\ChatMessage::TYPE_NORMAL;
+			$type = data\message\Message::TYPE_NORMAL;
 			$receiver = null;
 		}
 		
 		// mark user as back
 		if ($this->userData['away'] !== null) {
-			$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
+			$messageAction = new data\message\MessageAction(array(), 'create', array(
 				'data' => array(
 					'roomID' => $this->room->roomID,
 					'sender' => WCF::getUser()->userID,
 					'username' => WCF::getUser()->username,
 					'time' => TIME_NOW,
-					'type' => chat\message\ChatMessage::TYPE_BACK,
+					'type' => data\message\Message::TYPE_BACK,
 					'message' => '',
 					'color1' => $this->userData['color'][1],
 					'color2' => $this->userData['color'][2]
@@ -200,7 +200,7 @@ class ChatForm extends AbstractForm {
 			$messageAction->executeAction();
 		}
 		
-		$this->objectAction = new chat\message\ChatMessageAction(array(), 'create', array(
+		$this->objectAction = new data\message\MessageAction(array(), 'create', array(
 			'data' => array(
 				'roomID' => $this->room->roomID,
 				'sender' => WCF::getUser()->userID,
@@ -219,7 +219,7 @@ class ChatForm extends AbstractForm {
 		$this->objectAction->executeAction();
 		
 		// add activity points
-		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.wcf.chat.activityPointEvent.message', TIME_NOW, WCF::getUser()->userID);
+		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.message', TIME_NOW, WCF::getUser()->userID);
 		
 		$this->saved();
 	}
