@@ -4,7 +4,7 @@
 		<packagename><![CDATA[Tims Chat]]></packagename>
 		<packagedescription><![CDATA[Chat for WoltLab Community Framework™.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Chat für WoltLab Community Framework™.]]></packagedescription>
-		<standalone>1</standalone>
+		<isapplication>1</isapplication>
 		<version>3.0.0 Alpha 19</version>
 		<date>2011-11-26</date>
 	</packageinformation>
@@ -16,9 +16,9 @@
 	
 	<requiredpackages>
 		<requiredpackage minversion="2.0.0 Alpha 1">com.woltlab.wcf</requiredpackage>
-		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.bbcode</requiredpackage>
-		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.message</requiredpackage>
-		<requiredpackage minversion="1.0.0 Alpha 1">com.woltlab.wcf.user</requiredpackage>
+		<requiredpackage file="requirements/com.woltlab.wcf.bbcode.tar">com.woltlab.wcf.bbcode</requiredpackage>
+		<requiredpackage file="requirements/com.woltlab.wcf.message.tar">com.woltlab.wcf.message</requiredpackage>
+		<requiredpackage file="requirements/com.woltlab.wcf.user.tar">com.woltlab.wcf.user</requiredpackage>
 	</requiredpackages>
 	
 	<instructions type="install">

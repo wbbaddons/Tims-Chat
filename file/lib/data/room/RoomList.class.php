@@ -1,5 +1,5 @@
 <?php
-namespace wcf\data\chat\room;
+namespace chat\data\room;
 
 /**
  * Represents a list of chat rooms.

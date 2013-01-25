@@ -1,5 +1,5 @@
 <?php
-namespace wbb\system;
+namespace chat\system;
 
 /**
  * Chat core
