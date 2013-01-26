@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command\commands;
+namespace chat\system\command\commands;
 use \wcf\data\user\User;
 
 /**
@@ -11,11 +11,11 @@ use \wcf\data\user\User;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class WhisperCommand extends \wcf\system\chat\command\AbstractCommand {
-	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_USER;
+class WhisperCommand extends \chat\system\command\AbstractCommand {
+	public $enableSmilies = \chat\system\command\ICommand::SMILEY_USER;
 	public $user = null, $message = '';
 	
-	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
+	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
 		$parameters = $commandHandler->getParameters();
@@ -24,30 +24,30 @@ class WhisperCommand extends \wcf\system\chat\command\AbstractCommand {
 			$username = substr($parameters, 0, $comma);
 			$this->message = substr($parameters, $comma + 1);
 		}
-		else throw new \wcf\system\chat\command\NotFoundException();
+		else throw new \chat\system\command\NotFoundException();
 		
 		$this->user = User::getUserByUsername($username);
-		if (!$this->user->userID) throw new \wcf\system\chat\command\UserNotFoundException($username);
+		if (!$this->user->userID) throw new \chat\system\command\UserNotFoundException($username);
 		
 		$this->didInit();
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getType()
+	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_WHISPER;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getMessage()
+	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return serialize(array('message' => $this->message, 'username' => $this->user->username));
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
+	 * @see	\chat\system\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
 		return $this->user->userID;

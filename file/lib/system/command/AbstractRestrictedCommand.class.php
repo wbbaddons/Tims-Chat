@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command;
+namespace chat\system\command;
 use \wcf\system\event\EventHandler;
 
 /**
@@ -21,7 +21,7 @@ abstract class AbstractRestrictedCommand extends AbstractCommand implements IRes
 	/**
 	 * Fires checkPermission event.
 	 * 
-	 * @see \wcf\system\chat\command\IRestrictedCommand
+	 * @see \chat\system\command\IRestrictedCommand
 	 */
 	public function checkPermission() {
 		EventHandler::getInstance()->fireAction($this, 'checkPermission');

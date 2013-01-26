@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command;
+namespace chat\system\command;
 use \wcf\system\event\EventHandler;
 
 /**
@@ -15,7 +15,7 @@ abstract class AbstractCommand implements ICommand {
 	/**
 	 * Instance of the CommandHandler
 	 * 
-	 * @var \wcf\system\chat\command\CommandHandler
+	 * @var \chat\system\command\CommandHandler
 	 */
 	public $commandHandler = null;
 	
@@ -23,8 +23,8 @@ abstract class AbstractCommand implements ICommand {
 	 * Should HTML be enabled?
 	 * 
 	 * @var integer
-	 * @see \wcf\system\chat\command\ICommand::SETTING_OFF
-	 * @see \wcf\system\chat\command\ICommand::SETTING_ON
+	 * @see \chat\system\command\ICommand::SETTING_OFF
+	 * @see \chat\system\command\ICommand::SETTING_ON
 	 */
 	public $enableHTML = ICommand::SETTING_OFF;
 	
@@ -32,9 +32,9 @@ abstract class AbstractCommand implements ICommand {
 	 * Should BBCodes be enabled?
 	 *
 	 * @var integer
-	 * @see \wcf\system\chat\command\ICommand::SETTING_OFF
-	 * @see \wcf\system\chat\command\ICommand::SETTING_ON
-	 * @see \wcf\system\chat\command\ICommand::SETTING_USER
+	 * @see \chat\system\command\ICommand::SETTING_OFF
+	 * @see \chat\system\command\ICommand::SETTING_ON
+	 * @see \chat\system\command\ICommand::SETTING_USER
 	 */
 	public $enableBBCodes = ICommand::SETTING_OFF;
 	
@@ -42,9 +42,9 @@ abstract class AbstractCommand implements ICommand {
 	 * Should smilies be enabled?
 	 * 
 	 * @var integer
-	 * @see \wcf\system\chat\command\ICommand::SETTING_OFF
-	 * @see \wcf\system\chat\command\ICommand::SETTING_ON
-	 * @see \wcf\system\chat\command\ICommand::SETTING_USER
+	 * @see \chat\system\command\ICommand::SETTING_OFF
+	 * @see \chat\system\command\ICommand::SETTING_ON
+	 * @see \chat\system\command\ICommand::SETTING_USER
 	 */
 	public $enableSmilies = ICommand::SETTING_OFF;
 	
@@ -64,7 +64,7 @@ abstract class AbstractCommand implements ICommand {
 	/**
 	 * Default-Receiver: Everyone
 	 * 
-	 * @see \wcf\system\chat\command\ICommand::getReceiver()
+	 * @see \chat\system\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
 		return null;

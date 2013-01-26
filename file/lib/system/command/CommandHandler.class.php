@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command;
+namespace chat\system\command;
 use \wcf\util\StringUtil;
 
 /**
@@ -73,7 +73,7 @@ final class CommandHandler {
 			return new commands\PlainCommand($this);
 		}
 		
-		$class = '\wcf\system\chat\command\commands\\'.ucfirst(strtolower($parts[0])).'Command';
+		$class = '\chat\system\command\commands\\'.ucfirst(strtolower($parts[0])).'Command';
 		if (!class_exists($class)) {
 			throw new NotFoundException();
 		}

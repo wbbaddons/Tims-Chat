@@ -101,7 +101,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	 */
 	public function updatePosition() {
 		$roomList = new RoomList();
-		$roomList->sqlOrderBy = "chat_room.position";
+		$roomList->sqlOrderBy = "room.position";
 		$roomList->readObjects();
 		
 		$i = $this->parameters['data']['offset'];

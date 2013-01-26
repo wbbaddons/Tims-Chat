@@ -11,7 +11,7 @@ use \wcf\system\WCF;
  * @package	be.bastelstu.chat
  * @subpackage	data.suspension
  */
-class Suspension extends \wcf\data\DatabaseObject {
+class Suspension extends \chat\data\CHATDatabaseObject {
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */

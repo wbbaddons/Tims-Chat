@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command\commands;
+namespace chat\system\command\commands;
 use \wcf\system\WCF;
 use \wcf\util\StringUtil;
 
@@ -12,10 +12,10 @@ use \wcf\util\StringUtil;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class TemproomCommand extends \wcf\system\chat\command\AbstractRestrictedCommand {
+class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 	public $roomName = '';
 	
-	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
+	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
 		// create room
@@ -55,7 +55,7 @@ class TemproomCommand extends \wcf\system\chat\command\AbstractRestrictedCommand
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\IRestrictedCommand::checkPermission()
+	 * @see	\chat\system\command\IRestrictedCommand::checkPermission()
 	 */
 	public function checkPermission() {
 		parent::checkPermission();
@@ -64,21 +64,21 @@ class TemproomCommand extends \wcf\system\chat\command\AbstractRestrictedCommand
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getType()
+	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getMessage()
+	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return $this->roomName;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
+	 * @see	\chat\system\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
 		return \wcf\system\WCF::getUser()->userID;

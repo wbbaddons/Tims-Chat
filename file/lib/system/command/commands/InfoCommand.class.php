@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command\commands;
+namespace chat\system\command\commands;
 use \wcf\data\user\User;
 use \wcf\system\WCF;
 use \wcf\util\ChatUtil;
@@ -14,17 +14,17 @@ use \wcf\util\StringUtil;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class InfoCommand extends \wcf\system\chat\command\AbstractCommand {
+class InfoCommand extends \chat\system\command\AbstractCommand {
 	public $enableBBCodes = self::SETTING_ON;
 	public $enableHTML = self::SETTING_ON;	
 	public $lines = array();
 	public $user = null;
 	
-	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
+	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
 		$this->user = User::getUserByUsername(rtrim($commandHandler->getParameters(), ','));
-		if (!$this->user->userID) throw new \wcf\system\chat\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
+		if (!$this->user->userID) throw new \chat\system\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
 		
 		// Username + link to profile
 		$color = ChatUtil::readUserData('color', $this->user);
@@ -75,14 +75,14 @@ class InfoCommand extends \wcf\system\chat\command\AbstractCommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getType()
+	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getMessage()
+	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		$lines = array();
@@ -93,7 +93,7 @@ class InfoCommand extends \wcf\system\chat\command\AbstractCommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
+	 * @see	\chat\system\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
 		return \wcf\system\WCF::getUser()->userID;

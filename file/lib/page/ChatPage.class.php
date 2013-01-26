@@ -141,7 +141,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 					'sender' => WCF::getUser()->userID,
 					'username' => WCF::getUser()->username,
 					'time' => TIME_NOW,
-					'type' => chat\message\ChatMessage::TYPE_JOIN,
+					'type' => \chat\data\message\Message::TYPE_JOIN,
 					'message' => serialize(array('ipAddress' => \wcf\util\UserUtil::convertIPv6To4(\wcf\util\UserUtil::getIpAddress()))),
 					'color1' => $this->userData['color'][1],
 					'color2' => $this->userData['color'][2]

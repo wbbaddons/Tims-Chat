@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command\commands;
+namespace chat\system\command\commands;
 use \wcf\data\chat\suspension;
 use \wcf\data\user\User;
 use \wcf\system\WCF;

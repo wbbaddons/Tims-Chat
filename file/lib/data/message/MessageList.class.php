@@ -25,15 +25,15 @@ class MessageList extends \wcf\data\DatabaseObjectList {
 	 */
 	public static function getNewestMessages(\chat\data\room\Room $room, $number = CHAT_LASTMESSAGES) {
 		$messageList = new static();
-		$messageList->sqlOrderBy = "chat_message.messageID DESC";
+		$messageList->sqlOrderBy = "message.messageID DESC";
 		$messageList->sqlLimit = $number;
 		$messageList->getConditionBuilder()->add('
 			((
-					chat_message.receiver IS NULL
-				AND 	chat_message.roomID = ?
+					message.receiver IS NULL
+				AND 	message.roomID = ?
 			)
-			OR chat_message.receiver = ?
-			OR chat_message.sender = ?)', array($room->roomID, \wcf\system\WCF::getUser()->userID, \wcf\system\WCF::getUser()->userID));
+			OR message.receiver = ?
+			OR message.sender = ?)', array($room->roomID, \wcf\system\WCF::getUser()->userID, \wcf\system\WCF::getUser()->userID));
 		
 		$messageList->readObjects();
 		return array_reverse($messageList->getObjects());
@@ -48,15 +48,15 @@ class MessageList extends \wcf\data\DatabaseObjectList {
 	 */
 	public static function getMessagesSince(\chat\data\room\Room $room, $since) {
 		$messageList = new static();
-		$messageList->sqlOrderBy = "chat_message.messageID ASC";
-		$messageList->getConditionBuilder()->add('chat_message.messageID > ?', array($since));
+		$messageList->sqlOrderBy = "message.messageID ASC";
+		$messageList->getConditionBuilder()->add('message.messageID > ?', array($since));
 		$messageList->getConditionBuilder()->add('
 			((
-					chat_message.receiver IS NULL
-				AND 	chat_message.roomID = ?
+					message.receiver IS NULL
+				AND 	message.roomID = ?
 			)
-			OR chat_message.receiver = ?
-			OR chat_message.sender = ?)', array($room->roomID, \wcf\system\WCF::getUser()->userID, \wcf\system\WCF::getUser()->userID));
+			OR message.receiver = ?
+			OR message.sender = ?)', array($room->roomID, \wcf\system\WCF::getUser()->userID, \wcf\system\WCF::getUser()->userID));
 		
 		$messageList->readObjects();
 		return $messageList->getObjects();

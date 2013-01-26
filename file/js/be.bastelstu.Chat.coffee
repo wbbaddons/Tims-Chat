@@ -188,14 +188,14 @@ window.console ?=
 			# Toggle Buttons
 			$('.timsChatToggle').click (event) ->
 				element = $ @
-				icon = element.find 'img'
+				icon = element.find 'span.icon'
 				if element.data('status') is 1
 					element.data 'status', 0
-					icon.attr 'src', icon.attr('src').replace /enabled(.*).svg$/, 'disabled$1.svg'
+					icon.removeClass('icon-circle-blank').addClass('icon-off')
 					element.attr 'title', element.data 'enableMessage'
 				else
 					element.data 'status', 1
-					icon.attr 'src', icon.attr('src').replace /disabled(.*).svg$/, 'enabled$1.svg'
+					icon.removeClass('icon-off').addClass('icon-circle-blank')
 					element.attr 'title', element.data 'disableMessage'
 					
 				$('#timsChatInput').focus()
@@ -235,7 +235,7 @@ window.console ?=
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
 					@loading = false
-					target.parent().removeClass 'ajaxLoad'
+					target.parent().removeClass 'loading'
 					
 					# Mark as active
 					$('.activeMenuItem .timsChatRoom').parent().removeClass 'activeMenuItem'
@@ -260,10 +260,10 @@ window.console ?=
 					# inclusive the error-message :)
 					window.location.reload true
 				beforeSend: $.proxy(() ->
-					return false if target.parent().hasClass('ajaxLoad') or target.parent().hasClass 'activeMenuItem'
+					return false if target.parent().hasClass('loading') or target.parent().hasClass 'activeMenuItem'
 					
 					@loading = true
-					target.parent().addClass 'ajaxLoad'
+					target.parent().addClass 'loading'
 				, @)
 		###
 		# Frees the fish
@@ -412,11 +412,11 @@ window.console ?=
 					menu = $ '<ul></ul>'
 					#menu.addClass 'timsChatUserMenu'
 					menu.addClass 'dropdownMenu'
-					menu.append $ '<li><a>' + WCF.Language.get('chat.query') + '</a></li>'
-					menu.append $ '<li><a>' + WCF.Language.get('chat.kick') + '</a></li>'
-					menu.append $ '<li><a>' + WCF.Language.get('chat.ban') + '</a></li>'
+					menu.append $ '<li><a>' + WCF.Language.get('chat.general.query') + '</a></li>'
+					menu.append $ '<li><a>' + WCF.Language.get('chat.general.kick') + '</a></li>'
+					menu.append $ '<li><a>' + WCF.Language.get('chat.general.ban') + '</a></li>'
 					# TODO: SID and co
-					menu.append $ '<li><a href="index.php/User/' + user.userID + '-' + encodeURI(user.username) + '/">' + WCF.Language.get('wcf.chat.profile') + '</a></li>'
+					menu.append $ '<li><a href="index.php/User/' + user.userID + '-' + encodeURI(user.username) + '/">' + WCF.Language.get('chat.general.profile') + '</a></li>'
 					@events.userMenu.fire user, menu
 					li.append menu
 					
@@ -485,7 +485,7 @@ window.console ?=
 			# Desktop Notifications
 			if typeof window.webkitNotifications isnt 'undefined'
 				if window.webkitNotifications.checkPermission() is 0
-					title = WCF.Language.get 'chat.notify.title'
+					title = WCF.Language.get 'chat.general.notify.title'
 					icon = WCF.Icon.get 'be.bastelstu.chat.chat'
 					content = message.username + message.separator + (if message.separator is ' ' then '' else ' ') + message.message
 					notification = window.webkitNotifications.createNotification icon, title, content
@@ -500,14 +500,14 @@ window.console ?=
 		###
 		refreshRoomList: () ->
 			console.log 'Refreshing the roomlist'
-			$('#toggleRooms a').addClass 'ajaxLoad'
+			$('#toggleRooms .ajaxLoad').show()
 			
 			$.ajax $('#toggleRooms a').data('refreshUrl'),
 				dataType: 'json'
 				type: 'POST'
 				success: $.proxy((data, textStatus, jqXHR) ->
 					$('#timsChatRoomList li').remove()
-					$('#toggleRooms a').removeClass 'ajaxLoad'
+					$('#toggleRooms .ajaxLoad').hide()
 					$('#toggleRooms .badge').text data.length
 					
 					for room in data
@@ -549,12 +549,10 @@ window.console ?=
 					smilies: $('#timsChatSmilies').data 'status'
 				type: 'POST',
 				beforeSend: (jqXHR) ->
-					$('#timsChatInput').addClass 'ajaxLoad'
 				success: $.proxy((data, textStatus, jqXHR) ->
 					@getMessages()
 				, @)
 				complete: () ->
-					$('#timsChatInput').removeClass 'ajaxLoad'
 		###
 		# Toggles between user- and room-list.
 		# 

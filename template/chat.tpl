@@ -1,7 +1,7 @@
 {include file='documentHeader'}
 
 <head>
-	<title>{$room} - {lang}wcf.chat.title{/lang} - {PAGE_TITLE|language}</title>
+	<title>{$room} - {lang}chat.general.title{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude' sandbox=false}
 	<style type="text/css">
@@ -18,26 +18,26 @@
 		}
 		
 		.timsChatMessage{$type|concat:'JOIN'|constant} {
-			background-image: url({icon}circleArrowRight{/icon});
+			{*background-image: url({icon}circleArrowRight{/icon});*}
 		}
 		
 		.timsChatMessage{$type|concat:'LEAVE'|constant} {
-			background-image: url({icon}circleArrowLeft{/icon});
+			{*background-image: url({icon}circleArrowLeft{/icon});*}
 		}
 		
 		.timsChatMessage{$type|concat:'INFORMATION'|constant} {
-			background-image: url({icon}systemInfo{/icon});
+			{*background-image: url({icon}systemInfo{/icon});*}
 		}
 		
 		.timsChatMessage{$type|concat:'ERROR'|constant} {
-			background-image: url({icon}systemError{/icon});
+			{*background-image: url({icon}systemError{/icon});*}
 		}
 	</style>
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
-{capture assign='sidebar'}{include application='chat' file='chatSidebar'}{/capture}
-{capture assign='headerNavigation'}{include application='chat' file='chatNavigationInclude'}{/capture}
+{capture assign='sidebar'}{include application='chat' file='sidebar'}{/capture}
+{capture assign='headerNavigation'}{include application='chat' file='navigationInclude'}{/capture}
 {include file='header' sandbox=false sidebarOrientation='right'}
 
 <div id="timsChatRoomContent">
@@ -45,13 +45,13 @@
 	<fieldset>
 		<div id="timsChatMessageContainer" class="timsChatMessageContainer container box shadow1">
 			<ul>
-				<li class="error">{lang}wcf.chat.noJs{/lang}</li>
+				<li class="error">{lang}chat.general.noJs{/lang}</li>
 			</ul>
 		</div>
 	</fieldset>
 	
 	<form id="timsChatForm" action="{link application='chat' controller='Chat' action='Send'}{/link}" method="post">
-		<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}wcf.chat.submit.default{/lang}" />
+		<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}chat.general.submit.default{/lang}" />
 	</form>
 	
 	<div id="timsChatControls" class="marginTop">
@@ -87,40 +87,40 @@
 			<ul class="smallButtons">
 				<li>
 					<a id="timsChatAutoscroll" accesskey="d" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
-						<img alt="" src="{icon}enabled{/icon}" /> <span>{lang}wcf.chat.scroll{/lang}</span>
+						<span class="icon icon16 icon-circle-blank"></span><span>{lang}chat.general.scroll{/lang}</span>
 					</a>
 				</li>
 				<li>
 					<a id="timsChatFullscreen" accesskey="f" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
-						<img alt="" src="{icon}disabled{/icon}" /> <span>{lang}wcf.chat.fullscreen{/lang}</span>
+						<span class="icon icon16 icon-off"></span><span>{lang}chat.general.fullscreen{/lang}</span>
 					</a>
 				</li>
 				<li>
 					<a id="timsChatNotify" accesskey="n" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
-						<img alt="" src="{icon}disabled{/icon}" /> <span>{lang}wcf.chat.notify{/lang}</span>
+						<span class="icon icon16 icon-off"></span><span>{lang}chat.general.notify{/lang}</span>
 					</a>
 				</li>
 				<li{if !MODULE_SMILEY} style="display: none;"{/if}>
 					<a id="timsChatSmilies" accesskey="e" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.{if ENABLE_SMILIES_DEFAULT_VALUE}dis{else}en{/if}able{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="{@ENABLE_SMILIES_DEFAULT_VALUE}">
-						<img alt="" src="{icon}{if ENABLE_SMILIES_DEFAULT_VALUE}en{else}dis{/if}abled{/icon}" /> <span>{lang}wcf.chat.smilies{/lang}</span>
+						<span class="icon icon16 icon-{if ENABLE_SMILIES_DEFAULT_VALUE}circle-blank{else}off{/if}"></span><span>{lang}chat.general.smilies{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatClear" class="jsTooltip button" title="{lang}wcf.chat.clear.description{/lang}">
-						<img alt="" src="{icon}delete{/icon}" /> <span>{lang}wcf.chat.clear{/lang}</span>
+					<a id="timsChatClear" class="jsTooltip button" title="{lang}chat.general.clear.description{/lang}">
+						<span class="icon icon16 icon-remove"></span><span>{lang}chat.general.clear{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatMark" class="jsTooltip button" title="{lang}wcf.chat.mark.description{/lang}">
-						<img alt="" src="{icon}check{/icon}" /> <span>{lang}wcf.chat.mark{/lang}</span>
+					<a id="timsChatMark" class="jsTooltip button" title="{lang}chat.general.mark.description{/lang}">
+						<span class="icon icon16 icon-check"></span><span>{lang}chat.general.mark{/lang}</span>
 					</a>
 				</li>
 			</ul>
 		</nav>
 	</div>
-	{include file='chatCopyright'}
+	{include file='copyright'}
 </div>
-{include file='chatJavascriptInclude'}
+{include file='javascriptInclude'}
 <script type="text/javascript">
 	//<![CDATA[
 		var chat;
@@ -129,28 +129,25 @@
 			$('.timsChatMessageContainer .error').remove();
 			
 			WCF.Language.addObject({
-				'wcf.chat.query': '{lang}wcf.chat.query{/lang}',
-				'wcf.chat.kick': '{lang}wcf.chat.kick{/lang}',
-				'wcf.chat.ban': '{lang}wcf.chat.ban{/lang}',
-				'wcf.chat.profile': '{lang}wcf.chat.profile{/lang}',
-				'wcf.chat.notify.title': '{lang}wcf.chat.notify.title{/lang}'
-			});
-			WCF.Icon.addObject({
-				'be.bastelstu.wcf.chat.chat': '{icon}chat{/icon}'
+				'chat.general.query': '{lang}chat.general.query{/lang}',
+				'chat.general.kick': '{lang}chat.general.kick{/lang}',
+				'chat.general.ban': '{lang}chat.general.ban{/lang}',
+				'chat.general.profile': '{lang}chat.general.profile{/lang}',
+				'chat.general.notify.title': '{lang}chat.general.notify.title{/lang}'
 			});
 			{event name='shouldInit'}
 			// Boot the chat
 			WCF.TabMenu.init();
 			new WCF.Message.Smilies();{*
-			*}{capture assign='chatMessageTemplate'}{include application='chat' file='chatMessage'}{/capture}
+			*}{capture assign='messageTemplate'}{include application='chat' file='message'}{/capture}
 			
 			
-			chat = new be.bastelstu.WCF.Chat({
+			chat = new be.bastelstu.Chat({
 				reloadTime: {@CHAT_RELOADTIME},
 				unloadURL: '{link controller="Chat" action="Leave"}{/link}',
 				messageURL: '{link controller="Chat" action="Message"}{/link}',
 				socketIOPath: '{@CHAT_SOCKET_IO_PATH|encodeJS}'
-			}, (new WCF.Template('{ldelim}$title} - {'wcf.chat.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile(), (new WCF.Template('{@$chatMessageTemplate|encodeJS}')).compile());
+			}, (new WCF.Template('{ldelim}$title} - {'chat.general.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile(), (new WCF.Template('{@$messageTemplate|encodeJS}')).compile());
 			{event name='didInit'}
 			
 			// show the last X messages

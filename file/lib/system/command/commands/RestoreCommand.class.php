@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command\commands;
+namespace chat\system\command\commands;
 use \wcf\data\user\User;
 use \wcf\system\WCF;
 use \wcf\util\ChatUtil;
@@ -13,16 +13,16 @@ use \wcf\util\ChatUtil;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class RestoreCommand extends \wcf\system\chat\command\AbstractRestrictedCommand {
+class RestoreCommand extends \chat\system\command\AbstractRestrictedCommand {
 	public $enableHTML = 1;
 	public $user = null;
 	public $link = '';
 	
-	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
+	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
 		$this->user = User::getUserByUsername(rtrim($commandHandler->getParameters(), ','));
-		if (!$this->user->userID) throw new \wcf\system\chat\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
+		if (!$this->user->userID) throw new \chat\system\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
 		
 		$this->link = '<span class="userLink" data-user-id="'.$this->user->userID.'" />';
 		
@@ -30,7 +30,7 @@ class RestoreCommand extends \wcf\system\chat\command\AbstractRestrictedCommand 
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\IRestrictedChatCommand::checkPermission()
+	 * @see	\chat\system\command\IRestrictedChatCommand::checkPermission()
 	 */
 	public function checkPermission() {
 		parent::checkPermission();
@@ -39,19 +39,19 @@ class RestoreCommand extends \wcf\system\chat\command\AbstractRestrictedCommand 
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getType()
+	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_MODERATE;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getMessage()
+	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return serialize(array(
 			'link' => $this->link,
-			'type' => str_replace(array('wcf\system\chat\command\commands\\', 'command'), '', strtolower(get_class($this)))
+			'type' => str_replace(array('chat\system\command\commands\\', 'command'), '', strtolower(get_class($this)))
 		));
 	}
 }

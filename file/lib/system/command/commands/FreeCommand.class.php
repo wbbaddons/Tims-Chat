@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command\commands;
+namespace chat\system\command\commands;
 
 /**
  * Informs everyone that the fish was freed. OH A NOEZ.
@@ -11,18 +11,18 @@ namespace wcf\system\chat\command\commands;
  * @subpackage	system.chat.command.commands
  */
 class FreeCommand extends MeCommand {
-	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
+	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
 		if (\wcf\util\StringUtil::toLowerCase($this->commandHandler->getParameters()) != 'the fish') {
-			throw new \wcf\system\chat\command\NotFoundException();
+			throw new \chat\system\command\NotFoundException();
 		}
 		
 		$this->didInit();
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getMessage()
+	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return 'freed the fish. OH A NOEZ';

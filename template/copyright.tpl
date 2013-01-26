@@ -1,7 +1,7 @@
-{if $templateName == 'chat'}<address id="timsChatCopyright" class="copyright">{lang}wcf.chat.copyright{/lang}</address>
-{elseif $templateName == 'chatCopyright'}
+{if $templateName == 'chat'}<address id="timsChatCopyright" class="copyright">{lang}chat.general.copyright{/lang}</address>
+{elseif $templateName == 'copyright'}
 	<dl>
-		<dt>{lang}wcf.chat.copyright.leader{/lang}</dt>
+		<dt>{lang}chat.general.copyright.leader{/lang}</dt>
 		<dd>
 			<ul>
 				<li><a href="http://tims.bastelstu.be/">Tim Düsterhus</a></li>
@@ -9,7 +9,7 @@
 		</dd>
 	</dl>
 	<dl>
-		<dt>{lang}wcf.chat.copyright.developer{/lang}</dt>
+		<dt>{lang}chat.general.copyright.developer{/lang}</dt>
 		<dd>
 			<ul>
 				<li><a href="http://tims.bastelstu.be/">Tim Düsterhus</a></li>
@@ -18,7 +18,7 @@
 		</dd>
 	</dl>
 	<dl>
-		<dt>{lang}wcf.chat.copyright.graphics{/lang}</dt>
+		<dt>{lang}chat.general.copyright.graphics{/lang}</dt>
 		<dd>
 			<ul>
 				<li><a href="http://www.cls-design.com/">Tom</a></li>
@@ -26,7 +26,7 @@
 		</dd>
 	</dl>
 	<dl>
-		<dt>{lang}wcf.chat.copyright.translation{/lang}</dt>
+		<dt>{lang}chat.general.copyright.translation{/lang}</dt>
 		<dd>
 			<ul>
 				<li>Riccardo Vianello (it)</li>
@@ -34,7 +34,7 @@
 		</dd>
 	</dl>
 	<dl>
-		<dt>{lang}wcf.chat.copyright.thanks{/lang}</dt>
+		<dt>{lang}chat.general.copyright.thanks{/lang}</dt>
 		<dd>
 			<ul>
 				<li><a href="http://www.wbbaddons.de/user/2020-noone/">-noone-</a></li>

@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command\commands;
+namespace chat\system\command\commands;
 
 /**
  * Sends a message that starts with a slash.
@@ -10,25 +10,25 @@ namespace wcf\system\chat\command\commands;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class PlainCommand extends \wcf\system\chat\command\AbstractCommand {
-	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_USER;
+class PlainCommand extends \chat\system\command\AbstractCommand {
+	public $enableSmilies = \chat\system\command\ICommand::SMILEY_USER;
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getType()
+	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_NORMAL;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getMessage()
+	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return \wcf\util\StringUtil::substring($this->commandHandler->getText(), 1);
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
+	 * @see	\chat\system\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
 		return null;

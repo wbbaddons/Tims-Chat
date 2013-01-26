@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command\commands;
+namespace chat\system\command\commands;
 use \wcf\util\StringUtil;
 
 /**
@@ -11,24 +11,24 @@ use \wcf\util\StringUtil;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class MeCommand extends \wcf\system\chat\command\AbstractCommand {
-	public $enableSmilies = \wcf\system\chat\command\ICommand::SMILEY_USER;
+class MeCommand extends \chat\system\command\AbstractCommand {
+	public $enableSmilies = \chat\system\command\ICommand::SMILEY_USER;
 	
-	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
+	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
 		$this->didInit();
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getType()
+	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_ME;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getMessage()
+	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return $this->commandHandler->getParameters();

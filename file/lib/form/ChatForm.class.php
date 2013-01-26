@@ -14,7 +14,7 @@ use \wcf\util\StringUtil;
  * @package	be.bastelstu.chat
  * @subpackage	form
  */
-class ChatForm extends AbstractForm {
+class ChatForm extends \wcf\form\AbstractForm {
 	/**
 	 * Should HTML be enabled for this message.
 	 * 
@@ -143,7 +143,7 @@ class ChatForm extends AbstractForm {
 		parent::save();
 		
 		\chat\util\ChatUtil::writeUserData(array('away' => null));
-		$commandHandler = new \wcf\system\chat\command\CommandHandler($this->message);
+		$commandHandler = new \chat\system\command\CommandHandler($this->message);
 		if ($commandHandler->isCommand()) {
 			try {
 				$command = $commandHandler->loadCommand();
@@ -156,12 +156,12 @@ class ChatForm extends AbstractForm {
 				$this->message = $command->getMessage();
 				$receiver = $command->getReceiver();
 			}
-			catch (\wcf\system\chat\command\NotFoundException $e) {
+			catch (\chat\system\command\NotFoundException $e) {
 				$this->message = WCF::getLanguage()->get('wcf.chat.error.notFound');
 				$type = data\message\Message::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 			}
-			catch (\wcf\system\chat\command\UserNotFoundException $e) {
+			catch (\chat\system\command\UserNotFoundException $e) {
 				$this->message = WCF::getLanguage()->getDynamicVariable('wcf.chat.error.userNotFound', array('username' => $e->getUsername()));
 				$type = data\message\Message::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;

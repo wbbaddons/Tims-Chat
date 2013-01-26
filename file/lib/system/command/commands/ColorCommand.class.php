@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command\commands;
+namespace chat\system\command\commands;
 use \wcf\util\StringUtil;
 
 /**
@@ -11,7 +11,7 @@ use \wcf\util\StringUtil;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class ColorCommand extends \wcf\system\chat\command\AbstractCommand {
+class ColorCommand extends \chat\system\command\AbstractCommand {
 	public static $colors = array(
 		'red'		=> 0xFF0000,
 		'blue'		=> 0x0000FF,
@@ -36,7 +36,7 @@ class ColorCommand extends \wcf\system\chat\command\AbstractCommand {
 		'oxford'	=> 0xF02D // looks like green
 	);
 	
-	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
+	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		try {
 			list($color[1], $color[2]) = explode(' ', $commandHandler->getParameters());
@@ -49,7 +49,7 @@ class ColorCommand extends \wcf\system\chat\command\AbstractCommand {
 		foreach ($color as $key => $val) {
 			if (isset(self::$colors[$val])) $color[$key] = self::$colors[$val];
 			else {
-				if (!$regex->match($val)) throw new \wcf\system\chat\command\NotFoundException();
+				if (!$regex->match($val)) throw new \chat\system\command\NotFoundException();
 				$matches = $regex->getMatches();
 				$val = $matches[1];
 				if (strlen($val) == 3) $val = $val[0].$val[0].$val[1].$val[1].$val[2].$val[2];
@@ -61,21 +61,21 @@ class ColorCommand extends \wcf\system\chat\command\AbstractCommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getType()
+	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getMessage()
+	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return 'color changed';
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
+	 * @see	\chat\system\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
 		return \wcf\system\WCF::getUser()->userID;

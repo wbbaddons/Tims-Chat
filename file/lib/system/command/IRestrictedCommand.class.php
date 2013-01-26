@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command;
+namespace chat\system\command;
 
 /**
  * Interface for Restricted commands.

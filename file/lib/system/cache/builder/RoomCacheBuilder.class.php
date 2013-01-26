@@ -17,7 +17,7 @@ class RoomCacheBuilder implements \wcf\system\cache\builder\ICacheBuilder {
 	public function getData(array $cacheResource) {
 		// get all chat rooms
 		$roomList = new \chat\data\room\RoomList();
-		$roomList->sqlOrderBy = "chat_room.position";
+		$roomList->sqlOrderBy = "room.position";
 		$roomList->readObjects();
 		
 		return $roomList->getObjects();

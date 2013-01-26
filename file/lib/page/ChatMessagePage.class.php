@@ -118,7 +118,7 @@ class ChatMessagePage extends \wcf\page\AbstractPage {
 		$sql = "SELECT
 				MAX(messageID)
 			FROM
-				wcf".WCF_N."_chat_message";
+				chat".WCF_N."_message";
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
 		

@@ -13,7 +13,7 @@ use \wcf\util\ChatUtil;
  * @package	be.bastelstu.chat
  * @subpackage	data.message
  */
-class Message extends \wcf\data\DatabaseObject {
+class Message extends \chat\data\CHATDatabaseObject {
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */

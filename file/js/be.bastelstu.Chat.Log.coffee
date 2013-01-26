@@ -8,7 +8,7 @@
 ###
 
 (($, window) ->
-	be.bastelstu.WCF.Chat.Log = be.bastelstu.Chat.extend
+	be.bastelstu.Chat.Log = be.bastelstu.Chat.extend
 		init: (@chat) ->
 		handleMessages: (messages) ->
 			# Insert the messages
@@ -23,7 +23,7 @@
 				
 				li.appendTo $ '#timsChatLog .timsChatMessageContainer > ul'
 				
-	be.bastelstu.WCF.Chat.Log.loadOverlay = () ->
+	be.bastelstu.Chat.Log.loadOverlay = () ->
 		if !$.wcfIsset 'timsChatLogDialog'
 			container = $ '<fieldset id="timsChatLogDialog"></fieldset>'
 			$('#content').append container

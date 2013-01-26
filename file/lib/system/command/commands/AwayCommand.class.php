@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command\commands;
+namespace chat\system\command\commands;
 use \wcf\util\StringUtil;
 
 /**
@@ -11,8 +11,8 @@ use \wcf\util\StringUtil;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class AwayCommand extends \wcf\system\chat\command\AbstractCommand {
-	public function __construct(\wcf\system\chat\command\CommandHandler $commandHandler) {
+class AwayCommand extends \chat\system\command\AbstractCommand {
+	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
 		\chat\util\ChatUtil::writeUserData(array('away' => $commandHandler->getParameters()));
@@ -20,21 +20,21 @@ class AwayCommand extends \wcf\system\chat\command\AbstractCommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getType()
+	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_AWAY;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getMessage()
+	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		return serialize(array('message' => $this->commandHandler->getParameters()));
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
+	 * @see	\chat\system\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
 		return \wcf\system\WCF::getUser()->userID;

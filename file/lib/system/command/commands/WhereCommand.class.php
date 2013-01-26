@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\chat\command\commands;
+namespace chat\system\command\commands;
 
 /**
  * Shows the users that are online
@@ -10,19 +10,19 @@ namespace wcf\system\chat\command\commands;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class WhereCommand extends \wcf\system\chat\command\AbstractCommand {
+class WhereCommand extends \chat\system\command\AbstractCommand {
 	public $enableHTML = self::SETTING_ON;
 	public $enableBBCodes = self::SETTING_ON;
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getType()
+	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
 		return \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION;
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getMessage()
+	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
 		$rooms = \wcf\data\chat\room\ChatRoom::getCache();
@@ -40,7 +40,7 @@ class WhereCommand extends \wcf\system\chat\command\AbstractCommand {
 	}
 	
 	/**
-	 * @see	\wcf\system\chat\command\ICommand::getReceiver()
+	 * @see	\chat\system\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
 		return \wcf\system\WCF::getUser()->userID;

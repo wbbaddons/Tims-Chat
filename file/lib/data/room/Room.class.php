@@ -13,7 +13,7 @@ use \wcf\system\WCF;
  * @package	be.bastelstu.chat
  * @subpackage	data.room
  */
-class Room extends \wcf\data\DatabaseObject implements \wcf\system\request\IRouteController {
+class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\IRouteController {
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
