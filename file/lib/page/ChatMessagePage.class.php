@@ -96,7 +96,7 @@ class ChatMessagePage extends \wcf\page\AbstractPage {
 						'sender' => $user->userID,
 						'username' => $user->username,
 						'time' => TIME_NOW,
-						'type' => chat\message\ChatMessage::TYPE_LEAVE,
+						'type' => data\message\Message::TYPE_LEAVE,
 						'message' => '',
 						'color1' => $userData['color'][1],
 						'color2' => $userData['color'][2]
