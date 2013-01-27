@@ -11,7 +11,7 @@ use \chat\data;
  * @package	be.bastelstu.chat
  * @subpackage	system.cronjob
  */
-class ChatCleanupCronjob implements \wcf\system\cronjob\ICronjob {
+class CleanupCronjob implements \wcf\system\cronjob\ICronjob {
 	/**
 	 * @see wcf\system\ICronjob::execute()
 	 */
