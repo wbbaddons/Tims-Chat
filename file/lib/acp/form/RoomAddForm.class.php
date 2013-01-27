@@ -1,5 +1,5 @@
 <?php
-namespace wcf\acp\form;
+namespace chat\acp\form;
 use \wcf\system\exception\UserInputException;
 use \wcf\system\language\I18nHandler;
 use \wcf\system\WCF;
@@ -88,21 +88,21 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 		parent::save();
 
 		// save room
-		$this->objectAction = new \wcf\data\chat\room\ChatRoomAction(array(), 'create', array('data' => array(
+		$this->objectAction = new \chat\data\room\RoomAction(array(), 'create', array('data' => array(
 			'title' => $this->title,
 			'topic' => $this->topic
 		)));
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
-		$chatRoomEditor = new \wcf\data\chat\room\ChatRoomEditor($returnValues['returnValues']);
+		$roomEditor = new \chat\data\room\RoomEditor($returnValues['returnValues']);
 		$roomID = $returnValues['returnValues']->roomID;
 		
 		if (!I18nHandler::getInstance()->isPlainValue('title')) {
 			I18nHandler::getInstance()->save('title', 'chat.room.title'.$roomID, 'chat.room', \chat\util\ChatUtil::getPackageID());
 		
 			// update title
-			$chatRoomEditor->update(array(
-				'title' => 'wcf.chat.room.title'.$roomID
+			$roomEditor->update(array(
+				'title' => 'chat.room.title'.$roomID
 			));
 		}
 		
@@ -110,13 +110,13 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 			I18nHandler::getInstance()->save('topic', 'chat.room.topic'.$roomID, 'chat.room', \chat\util\ChatUtil::getPackageID());
 		
 			// update topic
-			$chatRoomEditor->update(array(
+			$roomEditor->update(array(
 				'topic' => 'chat.room.topic'.$roomID
 			));
 		}
 		
 		\wcf\system\acl\ACLHandler::getInstance()->save($roomID, $this->objectTypeID);
-		\wcf\system\chat\permission\ChatPermissionHandler::clearCache();
+		\chat\system\permission\permissionHandler::clearCache();
 		
 		$this->saved();
 		

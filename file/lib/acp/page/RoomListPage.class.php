@@ -1,5 +1,5 @@
 <?php
-namespace wcf\acp\page;
+namespace chat\acp\page;
 
 /**
  * Lists available chatrooms.

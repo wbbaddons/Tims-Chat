@@ -1,5 +1,5 @@
 <?php
-namespace wcf\acp\form;
+namespace chat\acp\form;
 use \wcf\system\language\I18nHandler;
 use \wcf\system\WCF;
 
@@ -21,7 +21,7 @@ class RoomEditForm extends RoomAddForm {
 	/**
 	 * @see	\wcf\acp\form\ACPForm::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.room.list';
+	public $activeMenuItem = 'chat.acp.menu.link.room.list';
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
