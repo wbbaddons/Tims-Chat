@@ -43,11 +43,9 @@
 					
 					$('#timsChatCopyright').click(function (event) {
 						event.preventDefault();
-						if ($.wcfIsset('timsChatCopyrightDialog')) return WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}' });
-						var container = $('<fieldset id="timsChatCopyrightDialog"></fieldset>');
-						container.load('{link application='chat' controller='Chat' action='Copyright'}{/link}', function() {
-							$('body').append(container);
-							WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}' });
+						if (!$.wcfIsset('timsChatCopyrightDialog')) $('<fieldset id="timsChatCopyrightDialog"></fieldset>').appendTo('body');
+						$('#timsChatCopyrightDialog').load('{link application='chat' controller='Chat' action='Copyright'}{/link}', function() {
+							WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}' });
 						});
 					});
 					

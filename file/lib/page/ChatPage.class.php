@@ -15,13 +15,6 @@ use \wcf\system\WCF;
  */
 class ChatPage extends \wcf\page\AbstractPage {
 	/**
-	 * The version of this installation of Tims Chat 3.
-	 * 
-	 * @var string
-	 */
-	public $chatVersion = '';
-	
-	/**
 	 * @see wcf\page\AbstractPage::$loginRequired
 	 */
 	public $loginRequired = true;
@@ -101,7 +94,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 		parent::assignVariables();
 
 		WCF::getTPL()->assign(array(
-			'chatVersion' => $this->chatVersion,
 			'newestMessages' => $this->newestMessages,
 			'room' => $this->room,
 			'roomID' => $this->roomID,
@@ -111,13 +103,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 			'sidebarCollapsed' => \wcf\system\user\collapsible\content\UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'be.bastelstu.chat.ChatPage'),
 			'sidebarName' => 'be.bastelstu.chat.ChatPage'
 		));
-	}
-	
-	/**
-	 * Reads chat-version. Used to avoid caching of JS-File when Tims Chat is updated.
-	 */
-	public function readChatVersion() {
-		return $this->chatVersion = \wcf\data\package\PackageCache::getInstance()->getPackage(\chat\util\ChatUtil::getPackageID())->packageVersion;
 	}
 	
 	/**
