@@ -36,7 +36,7 @@ class WhisperCommand extends \chat\system\command\AbstractCommand {
 	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
-		return \wcf\data\chat\message\ChatMessage::TYPE_WHISPER;
+		return \chat\data\message\Message::TYPE_WHISPER;
 	}
 	
 	/**

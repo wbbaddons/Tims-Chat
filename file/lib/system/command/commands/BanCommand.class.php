@@ -1,9 +1,9 @@
 <?php
 namespace chat\system\command\commands;
-use \wcf\data\chat\suspension;
+use \chat\data\suspension;
+use \chat\util\ChatUtil;
 use \wcf\data\user\User;
 use \wcf\system\WCF;
-use \wcf\util\ChatUtil;
 
 /**
  * Bans a user.
@@ -16,21 +16,21 @@ use \wcf\util\ChatUtil;
  */
 class BanCommand extends MuteCommand {
 	public function executeAction() {
-		if ($suspension = suspension\ChatSuspension::getSuspensionByUserRoomAndType($this->user, $this->room, suspension\ChatSuspension::TYPE_BAN)) {
+		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $this->room, suspension\Suspension::TYPE_BAN)) {
 			if ($suspension->time > TIME_NOW + $this->time) {
 				$this->fail = true;
 				return;
 			}
 			
-			$editor = new suspension\ChatSuspensionEditor($suspension);
+			$editor = new suspension\SuspensionEditor($suspension);
 			$editor->delete();
 		}
 		
-		$this->suspensionAction = new suspension\ChatSuspensionAction(array(), 'create', array(
+		$this->suspensionAction = new suspension\SuspensionAction(array(), 'create', array(
 			'data' => array(
 				'userID' => $this->user->userID,
 				'roomID' => ChatUtil::readUserData('roomID'),
-				'type' => suspension\ChatSuspension::TYPE_BAN,
+				'type' => suspension\Suspension::TYPE_BAN,
 				'time' => TIME_NOW + $this->time
 			)
 		));

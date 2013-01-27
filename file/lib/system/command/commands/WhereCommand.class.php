@@ -18,14 +18,14 @@ class WhereCommand extends \chat\system\command\AbstractCommand {
 	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
-		return \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION;
+		return \chat\data\message\Message::TYPE_INFORMATION;
 	}
 	
 	/**
 	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		$rooms = \wcf\data\chat\room\ChatRoom::getCache();
+		$rooms = \chat\data\room\Room::getCache();
 		
 		foreach ($rooms as $room) {
 			$users = $room->getUsers();

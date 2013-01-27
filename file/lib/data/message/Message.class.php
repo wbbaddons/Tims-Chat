@@ -1,8 +1,8 @@
 <?php
 namespace chat\data\message;
+use \chat\util\ChatUtil;
 use \wcf\system\Regex;
 use \wcf\system\WCF;
-use \wcf\util\ChatUtil;
 
 /**
  * Represents a chat message.

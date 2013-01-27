@@ -19,7 +19,7 @@ class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 		parent::__construct($commandHandler);
 		
 		// create room
-		$this->objectAction = new \wcf\data\chat\room\ChatRoomAction(array(), 'create', array('data' => array(
+		$this->objectAction = new \chat\data\room\RoomAction(array(), 'create', array('data' => array(
 			'title' => 'Temproom',
 			'topic' => '',
 			'permanent' => 0,
@@ -27,7 +27,7 @@ class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 		)));
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
-		$chatRoomEditor = new \wcf\data\chat\room\ChatRoomEditor($returnValues['returnValues']);
+		$chatRoomEditor = new \chat\data\room\RoomEditor($returnValues['returnValues']);
 		$roomID = $returnValues['returnValues']->roomID;
 		$this->roomName = WCF::getLanguage()->getDynamicVariable('wcf.chat.room.titleTemp', array('roomID' => $roomID));
 		
@@ -50,7 +50,7 @@ class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 		);
 		
 		\wcf\system\acl\ACLHandler::getInstance()->save($roomID, \wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.chat.room'));
-		\wcf\system\chat\permission\ChatPermissionHandler::clearCache();
+		\chat\system\permission\PermissionHandler::clearCache();
 		$this->didInit();
 	}
 	
@@ -67,7 +67,7 @@ class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
-		return \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION;
+		return \chat\data\message\Message::TYPE_INFORMATION;
 	}
 	
 	/**

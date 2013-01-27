@@ -1,9 +1,9 @@
 <?php
 namespace chat\system\command\commands;
-use \wcf\data\chat\suspension;
+use \chat\data\suspension;
 use \wcf\data\user\User;
 use \wcf\system\WCF;
-use \wcf\util\ChatUtil;
+use \chat\util\ChatUtil;
 
 /**
  * Mutes a user.
@@ -49,21 +49,21 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	}
 	
 	public function executeAction() {
-		if ($suspension = suspension\ChatSuspension::getSuspensionByUserRoomAndType($this->user, $this->room, suspension\ChatSuspension::TYPE_MUTE)) {
+		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $this->room, suspension\Suspension::TYPE_MUTE)) {
 			if ($suspension->time > TIME_NOW + $this->time) {
 				$this->fail = true;
 				return;
 			}
 			
-			$editor = new suspension\ChatSuspensionEditor($suspension);
+			$editor = new suspension\SuspensionEditor($suspension);
 			$editor->delete();
 		}
 		
-		$this->suspensionAction = new suspension\ChatSuspensionAction(array(), 'create', array(
+		$this->suspensionAction = new suspension\SuspensionAction(array(), 'create', array(
 			'data' => array(
 				'userID' => $this->user->userID,
 				'roomID' => ChatUtil::readUserData('roomID'),
-				'type' => suspension\ChatSuspension::TYPE_MUTE,
+				'type' => suspension\Suspension::TYPE_MUTE,
 				'time' => TIME_NOW + $this->time
 			)
 		));
@@ -77,7 +77,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 		parent::checkPermission();
 		
 		$this->room = \wcf\system\request\RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->request->room;
-		$ph = new \wcf\system\chat\permission\ChatPermissionHandler();
+		$ph = new \chat\system\permission\PermissionHandler();
 		if (!$ph->getPermission($this->room, 'mod.can'.str_replace(array('chat\system\command\commands\\', 'Command'), '', get_class($this)))) throw new \wcf\system\exception\PermissionDeniedException();
 	}
 	
@@ -94,8 +94,8 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
-		if ($this->fail) return \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION;
-		return \wcf\data\chat\message\ChatMessage::TYPE_MODERATE;
+		if ($this->fail) return \chat\data\message\Message::TYPE_INFORMATION;
+		return \chat\data\message\Message::TYPE_MODERATE;
 	}
 	
 	/**

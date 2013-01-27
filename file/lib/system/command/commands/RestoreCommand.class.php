@@ -42,7 +42,7 @@ class RestoreCommand extends \chat\system\command\AbstractRestrictedCommand {
 	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
-		return \wcf\data\chat\message\ChatMessage::TYPE_MODERATE;
+		return \chat\data\message\Message::TYPE_MODERATE;
 	}
 	
 	/**

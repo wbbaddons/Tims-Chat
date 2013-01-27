@@ -1,8 +1,8 @@
 <?php
 namespace chat\system\command\commands;
+use \chat\util\ChatUtil;
 use \wcf\data\user\User;
 use \wcf\system\WCF;
-use \wcf\util\ChatUtil;
 use \wcf\util\StringUtil;
 
 /**
@@ -39,16 +39,17 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 		}
 		
 		// Room
-		$room = new \wcf\data\chat\room\ChatRoom(ChatUtil::readUserData('roomID', $this->user));
+		$room = new \chat\data\room\Room(ChatUtil::readUserData('roomID', $this->user));
 		if ($room->roomID && $room->canEnter()) {
 			$this->lines[WCF::getLanguage()->get('wcf.chat.room')] = $room->getTitle();
 		}
 		
-		// IP-Address
-		$session = $this->fetchSession();
-		if ($session) {
-			// TODO: Check permission
-			$this->lines[WCF::getLanguage()->get('wcf.user.ipAddress')] = $session->ipAddress;
+		// ip address
+		if (WCF::getSession()->getPermission('admin.user.canViewIpAddress')) {
+			$session = $this->fetchSession();
+			if ($session) {
+				$this->lines[WCF::getLanguage()->get('wcf.user.ipAddress')] = $session->ipAddress;
+			}
 		}
 		
 		$this->didInit();
@@ -78,7 +79,7 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
-		return \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION;
+		return \chat\data\message\Message::TYPE_INFORMATION;
 	}
 	
 	/**

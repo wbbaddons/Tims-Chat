@@ -26,7 +26,7 @@ final class Update {
 	private $styles = null;
 	
 	public function __construct() {
-		$this->rooms = \wcf\data\chat\room\ChatRoom::getCache();
+		$this->rooms = \chat\data\room\Room::getCache();
 		$this->styles = \wcf\system\style\StyleHandler::getInstance()->getAvailableStyles();
 	}
 	
@@ -36,11 +36,11 @@ final class Update {
 	 */
 	public function execute() {
 		foreach ($this->rooms as $room) {
-			$messageAction = new \wcf\data\chat\message\ChatMessageAction(array(), 'create', array(
+			$messageAction = new \chat\data\message\MessageAction(array(), 'create', array(
 				'data' => array(
 					'roomID' => $room->roomID,
 					'time' => TIME_NOW,
-					'type' => \wcf\data\chat\message\ChatMessage::TYPE_INFORMATION,
+					'type' => \chat\data\message\Message::TYPE_INFORMATION,
 					'message' => \wcf\system\WCF::getLanguage()->get('wcf.chat.information.chatUpdate')
 				)
 			));
