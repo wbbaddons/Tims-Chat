@@ -26,12 +26,12 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link application='chat' controller='roomList'}{/link}" title="{lang}chat.acp.menu.link.room.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}chat.acp.menu.link.room.list{/lang}</span></a></li>
+			<li><a href="{link application='chat' controller='RoomList'}{/link}" title="{lang}chat.acp.menu.link.room.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}chat.acp.menu.link.room.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
 
-<form method="post" action="{if $action == 'add'}{link application='chat' controller='roomAdd'}{/link}{else}{link application='chat' controller='roomEdit' id=$roomID}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link application='chat' controller='RoomAdd'}{/link}{else}{link application='chat' controller='roomEdit' id=$roomID}{/link}{/if}">
 	<div class="container containerPadding sortableListContainer marginTop shadow">
 		<fieldset>
 			<legend>{lang}chat.acp.room.data{/lang}</legend>
