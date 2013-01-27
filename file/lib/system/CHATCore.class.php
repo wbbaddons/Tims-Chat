@@ -10,7 +10,7 @@ namespace chat\system;
  * @package	be.bastelstu.chat
  * @subpackage	system
  */
-class ChatCore extends \wcf\system\application\AbstractApplication {
+class CHATCore extends \wcf\system\application\AbstractApplication {
 	/**
 	 * @see	wcf\system\application\AbstractApplication::$abbreviation
 	 */
