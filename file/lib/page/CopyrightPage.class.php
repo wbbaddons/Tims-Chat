@@ -14,6 +14,11 @@ use \wcf\system\WCF;
  */
 class CopyrightPage extends \wcf\page\AbstractPage {
 	/**
+	 * @see wcf\page\AbstractPage::$loginRequired
+	 */
+	public $loginRequired = true;
+	
+	/**
 	 * @see \wcf\page\AbstractPage::$neededModules
 	 */
 	public $neededModules = array('CHAT_ACTIVE');
@@ -25,61 +30,26 @@ class CopyrightPage extends \wcf\page\AbstractPage {
 	
 	/**
 	 * shortcut for the active request
-	 * @see wcf\system\request\Request::getRequestObject()
+	 * @see \wcf\system\request\Request::getRequestObject()
 	 */
 	public $request = null;
 	
+	/**
+	 * @see \wcf\page\AbstractPage::$templateName
+	 */
 	public $templateName = '__copyright';
 	
 	/**
-	 * Disallows direct access.
-	 * 
-	 * @see wcf\page\IPage::__run()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
-	public function __run() {
-		if (($this->request = \wcf\system\request\RequestHandler::getInstance()->getActiveRequest()->getRequestObject()) === $this) throw new IllegalLinkException();
+	public function assignVariables() {
+		parent::assignVariables();
 		
-		parent::__run();
-	}
-	
-	/**
-	 * @see	\wcf\page\IPage::readParameters()
-	 */
-	public function readParameters() {
-		//     ###
-		//   ##   ##
-		//  #       #
-		//  # ##### #
-		// # #     # #
-		// # # * * # #
-		// # #     # #
-		// #  #   #  #
-		//  #  ###  #
-		//  #       #
-		//   #######
-		//   # # # #
-		//   # # # #
-		//   # # # #
-		
-		if (isset($_GET['sheep'])) $this->useTemplate = false;
-	}
-	
-	/**
-	 * @see	\wcf\page\IPage::show()
-	 */
-	public function show() {
-		// guests are not supported
-		if (!WCF::getUser()->userID) {
-			throw new \wcf\system\exception\PermissionDeniedException();
-		}
-		
-		parent::show();
-		if ($this->useTemplate) exit;
-		@header('Content-type: image/png');
-		\wcf\util\HeaderUtil::sendNoCacheHeaders();
 		$images = explode("\n\n", file_get_contents(__FILE__, null, null, __COMPILER_HALT_OFFSET__+2));
-		echo base64_decode($images[array_rand($images)]);
-		exit;
+		
+		WCF::getTPL()->assign(array(
+			'background' => str_replace("\n", '', $images[array_rand($images)])
+		));
 	}
 }
 // @codingStandardsIgnoreStart

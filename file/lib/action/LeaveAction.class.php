@@ -44,23 +44,6 @@ class LeaveAction extends \wcf\action\AbstractAction {
 	public $userData = array();
 	
 	/**
-	 * shortcut for the active request
-	 * @see wcf\system\request\Request::getRequestObject()
-	 */
-	public $request = null;
-	
-	/**
-	 * Disallows direct access.
-	 * 
-	 * @see wcf\page\IPage::__run()
-	 */
-	public function __run() {
-		if (($this->request = \wcf\system\request\RequestHandler::getInstance()->getActiveRequest()->getRequestObject()) === $this) throw new IllegalLinkException();
-		
-		parent::__run();
-	}
-	
-	/**
 	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {

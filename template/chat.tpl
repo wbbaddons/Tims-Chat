@@ -27,8 +27,8 @@
 					
 					chat = new be.bastelstu.Chat({
 						reloadTime: {@CHAT_RELOADTIME},
-						unloadURL: '{link controller="Chat" action="Leave"}{/link}',
-						messageURL: '{link controller="Chat" action="Message"}{/link}',
+						unloadURL: '{link application="chat" controller="Leave"}{/link}',
+						messageURL: '{link application="chat" controller="NewMessages"}{/link}',
 						socketIOPath: '{@CHAT_SOCKET_IO_PATH|encodeJS}'
 					}, (new WCF.Template('{ldelim}$title} - {'chat.general.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile(), (new WCF.Template('{@$messageTemplate|encodeJS}')).compile());
 					{event name='didInit'}
@@ -44,7 +44,7 @@
 					$('#timsChatCopyright').click(function (event) {
 						event.preventDefault();
 						if (!$.wcfIsset('timsChatCopyrightDialog')) $('<fieldset id="timsChatCopyrightDialog"></fieldset>').appendTo('body');
-						$('#timsChatCopyrightDialog').load('{link application='chat' controller='Chat' action='Copyright'}{/link}', function() {
+						$('#timsChatCopyrightDialog').load('{link application='chat' controller='Copyright'}{/link}', function() {
 							WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}' });
 						});
 					});
@@ -60,10 +60,6 @@
 	</script>
 	
 	<style type="text/css">
-		#timsChatCopyrightDialog {
-			background-image: url("{link application='chat' controller='Chat' action='Copyright' sheep=1}{/link}");
-		}
-		
 		{assign var='type' value='\chat\data\message\Message::TYPE_'}
 		.timsChatMessage{$type|concat:'JOIN'|constant}, .timsChatMessage{$type|concat:'LEAVE'|constant},
 		.timsChatMessage{$type|concat:'INFORMATION'|constant}, .timsChatMessage{$type|concat:'ERROR'|constant} {

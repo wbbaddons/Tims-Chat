@@ -6,7 +6,7 @@ use \wcf\system\exception\IllegalLinkException;
 use \wcf\system\WCF;
 
 /**
- * Outputs roomlist
+ * Outputs roomlist.
  *
  * @author 	Tim Düsterhus
  * @copyright	2010-2013 Tim Düsterhus
@@ -46,23 +46,6 @@ class RoomListPage extends \wcf\page\AbstractPage {
 	 * @see \wcf\page\AbstractPage::$useTemplate
 	 */
 	public $useTemplate = false;
-	
-	/**
-	 * shortcut for the active request
-	 * @see wcf\system\request\Request::getRequestObject()
-	 */
-	public $request = null;
-	
-	/**
-	 * Disallows direct access.
-	 * 
-	 * @see wcf\page\IPage::__run()
-	 */
-	public function __run() {
-		if (($this->request = \wcf\system\request\RequestHandler::getInstance()->getActiveRequest()->getRequestObject()) === $this) throw new IllegalLinkException();
-		
-		parent::__run();
-	}
 	
 	/**
 	 * @see	\wcf\page\IPage::readData()

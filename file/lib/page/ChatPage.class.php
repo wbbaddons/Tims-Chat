@@ -162,28 +162,12 @@ class ChatPage extends \wcf\page\AbstractPage {
 		
 		$this->request = $this;
 		switch ($this->action) {
-			case 'Message':
-				$this->request = new ChatMessagePage();
-				$this->request->__run();
-				exit;
 			case 'Log':
 				$this->request = new LogPage();
 				$this->request->__run();
 				exit;
-			case 'RefreshRoomList':
-				$this->request = new RoomListPage();
-				$this->request->__run();
-				exit;
 			case 'Send':
 				$this->request = new \chat\form\ChatForm();
-				$this->request->__run();
-				exit;
-			case 'Leave':
-				$this->request = new \chat\action\LeaveAction();
-				$this->request->__run();
-				exit;
-			case 'Copyright':
-				$this->request = new CopyrightPage();
 				$this->request->__run();
 				exit;
 		}

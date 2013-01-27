@@ -13,7 +13,7 @@ use \wcf\system\WCF;
  * @package	be.bastelstu.chat
  * @subpackage	page
  */
-class ChatMessagePage extends \wcf\page\AbstractPage {
+class NewMessagesPage extends \wcf\page\AbstractPage {
 	/**
 	 * @see wcf\page\AbstractPage::$loginRequired
 	 */
@@ -54,23 +54,6 @@ class ChatMessagePage extends \wcf\page\AbstractPage {
 	 * @see \wcf\page\AbstractPage::$useTemplate
 	 */
 	public $useTemplate = false;
-	
-	/**
-	 * shortcut for the active request
-	 * @see wcf\system\request\Request::getRequestObject()
-	 */
-	public $request = null;
-	
-	/**
-	 * Disallows direct access.
-	 * 
-	 * @see wcf\page\IPage::__run()
-	 */
-	public function __run() {
-		if (($this->request = \wcf\system\request\RequestHandler::getInstance()->getActiveRequest()->getRequestObject()) === $this) throw new IllegalLinkException();
-		
-		parent::__run();
-	}
 	
 	/**
 	 * @see	\wcf\page\Page::readData()
