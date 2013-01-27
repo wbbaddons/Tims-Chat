@@ -74,20 +74,32 @@
 			background-size: 16px 16px;
 		}
 		
-		.timsChatMessage{$type|concat:'JOIN'|constant} {
-			{*background-image: url({icon}circleArrowRight{/icon});*}
+		.timsChatMessage:before {
+			font-family: "fontawesome";
+			margin-right: 5px;
+			vertical-align: middle;
+			height: 16px;
+			width: 16px;
 		}
 		
-		.timsChatMessage{$type|concat:'LEAVE'|constant} {
-			{*background-image: url({icon}circleArrowLeft{/icon});*}
+		.timsChatMessage{$type|concat:'NORMAL'|constant} {
+			margin-left: 16px;
 		}
 		
-		.timsChatMessage{$type|concat:'INFORMATION'|constant} {
-			{*background-image: url({icon}systemInfo{/icon});*}
+		.timsChatMessage{$type|concat:'JOIN'|constant}:before {
+			content: "\f090";
 		}
 		
-		.timsChatMessage{$type|concat:'ERROR'|constant} {
-			{*background-image: url({icon}systemError{/icon});*}
+		.timsChatMessage{$type|concat:'LEAVE'|constant}:before {
+			content: "\f08b";
+		}
+		
+		.timsChatMessage{$type|concat:'INFORMATION'|constant}:before {
+			content: "\f05a";
+		}
+		
+		.timsChatMessage{$type|concat:'ERROR'|constant}:before {
+			content: "\f05e";
 		}
 	</style>
 </head>
