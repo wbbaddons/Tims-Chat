@@ -29,6 +29,8 @@ class CopyrightPage extends \wcf\page\AbstractPage {
 	 */
 	public $request = null;
 	
+	public $templateName = '__copyright';
+	
 	/**
 	 * Disallows direct access.
 	 * 

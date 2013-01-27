@@ -66,7 +66,7 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<item name="chat.general.rooms"><![CDATA[Räume]]></item>
 		<item name="chat.general.users"><![CDATA[Nutzer]]></item>
 		
-		<item name="chat.general.copyright"><![CDATA[<a href="http://tims.bastelstu.be">Chat: <strong>Tims Chat</strong>{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}, entwickelt von <strong>TimWolla</strong></a>]]></item>
+		<item name="chat.general.copyright"><![CDATA[<a href="http://tims.bastelstu.be"><strong>Tims Chat</strong>{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}, entwickelt in <strong>Tims Bastelstube</strong></a>]]></item>
 		<item name="chat.general.copyright.leader"><![CDATA[Projektleiter]]></item>
 		<item name="chat.general.copyright.developer"><![CDATA[Entwickler]]></item>
 		<item name="chat.general.copyright.graphics"><![CDATA[Grafisches]]></item>

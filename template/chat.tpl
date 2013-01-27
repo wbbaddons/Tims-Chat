@@ -4,6 +4,63 @@
 	<title>{$room} - {lang}chat.general.title{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude' sandbox=false}
+	{include file='javascriptInclude'}
+	<script type="text/javascript">
+		//<![CDATA[
+			var chat;
+			(function ($, window) {
+				$(function(){
+					WCF.Language.addObject({
+						'chat.general.query': '{lang}chat.general.query{/lang}',
+						'chat.general.kick': '{lang}chat.general.kick{/lang}',
+						'chat.general.ban': '{lang}chat.general.ban{/lang}',
+						'chat.general.profile': '{lang}chat.general.profile{/lang}',
+						'chat.general.notify.title': '{lang}chat.general.notify.title{/lang}'
+					});
+					
+					{event name='shouldInit'}
+					
+					// Boot the chat
+					WCF.TabMenu.init();
+					new WCF.Message.Smilies();
+					{capture assign='messageTemplate'}{include application='chat' file='message'}{/capture}
+					
+					chat = new be.bastelstu.Chat({
+						reloadTime: {@CHAT_RELOADTIME},
+						unloadURL: '{link controller="Chat" action="Leave"}{/link}',
+						messageURL: '{link controller="Chat" action="Message"}{/link}',
+						socketIOPath: '{@CHAT_SOCKET_IO_PATH|encodeJS}'
+					}, (new WCF.Template('{ldelim}$title} - {'chat.general.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile(), (new WCF.Template('{@$messageTemplate|encodeJS}')).compile());
+					{event name='didInit'}
+					
+					// show the last X messages
+					chat.handleMessages([
+						{implode from=$newestMessages item='message'}{@$message->jsonify()}{/implode}
+					]);
+					
+					// enable user-interface
+					$('#timsChatInput').enable().jCounter().focus();
+					
+					$('#timsChatCopyright').click(function (event) {
+						event.preventDefault();
+						if ($.wcfIsset('timsChatCopyrightDialog')) return WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}' });
+						var container = $('<fieldset id="timsChatCopyrightDialog"></fieldset>');
+						container.load('{link application='chat' controller='Chat' action='Copyright'}{/link}', function() {
+							$('body').append(container);
+							WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}' });
+						});
+					});
+					
+					$('#chatLogLink').click(function (event) {
+						event.preventDefault();
+						
+						be.bastelstu.Chat.Log.loadOverlay();
+					});
+				});
+			})(jQuery, this)
+		//]]>
+	</script>
+	
 	<style type="text/css">
 		#timsChatCopyrightDialog {
 			background-image: url("{link application='chat' controller='Chat' action='Copyright' sheep=1}{/link}");
@@ -44,8 +101,8 @@
 	<div id="timsChatTopic" class="container"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
 	<fieldset>
 		<div id="timsChatMessageContainer" class="timsChatMessageContainer container box shadow1">
+			<noscript><p class="error">{lang}chat.general.noJs{/lang}</p></noscript>
 			<ul>
-				<li class="error">{lang}chat.general.noJs{/lang}</li>
 			</ul>
 		</div>
 	</fieldset>
@@ -118,65 +175,7 @@
 			</ul>
 		</nav>
 	</div>
-	{include file='copyright'}
 </div>
-{include file='javascriptInclude'}
-<script type="text/javascript">
-	//<![CDATA[
-		var chat;
-		(function ($, window) {
-			// remove noscript message
-			$('.timsChatMessageContainer .error').remove();
-			
-			WCF.Language.addObject({
-				'chat.general.query': '{lang}chat.general.query{/lang}',
-				'chat.general.kick': '{lang}chat.general.kick{/lang}',
-				'chat.general.ban': '{lang}chat.general.ban{/lang}',
-				'chat.general.profile': '{lang}chat.general.profile{/lang}',
-				'chat.general.notify.title': '{lang}chat.general.notify.title{/lang}'
-			});
-			{event name='shouldInit'}
-			// Boot the chat
-			WCF.TabMenu.init();
-			new WCF.Message.Smilies();{*
-			*}{capture assign='messageTemplate'}{include application='chat' file='message'}{/capture}
-			
-			
-			chat = new be.bastelstu.Chat({
-				reloadTime: {@CHAT_RELOADTIME},
-				unloadURL: '{link controller="Chat" action="Leave"}{/link}',
-				messageURL: '{link controller="Chat" action="Message"}{/link}',
-				socketIOPath: '{@CHAT_SOCKET_IO_PATH|encodeJS}'
-			}, (new WCF.Template('{ldelim}$title} - {'chat.general.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}')).compile(), (new WCF.Template('{@$messageTemplate|encodeJS}')).compile());
-			{event name='didInit'}
-			
-			// show the last X messages
-			chat.handleMessages([
-				{implode from=$newestMessages item='message'}{@$message->jsonify()}{/implode}
-			]);
-			
-			// enable user-interface
-			$('#timsChatInput').enable().jCounter().focus();
-			
-			$('#timsChatCopyright').click(function (event) {
-				event.preventDefault();
-				if ($.wcfIsset('timsChatCopyrightDialog')) return WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}' });
-				var container = $('<fieldset id="timsChatCopyrightDialog"></fieldset>');
-				container.load('{link application='chat' controller='Chat' action='Copyright'}{/link}', function() {
-					$('body').append(container);
-					WCF.showDialog('timsChatCopyrightDialog', { title: 'Tims Chat{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}' });
-				});
-			});
-			
-			$('#chatLogLink').click(function (event) {
-				event.preventDefault();
-				
-				be.bastelstu.WCF.Chat.Log.loadOverlay();
-			});
-		})(jQuery, this)
-	//]]>
-</script>
-
 {include file='footer' sandbox=false}
 </body>
 </html>

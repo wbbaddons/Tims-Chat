@@ -6,7 +6,7 @@
 </div>
 <script type="text/javascript">
 	//<![CDATA[
-		var log = new be.bastelstu.WCF.Chat.Log(chat);
+		var log = new be.bastelstu.Chat.Log(chat);
 		log.handleMessages([
 			{implode from=$messages item='message'}
 				{@$message->jsonify()}

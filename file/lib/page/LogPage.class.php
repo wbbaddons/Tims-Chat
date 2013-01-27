@@ -106,7 +106,7 @@ class LogPage extends \wcf\page\AbstractPage {
 		
 		$this->room = $cache[$this->roomID];
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
-		$ph = new \wcf\system\chat\permission\ChatPermissionHandler();
+		$ph = new \chat\system\permission\PermissionHandler();
 		if (!$ph->getPermission($this->room, 'mod.canReadLog')) throw new \wcf\system\exception\PermissionDeniedException();
 		
 		// TODO: actually read the correct messages
