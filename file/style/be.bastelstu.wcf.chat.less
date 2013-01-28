@@ -27,12 +27,9 @@
 			padding-left: 16px;
 			min-height: 16px;
 			clear: both;
+			position: relative;
 			
 			time:first-child {
-				font-size: .8em;
-				&::before, &::after {
-					font-size: .8em;
-				}
 				&::before {
 					content: "[";
 				}
@@ -47,6 +44,13 @@
 			
 			&.unloaded {
 				opacity: 0.4;
+			}
+			
+			&::before {
+				.icon;
+				.icon16;
+				position: absolute;
+				left: 0px;
 			}
 		}
 	}

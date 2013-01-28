@@ -61,38 +61,19 @@
 	
 	<style type="text/css">
 		{assign var='type' value='\chat\data\message\Message::TYPE_'}
-		.timsChatMessage{$type|concat:'JOIN'|constant}, .timsChatMessage{$type|concat:'LEAVE'|constant},
-		.timsChatMessage{$type|concat:'INFORMATION'|constant}, .timsChatMessage{$type|concat:'ERROR'|constant} {
-			background-position: left top;
-			background-repeat: no-repeat;
-			background-size: 16px 16px;
-		}
-		
-		.timsChatMessage:before {
-			font-family: "fontawesome";
-			margin-right: 5px;
-			vertical-align: middle;
-			height: 16px;
-			width: 16px;
-		}
-		
-		.timsChatMessage{$type|concat:'NORMAL'|constant} {
-			margin-left: 16px;
-		}
-		
-		.timsChatMessage{$type|concat:'JOIN'|constant}:before {
+		.timsChatMessage{$type|concat:'JOIN'|constant}::before {
 			content: "\f090";
 		}
 		
-		.timsChatMessage{$type|concat:'LEAVE'|constant}:before {
+		.timsChatMessage{$type|concat:'LEAVE'|constant}::before {
 			content: "\f08b";
 		}
 		
-		.timsChatMessage{$type|concat:'INFORMATION'|constant}:before {
+		.timsChatMessage{$type|concat:'INFORMATION'|constant}::before {
 			content: "\f05a";
 		}
 		
-		.timsChatMessage{$type|concat:'ERROR'|constant}:before {
+		.timsChatMessage{$type|concat:'ERROR'|constant}::before {
 			content: "\f05e";
 		}
 	</style>
