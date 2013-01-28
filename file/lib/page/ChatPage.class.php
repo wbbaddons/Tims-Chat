@@ -151,7 +151,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 		}
 		
 		$this->defaultSmilies = \wcf\data\smiley\SmileyCache::getInstance()->getCategorySmilies();
-		$this->readChatVersion();
 	}
 	
 	/**
