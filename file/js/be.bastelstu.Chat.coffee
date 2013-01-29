@@ -18,11 +18,11 @@ window.console ?=
 	
 	console =
 		log: (message) ->
-			_console.log '[be.bastelstu.Chat] '+message
+			_console.log "[be.bastelstu.Chat] #{message}"
 		warn: (message) ->
-			_console.warn '[be.bastelstu.Chat] '+message
+			_console.warn "[be.bastelstu.Chat] #{message}"
 		error: (message) ->
-			_console.error '[be.bastelstu.Chat] '+message
+			_console.error "[be.bastelstu.Chat] #{message}"
 		
 	
 	be.bastelstu.Chat = Class.extend
@@ -155,13 +155,13 @@ window.console ?=
 						toComplete = toComplete.substring 0, nextSpace
 					
 					return if toComplete.length is 0
-					console.log 'Autocompleting "' + toComplete + '"'
+					console.log "Autocompleting '#{toComplete}'"
 					
 					# Insert name and increment offset
 					name = @autocomplete toComplete
 					
-					$('#timsChatInput').val beforeComplete + name + ' ' + afterComplete
-					$('#timsChatInput').setCaret((beforeComplete + name).length + 1);
+					$('#timsChatInput').val "#{beforeComplete}#{name} #{afterComplete}"
+					$('#timsChatInput').setCaret (beforeComplete + name).length + 1
 					@autocompleteOffset++
 				else
 					@autocompleteOffset = 0
@@ -176,7 +176,7 @@ window.console ?=
 			, @
 			
 			# Refreshes the roomlist
-			$('#timsChatRoomList button').click $.proxy(@refreshRoomList, @)
+			$('#timsChatRoomList button').click $.proxy @refreshRoomList, @
 			
 			# Clears the stream
 			$('#timsChatClear').click (event) ->
@@ -213,7 +213,7 @@ window.console ?=
 				if $(@).data 'status'
 					$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height()
 					@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
-					
+			
 			# Desktop Notifications
 			unless typeof window.webkitNotifications is 'undefined'
 				$('#timsChatNotify').click (event) ->
@@ -233,7 +233,7 @@ window.console ?=
 				data: 
 					ajax: 1
 				type: 'POST'
-				success: $.proxy((data, textStatus, jqXHR) ->
+				success: $.proxy (data, textStatus, jqXHR) ->
 					@loading = false
 					target.parent().removeClass 'loading'
 					
@@ -249,12 +249,12 @@ window.console ?=
 							$(@).text ''
 					else
 						$('#timsChatTopic').text data.topic
-						$('#timsChatTopic').wcfBlindIn() if $('#timsChatTopic').text().trim() isnt '' and $('#timsChatTopic').is(':hidden')
+						$('#timsChatTopic').wcfBlindIn() if $('#timsChatTopic').text().trim() isnt '' and $('#timsChatTopic').is ':hidden'
 					
 					$('.timsChatMessage').addClass 'unloaded', 800
 					@handleMessages data.messages
 					document.title = @titleTemplate.fetch data
-				, @)
+				, @
 				error: () ->
 					# Reload the page to change the room the old fashion-way
 					# inclusive the error-message :)
@@ -443,13 +443,13 @@ window.console ?=
 					console.log 'Connected to nodePush'
 					@pe.getMessages.stop()
 				, @)
-				@socket.on 'disconnect', $.proxy((data) ->
+				@socket.on 'disconnect', $.proxy (data) ->
 					console.log 'Lost connection to nodePush'
 					@pe.getMessages = new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1e3
-				, @)
-				@socket.on 'newMessage', $.proxy((data) ->
+				, @
+				@socket.on 'newMessage', $.proxy (data) ->
 					@getMessages()
-				, @)
+				, @
 		###
 		# Inserts text into our input.
 		# 
@@ -505,7 +505,7 @@ window.console ?=
 			$.ajax $('#toggleRooms a').data('refreshUrl'),
 				dataType: 'json'
 				type: 'POST'
-				success: $.proxy((data, textStatus, jqXHR) ->
+				success: $.proxy (data, textStatus, jqXHR) ->
 					$('#timsChatRoomList li').remove()
 					$('#toggleRooms .ajaxLoad').hide()
 					$('#toggleRooms .badge').text data.length
@@ -522,8 +522,8 @@ window.console ?=
 						@changeRoom $ event.target
 					, @
 					
-					console.log 'Found ' + data.length + ' rooms'
-				, @)
+					console.log "Found #{data.length} rooms"
+				, @
 		###
 		# Handles submitting of messages.
 		# 
@@ -549,9 +549,9 @@ window.console ?=
 					smilies: $('#timsChatSmilies').data 'status'
 				type: 'POST',
 				beforeSend: (jqXHR) ->
-				success: $.proxy((data, textStatus, jqXHR) ->
+				success: $.proxy (data, textStatus, jqXHR) ->
 					@getMessages()
-				, @)
+				, @
 				complete: () ->
 		###
 		# Toggles between user- and room-list.
