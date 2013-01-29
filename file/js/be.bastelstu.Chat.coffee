@@ -486,7 +486,7 @@ window.console ?=
 			if typeof window.webkitNotifications isnt 'undefined'
 				if window.webkitNotifications.checkPermission() is 0
 					title = WCF.Language.get 'chat.general.notify.title'
-					icon = WCF.Icon.get 'be.bastelstu.chat.chat'
+					icon = "data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw%3D%3D" # empty gif
 					content = message.username + message.separator + (if message.separator is ' ' then '' else ' ') + message.message
 					notification = window.webkitNotifications.createNotification icon, title, content
 					notification.show()
