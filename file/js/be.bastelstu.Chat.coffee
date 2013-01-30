@@ -178,13 +178,6 @@ window.console ?=
 			# Refreshes the roomlist
 			$('#timsChatRoomList button').click $.proxy @refreshRoomList, @
 			
-			# Clears the stream
-			$('#timsChatClear').click (event) ->
-				event.preventDefault()
-				$('.timsChatMessage').remove()
-				@oldScrollTop = null
-				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height()
-			
 			# Toggle Buttons
 			$('.timsChatToggle').click (event) ->
 				element = $ @
@@ -199,6 +192,19 @@ window.console ?=
 					element.attr 'title', element.data 'disableMessage'
 					
 				$('#timsChatInput').focus()
+			
+			# Clears the stream
+			$('#timsChatClear').click (event) ->
+				event.preventDefault()
+				$('.timsChatMessage').remove()
+				@oldScrollTop = null
+				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height()
+			
+			$('#timsChatSmilies.click (event) ->
+				if $(@).data 'status'
+					$('#smilies').removeClass 'disabled'
+				else
+					$('#smilies').addClass 'disabled'
 			
 			# Enable fullscreen-mode
 			$('#timsChatFullscreen').click (event) ->
