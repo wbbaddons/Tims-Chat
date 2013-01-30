@@ -200,7 +200,7 @@ window.console ?=
 				@oldScrollTop = null
 				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height()
 			
-			$('#timsChatSmilies.click (event) ->
+			$('#timsChatSmilies').click (event) ->
 				if $(@).data 'status'
 					$('#smilies').removeClass 'disabled'
 				else
@@ -225,7 +225,7 @@ window.console ?=
 				$('#timsChatNotify').click (event) ->
 					if $(@).data('status') and window.webkitNotifications.checkPermission() isnt 0
 						window.webkitNotifications.requestPermission()
-			
+						
 		###
 		# Changes the chat-room.
 		# 
