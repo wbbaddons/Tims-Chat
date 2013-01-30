@@ -383,7 +383,7 @@ window.console ?=
 						element.addClass 'away'
 						element.attr 'title', user.awayStatus
 					else
-						element.removeClass 'timsChatAway'
+						element.removeClass 'away'
 						element.removeAttr 'title'
 						element.data 'tooltip', ''
 					if user.suspended
