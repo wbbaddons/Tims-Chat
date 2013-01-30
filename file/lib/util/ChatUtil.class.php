@@ -1,5 +1,5 @@
 <?php
-namespace wcf\util;
+namespace chat\util;
 use \wcf\data\package\PackageCache;
 use \wcf\system\user\storage\UserStorageHandler;
 use \wcf\system\WCF;
@@ -8,9 +8,9 @@ use \wcf\system\WCF;
  * Chat utilities
  * 
  * @author	Tim Düsterhus
- * @copyright	2010-2012 Tim Düsterhus
+ * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	be.bastelstu.wcf.chat
+ * @package	be.bastelstu.chat
  * @subpackage	util
  */
 final class ChatUtil {
@@ -18,7 +18,7 @@ final class ChatUtil {
 	 * Matches a time-interval with modifiers.
 	 * Each part may be optionally separated by a comma
 	 * 
-	 * @see	\wcf\util\ChatUtil::timeModifier()
+	 * @see	\chat\util\ChatUtil::timeModifier()
 	 */
 	const TIME_MODIFIER_REGEX = '((?:[0-9]+[s|h|d|w|m|y|S|H|D|W|M|Y]?,?)+)';
 	
@@ -27,7 +27,7 @@ final class ChatUtil {
 	 * 
 	 * @var	string
 	 */
-	const PACKAGE_IDENTIFIER = 'be.bastelstu.wcf.chat';
+	const PACKAGE_IDENTIFIER = 'be.bastelstu.chat';
 	
 	/**
 	 * Which user-storage-keys need serialization.
@@ -120,7 +120,7 @@ final class ChatUtil {
 		
 		$result = '';
 		for ($i = 0, $max = count($string); $i < $max; $i++) {
-			$result .= '<span style="color:rgb('.(($start >> 16 & 255) - $i * $r).','.(($start >> 8 & 255) - $i * $g).','.(($start & 255) - $i * $b).')">'.StringUtil::encodeHTML($string[$i]).'</span>'; 
+			$result .= '<span style="color:rgb('.(($start >> 16 & 255) - $i * $r).','.(($start >> 8 & 255) - $i * $g).','.(($start & 255) - $i * $b).')">'.\wcf\util\StringUtil::encodeHTML($string[$i]).'</span>'; 
 		}
 		
 		return $result;
@@ -133,8 +133,8 @@ final class ChatUtil {
 	 */
 	public static function nodePushRunning() {
 		if (!CHAT_SOCKET_IO_PATH) return false;
-		if (!file_exists(WCF_DIR.'acp/be.bastelstu.wcf.chat.nodePush/data.sock')) return false;
-		if (!is_writable(WCF_DIR.'acp/be.bastelstu.wcf.chat.nodePush/data.sock')) return false;
+		if (!file_exists(CHAT_DIR.'acp/be.bastelstu.chat.nodePush/data.sock')) return false;
+		if (!is_writable(CHAT_DIR.'acp/be.bastelstu.chat.nodePush/data.sock')) return false;
 		
 		return true;
 	}
@@ -179,8 +179,8 @@ final class ChatUtil {
 	 */
 	public static function str_split($string, $length = 1) {
 		$result = array();
-		for ($i = 0, $max = StringUtil::length($string); $i < $max; $i += $length) {
-			$result[] = StringUtil::substring($string, $i, $length);
+		for ($i = 0, $max = \wcf\util\StringUtil::length($string); $i < $max; $i += $length) {
+			$result[] = \wcf\util\StringUtil::substring($string, $i, $length);
 		}
 		return $result;
 	}

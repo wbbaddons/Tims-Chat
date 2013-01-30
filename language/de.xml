@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de">
-	<category name="wcf.acp.chat">
-		<item name="wcf.acp.chat.room.list"><![CDATA[Chaträume]]></item>
-		<item name="wcf.acp.chat.room.add"><![CDATA[Chatraum hinzufügen]]></item>
-		<item name="wcf.acp.chat.room.edit"><![CDATA[Chatraum bearbeiten]]></item>
-		<item name="wcf.acp.chat.room.data"><![CDATA[Daten des Raumes]]></item>
-		<item name="wcf.acp.chat.room.title"><![CDATA[Titel]]></item>
-		<item name="wcf.acp.chat.room.topic"><![CDATA[Thema]]></item>
+	<category name="chat.acp.room">
+		<item name="chat.acp.room.list"><![CDATA[Chaträume]]></item>
+		<item name="chat.acp.room.add"><![CDATA[Chatraum hinzufügen]]></item>
+		<item name="chat.acp.room.edit"><![CDATA[Chatraum bearbeiten]]></item>
+		<item name="chat.acp.room.data"><![CDATA[Daten des Raumes]]></item>
+		<item name="chat.acp.room.title"><![CDATA[Titel]]></item>
+		<item name="chat.acp.room.topic"><![CDATA[Thema]]></item>
 		
-		<item name="wcf.acp.chat.delete.sure"><![CDATA[Möchten Sie den Raum &bdquo;{$chatRoom->title|language}&ldquo; wirklich löschen?]]></item>
+		<item name="chat.acp.room.noneAvailable"><![CDATA[Es wurden noch keine Chaträume angelegt.]]></item>
+		<item name="chat.acp.room.delete.sure"><![CDATA[Möchten Sie den Raum &bdquo;{$chatRoom->title|language}&ldquo; wirklich löschen?]]></item>
 	</category>
 	
-	<category name="wcf.acp.menu">
-		<item name="wcf.acp.menu.link.chat"><![CDATA[Chat]]></item>
-		<item name="wcf.acp.menu.link.chat.room.list"><![CDATA[Chaträume auflisten]]></item>
-		<item name="wcf.acp.menu.link.chat.room.add"><![CDATA[Chatraum hinzufügen]]></item>
+	<category name="chat.acp.menu">
+		<item name="chat.acp.menu.link"><![CDATA[Chat]]></item>
+		<item name="chat.acp.menu.link.room.list"><![CDATA[Chaträume auflisten]]></item>
+		<item name="chat.acp.menu.link.room.add"><![CDATA[Chatraum hinzufügen]]></item>
 	</category>
 	
 	<category name="wcf.acp.group">
@@ -57,71 +58,73 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Gibt die Zeit in Minuten an, die eine Nachricht im Protokoll gespeichert bleibt.]]></item>
 	</category>
 		
-	<category name="wcf.chat">
-		<item name="wcf.chat.title"><![CDATA[Chat]]></item>
-		<item name="wcf.chat.protocol"><![CDATA[Protokoll]]></item>
+	<category name="chat.general">
+		<item name="chat.general.title"><![CDATA[Chat]]></item>
+		<item name="chat.general.protocol"><![CDATA[Protokoll]]></item>
 		
-		<item name="wcf.chat.room"><![CDATA[Raum]]></item>
-		<item name="wcf.chat.rooms"><![CDATA[Räume]]></item>
-		<item name="wcf.chat.users"><![CDATA[Nutzer]]></item>
+		<item name="chat.general.room"><![CDATA[Raum]]></item>
+		<item name="chat.general.rooms"><![CDATA[Räume]]></item>
+		<item name="chat.general.users"><![CDATA[Nutzer]]></item>
 		
-		<item name="wcf.chat.copyright"><![CDATA[<a href="http://tims.bastelstu.be">Chat: <strong>Tims Chat</strong>{if CHAT_SHOW_VERSION && $chatVersion|isset} {$chatVersion}{/if}, entwickelt von <strong>TimWolla</strong></a>]]></item>
-		<item name="wcf.chat.copyright.leader"><![CDATA[Projektleiter]]></item>
-		<item name="wcf.chat.copyright.developer"><![CDATA[Entwickler]]></item>
-		<item name="wcf.chat.copyright.graphics"><![CDATA[Grafisches]]></item>
-		<item name="wcf.chat.copyright.translation"><![CDATA[Übersetzung]]></item>
-		<item name="wcf.chat.copyright.thanks"><![CDATA[Weiteren Dank an]]></item>
+		<item name="chat.general.copyright"><![CDATA[<a href="http://tims.bastelstu.be"><strong>Tims Chat</strong>{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}, entwickelt in <strong>Tims Bastelstube</strong></a>]]></item>
+		<item name="chat.general.copyright.leader"><![CDATA[Projektleiter]]></item>
+		<item name="chat.general.copyright.developer"><![CDATA[Entwickler]]></item>
+		<item name="chat.general.copyright.graphics"><![CDATA[Grafisches]]></item>
+		<item name="chat.general.copyright.translation"><![CDATA[Übersetzung]]></item>
+		<item name="chat.general.copyright.thanks"><![CDATA[Weiteren Dank an]]></item>
 		
-		<item name="wcf.chat.submit.default"><![CDATA[Zum Senden Enter drücken]]></item>
-		<item name="wcf.chat.scroll"><![CDATA[Scrollen]]></item>
-		<item name="wcf.chat.notify"><![CDATA[Benachrichtigen]]></item>
-		<item name="wcf.chat.notify.title"><![CDATA[Neue Nachrichten]]></item>
-		<item name="wcf.chat.smilies"><![CDATA[Smilies]]></item>
-		<item name="wcf.chat.clear"><![CDATA[Chat leeren]]></item>
-		<item name="wcf.chat.mark"><![CDATA[Markieren]]></item>
-		<item name="wcf.chat.forceRefresh"><![CDATA[Räume neu laden]]></item>
+		<item name="chat.general.submit.default"><![CDATA[Zum Senden Enter drücken]]></item>
+		<item name="chat.general.scroll"><![CDATA[Scrollen]]></item>
+		<item name="chat.general.notify"><![CDATA[Benachrichtigen]]></item>
+		<item name="chat.general.notify.title"><![CDATA[Neue Nachrichten]]></item>
+		<item name="chat.general.smilies"><![CDATA[Smilies]]></item>
+		<item name="chat.general.clear"><![CDATA[Chat leeren]]></item>
+		<item name="chat.general.mark"><![CDATA[Markieren]]></item>
+		<item name="chat.general.forceRefresh"><![CDATA[Räume neu laden]]></item>
 		
-		<item name="wcf.chat.query"><![CDATA[Privates Gespräch]]></item>
-		<item name="wcf.chat.kick"><![CDATA[Kicken]]></item>
-		<item name="wcf.chat.ban"><![CDATA[Bannen]]></item>
-		<item name="wcf.chat.profile"><![CDATA[Profil]]></item>
+		<item name="chat.general.query"><![CDATA[Privates Gespräch]]></item>
+		<item name="chat.general.kick"><![CDATA[Kicken]]></item>
+		<item name="chat.general.ban"><![CDATA[Bannen]]></item>
+		<item name="chat.general.profile"><![CDATA[Profil]]></item>
 		
-		<item name="wcf.chat.information"><![CDATA[Information]]></item>
-		<item name="wcf.chat.information.chatUpdate"><![CDATA[Der Chat wurde aktualisiert. Bitte lade die Seite neu, da es sonst zu Fehlern kommen kann.]]></item>
-		
-		<item name="wcf.chat.error"><![CDATA[Fehler]]></item>
-		<item name="wcf.chat.error.notFound"><![CDATA[Der Befehl wurde nicht gefunden.]]></item>
-		<item name="wcf.chat.error.userNotFound"><![CDATA[Der Benutzer &bdquo;{$username}&ldquo; wurde nicht gefunden.]]></item>
-		<item name="wcf.chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
-		<item name="wcf.chat.error.exception"><![CDATA[Es gab ein Problem bei der Ausführung dieses Befehls. Bitte wenden Sie sich an einen Administrator.]]></item>
+		<item name="chat.general.information"><![CDATA[Information]]></item>
+		<item name="chat.general.information.chatUpdate"><![CDATA[Der Chat wurde aktualisiert. Bitte lade die Seite neu, da es sonst zu Fehlern kommen kann.]]></item>
 	</category>
 	
-	<category name="wcf.chat.message">
+	<category name="chat.error">
+		<item name="chat.error"><![CDATA[Fehler]]></item>
+		<item name="chat.error.notFound"><![CDATA[Der Befehl wurde nicht gefunden.]]></item>
+		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer &bdquo;{$username}&ldquo; wurde nicht gefunden.]]></item>
+		<item name="chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
+		<item name="chat.error.exception"><![CDATA[Es gab ein Problem bei der Ausführung dieses Befehls. Bitte wenden Sie sich an einen Administrator.]]></item>
+	</category>
+	
+	<category name="chat.message">
 		<!-- 1 = TYPE_JOIN -->
-		<item name="wcf.chat.message.1"><![CDATA[hat den Chat betreten.{if true} ({$ipAddress}){/if}]]></item><!-- todo: check rights -->
+		<item name="chat.message.1"><![CDATA[hat den Chat betreten.{if $__wcf->session->getPermission('admin.user.canViewIpAddress')} ({$ipAddress}){/if}]]></item>
 		<!-- 2 = TYPE_LEAVE -->
-		<item name="wcf.chat.message.2"><![CDATA[hat den Chat verlassen.]]></item>
+		<item name="chat.message.2"><![CDATA[hat den Chat verlassen.]]></item>
 		<!-- 3 = TYPE_AWAY -->
-		<item name="wcf.chat.message.3"><![CDATA[ist jetzt abwesend{if $message}: {$message}{else}.{/if}]]></item>
+		<item name="chat.message.3"><![CDATA[ist jetzt abwesend{if $message}: {$message}{else}.{/if}]]></item>
 		<!-- 4 = TYPE_BACK -->
-		<item name="wcf.chat.message.4"><![CDATA[ist jetzt wieder da.]]></item>
+		<item name="chat.message.4"><![CDATA[ist jetzt wieder da.]]></item>
 		<!-- 5 = TYPE_MODERATE -->
-		<item name="wcf.chat.message.5.restore"><![CDATA[hat {@$link} zurückgesetzt.]]></item>
-		<item name="wcf.chat.message.5.mute"><![CDATA[hat {@$link} bis {@$until|plainTime} geknebelt.]]></item>
-		<item name="wcf.chat.message.5.ban"><![CDATA[hat {@$link} bis {@$until|plainTime} gebannt.]]></item>
+		<item name="chat.message.5.restore"><![CDATA[hat {@$link} zurückgesetzt.]]></item>
+		<item name="chat.message.5.mute"><![CDATA[hat {@$link} bis {@$until|plainTime} geknebelt.]]></item>
+		<item name="chat.message.5.ban"><![CDATA[hat {@$link} bis {@$until|plainTime} gebannt.]]></item>
 		
 		<!-- 7 = TYPE_WHISPER -->
-		<item name="wcf.chat.message.7"><![CDATA[flüstert{if $showReceiver} an {$username}{/if}:]]></item>
+		<item name="chat.message.7"><![CDATA[flüstert{if $showReceiver} an {$username}{/if}:]]></item>
 	</category>
 	
 	<!-- I18N Values -->
-	<category name="wcf.chat.room">
-		<item name="wcf.chat.room.title1"><![CDATA[Hauptchat]]></item>
-		<item name="wcf.chat.room.topic1"><![CDATA[Vielen Dank, dass Sie sich für Tims Chat entschieden haben. Bitte besuchen Sie das ACP um diesen Text anzupassen.]]></item>
-		<item name="wcf.chat.room.titleTemp"><![CDATA[Raum_{$roomID}]]></item>
+	<category name="chat.room">
+		<item name="chat.room.title1"><![CDATA[Hauptchat]]></item>
+		<item name="chat.room.topic1"><![CDATA[Vielen Dank, dass Sie sich für Tims Chat entschieden haben. Bitte besuchen Sie das ACP um diesen Text anzupassen.]]></item>
+		<item name="chat.room.titleTemp"><![CDATA[Raum_{$roomID}]]></item>
 	</category>
 		
-	<category name="wcf.header">
-		<item name="wcf.header.menu.chat"><![CDATA[Chat]]></item>
+	<category name="chat.header">
+		<item name="chat.header.menu.chat"><![CDATA[Chat]]></item>
 	</category>
 </language>

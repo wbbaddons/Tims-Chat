@@ -6,7 +6,7 @@
 			<eventname>didInit</eventname>
 			<environment>user</environment>
 			<inherit>0</inherit>
-			<listenerclassname>wcf\system\event\listener\ChatRouteListener</listenerclassname>
+			<listenerclassname>chat\system\event\listener\RouteHandlerListener</listenerclassname>
 		</eventlistener>
 	</import>
 </data>

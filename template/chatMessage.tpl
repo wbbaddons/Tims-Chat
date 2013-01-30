@@ -1,1 +1,0 @@
-{literal}<time>{@$formattedTime}</time> <span class="username">{@$formattedUsername}</span><span class="separator">{$separator}</span> <span class="text">{@$formattedMessage}</span>{/literal}

@@ -2,17 +2,17 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/object-type.xsd">
 	<import>
 		<type>
-			<name>be.bastelstu.wcf.chat.room</name>
+			<name>be.bastelstu.chat.room</name>
 			<definitionname>com.woltlab.wcf.acl</definitionname>
 		</type>
 		<type>
-			<name>be.bastelstu.wcf.chat.activityPointEvent.join</name>
+			<name>be.bastelstu.chat.activityPointEvent.join</name>
 			<definitionname>com.woltlab.wcf.user.activityPointEvent</definitionname>
 			<points>0</points>
 			<classname>wcf\system\user\activity\point\DefaultUserActivityPointObjectProcessor</classname><!-- We are unable to recalc those points -->
 		</type>
 		<type>
-			<name>be.bastelstu.wcf.chat.activityPointEvent.message</name>
+			<name>be.bastelstu.chat.activityPointEvent.message</name>
 			<definitionname>com.woltlab.wcf.user.activityPointEvent</definitionname>
 			<points>0</points>
 			<classname>wcf\system\user\activity\point\DefaultUserActivityPointObjectProcessor</classname><!-- We are unable to recalc those points -->

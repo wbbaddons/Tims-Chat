@@ -8,8 +8,8 @@
 			<category name="mod.chat">
 				<parent>mod</parent>
 			</category>
-			<category name="admin.content.chat">
-				<parent>admin.content</parent>
+			<category name="admin.chat">
+				<parent>admin</parent>
 			</category>
 		</categories>
 		
@@ -80,20 +80,20 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
-			<option name="admin.content.chat.canAddRoom">
-				<categoryname>admin.content.chat</categoryname>
+			<option name="admin.chat.canAddRoom">
+				<categoryname>admin.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
-			<option name="admin.content.chat.canEditRoom">
-				<categoryname>admin.content.chat</categoryname>
+			<option name="admin.chat.canEditRoom">
+				<categoryname>admin.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
-			<option name="admin.content.chat.canDeleteRoom">
-				<categoryname>admin.content.chat</categoryname>
+			<option name="admin.chat.canDeleteRoom">
+				<categoryname>admin.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>

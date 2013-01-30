@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/acpMenu.xsd">
 	<import>
-		<acpmenuitem name="wcf.acp.menu.link.chat">
+		<acpmenuitem name="chat.acp.menu.link">
 			<parent>wcf.acp.menu.link.community</parent>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.chat.room.list">
-			<controller><![CDATA[wcf\acp\page\ChatRoomListPage]]></controller>
-			<parent>wcf.acp.menu.link.chat</parent>
-			<permissions>admin.content.chat.canEditRoom,admin.content.chat.canDeleteRoom</permissions>
+		<acpmenuitem name="chat.acp.menu.link.chat">
+			<parent>chat.acp.menu.link</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="chat.acp.menu.link.room.list">
+			<controller><![CDATA[chat\acp\page\RoomListPage]]></controller>
+			<parent>chat.acp.menu.link.chat</parent>
+			<permissions>admin.chat.canEditRoom,admin.chat.canDeleteRoom</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 
-		<acpmenuitem name="wcf.acp.menu.link.chat.room.add">
-			<controller><![CDATA[wcf\acp\form\ChatRoomAddForm]]></controller>
-			<parent>wcf.acp.menu.link.chat</parent>
-			<permissions>admin.content.chat.canAddRoom</permissions>
+		<acpmenuitem name="chat.acp.menu.link.room.add">
+			<controller><![CDATA[chat\acp\form\RoomAddForm]]></controller>
+			<parent>chat.acp.menu.link.chat</parent>
+			<permissions>admin.chat.canAddRoom</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
 	</import>

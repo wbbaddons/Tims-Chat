@@ -2,11 +2,10 @@
  * Styles for Tims Chat
  * 
  * @author	Tim Düsterhus, Maximilian Mader
- * @copyright	2010-2012 Tim Düsterhus
+ * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.wcf.chat
  */
-
 #tplChat {
 	#content {
 		#timsChatRoomContent {
@@ -24,30 +23,48 @@
 		overflow-x: hidden;
 		padding-left: 7px !important;
 		
-		.timsChatMessage {
-			padding-left: 16px;
-			min-height: 16px;
-			clear: both;
-			
-			time:first-child {
-				font-size: .8em;
-				&::before, &::after {
-					font-size: .8em;
+		ul {
+			display: table;
+		
+			.timsChatMessage {
+				min-height: 16px;
+				display: table-row;
+				.transition(opacity, .2s);
+				
+				
+				time:first-child {
+					&::before {
+						content: "[";
+					}
+					&::after {
+						content: "]";
+					}
 				}
+				
+				.username {
+					font-weight: bold;
+				}
+				
+				> {
+					time, .usernameContainer, .text {
+						display: table-cell;
+					}
+					
+					.usernameContainer {
+						text-align: right;
+						min-width: 100px;
+						padding: 0px 5px;
+					}
+				}
+				
+				&.unloaded {
+					opacity: .5;
+				}
+				
 				&::before {
-					content: "[";
+					.icon;
+					.icon16;
 				}
-				&::after {
-					content: "]";
-				}
-			}
-			
-			.username {
-				font-weight: bold;
-			}
-			
-			&.unloaded {
-				opacity: 0.4;
 			}
 		}
 	}
@@ -80,7 +97,6 @@
 				}
 				
 				ul {
-					background-color: rgba(0, 0, 0, 0.2);
 					height: 33px;
 					
 					li {
@@ -94,7 +110,10 @@
 							height: 22px;
 							padding: 9px 0 0;
 							
-							.transition(~"border-radius .2s linear 0s, background-color .2s linear 0s, font-size", .2s);
+							.transition(border-radius, .2s);
+							.transition(background-color, .2s);
+							.transition(font-size, .2s);
+							
 							
 							.collapsed & {
 								border: none !important;
@@ -239,14 +258,13 @@
 			padding: 14px 21px 7px;
 			border-bottom-right-radius: 0px;
 			
-			> div {
+			li {
+				.transition(opacity, .2s);
+			}
+			
+			&.disabled {
 				li {
-					display: inline;
-					margin: 5px 5px 0 0;
-					
-					.icon24 {
-						//.square(16px);
-					}
+					opacity: .5;
 				}
 			}
 		}
@@ -290,21 +308,21 @@
 		}
 	}
 	
-	.ajaxLoad {
-		background-position: right center;
-		background-repeat: no-repeat;
-		background-size: auto 100%;
-		background-image: url("../icon/spinner.svg");
+	#toggleRooms .ajaxLoad {
+	    position: absolute;
+	    right: 5px;
+	    top: 3px;
+	    display: none;
 	}
 	
 	#timsChatCopyright {
 		.textShadow(@wcfContentBackgroundColor);
 	}
 	
-	#timsChatCopyrightDialog {
-		background-position: right 45px;
+	#timsChatCopyrightDialog > div {
+		background-position: right center;
 		background-repeat: no-repeat;
-		min-height: 50%;
+		min-height: 150px;
 	}
 	
 	.badgeBG(@backgroundColor) when (lightness(@backgroundColor) < 50%) {

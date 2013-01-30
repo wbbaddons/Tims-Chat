@@ -1,6 +1,6 @@
 <?php
-namespace wcf\page;
-use \wcf\data\chat;
+namespace chat\page;
+use \chat\data;
 use \wcf\system\cache\CacheHandler;
 use \wcf\system\WCF;
 
@@ -8,19 +8,12 @@ use \wcf\system\WCF;
  * Shows the chat-interface
  *
  * @author 	Tim Düsterhus
- * @copyright	2010-2012 Tim Düsterhus
+ * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
- * @package	be.bastelstu.wcf.chat
+ * @package	be.bastelstu.chat
  * @subpackage	page
  */
-class ChatPage extends AbstractPage {
-	/**
-	 * The version of this installation of Tims Chat 3.
-	 * 
-	 * @var string
-	 */
-	public $chatVersion = '';
-	
+class ChatPage extends \wcf\page\AbstractPage {
 	/**
 	 * @see wcf\page\AbstractPage::$loginRequired
 	 */
@@ -39,14 +32,14 @@ class ChatPage extends AbstractPage {
 	/**
 	 * The last X messages for the current room.
 	 * 
-	 * @var array<\wcf\data\chat\message\ChatMessage>
+	 * @var array<\chat\data\message\Message>
 	 */
 	public $newestMessages = array();
 	
 	/**
 	 * The current room.
 	 * 
-	 * @var \wcf\data\chat\room\ChatRoom
+	 * @var \chat\data\room\Room
 	 */
 	public $room = null;
 	
@@ -60,7 +53,7 @@ class ChatPage extends AbstractPage {
 	/**
 	 * List of accessible rooms.
 	 * 
-	 * @var \wcf\data\chat\room\ChatRoomList
+	 * @var \chat\data\room\RoomList
 	 */
 	public $rooms = array();
 	
@@ -101,23 +94,15 @@ class ChatPage extends AbstractPage {
 		parent::assignVariables();
 
 		WCF::getTPL()->assign(array(
-			'chatVersion' => $this->chatVersion,
 			'newestMessages' => $this->newestMessages,
 			'room' => $this->room,
 			'roomID' => $this->roomID,
 			'rooms' => $this->rooms,
 			'defaultSmilies' => $this->defaultSmilies,
 			'smileyCategories' => $this->smileyCategories,
-			'sidebarCollapsed' => \wcf\system\user\collapsible\content\UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'be.bastelstu.wcf.chat.ChatPage'),
-			'sidebarName' => 'be.bastelstu.wcf.chat.ChatPage'
+			'sidebarCollapsed' => \wcf\system\user\collapsible\content\UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'be.bastelstu.chat.ChatPage'),
+			'sidebarName' => 'be.bastelstu.chat.ChatPage'
 		));
-	}
-	
-	/**
-	 * Reads chat-version. Used to avoid caching of JS-File when Tims Chat is updated.
-	 */
-	public function readChatVersion() {
-		return $this->chatVersion = \wcf\data\package\PackageCache::getInstance()->getPackage(\wcf\util\ChatUtil::getPackageID())->packageVersion;
 	}
 	
 	/**
@@ -127,21 +112,21 @@ class ChatPage extends AbstractPage {
 		parent::readData();
 		
 		$this->readRoom();
-		$this->userData['color'] = \wcf\util\ChatUtil::readUserData('color');
-		\wcf\util\ChatUtil::writeUserData(array(
+		$this->userData['color'] = \chat\util\ChatUtil::readUserData('color');
+		\chat\util\ChatUtil::writeUserData(array(
 			'roomID' => $this->room->roomID,
 			'away' => null,
 			'lastActivity' => TIME_NOW
 		));
 		
 		if (CHAT_DISPLAY_JOIN_LEAVE) {
-			$messageAction = new chat\message\ChatMessageAction(array(), 'create', array(
+			$messageAction = new data\message\MessageAction(array(), 'create', array(
 				'data' => array(
 					'roomID' => $this->room->roomID,
 					'sender' => WCF::getUser()->userID,
 					'username' => WCF::getUser()->username,
 					'time' => TIME_NOW,
-					'type' => chat\message\ChatMessage::TYPE_JOIN,
+					'type' => \chat\data\message\Message::TYPE_JOIN,
 					'message' => serialize(array('ipAddress' => \wcf\util\UserUtil::convertIPv6To4(\wcf\util\UserUtil::getIpAddress()))),
 					'color1' => $this->userData['color'][1],
 					'color2' => $this->userData['color'][2]
@@ -151,12 +136,12 @@ class ChatPage extends AbstractPage {
 			$messageAction->getReturnValues();
 		}
 		
-		$this->newestMessages = chat\message\ChatMessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
+		$this->newestMessages = data\message\MessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
 		try {
-			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => end($this->newestMessages)->messageID));
+			\chat\util\ChatUtil::writeUserData(array('lastSeen' => end($this->newestMessages)->messageID));
 		}
 		catch (\wcf\system\exception\SystemException $e) {
-			\wcf\util\ChatUtil::writeUserData(array('lastSeen' => 0));
+			\chat\util\ChatUtil::writeUserData(array('lastSeen' => 0));
 		}
 		
 		$smileyCategories = \wcf\data\smiley\SmileyCache::getInstance()->getCategories();
@@ -166,7 +151,6 @@ class ChatPage extends AbstractPage {
 		}
 		
 		$this->defaultSmilies = \wcf\data\smiley\SmileyCache::getInstance()->getCategorySmilies();
-		$this->readChatVersion();
 	}
 	
 	/**
@@ -177,28 +161,12 @@ class ChatPage extends AbstractPage {
 		
 		$this->request = $this;
 		switch ($this->action) {
-			case 'Message':
-				$this->request = new ChatMessagePage();
-				$this->request->__run();
-				exit;
 			case 'Log':
-				$this->request = new ChatLogPage();
-				$this->request->__run();
-				exit;
-			case 'RefreshRoomList':
-				$this->request = new ChatRefreshRoomListPage();
+				$this->request = new LogPage();
 				$this->request->__run();
 				exit;
 			case 'Send':
-				$this->request = new \wcf\form\ChatForm();
-				$this->request->__run();
-				exit;
-			case 'Leave':
-				$this->request = new \wcf\action\ChatLeaveAction();
-				$this->request->__run();
-				exit;
-			case 'Copyright':
-				$this->request = new ChatCopyrightPage();
+				$this->request = new \chat\form\ChatForm();
 				$this->request->__run();
 				exit;
 		}
@@ -211,7 +179,7 @@ class ChatPage extends AbstractPage {
 	 * Reads room data.
 	 */
 	public function readRoom() {
-		$this->rooms = chat\room\ChatRoom::getCache();
+		$this->rooms = data\room\Room::getCache();
 		
 		if ($this->roomID === 0) {
 			// no room given
@@ -236,7 +204,7 @@ class ChatPage extends AbstractPage {
 	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
-		\wcf\system\menu\page\PageMenu::getInstance()->setActiveMenuItem('wcf.header.menu.chat');
+		\wcf\system\menu\page\PageMenu::getInstance()->setActiveMenuItem('chat.header.menu.chat');
 		
 		// remove index breadcrumb
 		WCF::getBreadcrumbs()->remove(0);
@@ -244,7 +212,7 @@ class ChatPage extends AbstractPage {
 		parent::show();
 		
 		// add activity points
-		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.wcf.chat.activityPointEvent.join', TIME_NOW, WCF::getUser()->userID);
+		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.join', TIME_NOW, WCF::getUser()->userID);
 		
 		// break if not using ajax
 		if ($this->useTemplate) exit;
