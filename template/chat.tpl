@@ -60,6 +60,10 @@
 	</script>
 	
 	<style type="text/css">
+		.timsChatMessage::before {
+			content: "";
+		}
+		
 		{assign var='type' value='\chat\data\message\Message::TYPE_'}
 		.timsChatMessage{$type|concat:'JOIN'|constant}::before {
 			content: "\f090";

@@ -23,34 +23,46 @@
 		overflow-x: hidden;
 		padding-left: 7px !important;
 		
-		.timsChatMessage {
-			padding-left: 16px;
-			min-height: 16px;
-			clear: both;
-			position: relative;
-			
-			time:first-child {
+		ul {
+			display: table;
+		
+			.timsChatMessage {
+				min-height: 16px;
+				display: table-row;
+				
+				time:first-child {
+					&::before {
+						content: "[";
+					}
+					&::after {
+						content: "]";
+					}
+				}
+				
+				.username {
+					font-weight: bold;
+				}
+				
+				> {
+					time, .usernameContainer, .text {
+						display: table-cell;
+					}
+					
+					.usernameContainer {
+						text-align: right;
+						min-width: 100px;
+						padding: 0px 5px;
+					}
+				}
+				
+				&.unloaded {
+					opacity: 0.4;
+				}
+				
 				&::before {
-					content: "[";
+					.icon;
+					.icon16;
 				}
-				&::after {
-					content: "]";
-				}
-			}
-			
-			.username {
-				font-weight: bold;
-			}
-			
-			&.unloaded {
-				opacity: 0.4;
-			}
-			
-			&::before {
-				.icon;
-				.icon16;
-				position: absolute;
-				left: 0px;
 			}
 		}
 	}
