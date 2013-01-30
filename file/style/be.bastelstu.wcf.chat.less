@@ -29,6 +29,8 @@
 			.timsChatMessage {
 				min-height: 16px;
 				display: table-row;
+				.transition(opacity, .2s);
+				
 				
 				time:first-child {
 					&::before {
@@ -56,7 +58,7 @@
 				}
 				
 				&.unloaded {
-					opacity: 0.4;
+					opacity: .5;
 				}
 				
 				&::before {
@@ -95,7 +97,6 @@
 				}
 				
 				ul {
-					background-color: rgba(0, 0, 0, 0.2);
 					height: 33px;
 					
 					li {
@@ -109,7 +110,10 @@
 							height: 22px;
 							padding: 9px 0 0;
 							
-							.transition(~"border-radius .2s linear 0s, background-color .2s linear 0s, font-size", .2s);
+							.transition(border-radius, .2s);
+							.transition(background-color, .2s);
+							.transition(font-size, .2s);
+							
 							
 							.collapsed & {
 								border: none !important;
@@ -254,14 +258,13 @@
 			padding: 14px 21px 7px;
 			border-bottom-right-radius: 0px;
 			
-			> div {
+			li {
+				.transition(opacity, .2s);
+			}
+			
+			&.disabled {
 				li {
-					display: inline;
-					margin: 5px 5px 0 0;
-					
-					.icon24 {
-						//.square(16px);
-					}
+					opacity: .5;
 				}
 			}
 		}
