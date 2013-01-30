@@ -52,7 +52,7 @@
 				</dd>
 			</dl>
 			
-			{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection='false'}
+			{include file='multipleLanguageInputJavascript' elementIdentifier='title' forceSelection=false}
 			
 			<dl{if $errorField == 'topic'} class="formError"{/if}>
 				<dt><label for="topic">{lang}chat.acp.room.topic{/lang}</label></dt>
@@ -70,7 +70,7 @@
 				</dd>
 			</dl>
 			
-			{include file='multipleLanguageInputJavascript' elementIdentifier='topic' forceSelection='false'}
+			{include file='multipleLanguageInputJavascript' elementIdentifier='topic' forceSelection=false}
 			
 			<dl id="groupPermissions">
 				<dt>{lang}wcf.acp.acl.permissions{/lang}</dt>
