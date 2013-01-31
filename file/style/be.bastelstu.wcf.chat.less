@@ -13,6 +13,16 @@
 			
 			#timsChatTopic {
 				padding: 5px;
+				.transition(height, .2s);
+				.transition(padding-top, .2s);
+				.transition(padding-bottom, .2s);
+				
+				&.empty {
+					height: 0px;
+					overflow: hidden;
+					border: 0px;
+					padding: 0px;
+				}
 			}
 		}
 	}

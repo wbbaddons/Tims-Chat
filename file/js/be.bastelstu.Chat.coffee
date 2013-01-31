@@ -178,6 +178,13 @@ window.console ?=
 			# Refreshes the roomlist
 			$('#timsChatRoomList button').click $.proxy @refreshRoomList, @
 			
+			# Clears the stream
+			$('#timsChatClear').click (event) ->
+				event.preventDefault()
+				$('.timsChatMessage').remove()
+				@oldScrollTop = null
+				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height()
+			
 			# Toggle Buttons
 			$('.timsChatToggle').click (event) ->
 				element = $ @
@@ -192,19 +199,6 @@ window.console ?=
 					element.attr 'title', element.data 'disableMessage'
 					
 				$('#timsChatInput').focus()
-			
-			# Clears the stream
-			$('#timsChatClear').click (event) ->
-				event.preventDefault()
-				$('.timsChatMessage').remove()
-				@oldScrollTop = null
-				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height()
-			
-			$('#timsChatSmilies').click (event) ->
-				if $(@).data 'status'
-					$('#smilies').removeClass 'disabled'
-				else
-					$('#smilies').addClass 'disabled'
 			
 			# Enable fullscreen-mode
 			$('#timsChatFullscreen').click (event) ->
@@ -225,7 +219,7 @@ window.console ?=
 				$('#timsChatNotify').click (event) ->
 					if $(@).data('status') and window.webkitNotifications.checkPermission() isnt 0
 						window.webkitNotifications.requestPermission()
-						
+			
 		###
 		# Changes the chat-room.
 		# 
@@ -248,14 +242,11 @@ window.console ?=
 					target.parent().addClass 'activeMenuItem'
 					
 					# Set new topic
+					$('#timsChatTopic').text data.topic
 					if data.topic is ''
-						return if $('#timsChatTopic').text().trim() is ''
-						
-						$('#timsChatTopic').wcfBlindOut 'vertical', () ->
-							$(@).text ''
+						$('#timsChatTopic').addClass 'empty'
 					else
-						$('#timsChatTopic').text data.topic
-						$('#timsChatTopic').wcfBlindIn() if $('#timsChatTopic').text().trim() isnt '' and $('#timsChatTopic').is ':hidden'
+						$('#timsChatTopic').removeClass 'empty'
 					
 					$('.timsChatMessage').addClass 'unloaded', 800
 					@handleMessages data.messages
@@ -383,7 +374,7 @@ window.console ?=
 						element.addClass 'away'
 						element.attr 'title', user.awayStatus
 					else
-						element.removeClass 'away'
+						element.removeClass 'timsChatAway'
 						element.removeAttr 'title'
 						element.data 'tooltip', ''
 					if user.suspended

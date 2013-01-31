@@ -89,7 +89,7 @@
 {include file='header' sandbox=false sidebarOrientation='right'}
 
 <div id="timsChatRoomContent">
-	<div id="timsChatTopic" class="container"{if $room->topic|language === ''} style="display: none;"{/if}>{$room->topic|language}</div>
+	<div id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">{$room->topic|language}</div>
 	<fieldset>
 		<div id="timsChatMessageContainer" class="timsChatMessageContainer container box shadow1">
 			<noscript><p class="error">{lang}chat.general.noJs{/lang}</p></noscript>
