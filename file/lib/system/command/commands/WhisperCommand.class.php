@@ -12,7 +12,7 @@ use \wcf\data\user\User;
  * @subpackage	system.chat.command.commands
  */
 class WhisperCommand extends \chat\system\command\AbstractCommand {
-	public $enableSmilies = \chat\system\command\ICommand::SMILEY_USER;
+	public $enableSmilies = self::SETTING_USER;
 	public $user = null, $message = '';
 	
 	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
