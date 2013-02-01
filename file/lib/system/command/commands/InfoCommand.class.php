@@ -48,7 +48,7 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 		if (WCF::getSession()->getPermission('admin.user.canViewIpAddress')) {
 			$session = $this->fetchSession();
 			if ($session) {
-				$this->lines[WCF::getLanguage()->get('wcf.user.ipAddress')] = $session->ipAddress;
+				$this->lines[WCF::getLanguage()->get('wcf.user.ipAddress')] = \wcf\util\UserUtil::convertIPv6To4($session->ipAddress);
 			}
 		}
 		
