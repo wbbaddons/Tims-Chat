@@ -65,8 +65,8 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 					FROM
 						wcf".WCF_N."_user_storage
 					WHERE
-						AND	field = ?
-						AND 	fieldValue IS NOT NULL
+							field = ?
+						AND	fieldValue IS NOT NULL
 				)";
 		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
 		$stmt->execute(array(0, 'roomID'));
