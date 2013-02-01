@@ -9,7 +9,7 @@
 		<item name="chat.acp.room.topic"><![CDATA[Thema]]></item>
 		
 		<item name="chat.acp.room.noneAvailable"><![CDATA[Es wurden noch keine Chaträume angelegt.]]></item>
-		<item name="chat.acp.room.delete.sure"><![CDATA[Möchten Sie den Raum &bdquo;{$chatRoom->title|language}&ldquo; wirklich löschen?]]></item>
+		<item name="chat.acp.room.delete.sure"><![CDATA[Möchten Sie den Raum „{$chatRoom->title|language}“ wirklich löschen?]]></item>
 	</category>
 	
 	<category name="chat.acp.menu">
@@ -94,7 +94,7 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 	<category name="chat.error">
 		<item name="chat.error"><![CDATA[Fehler]]></item>
 		<item name="chat.error.notFound"><![CDATA[Der Befehl wurde nicht gefunden.]]></item>
-		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer &bdquo;{$username}&ldquo; wurde nicht gefunden.]]></item>
+		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer „{$username}“ wurde nicht gefunden.]]></item>
 		<item name="chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
 		<item name="chat.error.exception"><![CDATA[Es gab ein Problem bei der Ausführung dieses Befehls. Bitte wenden Sie sich an einen Administrator.]]></item>
 	</category>
