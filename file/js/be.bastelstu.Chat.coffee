@@ -252,6 +252,12 @@ window.console ?=
 					$('.timsChatMessage').addClass 'unloaded', 800
 					@handleMessages data.messages
 					document.title = @titleTemplate.fetch data
+					
+					# Fix smiley urls ...
+					$('#smilies .menu li a').each (key, value) ->
+						anchor = $(value)
+						anchor.attr 'href', anchor.attr('href').replace /.*#/, "#{target.attr('href')}#"
+	  
 				, @
 				error: () ->
 					# Reload the page to change the room the old fashion-way
