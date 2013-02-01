@@ -154,7 +154,7 @@
 					</a>
 				</li>
 				<li>
-					<a id="timsChatClear" class="jsTooltip button" title="{lang}chat.general.clear.description{/lang}">
+					<a id="timsChatClear" class="button">
 						<span class="icon icon16 icon-remove"></span><span>{lang}chat.general.clear{/lang}</span>
 					</a>
 				</li>

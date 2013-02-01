@@ -65,10 +65,17 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 				chat".WCF_N."_suspension
 			WHERE	
 					userID = ?
-				AND	roomID = ?
 				AND	type = ?";
+		
+		$parameter = array($user->userID, $type);
+		if ($room->roomID) {
+			$sql .= " AND roomID = ?";
+			$parameter[] = $room->roomID;
+		}
+		else $sql .= " AND roomID IS NULL";
+		
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($user->userID, $room->roomID, $type));
+		$statement->execute($parameter);
 		$row = $statement->fetchArray();
 		if(!$row) $row = array();
 		

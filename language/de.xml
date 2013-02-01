@@ -112,6 +112,8 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<item name="chat.message.5.restore"><![CDATA[hat {@$link} zurückgesetzt.]]></item>
 		<item name="chat.message.5.mute"><![CDATA[hat {@$link} bis {@$until|plainTime} geknebelt.]]></item>
 		<item name="chat.message.5.ban"><![CDATA[hat {@$link} bis {@$until|plainTime} gebannt.]]></item>
+		<item name="chat.message.5.gmute"><![CDATA[hat {@$link} bis {@$until|plainTime} global geknebelt.]]></item>
+		<item name="chat.message.5.gban"><![CDATA[hat {@$link} bis {@$until|plainTime} global gebannt.]]></item>
 		
 		<!-- 7 = TYPE_WHISPER -->
 		<item name="chat.message.7"><![CDATA[flüstert{if $showReceiver} an {$username}{/if}:]]></item>

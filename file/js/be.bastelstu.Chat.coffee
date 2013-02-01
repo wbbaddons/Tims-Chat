@@ -13,6 +13,7 @@ window.console ?=
 	error: () ->
 
 (($, window, _console) ->
+	"use strict";
 	window.be ?= {}
 	be.bastelstu ?= {}
 	
@@ -268,7 +269,7 @@ window.console ?=
 		freeTheFish: () ->
 			return if $.wcfIsset 'fish'
 			console.warn 'Freeing the fish'
-			fish = $ '<div id="fish">' + WCF.String.escapeHTML('><((((\u00B0>') + '</div>'
+			fish = $ """<div id="fish">#{WCF.String.escapeHTML('><((((\u00B0>')}</div>"""
 			fish.css
 				position: 'absolute'
 				top: '150px'
@@ -368,7 +369,7 @@ window.console ?=
 				
 				# Move the user to the correct position
 				if element[0]
-					console.log 'Moving User: "' + user.username + '"'
+					console.log "Moving User: '#{user.username}'"
 					element = element.detach()
 					if user.awayStatus?
 						element.addClass 'away'
@@ -385,7 +386,7 @@ window.console ?=
 					$('#timsChatUserList').append element
 				# Insert the user
 				else
-					console.log 'Inserting User: "' + user.username + '"'
+					console.log "Inserting User: '#{user.username}'"
 					li = $ '<li></li>'
 					li.attr 'id', id
 					li.addClass 'timsChatUser'
@@ -424,7 +425,7 @@ window.console ?=
 			# Remove users that were not found
 			$('.timsChatUser').each () ->
 				if typeof foundUsers[$(@).attr('id')] is 'undefined'
-					console.log 'Removing User: "' + $(@).data('username') + '"'
+					console.log "Removing User: '#{$(@).data('username')}'"
 					$(@).remove();
 					
 			
@@ -510,7 +511,7 @@ window.console ?=
 					for room in data
 						li = $ '<li></li>'
 						li.addClass 'activeMenuItem' if room.active
-						$('<a href="' + room.link + '">' + room.title + '</a>').addClass('timsChatRoom').appendTo li
+						$("""<a href="#{room.link}">#{room.title}</a>""").addClass('timsChatRoom').appendTo li
 						$('#timsChatRoomList ul').append li
 						
 					$('.timsChatRoom').click $.proxy (event) ->
