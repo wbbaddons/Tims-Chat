@@ -22,10 +22,20 @@ class TimeIntervalOptionType extends \wcf\system\option\TextOptionType {
 	 * @see	\wcf\system\option\TextOptionType::getFormElement()
 	 */
 	public function getFormElement(\wcf\data\option\Option $option, $value) {
-		$tmp = (int) ($value / 60);
+		$tmp = '';
+		if ($value > 86400) {
+			$tmp = floor($value / 86400).'d';
+			$value -= floor($value / 86400) * 86400;
+		}
+		if ($value > 3600) {
+			$tmp .= floor($value / 3600).'h';
+			$value -= floor($value / 3600) * 3600;
+		}
+		$tmp .= floor($value / 60);
 		if ($value % 60 != 0) {
 			$tmp .= ','.($value % 60).'s';
 		}
+		
 		return parent::getFormElement($option, $tmp);
 	}
 }

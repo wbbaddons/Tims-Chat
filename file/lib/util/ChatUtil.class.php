@@ -75,7 +75,7 @@ final class ChatUtil {
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute(array('lastActivity', 'roomID', $time - 30));
 		$users = array();
-		while ($users[] = $stmt->fetchArray());
+		while ($user = $stmt->fetchArray()) $users[] = $user;
 		
 		return $users;
 	}
