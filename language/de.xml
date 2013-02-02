@@ -45,8 +45,6 @@
 		<item name="wcf.acp.option.chat_display_join_leave.description"><![CDATA[Gibt an, ob eine Nachricht angezeigt werden soll, wenn ein Nutzer den Chat betritt oder verlässt.]]></item>
 		<item name="wcf.acp.option.chat_max_length"><![CDATA[Maximale Textlänge]]></item>
 		<item name="wcf.acp.option.chat_max_length.description"><![CDATA[Gibt die maximale Länge einer Chatnachricht an.]]></item>
-		<item name="wcf.acp.option.chat_show_version"><![CDATA[Versionsnummer anzeigen]]></item>
-		<item name="wcf.acp.option.chat_show_version.description"><![CDATA[Zeigt die Versionsnummer im Copyrighthinweis an.]]></item>
 		
 		<item name="wcf.acp.option.chat_socket_io_path"><![CDATA[Push-Server-Adresse (nodePush)]]></item>
 		<item name="wcf.acp.option.chat_socket_io_path.description"><![CDATA[Der Push-Server dient dazu das Chat-Backend zu entlasten.
