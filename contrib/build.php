@@ -48,17 +48,6 @@ foreach (glob('file/acp/be.bastelstu.chat.nodePush/lib/*.coffee') as $coffeeFile
 }
 echo <<<EOT
 
-Building CSS
-------------
-
-EOT;
-foreach (glob('file/style/*.scss') as $sassFile) {
-	echo $sassFile."\n";
-	passthru('scss '.escapeshellarg($sassFile).' '.escapeshellarg(substr($sassFile, 0, -4).'css'), $code);
-	if ($code != 0) exit($code);
-}
-echo <<<EOT
-
 Checking PHP for Syntax Errors
 ------------------------------
 
