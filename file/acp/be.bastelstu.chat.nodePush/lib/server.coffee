@@ -1,8 +1,8 @@
 ###
 # node.js Pushserver for Tims Chat.
 # 
-# @author	Tim DÃ¼sterhus
-# @copyright	2010-2013 Tim DÃ¼sterhus
+# @author	Tim Düsterhus
+# @copyright	2010-2013 Tim Düsterhus
 # @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
 # @package	be.bastelstu.chat
 # @subpackage	nodePush
@@ -13,10 +13,10 @@ io = require 'socket.io'
 net = require 'net'
 fs = require 'fs'
 
-config = require('../config.js')
+config = require '../config.js'
 
 log = (message) ->
-	console.log '[be.bastelstu.chat.nodePush] '+message
+	console.log "[be.bastelstu.chat.nodePush] #{message}"
 
 class Server
 	constructor: () ->
@@ -24,8 +24,8 @@ class Server
 			console.error 'Please run me via bin/run.sh'
 			process.exit 1
 		log 'Starting Pushserver for Tims Chat'
-		log 'PID is ' + process.pid
-		log 'Using port: ' + config.port
+		log "PID is #{process.pid}"
+		log "Using port: #{config.port}"
 		
 		@initUnixSocket()
 		@initSocketIO()
@@ -45,7 +45,7 @@ class Server
 		@socket.set 'log level', 1
 		@socket.set 'browser client etag', true
 		@socket.set 'browser client minification', true
-		@socket.set 'browser client gzig', true
+		@socket.set 'browser client gzip', true
 		
 		@socket.configure 'development', (() ->
 			@socket.set 'log level', 3
