@@ -161,10 +161,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 		
 		$this->request = $this;
 		switch ($this->action) {
-			case 'Log':
-				$this->request = new LogPage();
-				$this->request->__run();
-				exit;
 			case 'Send':
 				$this->request = new \chat\form\ChatForm();
 				$this->request->__run();

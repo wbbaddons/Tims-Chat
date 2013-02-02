@@ -35,7 +35,7 @@ class LogPage extends \wcf\page\AbstractPage {
 	/**
 	 * @see \wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array();
+	public $neededPermissions = array('mod.chat.canReadLog');
 	
 	/**
 	 * given roomID
@@ -50,29 +50,6 @@ class LogPage extends \wcf\page\AbstractPage {
 	public $room = null;
 	
 	/**
-	 * all rooms in the current installation
-	 * @var array<\chat\data\room\Room>
-	 */
-	public $rooms = array();
-	
-	/**
-	 * shortcut for the active request
-	 * @see wcf\system\request\Request::getRequestObject()
-	 */
-	public $request = null;
-	
-	/**
-	 * Disallows direct access.
-	 * 
-	 * @see wcf\page\IPage::__run()
-	 */
-	public function __run() {
-		if (($this->request = \wcf\system\request\RequestHandler::getInstance()->getActiveRequest()->getRequestObject()) === $this) throw new IllegalLinkException();
-		
-		parent::__run();
-	}
-	
-	/**
 	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
@@ -81,8 +58,7 @@ class LogPage extends \wcf\page\AbstractPage {
 		WCF::getTPL()->assign(array(
 			'messages' => $this->messages,
 			'room' => $this->room,
-			'roomID' => $this->roomID,
-			'rooms' => $this->rooms
+			'roomID' => $this->roomID
 		));
 	}
 	
@@ -92,7 +68,7 @@ class LogPage extends \wcf\page\AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['id'])) $this->roomID = (int) $_REQUEST['id'];
+		if (isset($_REQUEST['id'])) $this->roomID = intval($_REQUEST['id']);
 	}
 	
 	/**
@@ -106,8 +82,6 @@ class LogPage extends \wcf\page\AbstractPage {
 		
 		$this->room = $cache[$this->roomID];
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
-		$ph = new \chat\system\permission\PermissionHandler();
-		if (!$ph->getPermission($this->room, 'mod.canReadLog')) throw new \wcf\system\exception\PermissionDeniedException();
 		
 		// TODO: actually read the correct messages
 		$this->messages = data\message\MessageList::getNewestMessages($this->room, 150);

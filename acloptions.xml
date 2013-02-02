@@ -37,10 +37,6 @@
 				<objecttype>be.bastelstu.chat.room</objecttype>
 				<categoryname>mod</categoryname>
 			</option>
-			<option name="mod.canReadLog">
-				<objecttype>be.bastelstu.chat.room</objecttype>
-				<categoryname>mod</categoryname>
-			</option>
 		</options>
 	</import>
 </data>

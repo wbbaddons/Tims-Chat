@@ -18,7 +18,7 @@ class RouteHandlerListener implements \wcf\system\event\IEventListener {
 		$route = new \wcf\system\request\Route('chatAction');
 		$route->setSchema('/{controller}/{action}/{id}');
 		$route->setParameterOption('controller', null, 'Chat');
-		$route->setParameterOption('action', null, '(Log|Send)');
+		$route->setParameterOption('action', null, '(Send)');
 		$route->setParameterOption('id', null, '\d+', true);
 		$eventObj->addRoute($route);
 	}
