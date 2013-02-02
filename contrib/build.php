@@ -28,7 +28,6 @@ EOT;
 	if (file_exists('acptemplate.tar')) unlink('acptemplate.tar');
 	foreach (glob('file/acp/be.bastelstu.chat.nodePush/lib/*.js') as $nodeFile) unlink($nodeFile);
 	foreach (glob('file/js/*.js') as $jsFile) unlink($jsFile);
-	foreach (glob('file/style/*.css') as $cssFile) unlink($cssFile);
 	if (file_exists('be.bastelstu.chat.tar')) unlink('be.bastelstu.chat.tar');
 echo <<<EOT
 
@@ -98,13 +97,13 @@ EOT;
 echo <<<EOT
 
 Building be.bastelstu.chat.tar
-----------------------------------
+------------------------------
 
 EOT;
 	chdir('..');
 	file_put_contents('package.xml.old', file_get_contents('package.xml'));
 	file_put_contents('package.xml', preg_replace('~<date>\d{4}-\d{2}-\d{2}</date>~', '<date>'.date('Y-m-d').'</date>', file_get_contents('package.xml')));
-	passthru('tar cvf be.bastelstu.chat.tar * --exclude=*.old --exclude=file --exclude=template --exclude=acptemplate --exclude=build.php', $code);
+	passthru('tar cvf be.bastelstu.chat.tar * --exclude=*.old --exclude=file --exclude=template --exclude=acptemplate --exclude=contrib', $code);
 	if (file_exists('package.xml.old')) {
 		file_put_contents('package.xml', file_get_contents('package.xml.old'));
 		unlink('package.xml.old');
@@ -116,4 +115,3 @@ if (file_exists('template.tar')) unlink('template.tar');
 if (file_exists('acptemplate.tar')) unlink('acptemplate.tar');
 foreach (glob('file/acp/be.bastelstu.chat.nodePush/lib/*.js') as $nodeFile) unlink($nodeFile);
 foreach (glob('file/js/*.js') as $jsFile) unlink($jsFile);
-foreach (glob('file/style/*.css') as $cssFile) unlink($cssFile);
