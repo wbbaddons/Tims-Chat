@@ -157,23 +157,23 @@ class ChatForm extends \wcf\form\AbstractForm {
 				$receiver = $command->getReceiver();
 			}
 			catch (\chat\system\command\NotFoundException $e) {
-				$this->message = WCF::getLanguage()->get('wcf.chat.error.notFound');
+				$this->message = WCF::getLanguage()->get('chat.error.notFound');
 				$type = data\message\Message::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 			}
 			catch (\chat\system\command\UserNotFoundException $e) {
-				$this->message = WCF::getLanguage()->getDynamicVariable('wcf.chat.error.userNotFound', array('username' => $e->getUsername()));
+				$this->message = WCF::getLanguage()->getDynamicVariable('chat.error.userNotFound', array('username' => $e->getUsername()));
 				$type = data\message\Message::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 				$this->enableHTML = 1;
 			}
 			catch (\wcf\system\exception\PermissionDeniedException $e) {
-				$this->message = WCF::getLanguage()->get('wcf.chat.error.permissionDenied');
+				$this->message = WCF::getLanguage()->get('chat.error.permissionDenied');
 				$type = data\message\Message::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 			}
 			catch (\Exception $e) {
-				$this->message = WCF::getLanguage()->get('wcf.chat.error.exception');
+				$this->message = WCF::getLanguage()->get('chat.error.exception');
 				$type = data\message\Message::TYPE_ERROR;
 				$receiver = WCF::getUser()->userID;
 			}

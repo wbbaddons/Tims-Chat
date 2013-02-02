@@ -114,6 +114,8 @@ Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die
 		<item name="chat.message.5.ban"><![CDATA[hat {@$link} bis {@$until|plainTime} gebannt.]]></item>
 		<item name="chat.message.5.gmute"><![CDATA[hat {@$link} bis {@$until|plainTime} global geknebelt.]]></item>
 		<item name="chat.message.5.gban"><![CDATA[hat {@$link} bis {@$until|plainTime} global gebannt.]]></item>
+		
+		<item name="chat.message.color.success"><![CDATA[Die Farbe wurde erfolgreich geändert.]]></item>
 	</category>
 	
 	<!-- I18N Values -->
