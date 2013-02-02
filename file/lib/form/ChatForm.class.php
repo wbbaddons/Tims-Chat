@@ -217,9 +217,10 @@ class ChatForm extends \wcf\form\AbstractForm {
 			)
 		));
 		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->getReturnValues();
 		
 		// add activity points
-		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.message', TIME_NOW, WCF::getUser()->userID);
+		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.message', $returnValues->messageID, WCF::getUser()->userID);
 		
 		$this->saved();
 	}

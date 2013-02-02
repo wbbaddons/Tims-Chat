@@ -208,7 +208,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 		parent::show();
 		
 		// add activity points
-		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.join', TIME_NOW, WCF::getUser()->userID);
+		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.join', (microtime(true) * 1000 & 0xFFFFFFFF), WCF::getUser()->userID);
 		
 		// break if not using ajax
 		if ($this->useTemplate) exit;
