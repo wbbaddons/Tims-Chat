@@ -11,20 +11,18 @@ use wcf\system\WCF;
  * @package	be.bastelstu.chat
  * @subpackage	system.cache.builder
  */
-class PermissionCacheBuilder implements \wcf\system\cache\builder\ICacheBuilder {
+class PermissionCacheBuilder implements \wcf\system\cache\builder\AbstractCacheBuilder {
 	/**
-	 * @see wcf\system\cache\ICacheBuilder::getData()
+	 * @see wcf\system\cache\AbstractCacheBuilder::rebuild()
 	 */
-	public function getData(array $cacheResource) {
+	public function rebuild(array $parameters) {
 		$data = array();
-		list(, $groupIDsStr) = explode('-', $cacheResource['cache']);
-		$groupIDs = explode(',', $groupIDsStr);
 		
-		if (count($groupIDs)) {
+		if (!empty($parameters)) {
 			$conditionBuilder = new \wcf\system\database\util\PreparedStatementConditionBuilder();
 			$conditionBuilder->add('acl_option.objectTypeID = ?', array(\wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.chat.room')));
 			$conditionBuilder->add('option_to_group.optionID = acl_option.optionID');
-			$conditionBuilder->add('option_to_group.groupID IN (?)', array($groupIDs));
+			$conditionBuilder->add('option_to_group.groupID IN (?)', array($parameters));
 			$sql = "SELECT		option_to_group.groupID, option_to_group.objectID AS roomID, option_to_group.optionValue,
 						acl_option.optionName AS permission
 				FROM		wcf".WCF_N."_acl_option acl_option,

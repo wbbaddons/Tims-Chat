@@ -59,6 +59,7 @@ class RoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data\IEd
 	 * Clears the room cache.
 	 */
 	public static function resetCache() {
-		\wcf\system\cache\CacheHandler::getInstance()->clear(CHAT_DIR.'cache', 'cache.rooms.php');
+		\chat\system\cache\builder\RoomCacheBuilder::getInstance()->reset();
+		\chat\system\cache\builder\PermissionCacheBuilder::getInstance()->reset();
 	}
 }

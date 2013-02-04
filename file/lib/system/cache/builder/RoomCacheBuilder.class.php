@@ -10,11 +10,11 @@ namespace chat\system\cache\builder;
  * @package	be.bastelstu.chat
  * @subpackage	system.cache.builder
  */
-class RoomCacheBuilder implements \wcf\system\cache\builder\ICacheBuilder {
+class RoomCacheBuilder implements \wcf\system\cache\builder\AbstractCacheBuilder {
 	/**
-	 * @see	\wcf\system\cache\ICacheBuilder::getData()
+	 * @see	\wcf\system\cache\AbstractCacheBuilder::rebuild()
 	 */
-	public function getData(array $cacheResource) {
+	public function rebuild(array $parameters) {
 		// get all chat rooms
 		$roomList = new \chat\data\room\RoomList();
 		$roomList->sqlOrderBy = "room.position";

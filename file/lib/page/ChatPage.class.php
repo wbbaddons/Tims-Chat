@@ -1,7 +1,6 @@
 <?php
 namespace chat\page;
 use \chat\data;
-use \wcf\system\cache\CacheHandler;
 use \wcf\system\WCF;
 
 /**

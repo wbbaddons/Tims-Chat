@@ -1,7 +1,6 @@
 <?php
 namespace chat\data\room;
 use \chat\data\suspension\Suspension;
-use \wcf\system\cache\CacheHandler;
 use \wcf\system\WCF;
 
 /**
@@ -23,13 +22,6 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'roomID';
-	
-	/**
-	 * Caches rooms.
-	 * 
-	 * @var	array<wcf\data\chat\room\ChatRoom>
-	 */
-	protected static $cache = null;
 	
 	/**
 	 * @see	\wcf\data\chat\room\ChatRoom::getTitle();
@@ -121,16 +113,7 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	 * Loads the room cache.
 	 */
 	public static function getCache() {
-		if (self::$cache === null) {
-			CacheHandler::getInstance()->addResource(
-				'chatRooms',
-				CHAT_DIR.'cache/cache.rooms.php',
-				'\chat\system\cache\builder\RoomCacheBuilder'
-			);
-			self::$cache = CacheHandler::getInstance()->get('chatRooms');
-		}
-		
-		return self::$cache;
+		return \chat\system\cache\builder\RoomCacheBuilder::getInstance()->getData();
 	}
 	
 	/**

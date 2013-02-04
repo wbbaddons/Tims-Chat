@@ -1,7 +1,6 @@
 <?php
 namespace chat\system\permission;
 use \wcf\system\acl\ACLHandler;
-use \wcf\system\cache\CacheHandler;
 use \wcf\system\package\PackageDependencyHandler;
 use \wcf\system\WCF;
 
@@ -35,10 +34,7 @@ class PermissionHandler {
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
 		// get groups permissions
-		$groups = implode(',', $user->getGroupIDs());
-		$groupsFileName = \wcf\util\StringUtil::getHash(implode('-', $user->getGroupIDs()));
-		CacheHandler::getInstance()->addResource('permission-'.$groups, WCF_DIR.'cache/cache.permission-'.$groupsFileName.'.php', '\chat\system\cache\builder\PermissionCacheBuilder');
-		$this->chatPermissions = CacheHandler::getInstance()->get('permission-'.$groups);
+		$this->chatPermissions = \chat\system\cache\builder\PermissionCacheBuilder::getInstance()->getData($user->getGroupIDs);
 		
 		// get user permissions
 		if ($user->userID) {
@@ -106,6 +102,6 @@ class PermissionHandler {
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
 		$ush->resetAll('chatUserPermissions', $packageID);
-		\wcf\system\cache\CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.permission-[a-f0-9]{40}.php');
+		\chat\system\cache\builder\PermissionCacheBuilder::getInstance()->reset();
 	}
 }
