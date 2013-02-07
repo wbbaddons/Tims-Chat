@@ -99,45 +99,45 @@ window.console ?=
 		###
 		# Binds all the events needed for Tims Chat.
 		###
-		bindEvents: () ->
+		bindEvents: ->
 			# Mark window as focused
-			$(window).focus $.proxy () ->
+			$(window).focus =>
 				document.title = @titleTemplate.fetch
 					title: $('#timsChatRoomList .activeMenuItem a').text()
 				@newMessageCount = 0
 				@isActive = true
-			, @
+			
 			
 			# Mark window as blurred
-			$(window).blur $.proxy () ->
+			$(window).blur =>
 				@isActive = false
-			, @
+			
 			
 			# Unload the chat
-			$(window).on 'beforeunload', $.proxy () ->
+			$(window).on 'beforeunload', =>
 				@unload()
-				return undefined
-			, @
+				undefined
+			
 			
 			# Insert a smiley
-			$('#smilies').on 'click', 'img', $.proxy (event) ->
+			$('#smilies').on 'click', 'img', (event) =>
 				@insertText ' ' + $(event.target).attr('alt') + ' '
-			, @
+			
 			
 			# Switch sidebar tab
-			$('.timsChatSidebarTabs li').click $.proxy (event) ->
+			$('.timsChatSidebarTabs li').click (event) =>
 				event.preventDefault()
 				@toggleSidebarContents $ event.target
-			, @
+			
 			
 			# Submit Handler
-			$('#timsChatForm').submit $.proxy (event) ->
+			$('#timsChatForm').submit (event) =>
 				event.preventDefault()
 				@submit $ event.target
-			, @
+			
 			
 			# Autocompleter
-			$('#timsChatInput').keydown $.proxy (event) ->
+			$('#timsChatInput').keydown (event) =>
 				# tab key
 				if event.keyCode is 9
 					event.preventDefault()
@@ -168,13 +168,13 @@ window.console ?=
 					@autocompleteOffset = 0
 					@autocompleteValue = null
 					@autocompleteCaret = null
-			, @
 			
-			$('#timsChatInput').click $.proxy (event) ->
+			
+			$('#timsChatInput').click =>
 				@autocompleteOffset = 0
 				@autocompleteValue = null
 				@autocompleteCaret = null
-			, @
+			
 			
 			# Refreshes the roomlist
 			$('#timsChatRoomList button').click $.proxy @refreshRoomList, @
@@ -234,7 +234,7 @@ window.console ?=
 				data: 
 					ajax: 1
 				type: 'POST'
-				success: $.proxy (data, textStatus, jqXHR) ->
+				success: (data, textStatus, jqXHR) =>
 					@loading = false
 					target.parent().removeClass 'loading'
 					
@@ -258,21 +258,20 @@ window.console ?=
 						anchor = $(value)
 						anchor.attr 'href', anchor.attr('href').replace /.*#/, "#{target.attr('href')}#"
 	  
-				, @
-				error: () ->
+				
+				error: ->
 					# Reload the page to change the room the old fashion-way
 					# inclusive the error-message :)
 					window.location.reload true
-				beforeSend: $.proxy(() ->
+				beforeSend: =>
 					return false if target.parent().hasClass('loading') or target.parent().hasClass 'activeMenuItem'
 					
 					@loading = true
 					target.parent().addClass 'loading'
-				, @)
 		###
 		# Frees the fish
 		###
-		freeTheFish: () ->
+		freeTheFish: ->
 			return if $.wcfIsset 'fish'
 			console.warn 'Freeing the fish'
 			fish = $ """<div id="fish">#{WCF.String.escapeHTML('><((((\u00B0>')}</div>"""
@@ -285,7 +284,7 @@ window.console ?=
 				zIndex: 9999
 			
 			fish.appendTo $ 'body'
-			@pe.fish = new WCF.PeriodicalExecuter(() ->
+			@pe.fish = new WCF.PeriodicalExecuter () ->
 				left = Math.random() * 100 - 50
 				top = Math.random() * 100 - 50
 				fish = $ '#fish'
@@ -297,24 +296,24 @@ window.console ?=
 				fish.text '<\u00B0))))><' if left < 0
 				
 				fish.animate
-					top: '+=' + top
-					left: '+=' + left
+					top: "+=#{top}"
+					left: "+=#{left}"
 				, 1e3
-			, 1.5e3)
+			, 1.5e3
 		###
 		# Loads new messages.
 		###
-		getMessages: () ->
+		getMessages: ->
 			$.ajax @config.messageURL,
 				dataType: 'json'
 				type: 'POST'
-				success: $.proxy (data, textStatus, jqXHR) ->
+				success: (data, textStatus, jqXHR) =>
 					WCF.DOMNodeInsertedHandler.enable()
 					@handleMessages(data.messages)
 					@handleUsers(data.users)
 					WCF.DOMNodeInsertedHandler.disable()
-				, @
-				error: $.proxy (jqXHR, textStatus, errorThrown) ->
+				
+				error: (jqXHR, textStatus, errorThrown) =>
 					console.error 'Battle Station hit - shields at ' + (--@shields / 3 * 104) + ' percent'
 					if @shields is 0
 						@pe.refreshRoomList.stop()
@@ -322,15 +321,12 @@ window.console ?=
 						@freeTheFish()
 						console.error 'We got destroyed, but could free our friend the fish before he was killed as well. Have a nice life in freedom!'
 						alert 'herp i cannot load messages'
-				, @
-				complete: $.proxy () ->
+				complete: =>
 					@loading = false
-				, @
-				beforeSend: $.proxy () ->
+				beforeSend: =>
 					return false if @loading
 					
 					@loading = true
-				, @
 		###
 		# Inserts the new messages.
 		#
@@ -416,11 +412,11 @@ window.console ?=
 					menu = $ '<ul></ul>'
 					#menu.addClass 'timsChatUserMenu'
 					menu.addClass 'dropdownMenu'
-					menu.append $ '<li><a>' + WCF.Language.get('chat.general.query') + '</a></li>'
-					menu.append $ '<li><a>' + WCF.Language.get('chat.general.kick') + '</a></li>'
-					menu.append $ '<li><a>' + WCF.Language.get('chat.general.ban') + '</a></li>'
+					menu.append $ "<li><a>#{WCF.Language.get('chat.general.query')}</a></li>"
+					menu.append $ "<li><a>#{ WCF.Language.get('chat.general.kick')}</a></li>"
+					menu.append $ "<li><a>#{ WCF.Language.get('chat.general.ban')}</a></li>"
 					# TODO: SID and co
-					menu.append $ '<li><a href="index.php/User/' + user.userID + '-' + encodeURI(user.username) + '/">' + WCF.Language.get('chat.general.profile') + '</a></li>'
+					menu.append $ """<li><a href="index.php/User/#{user.userID}-#{encodeURI(user.username)}/">#{WCF.Language.get('chat.general.profile')}</a></li>"""
 					@events.userMenu.fire user, menu
 					li.append menu
 					
@@ -443,17 +439,14 @@ window.console ?=
 			unless typeof window.io is 'undefined'
 				console.log 'Initializing nodePush'
 				@socket = io.connect @config.socketIOPath
-				@socket.on 'connect', $.proxy((data) ->
+				@socket.on 'connect', =>
 					console.log 'Connected to nodePush'
 					@pe.getMessages.stop()
-				, @)
-				@socket.on 'disconnect', $.proxy (data) ->
+				@socket.on 'disconnect', =>
 					console.log 'Lost connection to nodePush'
 					@pe.getMessages = new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1e3
-				, @
-				@socket.on 'newMessage', $.proxy (data) ->
+				@socket.on 'newMessage', =>
 					@getMessages()
-				, @
 		###
 		# Inserts text into our input.
 		# 
@@ -509,7 +502,7 @@ window.console ?=
 			$.ajax $('#toggleRooms a').data('refreshUrl'),
 				dataType: 'json'
 				type: 'POST'
-				success: $.proxy (data, textStatus, jqXHR) ->
+				success: (data, textStatus, jqXHR) =>
 					$('#timsChatRoomList li').remove()
 					$('#toggleRooms .ajaxLoad').hide()
 					$('#toggleRooms .badge').text data.length
@@ -520,14 +513,13 @@ window.console ?=
 						$("""<a href="#{room.link}">#{room.title}</a>""").addClass('timsChatRoom').appendTo li
 						$('#timsChatRoomList ul').append li
 						
-					$('.timsChatRoom').click $.proxy (event) ->
+					$('.timsChatRoom').click (event) =>
 						return if typeof window.history.replaceState is 'undefined'
 						event.preventDefault()
 						@changeRoom $ event.target
-					, @
+					
 					
 					console.log "Found #{data.length} rooms"
-				, @
 		###
 		# Handles submitting of messages.
 		# 
@@ -553,9 +545,8 @@ window.console ?=
 					smilies: $('#timsChatSmilies').data 'status'
 				type: 'POST',
 				beforeSend: (jqXHR) ->
-				success: $.proxy (data, textStatus, jqXHR) ->
+				success: =>
 					@getMessages()
-				, @
 				complete: () ->
 		###
 		# Toggles between user- and room-list.
