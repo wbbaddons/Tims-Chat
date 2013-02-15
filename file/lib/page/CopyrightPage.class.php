@@ -29,12 +29,6 @@ class CopyrightPage extends \wcf\page\AbstractPage {
 	public $neededPermissions = array();
 	
 	/**
-	 * shortcut for the active request
-	 * @see \wcf\system\request\Request::getRequestObject()
-	 */
-	public $request = null;
-	
-	/**
 	 * @see \wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = '__copyright';
