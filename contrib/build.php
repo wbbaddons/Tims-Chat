@@ -103,6 +103,7 @@ EOT;
 	chdir('..');
 	file_put_contents('package.xml.old', file_get_contents('package.xml'));
 	file_put_contents('package.xml', preg_replace('~<date>\d{4}-\d{2}-\d{2}</date>~', '<date>'.date('Y-m-d').'</date>', file_get_contents('package.xml')));
+	file_put_contents('package.xml', str_replace('</version>', '</version><!-- git id '.trim(shell_exec('git describe --always')).' -->', file_get_contents('package.xml')));
 	passthru('tar cvf be.bastelstu.chat.tar * --exclude=*.old --exclude=file --exclude=template --exclude=acptemplate --exclude=contrib', $code);
 	if (file_exists('package.xml.old')) {
 		file_put_contents('package.xml', file_get_contents('package.xml.old'));
