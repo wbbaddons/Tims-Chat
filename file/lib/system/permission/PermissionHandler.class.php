@@ -34,7 +34,7 @@ class PermissionHandler {
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
 		// get groups permissions
-		$this->chatPermissions = \chat\system\cache\builder\PermissionCacheBuilder::getInstance()->getData($user->getGroupIDs);
+		$this->chatPermissions = \chat\system\cache\builder\PermissionCacheBuilder::getInstance()->getData($user->getGroupIDs());
 		
 		// get user permissions
 		if ($user->userID) {
