@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * @package	be.bastelstu.chat
  * @subpackage	system.cache.builder
  */
-class PermissionCacheBuilder implements \wcf\system\cache\builder\AbstractCacheBuilder {
+class PermissionCacheBuilder extends \wcf\system\cache\builder\AbstractCacheBuilder {
 	/**
 	 * @see wcf\system\cache\AbstractCacheBuilder::rebuild()
 	 */

@@ -10,7 +10,7 @@ namespace chat\system\cache\builder;
  * @package	be.bastelstu.chat
  * @subpackage	system.cache.builder
  */
-class RoomCacheBuilder implements \wcf\system\cache\builder\AbstractCacheBuilder {
+class RoomCacheBuilder extends \wcf\system\cache\builder\AbstractCacheBuilder {
 	/**
 	 * @see	\wcf\system\cache\AbstractCacheBuilder::rebuild()
 	 */
