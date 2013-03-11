@@ -32,6 +32,11 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>0</admindefaultvalue>
 			</option>
+			<option name="user.chat.allowedBBCodes">
+				<categoryname>user.chat</categoryname>
+				<optiontype>BBCodeSelect</optiontype>
+				<defaultvalue>none</defaultvalue>
+			</option>
 			<option name="mod.chat.canAlwaysEnter">
 				<categoryname>mod.chat</categoryname>
 				<optiontype>boolean</optiontype>

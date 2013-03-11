@@ -52,6 +52,12 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		// validate text
 		if (strlen($this->parameters['text']) > CHAT_MAX_LENGTH) throw new UserInputException('text', 'tooLong');
 		
+		// search for disallowed bbcodes
+		$disallowedBBCodes = \wcf\system\bbcode\BBCodeParser::getInstance()->validateBBCodes($this->parameters['text'], explode(',', WCF::getSession()->getPermission('user.chat.allowedBBCodes')));
+		if (!empty($disallowedBBCodes)) {
+			throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', array('disallowedBBCodes' => $disallowedBBCodes)));
+		}
+		
 		// search for censored words
 		if (ENABLE_CENSORSHIP) {
 			$result = \wcf\system\message\censorship\Censorship::getInstance()->test($this->parameters['text']);
