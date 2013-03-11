@@ -48,6 +48,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$this->readString('text');
 		$this->readBoolean('enableSmilies');
 		$this->parameters['text'] = MessageUtil::stripCrap($this->parameters['text']);
+		$this->parameters['enableHTML'] = false;
 		
 		// validate text
 		if (strlen($this->parameters['text']) > CHAT_MAX_LENGTH) throw new UserInputException('text', 'tooLong');
@@ -85,8 +86,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 				$command = $commandHandler->loadCommand();
 				
 				if ($command->enableSmilies != \chat\system\command\ICommand::SETTING_USER) $this->parameters['enableSmilies'] = $command->enableSmilies;
-				$this->enableHTML = $command->enableHTML;
-				if ($command->enableBBCodes != \chat\system\command\ICommand::SETTING_USER) $this->enableBBCodes = $command->enableBBCodes;
+				$this->parameters['enableHTML'] = $command->enableHTML;
 				
 				$this->parameters['type'] = $command->getType();
 				$this->parameters['text'] = $command->getMessage();
@@ -134,9 +134,8 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 				'time' => TIME_NOW,
 				'type' => $this->parameters['type'],
 				'message' => $this->parameters['text'],
-				//'enableSmilies' => $this->enableSmilies,
-				//'enableHTML' => $this->enableHTML,
-				//'enableBBCodes' => $this->enableBBCodes,
+				'enableSmilies' => $this->parameters['enableSmilies'] ? 1 : 0,
+				'enableHTML' => $this->parameters['enableHTML'] ? 1 : 0,
 				'color1' => $this->parameters['userData']['color'][1],
 				'color2' => $this->parameters['userData']['color'][2]
 			)

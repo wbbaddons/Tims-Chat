@@ -29,16 +29,6 @@ abstract class AbstractCommand implements ICommand {
 	public $enableHTML = ICommand::SETTING_OFF;
 	
 	/**
-	 * Should BBCodes be enabled?
-	 *
-	 * @var integer
-	 * @see \chat\system\command\ICommand::SETTING_OFF
-	 * @see \chat\system\command\ICommand::SETTING_ON
-	 * @see \chat\system\command\ICommand::SETTING_USER
-	 */
-	public $enableBBCodes = ICommand::SETTING_OFF;
-	
-	/**
 	 * Should smilies be enabled?
 	 * 
 	 * @var integer

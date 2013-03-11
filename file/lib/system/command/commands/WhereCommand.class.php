@@ -12,7 +12,6 @@ namespace chat\system\command\commands;
  */
 class WhereCommand extends \chat\system\command\AbstractCommand {
 	public $enableHTML = self::SETTING_ON;
-	public $enableBBCodes = self::SETTING_ON;
 	
 	/**
 	 * @see	\chat\system\command\ICommand::getType()

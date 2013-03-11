@@ -15,7 +15,6 @@ use \wcf\util\StringUtil;
  * @subpackage	system.chat.command.commands
  */
 class InfoCommand extends \chat\system\command\AbstractCommand {
-	public $enableBBCodes = self::SETTING_ON;
 	public $enableHTML = self::SETTING_ON;	
 	public $lines = array();
 	public $user = null;
