@@ -50,9 +50,9 @@ class RoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data\IEd
 			$update->execute(array($select->fetchColumn()));
 		}
 		
-		// The transaction is being committed in parent::deleteAll()
-		// The beginTransaction() call in there is simply ignored.
-		return parent::deleteAll($objectIDs);
+		$return = parent::deleteAll($objectIDs);
+		WCF::getDB()->commitTransaction();
+		return $return;
 	}
 	
 	/**

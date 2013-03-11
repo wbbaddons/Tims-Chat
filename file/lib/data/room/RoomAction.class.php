@@ -28,6 +28,12 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	protected $permissionsUpdate = array('admin.chat.canEditRoom');
 	
 	/**
+	 * Resets cache if any of the listed actions is invoked
+	 * @var	array<string>
+	 */
+	protected $resetCache = array('create', 'delete', 'toggle', 'update', 'updatePosition', 'prune');
+	
+	/**
 	 * Fixes create to append new rooms.
 	 */
 	public function create() {
