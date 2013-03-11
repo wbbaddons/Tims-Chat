@@ -92,14 +92,21 @@
 	<div id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">{$room->topic|language}</div>
 	<fieldset>
 		<div id="timsChatMessageContainer" class="timsChatMessageContainer container box shadow1">
-			<p class="error noJsOnly">{lang}chat.general.noJs{/lang}</p>
+			<p class="error noJsOnly" style="display: none;">{lang}chat.general.noJs{/lang}</p>
 			<ul>
 			</ul>
 		</div>
 	</fieldset>
 	
 	<form id="timsChatForm" action="{link application='chat' controller='Chat' action='Send'}{/link}" method="post">
-		<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}chat.general.submit.default{/lang}" />
+		<fieldset>
+			<dl class="wide" id="timsChatInputContainer">
+				<dd>
+					<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}chat.general.submit.default{/lang}" />
+					<small class="innerError" style="display: none;">derp</small>
+				</dd>
+			</dl>
+		</fieldset>
 	</form>
 	
 	<div id="timsChatControls" class="marginTop">

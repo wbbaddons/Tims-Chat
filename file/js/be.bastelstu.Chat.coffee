@@ -539,15 +539,23 @@ window.console ?=
 			# text = @events.submit.fire text
 			
 			$('#timsChatInput').val('').focus().keyup()
-			$.ajax $('#timsChatForm').attr('action'), 
+			proxy = new WCF.Action.Proxy
+				autoSend: true
 				data:
-					text: text
-					smilies: $('#timsChatSmilies').data 'status'
-				type: 'POST',
-				beforeSend: (jqXHR) ->
+					actionName: 'send'
+					className: 'chat\\data\\message\\MessageAction'
+					parameters:
+						text: text
+						enableSmilies: $('#timsChatSmilies').data 'status'
+				showLoadingOverlay: false
 				success: =>
+					$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide()
 					@getMessages()
-				complete: () ->
+				failure: (data) =>
+					return true if not (data?.returnValues?.errorType?)
+					
+					$('#timsChatInputContainer').addClass('formError').find('.innerError').html(data.returnValues.errorType).show()
+					false
 		###
 		# Toggles between user- and room-list.
 		# 

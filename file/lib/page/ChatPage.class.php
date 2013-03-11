@@ -80,13 +80,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 	public $userData = array();
 	
 	/**
-	 * The request that is actually handled.
-	 * 
-	 * @var mixed
-	 */
-	public $request = null;
-	
-	/**
 	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
@@ -157,14 +150,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-		
-		$this->request = $this;
-		switch ($this->action) {
-			case 'Send':
-				$this->request = new \chat\form\ChatForm();
-				$this->request->__run();
-				exit;
-		}
 		
 		if (isset($_REQUEST['id'])) $this->roomID = (int) $_REQUEST['id'];
 		if (isset($_REQUEST['ajax'])) $this->useTemplate = false;
