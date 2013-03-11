@@ -4,7 +4,7 @@
 	<title>{$room} - {lang}chat.general.title{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude' sandbox=false}
-	{include file='javascriptInclude'}
+	{include file='javascriptInclude' application='chat'}
 	<script type="text/javascript">
 		//<![CDATA[
 			var chat;
@@ -92,7 +92,7 @@
 	<div id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">{$room->topic|language}</div>
 	<fieldset>
 		<div id="timsChatMessageContainer" class="timsChatMessageContainer container box shadow1">
-			<noscript><p class="error">{lang}chat.general.noJs{/lang}</p></noscript>
+			<p class="error noJsOnly">{lang}chat.general.noJs{/lang}</p>
 			<ul>
 			</ul>
 		</div>
