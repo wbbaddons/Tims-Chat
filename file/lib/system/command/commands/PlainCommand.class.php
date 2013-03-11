@@ -11,7 +11,7 @@ namespace chat\system\command\commands;
  * @subpackage	system.chat.command.commands
  */
 class PlainCommand extends \chat\system\command\AbstractCommand {
-	public $enableSmilies = \chat\system\command\ICommand::SMILEY_USER;
+	public $enableSmilies = \chat\system\command\ICommand::SETTING_USER;
 	
 	/**
 	 * @see	\chat\system\command\ICommand::getType()
