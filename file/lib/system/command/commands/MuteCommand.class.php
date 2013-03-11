@@ -76,7 +76,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	public function checkPermission() {
 		parent::checkPermission();
 		
-		$this->room = \wcf\system\request\RequestHandler::getInstance()->getActiveRequest()->getRequestObject()->request->room;
+		$this->room = $this->commandHandler->getRoom();
 		$ph = new \chat\system\permission\PermissionHandler();
 		if (!$ph->getPermission($this->room, 'mod.can'.str_replace(array('chat\system\command\commands\\', 'Command'), '', get_class($this)))) throw new \wcf\system\exception\PermissionDeniedException();
 	}

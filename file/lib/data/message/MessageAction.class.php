@@ -41,7 +41,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * 
+	 * Validates message sending.
 	 */
 	public function validateSend() {
 		// read parameters
@@ -77,10 +77,10 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		if (!isset($cache[$this->parameters['userData']['roomID']])) throw new \wcf\system\exception\IllegalLinkException();
 		$this->parameters['room'] = $cache[$this->parameters['userData']['roomID']];
 		
-		if (!$this->parameters['room']->canEnter() || !$this->parameters['room']->canWrite()) throw new PermissionDeniedException();
+		if (!$this->parameters['room']->canEnter() || !$this->parameters['room']->canWrite()) throw new \wcf\system\exception\PermissionDeniedException();
 		
 		// handle commands
-		$commandHandler = new \chat\system\command\CommandHandler($this->parameters['text']);
+		$commandHandler = new \chat\system\command\CommandHandler($this->parameters['text'], $this->parameters['room']);
 		if ($commandHandler->isCommand()) {
 			try {
 				$command = $commandHandler->loadCommand();
@@ -105,6 +105,9 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		}
 	}
 	
+	/**
+	 * Creates sent message.
+	 */
 	public function send() {
 		\chat\util\ChatUtil::writeUserData(array('away' => null));
 		

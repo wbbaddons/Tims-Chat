@@ -25,12 +25,20 @@ final class CommandHandler {
 	private $text = '';
 	
 	/**
+	 * current room
+	 * @var \chat\data\room\Room
+	 */
+	private $room = null;
+	
+	/**
 	 * Initialises the CommandHandler
 	 * 
-	 * @param	string	$text
+	 * @param	string			$text
+	 * @param	\chat\data\room\Room	$room
 	 */
-	public function __construct($text) {
+	public function __construct($text, \chat\data\room\Room $room = null) {
 		$this->text = $text;
+		$this->room = $room;
 	}
 	
 	/**
@@ -49,6 +57,15 @@ final class CommandHandler {
 	 */
 	public function getText() {
 		return $this->text;
+	}
+	
+	/**
+	 * Returns the current room.
+	 * 
+	 * @return	\chat\data\room\Room
+	 */
+	public function getRoom() {
+		return $this->room;
 	}
 	
 	/**
