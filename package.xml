@@ -32,7 +32,6 @@
 		<instruction type="option">option.xml</instruction>
 		<instruction type="templateListener">templateListener.xml</instruction>
 		<instruction type="pageMenu">pagemenu.xml</instruction>
-		<instruction type="eventListener">eventListener.xml</instruction>
 		<instruction type="aclOption">acloptions.xml</instruction>
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
@@ -50,7 +49,6 @@
 		<instruction type="option">option.xml</instruction>
 		<instruction type="templateListener">templateListener.xml</instruction>
 		<instruction type="pageMenu">pagemenu.xml</instruction>
-		<instruction type="eventListener">eventListener.xml</instruction>
 		<instruction type="aclOption">acloptions.xml</instruction>
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
