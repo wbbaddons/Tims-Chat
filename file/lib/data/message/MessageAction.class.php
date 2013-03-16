@@ -103,6 +103,8 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 			$this->parameters['type'] = Message::TYPE_NORMAL;
 			$this->parameters['receiver'] = null;
 		}
+		
+		$this->parameters['text'] = PreParser::getInstance()->parse($this->parameters['text'], explode(',', WCF::getSession()->getPermission('user.chat.allowedBBCodes')));
 	}
 	
 	/**
