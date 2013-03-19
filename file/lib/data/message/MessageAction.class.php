@@ -43,7 +43,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	/**
 	 * Validates message sending.
 	 */
-	public function validateSend() {		
+	public function validateSend() {
 		// read parameters
 		$this->readString('text');
 		$this->readBoolean('enableSmilies');

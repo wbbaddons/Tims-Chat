@@ -57,7 +57,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 	 * @param	string	$outputType	outputtype for messageparser
 	 * @return	string
 	 */
-	public function getFormattedMessage($outputType = 'text/html') {
+	public function getFormattedMessage() {
 		$message = $this->message;
 		
 		switch ($this->type) {
@@ -70,24 +70,15 @@ class Message extends \chat\data\CHATDatabaseObject {
 			case self::TYPE_MODERATE:
 				$message = unserialize($message);
 				$message = WCF::getLanguage()->getDynamicVariable('chat.message.'.$this->type.'.'.$message['type'], $message ?: array());
-				$message = self::replaceUserLink($message, $outputType);
 			break;
 			case self::TYPE_WHISPER:
 				$message = unserialize($message);
 				$message = $message['message'];
 			case self::TYPE_NORMAL:
 			case self::TYPE_ME:
-				$messageParser = \wcf\system\bbcode\MessageParser::getInstance();
-				$messageParser->setOutputType($outputType);
-				$message = $messageParser->parse($message, $this->enableSmilies, $this->enableHTML, true, false);
-			break;
 			default:
-				if ($this->enableHTML) {
-					$message = self::replaceUserLink($message, $outputType);
-				}
-				
 				$messageParser = \wcf\system\bbcode\MessageParser::getInstance();
-				$messageParser->setOutputType($outputType);
+				$messageParser->setOutputType('text/html');
 				$message = $messageParser->parse($message, $this->enableSmilies, $this->enableHTML, true, false);
 			break;
 		}
@@ -119,45 +110,6 @@ class Message extends \chat\data\CHATDatabaseObject {
 	}
 	
 	/**
-	 * Replaces a userLink in a message.
-	 */
-	public static function replaceUserLink($message, $outputType) {
-		static $regex = null;
-		if ($regex === null) $regex = new Regex('<span class="userLink" data-user-id="(\d+)" />');
-		
-		if ($outputType === 'text/html') {
-			return $regex->replace($message, new \wcf\system\Callback(function ($matches) {
-				return self::getUserLink($matches[1]);
-			}));
-		}
-		else {
-			return $regex->replace($message, new \wcf\system\Callback(function ($matches) {
-				self::getUserLink($matches[1]);
-				
-				return self::$users[$matches[1]]->username;
-			}));
-		}
-	}
-	
-	/**
-	 * Returns a fully colored userlink.
-	 */
-	public static function getUserLink($userID) {
-		if (!isset(self::$users[$userID])) {
-			self::$users[$userID] = $user = new \wcf\data\user\User($userID);
-			
-			// Username + link to profile
-			$color = ChatUtil::readUserData('color', $user);
-			$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
-				'object' => $user
-			));
-			self::$users[$userID]->userLink = '<a href="'.$profile.'" class="userLink" data-user-id="'.$user->userID.'">'.ChatUtil::gradient($user->username, $color[1], $color[2]).'</a>';
-		}
-		
-		return self::$users[$userID]->userLink;
-	}
-	
-	/**
 	 * Converts this message into json-form.
 	 *
 	 * @param	boolean	$raw
@@ -181,7 +133,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 			'formattedMessage' => $this->getFormattedMessage(),
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
 			'separator' => $separator,
-			'message' => $this->getFormattedMessage('text/plain'),
+			'message' => $this->message,
 			'sender' => (int) $this->sender,
 			'username' => $this->getUsername(),
 			'time' => (int) $this->time,

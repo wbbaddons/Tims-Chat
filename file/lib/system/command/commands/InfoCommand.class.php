@@ -26,11 +26,10 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 		if (!$this->user->userID) throw new \chat\system\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
 		
 		// Username + link to profile
-		$color = ChatUtil::readUserData('color', $this->user);
 		$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
-				'object' => $this->user
+			'object' => $this->user
 		));
-		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = '<span class="userLink" data-user-id="'.$this->user->userID.'" />';
+		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = "[url='".$profile."']".$this->user->username.'[/url]';
 		
 		// Away-Status
 		if (ChatUtil::readUserData('away', $this->user) !== null) {

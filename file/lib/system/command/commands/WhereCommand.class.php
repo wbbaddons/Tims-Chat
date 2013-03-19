@@ -30,7 +30,10 @@ class WhereCommand extends \chat\system\command\AbstractCommand {
 			$users = $room->getUsers();
 			$tmp = array();
 			foreach ($users as $user) {
-				$tmp[] = '<span class="userLink" data-user-id="'.$user->userID.'" />';
+				$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
+					'object' => $user
+				));
+				$tmp[] = "[url='".$profile."']".$user->username.'[/url]';
 			}
 			if (!empty($tmp)) $lines[] = '[b]'.$room.':[/b] '.implode(', ', $tmp);
 		}
