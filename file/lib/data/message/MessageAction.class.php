@@ -123,7 +123,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 			$this->parameters['receiver'] = null;
 		}
 		
-		$this->parameters['text'] = PreParser::getInstance()->parse($this->parameters['text'], explode(',', WCF::getSession()->getPermission('user.chat.allowedBBCodes')));
+		$this->parameters['text'] = \wcf\system\bbcode\PreParser::getInstance()->parse($this->parameters['text'], explode(',', WCF::getSession()->getPermission('user.chat.allowedBBCodes')));
 	}
 	
 	/**
