@@ -43,7 +43,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	/**
 	 * Validates message sending.
 	 */
-	public function validateSend() {
+	public function validateSend() {		
 		// read parameters
 		$this->readString('text');
 		$this->readBoolean('enableSmilies');
@@ -79,6 +79,25 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		
 		if (!$this->parameters['room']->canEnter() || !$this->parameters['room']->canWrite()) throw new \wcf\system\exception\PermissionDeniedException();
 		
+		\chat\util\ChatUtil::writeUserData(array('away' => null));
+		
+		// mark user as back
+		if ($this->parameters['userData']['away'] !== null) {
+			$messageAction = new MessageAction(array(), 'create', array(
+				'data' => array(
+					'roomID' => $this->parameters['room']->roomID,
+					'sender' => WCF::getUser()->userID,
+					'username' => WCF::getUser()->username,
+					'time' => TIME_NOW,
+					'type' => Message::TYPE_BACK,
+					'message' => '',
+					'color1' => $this->parameters['userData']['color'][1],
+					'color2' => $this->parameters['userData']['color'][2]
+				)
+			));
+			$messageAction->executeAction();
+		}
+		
 		// handle commands
 		$commandHandler = new \chat\system\command\CommandHandler($this->parameters['text'], $this->parameters['room']);
 		if ($commandHandler->isCommand()) {
@@ -103,33 +122,12 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 			$this->parameters['type'] = Message::TYPE_NORMAL;
 			$this->parameters['receiver'] = null;
 		}
-		
-		$this->parameters['text'] = PreParser::getInstance()->parse($this->parameters['text'], explode(',', WCF::getSession()->getPermission('user.chat.allowedBBCodes')));
 	}
 	
 	/**
 	 * Creates sent message.
 	 */
-	public function send() {
-		\chat\util\ChatUtil::writeUserData(array('away' => null));
-		
-		// mark user as back
-		if ($this->parameters['userData']['away'] !== null) {
-			$messageAction = new MessageAction(array(), 'create', array(
-				'data' => array(
-					'roomID' => $this->parameters['room']->roomID,
-					'sender' => WCF::getUser()->userID,
-					'username' => WCF::getUser()->username,
-					'time' => TIME_NOW,
-					'type' => Message::TYPE_BACK,
-					'message' => '',
-					'color1' => $this->userData['color'][1],
-					'color2' => $this->userData['color'][2]
-				)
-			));
-			$messageAction->executeAction();
-		}
-		
+	public function send() {		
 		$this->objectAction = new MessageAction(array(), 'create', array(
 			'data' => array(
 				'roomID' => $this->parameters['room']->roomID,
