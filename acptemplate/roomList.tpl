@@ -4,7 +4,7 @@
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('\\chat\\data\\room\\RoomAction', $('.chatRoomRow'));
-		new WCF.Sortable.List('roomList', '\\chat\\data\\room\\RoomAction', {@$startIndex-1});
+		new WCF.Sortable.List('roomList', '\\chat\\data\\room\\RoomAction');
 	});
 	//]]>
 </script>
@@ -26,7 +26,7 @@
 </div>
 {hascontent}
 	<section id="roomList" class="container containerPadding sortableListContainer marginTop shadow">
-		<ol class="sortableList" data-object-id="0" start="{$startIndex}">
+		<ol class="sortableList" data-object-id="0">
 			{content}
 				{foreach from=$objects item=chatRoom}
 					<li class="sortableNode sortableNoNesting chatRoomRow" data-object-id="{@$chatRoom->roomID}">

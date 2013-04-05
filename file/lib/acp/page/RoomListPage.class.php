@@ -1,5 +1,6 @@
 <?php
 namespace chat\acp\page;
+use \wcf\system\WCF;
 
 /**
  * Lists available chatrooms.
@@ -10,7 +11,7 @@ namespace chat\acp\page;
  * @package	be.bastelstu.chat
  * @subpackage	acp.page
  */
-class RoomListPage extends \wcf\page\MultipleLinkPage {
+class RoomListPage extends \wcf\page\AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
@@ -25,17 +26,30 @@ class RoomListPage extends \wcf\page\MultipleLinkPage {
 	);
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 * room list
+	 * @var	\chat\data\room\RoomListPage
 	 */
-	public $objectListClassName = '\chat\data\room\RoomList';
+	public $objects = null;
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$sortField
+	 * @see	\wcf\page\IPage::readData()
 	 */
-	public $sortField = 'position';
+	public function readData() {
+		parent::readData();
+		
+		$this->objects = new \chat\data\room\RoomList();
+		$this->objects->sqlOrder = 'position ASC';
+		$this->objects->readObjects();
+	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$sortOrder
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
-	public $sortOrder = 'ASC';
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign(array(
+			'objects' => $this->objects
+		));
+	}
 }
