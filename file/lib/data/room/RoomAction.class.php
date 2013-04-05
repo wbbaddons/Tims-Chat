@@ -98,8 +98,6 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		if (!isset($this->parameters['data']['structure'])) {
 			throw new \wcf\system\exception\UserInputException('structure');
 		}
-		
-		if (!isset($this->parameters['data']['offset'])) $this->parameters['data']['offset'] = 0;
 	}
 	
 	/**
@@ -107,14 +105,14 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	 */
 	public function updatePosition() {
 		$roomList = new RoomList();
-		$roomList->sqlOrderBy = "room.position";
 		$roomList->readObjects();
 		
-		$i = $this->parameters['data']['offset'];
+		$i = 0;
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'][0] as $roomID) {
 			$room = $roomList->search($roomID);
 			if ($room === null) continue;
+			
 			$editor = new RoomEditor($room);
 			$editor->update(array('position' => $i++));
 		}
