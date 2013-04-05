@@ -1,8 +1,8 @@
 ###
 # node.js Pushserver for Tims Chat.
 # 
-# @author	Tim D�sterhus
-# @copyright	2010-2013 Tim D�sterhus
+# @author	Tim Düsterhus
+# @copyright	2010-2013 Tim Düsterhus
 # @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
 # @package	be.bastelstu.chat
 # @subpackage	nodePush
@@ -20,9 +20,6 @@ log = (message) ->
 
 class Server
 	constructor: () ->
-		if process.cwd().substring(process.cwd().length - 3) isnt 'lib'
-			console.error 'Please run me via bin/run.sh'
-			process.exit 1
 		log 'Starting Pushserver for Tims Chat'
 		log "PID is #{process.pid}"
 		log "Using port: #{config.port}"
@@ -60,13 +57,13 @@ class Server
 			
 			c.end()
 		
-		socket.listen process.cwd() + '/../data.sock'
-		fs.chmod process.cwd() + '/../data.sock', '777'
+		socket.listen "#{__dirname}/../data.sock"
+		fs.chmod "#{__dirname}/../data.sock", '777'
 	shutdown: () ->
-		return unless fs.existsSync process.cwd() + '/../data.sock'
+		return unless fs.existsSync "#{__dirname}/../data.sock"
 		
 		log 'Shutting down'
-		fs.unlinkSync process.cwd() + '/../data.sock'
+		fs.unlinkSync "#{__dirname}/../data.sock"
 		process.exit()
 
 new Server()
