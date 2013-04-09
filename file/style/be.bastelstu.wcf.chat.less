@@ -8,21 +8,20 @@
  */
 #tplChat {
 	#content {
-		#timsChatRoomContent {
-			text-align: left;
+		text-align: left;
+		
+		#timsChatTopic {
+			padding: 5px;
+			margin-bottom: @wcfGapSmall;
+			.transition(height, .2s);
+			.transition(padding-top, .2s);
+			.transition(padding-bottom, .2s);
 			
-			#timsChatTopic {
-				padding: 5px;
-				.transition(height, .2s);
-				.transition(padding-top, .2s);
-				.transition(padding-bottom, .2s);
-				
-				&.empty {
-					height: 0px;
-					overflow: hidden;
-					border: 0px;
-					padding: 0px;
-				}
+			&.empty {
+				height: 0px;
+				overflow: hidden;
+				border: 0px;
+				padding: 0px;
 			}
 		}
 	}
@@ -190,7 +189,7 @@
 				
 				ul:not(.dropdownMenu) {
 					> li {
-						margin-top: 5px;
+						margin-top: @wcfGapSmall;
 						background-color: transparent !important;
 						box-shadow: none !important;
 						
@@ -210,12 +209,12 @@
 				}
 				
 				#timsChatRoomList {
-					margin-top: 5px;
+					margin-top: @wcfGapSmall;
 					
 					> div {
 						> div {
 							text-align: center;
-							margin-top: 10px;
+							margin-top: @wcfGapMedium;
 						}
 					}
 				}
@@ -279,7 +278,9 @@
 				}
 			}
 		}
-		
+	}
+	
+	@media only screen and (min-width: 641px) {
 		#timsChatOptions {
 			top: -1px;
 			right: 1px;
@@ -288,16 +289,16 @@
 			width: 100%;
 			
 			> ul {
+				.smallButtons;
 				margin-right: -1px;
 				text-align: right;
 				
 				> li {
 					> a {
-						&.button {
-							.borderRadius(0);
-							margin: 0;
-							padding-right: 7px;
-						}
+						.button;
+						.borderRadius(0);
+						margin: 0;
+						padding-right: 7px;
 					}
 					
 					display: inline-block;
@@ -313,6 +314,72 @@
 				> li:last-child {
 					> a {
 						border-bottom-right-radius: 14px;
+					}
+				}
+			}
+		}
+	}
+	
+	@media only screen and (max-width: 640px) {
+		#timsChatMessageContainer {
+			overflow: auto;
+			
+			.timsChatMessage {
+				> time {
+					display: none !important;
+				}
+				
+				> .usernameContainer {
+					min-width: 0px !important;
+				}
+			}
+		}
+		
+		#timsChatOptions {
+			margin-top: 5px;
+			position: relative;
+			
+			&:hover > ul {
+				display: block;
+			}
+			
+			> .invisible {
+				.button;
+				margin-left: @wcfGapSmall;
+				padding-left: 28px;
+				
+				&:before {
+					content: "\f03a";
+					font-family: FontAwesome;
+					font-size: 14px;
+					left: 9px;
+					position: absolute;
+					top: 6px;
+				}
+			}
+			
+			> ul {
+				.dropdown .dropdownMenu;
+				font-size: 120%;
+				left: @wcfGapSmall;
+				
+				> li.active {
+					> ul.invisible {
+						display: block;
+						font-size: 85%;
+						padding-left: 14px;
+					}
+					
+					> a {
+						position: relative;
+						
+						&:after {
+							content: "\f00c";
+							font-family: FontAwesome;
+							font-size: 14px;
+							position: absolute;
+							right: 7px;
+						}
 					}
 				}
 			}
@@ -354,74 +421,43 @@ html.fullscreen {
 		height: 0px;
 	}
 	
-	#content {
-		height: 100%;
-	}
-	
-	#timsChatRoomContent {
-		height: 100%;
-		
-		display: -webkit-box;
-		display: -moz-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
-		display: flex;
-
-		-webkit-box-direction: normal;
-		-moz-box-direction: normal;
-		-webkit-box-orient: vertical;
-		-moz-box-orient: vertical;
-		-webkit-flex-direction: column;
-		-ms-flex-direction: column;
-		flex-direction: column;
-		
-		-webkit-flex-wrap: nowrap;
-		-ms-flex-wrap: nowrap;
-		flex-wrap: nowrap;
-		
-		-webkit-box-pack: start;
-		-moz-box-pack: start;
-		-webkit-justify-content: flex-start;
-		-ms-flex-pack: start;
-		justify-content: flex-start;
-		
-		-webkit-align-content: stretch;
-		-ms-flex-line-pack: stretch;
-		align-content: stretch;
-		-webkit-box-align: stretch;
-		-moz-box-align: stretch;
-		-webkit-align-items: stretch;
-		-ms-flex-align: stretch;
-		align-items: stretch;
-		
-		> fieldset {
-			-webkit-box-ordinal-group: 1;
-			-moz-box-ordinal-group: 1;
-			-webkit-order: 0;
-			-ms-flex-order: 0;
-			order: 0;
-			-webkit-box-flex: 1;
-			-moz-box-flex: 1;
-			-webkit-flex: 1 100 auto;
-			-ms-flex: 1 100 auto;
-			flex: 1 100 auto;
-			-webkit-align-self: auto;
-			-ms-flex-item-align: auto;
-			align-self: auto;
-			
-			> div {
-				height: 100%;
-			}
-		}
-		
-		#timsChatControls {
-			margin-bottom: 15px;
-		}
-	}
-
-	
 	height: 100%;
 	overflow: hidden;
+	
+	#content {
+		height: 100%;
+		
+		> div {
+			width: 100%;
+			height: 100%;
+
+			display: -moz-box;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -ms-flexbox;
+			display: flex;
+			
+			-webkit-box-orient: vertical;
+			-moz-box-orient: vertical;
+			-webkit-box-direction: normal;
+			-moz-box-direction: normal;
+			-webkit-flex-direction: column;
+			-ms-flex-direction: column;
+			flex-direction: column;
+			
+			.timsChatMessageContainer {
+				-webkit-box-flex: 1;
+				-moz-box-flex: 1;
+				-webkit-flex: 1 0 auto;
+				-ms-flex: 1 0 auto;
+				flex: 1 0 auto;
+			}
+
+			#timsChatControls {
+				margin-bottom: 15px;
+			}
+		}
+	}
 	
 	#tplChat, #tplChatLog {
 		height: 100%;

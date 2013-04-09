@@ -88,16 +88,14 @@
 {capture assign='headerNavigation'}{include application='chat' file='navigationInclude'}{/capture}
 {include file='header' sandbox=false sidebarOrientation='right'}
 
-<div id="timsChatRoomContent">
+<div>
 	<div id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">{$room->topic|language}</div>
-	<fieldset>
-		<div id="timsChatMessageContainer" class="timsChatMessageContainer container box shadow1">
-			<p class="error noJsOnly" style="display: none;">{lang}chat.general.noJs{/lang}</p>
-			<ul>
-			</ul>
-		</div>
-	</fieldset>
-	
+	<div id="timsChatMessageContainer" class="timsChatMessageContainer container box shadow1">
+		<p class="error noJsOnly" style="display: none;">{lang}chat.general.noJs{/lang}</p>
+		<ul>
+		</ul>
+	</div>
+
 	<form id="timsChatForm" action="{link application='chat' controller='Chat' action='Send'}{/link}" method="post">
 		<fieldset>
 			<dl class="wide" id="timsChatInputContainer">
@@ -108,7 +106,7 @@
 			</dl>
 		</fieldset>
 	</form>
-	
+
 	<div id="timsChatControls" class="marginTop">
 		{if MODULE_SMILEY}
 			<div class="tabMenuContainer">
@@ -116,34 +114,35 @@
 			</div>
 		{/if}
 		<nav id="timsChatOptions">
-			<ul class="smallButtons">
+			<span class="invisible">{lang}chat.general.controls{/lang}</span>
+			<ul>
 				<li>
-					<a id="timsChatAutoscroll" accesskey="d" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
+					<a id="timsChatAutoscroll" accesskey="d" class="timsChatToggle jsTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
 						<span class="icon icon16 icon-circle-blank"></span><span>{lang}chat.general.scroll{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatFullscreen" accesskey="f" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
+					<a id="timsChatFullscreen" accesskey="f" class="timsChatToggle jsTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
 						<span class="icon icon16 icon-off"></span><span>{lang}chat.general.fullscreen{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatNotify" accesskey="n" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
+					<a id="timsChatNotify" accesskey="n" class="timsChatToggle jsTooltip" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
 						<span class="icon icon16 icon-off"></span><span>{lang}chat.general.notify{/lang}</span>
 					</a>
 				</li>
 				<li{if !MODULE_SMILEY} style="display: none;"{/if}>
-					<a id="timsChatSmilies" accesskey="e" class="timsChatToggle jsTooltip button" title="{lang}wcf.global.button.{if ENABLE_SMILIES_DEFAULT_VALUE}dis{else}en{/if}able{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="{@ENABLE_SMILIES_DEFAULT_VALUE}">
+					<a id="timsChatSmilies" accesskey="e" class="timsChatToggle jsTooltip" title="{lang}wcf.global.button.{if ENABLE_SMILIES_DEFAULT_VALUE}dis{else}en{/if}able{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="{@ENABLE_SMILIES_DEFAULT_VALUE}">
 						<span class="icon icon16 icon-{if ENABLE_SMILIES_DEFAULT_VALUE}circle-blank{else}off{/if}"></span><span>{lang}chat.general.smilies{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatClear" class="button">
+					<a id="timsChatClear">
 						<span class="icon icon16 icon-remove"></span><span>{lang}chat.general.clear{/lang}</span>
 					</a>
 				</li>
 				<li>
-					<a id="timsChatMark" class="jsTooltip button" title="{lang}chat.general.mark.description{/lang}">
+					<a id="timsChatMark" class="jsTooltip" title="{lang}chat.general.mark.description{/lang}">
 						<span class="icon icon16 icon-check"></span><span>{lang}chat.general.mark{/lang}</span>
 					</a>
 				</li>
