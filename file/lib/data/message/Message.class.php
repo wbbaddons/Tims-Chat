@@ -57,7 +57,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 	 * @param	string	$outputType	outputtype for messageparser
 	 * @return	string
 	 */
-	public function getFormattedMessage() {
+	public function getFormattedMessage($type = 'text/html') {
 		$message = $this->message;
 		
 		switch ($this->type) {
@@ -77,6 +77,8 @@ class Message extends \chat\data\CHATDatabaseObject {
 			case self::TYPE_NORMAL:
 			case self::TYPE_ME:
 			default:
+				if ($type !== 'text/html') return $message;
+				
 				$messageParser = \wcf\system\bbcode\MessageParser::getInstance();
 				$messageParser->setOutputType('text/html');
 				$message = $messageParser->parse($message, $this->enableSmilies, $this->enableHTML, true, false);
@@ -133,7 +135,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 			'formattedMessage' => $this->getFormattedMessage(),
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
 			'separator' => $separator,
-			'message' => $this->message,
+			'message' => $this->getFormattedMessage('text/plain'),
 			'sender' => (int) $this->sender,
 			'username' => $this->getUsername(),
 			'time' => (int) $this->time,
