@@ -216,11 +216,12 @@ window.console ?=
 					@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
 			
 			# Desktop Notifications
-			unless typeof window.webkitNotifications is 'undefined'
+			if window.Notification?
 				$('#timsChatNotify').click (event) ->
-					if $(@).data('status') and window.webkitNotifications.checkPermission() isnt 0
-						window.webkitNotifications.requestPermission()
-			
+					return unless $(@).data 'status'
+					if window.Notification.permission isnt 'granted'
+						window.Notification.requestPermission (permission) ->
+							window.Notification.permission ?= permission
 		###
 		# Changes the chat-room.
 		# 
@@ -480,18 +481,16 @@ window.console ?=
 				 title: $('#timsChatRoomList .activeMenuItem a').text()
 			
 			# Desktop Notifications
-			if typeof window.webkitNotifications isnt 'undefined'
-				if window.webkitNotifications.checkPermission() is 0
-					title = WCF.Language.get 'chat.general.notify.title'
-					icon = "data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw%3D%3D" # empty gif
-					content = message.username + message.separator + (if message.separator is ' ' then '' else ' ') + message.message
-					notification = window.webkitNotifications.createNotification icon, title, content
-					notification.show()
-					
-					# Hide notification after 10 seconds
-					setTimeout () ->
-						notification.cancel()
-					, 10e3
+			title = WCF.Language.get 'chat.general.notify.title'
+			content = message.username + message.separator + (if message.separator is ' ' then '' else ' ') + message.message
+			
+			if window.Notification?
+				if window.Notification.permission is 'granted'
+					notification = new window.Notification title,
+						body: content
+						onclick: ->
+							notification.close()
+					setTimeout notification.close, 5e3
 		###
 		# Refreshes the room-list.
 		###
