@@ -3,7 +3,7 @@
   "description"    : "node.js-Pushing for Tims Chat",
   "homepage"       : "https://github.com/wbbaddons/Tims-Chat",
   "keywords"       : ["chat"],
-  "author"         : "Tim Düsterhus <timwolla@googlemail.com>",
+  "author"         : "Tim Düsterhus <timwolla@bastelstu.be>",
   "contributors"   : [
                      ],
   "dependencies"   : {

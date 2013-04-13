@@ -35,12 +35,12 @@ Building JavaScript
 -------------------
 
 EOT;
-foreach (glob('file/js/*.coffee') as $coffeeFile) {
+foreach (glob('file/js/*.{litcoffee,coffee}', GLOB_BRACE) as $coffeeFile) {
 	echo $coffeeFile."\n";
 	passthru('coffee -cb '.escapeshellarg($coffeeFile), $code);
 	if ($code != 0) exit($code);
 }
-foreach (glob('file/acp/be.bastelstu.chat.nodePush/lib/*.coffee') as $coffeeFile) {
+foreach (glob('file/acp/be.bastelstu.chat.nodePush/lib/*.{litcoffee,coffee}', GLOB_BRACE) as $coffeeFile) {
 	echo $coffeeFile."\n";
 	passthru('coffee -cb '.escapeshellarg($coffeeFile), $code);
 	if ($code != 0) exit($code);

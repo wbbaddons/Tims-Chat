@@ -126,7 +126,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 				$separator = ':';
 			break;
 			default:
-				$separator = ' ';
+				$separator = '';
 			break;
 		}
 		
