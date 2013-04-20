@@ -595,11 +595,14 @@ Sends out notifications for the given `message`. The number of unread messages w
 				
 				if window.Notification?
 					if window.Notification.permission is 'granted'
-						notification = new window.Notification title,
-							body: content
-							onclick: ->
+						do ->
+							notification = new window.Notification title,
+								body: content
+								onclick: ->
+									notification.close()
+							setTimeout ->
 								notification.close()
-						setTimeout notification.close, 5e3
+							, 5e3
 
 **refreshRoomList()**  
 Updates the room list. 
