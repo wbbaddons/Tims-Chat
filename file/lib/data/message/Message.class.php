@@ -59,6 +59,8 @@ class Message extends \chat\data\CHATDatabaseObject {
 	 */
 	public function getFormattedMessage($type = 'text/html') {
 		$message = $this->message;
+		$messageParser = \wcf\system\bbcode\MessageParser::getInstance();
+		$messageParser->setOutputType('text/html');
 		
 		switch ($this->type) {
 			case self::TYPE_JOIN:
@@ -70,6 +72,8 @@ class Message extends \chat\data\CHATDatabaseObject {
 			case self::TYPE_MODERATE:
 				$message = unserialize($message);
 				$message = WCF::getLanguage()->getDynamicVariable('chat.message.'.$this->type.'.'.$message['type'], $message ?: array());
+				
+				$message = $messageParser->parse($message, false, false, true, false);
 			break;
 			case self::TYPE_WHISPER:
 				$message = unserialize($message);
@@ -79,8 +83,6 @@ class Message extends \chat\data\CHATDatabaseObject {
 			default:
 				if ($type !== 'text/html') return $message;
 				
-				$messageParser = \wcf\system\bbcode\MessageParser::getInstance();
-				$messageParser->setOutputType('text/html');
 				$message = $messageParser->parse($message, $this->enableSmilies, $this->enableHTML, true, false);
 			break;
 		}

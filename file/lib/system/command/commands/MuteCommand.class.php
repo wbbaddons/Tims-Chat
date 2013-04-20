@@ -41,7 +41,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 		$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
 			'object' => $this->user
 		));
-		$this->link = '<span class="userLink" data-user-id="'.$this->user->userID.'" />';
+		$this->link = "[url='".$profile."']".$this->user->username.'[/url]';
 		
 		$this->executeAction();
 		
