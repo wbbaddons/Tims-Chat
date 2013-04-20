@@ -62,9 +62,9 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
-
+		
 		I18nHandler::getInstance()->readValues();
-
+		
 		if (I18nHandler::getInstance()->isPlainValue('title')) $this->title = I18nHandler::getInstance()->getValue('title');
 		if (I18nHandler::getInstance()->isPlainValue('topic')) $this->topic = I18nHandler::getInstance()->getValue('topic');
 	}
@@ -86,7 +86,7 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 	 */
 	public function save() {
 		parent::save();
-
+		
 		// save room
 		$this->objectAction = new \chat\data\room\RoomAction(array(), 'create', array('data' => array(
 			'title' => $this->title,

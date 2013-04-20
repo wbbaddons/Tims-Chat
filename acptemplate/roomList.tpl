@@ -16,47 +16,52 @@
 </header>
 
 <div class="contentNavigation">
-	{if $__wcf->session->getPermission('admin.chat.canAddRoom')}
+	{hascontent}
 		<nav>
 			<ul>
-				<li><a href="{link application='chat' controller='roomAdd'}{/link}" title="{lang}chat.acp.room.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}chat.acp.room.add{/lang}</span></a></li>
+				{content}
+					{if $__wcf->session->getPermission('admin.chat.canAddRoom')}
+						<li><a href="{link application='chat' controller='RoomAdd'}{/link}" title="{lang}chat.acp.room.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}chat.acp.room.add{/lang}</span></a></li>
+					{/if}
+					{event name='contentNavigationButtonsTop'}
+				{/content}
 			</ul>
 		</nav>
-	{/if}
+	{/hascontent}
 </div>
-{hascontent}
-	<section id="roomList" class="container containerPadding sortableListContainer marginTop shadow">
+{if $objects|count}
+	<section id="roomList" class="container containerPadding sortableListContainer marginTop">
 		<ol class="sortableList" data-object-id="0">
-			{content}
-				{foreach from=$objects item=chatRoom}
-					<li class="sortableNode sortableNoNesting chatRoomRow" data-object-id="{@$chatRoom->roomID}">
-						<span class="sortableNodeLabel">
+			{foreach from=$objects item=chatRoom}
+				<li class="sortableNode sortableNoNesting chatRoomRow" data-object-id="{@$chatRoom->roomID}">
+					<span class="sortableNodeLabel">
+						{if $__wcf->session->getPermission('admin.chat.canEditRoom')}
+							<a href="{link  application='chat' controller='RoomEdit' id=$chatRoom->roomID}{/link}">{$chatRoom->title|language}</a>
+						{else}
+							{$chatRoom->title|language}
+						{/if}
+						
+						<span class="statusDisplay sortableButtonContainer">
 							{if $__wcf->session->getPermission('admin.chat.canEditRoom')}
-								<a href="{link  application='chat' controller='roomEdit' id=$chatRoom->roomID}{/link}">{$chatRoom->title|language}</a>
-							{else}
-								{$chatRoom->title|language}
+								<a href="{link application='chat' controller='RoomEdit' id=$chatRoom->roomID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 icon-pencil" /></a>
+							{/if}
+							{if $__wcf->session->getPermission('admin.chat.canDeleteRoom')}
+								<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 icon-remove" data-object-id="{@$chatRoom->roomID}" data-confirm-message="{lang}chat.acp.room.delete.sure{/lang}" />
 							{/if}
 							
-							<span class="statusDisplay sortableButtonContainer">
-								{if $__wcf->session->getPermission('admin.chat.canEditRoom')}
-									<a href="{link application='chat' controller='roomEdit' id=$chatRoom->roomID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 icon-pencil" /></a>
-								{/if}
-								{if $__wcf->session->getPermission('admin.chat.canDeleteRoom')}
-									<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 icon-remove" data-object-id="{@$chatRoom->roomID}" data-confirm-message="{lang}chat.acp.room.delete.sure{/lang}" />
-								{/if}
-							</span>
+							{event name='itemButtons'}
 						</span>
-						<ol class="sortableList" data-object-id="{@$chatRoom->roomID}"></ol></li>
-					</li>
-				{/foreach}
-			{/content}
+					</span>
+					<ol class="sortableList" data-object-id="{@$chatRoom->roomID}"></ol></li>
+				</li>
+			{/foreach}
 		</ol>
 		<div class="formSubmit">
 			<button class="button" data-type="submit">{lang}wcf.global.button.submit{/lang}</button>
 		</div>
 	</section>
-{hascontentelse}
+{else}
 	<p class="warning">{lang}chat.acp.room.noneAvailable{/lang}</p>
-{/hascontent}
+{/if}
 
 {include file='footer'}

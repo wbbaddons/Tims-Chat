@@ -24,17 +24,22 @@
 {/if}
 
 <div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link application='chat' controller='RoomList'}{/link}" title="{lang}chat.acp.menu.link.room.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}chat.acp.menu.link.room.list{/lang}</span></a></li>
-		</ul>
-	</nav>
+	{hascontent}
+		<nav>
+			<ul>
+				{content}
+					<li><a href="{link application='chat' controller='RoomList'}{/link}" title="{lang}chat.acp.menu.link.room.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}chat.acp.menu.link.room.list{/lang}</span></a></li>
+					{event name='contentNavigationButtonsTop'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
 </div>
 
-<form method="post" action="{if $action == 'add'}{link application='chat' controller='RoomAdd'}{/link}{else}{link application='chat' controller='roomEdit' id=$roomID}{/link}{/if}">
-	<div class="container containerPadding sortableListContainer marginTop shadow">
+<form method="post" action="{if $action == 'add'}{link application='chat' controller='RoomAdd'}{/link}{else}{link application='chat' controller='RoomEdit' id=$roomID}{/link}{/if}">
+	<div class="container containerPadding marginTop">
 		<fieldset>
-			<legend>{lang}chat.acp.room.data{/lang}</legend>
+			<legend>{lang}wcf.global.form.data{/lang}</legend>
 			
 			<dl{if $errorField == 'title'} class="formError"{/if}>
 				<dt><label for="title">{lang}chat.acp.room.title{/lang}</label></dt>

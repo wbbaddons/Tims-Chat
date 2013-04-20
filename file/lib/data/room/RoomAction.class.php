@@ -84,7 +84,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	}
 	
 	/**
-	 * @see wcf\data\ISortableAction
+	 * @see wcf\data\ISortableAction::validateUpdatePosition()
 	 */
 	public function validateUpdatePosition() {
 		// validate permissions
@@ -101,7 +101,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	}
 	
 	/**
-	 * @see wcf\data\ISortableAction
+	 * @see wcf\data\ISortableAction::updatePosition()
 	 */
 	public function updatePosition() {
 		$roomList = new RoomList();
