@@ -665,9 +665,9 @@ Submits the message.
 						$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide()
 						@getMessages()
 					failure: (data) =>
-						return true if not (data?.returnValues?.errorType?)
+						return true if not (data?.returnValues?.errorType?) and not (data?.message?)
 						
-						$('#timsChatInputContainer').addClass('formError').find('.innerError').html(data.returnValues.errorType).show()
+						$('#timsChatInputContainer').addClass('formError').find('.innerError').show().html (data?.returnValues?.errorType) ? data.message
 						false
 
 **toggleSidebarContents(target)**  
