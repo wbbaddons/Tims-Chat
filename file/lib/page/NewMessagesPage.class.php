@@ -140,12 +140,21 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 		foreach ($this->messages as $message) {
 			$json['messages'][] = $message->jsonify(true);
 		}
+		
+		\wcf\system\user\storage\UserStorageHandler::getInstance()->loadStorage(array_keys($this->users->getObjects()));
+		
 		foreach ($this->users as $user) {
 			$json['users'][] = array(
 				'userID' => (int) $user->userID,
 				'username' => $user->username,
 				'awayStatus' => $user->awayStatus,
-				'suspended' => (boolean) !$this->room->canWrite($user)
+				'suspended' => (boolean) !$this->room->canWrite($user->getDecoratedObject()),
+				'avatar' => array(
+					16 => $user->getAvatar()->getImageTag(16),
+					24 => $user->getAvatar()->getImageTag(24),
+					32 => $user->getAvatar()->getImageTag(32),
+					48 => $user->getAvatar()->getImageTag(48)
+				)
 			);
 		}
 		

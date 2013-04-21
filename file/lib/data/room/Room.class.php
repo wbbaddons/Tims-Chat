@@ -137,7 +137,7 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	/**
 	 * Returns the users that are currently active in this room.
 	 * 
-	 * @return	array<\wcf\data\user\User>
+	 * @return	\wcf\data\user\UserList
 	 */
 	public function getUsers() {
 		$sql = "SELECT
@@ -152,27 +152,11 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 		$userIDs = array();
 		while ($userID = $stmt->fetchColumn()) $userIDs[] = $userID;
 		
-		if (empty($userIDs)) return array();
+		$userList = new \wcf\data\user\UserProfileList();
+		if (!empty($userIDs)) $userList->getConditionBuilder()->add('user_table.userID IN (?)', array($userIDs));
+		else $userList->getConditionBuilder()->add('1 = 0', array());
+		$userList->readObjects();
 		
-		$sql = "SELECT
-				u.*,
-				st.fieldValue AS awayStatus
-			FROM
-				wcf".WCF_N."_user u
-			LEFT JOIN
-				wcf".WCF_N."_user_storage st
-				ON (
-						u.userID = st.userID 
-					AND	st.field = ?
-				)
-			WHERE
-				u.userID IN (".rtrim(str_repeat('?,', count($userIDs)), ',').")
-			ORDER BY
-				u.username ASC";
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		array_unshift($userIDs, 'away');
-		$stmt->execute($userIDs);
-		
-		return $stmt->fetchObjects('\wcf\data\user\User');
+		return $userList;
 	}
 }

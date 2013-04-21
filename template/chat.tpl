@@ -23,6 +23,7 @@
 					{if MODULE_SMILEY}WCF.TabMenu.init();{/if}
 					new WCF.Message.Smilies();
 					{capture assign='messageTemplate'}{include application='chat' file='message'}{/capture}
+					{capture assign='userTemplate'}{include application='chat' file='userListUser'}{/capture}
 					
 					window.chat = new be.bastelstu.Chat(
 						{
@@ -32,7 +33,8 @@
 							socketIOPath: '{@CHAT_SOCKET_IO_PATH|encodeJS}'
 						}, 
 						new WCF.Template('{ldelim}$title} - {'chat.general.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'), 
-						new WCF.Template('{@$messageTemplate|encodeJS}')
+						new WCF.Template('{@$messageTemplate|encodeJS}'),
+						new WCF.Template('{@$userTemplate|encodeJS}')
 					);
 					
 					{event name='afterInit'}

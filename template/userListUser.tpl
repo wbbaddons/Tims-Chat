@@ -1,0 +1,1 @@
+{literal}<a class="dropdownToggle userLink" data-user-id="{$user.userID.toString()}">{@$user.avatar['24']} {$user.username}</a>{/literal}

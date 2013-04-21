@@ -49,6 +49,7 @@ Instances of `WCF.Template`
 
 			titleTemplate: null
 			messageTemplate: null
+			userTemplate: null
 			
 Attributes needed for notificationss
 
@@ -86,10 +87,10 @@ Every `WCF.PeriodicalExecuter` used by the chat to allow access for 3rd party de
 Methods
 -------
 
-**init(@config, @titleTemplate, @messageTemplate)**  
+**init(@config, @titleTemplate, @messageTemplate, @userTemplate)**  
 Constructor, binds needed events and initializes `@events` and `PeriodicalExecuter`s.
 
-			init: (@config, @titleTemplate, @messageTemplate) ->
+			init: (@config, @titleTemplate, @messageTemplate, @userTemplate) ->
 				console.log 'Initializing'
 
 Bind events and initialize our own event system.
@@ -504,13 +505,8 @@ Build HTML of new user and append it.
 							li.attr 'title', user.awayStatus
 						li.data 'username', user.username
 						
-						a = $ '<a>' + WCF.String.escapeHTML(user.username) + '</a>'
-						a.addClass 'userLink'
-						a.addClass 'dropdownToggle'
-						a.data 'userID', user.userID
-						a.data 'toggle', id
-						
-						li.append a
+						li.append @userTemplate.fetch
+							user: user
 						
 						menu = $ '<ul></ul>'
 						menu.addClass 'dropdownMenu'
