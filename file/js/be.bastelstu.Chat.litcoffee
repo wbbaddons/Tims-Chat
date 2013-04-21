@@ -611,15 +611,18 @@ Updates the room list.
 				console.log 'Refreshing the roomlist'
 				$('#toggleRooms .ajaxLoad').show()
 				
-				$.ajax $('#toggleRooms a').data('refreshUrl'),
-					dataType: 'json'
-					type: 'POST'
-					success: (data, textStatus, jqXHR) =>
+				proxy = new WCF.Action.Proxy
+					autoSend: true
+					data:
+						actionName: 'getRoomList'
+						className: 'chat\\data\\room\\RoomAction'
+					showLoadingOverlay: false
+					success: (data) =>
 						$('#timsChatRoomList li').remove()
 						$('#toggleRooms .ajaxLoad').hide()
-						$('#toggleRooms .badge').text data.length
+						$('#toggleRooms .badge').text data.returnValues.length
 						
-						for room in data
+						for room in data.returnValues
 							li = $ '<li></li>'
 							li.addClass 'activeMenuItem' if room.active
 							$("""<a href="#{room.link}">#{room.title}</a>""").addClass('timsChatRoom').appendTo li

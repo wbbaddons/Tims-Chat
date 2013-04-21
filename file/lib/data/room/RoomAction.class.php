@@ -118,4 +118,38 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		}
 		WCF::getDB()->commitTransaction();
 	}
+	
+	/**
+	 * Validates parameters and permissions.
+	 */
+	public function validateGetRoomList() {
+		if (!CHAT_ACTIVE) throw new \wcf\system\exception\IllegalLinkException();
+	}
+	
+	/**
+	 * Returns the available rooms.
+	 */
+	public function getRoomList() {
+		$rooms = Room::getCache();
+		
+		$roomID = \chat\util\ChatUtil::readUserData('roomID');
+		if (!isset($rooms[$roomID])) throw new \wcf\system\exception\IllegalLinkException();
+		$activeRoom = $rooms[$roomID];
+		
+		$result = array();
+		foreach ($rooms as $room) {
+			if (!$room->canEnter()) continue;
+			
+			$result[] = array(
+				'title' => (string) $room,
+				'link' => \wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
+					'application' => 'chat',
+					'object' => $room
+				)),
+				'active' => $room->roomID == $activeRoom->roomID
+			);
+		}
+		
+		return $result;
+	}
 }
