@@ -44,6 +44,18 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	 * Validates message sending.
 	 */
 	public function validateSend() {
+		// read user data
+		$this->parameters['userData']['color'] = \chat\util\ChatUtil::readUserData('color');
+		$this->parameters['userData']['roomID'] = \chat\util\ChatUtil::readUserData('roomID');
+		$this->parameters['userData']['away'] = \chat\util\ChatUtil::readUserData('away');
+		
+		// read and validate room
+		$cache = room\Room::getCache();
+		if (!isset($cache[$this->parameters['userData']['roomID']])) throw new \wcf\system\exception\IllegalLinkException();
+		$this->parameters['room'] = $cache[$this->parameters['userData']['roomID']];
+		
+		if (!$this->parameters['room']->canEnter() || !$this->parameters['room']->canWrite()) throw new \wcf\system\exception\PermissionDeniedException();
+		
 		// read parameters
 		$this->readString('text');
 		$this->readBoolean('enableSmilies');
@@ -66,18 +78,6 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 				throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.censoredWordsFound', array('censoredWords' => $result)));
 			}
 		}
-		
-		// read user data
-		$this->parameters['userData']['color'] = \chat\util\ChatUtil::readUserData('color');
-		$this->parameters['userData']['roomID'] = \chat\util\ChatUtil::readUserData('roomID');
-		$this->parameters['userData']['away'] = \chat\util\ChatUtil::readUserData('away');
-		
-		// read and validate room
-		$cache = room\Room::getCache();
-		if (!isset($cache[$this->parameters['userData']['roomID']])) throw new \wcf\system\exception\IllegalLinkException();
-		$this->parameters['room'] = $cache[$this->parameters['userData']['roomID']];
-		
-		if (!$this->parameters['room']->canEnter() || !$this->parameters['room']->canWrite()) throw new \wcf\system\exception\PermissionDeniedException();
 		
 		\chat\util\ChatUtil::writeUserData(array('away' => null));
 		
