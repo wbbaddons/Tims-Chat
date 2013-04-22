@@ -97,7 +97,7 @@
 	<div>
 		<p id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">{$room->topic|language}</p>
 		
-		<div id="timsChatMessageContainer" class="timsChatMessageContainer container box shadow1">
+		<div id="timsChatMessageContainer" class="timsChatMessageContainer marginTop container">
 			<p class="error noJsOnly" style="display: none;">{lang}chat.general.noJs{/lang}</p>
 			<ul>
 			</ul>

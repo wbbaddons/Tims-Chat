@@ -254,7 +254,15 @@ Handling toggling when a toggable button is `click`ed.
 						element.attr 'title', element.data 'disableMessage'
 						
 					$('#timsChatInput').focus()
-				
+
+Mark smilies as disabled.
+
+				$('#timsChatSmilies').click (event) ->
+					if $(@).data 'status'
+						$('#smilies').removeClass 'disabled'
+					else
+						$('#smilies').addClass 'disabled'
+
 Toggle fullscreen mode.
 
 				$('#timsChatFullscreen').click (event) ->
@@ -263,7 +271,7 @@ Toggle fullscreen mode.
 					else
 						$('html').removeClass 'fullscreen'
 				
-Scroll down when autoscrollis being activated.
+Scroll down when autoscroll is being activated.
 
 				$('#timsChatAutoscroll').click (event) ->
 					$(@).removeClass 'active'

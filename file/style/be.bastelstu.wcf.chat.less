@@ -11,8 +11,7 @@
 		text-align: left;
 		
 		#timsChatTopic {
-			padding: 5px;
-			margin-bottom: @wcfGapSmall;
+			padding: @wcfGapTiny;
 			.transition(height, .2s);
 			.transition(padding-top, .2s);
 			.transition(padding-bottom, .2s);
@@ -87,14 +86,8 @@
 		}
 	}
 	
-	#timsChatLog .timsChatMessageContainer {
-		height: auto;
-		overflow: visible;
-	}
-	
 	.sidebar {
-		margin-bottom: -20px !important;
-		padding: 0;
+		padding-top: 0;
 		
 		#sidebarContent {
 			padding-top: 0px;
@@ -241,10 +234,6 @@
 			}
 		}
 		
-		h2 {
-			margin: auto;
-		}
-		
 		ul {
 			li {
 				a {
@@ -256,26 +245,8 @@
 		}
 	}
 	
-	#timsChatForm {
-		white-space: nowrap;
-		margin-top: 10px;
-		// Fix to align chatInput in center
-		text-align: center;
-		
-		#timsChatInput {
-			position: relative;
-			z-index: 10;
-		}
-	}
-	
 	#timsChatControls {
-		position: relative;
-		.borderRadius(5px, 5px, 0, 5px);
-		
 		#smilies {
-			padding: 14px 21px 7px;
-			border-bottom-right-radius: 0px;
-			
 			li {
 				.transition(opacity, .2s);
 			}
