@@ -30,25 +30,15 @@
 		height: 200px;
 		overflow-y: scroll;
 		overflow-x: hidden;
-		padding-left: 7px !important;
 		
 		ul {
 			display: table;
+			width: 100%;
 		
 			.timsChatMessage {
 				min-height: 16px;
 				display: table-row;
 				.transition(opacity, .2s);
-				
-				
-				time:first-child {
-					&::before {
-						content: "[";
-					}
-					&::after {
-						content: "]";
-					}
-				}
 				
 				.username {
 					font-weight: bold;
@@ -60,11 +50,24 @@
 						vertical-align: top;
 					}
 					
+					time {
+						&::before {
+							content: "[";
+						}
+						&::after {
+							content: "]";
+						}
+					}
+					
 					.usernameContainer {
 						text-align: right;
 						min-width: 100px;
 						padding: 0px 5px;
 						white-space: nowrap;
+					}
+					
+					.text {
+						width: 100%;
 					}
 				}
 				
@@ -75,6 +78,10 @@
 				&::before {
 					.icon;
 					.icon16;
+				}
+				
+				&:nth-child(even) {
+					background-color: @wcfContainerAccentBackgroundColor;
 				}
 			}
 		}
