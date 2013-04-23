@@ -38,6 +38,7 @@ class ColorCommand extends \chat\system\command\AbstractCommand {
 	
 	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
+		
 		try {
 			list($color[1], $color[2]) = explode(' ', $commandHandler->getParameters());
 		}

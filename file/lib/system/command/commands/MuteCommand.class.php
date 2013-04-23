@@ -80,13 +80,6 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	}
 	
 	/**
-	 * @see	chat\system\command\ICommand::getReceiver()
-	 */
-	public function getReceiver() {
-		return parent::getReceiver();
-	}
-	
-	/**
 	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
