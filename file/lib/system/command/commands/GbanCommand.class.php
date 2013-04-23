@@ -20,8 +20,7 @@ class GbanCommand extends MuteCommand {
 		
 		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $room, suspension\Suspension::TYPE_BAN)) {
 			if ($suspension->time > TIME_NOW + $this->time) {
-				$this->fail = true;
-				return;
+				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
 			}
 			
 			$editor = new suspension\SuspensionEditor($suspension);

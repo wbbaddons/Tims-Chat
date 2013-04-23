@@ -19,7 +19,6 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	public $time = 0;
 	public $suspensionAction = null;
 	public $link = '';
-	public $fail = false;
 	public $room = null;
 	
 	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
@@ -51,8 +50,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	public function executeAction() {
 		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $this->room, suspension\Suspension::TYPE_MUTE)) {
 			if ($suspension->time > TIME_NOW + $this->time) {
-				$this->fail = true;
-				return;
+				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
 			}
 			
 			$editor = new suspension\SuspensionEditor($suspension);
@@ -85,8 +83,6 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	 * @see	chat\system\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
-		if ($this->fail) return WCF::getUser()->userID;
-		
 		return parent::getReceiver();
 	}
 	
@@ -94,7 +90,6 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	 * @see	\chat\system\command\ICommand::getType()
 	 */
 	public function getType() {
-		if ($this->fail) return \chat\data\message\Message::TYPE_INFORMATION;
 		return \chat\data\message\Message::TYPE_MODERATE;
 	}
 	
@@ -102,8 +97,6 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		if ($this->fail) return WCF::getLanguage()->get('wcf.chat.suspension.exists');
-		
 		return serialize(array(
 			'link' => $this->link,
 			'until' => TIME_NOW + $this->time,
