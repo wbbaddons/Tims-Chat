@@ -115,7 +115,7 @@ final class ChatUtil {
 		if (count($string) === 0) return '';
 		
 		if ($start === $end) {
-			return '<span style="color:rgb('.($start >> 16 & 255).','.($start >> 8 & 255).','.($start & 255).')">'.\wcf\util\StringUtil::encodeHTML($string).'</span>'
+			return '<span style="color:rgb('.($start >> 16 & 255).','.($start >> 8 & 255).','.($start & 255).')">'.\wcf\util\StringUtil::encodeHTML($string).'</span>';
 		}
 		
 		$r = (int) ((($start >> 16 & 255) - ($end >> 16 & 255)) / (count($string) - 1));
