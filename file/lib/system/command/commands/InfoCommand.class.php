@@ -3,6 +3,7 @@ namespace chat\system\command\commands;
 use \chat\util\ChatUtil;
 use \wcf\data\user\User;
 use \wcf\system\WCF;
+use \wcf\util\DateUtil;
 use \wcf\util\StringUtil;
 
 /**
@@ -40,6 +41,16 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 		$room = new \chat\data\room\Room(ChatUtil::readUserData('roomID', $this->user));
 		if ($room->roomID && $room->canEnter()) {
 			$this->lines[WCF::getLanguage()->get('wcf.chat.room')] = $room->getTitle();
+		}
+		
+		// Suspensions
+		// TODO: Permissions
+		$suspensions = \chat\data\suspension\Suspension::getSuspensionsForUser($this->user);
+		foreach ($suspensions as $roomSuspensions) {
+			foreach ($roomSuspensions as $typeSuspension) {
+				$dateTime = DateUtil::getDateTimeByTimestamp($typeSuspension->time);
+				$this->lines[$typeSuspension->type.'-'.$typeSuspension->roomID] = str_replace('%time%', DateUtil::format($dateTime, DateUtil::TIME_FORMAT), str_replace('%date%', DateUtil::format($dateTime, DateUtil::DATE_FORMAT), WCF::getLanguage()->get('wcf.date.dateTimeFormat')));
+			}
 		}
 		
 		// ip address

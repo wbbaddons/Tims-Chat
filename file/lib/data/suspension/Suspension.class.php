@@ -28,6 +28,7 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	public static function getSuspensionsForUser(\wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
 		$suspensions = \chat\util\ChatUtil::readUserData('suspensions', $user);
+		
 		if ($suspensions === null) {
 			$sql = "SELECT
 					*
@@ -40,8 +41,8 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 			$stmt->execute(array($user->userID, TIME_NOW));
 			
 			$suspensions = array();
-			while ($row = $stmt->fetchArray()) {
-				$suspensions[$row['roomID']][$row['type']] = $row;
+			while ($suspension = $stmt->fetchObject('\chat\data\suspension\Suspension')) {
+				$suspensions[$suspension->roomID][$suspension->type] = $suspension;
 			}
 			
 			\chat\util\ChatUtil::writeUserData(array('suspensions' => $suspensions), $user);

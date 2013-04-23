@@ -45,14 +45,14 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 		$canEnter = $ph->getPermission($this, 'user.canEnter');
 		// room suspension
 		if ($canEnter && isset($suspensions[$this->roomID][Suspension::TYPE_BAN])) {
-			if ($suspensions[$this->roomID][Suspension::TYPE_BAN]['time'] > TIME_NOW) {
+			if ($suspensions[$this->roomID][Suspension::TYPE_BAN]->time > TIME_NOW) {
 				$canEnter = false;
 			}
 		}
 		
 		// global suspension
 		if ($canEnter && isset($suspensions[null][Suspension::TYPE_BAN])) {
-			if ($suspensions[null][Suspension::TYPE_BAN]['time'] > TIME_NOW) {
+			if ($suspensions[null][Suspension::TYPE_BAN]->time > TIME_NOW) {
 				$canEnter = false;
 			}
 		}
@@ -75,14 +75,14 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 		$canWrite = $ph->getPermission($this, 'user.canWrite');
 		// room suspension
 		if ($canWrite && isset($suspensions[$this->roomID][Suspension::TYPE_MUTE])) {
-			if ($suspensions[$this->roomID][Suspension::TYPE_MUTE]['time'] > TIME_NOW) {
+			if ($suspensions[$this->roomID][Suspension::TYPE_MUTE]->time > TIME_NOW) {
 				$canWrite = false;
 			}
 		}
 		
 		// global suspension
 		if ($canWrite && isset($suspensions[null][Suspension::TYPE_MUTE])) {
-			if ($suspensions[null][Suspension::TYPE_MUTE]['time'] > TIME_NOW) {
+			if ($suspensions[null][Suspension::TYPE_MUTE]->time > TIME_NOW) {
 				$canWrite = false;
 			}
 		}

@@ -31,7 +31,8 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
 		$stmt->execute(array(TIME_NOW));
 		$objectIDs = array();
-		while ($objectIDs[] = $stmt->fetchColumn());
+		
+		while ($objectID = $stmt->fetchColumn()) $objectIDs[] = $objectID;
 		
 		return call_user_func(array($this->className, 'deleteAll'), $objectIDs);
 	}
