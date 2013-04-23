@@ -38,7 +38,7 @@
 				<dd>
 					<ul>
 						<li><a href="http://www.wbbaddons.de/user/2020-noone/">-noone-</a></li>
-						<li>Gabi</li>
+						<li><a href="https://github.com/Gabbid">Gabi</a></li>
 						<li><a href="https://github.com/Leon-">Stefan Hahn</a></li>
 						<li><a href="http://www.wbbaddons.de">Martin Schwendowius</a></li>
 					</ul>
