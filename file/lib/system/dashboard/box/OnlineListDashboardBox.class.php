@@ -24,6 +24,7 @@ class OnlineListDashboardBox extends \wcf\system\dashboard\box\AbstractContentDa
 	public function init(\wcf\data\dashboard\box\DashboardBox $box, \wcf\page\IPage $page) {
 		parent::init($box, $page);
 		
+		if (!WCF::getUser()->userID) return;
 		$this->rooms = data\room\Room::getCache();
 		
 		foreach ($this->rooms as $key => $room) {
@@ -35,6 +36,7 @@ class OnlineListDashboardBox extends \wcf\system\dashboard\box\AbstractContentDa
 	 * @see	wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
+		if (!WCF::getUser()->userID) return;
 		if (count($this->rooms)) {
 			\wcf\system\WCF::getTPL()->assign(array(
 				'rooms' => $this->rooms
