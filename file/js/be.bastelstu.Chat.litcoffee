@@ -37,7 +37,7 @@ be.bastelstu.Chat
 Attributes
 ----------
 
-When `shields` reaches zero `@pe.getMessages` is stopped, to prevent annoying the server with requests that don't go through. Decreased every time `@getMessages()` fails.		
+When `shields` reaches zero `@pe.getMessages` is stopped, to prevent annoying the server with requests that don't go through. Decreased every time `@getMessages()` fails.
 
 			shields: 3
 			
@@ -407,15 +407,15 @@ Handle reply.
 
 					success: (data, textStatus, jqXHR) =>
 						WCF.DOMNodeInsertedHandler.enable()
-						@handleMessages(data.messages)
-						@handleUsers(data.users)
+						@handleMessages data.messages
+						@handleUsers data.users
 						WCF.DOMNodeInsertedHandler.disable()
 
 Decrease `@shields` on error and disable PeriodicalExecuters once `@shields` reaches zero.
 
 					error: =>
 						console.error 'Battle Station hit - shields at ' + (--@shields / 3 * 104) + ' percent'
-						if @shields is 0
+						if @shields <= 0
 							@pe.refreshRoomList.stop()
 							@pe.getMessages.stop()
 							@freeTheFish()
@@ -638,6 +638,7 @@ Updates the room list.
 						actionName: 'getRoomList'
 						className: 'chat\\data\\room\\RoomAction'
 					showLoadingOverlay: false
+					suppressErrors: true
 					success: (data) =>
 						$('#timsChatRoomList li').remove()
 						$('#toggleRooms .ajaxLoad').hide()
@@ -656,7 +657,7 @@ Bind click event for inline room change if we have the history API available.
 								event.preventDefault()
 								@changeRoom $ event.target
 						
-						console.log "Found #{data.length} rooms"
+						console.log "Found #{data.returnValues.length} rooms"
 
 **submit(target)**  
 Submits the message.
@@ -717,7 +718,12 @@ Switches the active sidebar tab to the one belonging to `target`.
 Sends leave notification to the server.
 
 			unload: ->
-				$.ajax @config.unloadURL,
-					type: 'POST'
+				proxy = new WCF.Action.Proxy
+					autoSend: true
+					data:
+						actionName: 'leave'
+						className: 'chat\\data\\room\\RoomAction'
+					showLoadingOverlay: false
 					async: false
+					suppressErrors: true
 	)(jQuery, @)

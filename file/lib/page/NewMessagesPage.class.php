@@ -65,29 +65,12 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 		$this->readMessages();
 		$this->users = $this->room->getUsers();
 		
-		$deadUsers = \chat\util\ChatUtil::getDiedUsers();
+		$deadUsers = data\room\Room::getDeadUsers();
 		foreach ($deadUsers as $deadUser) {
-			if (!$deadUser) continue;
-			
-			$user = new \wcf\data\user\User($deadUser['userID']);
-			if (CHAT_DISPLAY_JOIN_LEAVE) {
-				$userData['color'] = \chat\util\ChatUtil::readUserData('color', $user);
-			
-				$messageAction = new data\message\MessageAction(array(), 'create', array(
-					'data' => array(
-						'roomID' => $deadUser['roomID'],
-						'sender' => $user->userID,
-						'username' => $user->username,
-						'time' => TIME_NOW,
-						'type' => data\message\Message::TYPE_LEAVE,
-						'message' => '',
-						'color1' => $userData['color'][1],
-						'color2' => $userData['color'][2]
-					)
-				));
-				$messageAction->executeAction();
-			}
-			\chat\util\ChatUtil::writeUserData(array('roomID' => null), $user);
+			$roomAction = new data\room\RoomAction(array(), 'leave', array(
+				'user' => $deadUser
+			));
+			$roomAction->executeAction();
 		}
 	}
 	

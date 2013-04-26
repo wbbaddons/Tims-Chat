@@ -137,7 +137,7 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	/**
 	 * Returns the users that are currently active in this room.
 	 * 
-	 * @return	\wcf\data\user\UserList
+	 * @return	\wcf\data\user\UserProfileList
 	 */
 	public function getUsers() {
 		$sql = "SELECT
@@ -153,6 +153,48 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 		while ($userID = $stmt->fetchColumn()) $userIDs[] = $userID;
 		
 		$userList = new \wcf\data\user\UserProfileList();
+		if (!empty($userIDs)) $userList->getConditionBuilder()->add('user_table.userID IN (?)', array($userIDs));
+		else $userList->getConditionBuilder()->add('1 = 0', array());
+		
+		$userList->readObjects();
+		
+		return $userList;
+	}
+	
+	/**
+	 * Returns the users that "timed out".
+	 * 
+	 * @return	\wcf\data\user\UserList
+	 */
+	public static function getDeadUsers() {
+		if (\chat\util\ChatUtil::nodePushRunning()) {
+			$time = TIME_NOW - 120;
+		}
+		else {
+			$time = TIME_NOW;
+		}
+		
+		$sql = "SELECT
+				r.userID
+			FROM
+				wcf".WCF_N."_user_storage r
+			LEFT JOIN
+				wcf".WCF_N."_user_storage a
+				ON		a.userID = r.userID 
+					AND	a.field = ? 
+			WHERE
+					r.field = ?
+				AND	r.fieldValue IS NOT NULL
+				AND	(
+							a.fieldValue < ?
+						OR	a.fieldValue IS NULL
+				)";
+		$stmt = WCF::getDB()->prepareStatement($sql);
+		$stmt->execute(array('lastActivity', 'roomID', $time - 30));
+		$userIDs = array();
+		while ($userID = $stmt->fetchColumn()) $userIDs[] = $userID;
+		
+		$userList = new \wcf\data\user\UserList();
 		if (!empty($userIDs)) $userList->getConditionBuilder()->add('user_table.userID IN (?)', array($userIDs));
 		else $userList->getConditionBuilder()->add('1 = 0', array());
 		

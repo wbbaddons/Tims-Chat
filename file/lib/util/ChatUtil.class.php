@@ -45,41 +45,6 @@ final class ChatUtil {
 	private static $packageID = null;
 	
 	/**
-	 * Fetches the userIDs of died users.
-	 * 
-	 * @return array
-	 */
-	public static function getDiedUsers() {
-		if (self::nodePushRunning()) {
-			$time = TIME_NOW - 120;
-		}
-		else {
-			$time = TIME_NOW;
-		}
-		
-		$sql = "SELECT
-				r.userID, r.fieldValue AS roomID
-			FROM
-				wcf".WCF_N."_user_storage r
-			LEFT JOIN
-				wcf".WCF_N."_user_storage a
-				ON		a.userID = r.userID 
-					AND	a.field = ? 
-			WHERE
-					r.field = ?
-				AND	r.fieldValue IS NOT NULL
-				AND	(
-						a.fieldValue < ?
-						OR a.fieldValue IS NULL
-				)";
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array('lastActivity', 'roomID', $time - 30));
-		$users = array();
-		while ($user = $stmt->fetchArray()) $users[] = $user;
-		
-		return $users;
-	}
-	/**
 	 * Returns the packageID of Tims Chat.
 	 */
 	public static function getPackageID() {
@@ -174,6 +139,20 @@ final class ChatUtil {
 	}
 	
 	/**
+	 * Writes user data
+	 * @param	array $data
+	 * @param	\wcf\data\user\User	$user
+	 */
+	public static function writeUserData(array $data, \wcf\data\user\User $user = null) {
+		if ($user === null) $user = WCF::getUser();
+		$ush = UserStorageHandler::getInstance();
+	
+		foreach ($data as $key => $value) {
+			$ush->update($user->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value);
+		}
+	}
+	
+	/**
 	 * Splits a string into smaller chunks.
 	 * UTF-8 safe version of str_split().
 	 *
@@ -244,20 +223,6 @@ final class ChatUtil {
 		}
 		
 		return (int) round($result, 0);
-	}
-	
-	/**
-	 * Writes user data
-	 * @param	array $data
-	 * @param	\wcf\data\user\User	$user
-	 */
-	public static function writeUserData(array $data, \wcf\data\user\User $user = null) {
-		if ($user === null) $user = WCF::getUser();
-		$ush = UserStorageHandler::getInstance();
-
-		foreach ($data as $key => $value) {
-			$ush->update($user->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value);
-		}
 	}
 	
 	/**
