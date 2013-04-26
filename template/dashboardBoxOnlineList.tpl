@@ -18,7 +18,7 @@
 								<h2><strong>{#$users|count} Users</strong></h2>
 							</hgroup>
 							<ul class="dataList">
-								{implode from=$room->getUsers() item='user'}<li><a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{$user->userID}">{$user}</a></li>{/implode}
+								{foreach from=$room->getUsers() item='user'}<li><a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{$user->userID}">{$user}</a></li>{/foreach}
 							</ul>
 						</div>
 					</div>

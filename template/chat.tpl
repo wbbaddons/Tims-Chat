@@ -49,9 +49,9 @@
 					
 					$('#timsChatCopyright').click(function (event) {
 						event.preventDefault();
-						if (!$.wcfIsset('timsChatCopyrightDialog')) $('<fieldset id="timsChatCopyrightDialog"></fieldset>').appendTo('body');
+						if (!$.wcfIsset('timsChatCopyrightDialog')) $('<div id="timsChatCopyrightDialog"></div>').appendTo('body');
 						$('#timsChatCopyrightDialog').load('{link application="chat" controller="Copyright"}{/link}').wcfDialog({
-							title: 'Tims Chat{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}'
+							title: '<img width="246" height="90" alt="" src="{$__wcf->getPath("chat")|encodeJS}images/chatLogo.png"> {if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}'
 						});
 					});
 					
