@@ -32,7 +32,7 @@
 							messageURL: '{link application="chat" controller="NewMessages"}{/link}',
 							socketIOPath: '{@CHAT_SOCKET_IO_PATH|encodeJS}'
 						}, 
-						new WCF.Template('{ldelim}$title} - {'chat.general.title'|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'), 
+						new WCF.Template('{ldelim}$title} - {"chat.general.title"|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'),
 						new WCF.Template('{@$messageTemplate|encodeJS}'),
 						new WCF.Template('{@$userTemplate|encodeJS}')
 					);
@@ -97,7 +97,7 @@
 	<div>
 		<p id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">{$room->topic|language}</p>
 		
-		<div id="timsChatMessageContainer" class="timsChatMessageContainer marginTop container">
+		<div id="timsChatMessageContainer" class="timsChatMessageContainer marginTop container active">
 			<p class="error noJsOnly" style="display: none;">{lang}chat.general.noJs{/lang}</p>
 			<ul>
 			</ul>

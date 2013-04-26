@@ -29,24 +29,58 @@
 		height: 200px;
 		overflow-y: scroll;
 		overflow-x: hidden;
+		display: none;
+		
+		&.active {
+			display: block;
+		}
+		
+		&.markEnabled {
+			ul {
+				.timsChatMessage {
+					&.jsMarked {
+						background-color: @wcfSelectedBackgroundColor;
+						color: @wcfSelectedColor;
+					}
+					
+					> {
+						.markContainer {
+							visibility: visible;
+						}
+					}
+				}
+			}
+		}
 		
 		ul {
 			display: table;
 			width: 100%;
-		
+			
 			.timsChatMessage {
-				min-height: 16px;
 				display: table-row;
 				.transition(opacity, .2s);
 				
-				.username {
-					font-weight: bold;
+				&.unloaded {
+					opacity: .5;
+				}
+				
+				&::before {
+					.icon;
+					.icon16;
+				}
+				
+				&:nth-child(even) {
+					background-color: @wcfContainerAccentBackgroundColor;
 				}
 				
 				> {
-					time, .usernameContainer, .text {
+					.markContainer, time, .usernameContainer, .text {
 						display: table-cell;
 						vertical-align: top;
+					}
+					
+					.markContainer {
+						visibility: hidden;
 					}
 					
 					time {
@@ -63,24 +97,12 @@
 						min-width: 100px;
 						padding: 0px 5px;
 						white-space: nowrap;
+						font-weight: bold;
 					}
 					
 					.text {
 						width: 100%;
 					}
-				}
-				
-				&.unloaded {
-					opacity: .5;
-				}
-				
-				&::before {
-					.icon;
-					.icon16;
-				}
-				
-				&:nth-child(even) {
-					background-color: @wcfContainerAccentBackgroundColor;
 				}
 			}
 		}

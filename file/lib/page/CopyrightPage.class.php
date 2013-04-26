@@ -1,7 +1,5 @@
 <?php
 namespace chat\page;
-use \wcf\system\exception\IllegalLinkException;
-use \wcf\system\WCF;
 
 /**
  * Shows information about Tims chat.
@@ -39,9 +37,9 @@ class CopyrightPage extends \wcf\page\AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$images = explode("\n\n", file_get_contents(__FILE__, null, null, __COMPILER_HALT_OFFSET__+2));
+		$images = explode("\n\n", file_get_contents(__FILE__, null, null, __COMPILER_HALT_OFFSET__ + 2));
 		
-		WCF::getTPL()->assign(array(
+		\wcf\system\WCF::getTPL()->assign(array(
 			'background' => str_replace("\n", '', $images[array_rand($images)])
 		));
 	}

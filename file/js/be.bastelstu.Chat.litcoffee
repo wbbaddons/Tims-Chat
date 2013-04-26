@@ -270,6 +270,19 @@ Toggle fullscreen mode.
 						$('html').addClass 'fullscreen'
 					else
 						$('html').removeClass 'fullscreen'
+						
+
+Toggle checkboxes
+
+				$('#timsChatMark').click (event) ->
+					$('.timsChatMessageContainer').toggleClass 'markEnabled'
+					
+				$(document).on 'click', '.timsChatMessage :checkbox', (event) ->
+					if $(this).is ':checked'
+						$(this).parents('.timsChatMessage').addClass('jsMarked')
+					else
+						$(this).parents('.timsChatMessage').removeClass('jsMarked')
+
 				
 Scroll down when autoscroll is being activated.
 
@@ -517,8 +530,7 @@ Build HTML of new user and append it.
 							li.attr 'title', user.awayStatus
 						li.data 'username', user.username
 						
-						li.append @userTemplate.fetch
-							user: user
+						li.append @userTemplate.fetch user
 						
 						menu = $ '<ul></ul>'
 						menu.addClass 'dropdownMenu'
