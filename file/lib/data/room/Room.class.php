@@ -91,25 +91,6 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	}
 	
 	/**
-	 * Returns the number of users currently active in this room.
-	 * 
-	 * @return	integer
-	 */
-	public function countUsers() {
-		$sql = "SELECT
-				COUNT(*)
-			FROM
-				wcf".WCF_N."_user_storage 
-			WHERE
-					field = ?
-				AND 	fieldValue = ?";
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array('roomID', $this->roomID));
-		
-		return $stmt->fetchColumn();
-	}
-	
-	/**
 	 * Loads the room cache.
 	 */
 	public static function getCache() {
@@ -135,6 +116,25 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	}
 	
 	/**
+	 * Returns the number of users currently active in this room.
+	 *
+	 * @return	integer
+	 */
+	public function countUsers() {
+		$sql = "SELECT
+				COUNT(*)
+			FROM
+				wcf".WCF_N."_user_storage
+			WHERE
+					field = ?
+				AND 	fieldValue = ?";
+		$stmt = WCF::getDB()->prepareStatement($sql);
+		$stmt->execute(array('roomID', $this->roomID));
+	
+		return $stmt->fetchColumn();
+	}
+	
+	/**
 	 * Returns the users that are currently active in this room.
 	 * 
 	 * @return	\wcf\data\user\UserList
@@ -155,6 +155,7 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 		$userList = new \wcf\data\user\UserProfileList();
 		if (!empty($userIDs)) $userList->getConditionBuilder()->add('user_table.userID IN (?)', array($userIDs));
 		else $userList->getConditionBuilder()->add('1 = 0', array());
+		
 		$userList->readObjects();
 		
 		return $userList;

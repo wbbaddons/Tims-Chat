@@ -37,12 +37,10 @@ class OnlineListDashboardBox extends \wcf\system\dashboard\box\AbstractContentDa
 	 * @see	wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
-		if (count($this->rooms)) {
-			\wcf\system\WCF::getTPL()->assign(array(
-				'rooms' => $this->rooms
-			));
-			
-			return \wcf\system\WCF::getTPL()->fetch('dashboardBoxOnlineList', 'chat');
-		}
+		\wcf\system\WCF::getTPL()->assign(array(
+			'rooms' => $this->rooms
+		));
+		
+		return \wcf\system\WCF::getTPL()->fetch('dashboardBoxOnlineList', 'chat');
 	}
 }
