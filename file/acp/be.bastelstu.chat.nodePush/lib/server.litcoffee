@@ -27,6 +27,11 @@ Prepare environment
 
 	log = (message) ->
 		console.log "[be.bastelstu.chat.nodePush] #{message}"
+		
+	# Ensure our namespace is present
+	be = be ? {}
+	be.bastelstu ?= {}
+	be.bastelstu.chat ?= {}
 
 be.bastelstu.chat.nodePush
 ==========================
