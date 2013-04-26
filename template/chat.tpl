@@ -14,7 +14,8 @@
 						'chat.general.kick': '{lang}chat.general.kick{/lang}',
 						'chat.general.ban': '{lang}chat.general.ban{/lang}',
 						'chat.general.profile': '{lang}chat.general.profile{/lang}',
-						'chat.general.notify.title': '{lang}chat.general.notify.title{/lang}'
+						'chat.general.notify.title': '{lang}chat.general.notify.title{/lang}',
+						'chat.general.error.onMessageLoad': '{lang}chat.general.error.onMessageLoad{/lang}'
 					});
 					
 					{event name='beforeInit'}

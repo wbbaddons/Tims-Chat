@@ -420,11 +420,12 @@ Decrease `@shields` on error and disable PeriodicalExecuters once `@shields` rea
 							@pe.getMessages.stop()
 							@freeTheFish()
 							console.error 'We got destroyed, but could free our friend the fish before he was killed as well. Have a nice life in freedom!'
-							if not $.wcfIsset('timsChatLoadingErrorDialog') then $('<div id="timsChatLoadingErrorDialog">' + WCF.Language.get('chat.general.error.onMessageLoad') + '</div>').appendTo('body')
-							$('#timsChatLoadingErrorDialog').wcfDialog({
-								'closable': false,
+							
+							$("""<div id="timsChatLoadingErrorDialog">#{WCF.Language.get('chat.general.error.onMessageLoad')}</div>""").appendTo('body') if not $.wcfIsset('timsChatLoadingErrorDialog')
+							$('#timsChatLoadingErrorDialog').wcfDialog
+								closable: false,
 								title: WCF.Language.get('wcf.global.error.title')
-							})
+								
 					complete: =>
 						@loading = false
 
