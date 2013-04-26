@@ -16,8 +16,8 @@
 							<div>
 								<div>
 									<hgroup class="containerHeadline">
-										<h1><a href="{link controller='Chat' object=$room}{/link}">{$room}</a><small> - {$room->topic|language}</small></h1>
-										<h2><strong>{#$users|count} Users</strong></h2>
+										<h1><a href="{link controller='Chat' object=$room}{/link}">{$room}</a> <span clss="badge">{#$users}</span></h1>
+										<h2>{$room->topic|language}</h2>
 									</hgroup>
 									
 									<ul class="dataList">
