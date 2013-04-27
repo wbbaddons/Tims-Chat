@@ -113,6 +113,7 @@
 					</dd>
 				</dl>
 			</fieldset>
+			<button type="submit" class="invisible" accesskey="s"></button>
 		</form>
 		
 		<div id="timsChatControls" class="marginTop">
