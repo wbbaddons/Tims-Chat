@@ -1,8 +1,6 @@
 {hascontent}
 	<header class="boxHeadline boxSubHeadline">
-		<hgroup>
-			<h1>{lang}chat.header.menu.chat{/lang}</h1>
-		</hgroup>
+		<h1>{lang}chat.header.menu.chat{/lang}</h1>
 	</header>
 	
 	<div class="container marginTop">

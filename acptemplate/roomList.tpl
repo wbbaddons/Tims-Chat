@@ -10,9 +10,7 @@
 </script>
 	
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}chat.acp.room.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}chat.acp.room.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
