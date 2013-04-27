@@ -45,7 +45,7 @@
 					
 					> {
 						.markContainer {
-							visibility: visible;
+							display: table-cell;
 						}
 					}
 				}
@@ -58,6 +58,7 @@
 			
 			.timsChatMessage {
 				display: table-row;
+				height: 20px;
 				.transition(opacity, .2s);
 				
 				&.unloaded {
@@ -67,6 +68,7 @@
 				&::before {
 					.icon;
 					.icon16;
+					padding: @wcfGapTiny;
 				}
 				
 				&:nth-child(even) {
@@ -74,13 +76,15 @@
 				}
 				
 				> {
-					.markContainer, time, .usernameContainer, .text {
+					time, .usernameContainer, .text, .markContainer {
 						display: table-cell;
 						vertical-align: top;
+						padding: @wcfGapTiny 0;
 					}
 					
 					.markContainer {
-						visibility: hidden;
+						display: none;
+						padding: 0;
 					}
 					
 					time {
@@ -95,7 +99,7 @@
 					.usernameContainer {
 						text-align: right;
 						min-width: 100px;
-						padding: 0px 5px;
+						padding-right: @wcfGapSmall;
 						white-space: nowrap;
 						font-weight: bold;
 					}
