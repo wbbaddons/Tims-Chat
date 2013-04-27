@@ -229,11 +229,12 @@ Resets autocompleter to default status, when input is `click`ed, as the position
 				
 Refreshes the room list when the associated button is `click`ed.
 
-				$('#timsChatRoomList button').click $.proxy @refreshRoomList, @
-				
+				$('#timsChatRoomList button').click =>
+					@refreshRoomList
+
 Clears the chat, by removing every single message.
 
-				$('#timsChatClear').click (event) ->
+				$('#timsChatClear').click (event) =>
 					event.preventDefault()
 					$('.timsChatMessage').remove()
 					@oldScrollTop = null
@@ -243,14 +244,13 @@ Handling toggling when a toggable button is `click`ed.
 
 				$('.timsChatToggle').click (event) ->
 					element = $ @
-					icon = element.find 'span.icon'
 					if element.data('status') is 1
 						element.data 'status', 0
-						icon.removeClass('icon-circle-blank').addClass('icon-off')
+						element.removeClass 'active'
 						element.attr 'title', element.data 'enableMessage'
 					else
 						element.data 'status', 1
-						icon.removeClass('icon-off').addClass('icon-circle-blank')
+						element.addClass 'active'
 						element.attr 'title', element.data 'disableMessage'
 						
 					$('#timsChatInput').focus()
@@ -265,8 +265,9 @@ Mark smilies as disabled.
 
 Toggle fullscreen mode.
 
-				$('#timsChatFullscreen').click (event) ->
-					if $(@).data 'status'
+				$('#timsChatFullscreen').click (event) =>
+					@oldScrollTop = null if $('#timsChatAutoscroll').data 'status'
+					if $('#timsChatFullscreen').data 'status'
 						$('html').addClass 'fullscreen'
 					else
 						$('html').removeClass 'fullscreen'
@@ -278,17 +279,16 @@ Toggle checkboxes
 					$('.timsChatMessageContainer').toggleClass 'markEnabled'
 					
 				$(document).on 'click', '.timsChatMessage :checkbox', (event) ->
-					if $(this).is ':checked'
-						$(this).parents('.timsChatMessage').addClass('jsMarked')
+					if $(@).is ':checked'
+						$(@).parents('.timsChatMessage').addClass('jsMarked')
 					else
-						$(this).parents('.timsChatMessage').removeClass('jsMarked')
+						$(@).parents('.timsChatMessage').removeClass('jsMarked')
 
 				
 Scroll down when autoscroll is being activated.
 
-				$('#timsChatAutoscroll').click (event) ->
-					$(@).removeClass 'active'
-					if $(@).data 'status'
+				$('#timsChatAutoscroll').click (event) =>
+					if $('#timsChatAutoscroll').data 'status'
 						$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height()
 						@oldScrollTop = $('.timsChatMessageContainer').scrollTop()
 
@@ -447,7 +447,6 @@ Disable autoscroll when the user scrolled up to read old messages
 					if $('#timsChatMessageContainer').scrollTop() < @oldScrollTop
 						if $('#timsChatAutoscroll').data('status') is 1
 							$('#timsChatAutoscroll').click()
-							$('#timsChatAutoscroll').addClass 'active'
 							$('#timsChatAutoscroll').parent().fadeOut('slow').fadeIn 'slow'
 
 Insert the new messages.

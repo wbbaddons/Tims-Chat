@@ -123,37 +123,13 @@
 			{/if}
 			<nav id="timsChatOptions">
 				<span class="invisible">{lang}chat.general.controls{/lang}</span>
-				<ul>
-					<li>
-						<a id="timsChatAutoscroll" accesskey="d" class="timsChatToggle jsTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1">
-							<span class="icon icon16 icon-circle-blank"></span><span>{lang}chat.general.scroll{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatFullscreen" accesskey="f" class="timsChatToggle jsTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
-							<span class="icon icon16 icon-off"></span><span>{lang}chat.general.fullscreen{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatNotify" accesskey="n" class="timsChatToggle jsTooltip" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0">
-							<span class="icon icon16 icon-off"></span><span>{lang}chat.general.notify{/lang}</span>
-						</a>
-					</li>
-					<li{if !MODULE_SMILEY} style="display: none;"{/if}>
-						<a id="timsChatSmilies" accesskey="e" class="timsChatToggle jsTooltip" title="{lang}wcf.global.button.{if ENABLE_SMILIES_DEFAULT_VALUE}dis{else}en{/if}able{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="{@ENABLE_SMILIES_DEFAULT_VALUE}">
-							<span class="icon icon16 icon-{if ENABLE_SMILIES_DEFAULT_VALUE}circle-blank{else}off{/if}"></span><span>{lang}chat.general.smilies{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatClear">
-							<span class="icon icon16 icon-remove"></span><span>{lang}chat.general.clear{/lang}</span>
-						</a>
-					</li>
-					<li>
-						<a id="timsChatMark" class="jsTooltip" title="{lang}chat.general.mark.description{/lang}">
-							<span class="icon icon16 icon-check"></span><span>{lang}chat.general.mark{/lang}</span>
-						</a>
-					</li>
+				<ul class="smallButtons buttonGroup">
+					<li><a id="timsChatAutoscroll" accesskey="d" class="button active timsChatToggle jsTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="1"><span class="icon icon16 icon-arrow-down"></span><span>{lang}chat.general.scroll{/lang}</span></a></li>{*
+					*}<li><a id="timsChatFullscreen" accesskey="f" class="button timsChatToggle jsTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0"><span class="icon icon16 icon-fullscreen"></span><span>{lang}chat.general.fullscreen{/lang}</span></a></li>{*
+					*}<li><a id="timsChatNotify" accesskey="n" class="button timsChatToggle jsTooltip" title="{lang}wcf.global.button.enable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0"><span class="icon icon16 icon-bell-alt"></span><span>{lang}chat.general.notify{/lang}</span></a></li>{*
+					*}<li{if !MODULE_SMILEY} style="display: none;"{/if}><a id="timsChatSmilies" accesskey="e" class="button{if ENABLE_SMILIES_DEFAULT_VALUE} active{/if} timsChatToggle jsTooltip" title="{lang}wcf.global.button.{if ENABLE_SMILIES_DEFAULT_VALUE}dis{else}en{/if}able{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="{@ENABLE_SMILIES_DEFAULT_VALUE}"><span class="icon icon16 icon-{if ENABLE_SMILIES_DEFAULT_VALUE}circle-blank{else}off{/if}"></span><span>{lang}chat.general.smilies{/lang}</span></a></li>{*
+					*}<li><a id="timsChatClear" class="button"><span class="icon icon16 icon-remove"></span><span>{lang}chat.general.clear{/lang}</span></a></li>{*
+					*}<li><a id="timsChatMark" class="button timsChatToggle jsTooltip" title="{lang}wcf.global.button.disable{/lang}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" data-status="0"><span class="icon icon16 icon-check"></span><span>{lang}chat.general.mark{/lang}</span></a></li>
 				</ul>
 			</nav>
 		</div>
