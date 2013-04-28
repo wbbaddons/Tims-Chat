@@ -136,13 +136,23 @@ class ChatPage extends \wcf\page\AbstractPage {
 			\chat\util\ChatUtil::writeUserData(array('lastSeen' => 0));
 		}
 		
-		$smileyCategories = \wcf\data\smiley\SmileyCache::getInstance()->getCategories();
-		
-		foreach ($smileyCategories as $category) {
-			if (!$category->disabled) $this->smileyCategories[] = $category;
+		// get default smilies
+		if (MODULE_SMILEY) {
+			$this->smileyCategories = \wcf\data\smiley\SmileyCache::getInstance()->getCategories();
+			foreach ($this->smileyCategories as $index => $category) {
+				$category->loadSmilies();
+				
+				// remove empty categories
+				if (!count($category) || $category->isDisabled) {
+					unset($this->smileyCategories[$index]);
+				}
+			}
+			
+			$firstCategory = reset($this->smileyCategories);
+			if ($firstCategory) {
+				$this->defaultSmilies = \wcf\data\smiley\SmileyCache::getInstance()->getCategorySmilies($firstCategory->categoryID ?: null);
+			}
 		}
-		
-		$this->defaultSmilies = \wcf\data\smiley\SmileyCache::getInstance()->getCategorySmilies();
 	}
 	
 	/**
