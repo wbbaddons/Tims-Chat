@@ -29,9 +29,7 @@
 					window.chat = new be.bastelstu.Chat(
 						{
 							reloadTime: {@CHAT_RELOADTIME},
-							unloadURL: '{link application="chat" controller="Leave"}{/link}',
-							messageURL: '{link application="chat" controller="NewMessages"}{/link}',
-							socketIOPath: '{@CHAT_SOCKET_IO_PATH|encodeJS}'
+							messageURL: '{link application="chat" controller="NewMessages"}{/link}'
 						}, 
 						new WCF.Template('{ldelim}$title} - {"chat.general.title"|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'),
 						new WCF.Template('{@$messageTemplate|encodeJS}'),

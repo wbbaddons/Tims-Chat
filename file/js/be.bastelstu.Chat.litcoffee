@@ -560,26 +560,26 @@ Remove all users that left the chat.
 Initialize socket.io to enable nodePush.
 
 			initPush: ->
-				if window.io?
-					console.log 'Initializing nodePush'
-					@socket = io.connect @config.socketIOPath
-					
-					@socket.on 'connect', =>
-						console.log 'Connected to nodePush'
+				be.bastelstu.wcf.nodePush.onConnect =>
+						console.log 'Disabling periodic loading'
 
 Disable `@pe.getMessages` once we are connected.
 
 						@pe.getMessages.stop()
 						
-					@socket.on 'disconnect', =>
-						console.log 'Lost connection to nodePush'
+				be.bastelstu.wcf.nodePush.onDisconnect =>
+						console.log 'Enabling periodic loading'
 
 Reenable `@pe.getMessages` once we are disconnected.
 
 						@pe.getMessages = new WCF.PeriodicalExecuter $.proxy(@getMessages, @), @config.reloadTime * 1e3
 						
-					@socket.on 'newMessage', =>
+				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.newMessage', =>
 						@getMessages()
+				
+				be.bastelstu.wcf.nodePush.onMessage 'tick60', =>
+						@getMessages()
+				
 
 **insertText(text, options)**  
 Inserts the given `text` into the input. If `options.append` is truthy the given `text` will be appended and replaces the existing text otherwise. If `options.submit` is truthy the message will be submitted afterwards.

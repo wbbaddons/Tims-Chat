@@ -96,19 +96,6 @@ final class ChatUtil {
 	}
 	
 	/**
-	 * Checks whether nodePush is running.
-	 * 
-	 * @return	boolean
-	 */
-	public static function nodePushRunning() {
-		if (!CHAT_SOCKET_IO_PATH) return false;
-		if (!file_exists(CHAT_DIR.'acp/be.bastelstu.chat.nodePush/data.sock')) return false;
-		if (!is_writable(CHAT_DIR.'acp/be.bastelstu.chat.nodePush/data.sock')) return false;
-		
-		return true;
-	}
-	
-	/**
 	 * Reads user data.
 	 *
 	 * @param	string			$field

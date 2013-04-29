@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-namespace be\bastelstu\wcf\chat;
+namespace be\bastelstu\chat;
 /**
  * Builds the Chat
  *
@@ -37,12 +37,12 @@ Building JavaScript
 EOT;
 foreach (glob('file/js/*.{litcoffee,coffee}', GLOB_BRACE) as $coffeeFile) {
 	echo $coffeeFile."\n";
-	passthru('coffee -cb '.escapeshellarg($coffeeFile), $code);
+	passthru('coffee -c '.escapeshellarg($coffeeFile), $code);
 	if ($code != 0) exit($code);
 }
 foreach (glob('file/acp/be.bastelstu.chat.nodePush/lib/*.{litcoffee,coffee}', GLOB_BRACE) as $coffeeFile) {
 	echo $coffeeFile."\n";
-	passthru('coffee -cb '.escapeshellarg($coffeeFile), $code);
+	passthru('coffee -c '.escapeshellarg($coffeeFile), $code);
 	if ($code != 0) exit($code);
 }
 echo <<<EOT
@@ -74,7 +74,7 @@ Building file.tar
 -----------------
 
 EOT;
-	passthru('tar cvf ../file.tar * --exclude=*.coffee --exclude=*.scss --exclude=.sass-cache --exclude=node_modules', $code);
+	passthru('tar cvf ../file.tar * --exclude=*coffee --exclude=*.scss --exclude=.sass-cache --exclude=node_modules', $code);
 	if ($code != 0) exit($code);
 echo <<<EOT
 

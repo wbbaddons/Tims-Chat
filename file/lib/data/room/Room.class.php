@@ -167,7 +167,7 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	 * @return	\wcf\data\user\UserList
 	 */
 	public static function getDeadUsers() {
-		if (\chat\util\ChatUtil::nodePushRunning()) {
+		if (\wcf\system\nodePush\NodePushHandler::getInstance()->isRunning()) {
 			$time = TIME_NOW - 120;
 		}
 		else {

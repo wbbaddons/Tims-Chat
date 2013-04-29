@@ -20,13 +20,7 @@ class MessageEditor extends \wcf\data\DatabaseObjectEditor {
 	 * Notify the Push-Server.
 	 */
 	public static function create(array $parameters = array()) {
-		try {
-			if (\chat\util\ChatUtil::nodePushRunning()) {
-				$sock = stream_socket_client('unix://'.CHAT_DIR.'acp/be.bastelstu.chat.nodePush/data.sock', $errno, $errstr, 1);
-				fclose($sock);
-			}
-		}
-		catch (\Exception $e) { }
+		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.newMessage');
 		
 		return parent::create($parameters);
 	}
