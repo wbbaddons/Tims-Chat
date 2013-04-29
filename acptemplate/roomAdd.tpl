@@ -26,7 +26,7 @@
 		<nav>
 			<ul>
 				{content}
-					<li><a href="{link application='chat' controller='RoomList'}{/link}" title="{lang}chat.acp.menu.link.room.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}chat.acp.menu.link.room.list{/lang}</span></a></li>
+					<li><a href="{link application='chat' controller='RoomList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}chat.acp.menu.link.room.list{/lang}</span></a></li>
 					{event name='contentNavigationButtonsTop'}
 				{/content}
 			</ul>

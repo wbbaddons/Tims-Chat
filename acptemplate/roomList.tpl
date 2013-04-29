@@ -19,7 +19,7 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.chat.canAddRoom')}
-						<li><a href="{link application='chat' controller='RoomAdd'}{/link}" title="{lang}chat.acp.room.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}chat.acp.room.add{/lang}</span></a></li>
+						<li><a href="{link application='chat' controller='RoomAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}chat.acp.room.add{/lang}</span></a></li>
 					{/if}
 					{event name='contentNavigationButtonsTop'}
 				{/content}
