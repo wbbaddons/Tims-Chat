@@ -122,7 +122,7 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 		
 		// reset values
 		$this->topic = $this->title = '';
-		I18nHandler::getInstance()->disableAssignValueVariables();
+		I18nHandler::getInstance()->reset();
 		
 		// show success
 		WCF::getTPL()->assign(array(
