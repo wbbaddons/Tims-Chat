@@ -12,5 +12,5 @@ before_script:
   - sed -i 's/<rule ref="WCF.Namespaces.ClassMustBeImported" \/>//' WCF/CodeSniff/WCF/ruleset.xml
   - sed -i 's/<rule ref="WCF.Namespaces.UseDeclaration" \/>//' WCF/CodeSniff/WCF/ruleset.xml
 script:
-  - find . -type f -name '*.php' |xargs -I file php -l file
+  - find file -type f -name '*.php' |xargs -I file php -l file
   - phpcs -p --extensions=php --standard="`pwd`/WCF/CodeSniff/WCF" file
