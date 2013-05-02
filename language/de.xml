@@ -46,10 +46,6 @@
 		<item name="wcf.acp.option.chat_max_length"><![CDATA[Maximale Textlänge]]></item>
 		<item name="wcf.acp.option.chat_max_length.description"><![CDATA[Gibt die maximale Länge einer Chatnachricht an.]]></item>
 		
-		<item name="wcf.acp.option.chat_socket_io_path"><![CDATA[Push-Server-Adresse (nodePush)]]></item>
-		<item name="wcf.acp.option.chat_socket_io_path.description"><![CDATA[Der Push-Server dient dazu das Chat-Backend zu entlasten.
-Hinweis: Setzen Sie diese Einstellung nur, wenn Sie wissen, was sie bewirkt. Die Adresse wird ohne abschließenden Slash (/) angegeben.]]></item>
-		
 		<item name="wcf.acp.option.category.chat.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.option.chat_log_active"><![CDATA[Protokoll aktivieren]]></item>
 		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Speicherzeit]]></item>
