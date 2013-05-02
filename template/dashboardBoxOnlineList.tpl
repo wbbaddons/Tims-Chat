@@ -19,7 +19,7 @@
 									</hgroup>
 									
 									<ul class="dataList">
-										{foreach from=$room->getUsers() item='user'}
+										{foreach from=$users item='user'}
 											<li><a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{$user->userID}">{$user}</a></li>
 										{/foreach}
 									</ul>
