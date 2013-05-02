@@ -208,6 +208,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.join', $result, WCF::getUser()->userID);
 		
 		// break if not using ajax
+		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.join');
 		if ($this->useTemplate) exit;
 		@header('Content-type: application/json');
 		

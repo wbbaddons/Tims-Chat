@@ -24,6 +24,7 @@ class OnlineListDashboardBox extends \wcf\system\dashboard\box\AbstractContentDa
 	public function init(\wcf\data\dashboard\box\DashboardBox $box, \wcf\page\IPage $page) {
 		parent::init($box, $page);
 		
+		if (!CHAT_ACTIVE) return;
 		if (!\wcf\system\WCF::getUser()->userID) return;
 		
 		$this->rooms = data\room\Room::getCache();

@@ -206,5 +206,34 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		
 		// set current room to null
 		ChatUtil::writeUserData(array('roomID' => null), $this->parameters['user']);
+		
+		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.join');
+	}
+	
+	/**
+	 * Validates permissions.
+	 */
+	public function validateGetDashboardRoomList() {
+		if (!CHAT_ACTIVE) throw new \wcf\system\exception\IllegalLinkException();
+	}
+	
+	/**
+	 * Returns dashboard roomlist.
+	 */
+	public function getDashboardRoomList() {
+		$rooms = Room::getCache();
+		
+		foreach ($rooms as $key => $room) {
+			if (!$room->canEnter()) unset($rooms[$key]);
+		}
+		
+		\wcf\system\WCF::getTPL()->assign(array(
+			'rooms' => $rooms,
+			'onlyList' => true
+		));
+		
+		return array(
+			'template' => \wcf\system\WCF::getTPL()->fetch('dashboardBoxOnlineList', 'chat')
+		);
 	}
 }
