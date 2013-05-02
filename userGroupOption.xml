@@ -18,30 +18,31 @@
 				<categoryname>user.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>0</admindefaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
 			</option>
 			<option name="user.chat.canWrite">
 				<categoryname>user.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>0</admindefaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
 			</option>
 			<option name="user.chat.canTempRoom">
 				<categoryname>user.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>0</admindefaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
 			</option>
 			<option name="user.chat.allowedBBCodes">
 				<categoryname>user.chat</categoryname>
 				<optiontype>BBCodeSelect</optiontype>
 				<defaultvalue>none</defaultvalue>
+				<admindefaultvalue>all</admindefaultvalue>
 			</option>
 			<option name="mod.chat.canAlwaysEnter">
 				<categoryname>mod.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>0</admindefaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
 			</option>
 			<option name="mod.chat.canAlwaysWrite">
 				<categoryname>mod.chat</categoryname>
