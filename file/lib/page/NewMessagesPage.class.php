@@ -65,13 +65,8 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 		$this->readMessages();
 		$this->users = $this->room->getUsers();
 		
-		$deadUsers = data\room\Room::getDeadUsers();
-		foreach ($deadUsers as $deadUser) {
-			$roomAction = new data\room\RoomAction(array(), 'leave', array(
-				'user' => $deadUser
-			));
-			$roomAction->executeAction();
-		}
+		$roomAction = new data\room\RoomAction(array(), 'removeDeadUsers');
+		$roomAction->executeAction();
 	}
 	
 	/**
