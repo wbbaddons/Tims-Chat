@@ -211,6 +211,20 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	}
 	
 	/**
+	 * Forces dead users to leave the chat.
+	 */
+	public function removeDeadUsers() {
+		$deadUsers = Room::getDeadUsers();
+		
+		foreach ($deadUsers as $deadUser) {
+			$roomAction = new self(array(), 'leave', array(
+				'user' => $deadUser
+			));
+			$roomAction->executeAction();
+		}
+	}
+	
+	/**
 	 * Validates permissions.
 	 */
 	public function validateGetDashboardRoomList() {
