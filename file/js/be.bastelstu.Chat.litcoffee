@@ -145,7 +145,7 @@ Mark chat as `@isActive` and reset `document.title` to default title, thus remov
 
 				$(window).focus =>
 					document.title = @titleTemplate.fetch
-						title: $('#timsChatRoomList .activeMenuItem a').text()
+						title: $('#timsChatRoomList .active a').text()
 					@newMessageCount = 0
 					@isActive = true
 				
@@ -164,14 +164,6 @@ Inserts a smiley into the input.
 
 				$('#smilies').on 'click', 'img', (event) =>
 					@insertText ' ' + $(event.target).attr('alt') + ' '
-				
-
-Switches the active sidebar tab.
-
-				$('.timsChatSidebarTabs li').click (event) =>
-					event.preventDefault()
-					@toggleSidebarContents $ event.target
-				
 				
 Calls the submit handler (`@submit`) when the `#timsChatForm` is `submit`ted.
 
@@ -230,7 +222,7 @@ Resets autocompleter to default status, when input is `click`ed, as the position
 Refreshes the room list when the associated button is `click`ed.
 
 				$('#timsChatRoomList button').click =>
-					@refreshRoomList
+					@refreshRoomList()
 
 Clears the chat, by removing every single message.
 
@@ -320,8 +312,8 @@ Update URL to target URL by using `window.history.replaceState()`.
 						target.parent().removeClass 'loading'
 						
 						# Mark as active
-						$('.activeMenuItem .timsChatRoom').parent().removeClass 'activeMenuItem'
-						target.parent().addClass 'activeMenuItem'
+						$('.active .timsChatRoom').parent().removeClass 'active'
+						target.parent().addClass 'active'
 						
 Update topic, hiding and showing the topic container when necessary.
 
@@ -357,7 +349,7 @@ Reload the whole page when an error occurs. The users thus sees the error messag
 Show loading icon and prevent switching the room in parallel.
 
 					beforeSend: =>
-						return false if target.parent().hasClass('loading') or target.parent().hasClass 'activeMenuItem'
+						return false if target.parent().hasClass('loading') or target.parent().hasClass 'active'
 						
 						@loading = true
 						target.parent().addClass 'loading'
@@ -512,7 +504,7 @@ Move the user, to prevent rebuilding the entire user list.
 						else
 							element.removeClass 'suspended'
 						
-						$('#timsChatUserList').append element
+						$('#timsChatUserList > ul').append element
 
 Build HTML of new user and append it.
 
@@ -542,7 +534,7 @@ Build HTML of new user and append it.
 						@events.userMenu.fire user, menu
 						li.append menu
 						
-						li.appendTo $ '#timsChatUserList'
+						li.appendTo $ '#timsChatUserList > ul'
 					
 					foundUsers[id] = true
 
@@ -607,7 +599,7 @@ Sends out notifications for the given `message`. The number of unread messages w
 				@newMessageCount++
 				
 				document.title = '(' + @newMessageCount + ') ' + @titleTemplate.fetch
-					 title: $('#timsChatRoomList .activeMenuItem a').text()
+					 title: $('#timsChatRoomList .active a').text()
 				
 				# Desktop Notifications
 				title = WCF.Language.get 'chat.general.notify.title'
@@ -645,7 +637,7 @@ Updates the room list.
 						
 						for room in data.returnValues
 							li = $ '<li></li>'
-							li.addClass 'activeMenuItem' if room.active
+							li.addClass 'active' if room.active
 							$("""<a href="#{room.link}">#{room.title}</a>""").addClass('timsChatRoom').appendTo li
 							$('#timsChatRoomList ul').append li
 
@@ -692,26 +684,11 @@ Submits the message.
 						return true if not (data?.returnValues?.errorType?) and not (data?.message?)
 						
 						$('#timsChatInputContainer').addClass('formError').find('.innerError').show().html (data?.returnValues?.errorType) ? data.message
+						setTimeout -> 
+							$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide().html("")
+						, 3000
+						
 						false
-
-**toggleSidebarContents(target)**  
-Switches the active sidebar tab to the one belonging to `target`.
-
-			toggleSidebarContents: (target) ->
-				return if target.parents('li').hasClass 'active'
-				
-				if target.parents('li').attr('id') is 'toggleUsers'
-					$('#toggleUsers').addClass 'active'
-					$('#toggleRooms').removeClass 'active'
-					
-					$('#timsChatRoomList').hide()
-					$('#timsChatUserList').show()
-				else if target.parents('li').attr('id') is 'toggleRooms'
-					$('#toggleRooms').addClass 'active'
-					$('#toggleUsers').removeClass 'active'
-					
-					$('#timsChatUserList').hide()
-					$('#timsChatRoomList').show()
 
 **unload()**  
 Sends leave notification to the server.

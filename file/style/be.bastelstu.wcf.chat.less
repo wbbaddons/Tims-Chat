@@ -7,6 +7,11 @@
  * @package	be.bastelstu.wcf.chat
  */
 #tplChat {
+	#main > div {
+		overflow: hidden;
+		position: relative;
+	}
+	
 	#content {
 		text-align: left;
 		
@@ -21,6 +26,7 @@
 				overflow: hidden;
 				border: 0px;
 				padding: 0px;
+				margin: 0px;
 			}
 		}
 	}
@@ -113,219 +119,108 @@
 	}
 	
 	.sidebar {
-		padding-top: 0;
+		overflow: auto;
+		position: absolute !important;
+		right: 0;
+		height: 100%;
+		
+		padding-top: 0px !important;
+		
+		> div {
+			> .chatTabMenuContainer {
+				padding: 14px 0 21px;
+				
+				> .chatSidebarMenu {
+					background: @wcfContentBackgroundColor;
+					margin: -14px 0 0;
+				}
+			}
+		}
 		
 		#sidebarContent {
-			padding-top: 0px;
-			overflow: hidden;
+			fieldset {
+				padding-top: 0px;
+				padding-bottom: 0px;
+			}
 			
-			.timsChatSidebarTabs {
-				height: 34px;
-				z-index: 131;
-				position: relative;
-				.boxShadowNative(0 0 5px 0 rgba(0, 0, 0, 0.1));
-				
-				.left & {
-					margin-right: 1px;
-				}
-				
-				.right & {
-					margin-left: 1px;
-				}
-				
+			nav {
 				ul {
-					height: 33px;
-					
-					li {
-						width: 50%;
-						float: left;
-						text-align: center;
-						
-						a {
-							color: fade(@wcfColor, 80%);
-							.textShadow(@wcfContentBackgroundColor);
-							height: 22px;
-							padding: 9px 0 0;
-							
-							.transition(border-radius, .2s);
-							.transition(background-color, .2s);
-							.transition(font-size, .2s);
-							
-							
-							.collapsed & {
-								border: none !important;
-							}
+					> li {
+						> a {
+							padding: @wcfGapTiny @wcfGapMedium @wcfGapTiny @wcfGapLarge;
+							height: 24px; // height of avatar image
 						}
 						
-						&.active a {
-							background-color: @wcfContentBackgroundColor;
-							border-bottom: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
-							.borderRadius(0, 7px);
-							color: @wcfColor;
-							font-size: 130%;
-							font-weight: bold;
+						> a:before {
+							display: inline-block;
+							content: "";
+							height: 100%;
+							vertical-align: middle;
 						}
 						
-						&:first-child.active a {
-							.borderRadius(0, 0, 7px, 0);
-							border-right: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
-							
-							.right & {
-								margin-left: -1px;
-							}
-						}
-						
-						&:last-child.active a {
-							.borderRadius(0, 0, 0, 7px);
-							border-left: 1px solid darken(@wcfSidebarBackgroundColor, 6%);
-							
-							.left & {
-								margin-right: -1px;
-							}
-						}
-						
-						.badge {
-							.badgeBG(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.2));
-							.badgeShadow(@wcfSidebarBackgroundColor + rgba(0, 0, 0, 0.2));
-							position: relative;
-							top: -1px;
-							color: #fff;
-						}
-						
-						&.active .badge {
-							font-size: 65% !important;
-							.badgeBG(@wcfContentBackgroundColor);
-							.badgeShadow(@wcfContentBackgroundColor);
+						> &.active {
+							margin-top: @wcfGapSmall;
 						}
 					}
 				}
 			}
 			
-			#sidebarContainer {
-				overflow-y: auto;
-				height: 420px;
-				width: 100%;
-				border-top: 1px solid darken(@wcfSidebarBackgroundColor, 8%);
-				z-index: 131;
-				position: relative;
-				
-				a {
-					outline: none;
-					overflow: hidden;
-				}
-				
-				ul:not(.dropdownMenu) {
-					> li {
-						margin-top: @wcfGapSmall;
-						background-color: transparent !important;
-						box-shadow: none !important;
-						
-						> a {
-							background-color: fade(@wcfContentBackgroundColor, 33.33%);
-							.textShadow(fade(@wcfContentBackgroundColor, 33.33%));
-							.transition(background-color, .2s);
-						}
-						
-						&.activeMenuItem, &.dropdownOpen, &:hover {
-							> a {
-								background-color: @wcfContentBackgroundColor !important;
-								.boxShadowNative(0 0 5px rgba(0, 0, 0, 0.1));
-							}
-						}
-					}
-				}
-				
-				#timsChatRoomList {
+			ul:not(.dropdownMenu) {
+				> li {
 					margin-top: @wcfGapSmall;
-					
-					> div {
-						> div {
-							text-align: center;
-							margin-top: @wcfGapMedium;
-						}
-					}
 				}
-				
-				#timsChatUserList {
-					.timsChatUser {
-						&.away {
-							opacity: .5;
-						}
+			}
+			
+			#timsChatUserList {
+				.timsChatUser {
+					> a {
+						background: @wcfContentBackgroundColor;
 						
-						&.suspended a {
-							text-decoration: line-through;
+						img {
+							margin-right: @wcfGapSmall;
 						}
 					}
+					
+					&.away {
+						opacity: .5;
+					}
+					
+					&.suspended a {
+						text-decoration: line-through;
+					}
 				}
+			}
+		}
+	}
+	
+	#timsChatRoomList {
+		> div {
+			> div {
+				margin-top: @wcfGapMedium;
+				text-align: center;
+			}
+		}
+	}
+	
+	#smilies {
+		li {
+			.transition(opacity, .2s);
+		}
+		
+		&.disabled {
+			li {
+				opacity: .5;
 			}
 		}
 		
-		ul {
-			li {
-				a {
-					color: @wcfLinkColor;
-					display: block;
-					padding: 5px 25px 7px 35px;
-				}
-			}
-		}
+		margin-top: @wcfGapMedium;
 	}
 	
-	#timsChatControls {
-		#smilies {
-			li {
-				.transition(opacity, .2s);
-			}
-			
-			&.disabled {
-				li {
-					opacity: .5;
-				}
-			}
-		}
+	@media only screen and (min-width: 801px) {
+		
 	}
 	
-	/*@media only screen and (min-width: 641px) {
-		#timsChatOptions {
-			top: -1px;
-			right: 1px;
-			margin-left: 0;
-			position: relative;
-			width: 100%;
-			
-			> ul {
-				.smallButtons;
-				margin-right: -1px;
-				text-align: right;
-				
-				> li {
-					> a {
-						.button;
-						.borderRadius(0);
-						margin: 0;
-						padding-right: 7px;
-					}
-					
-					display: inline-block;
-					margin-left: -5px;
-				}
-				
-				> li:first-child {
-					> a {
-						border-bottom-left-radius: 14px;
-					}
-				}
-				
-				> li:last-child {
-					> a {
-						border-bottom-right-radius: 14px;
-					}
-				}
-			}
-		}
-	}
-	
-	@media only screen and (max-width: 640px) {
+	@media only screen and (max-width: 800px) {
 		#timsChatMessageContainer {
 			overflow: auto;
 			
@@ -339,62 +234,18 @@
 				}
 			}
 		}
-		
-		#timsChatOptions {
-			margin-top: 5px;
-			position: relative;
-			
-			&:hover > ul {
-				display: block;
-			}
-			
-			> .invisible {
-				.button;
-				margin-left: @wcfGapSmall;
-				padding-left: 28px;
-				
-				&:before {
-					content: "\f03a";
-					font-family: FontAwesome;
-					font-size: 14px;
-					left: 9px;
-					position: absolute;
-					top: 6px;
-				}
-			}
-			
-			> ul {
-				.dropdown .dropdownMenu;
-				font-size: 120%;
-				left: @wcfGapSmall;
-				
-				> li.active {
-					> ul.invisible {
-						display: block;
-						font-size: 85%;
-						padding-left: 14px;
-					}
-					
-					> a {
-						position: relative;
-						
-						&:after {
-							content: "\f00c";
-							font-family: FontAwesome;
-							font-size: 14px;
-							position: absolute;
-							right: 7px;
-						}
-					}
-				}
-			}
+	}
+	
+	#timsChatOptions {
+		> ul {
+			text-align: right;
 		}
-	}*/
+	}
 	
 	#toggleRooms .ajaxLoad {
 		position: absolute;
-		right: 5px;
-		top: 3px;
+		right: 10px;
+		top: 7px;
 		display: none;
 	}
 	
@@ -406,18 +257,6 @@
 		background-position: right center;
 		background-repeat: no-repeat;
 		min-height: 150px;
-	}
-	
-	.badgeBG(@backgroundColor) when (lightness(@backgroundColor) < 50%) {
-		background-color: lighten(@backgroundColor, lightness(@backgroundColor) / 2);
-	}
-	
-	.badgeBG(@backgroundColor) when (lightness(@backgroundColor) < 20%) {
-		background-color: lighten(@backgroundColor, 20%);
-	}
-	
-	.badgeBG(@backgroundColor) when (lightness(@backgroundColor) >= 50%) {
-		background-color: darken(@backgroundColor, lightness(@backgroundColor) / 2);
 	}
 }
 
@@ -457,11 +296,11 @@ html.fullscreen {
 				-ms-flex: 1 0 auto;
 				flex: 1 0 auto;
 			}
-
-			#timsChatControls {
-				margin-bottom: 15px;
-			}
 		}
+	}
+	
+	#timsChatOptions {
+		margin-bottom: @wcfGapMedium;
 	}
 	
 	#tplChat, #tplChatLog {
