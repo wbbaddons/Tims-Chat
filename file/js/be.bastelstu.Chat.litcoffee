@@ -561,6 +561,7 @@ Disable `@pe.getMessages` once we are connected.
 						
 				be.bastelstu.wcf.nodePush.onDisconnect =>
 						console.log 'Enabling periodic loading'
+						@getMessages()
 
 Reenable `@pe.getMessages` once we are disconnected.
 
