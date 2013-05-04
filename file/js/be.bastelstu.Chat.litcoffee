@@ -569,7 +569,7 @@ Reenable `@pe.getMessages` once we are disconnected.
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.newMessage', =>
 						@getMessages()
 				
-				be.bastelstu.wcf.nodePush.onMessage 'tick60', =>
+				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.wcf.nodePush.tick60', =>
 						@getMessages()
 				
 
