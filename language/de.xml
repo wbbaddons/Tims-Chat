@@ -9,7 +9,7 @@
 		<item name="chat.acp.room.topic"><![CDATA[Thema]]></item>
 		
 		<item name="chat.acp.room.noneAvailable"><![CDATA[Es wurden noch keine Chaträume angelegt.]]></item>
-		<item name="chat.acp.room.delete.sure"><![CDATA[Möchten Sie den Raum „{$chatRoom}“ wirklich löschen?]]></item>
+		<item name="chat.acp.room.delete.sure"><![CDATA[Wollen Sie den Raum „{$chatRoom}“ wirklich löschen?]]></item>
 	</category>
 	
 	<category name="chat.acp.menu">
