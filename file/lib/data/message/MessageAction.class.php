@@ -26,6 +26,8 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	 * @return	integer			Number of deleted messages.
 	 */
 	public function prune() {
+		if (CHAT_LOG_ARCHIVETIME == -1) return 0;
+		
 		$sql = "SELECT
 				".call_user_func(array($this->className, 'getDatabaseTableIndexName'))."
 			FROM
