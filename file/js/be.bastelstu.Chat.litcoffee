@@ -546,7 +546,7 @@ Remove all users that left the chat.
 						$(@).remove();
 						
 				
-				$('#toggleUsers .badge').text users.length
+				$('#toggleUsers .badge').text $('.timsChatUser').length
 
 **initPush()**  
 Initialize socket.io to enable nodePush.
