@@ -17,5 +17,12 @@
 			<points>0</points>
 			<classname>wcf\system\user\activity\point\DefaultUserActivityPointObjectProcessor</classname><!-- We are unable to recalc those points -->
 		</type>
+		<type>
+			<name>be.bastelstu.chat.ChatPage</name>
+			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
+			<controller>chat\page\ChatPage</controller>
+			<classname>chat\system\user\online\location\ChatLocation</classname>
+			<languagevariable>chat.user.usersOnline.location.ChatPage</languagevariable>
+		</type>
 	</import>
 </data>

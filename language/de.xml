@@ -51,7 +51,15 @@
 		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Speicherzeit]]></item>
 		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Gibt die Zeit in Minuten an, die eine Nachricht im Protokoll gespeichert bleibt.]]></item>
 	</category>
-		
+	
+	<category name="chat.error">
+		<item name="chat.error"><![CDATA[Fehler]]></item>
+		<item name="chat.error.notFound"><![CDATA[Der Befehl wurde nicht gefunden.]]></item>
+		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer „{$exception->getUsername()}“ wurde nicht gefunden.]]></item>
+		<item name="chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
+		<item name="chat.error.exception"><![CDATA[Es gab ein Problem bei der Ausführung dieses Befehls. Bitte wenden Sie sich an einen Administrator.]]></item>
+	</category>
+	
 	<category name="chat.general">
 		<item name="chat.general.title"><![CDATA[Chat]]></item>
 		<item name="chat.general.protocol"><![CDATA[Protokoll]]></item>
@@ -85,12 +93,8 @@
 		<item name="chat.general.information.chatUpdate"><![CDATA[Der Chat wurde aktualisiert. Bitte lade die Seite neu, da es sonst zu Fehlern kommen kann.]]></item>
 	</category>
 	
-	<category name="chat.error">
-		<item name="chat.error"><![CDATA[Fehler]]></item>
-		<item name="chat.error.notFound"><![CDATA[Der Befehl wurde nicht gefunden.]]></item>
-		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer „{$exception->getUsername()}“ wurde nicht gefunden.]]></item>
-		<item name="chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
-		<item name="chat.error.exception"><![CDATA[Es gab ein Problem bei der Ausführung dieses Befehls. Bitte wenden Sie sich an einen Administrator.]]></item>
+	<category name="chat.header">
+		<item name="chat.header.menu.chat"><![CDATA[Chat]]></item>
 	</category>
 	
 	<category name="chat.message">
@@ -118,8 +122,8 @@
 		<item name="chat.room.topic1"><![CDATA[Vielen Dank, dass Sie sich für Tims Chat entschieden haben. Bitte besuchen Sie das ACP um diesen Text anzupassen.]]></item>
 		<item name="chat.room.titleTemp"><![CDATA[Raum_{$roomID}]]></item>
 	</category>
-		
-	<category name="chat.header">
-		<item name="chat.header.menu.chat"><![CDATA[Chat]]></item>
+	
+	<category name="chat.user">
+		<item name="chat.user.usersOnline.location.ChatPage"><![CDATA[<a href="{link controller='Chat' application='chat' object=$room}{/link}">Chatraum „{$room}“</a>]]></item>
 	</category>
 </language>

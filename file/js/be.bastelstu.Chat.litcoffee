@@ -58,9 +58,10 @@ Attributes needed for notificationss
 			
 Attributes needed for autocompleter
 
-			autocompleteOffset: 0
-			autocompleteValue: null
-			autocompleteCaret: 0
+			autocomplete:
+				offset: 0
+				value: null
+				caret: 0
 			
 Attributes needed for automated scrolling
 			
@@ -117,7 +118,7 @@ Finished!
 **autocomplete(firstChars, offset = @autocompleteOffset)**  
 Autocompletes a username based on the `firstChars` given and the given `offset`. `offset` allows to skip users.
 
-			autocomplete: (firstChars, offset = @autocompleteOffset) ->
+			autocompleter: (firstChars, offset = @autocomplete.offset) ->
 				
 Create an array of active chatters with usernames beginning with `firstChars`
 
@@ -171,18 +172,19 @@ Calls the submit handler (`@submit`) when the `#timsChatForm` is `submit`ted.
 Autocompletes a username when TAB is pressed.
 
 				$('#timsChatInput').keydown (event) =>
-					if event.keyCode is 9
+					if event.keyCode is $.ui.keyCode.TAB
+						input = $(event.currentTarget)
 						event.preventDefault()
 	
 Calculate `firstChars` to autocomplete, based on the caret position.
 
-						@autocompleteValue = $('#timsChatInput').val() if @autocompleteValue is null
-						@autocompleteCaret = $('#timsChatInput').getCaret() if @autocompleteCaret is null
+						@autocomplete.value ?= input.val()
+						@autocomplete.caret ?= input.getCaret()
 						
-						beforeCaret = @autocompleteValue.substring 0, @autocompleteCaret
+						beforeCaret = @autocomplete.value.substring 0, @autocomplete.caret
 						lastSpace = beforeCaret.lastIndexOf ' '
-						beforeComplete = @autocompleteValue.substring 0, lastSpace + 1
-						toComplete = @autocompleteValue.substring lastSpace + 1
+						beforeComplete = @autocomplete.value.substring 0, lastSpace + 1
+						toComplete = @autocomplete.value.substring lastSpace + 1
 						nextSpace = toComplete.indexOf ' '
 						if nextSpace is -1
 							afterComplete = '';
@@ -195,25 +197,25 @@ Calculate `firstChars` to autocomplete, based on the caret position.
 						
 Insert completed value into `#timsChatInput`
 						
-						name = @autocomplete toComplete
+						name = @autocompleter toComplete
 						
-						$('#timsChatInput').val "#{beforeComplete}#{name} #{afterComplete}"
-						$('#timsChatInput').setCaret (beforeComplete + name).length + 1
+						input.val "#{beforeComplete}#{name} #{afterComplete}"
+						input.setCaret (beforeComplete + name).length + 1
 						@autocompleteOffset++
 						
 Resets autocompleter to default status, when a key is pressed that is not TAB.
 
 					else
-						@autocompleteOffset = 0
-						@autocompleteValue = null
-						@autocompleteCaret = null
+						@autocomplete.offset = 0
+						@autocomplete.value = null
+						@autocomplete.caret = null
 				
 Resets autocompleter to default status, when input is `click`ed, as the position of the caret may have changed.
 
 				$('#timsChatInput').click =>
-					@autocompleteOffset = 0
-					@autocompleteValue = null
-					@autocompleteCaret = null
+					@autocomplete.offset = 0
+					@autocomplete.value = null
+					@autocomplete.caret = null
 				
 Refreshes the room list when the associated button is `click`ed.
 
@@ -526,7 +528,7 @@ Build HTML of new user and append it.
 						menu.append $ "<li><a>#{WCF.Language.get('chat.general.kick')}</a></li>"
 						menu.append $ "<li><a>#{WCF.Language.get('chat.general.ban')}</a></li>"
 						# TODO: SID and co
-						menu.append $ """<li><a href="index.php/User/#{user.userID}-#{encodeURI(user.username)}/">#{WCF.Language.get('chat.general.profile')}</a></li>"""
+						menu.append $ """<li><a href="#{user.link}">#{WCF.Language.get('chat.general.profile')}</a></li>"""
 						@events.userMenu.fire user, menu
 						li.append menu
 						

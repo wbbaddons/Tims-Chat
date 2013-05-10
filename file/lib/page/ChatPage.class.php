@@ -80,6 +80,11 @@ class ChatPage extends \wcf\page\AbstractPage {
 	public $userData = array();
 	
 	/**
+	 * @see wcf\page\AbstractPage::$enableTracking
+	 */
+	public $enableTracking = true;
+	
+	/**
 	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
@@ -220,5 +225,19 @@ class ChatPage extends \wcf\page\AbstractPage {
 			'messages' => $messages
 		));
 		exit;
+	}
+	
+	/**
+	 * @see	wcf\page\ITrackablePage::getObjectType()
+	 */
+	public function getObjectType() {
+		return 'be.bastelstu.chat.room';
+	}
+	
+	/**
+	 * @see	wcf\page\ITrackablePage::getObjectID()
+	 */
+	public function getObjectID() {
+		return $this->room->roomID;
 	}
 }
