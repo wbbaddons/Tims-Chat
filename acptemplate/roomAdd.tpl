@@ -76,7 +76,7 @@
 			{include file='multipleLanguageInputJavascript' elementIdentifier='topic' forceSelection=false}
 			
 			<dl id="groupPermissions">
-				<dt>{lang}wcf.acp.acl.permissions{/lang}</dt>
+				<dt>{lang}wcf.acl.permissions{/lang}</dt>
 				<dd></dd>
 			</dl>
 		</fieldset>
