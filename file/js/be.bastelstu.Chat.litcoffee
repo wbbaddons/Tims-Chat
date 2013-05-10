@@ -72,10 +72,6 @@ Events one can listen to. Allows 3rd party developers to change data shown in th
 				newMessage: $.Callbacks()
 				userMenu: $.Callbacks()
 				submit: $.Callbacks()
-				
-Instance of socket.io for real time chatting.
-
-			socket: null
 			
 Every `WCF.PeriodicalExecuter` used by the chat to allow access for 3rd party developers.
 
