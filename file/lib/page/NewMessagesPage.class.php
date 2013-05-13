@@ -1,7 +1,5 @@
 <?php
 namespace chat\page;
-use wcf\system\request\LinkHandler;
-
 use \chat\data;
 use \wcf\system\exception\IllegalLinkException;
 use \wcf\system\WCF;
@@ -135,7 +133,7 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 					32 => $user->getAvatar()->getImageTag(32),
 					48 => $user->getAvatar()->getImageTag(48)
 				),
-				'link' => LinkHandler::getInstance()->getLink('User', array(
+				'link' => \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
 					'user' => $user->getDecoratedObject()
 				))
 			);
