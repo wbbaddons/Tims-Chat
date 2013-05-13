@@ -9,16 +9,16 @@ use chat\data;
  * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.chat
- * @subpackage	page
+ * @subpackage	system.user.online.location
  */
 class ChatLocation implements \wcf\system\user\online\location\IUserOnlineLocation {
 	/**
-	 * @see	wcf\system\user\online\location\IUserOnlineLocation::cache()
+	 * @see	\wcf\system\user\online\location\IUserOnlineLocation::cache()
 	 */
 	public function cache(\wcf\data\user\online\UserOnline $user) {}
 	
 	/**
-	 * @see	wcf\system\user\online\location\IUserOnlineLocation::get()
+	 * @see	\wcf\system\user\online\location\IUserOnlineLocation::get()
 	 */
 	public function get(\wcf\data\user\online\UserOnline $user, $languageVariable = '') {
 		$cache = data\room\Room::getCache();
