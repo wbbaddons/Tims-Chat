@@ -26,12 +26,12 @@
 					{capture assign='messageTemplate'}{include application='chat' file='message'}{/capture}
 					{capture assign='userTemplate'}{include application='chat' file='userListUser'}{/capture}
 					
-					window.chat = new be.bastelstu.Chat(
+					be.bastelstu.Chat.init(
 						{
 							reloadTime: {@CHAT_RELOADTIME},
 							messageURL: '{link application="chat" controller="NewMessages"}{/link}'
 						}, 
-						new WCF.Template('{ldelim}$title} - {"chat.general.title"|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'),
+						new WCF.Template('{literal}{if $newMessageCount}({#$newMessageCount}) {/if}{$title} - {/literal}{"chat.general.title"|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'),
 						new WCF.Template('{@$messageTemplate|encodeJS}'),
 						new WCF.Template('{@$userTemplate|encodeJS}')
 					);
@@ -39,7 +39,7 @@
 					{event name='afterInit'}
 					
 					// show the last X messages
-					window.chat.handleMessages([
+					be.bastelstu.Chat.handleMessages([
 						{implode from=$newestMessages item='message'}{@$message->jsonify()}{/implode}
 					]);
 					
