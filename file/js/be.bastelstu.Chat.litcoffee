@@ -13,8 +13,7 @@ everything that happens in the GUI of **Tims Chat**.
 
 ## Code
 We start by setting up our environment by ensuring some sane values for both `$` and `window`,
-enabling EMCAScript 5 strict mode, creating the namespace object and overwriting console to prepend
-the name of the class.
+enabling EMCAScript 5 strict mode and overwriting console to prepend the name of the class.
 
 	(($, window) ->
 		"use strict";
@@ -27,7 +26,7 @@ the name of the class.
 			error: (message) ->
 				window.console.error "[be.bastelstu.Chat] #{message}"
 
-We continue with defining the needed variables. All variables are local to our closure and will be
+Continue with defining the needed variables. All variables are local to our closure and will be
 exposed by a function if necessary.
 
 		isActive = true
@@ -415,14 +414,13 @@ Rebuild the userlist based on the given `users`.
 			foundUsers = { }
 
 			for user in users
-				id = "timsChatUser-#{user.userID}"
-				element = $ "##{id}"
+				id = "timsChatUser#{user.userID}"
 
 Move the user to the new position if he was found in the old list.
 
-				if element.length
+				if $.wcfIsset id
 					console.log "Moving User: '#{user.username}'"
-					element = element.detach()
+					element = $("##{id}").detach()
 					
 					if user.awayStatus?
 						element.addClass 'away'
@@ -463,9 +461,10 @@ Build HTML of the user and insert it into the list, if the users was not found i
 					menu.append $ "<li><a>#{WCF.Language.get('chat.general.kick')}</a></li>"
 					menu.append $ "<li><a>#{WCF.Language.get('chat.general.ban')}</a></li>"
 					menu.append $ """<li><a href="#{user.link}">#{WCF.Language.get('chat.general.profile')}</a></li>"""
+
 					events.userMenu.fire user, menu
-					li.append menu
 					
+					li.append menu
 					li.appendTo $ '#timsChatUserList > ul'
 				
 				foundUsers[id] = true
@@ -508,7 +507,6 @@ Send out notifications for the given `message`. The number of unread messages wi
 				 title: $('#timsChatRoomList .active a').text()
 				 newMessageCount: ++newMessageCount
 			
-			# Desktop Notifications
 			title = WCF.Language.get 'chat.general.notify.title'
 			content = "#{message.username}#{message.separator} #{message.message}"
 			

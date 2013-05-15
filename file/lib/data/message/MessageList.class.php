@@ -27,11 +27,8 @@ class MessageList extends \wcf\data\DatabaseObjectList {
 		$messageList = new static();
 		$messageList->sqlOrderBy = "message.messageID DESC";
 		$messageList->sqlLimit = $number;
-		$messageList->getConditionBuilder()->add('
-			(
-					message.receiver IS NULL
-				AND	message.roomID = ?
-			)', array($room->roomID));
+		$messageList->getConditionBuilder()->add('message.receiver IS NULL', array());
+		$messageList->getConditionBuilder()->add('message.roomID = ?', array($room->roomID));
 		
 		$messageList->readObjects();
 		return array_reverse($messageList->getObjects());
@@ -54,7 +51,9 @@ class MessageList extends \wcf\data\DatabaseObjectList {
 				AND 	message.roomID = ?
 			)
 			OR message.receiver = ?
-			OR message.sender = ?)', array($room->roomID, \wcf\system\WCF::getUser()->userID, \wcf\system\WCF::getUser()->userID));
+			OR message.sender = ?)', 
+			array($room->roomID, \wcf\system\WCF::getUser()->userID, \wcf\system\WCF::getUser()->userID)
+		);
 		
 		$messageList->readObjects();
 		return $messageList->getObjects();
