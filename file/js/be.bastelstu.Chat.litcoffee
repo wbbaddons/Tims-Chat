@@ -111,8 +111,9 @@ Initialize `nodePush`
 
 				@initPush()
 
-Finished!
+Finished! Enable the input now.
 
+				$('#timsChatInput').enable().jCounter().focus();
 				console.log 'Finished initializing - Shields at 104 percent'
 
 **autocomplete(firstChars, offset = @autocompleteOffset)**  
@@ -527,7 +528,6 @@ Build HTML of new user and append it.
 						menu.append $ "<li><a>#{WCF.Language.get('chat.general.query')}</a></li>"
 						menu.append $ "<li><a>#{WCF.Language.get('chat.general.kick')}</a></li>"
 						menu.append $ "<li><a>#{WCF.Language.get('chat.general.ban')}</a></li>"
-						# TODO: SID and co
 						menu.append $ """<li><a href="#{user.link}">#{WCF.Language.get('chat.general.profile')}</a></li>"""
 						@events.userMenu.fire user, menu
 						li.append menu
@@ -662,8 +662,12 @@ Submits the message.
 				text = $('#timsChatInput').val()
 				
 				# call submit event
-				# TODO: Fix this
-				# text = @events.submit.fire text
+				text = do (text) =>
+					obj =
+						text: text
+					@events.submit.fire obj
+					
+					obj.text
 				
 				$('#timsChatInput').val('').focus().keyup()
 				

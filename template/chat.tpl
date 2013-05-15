@@ -43,9 +43,6 @@
 						{implode from=$newestMessages item='message'}{@$message->jsonify()}{/implode}
 					]);
 					
-					// enable user-interface
-					$('#timsChatInput').enable().jCounter().focus();
-					
 					$('#timsChatCopyright').click(function (event) {
 						event.preventDefault();
 						if (!$.wcfIsset('timsChatCopyrightDialog')) $('<div id="timsChatCopyrightDialog"></div>').appendTo('body');
