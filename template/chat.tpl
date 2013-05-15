@@ -65,6 +65,7 @@
 	</script>
 	
 	<style type="text/css">
+		/*<![CDATA[*/
 		.timsChatMessage::before {
 			content: "";
 		}
@@ -85,6 +86,7 @@
 		.timsChatMessage{$type|concat:'ERROR'|constant}::before {
 			content: "\f05e";
 		}
+		/*]]>*/
 	</style>
 </head>
 
