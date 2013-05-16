@@ -82,6 +82,7 @@
 		<item name="chat.general.smilies"><![CDATA[Smilies]]></item>
 		<item name="chat.general.clear"><![CDATA[Chat leeren]]></item>
 		<item name="chat.general.mark"><![CDATA[Markieren]]></item>
+		<item name="chat.general.fullscreen"><![CDATA[Vollbild]]></item>
 		<item name="chat.general.forceRefresh"><![CDATA[Räume neu laden]]></item>
 		
 		<item name="chat.general.query"><![CDATA[Privates Gespräch]]></item>
