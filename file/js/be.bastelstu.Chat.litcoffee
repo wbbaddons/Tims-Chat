@@ -198,7 +198,7 @@ Reset autocompleter to default status, when the input is `click`ed, as the posit
 Refresh the room list when the associated button is `click`ed.
 
 			$('#timsChatRoomList button').click ->
-				@refreshRoomList()
+				refreshRoomList()
 
 Clear the chat by removing every single message once the clear button is `clicked`.
 
