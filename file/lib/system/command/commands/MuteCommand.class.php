@@ -36,7 +36,6 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 		$this->user = User::getUserByUsername($username);
 		if (!$this->user->userID) throw new \chat\system\command\UserNotFoundException($username);
 		
-		$color = ChatUtil::readUserData('color', $this->user);
 		$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
 			'object' => $this->user
 		));
