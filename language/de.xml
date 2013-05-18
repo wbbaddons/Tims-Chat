@@ -4,7 +4,6 @@
 		<item name="chat.acp.room.list"><![CDATA[Chaträume]]></item>
 		<item name="chat.acp.room.add"><![CDATA[Chatraum hinzufügen]]></item>
 		<item name="chat.acp.room.edit"><![CDATA[Chatraum bearbeiten]]></item>
-		<item name="chat.acp.room.data"><![CDATA[Daten des Raumes]]></item>
 		<item name="chat.acp.room.title"><![CDATA[Titel]]></item>
 		<item name="chat.acp.room.topic"><![CDATA[Thema]]></item>
 		
@@ -64,8 +63,8 @@
 		<item name="chat.general.title"><![CDATA[Chat]]></item>
 		<item name="chat.general.protocol"><![CDATA[Protokoll]]></item>
 		
-		<item name="chat.general.room"><![CDATA[Raum]]></item>
-		<item name="chat.general.rooms"><![CDATA[Räume]]></item>
+		<item name="chat.general.room"><![CDATA[Chatraum]]></item>
+		<item name="chat.general.rooms"><![CDATA[Chaträume]]></item>
 		<item name="chat.general.users"><![CDATA[Nutzer]]></item>
 		
 		<item name="chat.general.copyright"><![CDATA[<a href="http://tims.bastelstu.be"><strong>Tims Chat</strong>{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}, entwickelt in <strong>Tims Bastelstube</strong></a>]]></item>
@@ -113,6 +112,7 @@
 		<item name="chat.message.5.ban"><![CDATA[hat {@$link} bis {@$until|plainTime} gebannt.]]></item>
 		<item name="chat.message.5.gmute"><![CDATA[hat {@$link} bis {@$until|plainTime} global geknebelt.]]></item>
 		<item name="chat.message.5.gban"><![CDATA[hat {@$link} bis {@$until|plainTime} global gebannt.]]></item>
+		<item name="chat.message.5.unmute"><![CDATA[hat {@$link} entknebelt.]]></item>
 		
 		<item name="chat.message.color.success"><![CDATA[Die Farbe wurde erfolgreich geändert.]]></item>
 	</category>

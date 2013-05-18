@@ -1,9 +1,9 @@
 <?php
 namespace chat\system\command\commands;
 use \chat\data\suspension;
+use \chat\util\ChatUtil;
 use \wcf\data\user\User;
 use \wcf\system\WCF;
-use \chat\util\ChatUtil;
 
 /**
  * Mutes a user.
@@ -52,8 +52,8 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
 			}
 			
-			$editor = new suspension\SuspensionEditor($suspension);
-			$editor->delete();
+			$action = new suspension\SuspensionAction(array($suspension), 'delete');
+			$action->executeAction();
 		}
 		
 		$this->suspensionAction = new suspension\SuspensionAction(array(), 'create', array(

@@ -25,6 +25,12 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	const TYPE_MUTE = 1;
 	const TYPE_BAN = 2;
 	
+	/**
+	 * Returns all the suspensions for the specified user (current user if no user was specified).
+	 * 
+	 * @param	\wcf\data\user\User	$user
+	 * @return	array
+	 */
 	public static function getSuspensionsForUser(\wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
 		$suspensions = \chat\util\ChatUtil::readUserData('suspensions', $user);
@@ -53,6 +59,7 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	
 	/**
 	 * Returns the appropriate suspension for user, room and type.
+	 * Returns false if no suspension was found.
 	 * 
 	 * @param	\wcf\data\user\User	$user
 	 * @param	\chat\data\room\Room	$room
@@ -78,7 +85,7 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($parameter);
 		$row = $statement->fetchArray();
-		if(!$row) $row = array();
+		if (!$row) return false;
 		
 		return new self(null, $row);
 	}

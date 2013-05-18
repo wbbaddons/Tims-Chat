@@ -23,8 +23,9 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
-		$this->user = User::getUserByUsername(rtrim($commandHandler->getParameters(), ','));
-		if (!$this->user->userID) throw new \chat\system\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
+		$username = rtrim($commandHandler->getParameters(), ',');
+		$this->user = User::getUserByUsername($username);
+		if (!$this->user->userID) throw new \chat\system\command\UserNotFoundException($username);
 		
 		// Username + link to profile
 		$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
@@ -40,7 +41,7 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 		// Room
 		$room = new \chat\data\room\Room(ChatUtil::readUserData('roomID', $this->user));
 		if ($room->roomID && $room->canEnter()) {
-			$this->lines[WCF::getLanguage()->get('wcf.chat.room')] = $room->getTitle();
+			$this->lines[WCF::getLanguage()->get('chat.general.room')] = $room->getTitle();
 		}
 		
 		// Suspensions
