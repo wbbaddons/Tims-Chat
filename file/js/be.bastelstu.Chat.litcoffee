@@ -148,7 +148,7 @@ and afterwards sent to the server by an AJAX request.
 							$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide()
 						, 5e3
 						
-					false
+						false
 				
 Autocomplete a username when TAB is pressed. The name to autocomplete is based on the current caret position.
 The the word the caret is in will be passed to `autocomplete` and replaced if a match was found.
