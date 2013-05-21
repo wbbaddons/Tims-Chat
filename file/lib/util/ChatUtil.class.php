@@ -76,19 +76,19 @@ final class ChatUtil {
 	 * @return	string
 	 */
 	public static function gradient($string, $start, $end) {
-		$string = self::str_split($string);
-		if (count($string) === 0) return '';
+		if (($length = \wcf\util\StringUtil::length($string)) === 0) return '';
 		
 		if ($start === $end) {
 			return '<span style="color:rgb('.($start >> 16 & 255).','.($start >> 8 & 255).','.($start & 255).')">'.\wcf\util\StringUtil::encodeHTML($string).'</span>';
 		}
 		
-		$r = (int) ((($start >> 16 & 255) - ($end >> 16 & 255)) / (count($string) - 1));
-		$g = (int) ((($start >> 8 & 255) - ($end >> 8 & 255)) / (count($string) - 1));
-		$b = (int) ((($start & 255) - ($end & 255)) / (count($string) - 1));
+		$r = (int) ((($start >> 16 & 255) - ($end >> 16 & 255)) / ($length - 1));
+		$g = (int) ((($start >> 8 & 255) - ($end >> 8 & 255)) / ($length - 1));
+		$b = (int) ((($start & 255) - ($end & 255)) / ($length - 1));
 		
 		$result = '';
-		for ($i = 0, $max = count($string); $i < $max; $i++) {
+		$string = self::str_split($string);
+		for ($i = 0; $i < $length; $i++) {
 			$result .= '<span style="color:rgb('.(($start >> 16 & 255) - $i * $r).','.(($start >> 8 & 255) - $i * $g).','.(($start & 255) - $i * $b).')">'.\wcf\util\StringUtil::encodeHTML($string[$i]).'</span>'; 
 		}
 		
