@@ -26,6 +26,15 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	const TYPE_BAN = 2;
 	
 	/**
+	 * Returns whether the suspension still is valid.
+	 * 
+	 * @return	boolean
+	 */
+	public function isValid() {
+		return $this->expires > TIME_NOW;
+	}
+	
+	/**
 	 * Returns all the suspensions for the specified user (current user if no user was specified).
 	 * 
 	 * @param	\wcf\data\user\User	$user
@@ -42,7 +51,7 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 					chat".WCF_N."_suspension
 				WHERE
 						userID = ?
-					AND	time > ?";
+					AND	expires > ?";
 			$stmt = WCF::getDB()->prepareStatement($sql);
 			$stmt->execute(array($user->userID, TIME_NOW));
 			

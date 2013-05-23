@@ -49,7 +49,9 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 		$suspensions = \chat\data\suspension\Suspension::getSuspensionsForUser($this->user);
 		foreach ($suspensions as $roomSuspensions) {
 			foreach ($roomSuspensions as $typeSuspension) {
-				$dateTime = DateUtil::getDateTimeByTimestamp($typeSuspension->time);
+				if (!$typeSuspension->isValid()) continue;
+				
+				$dateTime = DateUtil::getDateTimeByTimestamp($typeSuspension->expires);
 				$this->lines[$typeSuspension->type.'-'.$typeSuspension->roomID] = str_replace('%time%', DateUtil::format($dateTime, DateUtil::TIME_FORMAT), str_replace('%date%', DateUtil::format($dateTime, DateUtil::DATE_FORMAT), WCF::getLanguage()->get('wcf.date.dateTimeFormat')));
 			}
 		}

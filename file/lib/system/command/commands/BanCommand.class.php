@@ -17,12 +17,12 @@ use \wcf\system\WCF;
 class BanCommand extends MuteCommand {
 	public function executeAction() {
 		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $this->room, suspension\Suspension::TYPE_BAN)) {
-			if ($suspension->time > TIME_NOW + $this->time) {
+			if ($suspension->expires > $this->expires) {
 				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
 			}
 			
-			$editor = new suspension\SuspensionEditor($suspension);
-			$editor->delete();
+			$action = new suspension\SuspensionAction(array($suspension), 'delete');
+			$action->executeAction();
 		}
 		
 		$this->suspensionAction = new suspension\SuspensionAction(array(), 'create', array(
@@ -30,7 +30,7 @@ class BanCommand extends MuteCommand {
 				'userID' => $this->user->userID,
 				'roomID' => ChatUtil::readUserData('roomID'),
 				'type' => suspension\Suspension::TYPE_BAN,
-				'time' => TIME_NOW + $this->time
+				'expires' => $this->expires
 			)
 		));
 		$this->suspensionAction->executeAction();

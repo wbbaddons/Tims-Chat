@@ -27,7 +27,7 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 			FROM
 				".call_user_func(array($this->className, 'getDatabaseTableName'))."
 			WHERE
-				time < ?";
+				expires < ?";
 		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
 		$stmt->execute(array(TIME_NOW));
 		$objectIDs = array();

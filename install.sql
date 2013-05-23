@@ -22,22 +22,22 @@ CREATE TABLE chat1_message (
 	color1		INT(10)		NOT NULL DEFAULT 0,
 	color2		INT(10)		NOT NULL DEFAULT 0,
 	
-	KEY roomID (roomID),
-	KEY sender (sender),
-	KEY receiver (receiver)
+	KEY (roomID),
+	KEY (sender),
+	KEY (receiver)
 );
 
 DROP TABLE IF EXISTS chat1_room;
 CREATE TABLE chat1_room (
 	roomID		INT(10)		NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	title		VARCHAR(255)	NOT NULL,
-	topic		VARCHAR(255)	NOT NULL,
+	topic		VARCHAR(255)	NOT NULL DEFAULT '',
 	showOrder	INT(10)		NOT NULL DEFAULT 0,
 	permanent	TINYINT(1)	NOT NULL DEFAULT 1,
 	owner		INT(10)		DEFAULT NULL,
 	
-	KEY showOrder (showOrder),
-	KEY owner (owner)
+	KEY (showOrder),
+	KEY (owner)
 );
 
 DROP TABLE IF EXISTS chat1_suspension;
@@ -46,12 +46,12 @@ CREATE TABLE chat1_suspension (
 	userID		INT(10)		NOT NULL,
 	roomID		INT(10)		DEFAULT NULL,
 	type		TINYINT(3)	NOT NULL,
-	time		INT(10)		NOT NULL,
+	expires		INT(10)		NOT NULL,
 	
 	UNIQUE KEY suspension (userID, roomID, type),
-	KEY roomID (roomID),
-	KEY type (type),
-	KEY time (time)
+	KEY (roomID),
+	KEY (type),
+	KEY (time)
 );
 
 ALTER TABLE chat1_message ADD FOREIGN KEY (receiver) REFERENCES wcf1_user (userID) ON DELETE CASCADE;

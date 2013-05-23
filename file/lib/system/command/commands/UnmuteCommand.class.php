@@ -15,7 +15,6 @@ use \wcf\system\WCF;
  */
 class UnmuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	public $user = null;
-	public $time = 0;
 	public $suspensionAction = null;
 	public $link = '';
 	public $room = null;
@@ -71,7 +70,6 @@ class UnmuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	public function getMessage() {
 		return serialize(array(
 			'link' => $this->link,
-			'until' => TIME_NOW + $this->time,
 			'type' => str_replace(array('chat\system\command\commands\\', 'command'), '', strtolower(get_class($this)))
 		));
 	}

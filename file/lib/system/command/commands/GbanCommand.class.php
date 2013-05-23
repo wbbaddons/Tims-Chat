@@ -19,12 +19,12 @@ class GbanCommand extends MuteCommand {
 		$room = new \chat\data\room\Room(null, array('roomID' => null));
 		
 		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $room, suspension\Suspension::TYPE_BAN)) {
-			if ($suspension->time > TIME_NOW + $this->time) {
+			if ($suspension->expires > $this->expires) {
 				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
 			}
 			
-			$editor = new suspension\SuspensionEditor($suspension);
-			$editor->delete();
+			$action = new suspension\SuspensionAction(array($suspension), 'delete');
+			$action->executeAction();
 		}
 		
 		$this->suspensionAction = new suspension\SuspensionAction(array(), 'create', array(
@@ -32,7 +32,7 @@ class GbanCommand extends MuteCommand {
 				'userID' => $this->user->userID,
 				'roomID' => null,
 				'type' => suspension\Suspension::TYPE_BAN,
-				'time' => TIME_NOW + $this->time
+				'expires' => $this->expires
 			)
 		));
 		$this->suspensionAction->executeAction();
