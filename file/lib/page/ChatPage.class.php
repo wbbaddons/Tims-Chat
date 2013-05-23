@@ -238,6 +238,8 @@ class ChatPage extends \wcf\page\AbstractPage {
 	 * @see	wcf\page\ITrackablePage::getObjectID()
 	 */
 	public function getObjectID() {
+		if ($this->room === null) return 0;
+		
 		return $this->room->roomID;
 	}
 }
