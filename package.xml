@@ -5,7 +5,7 @@
 		<packagedescription><![CDATA[Chat for WoltLab Community Framework™.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Chat für WoltLab Community Framework™.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.0.0 Alpha 24</version><!-- Codename: Codenames are overrated -->
+		<version>3.0.0 Alpha 25</version><!-- Codename: Codenames are overrated -->
 		<date>2011-11-26</date>
 	</packageinformation>
 	
@@ -46,7 +46,7 @@
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="templateListener">templateListener.xml</instruction>
-		<!--instruction type="pageMenu">pageMenu.xml</instruction-->
+		<instruction type="pageMenu">pageMenu.xml</instruction>
 		<instruction type="aclOption">aclOption.xml</instruction>
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>

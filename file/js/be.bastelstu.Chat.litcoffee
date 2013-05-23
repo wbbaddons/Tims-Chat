@@ -51,8 +51,6 @@ exposed by a function if necessary.
 				value: null
 				caret: 0
 
-		oldScrollTop = null
-
 		v =
 			titleTemplate: null
 			messageTemplate: null
@@ -205,8 +203,7 @@ Clear the chat by removing every single message once the clear button is `clicke
 			$('#timsChatClear').click (event) ->
 				event.preventDefault()
 				$('.timsChatMessage').remove()
-				oldScrollTop = null
-				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height()
+				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight')
 				
 Handle toggling of the toggleable buttons.
 
@@ -234,7 +231,6 @@ Mark smilies as disabled when they are disabled.
 Toggle fullscreen mode.
 
 			$('#timsChatFullscreen').click (event) ->
-				oldScrollTop = null if $('#timsChatAutoscroll').data 'status'
 				if $('#timsChatFullscreen').data 'status'
 					$('html').addClass 'fullscreen'
 				else
@@ -261,15 +257,21 @@ Scroll down when autoscroll is being activated.
 
 			$('#timsChatAutoscroll').click (event) ->
 				if $('#timsChatAutoscroll').data 'status'
-					$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').height()
-					oldScrollTop = $('.timsChatMessageContainer').scrollTop()
+					$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight')
 
 			$('#timsChatMessageContainer').on 'scroll', (event) ->
-				return if oldScrollTop is null
-
-				if $(@).scrollTop() < oldScrollTop
+				element = $ @
+				scrollTop = element.scrollTop()
+				scrollHeight = element.prop 'scrollHeight'
+				height = element.height()
+				
+				if scrollTop < scrollHeight - height - 25
 					if $('#timsChatAutoscroll').data('status') is 1
-						$('#timsChatAutoscroll').click().parent().fadeOut('slow').fadeIn 'slow'
+						$('#timsChatAutoscroll').click()
+						
+				if scrollTop > scrollHeight - height - 10
+					if $('#timsChatAutoscroll').data('status') is 0
+						$('#timsChatAutoscroll').click()
 
 Ask for permissions to use Desktop notifications when notifications are activated.
 
@@ -405,8 +407,7 @@ Insert the given messages into the chat stream.
 				
 				li.appendTo $ '#timsChatMessageContainer > ul'
 
-			$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer ul').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
-			oldScrollTop = $('#timsChatMessageContainer').scrollTop()
+			$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
 
 Rebuild the userlist based on the given `users`.
 
