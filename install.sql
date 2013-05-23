@@ -51,7 +51,7 @@ CREATE TABLE chat1_suspension (
 	UNIQUE KEY suspension (userID, roomID, type),
 	KEY (roomID),
 	KEY (type),
-	KEY (time)
+	KEY (expires)
 );
 
 ALTER TABLE chat1_message ADD FOREIGN KEY (receiver) REFERENCES wcf1_user (userID) ON DELETE CASCADE;

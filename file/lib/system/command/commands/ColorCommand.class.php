@@ -12,6 +12,11 @@ use \wcf\util\StringUtil;
  * @subpackage	system.chat.command.commands
  */
 class ColorCommand extends \chat\system\command\AbstractCommand {
+	/**
+	 * Map names to hexcodes
+	 * 
+	 * @var	array<integer>
+	 */
 	public static $colors = array(
 		'red'		=> 0xFF0000,
 		'blue'		=> 0x0000FF,

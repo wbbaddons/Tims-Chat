@@ -12,6 +12,9 @@ use \wcf\util\StringUtil;
  * @subpackage	system.chat.command.commands
  */
 class MeCommand extends \chat\system\command\AbstractCommand {
+	/**
+	 * @see	\chat\system\command\AbstractCommand::$enableSmilies
+	 */
 	public $enableSmilies = self::SETTING_USER;
 	
 	public function __construct(\chat\system\command\CommandHandler $commandHandler) {

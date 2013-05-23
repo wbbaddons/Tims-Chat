@@ -12,19 +12,20 @@ use \wcf\data\user\User;
  * @subpackage	system.chat.command.commands
  */
 class WhisperCommand extends \chat\system\command\AbstractCommand {
+	/**
+	 * @see	\chat\system\command\AbstractCommand::$enableSmilies
+	 */
 	public $enableSmilies = self::SETTING_USER;
 	public $user = null, $message = '';
 	
 	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
-		$parameters = $commandHandler->getParameters();
-	
-		if (($comma = strpos($parameters, ',')) !== false) {
-			$username = substr($parameters, 0, $comma);
-			$this->message = substr($parameters, $comma + 1);
+		try {
+			list($username, $message) = explode(',', $commandHandler->getParameters(), 2);
+			$this->message = \wcf\util\StringUtil::trim($message);
 		}
-		else {
+		catch (\wcf\system\exception\SystemException $e) {
 			throw new \chat\system\command\NotFoundException();
 		}
 		

@@ -21,10 +21,14 @@ class RestoreCommand extends \chat\system\command\AbstractRestrictedCommand {
 	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
-		$this->user = User::getUserByUsername(rtrim($commandHandler->getParameters(), ','));
-		if (!$this->user->userID) throw new \chat\system\command\UserNotFoundException(rtrim($commandHandler->getParameters(), ','));
+		$username = rtrim($commandHandler->getParameters(), ',');
+		$this->user = User::getUserByUsername($username);
+		if (!$this->user->userID) throw new \chat\system\command\UserNotFoundException($username);
 		
-		$this->link = '<span class="userLink" data-user-id="'.$this->user->userID.'" />';
+		$profile = \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
+			'object' => $this->user
+		));
+		$this->link = "[url='".$profile."']".$this->user->username.'[/url]';
 		
 		$this->didInit();
 	}

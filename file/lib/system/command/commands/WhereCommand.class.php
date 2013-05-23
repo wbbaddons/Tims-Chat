@@ -11,8 +11,6 @@ namespace chat\system\command\commands;
  * @subpackage	system.chat.command.commands
  */
 class WhereCommand extends \chat\system\command\AbstractCommand {
-	public $enableHTML = self::SETTING_ON;
-	
 	/**
 	 * @see	\chat\system\command\ICommand::getType()
 	 */
