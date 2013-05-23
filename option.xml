@@ -13,7 +13,7 @@
 
 		<options>
 			<!-- general chat options -->
-			<option name="chat_active">
+			<option name="module_chat">
 				<categoryname>module.community</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
