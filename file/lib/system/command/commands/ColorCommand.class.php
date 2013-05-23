@@ -40,7 +40,7 @@ class ColorCommand extends \chat\system\command\AbstractCommand {
 		parent::__construct($commandHandler);
 		
 		try {
-			list($color[1], $color[2]) = explode(' ', $commandHandler->getParameters());
+			list($color[1], $color[2]) = explode(' ', $commandHandler->getParameters(), 2);
 		}
 		catch (\wcf\system\exception\SystemException $e) {
 			$color[1] = $color[2] = $commandHandler->getParameters();

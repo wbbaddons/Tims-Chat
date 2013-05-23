@@ -127,6 +127,7 @@ final class ChatUtil {
 	
 	/**
 	 * Writes user data
+	 * 
 	 * @param	array $data
 	 * @param	\wcf\data\user\User	$user
 	 */
@@ -166,50 +167,45 @@ final class ChatUtil {
 	 * @return	integer
 	 */
 	public static function timeModifier($time) {
-		$regex = new \wcf\system\Regex('([0-9]+[s|h|d|w|m|y]?)', \wcf\system\Regex::CASE_INSENSITIVE);
-		if (!$regex->match($time, true)) return 0;
+		$regex = new \wcf\system\Regex('([0-9]+)([shdwmy]?)', \wcf\system\Regex::CASE_INSENSITIVE);
+		if (!$regex->match($time, true, \wcf\system\Regex::ORDER_MATCH_BY_SET)) return 0;
 		$matches = $regex->getMatches();
 		
-		$result = 0;
-		foreach ($matches[1] as $time) {
-			// 60 seconds a minute
-			$multiplier = 60;
-			$modifier = substr($time, -1);
+		$result = '';
+		foreach ($matches as $match) {
+			list(, $time, $modifier) = $match;
 			
 			switch ($modifier) {
 				case 'y':
 				case 'Y':
-					// twelve months a year
-					$multiplier *= 12;
+					$result .= '+'.$time.'year';
+				break;
 				case 'm':
 				case 'M':
-					// about 4.3 weeks per month
-					$multiplier *= 4.34812141;
+					$result .= '+'.$time.'month';
+				break;
 				case 'w':
 				case 'W':
-					// seven days a weeks
-					$multiplier *= 7;
+					$result .= '+'.$time.'week';
+				break;
 				case 'd':
 				case 'D':
-					// 24 hours a day
-					$multiplier *= 24;
+					$result .= '+'.$time.'day';
+				break;
 				case 'h':
 				case 'H':
-					// 60 minutes an hour
-					$multiplier *= 60;
-					$time = substr($time, 0, -1);
+					$result .= '+'.$time.'hour';
 				break;
 				case 's':
 				case 'S':
-					// 60 seconds per minute
-					$multiplier /= 60;
-					$time = substr($time, 0, -1);
+					$result .= '+'.$time.'second';
+				break;
+				default:
+					$result .= '+'.$time.'minute';
 			}
-			
-			$result += $time * $multiplier;
 		}
 		
-		return (int) round($result, 0);
+		return $result;
 	}
 	
 	/**

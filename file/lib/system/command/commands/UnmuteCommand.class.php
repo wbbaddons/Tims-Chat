@@ -43,7 +43,7 @@ class UnmuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 			$action->executeAction();
 		}
 		else {
-			throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.notExists'));			
+			throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.notExists'));
 		}
 	}
 	

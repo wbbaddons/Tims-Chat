@@ -24,12 +24,13 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
-		$parameters = $commandHandler->getParameters();
-		if (($comma = strpos($parameters, ',')) !== false) {
-			$username = substr($parameters, 0, $comma);
-			$this->time = ChatUtil::timeModifier(substr($parameters, $comma + 1));
+		try {
+			list($username, $modifier) = explode(',', $commandHandler->getParameters(), 2);
+			$modifier = ChatUtil::timeModifier(\wcf\util\StringUtil::trim($modifier));
+			$this->time = strtotime($modifier, TIME_NOW);
+			$this->time = min(max(-0x80000000, $this->time), 0x7FFFFFFF);
 		}
-		else {
+		catch (\wcf\system\exception\SystemException $e) {
 			throw new \chat\system\command\NotFoundException();
 		}
 		
@@ -48,7 +49,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	
 	public function executeAction() {
 		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $this->room, suspension\Suspension::TYPE_MUTE)) {
-			if ($suspension->time > TIME_NOW + $this->time) {
+			if ($suspension->time > $this->time) {
 				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
 			}
 			
@@ -61,7 +62,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 				'userID' => $this->user->userID,
 				'roomID' => ChatUtil::readUserData('roomID'),
 				'type' => suspension\Suspension::TYPE_MUTE,
-				'time' => TIME_NOW + $this->time
+				'time' => $this->time
 			)
 		));
 		$this->suspensionAction->executeAction();
@@ -91,7 +92,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	public function getMessage() {
 		return serialize(array(
 			'link' => $this->link,
-			'until' => TIME_NOW + $this->time,
+			'until' => $this->time,
 			'type' => str_replace(array('chat\system\command\commands\\', 'command'), '', strtolower(get_class($this)))
 		));
 	}

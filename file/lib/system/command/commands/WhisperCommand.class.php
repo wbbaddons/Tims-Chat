@@ -24,7 +24,9 @@ class WhisperCommand extends \chat\system\command\AbstractCommand {
 			$username = substr($parameters, 0, $comma);
 			$this->message = substr($parameters, $comma + 1);
 		}
-		else throw new \chat\system\command\NotFoundException();
+		else {
+			throw new \chat\system\command\NotFoundException();
+		}
 		
 		$this->user = User::getUserByUsername($username);
 		if (!$this->user->userID) throw new \chat\system\command\UserNotFoundException($username);

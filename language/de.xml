@@ -37,18 +37,17 @@
 		<item name="wcf.acp.option.category.chat.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.chat_active"><![CDATA[Chat aktivieren]]></item>
 		<item name="wcf.acp.option.chat_reloadtime"><![CDATA[Nachladezeit]]></item>
-		<item name="wcf.acp.option.chat_reloadtime.description"><![CDATA[Gibt die Zeit in Sekunden an, nach der neue Nachrichten geladen werden. (Standard: alle 5 Sekunden)]]></item>
+		<item name="wcf.acp.option.chat_reloadtime.description"><![CDATA[Wartezeit zwischen zwei Anfragen zum Server. [Zeit in Sekunden]]]></item>
 		<item name="wcf.acp.option.chat_lastmessages"><![CDATA[Anzahl der letzten Nachrichten]]></item>
-		<item name="wcf.acp.option.chat_lastmessages.description"><![CDATA[Gibt die Zahl der Nachrichten an, die beim Betreten des Chats angezeigt werden. (Standard: 5)]]></item>
+		<item name="wcf.acp.option.chat_lastmessages.description"><![CDATA[Anzahl der Nachrichten, die beim Betreten des Chats angezeigt werden.]]></item>
 		<item name="wcf.acp.option.chat_display_join_leave"><![CDATA[Join- und Leave-Nachrichten anzeigen]]></item>
-		<item name="wcf.acp.option.chat_display_join_leave.description"><![CDATA[Gibt an, ob eine Nachricht angezeigt werden soll, wenn ein Nutzer den Chat betritt oder verlässt.]]></item>
+		<item name="wcf.acp.option.chat_display_join_leave.description"><![CDATA[Soll eine Nachricht angezeigt werden, wenn ein Nutzer den Chat betritt oder verlässt?]]></item>
 		<item name="wcf.acp.option.chat_max_length"><![CDATA[Maximale Textlänge]]></item>
-		<item name="wcf.acp.option.chat_max_length.description"><![CDATA[Gibt die maximale Länge einer Chatnachricht an.]]></item>
 		
 		<item name="wcf.acp.option.category.chat.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.option.chat_log_active"><![CDATA[Protokoll aktivieren]]></item>
 		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Speicherzeit]]></item>
-		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Gibt die Zeit in Minuten an, die eine Nachricht im Protokoll gespeichert bleibt.]]></item>
+		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Zeit, die eine Nachricht im Protokoll abrufbar bleibt. [Zeit in Minuten, -1 für unendlich]]]></item>
 	</category>
 	
 	<category name="chat.error">

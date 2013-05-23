@@ -23,12 +23,16 @@
 				<categoryname>chat.general</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>5</defaultvalue>
+				<minvalue>1</minvalue>
+				<maxvalue>15</maxvalue>
 				<showorder>2</showorder>
 			</option>
 			<option name="chat_lastmessages">
 				<categoryname>chat.general</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>5</defaultvalue>
+				<minvalue>0</minvalue>
+				<maxvalue>50</maxvalue>
 				<showorder>4</showorder>
 			</option>
 			<option name="chat_display_join_leave">
@@ -41,6 +45,8 @@
 				<categoryname>chat.general</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>500</defaultvalue>
+				<minvalue>1</minvalue>
+				<maxvalue>5000</maxvalue>
 				<showorder>8</showorder>
 			</option>
 			<option name="chat_show_version">
@@ -60,8 +66,9 @@
 			</option>
 			<option name="chat_log_archivetime">
 				<categoryname>chat.log</categoryname>
-				<optiontype>timeInterval</optiontype>
-				<defaultvalue>172800</defaultvalue>
+				<optiontype>integer</optiontype>
+				<defaultvalue>10080</defaultvalue>
+				<minvalue>-1</minvalue>
 				<showorder>2</showorder>
 			</option>
 			<!--log options end-->
