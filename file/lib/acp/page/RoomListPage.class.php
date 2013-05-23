@@ -38,7 +38,7 @@ class RoomListPage extends \wcf\page\AbstractPage {
 		parent::readData();
 		
 		$this->objects = new \chat\data\room\RoomList();
-		$this->objects->sqlOrderBy = 'position ASC';
+		$this->objects->sqlOrderBy = 'showOrder ASC';
 		$this->objects->readObjects();
 	}
 	

@@ -32,11 +32,11 @@ CREATE TABLE chat1_room (
 	roomID		INT(10)		NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	title		VARCHAR(255)	NOT NULL,
 	topic		VARCHAR(255)	NOT NULL,
-	position	INT(10)		NOT NULL DEFAULT 0,
+	showOrder	INT(10)		NOT NULL DEFAULT 0,
 	permanent	TINYINT(1)	NOT NULL DEFAULT 1,
 	owner		INT(10)		DEFAULT NULL,
 	
-	KEY positionKey (position),
+	KEY showOrder (showOrder),
 	KEY owner (owner)
 );
 
@@ -63,7 +63,7 @@ ALTER TABLE chat1_room ADD FOREIGN KEY (owner) REFERENCES wcf1_user (userID) ON 
 ALTER TABLE chat1_suspension ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE chat1_suspension ADD FOREIGN KEY (roomID) REFERENCES chat1_room (roomID) ON DELETE CASCADE;
 
-INSERT INTO chat1_room (title, topic, position) VALUES ('chat.room.title1', 'chat.room.topic1', 1);
-INSERT INTO chat1_room (title, topic, position) VALUES ('Testroom 2', 'Topic of Testroom 2', 2);
-INSERT INTO chat1_room (title, topic, position) VALUES ('Testroom with a very long', 'The topic of this room is rather loing as well!', 3);
-INSERT INTO chat1_room (title, topic, position) VALUES ('Room w/o topic', '', 4);
+INSERT INTO chat1_room (title, topic, showOrder) VALUES ('chat.room.title1', 'chat.room.topic1', 1);
+INSERT INTO chat1_room (title, topic, showOrder) VALUES ('Testroom 2', 'Topic of Testroom 2', 2);
+INSERT INTO chat1_room (title, topic, showOrder) VALUES ('Testroom with a very long', 'The topic of this room is rather loing as well!', 3);
+INSERT INTO chat1_room (title, topic, showOrder) VALUES ('Room w/o topic', '', 4);

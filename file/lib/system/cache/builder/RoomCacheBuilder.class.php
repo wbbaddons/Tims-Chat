@@ -17,7 +17,7 @@ class RoomCacheBuilder extends \wcf\system\cache\builder\AbstractCacheBuilder {
 	public function rebuild(array $parameters) {
 		// get all chat rooms
 		$roomList = new \chat\data\room\RoomList();
-		$roomList->sqlOrderBy = "room.position";
+		$roomList->sqlOrderBy = "room.showOrder";
 		$roomList->readObjects();
 		
 		return $roomList->getObjects();

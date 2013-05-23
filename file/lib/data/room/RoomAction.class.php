@@ -41,14 +41,14 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		$room = parent::create();
 		
 		WCF::getDB()->beginTransaction();
-		$sql = "SELECT	MAX(position)
+		$sql = "SELECT	MAX(showOrder)
 			FROM	".call_user_func(array($this->className, 'getDatabaseTableName'))."
 			FOR UPDATE";
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
 
 		$editor = new RoomEditor($room);
-		$editor->update(array('position' => ($stmt->fetchColumn() + 1)));
+		$editor->update(array('showOrder' => ($stmt->fetchColumn() + 1)));
 		WCF::getDB()->commitTransaction();
 		
 		return $room;
@@ -115,7 +115,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			if ($room === null) continue;
 			
 			$editor = new RoomEditor($room);
-			$editor->update(array('position' => $i++));
+			$editor->update(array('showOrder' => $i++));
 		}
 		WCF::getDB()->commitTransaction();
 	}

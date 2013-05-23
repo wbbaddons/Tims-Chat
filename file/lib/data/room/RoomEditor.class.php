@@ -29,7 +29,7 @@ class RoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data\IEd
 		}
 		
 		$sql = "SELECT
-				position
+				showOrder
 			FROM
 				chat".WCF_N."_room
 			WHERE
@@ -40,9 +40,9 @@ class RoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data\IEd
 		$sql = "UPDATE
 				chat".WCF_N."_room
 			SET
-				position = position - 1
+				showOrder = showOrder - 1
 			WHERE
-				position > ?";
+				showOrder > ?";
 		$update = WCF::getDB()->prepareStatement($sql);
 		
 		foreach ($objectIDs as $objectID) {
