@@ -6,7 +6,7 @@
 		</ul>
 	</nav>
 	
-	<section id="sidebarContent">
+	<section id="sidebarContent" class="tabMenuContent">
 		<fieldset>
 			<nav id="timsChatUserList">
 				<ul>
