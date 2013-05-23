@@ -14,10 +14,9 @@
 		<options>
 			<!-- general chat options -->
 			<option name="chat_active">
-				<categoryname>chat.general</categoryname>
+				<categoryname>module.community</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<showorder>1</showorder>
 			</option>
 			<option name="chat_reloadtime">
 				<categoryname>chat.general</categoryname>
@@ -25,7 +24,6 @@
 				<defaultvalue>5</defaultvalue>
 				<minvalue>1</minvalue>
 				<maxvalue>15</maxvalue>
-				<showorder>2</showorder>
 			</option>
 			<option name="chat_lastmessages">
 				<categoryname>chat.general</categoryname>
@@ -33,13 +31,11 @@
 				<defaultvalue>5</defaultvalue>
 				<minvalue>0</minvalue>
 				<maxvalue>50</maxvalue>
-				<showorder>4</showorder>
 			</option>
 			<option name="chat_display_join_leave">
 				<categoryname>chat.general</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<showorder>5</showorder>
 			</option>
 			<option name="chat_max_length">
 				<categoryname>chat.general</categoryname>
@@ -47,13 +43,11 @@
 				<defaultvalue>500</defaultvalue>
 				<minvalue>1</minvalue>
 				<maxvalue>5000</maxvalue>
-				<showorder>8</showorder>
 			</option>
 			<option name="chat_show_version">
 				<categoryname>chat.general</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<showorder>9</showorder>
 			</option>
 			<!-- general chat options end -->
 			
@@ -62,14 +56,12 @@
 				<categoryname>chat.log</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue><![CDATA[1]]></defaultvalue>
-				<showorder>1</showorder>
 			</option>
 			<option name="chat_log_archivetime">
 				<categoryname>chat.log</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>10080</defaultvalue>
 				<minvalue>-1</minvalue>
-				<showorder>2</showorder>
 			</option>
 			<!--log options end-->
 		</options>

@@ -21,7 +21,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 	/**
 	 * @see \wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('CHAT_ACTIVE');
+	public $neededModules = array('MODULE_CHAT');
 	
 	/**
 	 * @see \wcf\page\AbstractPage::$neededPermissions

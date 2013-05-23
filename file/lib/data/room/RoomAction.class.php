@@ -124,7 +124,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	 * Validates parameters and permissions.
 	 */
 	public function validateGetRoomList() {
-		if (!CHAT_ACTIVE) throw new \wcf\system\exception\IllegalLinkException();
+		if (!MODULE_CHAT) throw new \wcf\system\exception\IllegalLinkException();
 		
 		$rooms = Room::getCache();
 		$roomID = ChatUtil::readUserData('roomID');
@@ -161,7 +161,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	 * Validates parameters and permissions.
 	 */
 	public function validateLeave() {
-		if (!CHAT_ACTIVE) throw new \wcf\system\exception\IllegalLinkException();
+		if (!MODULE_CHAT) throw new \wcf\system\exception\IllegalLinkException();
 		
 		unset($this->parameters['user']);
 		
@@ -228,7 +228,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	 * Validates permissions.
 	 */
 	public function validateGetDashboardRoomList() {
-		if (!CHAT_ACTIVE) throw new \wcf\system\exception\IllegalLinkException();
+		if (!MODULE_CHAT) throw new \wcf\system\exception\IllegalLinkException();
 	}
 	
 	/**
