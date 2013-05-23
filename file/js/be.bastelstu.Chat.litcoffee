@@ -172,8 +172,9 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 					
 					return if toComplete.length is 0
 					console.log "Autocompleting '#{toComplete}'"
-
-					users = (username for user in $('.timsChatUser') when (username = $(user).data('username')).indexOf(toComplete) is 0)
+					
+					regex = new RegExp "^#{WCF.String.escapeRegExp(toComplete)}", "i"
+					users = (username for user in $('.timsChatUser') when regex.test(username = $(user).data('username')))
 
 					toComplete = users[autocomplete.offset++ % users.length] + ', ' if users.length isnt 0
 					
