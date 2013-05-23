@@ -38,6 +38,7 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	 */
 	public function canEnter(\wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
+		if (!$user->userID) return false;
 		
 		$ph = new \chat\system\permission\PermissionHandler($user);
 		$suspensions = Suspension::getSuspensionsForUser($user);
@@ -68,6 +69,7 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	 */
 	public function canWrite(\wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
+		if (!$user->userID) return false;
 		
 		$ph = new \chat\system\permission\PermissionHandler($user);
 		$suspensions = Suspension::getSuspensionsForUser($user);
