@@ -7,7 +7,7 @@
 				<div>
 					<div>
 						<hgroup class="containerHeadline">
-							<h1><a href="{link controller='Chat' object=$room}{/link}">{$room}</a> <span class="badge">{#$users|count}</span></h1>
+							<h1><a href="{link application='chat' controller='Chat' object=$room}{/link}">{$room}</a> <span class="badge">{#$users|count}</span></h1>
 							<h2>{$room->topic|language}</h2>
 						</hgroup>
 						
