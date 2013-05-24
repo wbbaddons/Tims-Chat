@@ -44,7 +44,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 	protected static $users = array();
 	
 	/**
-	 * @see	\chat\data\\message\Message::getFormattedMessage()
+	 * @see	\chat\data\message\Message::getFormattedMessage()
 	 */
 	public function __toString() {
 		return $this->getFormattedMessage();

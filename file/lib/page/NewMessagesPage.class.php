@@ -73,7 +73,7 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 	 * Fetches the new messages
 	 */
 	public function readMessages() {
-		$this->messages = data\message\MessageList::getMessagesSince($this->room, WCF::getUser()->chatLastSeen);
+		$this->messages = data\message\ViewableMessageList::getMessagesSince($this->room, WCF::getUser()->chatLastSeen);
 		
 		// update last seen message
 		$sql = "SELECT
@@ -142,7 +142,11 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 			$items = array();
 			if (ENABLE_DEBUG_MODE) {
 				foreach ($b->getItems() as $item) {
-					$items[] = array('text' => $item['text'], 'use' => $item['use']);
+					$items[] = array(
+						'text' => $item['text'],
+						'use' => $item['use'],
+						'trace' => $item['trace']
+					);
 				}
 			}
 			
