@@ -59,7 +59,7 @@
 		</div>
 	</section>
 {else}
-	<p class="warning">{lang}chat.acp.room.noneAvailable{/lang}</p>
+	<p class="warning">{lang}chat.acp.room.noItems{/lang}</p>
 {/if}
 
 {include file='footer'}
