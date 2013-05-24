@@ -32,6 +32,7 @@ exposed by a function if necessary.
 		isActive = true
 		newMessageCount = 0
 		chatSession = Date.now()
+		errorVisible = false
 
 		remainingFailures = 3
 
@@ -281,15 +282,8 @@ Enable duplicate tab detection.
 			$(window).on 'storage', (event) ->
 				if event.originalEvent.key is 'be.bastelstu.chat.session'
 					if event.originalEvent.newValue isnt chatSession
-						loading = true
-						pe.refreshRoomList.stop()
-						pe.getMessages.stop()
+						showError WCF.Language.get 'chat.general.error.duplicateTab'
 						
-						$("""<div id="timsChatLoadingErrorDialog">#{WCF.Language.get('chat.general.error.duplicateTab')}</div>""").appendTo('body') unless $.wcfIsset('timsChatLoadingErrorDialog')
-						$('#timsChatLoadingErrorDialog').wcfDialog
-							closable: false
-							title: WCF.Language.get('wcf.global.error.title')
-							
 Ask for permissions to use Desktop notifications when notifications are activated.
 
 			if window.Notification?
@@ -384,17 +378,10 @@ Fetch new messages from the server and pass them to `handleMessages`. The userli
 				error: ->
 					console.error "Message loading failed, #{--remainingFailures} remaining"
 					if remainingFailures <= 0
-						loading = true
-						
-						pe.refreshRoomList.stop()
-						pe.getMessages.stop()
 						freeTheFish()
-						console.error 'To many failues, aborting'
+						console.error 'To many failures, aborting'
 						
-						$("""<div id="timsChatLoadingErrorDialog">#{WCF.Language.get('chat.general.error.onMessageLoad')}</div>""").appendTo('body') unless $.wcfIsset('timsChatLoadingErrorDialog')
-						$('#timsChatLoadingErrorDialog').wcfDialog
-							closable: false
-							title: WCF.Language.get('wcf.global.error.title')
+						showError WCF.Language.get 'chat.general.error.onMessageLoad'
 							
 				complete: ->
 					loading = false
@@ -614,11 +601,37 @@ Show loading icon and prevent switching the room in parallel.
 					
 					console.log "Found #{data.returnValues.length} rooms"
 
+Shows an unrecoverable error with the given text.
+
+		showError = (text) ->
+			return if errorVisible
+			errorVisible = true
+			
+			loading = true
+			
+			pe.refreshRoomList.stop()
+			pe.getMessages.stop()
+			
+			errorDialog = $("""
+				<div id="timsChatLoadingErrorDialog">
+					<p>#{text}</p>
+				</div>
+			""").appendTo 'body'
+			
+			formSubmit = $("""<div class="formSubmit"></div>""").appendTo errorDialog
+			reloadButton = $("""<button class="buttonPrimary">#{WCF.Language.get 'chat.general.error.reload'}</button>""").appendTo formSubmit
+			reloadButton.on 'click', ->
+				window.location.reload()
+				
+			$('#timsChatLoadingErrorDialog').wcfDialog
+				closable: false
+				title: WCF.Language.get('wcf.global.error.title')
+
 Bind the given callback to the given event.
 
 		addListener = (event, callback) ->
 			return false unless events[event]?
-
+			
 			events[event].add callback
 
 Remove the given callback from the given event.
