@@ -31,6 +31,7 @@ exposed by a function if necessary.
 
 		isActive = true
 		newMessageCount = 0
+		chatSession = Date.now()
 
 		remainingFailures = 3
 
@@ -274,6 +275,21 @@ Scroll down when autoscroll is being activated.
 					if $('#timsChatAutoscroll').data('status') is 0
 						$('#timsChatAutoscroll').click()
 
+Enable duplicate tab detection.
+
+			window.localStorage.setItem 'be.bastelstu.chat.session', chatSession
+			$(window).on 'storage', (event) ->
+				if event.originalEvent.key is 'be.bastelstu.chat.session'
+					if event.originalEvent.newValue isnt chatSession
+						loading = true
+						pe.refreshRoomList.stop()
+						pe.getMessages.stop()
+						
+						$("""<div id="timsChatLoadingErrorDialog">#{WCF.Language.get('chat.general.error.duplicateTab')}</div>""").appendTo('body') unless $.wcfIsset('timsChatLoadingErrorDialog')
+						$('#timsChatLoadingErrorDialog').wcfDialog
+							closable: false
+							title: WCF.Language.get('wcf.global.error.title')
+							
 Ask for permissions to use Desktop notifications when notifications are activated.
 
 			if window.Notification?
@@ -369,7 +385,7 @@ Fetch new messages from the server and pass them to `handleMessages`. The userli
 					console.error "Message loading failed, #{--remainingFailures} remaining"
 					if remainingFailures <= 0
 						loading = true
-
+						
 						pe.refreshRoomList.stop()
 						pe.getMessages.stop()
 						freeTheFish()

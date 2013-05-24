@@ -5,6 +5,7 @@
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.chat
  */
+
 // include config
 require_once(__DIR__.'/config.inc.php');
 
