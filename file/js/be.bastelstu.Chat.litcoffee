@@ -581,12 +581,6 @@ Fetch the roomlist from the server and update it in the GUI.
 									handleMessages data.messages
 
 									document.title = v.titleTemplate.fetch data
-									
-Fix smiley category URLs, as the URL changed.
-
-									$('#smilies .menu li a').each (key, value) ->
-										anchor = $(value)
-										anchor.attr 'href', anchor.attr('href').replace /.*#/, "#{target.attr href}#"
 
 Reload the whole page when an error occurs. The users thus sees the error message (usually `PermissionDeniedException`)
 

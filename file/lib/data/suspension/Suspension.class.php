@@ -50,7 +50,7 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 		
 		try {
 			$suspensions = unserialize($data[$user->userID]);
-			if (!$suspensions) throw new \wcf\system\exception\SystemException();
+			if ($suspensions === false) throw new \wcf\system\exception\SystemException();
 		}
 		catch (\wcf\system\exception\SystemException $e) {
 			$sql = "SELECT
