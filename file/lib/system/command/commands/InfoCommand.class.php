@@ -52,7 +52,7 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 				if (!$typeSuspension->isValid()) continue;
 				
 				$dateTime = DateUtil::getDateTimeByTimestamp($typeSuspension->expires);
-				$name = WCF::getLanguage()->getDynamicVariable('chat.information.suspension', array(
+				$name = WCF::getLanguage()->getDynamicVariable('chat.general.information.suspension', array(
 					'suspension' => $typeSuspension,
 					'room' => \chat\data\room\RoomCache::getInstance()->getRoom($typeSuspension->roomID)
 				));

@@ -50,16 +50,20 @@
 		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Zeit, die eine Nachricht im Protokoll abrufbar bleibt. [Zeit in Minuten, -1 für unendlich]]]></item>
 	</category>
 	
+	<category name="wcf.dashboard">
+		<item name="wcf.dashboard.box.be.bastelstu.chat.onlineList"><![CDATA[Chat]]></item>
+	</category>
+	
 	<category name="chat.error">
-		<item name="chat.error"><![CDATA[Fehler]]></item>
 		<item name="chat.error.notFound"><![CDATA[Der Befehl wurde nicht gefunden.]]></item>
 		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer „{$exception->getUsername()}“ wurde nicht gefunden.]]></item>
 		<item name="chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
-		<item name="chat.error.exception"><![CDATA[Es gab ein Problem bei der Ausführung dieses Befehls. Bitte wenden Sie sich an einen Administrator.]]></item>
+		<item name="chat.error.duplicateTab"><![CDATA[Der Chat wurde in einem weiteren Tab geöffnet.]]></item>
+		<item name="chat.error.reload"><![CDATA[Neu laden]]></item>
 	</category>
 	
 	<category name="chat.general">
-		<item name="chat.general.title"><![CDATA[Chat]]></item>
+		<item name="chat.general.title"><![CDATA[{lang}chat.header.menu.chat{/lang}]]></item>
 		<item name="chat.general.protocol"><![CDATA[Protokoll]]></item>
 		
 		<item name="chat.general.room"><![CDATA[Chatraum]]></item>
@@ -90,7 +94,7 @@
 		
 		<item name="chat.general.information"><![CDATA[Information]]></item>
 		<item name="chat.general.information.chatUpdate"><![CDATA[Der Chat wurde aktualisiert. Bitte lade die Seite neu, da es sonst zu Fehlern kommen kann.]]></item>
-		<item name="chat.information.suspension"><![CDATA[{lang}chat.suspension.{$suspension->type}{/lang} ({if $room}{$room}{else}{lang}chat.room.global{/lang}{/if})]]></item>
+		<item name="chat.general.information.suspension"><![CDATA[{lang}chat.suspension.{$suspension->type}{/lang} ({if $room}{$room}{else}{lang}chat.room.global{/lang}{/if})]]></item>
 	</category>
 	
 	<category name="chat.header">

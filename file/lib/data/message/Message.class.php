@@ -36,7 +36,6 @@ class Message extends \chat\data\CHATDatabaseObject {
 	const TYPE_CLEAR = 9;
 	const TYPE_TEAM = 10;
 	const TYPE_GLOBALMESSAGE = 11;
-	const TYPE_ERROR = 12;
 	
 	/**
 	 * cache for users
@@ -99,7 +98,6 @@ class Message extends \chat\data\CHATDatabaseObject {
 	public function getUsername($colored = false) {
 		$username = $this->username;
 		if ($this->type == self::TYPE_INFORMATION) return WCF::getLanguage()->get('chat.general.information');
-		if ($this->type == self::TYPE_ERROR) return WCF::getLanguage()->get('chat.error');
 		
 		if ($colored) {
 			$username = \chat\util\ChatUtil::gradient($username, $this->color1, $this->color2);
@@ -122,7 +120,6 @@ class Message extends \chat\data\CHATDatabaseObject {
 	public function jsonify($raw = false) {
 		switch ($this->type) {
 			case self::TYPE_NORMAL:
-			case self::TYPE_ERROR:
 			case self::TYPE_INFORMATION:
 			case self::TYPE_WHISPER:
 				$separator = ':';

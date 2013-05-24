@@ -91,6 +91,8 @@ When **Tims Chat** loses the focus mark the chat as inactive.
 Make the user leave the chat when **Tims Chat** is about to be unloaded.
 
 			$(window).on 'beforeunload', ->
+				return undefined if errorVisible
+				
 				new WCF.Action.Proxy
 					autoSend: true
 					data:
@@ -282,7 +284,7 @@ Enable duplicate tab detection.
 			$(window).on 'storage', (event) ->
 				if event.originalEvent.key is 'be.bastelstu.chat.session'
 					if event.originalEvent.newValue isnt chatSession
-						showError WCF.Language.get 'chat.general.error.duplicateTab'
+						showError WCF.Language.get 'chat.error.duplicateTab'
 						
 Ask for permissions to use Desktop notifications when notifications are activated.
 
@@ -381,7 +383,7 @@ Fetch new messages from the server and pass them to `handleMessages`. The userli
 						freeTheFish()
 						console.error 'To many failures, aborting'
 						
-						showError WCF.Language.get 'chat.general.error.onMessageLoad'
+						showError WCF.Language.get 'chat.error.onMessageLoad'
 							
 				complete: ->
 					loading = false
@@ -619,7 +621,7 @@ Shows an unrecoverable error with the given text.
 			""").appendTo 'body'
 			
 			formSubmit = $("""<div class="formSubmit"></div>""").appendTo errorDialog
-			reloadButton = $("""<button class="buttonPrimary">#{WCF.Language.get 'chat.general.error.reload'}</button>""").appendTo formSubmit
+			reloadButton = $("""<button class="buttonPrimary">#{WCF.Language.get 'chat.error.reload'}</button>""").appendTo formSubmit
 			reloadButton.on 'click', ->
 				window.location.reload()
 				

@@ -15,7 +15,9 @@
 						'chat.general.ban': '{lang}chat.general.ban{/lang}',
 						'chat.general.profile': '{lang}chat.general.profile{/lang}',
 						'chat.general.notify.title': '{lang}chat.general.notify.title{/lang}',
-						'chat.general.error.onMessageLoad': '{lang}chat.general.error.onMessageLoad{/lang}'
+						'chat.error.onMessageLoad': '{lang}chat.error.onMessageLoad{/lang}',
+						'chat.error.duplicateTab': '{lang}chat.error.duplicateTab{/lang}',
+						'chat.error.reload': '{lang}chat.error.reload{/lang}'
 					});
 					
 					{event name='beforeInit'}
@@ -78,10 +80,6 @@
 		
 		.timsChatMessage{$type|concat:'INFORMATION'|constant}::before {
 			content: "\f05a";
-		}
-		
-		.timsChatMessage{$type|concat:'ERROR'|constant}::before {
-			content: "\f05e";
 		}
 		/*]]>*/
 	</style>
