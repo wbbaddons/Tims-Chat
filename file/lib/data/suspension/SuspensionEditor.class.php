@@ -23,6 +23,6 @@ class SuspensionEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\da
 	public static function resetCache() {
 		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
-		$ush->resetAll('suspensions');
+		$ush->resetAll('chatSuspensions');
 	}
 }

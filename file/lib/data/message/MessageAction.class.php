@@ -48,9 +48,10 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	 */
 	public function validateSend() {
 		// read user data
-		$this->parameters['userData']['color'] = \chat\util\ChatUtil::readUserData('color');
-		$this->parameters['userData']['roomID'] = \chat\util\ChatUtil::readUserData('roomID');
-		$this->parameters['userData']['away'] = \chat\util\ChatUtil::readUserData('away');
+		$this->parameters['userData']['color1'] = WCF::getUser()->chatColor1;
+		$this->parameters['userData']['color2'] = WCF::getUser()->chatColor2;
+		$this->parameters['userData']['roomID'] = WCF::getUser()->chatRoomID;
+		$this->parameters['userData']['away'] = WCF::getUser()->chatAway;
 		
 		// read and validate room
 		$this->parameters['room'] = room\RoomCache::getInstance()->getRoom($this->parameters['userData']['roomID']);
@@ -81,7 +82,11 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 			}
 		}
 		
-		\chat\util\ChatUtil::writeUserData(array('away' => null));
+		$editor = new \wcf\data\user\UserEditor(WCF::getUser());
+		$editor->update(array(
+			'chatAway' => null,
+			'chatLastActivity' => TIME_NOW
+		));
 		
 		// mark user as back
 		if ($this->parameters['userData']['away'] !== null) {
@@ -93,8 +98,8 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 					'time' => TIME_NOW,
 					'type' => Message::TYPE_BACK,
 					'message' => '',
-					'color1' => $this->parameters['userData']['color'][1],
-					'color2' => $this->parameters['userData']['color'][2]
+					'color1' => $this->parameters['userData']['color1'],
+					'color2' => $this->parameters['userData']['color2']
 				)
 			));
 			$messageAction->executeAction();
@@ -131,7 +136,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	/**
 	 * Creates sent message.
 	 */
-	public function send() {		
+	public function send() {
 		$this->objectAction = new MessageAction(array(), 'create', array(
 			'data' => array(
 				'roomID' => $this->parameters['room']->roomID,
@@ -143,8 +148,8 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 				'message' => $this->parameters['text'],
 				'enableSmilies' => $this->parameters['enableSmilies'] ? 1 : 0,
 				'enableHTML' => $this->parameters['enableHTML'] ? 1 : 0,
-				'color1' => $this->parameters['userData']['color'][1],
-				'color2' => $this->parameters['userData']['color'][2]
+				'color1' => $this->parameters['userData']['color1'],
+				'color2' => $this->parameters['userData']['color2']
 			)
 		));
 		$this->objectAction->executeAction();

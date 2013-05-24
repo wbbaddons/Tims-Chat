@@ -54,6 +54,13 @@ CREATE TABLE chat1_suspension (
 	KEY (expires)
 );
 
+ALTER TABLE wcf1_user ADD COLUMN chatRoomID INT(10) DEFAULT NULL;
+ALTER TABLE wcf1_user ADD COLUMN chatColor1 INT(10) NOT NULL DEFAULT 0;
+ALTER TABLE wcf1_user ADD COLUMN chatColor2 INT(10) NOT NULL DEFAULT 0;
+ALTER TABLE wcf1_user ADD COLUMN chatLastActivity INT(10) NOT NULL DEFAULT 0;
+ALTER TABLE wcf1_user ADD COLUMN chatAway TEXT DEFAULT NULL;
+ALTER TABLE wcf1_user ADD COLUMN chatLastSeen INT(10) NOT NULL DEFAULT 0;
+
 ALTER TABLE chat1_message ADD FOREIGN KEY (receiver) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE chat1_message ADD FOREIGN KEY (roomID) REFERENCES chat1_room (roomID) ON DELETE CASCADE;
 ALTER TABLE chat1_message ADD FOREIGN KEY (sender) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
@@ -62,6 +69,8 @@ ALTER TABLE chat1_room ADD FOREIGN KEY (owner) REFERENCES wcf1_user (userID) ON 
 
 ALTER TABLE chat1_suspension ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE chat1_suspension ADD FOREIGN KEY (roomID) REFERENCES chat1_room (roomID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user ADD FOREIGN KEY (chatRoomID) REFERENCES chat1_room (roomID) ON DELETE SET NULL;
 
 INSERT INTO chat1_room (title, topic, showOrder) VALUES ('chat.room.title1', 'chat.room.topic1', 1);
 INSERT INTO chat1_room (title, topic, showOrder) VALUES ('Testroom 2', 'Topic of Testroom 2', 2);

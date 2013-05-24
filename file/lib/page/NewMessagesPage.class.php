@@ -73,7 +73,7 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 	 * Fetches the new messages
 	 */
 	public function readMessages() {
-		$this->messages = data\message\MessageList::getMessagesSince($this->room, \chat\util\ChatUtil::readUserData('lastSeen'));
+		$this->messages = data\message\MessageList::getMessagesSince($this->room, WCF::getUser()->chatLastSeen);
 		
 		// update last seen message
 		$sql = "SELECT
@@ -83,9 +83,10 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 		$stmt = WCF::getDB()->prepareStatement($sql);
 		$stmt->execute();
 		
-		\chat\util\ChatUtil::writeUserData(array(
-			'lastSeen' => $stmt->fetchColumn(),
-			'lastActivity' => TIME_NOW
+		$editor = new \wcf\data\user\UserEditor(WCF::getUser());
+		$editor->update(array(
+			'chatLastSeen' => $stmt->fetchColumn(),
+			'chatLastActivity' => TIME_NOW
 		));
 	}
 	
@@ -93,9 +94,7 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 	 * Initializes the room databaseobject.
 	 */
 	public function readRoom() {
-		$roomID = \chat\util\ChatUtil::readUserData('roomID');
-		
-		$this->room = \chat\data\room\RoomCache::getInstance()->getRoom($roomID);
+		$this->room = \chat\data\room\RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID);
 		if (!$this->room) throw new IllegalLinkException();
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 	}

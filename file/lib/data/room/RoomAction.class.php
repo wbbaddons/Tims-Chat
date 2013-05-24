@@ -126,8 +126,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	public function validateGetRoomList() {
 		if (!MODULE_CHAT) throw new \wcf\system\exception\IllegalLinkException();
 		
-		$roomID = ChatUtil::readUserData('roomID');
-		$this->parameters['room'] = RoomCache::getInstance()->getRoom($roomID);
+		$this->parameters['room'] = RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID);
 		if ($this->parameters['room'] === null) throw new \wcf\system\exception\IllegalLinkException();
 	}
 	
@@ -162,8 +161,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		
 		unset($this->parameters['user']);
 		
-		$roomID = ChatUtil::readUserData('roomID');
-		if (RoomCache::getInstance()->getRoom($roomID) === null) throw new \wcf\system\exception\IllegalLinkException();
+		if (RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID) === null) throw new \wcf\system\exception\IllegalLinkException();
 	}
 	
 	/**
@@ -175,13 +173,10 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			$this->parameters['user'] = WCF::getUser();
 		}
 		
-		$roomID = ChatUtil::readUserData('roomID', $this->parameters['user']);
-		$room = RoomCache::getInstance()->getRoom($roomID);
+		$room = RoomCache::getInstance()->getRoom($this->parameters['user']->chatRoomID);
 		if ($room === null) throw new \wcf\system\exception\UserInputException();
 		
 		if (CHAT_DISPLAY_JOIN_LEAVE) {
-			$userData['color'] = ChatUtil::readUserData('color', $this->parameters['user']);
-			
 			// leave message
 			$messageAction = new \chat\data\message\MessageAction(array(), 'create', array(
 				'data' => array(
@@ -191,15 +186,18 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 					'time' => TIME_NOW,
 					'type' => \chat\data\message\Message::TYPE_LEAVE,
 					'message' => '',
-					'color1' => $userData['color'][1],
-					'color2' => $userData['color'][2]
+					'color1' => $this->parameters['user']->chatColor1,
+					'color2' => $this->parameters['user']->chatColor2
 				)
 			));
 			$messageAction->executeAction();
 		}
 		
 		// set current room to null
-		ChatUtil::writeUserData(array('roomID' => null), $this->parameters['user']);
+		$editor = new \wcf\data\user\UserEditor($this->parameters['user']);
+		$editor->update(array(
+			'chatRoomID' => null
+		));
 		
 		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.join');
 	}

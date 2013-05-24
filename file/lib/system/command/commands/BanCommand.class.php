@@ -28,7 +28,7 @@ class BanCommand extends MuteCommand {
 		$this->suspensionAction = new suspension\SuspensionAction(array(), 'create', array(
 			'data' => array(
 				'userID' => $this->user->userID,
-				'roomID' => ChatUtil::readUserData('roomID'),
+				'roomID' => WCF::getUser()->chatRoomID,
 				'type' => suspension\Suspension::TYPE_BAN,
 				'expires' => $this->expires
 			)

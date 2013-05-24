@@ -126,12 +126,11 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 		$sql = "SELECT
 				COUNT(*)
 			FROM
-				wcf".WCF_N."_user_storage
+				wcf".WCF_N."_user
 			WHERE
-					field = ?
-				AND 	fieldValue = ?";
+				chatRoomID = ?";
 		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array('roomID', $this->roomID));
+		$stmt->execute(array($this->roomID));
 	
 		return $stmt->fetchColumn();
 	}
@@ -142,21 +141,8 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	 * @return	\wcf\data\user\UserProfileList
 	 */
 	public function getUsers() {
-		$sql = "SELECT
-				userID
-			FROM
-				wcf".WCF_N."_user_storage 
-			WHERE
-					field = ?
-				AND 	fieldValue = ?";
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array('roomID', $this->roomID));
-		$userIDs = array();
-		while ($userID = $stmt->fetchColumn()) $userIDs[] = $userID;
-		
 		$userList = new \wcf\data\user\UserProfileList();
-		if (!empty($userIDs)) $userList->getConditionBuilder()->add('user_table.userID IN (?)', array($userIDs));
-		else $userList->getConditionBuilder()->add('1 = 0', array());
+		$userList->getConditionBuilder()->add('user_table.chatRoomID = ?', array($this->roomID));
 		
 		$userList->readObjects();
 		
@@ -170,35 +156,15 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	 */
 	public static function getDeadUsers() {
 		if (\wcf\system\nodePush\NodePushHandler::getInstance()->isEnabled()) {
-			$time = TIME_NOW - 120;
+			$time = TIME_NOW - 180;
 		}
 		else {
 			$time = TIME_NOW;
 		}
 		
-		$sql = "SELECT
-				r.userID
-			FROM
-				wcf".WCF_N."_user_storage r
-			LEFT JOIN
-				wcf".WCF_N."_user_storage a
-				ON		a.userID = r.userID 
-					AND	a.field = ? 
-			WHERE
-					r.field = ?
-				AND	r.fieldValue IS NOT NULL
-				AND	(
-							a.fieldValue < ?
-						OR	a.fieldValue IS NULL
-				)";
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array('lastActivity', 'roomID', $time - 30));
-		$userIDs = array();
-		while ($userID = $stmt->fetchColumn()) $userIDs[] = $userID;
-		
 		$userList = new \wcf\data\user\UserList();
-		if (!empty($userIDs)) $userList->getConditionBuilder()->add('user_table.userID IN (?)', array($userIDs));
-		else $userList->getConditionBuilder()->add('1 = 0', array());
+		$userList->getConditionBuilder()->add('user_table.chatRoomID IS NOT NULL', array());
+		$userList->getConditionBuilder()->add('user_table.chatLastActivity < ?', array($time - 30));
 		
 		$userList->readObjects();
 		

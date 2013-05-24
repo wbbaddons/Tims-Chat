@@ -42,9 +42,17 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	 */
 	public static function getSuspensionsForUser(\wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
-		$suspensions = \chat\util\ChatUtil::readUserData('suspensions', $user);
+		$ush = \wcf\system\user\storage\UserStorageHandler::getInstance();
 		
-		if ($suspensions === null) {
+		// load storage
+		$ush->loadStorage(array($user->userID));
+		$data = $ush->getStorage(array($user->userID), 'chatSuspensions');
+		
+		try {
+			$suspensions = unserialize($data[$user->userID]);
+			if (!$suspensions) throw new \wcf\system\exception\SystemException();
+		}
+		catch (\wcf\system\exception\SystemException $e) {
 			$sql = "SELECT
 					*
 				FROM
@@ -60,7 +68,7 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 				$suspensions[$suspension->roomID][$suspension->type] = $suspension;
 			}
 			
-			\chat\util\ChatUtil::writeUserData(array('suspensions' => $suspensions), $user);
+			$ush->update($user->userID, 'chatSuspensions', serialize($suspensions));
 		}
 		
 		return $suspensions;

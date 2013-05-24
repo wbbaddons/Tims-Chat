@@ -56,13 +56,19 @@ class ColorCommand extends \chat\system\command\AbstractCommand {
 			if (isset(self::$colors[$val])) $color[$key] = self::$colors[$val];
 			else {
 				if (!$regex->match($val)) throw new \chat\system\command\NotFoundException();
+				
 				$matches = $regex->getMatches();
 				$val = $matches[1];
 				if (strlen($val) == 3) $val = $val[0].$val[0].$val[1].$val[1].$val[2].$val[2];
 				$color[$key] = hexdec($val);
 			}
 		}
-		\chat\util\ChatUtil::writeUserData(array('color' => $color));
+		
+		$editor = new \wcf\data\user\UserEditor(\wcf\system\WCF::getUser());
+		$editor->update(array(
+			'chatColor1' => $color[1],
+			'chatColor2' => $color[2]
+		));
 		$this->didInit();
 	}
 	

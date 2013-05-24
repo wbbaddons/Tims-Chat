@@ -30,14 +30,6 @@ final class ChatUtil {
 	const PACKAGE_IDENTIFIER = 'be.bastelstu.chat';
 	
 	/**
-	 * Which user-storage-keys need serialization.
-	 * The value should always be true.
-	 * 
-	 * @var array<boolean>
-	 */
-	private static $serialize = array('color' => true, 'suspensions' => true);
-	
-	/**
 	 * Cached packageID of Tims Chat.
 	 * 
 	 * @var	integer
@@ -53,16 +45,6 @@ final class ChatUtil {
 		}
 		
 		return self::$packageID;
-	}
-	
-	/**
-	 * Returns a random number.
-	 * 
-	 * @return	integer
-	 */
-	public static function /* int */ getRandomNumber() {
-		return 4;	// chosen by a fair dice roll
-				// guaranteed to be random
 	}
 	
 	/**
@@ -93,51 +75,6 @@ final class ChatUtil {
 		}
 		
 		return $result;
-	}
-	
-	/**
-	 * Reads user data.
-	 *
-	 * @param	string			$field
-	 * @param	\wcf\data\user\User	$user
-	 * @return	mixed
-	 */
-	public static function readUserData($field, \wcf\data\user\User $user = null) {
-		if ($user === null) $user = WCF::getUser();
-		$ush = UserStorageHandler::getInstance();
-		
-		// load storage
-		$ush->loadStorage(array($user->userID));
-		$data = $ush->getStorage(array($user->userID), $field);
-		
-		if ($data[$user->userID] === null) {
-			switch ($field) {
-				case 'color':
-					$data[$user->userID] = array(1 => self::getRandomNumber(), 2 => self::getRandomNumber() * 0xFFFF);
-				break;
-			}
-			if ($data[$user->userID] !== null) static::writeUserData(array($field => $data[$user->userID]));
-			
-			return $data[$user->userID];
-		}
-		
-		if (isset(static::$serialize[$field])) return unserialize($data[$user->userID]);
-		else return $data[$user->userID];
-	}
-	
-	/**
-	 * Writes user data
-	 * 
-	 * @param	array $data
-	 * @param	\wcf\data\user\User	$user
-	 */
-	public static function writeUserData(array $data, \wcf\data\user\User $user = null) {
-		if ($user === null) $user = WCF::getUser();
-		$ush = UserStorageHandler::getInstance();
-	
-		foreach ($data as $key => $value) {
-			$ush->update($user->userID, $key, (isset(static::$serialize[$key])) ? serialize($value) : $value);
-		}
 	}
 	
 	/**

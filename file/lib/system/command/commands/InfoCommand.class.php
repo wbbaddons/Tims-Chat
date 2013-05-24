@@ -34,13 +34,13 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 		$this->lines[WCF::getLanguage()->get('wcf.user.username')] = "[url='".$profile."']".$this->user->username.'[/url]';
 		
 		// Away-Status
-		if (ChatUtil::readUserData('away', $this->user) !== null) {
-			$this->lines[WCF::getLanguage()->get('wcf.chat.away')] = ChatUtil::readUserData('away', $this->user);
+		if ($this->user->chatAway !== null) {
+			$this->lines[WCF::getLanguage()->get('wcf.chat.away')] = $this->user->chatAway;
 		}
 		
 		// Room
-		$room = \chat\data\room\RoomCache::getInstance()->getRoom(ChatUtil::readUserData('roomID', $this->user));
-		if ($room->roomID && $room->canEnter()) {
+		$room = \chat\data\room\RoomCache::getInstance()->getRoom($this->user->chatRoomID);
+		if ($room !== null && $room->canEnter()) {
 			$this->lines[WCF::getLanguage()->get('chat.general.room')] = $room->getTitle();
 		}
 		

@@ -109,12 +109,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 		parent::readData();
 		
 		$this->readRoom();
-		$this->userData['color'] = \chat\util\ChatUtil::readUserData('color');
-		\chat\util\ChatUtil::writeUserData(array(
-			'roomID' => $this->room->roomID,
-			'away' => null,
-			'lastActivity' => TIME_NOW
-		));
 		
 		if (CHAT_DISPLAY_JOIN_LEAVE) {
 			$messageAction = new data\message\MessageAction(array(), 'create', array(
@@ -125,8 +119,8 @@ class ChatPage extends \wcf\page\AbstractPage {
 					'time' => TIME_NOW,
 					'type' => \chat\data\message\Message::TYPE_JOIN,
 					'message' => serialize(array('ipAddress' => \wcf\util\UserUtil::convertIPv6To4(\wcf\util\UserUtil::getIpAddress()))),
-					'color1' => $this->userData['color'][1],
-					'color2' => $this->userData['color'][2]
+					'color1' => WCF::getUser()->chatColor1,
+					'color2' => WCF::getUser()->chatColor2
 				)
 			));
 			$messageAction->executeAction();
@@ -135,11 +129,19 @@ class ChatPage extends \wcf\page\AbstractPage {
 		
 		$this->newestMessages = data\message\MessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
 		try {
-			\chat\util\ChatUtil::writeUserData(array('lastSeen' => end($this->newestMessages)->messageID));
+			$lastSeen = end($this->newestMessages)->messageID;
 		}
 		catch (\wcf\system\exception\SystemException $e) {
-			\chat\util\ChatUtil::writeUserData(array('lastSeen' => 0));
+			$lastSeen = 0;
 		}
+		
+		$editor = new \wcf\data\user\UserEditor(WCF::getUser());
+		$editor->update(array(
+			'chatRoomID' => $this->room->roomID,
+			'chatAway' => null,
+			'chatLastActivity' => TIME_NOW,
+			'chatLastSeen' => $lastSeen
+		));
 		
 		// get default smilies
 		if (MODULE_SMILEY) {

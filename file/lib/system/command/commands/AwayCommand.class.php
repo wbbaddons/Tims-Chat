@@ -15,7 +15,10 @@ class AwayCommand extends \chat\system\command\AbstractCommand {
 	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
-		\chat\util\ChatUtil::writeUserData(array('away' => $commandHandler->getParameters()));
+		$editor = new \wcf\data\user\UserEditor(WCF::getUser());
+		$editor->update(array(
+			'chatAway' => $commandHandler->getParameters()
+		));
 		$this->didInit();
 	}
 	
