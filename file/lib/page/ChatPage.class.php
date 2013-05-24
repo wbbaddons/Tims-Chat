@@ -174,7 +174,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 	 * Reads room data.
 	 */
 	public function readRoom() {
-		$this->rooms = data\room\Room::getCache();
+		$this->rooms = data\room\RoomCache::getInstance()->getRooms();
 		
 		if ($this->roomID === 0) {
 			// no room given

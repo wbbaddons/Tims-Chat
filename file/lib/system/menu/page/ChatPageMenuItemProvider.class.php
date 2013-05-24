@@ -11,6 +11,11 @@ namespace chat\system\menu\page;
  * @subpackage	system.menu.page
  */
 class ChatPageMenuItemProvider extends \wcf\system\menu\page\DefaultPageMenuItemProvider {
+	/**
+	 * room that the menu item points to
+	 * 
+	 * @var \chat\data\room\Room
+	 */
 	protected $room = null;
 	
 	/**
@@ -22,9 +27,9 @@ class ChatPageMenuItemProvider extends \wcf\system\menu\page\DefaultPageMenuItem
 		// guests are not supported
 		if (!\wcf\system\WCF::getUser()->userID) return false;
 		
-		$cache = \chat\data\room\Room::getCache();
+		$rooms = \chat\data\room\RoomCache::getInstance()->getRooms();
 		
-		foreach ($cache as $this->room) {
+		foreach ($rooms as $this->room) {
 			if ($this->room->canEnter()) {
 				return true;
 			}

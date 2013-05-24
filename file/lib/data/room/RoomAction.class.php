@@ -126,19 +126,16 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	public function validateGetRoomList() {
 		if (!MODULE_CHAT) throw new \wcf\system\exception\IllegalLinkException();
 		
-		$rooms = Room::getCache();
 		$roomID = ChatUtil::readUserData('roomID');
-		if (!isset($rooms[$roomID])) {
-			throw new \wcf\system\exception\IllegalLinkException();
-		}
-		$this->parameters['room'] = $rooms[$roomID];
+		$this->parameters['room'] = RoomCache::getInstance()->getRoom($roomID);
+		if ($this->parameters['room'] === null) throw new \wcf\system\exception\IllegalLinkException();
 	}
 	
 	/**
 	 * Returns the available rooms.
 	 */
 	public function getRoomList() {
-		$rooms = Room::getCache();
+		$rooms = RoomCache::getInstance()->getRooms();
 		
 		$result = array();
 		foreach ($rooms as $room) {
@@ -165,9 +162,8 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		
 		unset($this->parameters['user']);
 		
-		$rooms = Room::getCache();
 		$roomID = ChatUtil::readUserData('roomID');
-		if (!isset($rooms[$roomID])) throw new \wcf\system\exception\IllegalLinkException();
+		if (RoomCache::getInstance()->getRoom($roomID) === null) throw new \wcf\system\exception\IllegalLinkException();
 	}
 	
 	/**
@@ -179,11 +175,9 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			$this->parameters['user'] = WCF::getUser();
 		}
 		
-		$rooms = Room::getCache();
-		
 		$roomID = ChatUtil::readUserData('roomID', $this->parameters['user']);
-		if (!isset($rooms[$roomID])) throw new \wcf\system\exception\UserInputException();
-		$activeRoom = $rooms[$roomID];
+		$room = RoomCache::getInstance()->getRoom($roomID);
+		if ($room === null) throw new \wcf\system\exception\UserInputException();
 		
 		if (CHAT_DISPLAY_JOIN_LEAVE) {
 			$userData['color'] = ChatUtil::readUserData('color', $this->parameters['user']);
@@ -191,7 +185,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			// leave message
 			$messageAction = new \chat\data\message\MessageAction(array(), 'create', array(
 				'data' => array(
-					'roomID' => $activeRoom->roomID,
+					'roomID' => $room->roomID,
 					'sender' => $this->parameters['user']->userID,
 					'username' => $this->parameters['user']->username,
 					'time' => TIME_NOW,
@@ -235,7 +229,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	 * Returns dashboard roomlist.
 	 */
 	public function getDashboardRoomList() {
-		$rooms = Room::getCache();
+		$rooms = RoomCache::getInstance()->getRooms();
 		
 		foreach ($rooms as $key => $room) {
 			if (!$room->canEnter()) unset($rooms[$key]);

@@ -1,5 +1,5 @@
 <?php
-namespace be\bastelstu\wcf\chat;
+namespace be\bastelstu\chat;
 
 /**
  * Handles installation of Tims Chat.

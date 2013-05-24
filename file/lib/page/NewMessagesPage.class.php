@@ -94,10 +94,9 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 	 */
 	public function readRoom() {
 		$roomID = \chat\util\ChatUtil::readUserData('roomID');
-		$cache = data\room\Room::getCache();
-		if (!isset($cache[$roomID])) throw new IllegalLinkException();
 		
-		$this->room = $cache[$roomID];
+		$this->room = \chat\data\room\RoomCache::getInstance()->getRoom($roomID);
+		if (!$this->room) throw new IllegalLinkException();
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 	}
 	

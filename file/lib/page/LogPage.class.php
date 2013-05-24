@@ -77,11 +77,9 @@ class LogPage extends \wcf\page\AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		$cache = data\room\Room::getCache();
-		if (!isset($cache[$this->roomID])) throw new IllegalLinkException();
-		
-		$this->room = $cache[$this->roomID];
-		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
+		$this->room = data\room\RoomCache::getInstance()->getRoom($this->roomID);
+		if (!$this->room) throw new IllegalLinkException();
+		if (!$this->room->canEnter()) throw new PermissionDeniedException();
 		
 		// TODO: actually read the correct messages
 		$this->messages = data\message\MessageList::getNewestMessages($this->room, 150);

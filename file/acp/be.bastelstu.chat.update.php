@@ -26,7 +26,7 @@ final class Update {
 	private $styles = null;
 	
 	public function __construct() {
-		$this->rooms = \chat\data\room\Room::getCache();
+		$this->rooms = \chat\data\room\RoomCache::getInstance()->getRooms();
 		$this->styles = \wcf\system\style\StyleHandler::getInstance()->getAvailableStyles();
 	}
 	

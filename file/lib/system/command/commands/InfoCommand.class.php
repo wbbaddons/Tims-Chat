@@ -39,7 +39,7 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 		}
 		
 		// Room
-		$room = new \chat\data\room\Room(ChatUtil::readUserData('roomID', $this->user));
+		$room = \chat\data\room\RoomCache::getInstance()->getRoom(ChatUtil::readUserData('roomID', $this->user));
 		if ($room->roomID && $room->canEnter()) {
 			$this->lines[WCF::getLanguage()->get('chat.general.room')] = $room->getTitle();
 		}
@@ -52,7 +52,11 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 				if (!$typeSuspension->isValid()) continue;
 				
 				$dateTime = DateUtil::getDateTimeByTimestamp($typeSuspension->expires);
-				$this->lines[$typeSuspension->type.'-'.$typeSuspension->roomID] = str_replace('%time%', DateUtil::format($dateTime, DateUtil::TIME_FORMAT), str_replace('%date%', DateUtil::format($dateTime, DateUtil::DATE_FORMAT), WCF::getLanguage()->get('wcf.date.dateTimeFormat')));
+				$name = WCF::getLanguage()->getDynamicVariable('chat.information.suspension', array(
+					'suspension' => $typeSuspension,
+					'room' => \chat\data\room\RoomCache::getInstance()->getRoom($typeSuspension->roomID)
+				));
+				$this->lines[$name] = str_replace('%time%', DateUtil::format($dateTime, DateUtil::TIME_FORMAT), str_replace('%date%', DateUtil::format($dateTime, DateUtil::DATE_FORMAT), WCF::getLanguage()->get('wcf.date.dateTimeFormat')));
 			}
 		}
 		

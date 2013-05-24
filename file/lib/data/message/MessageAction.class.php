@@ -53,11 +53,10 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$this->parameters['userData']['away'] = \chat\util\ChatUtil::readUserData('away');
 		
 		// read and validate room
-		$cache = room\Room::getCache();
-		if (!isset($cache[$this->parameters['userData']['roomID']])) throw new \wcf\system\exception\IllegalLinkException();
-		$this->parameters['room'] = $cache[$this->parameters['userData']['roomID']];
-		
-		if (!$this->parameters['room']->canEnter() || !$this->parameters['room']->canWrite()) throw new \wcf\system\exception\PermissionDeniedException();
+		$this->parameters['room'] = room\RoomCache::getInstance()->getRoom($this->parameters['userData']['roomID']);
+		if ($this->parameters['room'] === null) throw new \wcf\system\exception\IllegalLinkException();
+		if (!$this->parameters['room']->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
+		if (!$this->parameters['room']->canWrite()) throw new \wcf\system\exception\PermissionDeniedException();
 		
 		// read parameters
 		$this->readString('text');

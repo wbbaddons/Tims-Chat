@@ -27,7 +27,7 @@ class OnlineListDashboardBox extends \wcf\system\dashboard\box\AbstractContentDa
 		if (!MODULE_CHAT) return;
 		if (!\wcf\system\WCF::getUser()->userID) return;
 		
-		$this->rooms = data\room\Room::getCache();
+		$this->rooms = data\room\RoomCache::getInstance()->getRooms();
 		
 		foreach ($this->rooms as $key => $room) {
 			if (!$room->canEnter()) unset($this->rooms[$key]);

@@ -22,7 +22,7 @@ class WhereCommand extends \chat\system\command\AbstractCommand {
 	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		$rooms = \chat\data\room\Room::getCache();
+		$rooms = \chat\data\room\RoomCache::getInstance()->getRooms();
 		
 		foreach ($rooms as $room) {
 			$users = $room->getUsers();
