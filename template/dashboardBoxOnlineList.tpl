@@ -7,8 +7,8 @@
 				<div>
 					<div>
 						<hgroup class="containerHeadline">
-							<h1><a href="{link application='chat' controller='Chat' object=$room}{/link}">{$room}</a> <span class="badge">{#$users|count}</span></h1>
-							<h2>{$room->topic|language}</h2>
+							<h3><a href="{link application='chat' controller='Chat' object=$room}{/link}">{$room}</a> <span class="badge">{#$users|count}</span></h3>
+							<p>{$room->topic|language}</p>
 						</hgroup>
 						
 						<ul class="dataList">
@@ -27,7 +27,7 @@
 {else}
 	<div id="chatDashboardBoxOnlineListContainer" {if !$roomList|trim} style="display: none;"{/if}>
 		<header class="boxHeadline boxSubHeadline">
-			<h1>{lang}chat.header.menu.chat{/lang}</h1>
+			<h2>{lang}chat.header.menu.chat{/lang}</h2>
 		</header>
 
 		<div class="container marginTop">
