@@ -12,22 +12,18 @@
 		position: relative;
 	}
 	
-	#content {
-		text-align: left;
+	#timsChatTopic {
+		padding: @wcfGapTiny;
+		.transition(height, .2s);
+		.transition(padding-top, .2s);
+		.transition(padding-bottom, .2s);
 		
-		#timsChatTopic {
-			padding: @wcfGapTiny;
-			.transition(height, .2s);
-			.transition(padding-top, .2s);
-			.transition(padding-bottom, .2s);
-			
-			&.empty {
-				height: 0px;
-				overflow: hidden;
-				border: 0px;
-				padding: 0px;
-				margin: 0px;
-			}
+		&.empty {
+			height: 0px;
+			overflow: hidden;
+			border: 0px;
+			padding: 0px;
+			margin: 0px;
 		}
 	}
 	
@@ -217,10 +213,6 @@
 		margin-top: @wcfGapMedium;
 	}
 	
-	@media only screen and (min-width: 801px) {
-		
-	}
-	
 	@media only screen and (max-width: 800px) {
 		#timsChatMessageContainer {
 			overflow: auto;
@@ -272,31 +264,30 @@ html.fullscreen {
 	#content {
 		height: 100%;
 		
-		> div {
-			width: 100%;
-			height: 100%;
-
-			display: -moz-box;
-			display: -webkit-box;
-			display: -webkit-flex;
-			display: -ms-flexbox;
-			display: flex;
-			
-			-webkit-box-orient: vertical;
-			-moz-box-orient: vertical;
-			-webkit-box-direction: normal;
-			-moz-box-direction: normal;
-			-webkit-flex-direction: column;
-			-ms-flex-direction: column;
-			flex-direction: column;
-			
-			.timsChatMessageContainer {
-				-webkit-box-flex: 1;
-				-moz-box-flex: 1;
-				-webkit-flex: 1 0 auto;
-				-ms-flex: 1 0 auto;
-				flex: 1 0 auto;
-			}
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		
+		display: -moz-box;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		
+		-webkit-box-orient: vertical;
+		-moz-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-moz-box-direction: normal;
+		-webkit-flex-direction: column;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		
+		.timsChatMessageContainer {
+			-webkit-box-flex: 1;
+			-moz-box-flex: 1;
+			-webkit-flex: 1 0 auto;
+			-ms-flex: 1 0 auto;
+			flex: 1 0 auto;
 		}
 	}
 	
@@ -304,7 +295,7 @@ html.fullscreen {
 		margin-bottom: @wcfGapMedium;
 	}
 	
-	#tplChat, #tplChatLog {
+	#tplChat {
 		height: 100%;
 		overflow: hidden;
 		
