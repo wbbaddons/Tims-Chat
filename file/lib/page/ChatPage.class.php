@@ -127,7 +127,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 			$messageAction->getReturnValues();
 		}
 		
-		$this->newestMessages = data\message\MessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
+		$this->newestMessages = data\message\ViewableMessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
 		try {
 			$lastSeen = end($this->newestMessages)->messageID;
 		}
