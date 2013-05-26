@@ -93,13 +93,6 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	}
 	
 	/**
-	 * Loads the room cache.
-	 */
-	public static function getCache() {
-		return \chat\system\cache\builder\RoomCacheBuilder::getInstance()->getData();
-	}
-	
-	/**
 	 * Returns the ID of this chat-room.
 	 *
 	 * @see	\wcf\system\request\IRouteController
