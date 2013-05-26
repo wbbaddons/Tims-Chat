@@ -600,7 +600,7 @@ Joins a room.
 					loading = false
 					
 					$('#timsChatTopic').text data.returnValues.topic
-					if data.topic is ''
+					if data.returnValues.topic.trim() is ''
 						$('#timsChatTopic').addClass 'empty'
 					else
 						$('#timsChatTopic').removeClass 'empty'
