@@ -37,7 +37,8 @@ class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 		));
 		
 		// set permissions
-		$options = \wcf\data\acl\option\ACLOption::getOptions(\wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.chat.room'))->getObjects();
+		$acl = \wcf\system\acl\ACLHandler::getInstance();
+		$options = $acl->getOptions($acl->getObjectTypeID('be.bastelstu.chat.room'))->getObjects();
 		$_POST['aclValues'] = array(
 			'user' => array(
 				// creators may do everything
@@ -49,7 +50,7 @@ class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 			)
 		);
 		
-		\wcf\system\acl\ACLHandler::getInstance()->save($roomID, \wcf\system\acl\ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.chat.room'));
+		$acl->save($roomID, $acl->getObjectTypeID('be.bastelstu.chat.room'));
 		\chat\system\permission\PermissionHandler::clearCache();
 		$this->didInit();
 	}
