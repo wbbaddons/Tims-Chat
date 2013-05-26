@@ -236,7 +236,6 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			'chatLastSeen' => $lastSeen
 		));
 		
-		
 		// add activity points
 		$microtime = microtime(true) * 1000;
 		$result = $microtime & 0xFFFFFFFF;
