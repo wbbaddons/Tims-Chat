@@ -30,6 +30,11 @@ class RestoreCommand extends \chat\system\command\AbstractRestrictedCommand {
 		));
 		$this->link = "[url='".$profile."']".$this->user->username.'[/url]';
 		
+		$editor = new \wcf\data\user\UserEditor($this->user);
+		$editor->update(array(
+			'chatColor1' => 0,
+			'chatColor2' => 0
+		));
 		$this->didInit();
 	}
 	
