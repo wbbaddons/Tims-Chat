@@ -132,7 +132,7 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 					48 => $user->getAvatar()->getImageTag(48)
 				),
 				'link' => \wcf\system\request\LinkHandler::getInstance()->getLink('User', array(
-					'user' => $user->getDecoratedObject()
+					'object' => $user->getDecoratedObject()
 				))
 			);
 		}
