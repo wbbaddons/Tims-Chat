@@ -1,6 +1,7 @@
 <?php
 namespace chat\page;
 use \chat\data;
+use \wcf\system\exception;
 use \wcf\system\WCF;
 
 /**
@@ -27,13 +28,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 	 * @see \wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array();
-	
-	/**
-	 * The last X messages for the current room.
-	 * 
-	 * @var array<\chat\data\message\Message>
-	 */
-	public $newestMessages = array();
 	
 	/**
 	 * The current room.
@@ -73,13 +67,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 	public $smileyCategories = array();
 	
 	/**
-	 * Values read from the UserStorage of the current user.
-	 * 
-	 * @var array
-	 */
-	public $userData = array();
-	
-	/**
 	 * @see wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;
@@ -91,7 +78,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 		parent::assignVariables();
 
 		WCF::getTPL()->assign(array(
-			'newestMessages' => $this->newestMessages,
 			'room' => $this->room,
 			'roomID' => $this->roomID,
 			'rooms' => $this->rooms,
@@ -109,39 +95,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 		parent::readData();
 		
 		$this->readRoom();
-		
-		if (CHAT_DISPLAY_JOIN_LEAVE) {
-			$messageAction = new data\message\MessageAction(array(), 'create', array(
-				'data' => array(
-					'roomID' => $this->room->roomID,
-					'sender' => WCF::getUser()->userID,
-					'username' => WCF::getUser()->username,
-					'time' => TIME_NOW,
-					'type' => \chat\data\message\Message::TYPE_JOIN,
-					'message' => serialize(array('ipAddress' => \wcf\util\UserUtil::convertIPv6To4(\wcf\util\UserUtil::getIpAddress()))),
-					'color1' => WCF::getUser()->chatColor1,
-					'color2' => WCF::getUser()->chatColor2
-				)
-			));
-			$messageAction->executeAction();
-			$messageAction->getReturnValues();
-		}
-		
-		$this->newestMessages = data\message\ViewableMessageList::getNewestMessages($this->room, CHAT_LASTMESSAGES);
-		try {
-			$lastSeen = end($this->newestMessages)->messageID;
-		}
-		catch (\wcf\system\exception\SystemException $e) {
-			$lastSeen = 0;
-		}
-		
-		$editor = new \wcf\data\user\UserEditor(WCF::getUser());
-		$editor->update(array(
-			'chatRoomID' => $this->room->roomID,
-			'chatAway' => null,
-			'chatLastActivity' => TIME_NOW,
-			'chatLastSeen' => $lastSeen
-		));
 		
 		// get default smilies
 		if (MODULE_SMILEY) {
@@ -169,7 +122,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 		parent::readParameters();
 		
 		if (isset($_REQUEST['id'])) $this->roomID = (int) $_REQUEST['id'];
-		if (isset($_REQUEST['ajax'])) $this->useTemplate = false;
 	}
 	
 	/**
@@ -183,7 +135,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 			$room = reset($this->rooms);
 			if ($room === null) {
 				// no valid room found
-				throw new \wcf\system\exception\IllegalLinkException();
+				throw new exception\IllegalLinkException();
 			}
 			// redirect to first chat-room
 			\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
@@ -192,9 +144,9 @@ class ChatPage extends \wcf\page\AbstractPage {
 			exit;
 		}
 		
-		if (!isset($this->rooms[$this->roomID])) throw new \wcf\system\exception\IllegalLinkException();
+		if (!isset($this->rooms[$this->roomID])) throw new exception\IllegalLinkException();
 		$this->room = $this->rooms[$this->roomID];
-		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
+		if (!$this->room->canEnter()) throw new exception\PermissionDeniedException();
 	}
 	
 	/**
@@ -207,26 +159,6 @@ class ChatPage extends \wcf\page\AbstractPage {
 		WCF::getBreadcrumbs()->remove(0);
 		
 		parent::show();
-		
-		// add activity points
-		$microtime = microtime(true) * 1000;
-		$result = $microtime & 0xFFFFFFFF;
-		if ($result > 0x7FFFFFFF) $result -= 0x80000000;
-		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.join', $result, WCF::getUser()->userID);
-		
-		// break if not using ajax
-		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.join');
-		if ($this->useTemplate) exit;
-		@header('Content-type: application/json');
-		
-		$messages = array();
-		foreach ($this->newestMessages as $message) $messages[] = $message->jsonify(true);
-		echo \wcf\util\JSON::encode(array(
-			'title' => $this->room->getTitle(),
-			'topic' => WCF::getLanguage()->get($this->room->topic),
-			'messages' => $messages
-		));
-		exit;
 	}
 	
 	/**

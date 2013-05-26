@@ -93,7 +93,7 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	}
 	
 	/**
-	 * Returns the ID of this chat-room.
+	 * Returns the ID of this chatroom.
 	 *
 	 * @see	\wcf\system\request\IRouteController
 	 */
@@ -102,12 +102,21 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	}
 	
 	/**
-	 * Returns the name of this chat-room.
+	 * Returns the name of this chatroom.
 	 * 
 	 * @see	\wcf\system\request\IRouteController
 	 */
 	public function getTitle() {
 		return \wcf\system\WCF::getLanguage()->get($this->title);
+	}
+	
+	/**
+	 * Returns the topic of this chat room
+	 * 
+	 * @return	string
+	 */
+	public function getTopic() {
+		return \wcf\system\WCF::getLanguage()->get($this->topic);
 	}
 	
 	/**

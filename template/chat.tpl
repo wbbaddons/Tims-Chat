@@ -17,6 +17,7 @@
 						'chat.general.notify.title': '{lang}chat.general.notify.title{/lang}',
 						'chat.error.onMessageLoad': '{lang}chat.error.onMessageLoad{/lang}',
 						'chat.error.duplicateTab': '{lang}chat.error.duplicateTab{/lang}',
+						'chat.error.join': '{lang}chat.error.join{/lang}',
 						'chat.error.reload': '{lang}chat.error.reload{/lang}'
 					});
 					
@@ -29,6 +30,7 @@
 					{capture assign='userTemplate'}{include application='chat' file='userListUser'}{/capture}
 					
 					be.bastelstu.Chat.init(
+						{$roomID},
 						{
 							reloadTime: {@CHAT_RELOADTIME},
 							messageURL: '{link application="chat" controller="NewMessages"}{/link}'
@@ -39,11 +41,6 @@
 					);
 					
 					{event name='afterInit'}
-					
-					// show the last X messages
-					be.bastelstu.Chat.handleMessages([
-						{implode from=$newestMessages item='message'}{@$message->jsonify()}{/implode}
-					]);
 					
 					$('#timsChatCopyright').click(function (event) {
 						event.preventDefault();

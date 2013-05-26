@@ -63,7 +63,7 @@ exposed by a function if necessary.
 Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 
 		initialized = false
-		init = (config, titleTemplate, messageTemplate, userTemplate) ->
+		init = (roomID, config, titleTemplate, messageTemplate, userTemplate) ->
 			return false if initialized
 			initialized = true
 
@@ -240,7 +240,6 @@ Toggle fullscreen mode.
 					$('html').addClass 'fullscreen'
 				else
 					$('html').removeClass 'fullscreen'
-						
 
 Toggle checkboxes
 
@@ -254,9 +253,9 @@ Visibly mark the message once the associated checkbox is checked.
 
 			$(document).on 'click', '.timsChatMessage :checkbox', (event) ->
 				if $(@).is ':checked'
-					$(@).parents('.timsChatMessage').addClass('jsMarked')
+					$(@).parents('.timsChatMessage').addClass 'jsMarked'
 				else
-					$(@).parents('.timsChatMessage').removeClass('jsMarked')
+					$(@).parents('.timsChatMessage').removeClass 'jsMarked'
 		
 Scroll down when autoscroll is being activated.
 
@@ -297,13 +296,10 @@ Ask for permissions to use Desktop notifications when notifications are activate
 
 			events.newMessage.add notify
 			
-Initialize the `PeriodicalExecuter`s and run them once.
+Initialize the `PeriodicalExecuter`s
 
 			pe.refreshRoomList = new WCF.PeriodicalExecuter refreshRoomList, 60e3
 			pe.getMessages = new WCF.PeriodicalExecuter getMessages, v.config.reloadTime * 1e3
-			refreshRoomList()
-			getMessages()
-			
 
 Initialize the [**nodePush**](https://github.com/wbbaddons/nodePush) integration of **Tims Chat**. Once
 the browser is connected to **nodePush** periodic message loading will be disabled and **Tims Chat** will
@@ -322,8 +318,9 @@ load messages if the appropriate event arrives.
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.newMessage', getMessages
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.wcf.nodePush.tick60', getMessages
 
-Finished! Enable the input now.
+Finished! Enable the input now and join the chat.
 
+			join roomID
 			$('#timsChatInput').enable().jCounter().focus();
 
 			console.log "Finished initializing"
@@ -531,7 +528,6 @@ Fetch the roomlist from the server and update it in the GUI.
 
 		refreshRoomList = ->
 			console.log 'Refreshing the roomlist'
-			$('#toggleRooms .ajaxLoad').show()
 			
 			new WCF.Action.Proxy
 				autoSend: true
@@ -541,14 +537,13 @@ Fetch the roomlist from the server and update it in the GUI.
 				showLoadingOverlay: false
 				suppressErrors: true
 				success: (data) ->
-					$('#timsChatRoomList li').remove()
-					$('#toggleRooms .ajaxLoad').hide()
+					$('.timsChatRoom').remove()
 					$('#toggleRooms .badge').text data.returnValues.length
 					
 					for room in data.returnValues
 						li = $ '<li></li>'
 						li.addClass 'active' if room.active
-						$("""<a href="#{room.link}">#{room.title}</a>""").addClass('timsChatRoom').appendTo li
+						$("""<a href="#{room.link}">#{room.title}</a>""").addClass('timsChatRoom').data('roomID', room.roomID).appendTo li
 						$('#timsChatRoomList ul').append li
 
 					if window.history?.replaceState?
@@ -557,43 +552,10 @@ Fetch the roomlist from the server and update it in the GUI.
 							target = $(@)
 
 							window.history.replaceState {}, '', target.attr 'href'
-								
-							$.ajax target.attr('href'),
-								dataType: 'json'
-								data:
-									ajax: 1
-								type: 'POST'
-								success: (data, textStatus, jqXHR) ->
-									loading = false
-									target.parent().removeClass 'loading'
-									
-									$('.active .timsChatRoom').parent().removeClass 'active'
-									target.parent().addClass 'active'
-
-									$('#timsChatTopic').text data.topic
-									if data.topic is ''
-										$('#timsChatTopic').addClass 'empty'
-									else
-										$('#timsChatTopic').removeClass 'empty'
-
-									$('.timsChatMessage').addClass 'unloaded'
-
-									handleMessages data.messages
-
-									document.title = v.titleTemplate.fetch data
-
-Reload the whole page when an error occurs. The users thus sees the error message (usually `PermissionDeniedException`)
-
-								error: ->
-									window.location.reload true
-
-Show loading icon and prevent switching the room in parallel.
-
-								beforeSend: ->
-									return false if target.parent().hasClass('loading') or target.parent().hasClass 'active'
-									
-									loading = true
-									target.parent().addClass 'loading'
+							
+							join target.data 'roomID'
+							$('#timsChatRoomList .active').removeClass 'active'
+							target.parent().addClass 'active'
 					
 					console.log "Found #{data.returnValues.length} rooms"
 
@@ -621,8 +583,37 @@ Shows an unrecoverable error with the given text.
 				
 			$('#timsChatLoadingErrorDialog').wcfDialog
 				closable: false
-				title: WCF.Language.get('wcf.global.error.title')
+				title: WCF.Language.get 'wcf.global.error.title'
 
+Joins a room.
+
+		join = (roomID) ->
+			loading = true
+			new WCF.Action.Proxy
+				autoSend: true
+				data:
+					actionName: 'join'
+					className: 'chat\\data\\room\\RoomAction'
+					parameters:
+						roomID: roomID
+				success: (data) ->
+					loading = false
+					
+					$('#timsChatTopic').text data.returnValues.topic
+					if data.topic is ''
+						$('#timsChatTopic').addClass 'empty'
+					else
+						$('#timsChatTopic').removeClass 'empty'
+					
+					$('.timsChatMessage').addClass 'unloaded'
+					
+					document.title = v.titleTemplate.fetch data.returnValues
+					handleMessages data.returnValues.messages
+					getMessages()
+					refreshRoomList()
+				failure: ->
+					showError WCF.Language.get 'chat.error.join'
+					
 Bind the given callback to the given event.
 
 		addListener = (event, callback) ->
@@ -645,7 +636,7 @@ And finally export the public methods and variables.
 			refreshRoomList: refreshRoomList
 			insertText: insertText
 			freeTheFish: freeTheFish
-			handleMessages: handleMessages
+			join: join
 			listener:
 				add: addListener
 				remove: removeListener

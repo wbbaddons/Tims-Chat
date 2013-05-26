@@ -1,6 +1,8 @@
 <?php
 namespace chat\data\room;
+use \chat\data\message;
 use \chat\util\ChatUtil;
+use \wcf\system\exception;
 use \wcf\system\WCF;
 
 /**
@@ -93,11 +95,11 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			WCF::getSession()->checkPermissions($this->permissionsUpdate);
 		}
 		else {
-			throw new \wcf\system\exception\PermissionDeniedException();
+			throw new exception\PermissionDeniedException();
 		}
 		
 		if (!isset($this->parameters['data']['structure'])) {
-			throw new \wcf\system\exception\UserInputException('structure');
+			throw new exception\UserInputException('structure');
 		}
 	}
 	
@@ -124,10 +126,10 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	 * Validates parameters and permissions.
 	 */
 	public function validateGetRoomList() {
-		if (!MODULE_CHAT) throw new \wcf\system\exception\IllegalLinkException();
+		if (!MODULE_CHAT) throw new exception\IllegalLinkException();
 		
 		$this->parameters['room'] = RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID);
-		if ($this->parameters['room'] === null) throw new \wcf\system\exception\IllegalLinkException();
+		if ($this->parameters['room'] === null) throw new exception\IllegalLinkException();
 	}
 	
 	/**
@@ -146,6 +148,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 					'application' => 'chat',
 					'object' => $room
 				)),
+				'roomID' => $room->roomID,
 				'active' => $room->roomID == $this->parameters['room']->roomID
 			);
 		}
@@ -156,36 +159,135 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	/**
 	 * Validates parameters and permissions.
 	 */
+	public function validateJoin() {
+		if (!MODULE_CHAT) throw new exception\IllegalLinkException();
+		
+		unset($this->parameters['user']);
+		$this->readInteger('roomID');
+		
+		$room = RoomCache::getInstance()->getRoom($this->parameters['roomID']);
+		if ($room === null) throw new exception\UserInputException();
+		if (!$room->canEnter()) throw new exception\PermissionDeniedException();
+	}
+	
+	/**
+	 * Joins the room.
+	 */
+	public function join() {
+		// user cannot be set during an AJAX request but may be set by the chat itself
+		if (!isset($this->parameters['user'])) {
+			$this->parameters['user'] = WCF::getUser();
+		}
+		
+		$room = RoomCache::getInstance()->getRoom($this->parameters['roomID']);
+		if ($room === null) throw new exception\UserInputException();
+		
+		if (CHAT_DISPLAY_JOIN_LEAVE) {
+			if ($this->parameters['user']->chatRoomID) {
+				// leave message
+				$messageAction = new message\MessageAction(array(), 'create', array(
+					'data' => array(
+						'roomID' => $this->parameters['user']->chatRoomID,
+						'sender' => $this->parameters['user']->userID,
+						'username' => $this->parameters['user']->username,
+						'time' => TIME_NOW,
+						'type' => message\Message::TYPE_LEAVE,
+						'message' => serialize(array('room' => $room)),
+						'color1' => $this->parameters['user']->chatColor1,
+						'color2' => $this->parameters['user']->chatColor2
+					)
+				));
+				$messageAction->executeAction();
+			}
+			
+			$ipAddress = '';
+			if ($this->parameters['user']->userID == WCF::getUser()->userID) $ipAddress = \wcf\util\UserUtil::convertIPv6To4(\wcf\util\UserUtil::getIpAddress());
+			
+			// join message
+			$messageAction = new message\MessageAction(array(), 'create', array(
+				'data' => array(
+					'roomID' => $room->roomID,
+					'sender' => $this->parameters['user']->userID,
+					'username' => $this->parameters['user']->username,
+					'time' => TIME_NOW,
+					'type' => message\Message::TYPE_JOIN,
+					'message' => serialize(array('ipAddress' => $ipAddress)),
+					'color1' => $this->parameters['user']->chatColor1,
+					'color2' => $this->parameters['user']->chatColor2
+				)
+			));
+			$messageAction->executeAction();
+		}
+		
+		$newestMessages = message\ViewableMessageList::getNewestMessages($room, CHAT_LASTMESSAGES);
+		
+		try {
+			$lastSeen = end($newestMessages)->messageID;
+		}
+		catch (\wcf\system\exception\SystemException $e) {
+			$lastSeen = 0;
+		}
+		
+		$editor = new \wcf\data\user\UserEditor($this->parameters['user']);
+		$editor->update(array(
+			'chatRoomID' => $room->roomID,
+			'chatAway' => null,
+			'chatLastActivity' => TIME_NOW,
+			'chatLastSeen' => $lastSeen
+		));
+		
+		
+		// add activity points
+		$microtime = microtime(true) * 1000;
+		$result = $microtime & 0xFFFFFFFF;
+		if ($result > 0x7FFFFFFF) $result -= 0x80000000;
+		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.join', $result, WCF::getUser()->userID);
+		
+		// break if not using ajax
+		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.join');
+		
+		$messages = array();
+		foreach ($newestMessages as $message) $messages[] = $message->jsonify(true);
+		return array(
+			'title' => (string) $room,
+			'topic' => $room->getTopic(),
+			'messages' => $messages
+		);
+	}
+	
+	/**
+	 * Validates parameters and permissions.
+	 */
 	public function validateLeave() {
-		if (!MODULE_CHAT) throw new \wcf\system\exception\IllegalLinkException();
+		if (!MODULE_CHAT) throw new exception\IllegalLinkException();
 		
 		unset($this->parameters['user']);
 		
-		if (RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID) === null) throw new \wcf\system\exception\IllegalLinkException();
+		if (RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID) === null) throw new exception\IllegalLinkException();
 	}
 	
 	/**
 	 * Leaves the room.
 	 */
 	public function leave() {
-		// user cannot be set during an AJAX request may be set by the chat itself
+		// user cannot be set during an AJAX request but may be set by the chat itself
 		if (!isset($this->parameters['user'])) {
 			$this->parameters['user'] = WCF::getUser();
 		}
 		
 		$room = RoomCache::getInstance()->getRoom($this->parameters['user']->chatRoomID);
-		if ($room === null) throw new \wcf\system\exception\UserInputException();
+		if ($room === null) throw new exception\UserInputException();
 		
 		if (CHAT_DISPLAY_JOIN_LEAVE) {
 			// leave message
-			$messageAction = new \chat\data\message\MessageAction(array(), 'create', array(
+			$messageAction = new message\MessageAction(array(), 'create', array(
 				'data' => array(
 					'roomID' => $room->roomID,
 					'sender' => $this->parameters['user']->userID,
 					'username' => $this->parameters['user']->username,
 					'time' => TIME_NOW,
-					'type' => \chat\data\message\Message::TYPE_LEAVE,
-					'message' => '',
+					'type' => message\Message::TYPE_LEAVE,
+					'message' => serialize(array('room' => null)),
 					'color1' => $this->parameters['user']->chatColor1,
 					'color2' => $this->parameters['user']->chatColor2
 				)
