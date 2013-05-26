@@ -117,6 +117,7 @@
 		<item name="chat.message.5.gmute"><![CDATA[hat {@$link} bis {@$expires|plainTime} global geknebelt.]]></item>
 		<item name="chat.message.5.gban"><![CDATA[hat {@$link} bis {@$expires|plainTime} global gebannt.]]></item>
 		<item name="chat.message.5.unmute"><![CDATA[hat {@$link} entknebelt.]]></item>
+		<item name="chat.message.5.unban"><![CDATA[hat {@$link} entbannt.]]></item>
 		
 		<item name="chat.message.color.success"><![CDATA[Die Farbe wurde erfolgreich geändert.]]></item>
 	</category>
