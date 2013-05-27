@@ -370,10 +370,9 @@ Fetch new messages from the server and pass them to `handleMessages`. The userli
 				type: 'POST'
 				success: (data) ->
 					remainingFailures = 3
-					WCF.DOMNodeInsertedHandler.enable()
 					handleMessages data.messages
 					handleUsers data.users
-					WCF.DOMNodeInsertedHandler.disable()
+					WCF.DOMNodeInsertedHandler.execute()
 				error: ->
 					console.error "Message loading failed, #{--remainingFailures} remaining"
 					if remainingFailures <= 0
