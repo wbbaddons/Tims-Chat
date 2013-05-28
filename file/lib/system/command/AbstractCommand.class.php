@@ -59,4 +59,11 @@ abstract class AbstractCommand implements ICommand {
 	public function getReceiver() {
 		return null;
 	}
+	
+	/**
+	 * No additionaldata by default.
+	 */
+	public function getAdditionalData() {
+		return null;
+	}
 }

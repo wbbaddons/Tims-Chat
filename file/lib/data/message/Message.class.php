@@ -44,6 +44,17 @@ class Message extends \chat\data\CHATDatabaseObject {
 	protected static $users = array();
 	
 	/**
+	 * @see	\wcf\data\DatabaseObject::handleData()
+	 */
+	protected function handleData($data) {
+		parent::handleData($data);
+		
+		if ($this->data['additionalData'] !== null) {
+			$this->data['additionalData'] = unserialize($this->data['additionalData']);
+		}
+	}
+	
+	/**
 	 * @see	\chat\data\message\Message::getFormattedMessage()
 	 */
 	public function __toString() {
@@ -65,8 +76,10 @@ class Message extends \chat\data\CHATDatabaseObject {
 			case self::TYPE_JOIN:
 			case self::TYPE_LEAVE:
 			case self::TYPE_BACK:
+				$message = WCF::getLanguage()->getDynamicVariable('chat.message.'.$this->type, $this->data['additionalData'] ?: array());
+			break;
 			case self::TYPE_AWAY:
-				$message = WCF::getLanguage()->getDynamicVariable('chat.message.'.$this->type, unserialize($message) ?: array());
+				$message = WCF::getLanguage()->getDynamicVariable('chat.message.'.$this->type, array('message' => $message));
 			break;
 			case self::TYPE_MODERATE:
 				$message = unserialize($message);
@@ -75,8 +88,6 @@ class Message extends \chat\data\CHATDatabaseObject {
 				$message = $messageParser->parse($message, false, false, true, false);
 			break;
 			case self::TYPE_WHISPER:
-				$message = unserialize($message);
-				$message = $message['message'];
 			case self::TYPE_NORMAL:
 			case self::TYPE_ME:
 			default:
@@ -103,11 +114,6 @@ class Message extends \chat\data\CHATDatabaseObject {
 			$username = \chat\util\ChatUtil::gradient($username, $this->color1, $this->color2);
 		}
 		
-		if ($this->type == self::TYPE_WHISPER) {
-			$message = unserialize($this->message);
-			$username .= ' -> '.$message['username'];
-		}
-		
 		return $username;
 	}
 	
@@ -119,9 +125,9 @@ class Message extends \chat\data\CHATDatabaseObject {
 	 */
 	public function jsonify($raw = false) {
 		switch ($this->type) {
+			case self::TYPE_WHISPER:
 			case self::TYPE_NORMAL:
 			case self::TYPE_INFORMATION:
-			case self::TYPE_WHISPER:
 				$separator = ':';
 			break;
 			default:
@@ -141,7 +147,8 @@ class Message extends \chat\data\CHATDatabaseObject {
 			'receiver' => (int) $this->receiver,
 			'type' => (int) $this->type,
 			'roomID' => (int) $this->roomID,
-			'messageID' => (int) $this->messageID
+			'messageID' => (int) $this->messageID,
+			'additionalData' => $this->additionalData
 		);
 		
 		if ($raw) return $array;

@@ -1,5 +1,6 @@
 <?php
 namespace chat\system\command\commands;
+use \wcf\system\WCF;
 use \wcf\util\StringUtil;
 
 /**
@@ -33,15 +34,13 @@ class AwayCommand extends \chat\system\command\AbstractCommand {
 	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return serialize(array(
-			'message' => \wcf\system\bbcode\PreParser::getInstance()->parse($this->commandHandler->getParameters(), explode(',', \wcf\system\WCF::getSession()->getPermission('user.chat.allowedBBCodes')))
-		));
+		return \wcf\system\bbcode\PreParser::getInstance()->parse($this->commandHandler->getParameters(), explode(',', WCF::getSession()->getPermission('user.chat.allowedBBCodes')));
 	}
 	
 	/**
 	 * @see	\chat\system\command\ICommand::getReceiver()
 	 */
 	public function getReceiver() {
-		return \wcf\system\WCF::getUser()->userID;
+		return WCF::getUser()->userID;
 	}
 }
