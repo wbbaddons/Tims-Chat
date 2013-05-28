@@ -21,5 +21,15 @@
 			<eventname>headerLogo</eventname>
 			<templatecode><![CDATA[{if $__chat->isActiveApplication()}<img src="{$__wcf->getPath('chat')}images/chatLogo.png" style="width: 246px; height: 90px;" alt="" />{/if}]]></templatecode>
 		</templatelistener>
+		
+		<templatelistener name="softwareVersions">
+			<environment>admin</environment>
+			<templatename>index</templatename>
+			<eventname>softwareVersions</eventname>
+			<templatecode><![CDATA[<dl>
+	<dt>{lang}wcf.acp.index.system.software.chatVersion{/lang}</dt>
+	<dd>{$__chat->getPackage()->packageVersion}</dd>
+</dl>]]></templatecode>
+		</templatelistener>
 	</import>
 </data>

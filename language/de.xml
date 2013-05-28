@@ -54,6 +54,10 @@
 		<item name="wcf.dashboard.box.be.bastelstu.chat.onlineList"><![CDATA[Chat]]></item>
 	</category>
 	
+	<category name="wcf.acp.index">
+		<item name="wcf.acp.index.system.software.chatVersion"><![CDATA[Tims Chat-Version]]></item>
+	</category>
+	
 	<category name="chat.error">
 		<item name="chat.error.notFound"><![CDATA[Der Befehl wurde nicht gefunden.]]></item>
 		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer „{$exception->getUsername()}“ wurde nicht gefunden.]]></item>
