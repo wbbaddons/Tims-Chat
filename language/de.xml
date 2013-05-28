@@ -110,7 +110,7 @@
 		<!-- 1 = TYPE_JOIN -->
 		<item name="chat.message.1"><![CDATA[hat den Chat betreten.{if $__wcf->session->getPermission('admin.user.canViewIpAddress') && $ipAddress} ({$ipAddress}){/if}]]></item>
 		<!-- 2 = TYPE_LEAVE -->
-		<item name="chat.message.2"><![CDATA[{if $room == null}hat den Chat verlassen.{else}ist in den Raum „{$room}“ gegangen.{/if}]]></item>
+		<item name="chat.message.2"><![CDATA[{if !$room|isset || $room === null}hat den Chat verlassen.{else}ist in den Raum „{$room}“ gegangen.{/if}]]></item>
 		<!-- 3 = TYPE_AWAY -->
 		<item name="chat.message.3"><![CDATA[ist jetzt abwesend{if $message}: {$message}{else}.{/if}]]></item>
 		<!-- 4 = TYPE_BACK -->

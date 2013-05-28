@@ -14,6 +14,7 @@ use \wcf\util\StringUtil;
  */
 class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 	public $roomName = '';
+	public $roomID = 0;
 	
 	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
@@ -28,8 +29,8 @@ class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
 		$chatRoomEditor = new \chat\data\room\RoomEditor($returnValues['returnValues']);
-		$roomID = $returnValues['returnValues']->roomID;
-		$this->roomName = WCF::getLanguage()->getDynamicVariable('chat.room.titleTemp', array('roomID' => $roomID));
+		$this->roomID = $returnValues['returnValues']->roomID;
+		$this->roomName = WCF::getLanguage()->getDynamicVariable('chat.room.titleTemp', array('roomID' => $this->roomID));
 		
 		// set accurate title
 		$chatRoomEditor->update(array(
@@ -50,7 +51,7 @@ class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 			)
 		);
 		
-		$acl->save($roomID, $acl->getObjectTypeID('be.bastelstu.chat.room'));
+		$acl->save($this->roomID, $acl->getObjectTypeID('be.bastelstu.chat.room'));
 		\chat\system\permission\PermissionHandler::clearCache();
 		$this->didInit();
 	}
@@ -83,5 +84,15 @@ class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 	 */
 	public function getReceiver() {
 		return \wcf\system\WCF::getUser()->userID;
+	}
+	
+	/**
+	 * @see	\chat\system\command\ICommand::getAdditionalData()
+	 */
+	public function getAdditionalData() {
+		return array(
+			'roomID' => (int) $this->roomID,
+			'roomName' => $this->roomName
+		);
 	}
 }

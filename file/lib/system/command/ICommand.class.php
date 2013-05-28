@@ -43,6 +43,11 @@ interface ICommand {
 	public function getMessage();
 	
 	/**
+	 * Returns additionalData to be saved within database
+	 */
+	public function getAdditionalData();
+	
+	/**
 	 * Returns the receiver for this command.
 	 */
 	public function getReceiver();

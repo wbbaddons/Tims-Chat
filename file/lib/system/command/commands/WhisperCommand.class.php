@@ -48,7 +48,7 @@ class WhisperCommand extends \chat\system\command\AbstractCommand {
 	public function getMessage() {
 		$this->message = \wcf\system\bbcode\PreParser::getInstance()->parse($this->message, explode(',', \wcf\system\WCF::getSession()->getPermission('user.chat.allowedBBCodes')));
 		
-		return serialize(array('message' => $this->message, 'username' => $this->user->username));
+		return $this->message;
 	}
 	
 	/**
@@ -56,5 +56,14 @@ class WhisperCommand extends \chat\system\command\AbstractCommand {
 	 */
 	public function getReceiver() {
 		return $this->user->userID;
+	}
+	
+	/**
+	 * @see	\chat\system\command\ICommand::getAdditionalData()
+	 */
+	public function getAdditionalData() {
+		return array(
+			'receiverUsername' => $this->user->username
+		);
 	}
 }

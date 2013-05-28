@@ -192,9 +192,10 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 						'username' => $this->parameters['user']->username,
 						'time' => TIME_NOW,
 						'type' => message\Message::TYPE_LEAVE,
-						'message' => serialize(array('room' => $room)),
+						'message' => '',
 						'color1' => $this->parameters['user']->chatColor1,
-						'color2' => $this->parameters['user']->chatColor2
+						'color2' => $this->parameters['user']->chatColor2,
+						'additionalData' => serialize(array('room' => $room))
 					)
 				));
 				$messageAction->executeAction();
@@ -211,9 +212,10 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 					'username' => $this->parameters['user']->username,
 					'time' => TIME_NOW,
 					'type' => message\Message::TYPE_JOIN,
-					'message' => serialize(array('ipAddress' => $ipAddress)),
+					'message' => '',
 					'color1' => $this->parameters['user']->chatColor1,
-					'color2' => $this->parameters['user']->chatColor2
+					'color2' => $this->parameters['user']->chatColor2,
+					'additionalData' => serialize(array('ipAddress' => $ipAddress))
 				)
 			));
 			$messageAction->executeAction();
@@ -286,7 +288,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 					'username' => $this->parameters['user']->username,
 					'time' => TIME_NOW,
 					'type' => message\Message::TYPE_LEAVE,
-					'message' => serialize(array('room' => null)),
+					'message' => '',
 					'color1' => $this->parameters['user']->chatColor1,
 					'color2' => $this->parameters['user']->chatColor2
 				)

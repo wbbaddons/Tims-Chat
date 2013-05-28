@@ -117,6 +117,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 				$this->parameters['type'] = $command->getType();
 				$this->parameters['text'] = $command->getMessage();
 				$this->parameters['receiver'] = $command->getReceiver();
+				$this->parameters['additionalData'] = $command->getAdditionalData();
 			}
 			catch (\chat\system\command\NotFoundException $e) {
 				throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('chat.error.notFound', array('exception' => $e)));
@@ -128,6 +129,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		else {
 			$this->parameters['type'] = Message::TYPE_NORMAL;
 			$this->parameters['receiver'] = null;
+			$this->parameters['additionalData'] = null;
 			
 			$this->parameters['text'] = \wcf\system\bbcode\PreParser::getInstance()->parse($this->parameters['text'], explode(',', WCF::getSession()->getPermission('user.chat.allowedBBCodes')));
 		}
@@ -149,7 +151,8 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 				'enableSmilies' => $this->parameters['enableSmilies'] ? 1 : 0,
 				'enableHTML' => $this->parameters['enableHTML'] ? 1 : 0,
 				'color1' => $this->parameters['userData']['color1'],
-				'color2' => $this->parameters['userData']['color2']
+				'color2' => $this->parameters['userData']['color2'],
+				'additionalData' => serialize($this->parameters['additionalData'])
 			)
 		));
 		$this->objectAction->executeAction();

@@ -21,6 +21,7 @@ CREATE TABLE chat1_message (
 	enableHTML	TINYINT(1)	NOT NULL DEFAULT 0,
 	color1		INT(10)		NOT NULL DEFAULT 0,
 	color2		INT(10)		NOT NULL DEFAULT 0,
+	additionalData	TEXT		DEFAULT NULL,
 	
 	KEY (roomID),
 	KEY (sender),
