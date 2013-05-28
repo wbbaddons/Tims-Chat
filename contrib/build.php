@@ -40,11 +40,6 @@ foreach (glob('file/js/*.{litcoffee,coffee}', GLOB_BRACE) as $coffeeFile) {
 	passthru('coffee -c '.escapeshellarg($coffeeFile), $code);
 	if ($code != 0) exit($code);
 }
-foreach (glob('file/acp/be.bastelstu.chat.nodePush/lib/*.{litcoffee,coffee}', GLOB_BRACE) as $coffeeFile) {
-	echo $coffeeFile."\n";
-	passthru('coffee -c '.escapeshellarg($coffeeFile), $code);
-	if ($code != 0) exit($code);
-}
 echo <<<EOT
 
 Compressing JavaScript
