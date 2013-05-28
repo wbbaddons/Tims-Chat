@@ -429,7 +429,7 @@ Move the user to the new position if he was found in the old list.
 						element.addClass 'away'
 						element.attr 'title', user.awayStatus
 					else
-						element.removeClass 'timsChatAway'
+						element.removeClass 'away'
 						element.removeAttr 'title'
 						element.data 'tooltip', ''
 					
@@ -452,7 +452,7 @@ Build HTML of the user and insert it into the list, if the users was not found i
 					li.addClass 'you' if user.userID is WCF.User.userID
 					li.addClass 'suspended' if user.suspended
 					if user.awayStatus?
-						li.addClass 'timsChatAway'
+						li.addClass 'away'
 						li.attr 'title', user.awayStatus
 					li.data 'username', user.username
 					

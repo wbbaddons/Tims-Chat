@@ -123,7 +123,7 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 			$json['users'][] = array(
 				'userID' => (int) $user->userID,
 				'username' => $user->username,
-				'awayStatus' => $user->awayStatus,
+				'awayStatus' => $user->chatAway,
 				'suspended' => (boolean) !$this->room->canWrite($user->getDecoratedObject()),
 				'avatar' => array(
 					16 => $user->getAvatar()->getImageTag(16),
