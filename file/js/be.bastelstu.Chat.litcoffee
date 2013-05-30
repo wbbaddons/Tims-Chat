@@ -31,6 +31,7 @@ exposed by a function if necessary.
 
 		isActive = true
 		newMessageCount = 0
+		scrollUpNotifications = off
 		chatSession = Date.now()
 		errorVisible = false
 
@@ -57,7 +58,6 @@ exposed by a function if necessary.
 			titleTemplate: null
 			messageTemplate: null
 			userTemplate: null
-
 			config: null
 
 Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
@@ -73,7 +73,7 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 			v.userTemplate = userTemplate
 			
 			console.log 'Initializing'
-			
+
 When **Tims Chat** becomes focused mark the chat as active and remove the number of new messages from the title.
 
 			$(window).focus ->
@@ -87,7 +87,7 @@ When **Tims Chat** loses the focus mark the chat as inactive.
 
 			$(window).blur ->
 				isActive = false
-				
+
 Make the user leave the chat when **Tims Chat** is about to be unloaded.
 
 			$(window).on 'beforeunload', ->
@@ -102,18 +102,18 @@ Make the user leave the chat when **Tims Chat** is about to be unloaded.
 					async: false
 					suppressErrors: true
 				undefined
-				
+
 Insert the appropriate smiley code into the input when a smiley is clicked.
 
 			$('#smilies').on 'click', 'img', ->
 				insertText ' ' + $(@).attr('alt') + ' '
-				
+
 Handle submitting the form. The message will be validated by some basic checks, passed to the `submit` eventlisteners
 and afterwards sent to the server by an AJAX request.
 
 			$('#timsChatForm').submit (event) ->
 				event.preventDefault()
-
+				
 				text = $('#timsChatInput').val().trim()
 				$('#timsChatInput').val('').focus().keyup()
 				
@@ -121,14 +121,14 @@ and afterwards sent to the server by an AJAX request.
 				
 				# Free the fish!
 				freeTheFish() if text.toLowerCase() is '/free the fish'
-
+				
 				text = do (text) ->
 					obj =
 						text: text
 					events.submit.fire obj
 					
 					obj.text
-
+				
 				new WCF.Action.Proxy
 					autoSend: true
 					data:
@@ -145,13 +145,13 @@ and afterwards sent to the server by an AJAX request.
 						return true unless (data?.returnValues?.errorType?) or (data?.message?)
 						
 						$('#timsChatInputContainer').addClass('formError').find('.innerError').show().html (data?.returnValues?.errorType) ? data.message
-
+						
 						setTimeout ->
 							$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide()
 						, 5e3
 						
 						false
-				
+
 Autocomplete a username when TAB is pressed. The name to autocomplete is based on the current caret position.
 The the word the caret is in will be passed to `autocomplete` and replaced if a match was found.
 
@@ -159,7 +159,7 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 				if event.keyCode is $.ui.keyCode.TAB
 					input = $(event.currentTarget)
 					event.preventDefault()
-
+					
 					autocomplete.value ?= input.val()
 					autocomplete.caret ?= input.getCaret()
 					
@@ -179,17 +179,17 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 					
 					regex = new RegExp "^#{WCF.String.escapeRegExp(toComplete)}", "i"
 					users = (username for user in $('.timsChatUser') when regex.test(username = $(user).data('username')))
-
+					
 					toComplete = users[autocomplete.offset++ % users.length] + ', ' if users.length isnt 0
 					
 					input.val "#{beforeComplete}#{toComplete}#{afterComplete}"
 					input.setCaret (beforeComplete + toComplete).length
-						
+
 Reset autocompleter to default status, when a key is pressed that is not TAB.
 
 				else
 					$('#timsChatInput').click()
-				
+
 Reset autocompleter to default status, when the input is `click`ed, as the position of the caret may have changed.
 
 			$('#timsChatInput').click ->
@@ -197,7 +197,7 @@ Reset autocompleter to default status, when the input is `click`ed, as the posit
 					offset: 0
 					value: null
 					caret: null
-				
+
 Refresh the room list when the associated button is `click`ed.
 
 			$('#timsChatRoomList button').click ->
@@ -209,7 +209,7 @@ Clear the chat by removing every single message once the clear button is `clicke
 				event.preventDefault()
 				$('.timsChatMessage').remove()
 				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight')
-				
+
 Handle toggling of the toggleable buttons.
 
 			$('.timsChatToggle').click (event) ->
@@ -256,13 +256,13 @@ Visibly mark the message once the associated checkbox is checked.
 					$(@).parents('.timsChatMessage').addClass 'jsMarked'
 				else
 					$(@).parents('.timsChatMessage').removeClass 'jsMarked'
-		
+
 Scroll down when autoscroll is being activated.
 
 			$('#timsChatAutoscroll').click (event) ->
 				if $('#timsChatAutoscroll').data 'status'
 					$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight')
-
+			
 			$('#timsChatMessageContainer').on 'scroll', (event) ->
 				element = $ @
 				scrollTop = element.scrollTop()
@@ -271,10 +271,13 @@ Scroll down when autoscroll is being activated.
 				
 				if scrollTop < scrollHeight - height - 25
 					if $('#timsChatAutoscroll').data('status') is 1
+						scrollUpNotifications = on
 						$('#timsChatAutoscroll').click()
 						
 				if scrollTop > scrollHeight - height - 10
 					if $('#timsChatAutoscroll').data('status') is 0
+						scrollUpNotifications = off
+						$(@).removeClass 'notification'
 						$('#timsChatAutoscroll').click()
 
 Enable duplicate tab detection.
@@ -284,7 +287,7 @@ Enable duplicate tab detection.
 				if event.originalEvent.key is 'be.bastelstu.chat.session'
 					if parseInt(event.originalEvent.newValue) isnt chatSession
 						showError WCF.Language.get 'chat.error.duplicateTab'
-						
+
 Ask for permissions to use Desktop notifications when notifications are activated.
 
 			if window.Notification?
@@ -293,9 +296,9 @@ Ask for permissions to use Desktop notifications when notifications are activate
 					if window.Notification.permission isnt 'granted'
 						window.Notification.requestPermission (permission) ->
 							window.Notification.permission ?= permission
-
-			events.newMessage.add notify
 			
+			events.newMessage.add notify
+
 Initialize the `PeriodicalExecuter`s
 
 			pe.refreshRoomList = new WCF.PeriodicalExecuter refreshRoomList, 60e3
@@ -304,7 +307,7 @@ Initialize the `PeriodicalExecuter`s
 Initialize the [**nodePush**](https://github.com/wbbaddons/nodePush) integration of **Tims Chat**. Once
 the browser is connected to **nodePush** periodic message loading will be disabled and **Tims Chat** will
 load messages if the appropriate event arrives.
-			
+
 			do ->
 				be.bastelstu.wcf.nodePush.onConnect ->
 						console.log 'Disabling periodic loading'
@@ -322,9 +325,9 @@ Finished! Enable the input now and join the chat.
 
 			join roomID
 			$('#timsChatInput').enable().jCounter().focus();
-
+			
 			console.log "Finished initializing"
-
+			
 			true
 
 Free the fish.
@@ -380,7 +383,6 @@ Fetch new messages from the server and pass them to `handleMessages`. The userli
 						console.error 'To many failures, aborting'
 						
 						showError WCF.Language.get 'chat.error.onMessageLoad'
-							
 				complete: ->
 					loading = false
 
@@ -395,10 +397,10 @@ Insert the given messages into the chat stream.
 
 		handleMessages = (messages) ->
 			$('#timsChatMessageContainer').trigger 'scroll'
-
+			
 			for message in messages
 				events.newMessage.fire message
-
+				
 				output = v.messageTemplate.fetch message
 				li = $ '<li></li>'
 				li.addClass 'timsChatMessage'
@@ -408,14 +410,14 @@ Insert the given messages into the chat stream.
 				li.append output
 				
 				li.appendTo $ '#timsChatMessageContainer > ul'
-
+			
 			$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
 
 Rebuild the userlist based on the given `users`.
 
 		handleUsers = (users) ->
 			foundUsers = { }
-
+			
 			for user in users
 				id = "timsChatUser#{user.userID}"
 
@@ -464,7 +466,7 @@ Build HTML of the user and insert it into the list, if the users was not found i
 					menu.append $ "<li><a>#{WCF.Language.get('chat.general.kick')}</a></li>"
 					menu.append $ "<li><a>#{WCF.Language.get('chat.general.ban')}</a></li>"
 					menu.append $ """<li><a href="#{user.link}">#{WCF.Language.get('chat.general.profile')}</a></li>"""
-
+					
 					events.userMenu.fire user, menu
 					
 					li.append menu
@@ -500,10 +502,12 @@ the existing text. If `options.submit` is true the message will be sent to the s
 			else
 				$('#timsChatInput').focus()
 
-
 Send out notifications for the given `message`. The number of unread messages will be prepended to `document.title` and if available desktop notifications will be sent.
 
 		notify = (message) ->
+			if scrollUpNotifications
+				$('#timsChatMessageContainer').addClass 'notification'
+			
 			return if isActive or $('#timsChatNotify').data('status') is 0
 			
 			document.title = v.titleTemplate.fetch
@@ -544,12 +548,12 @@ Fetch the roomlist from the server and update it in the GUI.
 						li.addClass 'active' if room.active
 						$("""<a href="#{room.link}">#{room.title}</a>""").addClass('timsChatRoom').data('roomID', room.roomID).appendTo li
 						$('#timsChatRoomList ul').append li
-
+					
 					if window.history?.replaceState?
 						$('.timsChatRoom').click (event) ->
 							event.preventDefault()
 							target = $(@)
-
+							
 							window.history.replaceState {}, '', target.attr 'href'
 							
 							join target.data 'roomID'
@@ -612,7 +616,7 @@ Joins a room.
 					refreshRoomList()
 				failure: ->
 					showError WCF.Language.get 'chat.error.join'
-					
+
 Bind the given callback to the given event.
 
 		addListener = (event, callback) ->
@@ -624,11 +628,11 @@ Remove the given callback from the given event.
 
 		removeListener = (event, callback) ->
 			return false unless events[event]?
-
+			
 			events[event].remove callback
 
 And finally export the public methods and variables.
-		
+
 		Chat =
 			init: init
 			getMessages: getMessages
@@ -639,8 +643,7 @@ And finally export the public methods and variables.
 			listener:
 				add: addListener
 				remove: removeListener
-
-
+		
 		window.be ?= {}
 		be.bastelstu ?= {}
 		window.be.bastelstu.Chat = Chat
