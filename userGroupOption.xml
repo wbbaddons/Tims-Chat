@@ -9,7 +9,7 @@
 				<parent>mod</parent>
 			</category>
 			<category name="admin.chat">
-				<parent>admin</parent>
+				<parent>admin.community</parent>
 			</category>
 		</categories>
 		
