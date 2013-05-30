@@ -236,6 +236,9 @@ Mark smilies as disabled when they are disabled.
 Toggle fullscreen mode.
 
 			$('#timsChatFullscreen').click (event) ->
+				# Force dropdowns to reorientate
+				$('.dropdownMenu').data 'orientationX', ''
+				
 				if $('#timsChatFullscreen').data 'status'
 					$('html').addClass 'fullscreen'
 				else
