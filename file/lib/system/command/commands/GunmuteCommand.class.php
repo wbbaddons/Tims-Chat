@@ -14,7 +14,7 @@ use \wcf\system\WCF;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class GunbanCommand extends UnmuteCommand {
+class GunmuteCommand extends UnmuteCommand {
 	/**
 	 * @see \chat\system\command\commands\UnmuteCommand::executeAction()
 	 */
