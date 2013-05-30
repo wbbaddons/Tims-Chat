@@ -1,1 +1,24 @@
-{literal}<time>{@$formattedTime}</time> <span class="usernameContainer"><span class="username">{if $type != 7}{@$formattedUsername}{else}{if $receiver == WCF.User.userID}{@$formattedUsername} {/if}->{if $receiver != WCF.User.userID} {$additionalData.receiverUsername}{/if}{/if}</span><span class="separator">{$separator}</span></span> <span class="text">{@$formattedMessage}</span> <span class="markContainer"><input type="checkbox" value="{@$messageID}" /></span>{/literal}
+{literal}
+	<time>{@$formattedTime}</time>
+	<span class="usernameContainer">
+		<span class="username">{*
+			*}{if $type != 7}{*
+				*}{@$formattedUsername}{*
+			*}{else}
+				{if $receiver == WCF.User.userID}
+					{@$formattedUsername}
+				{/if}
+				<span class="icon icon16 icon-double-angle-right" title="{/literal}{lang}chat.ui.whispers{/lang}{literal}"></span>
+				{if $receiver != WCF.User.userID}
+					{$additionalData.receiverUsername}{/if}{*
+				*}{/if}{*
+		*}</span>{*
+		*}{if $receiver != WCF.User.userID}{*
+			*}<span class="separator">{$separator}</span>
+		{/if}
+	</span>
+	<span class="text">{@$formattedMessage}</span>
+	<span class="markContainer">
+		<input type="checkbox" value="{@$messageID}" />
+	</span>
+{/literal}
