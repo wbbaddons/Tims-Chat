@@ -53,6 +53,9 @@ class RoomEditForm extends RoomAddForm {
 		if (!$this->roomObj->roomID) {
 			throw new \wcf\system\exception\IllegalLinkException();
 		}
+		if (!$this->roomObj->permanent) {
+			throw new \wcf\system\exception\PermissionDeniedException();
+		}
 	}
 	
 	/**

@@ -39,6 +39,7 @@ class RoomListPage extends \wcf\page\AbstractPage {
 		
 		$this->objects = new \chat\data\room\RoomList();
 		$this->objects->sqlOrderBy = 'showOrder ASC';
+		$this->objects->getConditionBuilder()->add('permanent = ?', array(1));
 		$this->objects->readObjects();
 	}
 	
