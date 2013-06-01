@@ -138,7 +138,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 	 */
 	public function readCommands() {
 		$regex = new \wcf\system\Regex('Command.class.php$');
-		$directory = \wcf\utilDirectoryUtil::getInstance(CHAT_DIR.'lib/system/command/commands/', false);
+		$directory = \wcf\util\DirectoryUtil::getInstance(CHAT_DIR.'lib/system/command/commands/', false);
 		$files = $directory->getFiles(SORT_ASC, $regex);
 		
 		foreach ($files as $file) {
