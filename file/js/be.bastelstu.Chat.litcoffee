@@ -180,7 +180,7 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 					if beforeComplete is '' and toComplete.substring(0, 1) is '/'
 						regex = new RegExp "^#{WCF.String.escapeRegExp toComplete.substring 1}", "i"
 						# TODO: Proper command list
-						commands = (command for command in [ 'gmute', 'gban', 'ban', 'mute', 'whisper', 'where', 'info' ] when regex.test command)
+						commands = (command for command in v.config.installedCommands when regex.test command)
 						
 						toComplete = '/' + commands[autocomplete.offset++ % commands.length] + ' ' if commands.length isnt 0
 					else

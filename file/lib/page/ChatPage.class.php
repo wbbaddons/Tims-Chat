@@ -51,6 +51,13 @@ class ChatPage extends \wcf\page\AbstractPage {
 	public $rooms = array();
 	
 	/**
+	 * List of installed commands.
+	 * 
+	 * @var array<string>
+	 */
+	public $commands = array();
+	
+	/**
 	 * List of smilies in the default category.
 	 * 
 	 * @var array<\wcf\data\smiley\Smiley>
@@ -81,6 +88,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 			'room' => $this->room,
 			'roomID' => $this->roomID,
 			'rooms' => $this->rooms,
+			'commands' => $this->commands,
 			'defaultSmilies' => $this->defaultSmilies,
 			'smileyCategories' => $this->smileyCategories,
 			'sidebarCollapsed' => \wcf\system\user\collapsible\content\UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'be.bastelstu.chat.ChatPage'),
@@ -95,6 +103,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 		parent::readData();
 		
 		$this->readRoom();
+		$this->readCommands();
 		
 		// get default smilies
 		if (MODULE_SMILEY) {
@@ -122,6 +131,21 @@ class ChatPage extends \wcf\page\AbstractPage {
 		parent::readParameters();
 		
 		if (isset($_REQUEST['id'])) $this->roomID = (int) $_REQUEST['id'];
+	}
+	
+	/**
+	 * Reads installed commands.
+	 */
+	public function readCommands() {
+		$regex = new \wcf\system\Regex('Command.class.php$');
+		$directory = \wcf\utilDirectoryUtil::getInstance(CHAT_DIR.'lib/system/command/commands/', false);
+		$files = $directory->getFiles(SORT_ASC, $regex);
+		
+		foreach ($files as $file) {
+			$command = $regex->replace(basename($file), '');
+			if ($command == 'Plain') continue;
+			$this->commands[] = \wcf\util\StringUtil::toLowerCase($command);
+		}
 	}
 	
 	/**
