@@ -177,10 +177,17 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 					return if toComplete.length is 0
 					console.log "Autocompleting '#{toComplete}'"
 					
-					regex = new RegExp "^#{WCF.String.escapeRegExp(toComplete)}", "i"
-					users = (username for user in $('.timsChatUser') when regex.test(username = $(user).data('username')))
-					
-					toComplete = users[autocomplete.offset++ % users.length] + ', ' if users.length isnt 0
+					if beforeComplete is '' and toComplete.substring(0, 1) is '/'
+						regex = new RegExp "^#{WCF.String.escapeRegExp toComplete.substring 1}", "i"
+						# TODO: Proper command list
+						commands = (command for command in [ 'gmute', 'gban', 'ban', 'mute', 'whisper', 'where', 'info' ] when regex.test command)
+						
+						toComplete = '/' + commands[autocomplete.offset++ % commands.length] + ' ' if commands.length isnt 0
+					else
+						regex = new RegExp "^#{WCF.String.escapeRegExp toComplete}", "i"
+						users = (username for user in $('.timsChatUser') when regex.test(username = $(user).data('username')))
+						
+						toComplete = users[autocomplete.offset++ % users.length] + ', ' if users.length isnt 0
 					
 					input.val "#{beforeComplete}#{toComplete}#{afterComplete}"
 					input.setCaret (beforeComplete + toComplete).length
