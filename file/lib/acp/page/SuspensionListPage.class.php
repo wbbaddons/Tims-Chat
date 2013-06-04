@@ -48,9 +48,9 @@ class SuspensionListPage extends \wcf\page\SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->sqlSelects .= "user.username";
-		$this->objectList->sqlJoins .= "LEFT JOIN
-						wcf".WCF_N."_user AS user
-						ON suspension.userID = user.userID";
+		$this->objectList->sqlSelects .= "user_table.username";
+		$this->objectList->sqlJoins .= " LEFT JOIN	wcf".WCF_N."_user user_table
+						ON		suspension.userID = user_table.userID";
+		$this->objectList->getConditionBuilder()->add('expires >= ?', array(TIME_NOW));
 	}
 }
