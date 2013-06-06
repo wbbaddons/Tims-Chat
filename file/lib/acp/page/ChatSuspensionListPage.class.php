@@ -91,7 +91,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 		$this->objectList->sqlJoins .= $conditionJoins;
 		
 		$this->objectList->getConditionBuilder()->add('expires >= ?', array(TIME_NOW));
-		$this->objectList->getConditionBuilder()->add('room_table.permanent = ?', array(1));
+		$this->objectList->getConditionBuilder()->add('(room_table.permanent = ? OR suspension.roomID IS NULL)', array(1));
 		if ($this->filterType !== null) $this->objectList->getConditionBuilder()->add('suspension.type = ?', array($this->filterType));
 		if ($this->filterUserID !== null) $this->objectList->getConditionBuilder()->add('suspension.userID = ?', array($this->filterUserID));
 		if ($this->filterRoomID !== null) {
