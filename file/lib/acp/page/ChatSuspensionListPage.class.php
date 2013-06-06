@@ -24,23 +24,23 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	public $neededPermissions = array();
 	
 	/**
-	* @see	\wcf\page\SortablePage::$defaultSortField
-	*/
+	 * @see	\wcf\page\SortablePage::$defaultSortField
+	 */
 	public $defaultSortField = 'expires';
 	
 	/**
-	* @see	\wcf\page\MultipleLinkPage::$itemsPerPage
-	*/
+	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
+	 */
 	public $itemsPerPage = 30;
 	
 	/**
-	* @see	\wcf\page\SortablePage::$validSortFields
-	*/
+	 * @see	\wcf\page\SortablePage::$validSortFields
+	 */
 	public $validSortFields = array('suspensionID', 'userID', 'username', 'roomID', 'type', 'expires');
 	
 	/**
-	* @see	\wcf\page\MultipleLinkPage::$objectListClassName
-	*/
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
+	 */
 	public $objectListClassName = 'chat\data\suspension\SuspensionList';
 	
 	/**
