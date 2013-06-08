@@ -8,7 +8,7 @@
 				{if $receiver == WCF.User.userID}
 					{@$formattedUsername}
 				{/if}
-				<span class="icon icon16 icon-double-angle-right" title="{/literal}{lang}chat.ui.whispers{/lang}{literal}" onclick="be.bastelstu.Chat.insertText('/whisper {if $receiver == WCF.User.userID}{$username.replace("\\", "\\\\").replace("'", "\\'")}{else}{$additionalData.receiverUsername.replace("\\", "\\\\").replace("'", "\\'")}{/if}, ', { append: false });"></span>
+				<span class="icon icon16 icon-double-angle-right jsTooltip" title="{/literal}{lang}chat.ui.whispers{/lang}{literal}" onclick="be.bastelstu.Chat.insertText('/whisper {if $receiver == WCF.User.userID}{$username.replace("\\", "\\\\").replace("'", "\\'")}{else}{$additionalData.receiverUsername.replace("\\", "\\\\").replace("'", "\\'")}{/if}, ', { append: false });"></span>
 				{if $receiver != WCF.User.userID}
 					{$additionalData.receiverUsername}{/if}{*
 				*}{/if}{*
