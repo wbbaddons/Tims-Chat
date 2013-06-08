@@ -32,7 +32,9 @@ class GmuteCommand extends MuteCommand {
 				'userID' => $this->user->userID,
 				'roomID' => null,
 				'type' => suspension\Suspension::TYPE_MUTE,
-				'expires' => $this->expires
+				'expires' => $this->expires,
+				'time' => TIME_NOW,
+				'issuer' => WCF::getUser()->userID
 			)
 		));
 		$this->suspensionAction->executeAction();

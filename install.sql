@@ -48,6 +48,8 @@ CREATE TABLE chat1_suspension (
 	roomID		INT(10)		DEFAULT NULL,
 	type		TINYINT(3)	NOT NULL,
 	expires		INT(10)		NOT NULL,
+	time		INT(10)		NOT NULL,
+	issuer		INT(10)		DEFAULT NULL,
 	
 	UNIQUE KEY suspension (userID, roomID, type),
 	KEY (roomID),
@@ -70,6 +72,7 @@ ALTER TABLE chat1_room ADD FOREIGN KEY (owner) REFERENCES wcf1_user (userID) ON 
 
 ALTER TABLE chat1_suspension ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE chat1_suspension ADD FOREIGN KEY (roomID) REFERENCES chat1_room (roomID) ON DELETE CASCADE;
+ALTER TABLE chat1_suspension ADD FOREIGN KEY (issuer) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_user ADD FOREIGN KEY (chatRoomID) REFERENCES chat1_room (roomID) ON DELETE SET NULL;
 

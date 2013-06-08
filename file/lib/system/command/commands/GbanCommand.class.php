@@ -32,7 +32,9 @@ class GbanCommand extends MuteCommand {
 				'userID' => $this->user->userID,
 				'roomID' => null,
 				'type' => suspension\Suspension::TYPE_BAN,
-				'expires' => $this->expires
+				'expires' => $this->expires,
+				'time' => TIME_NOW,
+				'issuer' => WCF::getUser()->userID
 			)
 		));
 		$this->suspensionAction->executeAction();
