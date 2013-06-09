@@ -112,7 +112,7 @@
 		{include file='messageFormSmilies' wysiwygSelector=''}
 	{/if}
 	
-	<nav id="timsChatOptions" class="marginTop">
+	<nav id="timsChatOptions" class="marginTop buttonGroupNavigation">
 		<span class="invisible">{lang}chat.general.controls{/lang}</span>
 		<ul class="smallButtons buttonGroup">
 			<li><a id="timsChatAutoscroll" accesskey="d" class="button active timsChatToggle jsTooltip" title="{lang}chat.general.scroll{/lang}" data-status="1"><span class="icon icon16 icon-arrow-down"></span><span class="invisible">{lang}chat.general.scroll{/lang}</span></a></li>{*
