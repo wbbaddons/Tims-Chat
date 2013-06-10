@@ -35,7 +35,7 @@
 		</table>
 	</div>
 {else}
-	<p class="info">{lang}chat.acp.suspension.noItems{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 
