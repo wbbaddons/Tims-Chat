@@ -36,7 +36,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('suspensionID', 'userID', 'username', 'roomID', 'type', 'expires');
+	public $validSortFields = array('suspensionID', 'userID', 'username', 'roomID', 'type', 'expires', 'issuer', 'time');
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
@@ -58,6 +58,13 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	public $filterUserID = null;
 	
 	/**
+	 * issuer filter
+	 * 
+	 * @var	integer
+	 */
+	public $filterIssuerUserID = null;
+	
+	/**
 	 * room filter
 	 * 
 	 * @var	integer
@@ -72,6 +79,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 		
 		if (isset($_REQUEST['type'])) $this->filterType = intval($_REQUEST['type']);
 		if (isset($_REQUEST['userID'])) $this->filterUserID = intval($_REQUEST['userID']);
+		if (isset($_REQUEST['issuerUserID'])) $this->filterIssuerUserID = intval($_REQUEST['issuerUserID']);
 		if (isset($_REQUEST['roomID'])) $this->filterRoomID = intval($_REQUEST['roomID']);
 	}
 	
@@ -81,10 +89,12 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->sqlSelects .= "user_table.username, room_table.title AS roomTitle";
+		$this->objectList->sqlSelects .= "user_table.username, user_table2.username as issuerUsername, room_table.title AS roomTitle";
 		$this->objectList->sqlJoins .= "
 						LEFT JOIN	wcf".WCF_N."_user user_table
-						ON		suspension.userID = user_table.userID";
+						ON		suspension.userID = user_table.userID
+						LEFT JOIN	wcf".WCF_N."_user user_table2
+						ON		suspension.issuer = user_table2.userID";
 		$conditionJoins = "	LEFT JOIN	chat".WCF_N."_room room_table
 					ON		suspension.roomID = room_table.roomID";
 		$this->objectList->sqlConditionJoins .= $conditionJoins;
@@ -94,6 +104,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 		$this->objectList->getConditionBuilder()->add('(room_table.permanent = ? OR suspension.roomID IS NULL)', array(1));
 		if ($this->filterType !== null) $this->objectList->getConditionBuilder()->add('suspension.type = ?', array($this->filterType));
 		if ($this->filterUserID !== null) $this->objectList->getConditionBuilder()->add('suspension.userID = ?', array($this->filterUserID));
+		if ($this->filterIssuerUserID !== null) $this->objectList->getConditionBuilder()->add('suspension.issuer = ?', array($this->filterIssuerUserID));
 		if ($this->filterRoomID !== null) {
 			if ($this->filterRoomID === 0) {
 				$this->objectList->getConditionBuilder()->add('suspension.roomID IS NULL', array());
