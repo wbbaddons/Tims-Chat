@@ -91,15 +91,23 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	public function readParameters() {
 		parent::readParameters();
 		
+		// get usernames
 		if (isset($_REQUEST['username']) && !empty($_REQUEST['username'])) $this->filterUsername = \wcf\util\StringUtil::trim($_REQUEST['username']);
 		if (isset($_REQUEST['issuerUsername']) && !empty($_REQUEST['issuerUsername'])) $this->filterIssuerUsername = \wcf\util\StringUtil::trim($_REQUEST['issuerUsername']);
 		
+		// get user IDs by username
 		if ($this->filterUsername != null) $this->filterUserID = \wcf\data\user\UserProfile::getUserProfileByUsername($this->filterUsername)->userID;
 		if ($this->filterIssuerUsername != null) $this->filterIssuerUserID = \wcf\data\user\UserProfile::getUserProfileByUsername($this->filterIssuerUsername)->userID;
 		
-		if ($this->filterUserID === null && isset($_REQUEST['userID']) 	&& !empty($_REQUEST['userID'])) $this->filterUserID = 	intval($_REQUEST['userID']);
+		// get user IDs by request if no username was sent
+		if ($this->filterUserID === null && isset($_REQUEST['userID']) && !empty($_REQUEST['userID'])) $this->filterUserID = intval($_REQUEST['userID']);
 		if ($this->filterIssuerUserID === null && isset($_REQUEST['issuerUserID']) && !empty($_REQUEST['issuerUserID'])) $this->filterIssuerUserID = intval($_REQUEST['issuerUserID']);
 		
+		// get usernames by ID if no usernames were sent
+		if ($this->filterUsername === null) $this->filterUsername = \wcf\data\user\UserProfile::getUserProfile($this->filterUserID);
+		if ($this->filterIssuerUsername === null) $this->filterIssuerUsername = \wcf\data\user\UserProfile::getUserProfile($this->filterIssuerUserID);
+		
+		// get room IDs by request
 		if (isset($_REQUEST['roomID']) && $_REQUEST['roomID'] != -1) $this->filterRoomID = intval($_REQUEST['roomID']);
 		if (isset($_REQUEST['suspensionType']) && !empty($_REQUEST['suspensionType'])) $this->filterSuspensionType = intval($_REQUEST['suspensionType']);
 	}

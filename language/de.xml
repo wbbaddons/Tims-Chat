@@ -11,10 +11,17 @@
 		<item name="chat.acp.room.delete.sure"><![CDATA[Wollen Sie den Raum „{$chatRoom}“ wirklich löschen?]]></item>
 	</category>
 	
+	<category name="chat.acp.suspension">
+		<item name="chat.acp.suspension.list"><![CDATA[Sanktionen]]></item>
+		<item name="chat.acp.suspension.type"><![CDATA[Art der Sanktion]]></item>
+		<item name="chat.acp.suspension.issuer"><![CDATA[Aussteller]]></item>
+	</category>
+	
 	<category name="chat.acp.menu">
 		<item name="chat.acp.menu.link"><![CDATA[Chat]]></item>
 		<item name="chat.acp.menu.link.room.list"><![CDATA[Chaträume auflisten]]></item>
 		<item name="chat.acp.menu.link.room.add"><![CDATA[Chatraum hinzufügen]]></item>
+		<item name="chat.acp.menu.link.suspension.list"><![CDATA[Sperren auflisten]]></item>
 	</category>
 	
 	<category name="wcf.acp.group">
@@ -68,6 +75,9 @@
 	</category>
 	
 	<category name="chat.general">
+		<item name="chat.general.expires"><![CDATA[Ablaufzeitpunkt]]></item>
+		<item name="chat.general.time"><![CDATA[Datum]]></item>
+				
 		<item name="chat.general.title"><![CDATA[{lang}chat.header.menu.chat{/lang}]]></item>
 		<item name="chat.general.protocol"><![CDATA[Protokoll]]></item>
 		

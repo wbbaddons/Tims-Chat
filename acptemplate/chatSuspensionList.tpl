@@ -21,21 +21,21 @@
 			<dl>
 				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>
-					<input type="text" id="username" name="username" class="long" value="{$filterUsername}" />
+					<input type="text" id="username" name="username" class="medium" value="{$filterUsername}" />
 				</dd>
 			</dl>
 			
 			<dl>
-				<dt><label for="issuerUsername">{lang}wcf.acp.chat.issuer{/lang}</label></dt>
+				<dt><label for="issuerUsername">{lang}chat.acp.suspension.issuer{/lang}</label></dt>
 				<dd>
-					<input type="text" id="issuerUsername" name="issuerUsername" class="long" value="{$filterIssuerUsername}" />
+					<input type="text" id="issuerUsername" name="issuerUsername" class="medium" value="{$filterIssuerUsername}" />
 				</dd>
 			</dl>
 			
 			<dl>
 				<dt><label for="roomID">{lang}chat.general.room{/lang}</label></dt>
 				<dd>
-					<select name="roomID">
+					<select name="roomID" class="medium">
 						<option value="-1" {if $filterRoomID == -1}selected="selected"{/if}></option>
 						<option value="0" {if $filterRoomID == 0}selected="selected"{/if}>{lang}chat.room.global{/lang}</option>
 						<option value="" disabled="disabled">&mdash;&mdash;&mdash;&mdash;</option>
@@ -47,9 +47,9 @@
 			</dl>
 			
 			<dl>
-				<dt><label for="searchTypeMute">{lang}wcf.acp.chat.suspensionType{/lang}</label></dt>
+				<dt><label for="searchTypeMute">{lang}chat.acp.suspension.type{/lang}</label></dt>
 				<dd>
-					<select name="suspensionType" id="suspensionType">
+					<select name="suspensionType" id="suspensionType" class="medium">
 						<option value=""{if $filterSuspensionType == null}selected="selected"{/if}></option>
 						<option value="{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}"{if $filterSuspensionType == '\chat\data\suspension\Suspension::TYPE_MUTE'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}{/lang}</option>
 						<option value="{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}"{if $filterSuspensionType == '\chat\data\suspension\Suspension::TYPE_BAN'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}{/lang}</option>
@@ -67,7 +67,7 @@
 {if $objects|count}
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<header>
-			<h2>{lang}wcf.acp.suspension.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+			<h2>{lang}chat.acp.suspension.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
 		</header>
 		
 		<table class="table">
@@ -76,10 +76,10 @@
 					<th class="columnID{if $sortField == 'suspensionID'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=suspensionID&sortOrder={if $sortField == 'suspensionID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnUsername{if $sortField == 'username'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=username&sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.user.username{/lang}</a></th>
 					<th class="columnRoomID{if $sortField == 'roomID'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=roomID&sortOrder={if $sortField == 'roomID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}chat.general.room{/lang}</a></th>
-					<th class="columnSuspensionType{if $sortField == 'suspensionType'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=suspensionType&sortOrder={if $sortField == 'suspensionType' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.chat.suspensionType{/lang}</a></th>
-					<th class="columnTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.chat.time{/lang}</a></th>
-					<th class="columnExpires{if $sortField == 'expires'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=expires&sortOrder={if $sortField == 'expires' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.chat.expires{/lang}</a></th>
-					<th class="columnIssuer{if $sortField == 'issuer'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=issuer&sortOrder={if $sortField == 'issuer' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.chat.issuer{/lang}</a></th>
+					<th class="columnSuspensionType{if $sortField == 'suspensionType'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=suspensionType&sortOrder={if $sortField == 'suspensionType' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}chat.acp.suspension.type{/lang}</a></th>
+					<th class="columnTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}chat.general.time{/lang}</a></th>
+					<th class="columnExpires{if $sortField == 'expires'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=expires&sortOrder={if $sortField == 'expires' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}chat.general.expires{/lang}</a></th>
+					<th class="columnIssuer{if $sortField == 'issuer'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=issuer&sortOrder={if $sortField == 'issuer' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}chat.acp.suspension.issuer{/lang}</a></th>
 				</tr>
 			</thead>
 			
