@@ -48,7 +48,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	 * 
 	 * @var	integer
 	 */
-	public $filterType = null;
+	public $filterSuspensionType = null;
 	
 	/**
 	 * user filter
@@ -57,12 +57,26 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	 */
 	public $filterUserID = null;
 	
+	/*
+	 * username
+	 *
+	 * @var String
+	 */
+	public $filterUsername = null;
+	
 	/**
 	 * issuer filter
 	 * 
 	 * @var	integer
 	 */
 	public $filterIssuerUserID = null;
+	
+	/*
+	 * issuer username
+	 *
+	 * @var String
+	 */
+	public $filterIssuerUsername = null;
 	
 	/**
 	 * room filter
@@ -77,10 +91,32 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['type'])) $this->filterType = intval($_REQUEST['type']);
-		if (isset($_REQUEST['userID'])) $this->filterUserID = intval($_REQUEST['userID']);
-		if (isset($_REQUEST['issuerUserID'])) $this->filterIssuerUserID = intval($_REQUEST['issuerUserID']);
-		if (isset($_REQUEST['roomID'])) $this->filterRoomID = intval($_REQUEST['roomID']);
+		if (isset($_REQUEST['username']) && !empty($_REQUEST['username'])) $this->filterUsername = \wcf\util\StringUtil::trim($_REQUEST['username']);
+		if (isset($_REQUEST['issuerUsername']) && !empty($_REQUEST['issuerUsername'])) $this->filterIssuerUsername = \wcf\util\StringUtil::trim($_REQUEST['issuerUsername']);
+		
+		if ($this->filterUsername != null) $this->filterUserID = \wcf\data\user\UserProfile::getUserProfileByUsername($this->filterUsername)->userID;
+		if ($this->filterIssuerUsername != null) $this->filterIssuerUserID = \wcf\data\user\UserProfile::getUserProfileByUsername($this->filterIssuerUsername)->userID;
+		
+		if ($this->filterUserID === null && isset($_REQUEST['userID']) 	&& !empty($_REQUEST['userID'])) $this->filterUserID = 	intval($_REQUEST['userID']);
+		if ($this->filterIssuerUserID === null && isset($_REQUEST['issuerUserID']) && !empty($_REQUEST['issuerUserID'])) $this->filterIssuerUserID = intval($_REQUEST['issuerUserID']);
+		
+		if (isset($_REQUEST['roomID']) && $_REQUEST['roomID'] != -1) $this->filterRoomID = intval($_REQUEST['roomID']);
+		if (isset($_REQUEST['suspensionType']) && !empty($_REQUEST['suspensionType'])) $this->filterSuspensionType = intval($_REQUEST['suspensionType']);
+	}
+	
+	/**
+	 * @see	wcf\page\IPage::assignVariables()
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign(array(
+			'availableRooms' => \chat\data\room\RoomCache::getInstance()->getRooms(),
+			'filterRoomID' => ($this->filterRoomID !== null) ? $this->filterRoomID : -1,
+			'filterUsername' => $this->filterUsername,
+			'filterIssuerUsername' => $this->filterIssuerUsername,
+			'filterSuspensionType' => $this->filterSuspensionType
+		));
 	}
 	
 	/**
@@ -102,7 +138,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 		
 		$this->objectList->getConditionBuilder()->add('expires >= ?', array(TIME_NOW));
 		$this->objectList->getConditionBuilder()->add('(room_table.permanent = ? OR suspension.roomID IS NULL)', array(1));
-		if ($this->filterType !== null) $this->objectList->getConditionBuilder()->add('suspension.type = ?', array($this->filterType));
+		if ($this->filterSuspensionType !== null) $this->objectList->getConditionBuilder()->add('suspension.type = ?', array($this->filterSuspensionType));
 		if ($this->filterUserID !== null) $this->objectList->getConditionBuilder()->add('suspension.userID = ?', array($this->filterUserID));
 		if ($this->filterIssuerUserID !== null) $this->objectList->getConditionBuilder()->add('suspension.issuer = ?', array($this->filterIssuerUserID));
 		if ($this->filterRoomID !== null) {
