@@ -24,7 +24,7 @@
 		</acpmenuitem>
 
 		<acpmenuitem name="chat.acp.menu.link.suspension.list">
-			<controller><![CDATA[chat\acp\page\SuspensionListPage]]></controller>
+			<controller><![CDATA[chat\acp\page\ChatSuspensionListPage]]></controller>
 			<parent>chat.acp.menu.link.chat</parent>
 			<!--TODO: <permissions></permissions> -->
 			<showorder>1</showorder>
