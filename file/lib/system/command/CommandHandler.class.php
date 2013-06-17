@@ -39,6 +39,11 @@ final class CommandHandler {
 	public function __construct($text, \chat\data\room\Room $room = null) {
 		$this->text = $text;
 		$this->room = $room;
+		
+		$aliases = self::getAliasMap();
+		foreach ($aliases as $search => $replace) {
+			$this->text = \wcf\system\Regex::compile('^'.preg_quote($search))->replace($this->text, $replace);
+		}
 	}
 	
 	/**
@@ -105,9 +110,6 @@ final class CommandHandler {
 		if ($this->isCommand($parts[0])) {
 			return new commands\PlainCommand($this);
 		}
-		
-		$aliases = self::getAliasMap();
-		if (isset($aliases[$parts[0]])) $parts[0] = $aliases[$parts[0]];
 		
 		$class = '\chat\system\command\commands\\'.ucfirst(strtolower($parts[0])).'Command';
 		if (!class_exists($class)) {
