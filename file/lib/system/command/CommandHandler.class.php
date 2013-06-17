@@ -14,19 +14,19 @@ use \wcf\util\StringUtil;
 final class CommandHandler {
 	/**
 	 * char that indicates a command
-	 * @var string
+	 * @var	string
 	 */
 	const COMMAND_CHAR = '/';
 	
 	/**
 	 * message text
-	 * @var string
+	 * @var	string
 	 */
 	private $text = '';
 	
 	/**
 	 * current room
-	 * @var \chat\data\room\Room
+	 * @var	\chat\data\room\Room
 	 */
 	private $room = null;
 	
@@ -39,6 +39,22 @@ final class CommandHandler {
 	public function __construct($text, \chat\data\room\Room $room = null) {
 		$this->text = $text;
 		$this->room = $room;
+	}
+	
+	/**
+	 * Returns the alias map. Key is the alias, value is the target.
+	 * 
+	 * @return	array<string>
+	 */
+	public static function getAliasMap() {
+		$result = array();
+		foreach (explode("\n", StringUtil::unifyNewlines(StringUtil::toLowerCase(CHAT_COMMAND_ALIASES))) as $line) {
+			list($key, $val) = explode(':', $line, 2);
+			
+			$result[$key] = $val;
+		}
+		
+		return $result;
 	}
 	
 	/**
@@ -89,6 +105,9 @@ final class CommandHandler {
 		if ($this->isCommand($parts[0])) {
 			return new commands\PlainCommand($this);
 		}
+		
+		$aliases = self::getAliasMap();
+		if (isset($aliases[$parts[0]])) $parts[0] = $aliases[$parts[0]];
 		
 		$class = '\chat\system\command\commands\\'.ucfirst(strtolower($parts[0])).'Command';
 		if (!class_exists($class)) {
