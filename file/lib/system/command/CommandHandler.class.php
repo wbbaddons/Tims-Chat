@@ -111,7 +111,7 @@ final class CommandHandler {
 		
 		$class = '\chat\system\command\commands\\'.ucfirst(strtolower($parts[0])).'Command';
 		if (!class_exists($class)) {
-			throw new NotFoundException();
+			throw new NotFoundException($parts[0]);
 		}
 		
 		return new $class($this);

@@ -125,6 +125,9 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 			catch (\chat\system\command\UserNotFoundException $e) {
 				throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('chat.error.userNotFound', array('exception' => $e)));
 			}
+			catch (\InvalidArgumentException $e) {
+				throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('chat.error.invalidArgument', array('exception' => $e)));
+			}
 		}
 		else {
 			$this->parameters['type'] = Message::TYPE_NORMAL;

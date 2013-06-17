@@ -10,4 +10,23 @@ namespace chat\system\command;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command
  */
-class NotFoundException extends \Exception { }
+class NotFoundException extends \Exception {
+	/**
+	 * given command
+	 * @var string
+	 */
+	private $command = '';
+	
+	public function __construct($command) {
+		$this->command = $command;
+	}
+	
+	/**
+	 * Returns the given command
+	 * 
+	 * @return string
+	 */
+	public function getCommand() {
+		return $this->command;
+	}
+}
