@@ -42,8 +42,10 @@ final class CommandHandler {
 		
 		$aliases = self::getAliasMap();
 		foreach ($aliases as $search => $replace) {
-			$this->text = \wcf\system\Regex::compile('^'.preg_quote($search))->replace($this->text, $replace);
+			$this->text = \wcf\system\Regex::compile('^'.preg_quote(self::COMMAND_CHAR.$search).'( |$)')->replace($this->text, self::COMMAND_CHAR.$replace.' ');
 		}
+		
+		$this->text = \wcf\system\Regex::compile('^//')->replace($this->text, '/plain ');
 	}
 	
 	/**
@@ -106,10 +108,6 @@ final class CommandHandler {
 	 */
 	public function loadCommand() {
 		$parts = explode(' ', StringUtil::substring($this->text, StringUtil::length(static::COMMAND_CHAR)), 2);
-		
-		if ($this->isCommand($parts[0])) {
-			return new commands\PlainCommand($this);
-		}
 		
 		$class = '\chat\system\command\commands\\'.ucfirst(strtolower($parts[0])).'Command';
 		if (!class_exists($class)) {
