@@ -12,7 +12,7 @@
 <header class="boxHeadline">
 	<h1>{lang}chat.acp.suspension.list{/lang}</h1>
 </header>
-	
+
 {if $objects|count}
 	<form method="post" action="{link controller='ChatSuspensionList' application='chat'}{/link}">
 		<div class="container containerPadding marginTop">
@@ -22,14 +22,14 @@
 				<dl>
 					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 					<dd>
-						<input type="text" id="username" name="username" class="medium" value="{$filterUsername}" />
+						<input type="text" id="username" name="username" class="medium" value="{$username}" />
 					</dd>
 				</dl>
 				
 				<dl>
 					<dt><label for="issuerUsername">{lang}chat.acp.suspension.issuer{/lang}</label></dt>
 					<dd>
-						<input type="text" id="issuerUsername" name="issuerUsername" class="medium" value="{$filterIssuerUsername}" />
+						<input type="text" id="issuerUsername" name="issuerUsername" class="medium" value="{$issuerUsername}" />
 					</dd>
 				</dl>
 				
@@ -37,11 +37,11 @@
 					<dt><label for="roomID">{lang}chat.general.room{/lang}</label></dt>
 					<dd>
 						<select id="roomID" name="roomID">
-							<option value="-1"{if $filterRoomID == -1} selected="selected"{/if}></option>
-							<option value="0"{if $filterRoomID == 0} selected="selected"{/if}>{lang}chat.room.global{/lang}</option>
+							<option value="-1"{if $roomID == -1} selected="selected"{/if}></option>
+							<option value="0"{if $roomID == 0} selected="selected"{/if}>{lang}chat.room.global{/lang}</option>
 							<option value="" disabled="disabled">&mdash;&mdash;&mdash;&mdash;</option>
 							{foreach from=$availableRooms key=id item=room}
-								<option value="{$id}" {if $filterRoomID == $id}selected="selected"{/if}>{$room}</option>
+								<option value="{$id}" {if $roomID == $id}selected="selected"{/if}>{$room}</option>
 							{/foreach}
 						</select>
 					</dd>
@@ -51,9 +51,9 @@
 					<dt><label for="suspensionType">{lang}chat.acp.suspension.type{/lang}</label></dt>
 					<dd>
 						<select id="suspensionType" name="suspensionType">
-							<option value=""{if $filterSuspensionType == null} selected="selected"{/if}></option>
-							<option value="{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}"{if $filterSuspensionType == '\chat\data\suspension\Suspension::TYPE_MUTE'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}{/lang}</option>
-							<option value="{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}"{if $filterSuspensionType == '\chat\data\suspension\Suspension::TYPE_BAN'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}{/lang}</option>
+							<option value=""{if $suspensionType == null} selected="selected"{/if}></option>
+							<option value="{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}"{if $suspensionType == '\chat\data\suspension\Suspension::TYPE_MUTE'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}{/lang}</option>
+							<option value="{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}"{if $suspensionType == '\chat\data\suspension\Suspension::TYPE_BAN'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}{/lang}</option>
 						</select>
 					</dd>
 				</dl>
@@ -64,6 +64,10 @@
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		</div>
 	</form>
+
+	<div class="contentNavigation">
+		{pages print=true assign=pagesLinks application="chat" controller="ChatSuspensionList" link="pageNo=%d&userID=$userID&issuerUserID=$issuerUserID&roomID=$roomID&suspensionType=$suspensionType"}
+	</div>
 	
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<header>
@@ -97,6 +101,10 @@
 				{/foreach}
 			</tbody>
 		</table>
+	</div>
+	
+	<div class="contentNavigation">
+		{pages print=true assign=pagesLinks application="chat" controller="ChatSuspensionList" link="pageNo=%d&username=$username&issuerUsername=$issuerUsername&roomID=$roomID&suspensionType=$suspensionType"}
 	</div>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>

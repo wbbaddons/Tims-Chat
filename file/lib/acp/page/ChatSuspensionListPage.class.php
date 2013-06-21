@@ -29,11 +29,6 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	public $defaultSortField = 'expires';
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
-	 */
-	public $itemsPerPage = 30;
-	
-	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('suspensionID', 'userID', 'username', 'roomID', 'type', 'expires', 'issuer', 'time');
@@ -120,10 +115,12 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 		
 		WCF::getTPL()->assign(array(
 			'availableRooms' => \chat\data\room\RoomCache::getInstance()->getRooms(),
-			'filterRoomID' => ($this->filterRoomID !== null) ? $this->filterRoomID : -1,
-			'filterUsername' => $this->filterUsername,
-			'filterIssuerUsername' => $this->filterIssuerUsername,
-			'filterSuspensionType' => $this->filterSuspensionType
+			'roomID' => ($this->filterRoomID !== null) ? $this->filterRoomID : -1,
+			'username' => $this->filterUsername,
+			'issuerUsername' => $this->filterIssuerUsername,
+			'suspensionType' => $this->filterSuspensionType,
+			'userID' => $this->filterUserID,
+			'issuerUserID' => $this->filterIssuerUserID
 		));
 	}
 	
