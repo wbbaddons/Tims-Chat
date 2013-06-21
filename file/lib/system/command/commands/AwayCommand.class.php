@@ -36,11 +36,4 @@ class AwayCommand extends \chat\system\command\AbstractCommand {
 	public function getMessage() {
 		return \wcf\system\bbcode\PreParser::getInstance()->parse($this->commandHandler->getParameters(), explode(',', WCF::getSession()->getPermission('user.chat.allowedBBCodes')));
 	}
-	
-	/**
-	 * @see	\chat\system\command\ICommand::getReceiver()
-	 */
-	public function getReceiver() {
-		return WCF::getUser()->userID;
-	}
 }
