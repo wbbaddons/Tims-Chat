@@ -18,7 +18,13 @@
 		<div class="container containerPadding marginTop">
 			<fieldset>
 				<legend>{lang}wcf.global.filter{/lang}</legend>
-			
+				
+				<dl>
+					<dd>
+						<label><input type="checkbox" id="displayRevoked" name="displayRevoked" value="1"{if $displayRevoked} checked="checked"{/if} /> {lang}chat.acp.suspension.displayRevoked{/lang}</label>
+					</dd>
+				</dl>
+				
 				<dl>
 					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 					<dd>

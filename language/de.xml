@@ -66,7 +66,7 @@
 	</category>
 	
 	<category name="chat.error">
-		<item name="chat.error.notFound"><![CDATA[Der Befehl wurde nicht gefunden.]]></item>
+		<item name="chat.error.notFound"><![CDATA[Der Befehl „{$exception->getCommand()}“ wurde nicht gefunden.]]></item>
 		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer „{$exception->getUsername()}“ wurde nicht gefunden.]]></item>
 		<item name="chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
 		<item name="chat.error.duplicateTab"><![CDATA[Der Chat wurde in einem weiteren Tab geöffnet.]]></item>

@@ -51,8 +51,10 @@ CREATE TABLE chat1_suspension (
 	time		INT(10)		NOT NULL,
 	issuer		INT(10)		DEFAULT NULL,
 	reason		VARCHAR(255)	NOT NULL DEFAULT '',
+	revoked		TINYINT(1)	NOT NULL DEFAULT 0,
+	revoker		INT(10)		DEFAULT NULL,
 	
-	UNIQUE KEY suspension (userID, roomID, type),
+	KEY suspension (userID, roomID, type),
 	KEY (roomID),
 	KEY (type),
 	KEY (expires)
@@ -74,6 +76,7 @@ ALTER TABLE chat1_room ADD FOREIGN KEY (owner) REFERENCES wcf1_user (userID) ON 
 ALTER TABLE chat1_suspension ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE chat1_suspension ADD FOREIGN KEY (roomID) REFERENCES chat1_room (roomID) ON DELETE CASCADE;
 ALTER TABLE chat1_suspension ADD FOREIGN KEY (issuer) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+ALTER TABLE chat1_suspension ADD FOREIGN KEY (revoker) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_user ADD FOREIGN KEY (chatRoomID) REFERENCES chat1_room (roomID) ON DELETE SET NULL;
 

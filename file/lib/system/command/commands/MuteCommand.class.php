@@ -61,7 +61,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
 			}
 			
-			$action = new suspension\SuspensionAction(array($suspension), 'delete');
+			$action = new suspension\SuspensionAction(array($suspension), 'revoke');
 			$action->executeAction();
 		}
 		
