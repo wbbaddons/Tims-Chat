@@ -1,5 +1,6 @@
 <?php
 namespace chat\data\suspension;
+use \wcf\system\WCF;
 
 /**
  * Executes chat-suspension-related actions.
@@ -15,6 +16,15 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = '\chat\data\suspension\SuspensionEditor';
+	
+	/**
+	 * Validates permissions and parameters
+	 */
+	public function validateRevoke() {
+		WCF::getSession()->checkPermissions((array) 'admin.chat.canManageSuspensions');
+		
+		$this->parameters['revoker'] = WCF::getUser()->userID;
+	}
 	
 	/**
 	 * Revokes suspensions.

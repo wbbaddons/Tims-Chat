@@ -5,6 +5,33 @@
 		$(function() {
 			new WCF.Search.User('#username', null, false, [ ], false);
 			new WCF.Search.User('#issuerUsername', null, false, [ ], false);
+			
+			var proxy = new WCF.Action.Proxy({
+				success: function (data, textStatus, jqXHR) {
+					$('.jsSuspensionRow').each(function(index, row) {
+						var row = $(row);
+						if (WCF.inArray(row.data('objectID'), data.objectIDs)) {
+							row.find('.jsRevokeButton').addClass('disabled').removeClass('pointer').off('click');
+							
+							(new WCF.System.Notification('{"chat.acp.suspension.revoke.success"|language|encodeJS}')).show();
+						}
+					});
+				}
+			});
+			$('.jsRevokeButton:not(.disabled)').click(function () {
+				var objectID = $(this).parents('.jsSuspensionRow').data('objectID');
+				
+				WCF.System.Confirmation.show($(this).data('confirmMessage'), $.proxy(function (action) {
+					if (action === 'confirm') {
+						proxy.setOption('data', {
+							actionName: 'revoke',
+							className: '\\chat\\data\\suspension\\SuspensionAction',
+							objectIDs: [ objectID ]
+						});
+						proxy.sendRequest();
+					}
+				}, this));
+			});
 		});
 	//]]>
 </script>
@@ -108,7 +135,7 @@
 				{foreach from=$objects item=$suspension}
 					<tr class="jsSuspensionRow" data-object-id="{$suspension->suspensionID}">
 						<td class="columnIcon">
-							<span class="icon icon16 icon-undo{if $suspension->expires <= TIME_NOW} disabled{/if}" title="{lang}chat.acp.suspension.revoked{/lang}"></span>
+							<span class="icon icon16 icon-undo{if $suspension->expires <= TIME_NOW} disabled{else} pointer{/if} jsRevokeButton" title="{lang}chat.acp.suspension.revoked{/lang}" data-confirm-message="{lang}chat.acp.suspension.revoke.sure{/lang}"></span>
 							{event name='rowButtons'}
 						</td>
 						<td id="columnID">{#$suspension->suspensionID}</td>
