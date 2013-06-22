@@ -56,12 +56,6 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
-			<option name="mod.chat.canViewAllSuspensions">
-				<categoryname>mod.chat</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
 			<option name="mod.chat.canMute">
 				<categoryname>mod.chat</categoryname>
 				<optiontype>boolean</optiontype>
@@ -105,6 +99,12 @@
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
 			<option name="admin.chat.canDeleteRoom">
+				<categoryname>admin.chat</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.chat.canViewAllSuspensions">
 				<categoryname>admin.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>

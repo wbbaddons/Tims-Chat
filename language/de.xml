@@ -28,6 +28,17 @@
 		<item name="chat.acp.menu.link.suspension.list"><![CDATA[Sanktionen auflisten]]></item>
 	</category>
 	
+	<category name="wcf.acl.option">
+		<item name="wcf.acl.option.category.be.bastelstu.chat.room.user"><![CDATA[Benutzerrechte]]></item>
+		<item name="wcf.acl.option.category.be.bastelstu.chat.room.mod"><![CDATA[Moderative Rechte]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.user.canEnter"><![CDATA[Kann Raum betreten]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.user.canWrite"><![CDATA[Kann schreiben]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canAlwaysEnter"><![CDATA[Kann Raum immer betreten]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canAlwaysWrite"><![CDATA[Kann immer schreiben]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canMute"><![CDATA[Kann knebeln]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canBan"><![CDATA[Kann bannen]]></item>
+	</category>
+	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.option.category.user.chat"><![CDATA[Chat]]></item>
 		<item name="wcf.acp.group.option.user.chat.canEnter"><![CDATA[Kann Chat betreten]]></item>
@@ -35,12 +46,24 @@
 		<item name="wcf.acp.group.option.user.chat.canTempRoom"><![CDATA[Kann temporäre Räume erstellen]]></item>
 		
 		<item name="wcf.acp.group.option.category.mod.chat"><![CDATA[Chat]]></item>
-		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter"><![CDATA[Kann jeden Raum betreten]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter"><![CDATA[Kann Räume immer betreten]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter.description"><![CDATA[Setzt Banns außer Kraft.]]></item>
-		<item name="wcf.acp.group.option.mod.chat.canAlwaysWrite"><![CDATA[Kann in jedem Raum schreiben]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysWrite"><![CDATA[Kann immer schreiben]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canAlwaysWrite.description"><![CDATA[Setzt Knebel außer Kraft.]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canRestore"><![CDATA[Kann User zurücksetzen]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canRestore.description"><![CDATA[Setzt Nutzerdaten (Farbe) zurück.]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canBan"><![CDATA[Kann bannen]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canBan.description"><![CDATA[Impliziert „Kann Chat immer betreten“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canMute"><![CDATA[Kann knebeln]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canMute.description"><![CDATA[Impliziert „Kann immer schreiben“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGban"><![CDATA[Kann global bannen]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGban.description"><![CDATA[Impliziert „Kann bannen“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGmute"><![CDATA[Kann global knebeln]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGmute.description"><![CDATA[Impliziert „Kann knebeln“]]></item>
+		
+		<item name="wcf.acp.group.option.category.admin.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions"><![CDATA[Kann Sanktionen verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions.description"><![CDATA[Impliziert „Kann bannen“, „Kann knebeln“, „Kann global bannen“, „Kann global knebeln“ und gegenbenenfalls weitere Rechte.]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
