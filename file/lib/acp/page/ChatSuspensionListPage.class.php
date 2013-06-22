@@ -81,6 +81,13 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	public $filterRoomID = null;
 	
 	/**
+	 * display revoked suspensions
+	 * 
+	 * @var	integer
+	 */
+	public $displayRevoked = 0;
+	
+	/**
 	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -105,6 +112,9 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 		// get room IDs by request
 		if (isset($_REQUEST['roomID']) && $_REQUEST['roomID'] != -1) $this->filterRoomID = intval($_REQUEST['roomID']);
 		if (isset($_REQUEST['suspensionType']) && !empty($_REQUEST['suspensionType'])) $this->filterSuspensionType = intval($_REQUEST['suspensionType']);
+		
+		// display revoked
+		if (isset($_REQUEST['displayRevoked'])) $this->displayRevoked = intval($_REQUEST['displayRevoked']);
 	}
 	
 	/**
@@ -120,7 +130,8 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 			'issuerUsername' => $this->filterIssuerUsername,
 			'suspensionType' => $this->filterSuspensionType,
 			'userID' => $this->filterUserID,
-			'issuerUserID' => $this->filterIssuerUserID
+			'issuerUserID' => $this->filterIssuerUserID,
+			'displayRevoked' => $this->displayRevoked
 		));
 	}
 	
@@ -130,18 +141,23 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->sqlSelects .= "user_table.username, user_table2.username as issuerUsername, room_table.title AS roomTitle";
+		$this->objectList->sqlSelects .= "user_table.username, user_table2.username AS issuerUsername, user_table3.username AS revokerUsername, room_table.title AS roomTitle";
 		$this->objectList->sqlJoins .= "
 						LEFT JOIN	wcf".WCF_N."_user user_table
 						ON		suspension.userID = user_table.userID
 						LEFT JOIN	wcf".WCF_N."_user user_table2
-						ON		suspension.issuer = user_table2.userID";
+						ON		suspension.issuer = user_table2.userID
+						LEFT JOIN	wcf".WCF_N."_user user_table3
+						ON              suspension.issuer = user_table3.userID";
 		$conditionJoins = "	LEFT JOIN	chat".WCF_N."_room room_table
 					ON		suspension.roomID = room_table.roomID";
 		$this->objectList->sqlConditionJoins .= $conditionJoins;
 		$this->objectList->sqlJoins .= $conditionJoins;
 		
-		$this->objectList->getConditionBuilder()->add('expires >= ?', array(TIME_NOW));
+		if (!$this->displayRevoked) {
+			$this->objectList->getConditionBuilder()->add('expires >= ?', array(TIME_NOW));
+			$this->objectList->getConditionBuilder()->add('revoked = ?', array(0));
+		}
 		$this->objectList->getConditionBuilder()->add('(room_table.permanent = ? OR suspension.roomID IS NULL)', array(1));
 		if ($this->filterSuspensionType !== null) $this->objectList->getConditionBuilder()->add('suspension.type = ?', array($this->filterSuspensionType));
 		if ($this->filterUserID !== null) $this->objectList->getConditionBuilder()->add('suspension.userID = ?', array($this->filterUserID));
