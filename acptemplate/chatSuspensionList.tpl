@@ -84,6 +84,7 @@
 					<th class="columnTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}chat.general.time{/lang}</a></th>
 					<th class="columnExpires{if $sortField == 'expires'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=expires&sortOrder={if $sortField == 'expires' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}chat.general.expires{/lang}</a></th>
 					<th class="columnIssuer{if $sortField == 'issuer'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=issuer&sortOrder={if $sortField == 'issuer' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}chat.acp.suspension.issuer{/lang}</a></th>
+					<th class="columnMessage{if $sortField == 'reason'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=reason&sortOrder={if $sortField == 'reason' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}chat.acp.suspension.reason{/lang}</a></th>
 				</tr>
 			</thead>
 			
@@ -97,6 +98,7 @@
 						<td id="columnTime">{$suspension->time|plainTime}</td>
 						<td id="columnExpires">{$suspension->expires|plainTime} ({$suspension->expires|dateDiff})</td>
 						<td id="columnIssuer"><a href="{link application='chat' controller='ChatSuspensionList'}issuerUserID={$suspension->issuer}{/link}">{$suspension->issuerUsername}</a></td>
+						<td id="columnMessage" {if $suspension->reason != $suspension->reason|truncate:30} class="jsTooltip" title="{$suspension->reason}"{/if}>{$suspension->reason|truncate:30}</a></td>
 					</tr>
 				{/foreach}
 			</tbody>
@@ -104,7 +106,7 @@
 	</div>
 	
 	<div class="contentNavigation">
-		{pages print=true assign=pagesLinks application="chat" controller="ChatSuspensionList" link="pageNo=%d&username=$username&issuerUsername=$issuerUsername&roomID=$roomID&suspensionType=$suspensionType"}
+		{@$pagesLinks}
 	</div>
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>

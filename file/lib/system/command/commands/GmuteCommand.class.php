@@ -18,8 +18,8 @@ class GmuteCommand extends MuteCommand {
 	public function executeAction() {
 		$room = new \chat\data\room\Room(null, array('roomID' => null));
 		
-		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $room, suspension\Suspension::TYPE_MUTE)) {
-			if ($suspension->expires > $this->expires) {
+		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $room, static::SUSPENSION_TYPE)) {
+			if ($suspension->expires >= $this->expires) {
 				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
 			}
 			
@@ -31,10 +31,11 @@ class GmuteCommand extends MuteCommand {
 			'data' => array(
 				'userID' => $this->user->userID,
 				'roomID' => null,
-				'type' => suspension\Suspension::TYPE_MUTE,
+				'type' => self::SUSPENSION_TYPE,
 				'expires' => $this->expires,
 				'time' => TIME_NOW,
-				'issuer' => WCF::getUser()->userID
+				'issuer' => WCF::getUser()->userID,
+				'reason' => $this->reason
 			)
 		));
 		$this->suspensionAction->executeAction();

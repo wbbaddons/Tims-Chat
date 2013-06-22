@@ -50,6 +50,7 @@ CREATE TABLE chat1_suspension (
 	expires		INT(10)		NOT NULL,
 	time		INT(10)		NOT NULL,
 	issuer		INT(10)		DEFAULT NULL,
+	reason		VARCHAR(255)	NOT NULL DEFAULT '',
 	
 	UNIQUE KEY suspension (userID, roomID, type),
 	KEY (roomID),
@@ -78,5 +79,5 @@ ALTER TABLE wcf1_user ADD FOREIGN KEY (chatRoomID) REFERENCES chat1_room (roomID
 
 INSERT INTO chat1_room (title, topic, showOrder) VALUES ('chat.room.title1', 'chat.room.topic1', 1);
 INSERT INTO chat1_room (title, topic, showOrder) VALUES ('Testroom 2', 'Topic of Testroom 2', 2);
-INSERT INTO chat1_room (title, topic, showOrder) VALUES ('Testroom with a very long', 'The topic of this room is rather loing as well!', 3);
+INSERT INTO chat1_room (title, topic, showOrder) VALUES ('Testroom with a very long name', 'The topic of this room is rather loing as well!', 3);
 INSERT INTO chat1_room (title, topic, showOrder) VALUES ('Room w/o topic', '', 4);

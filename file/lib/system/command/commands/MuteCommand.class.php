@@ -15,17 +15,25 @@ use \wcf\system\WCF;
  * @subpackage	system.chat.command.commands
  */
 class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
+	const SUSPENSION_TYPE = suspension\Suspension::TYPE_MUTE;
 	public $user = null;
 	public $expires = 0;
 	public $suspensionAction = null;
 	public $link = '';
 	public $room = null;
+	public $reason = '';
 	
 	public function __construct(\chat\system\command\CommandHandler $commandHandler) {
 		parent::__construct($commandHandler);
 		
 		try {
-			list($username, $modifier) = explode(',', $commandHandler->getParameters(), 2);
+			$parameters = explode(',', $commandHandler->getParameters(), 3);
+			list($username, $modifier) = $parameters;
+			
+			if (isset($parameters[2])) {
+				$this->reason = \wcf\util\StringUtil::trim($parameters[2]);
+			}
+			
 			$modifier = ChatUtil::timeModifier(\wcf\util\StringUtil::trim($modifier));
 			$expires = strtotime($modifier, TIME_NOW);
 			$this->expires = min(max(-0x80000000, $expires), 0x7FFFFFFF);
@@ -48,8 +56,8 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	}
 	
 	public function executeAction() {
-		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $this->room, suspension\Suspension::TYPE_MUTE)) {
-			if ($suspension->expires > $this->expires) {
+		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $this->room, static::SUSPENSION_TYPE)) {
+			if ($suspension->expires >= $this->expires) {
 				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
 			}
 			
@@ -64,7 +72,8 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 				'type' => suspension\Suspension::TYPE_MUTE,
 				'expires' => $this->expires,
 				'time' => TIME_NOW,
-				'issuer' => WCF::getUser()->userID
+				'issuer' => WCF::getUser()->userID,
+				'reason' => $this->reason
 			)
 		));
 		$this->suspensionAction->executeAction();
@@ -95,7 +104,8 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 		return serialize(array(
 			'link' => $this->link,
 			'expires' => $this->expires,
-			'type' => str_replace(array('chat\system\command\commands\\', 'command'), '', strtolower(get_class($this)))
+			'type' => str_replace(array('chat\system\command\commands\\', 'command'), '', strtolower(get_class($this))),
+			'message' => $this->suspensionMessage
 		));
 	}
 }

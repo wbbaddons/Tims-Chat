@@ -31,7 +31,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('suspensionID', 'userID', 'username', 'roomID', 'type', 'expires', 'issuer', 'time');
+	public $validSortFields = array('suspensionID', 'userID', 'username', 'roomID', 'type', 'expires', 'issuer', 'time', 'reason');
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
