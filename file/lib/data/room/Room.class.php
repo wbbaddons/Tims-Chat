@@ -48,24 +48,24 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 		if ($ph->getPermission($this, 'mod.canAlwaysEnter')) return true;
 		if ($ph->getPermission($this, 'mod.canBan')) return true;
 		
-		$canEnter = $ph->getPermission($this, 'user.canEnter');
+		if (!$ph->getPermission($this, 'user.canEnter')) return false;
 		
 		$suspensions = Suspension::getSuspensionsForUser($user->getDecoratedObject());
 		// room suspension
-		if ($canEnter && isset($suspensions[$this->roomID][Suspension::TYPE_BAN])) {
+		if (isset($suspensions[$this->roomID][Suspension::TYPE_BAN])) {
 			if ($suspensions[$this->roomID][Suspension::TYPE_BAN]->isValid()) {
-				$canEnter = false;
+				return false;
 			}
 		}
 		
 		// global suspension
-		if ($canEnter && isset($suspensions[null][Suspension::TYPE_BAN])) {
+		if (isset($suspensions[null][Suspension::TYPE_BAN])) {
 			if ($suspensions[null][Suspension::TYPE_BAN]->isValid()) {
-				$canEnter = false;
+				return false;
 			}
 		}
 		
-		return $canEnter;
+		return true;
 	}
 	
 	/**
@@ -86,24 +86,24 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 		if ($ph->getPermission($this, 'mod.canAlwaysWrite')) return true;
 		if ($ph->getPermission($this, 'mod.canMute')) return true;
 		
-		$canEnter = $ph->getPermission($this, 'user.canWrite');
+		if (!$ph->getPermission($this, 'user.canWrite')) return false;
 		
 		$suspensions = Suspension::getSuspensionsForUser($user->getDecoratedObject());
 		// room suspension
-		if ($canEnter && isset($suspensions[$this->roomID][Suspension::TYPE_MUTE])) {
+		if (isset($suspensions[$this->roomID][Suspension::TYPE_MUTE])) {
 			if ($suspensions[$this->roomID][Suspension::TYPE_MUTE]->isValid()) {
-				$canWrite = false;
+				return false;
 			}
 		}
 		
 		// global suspension
-		if ($canEnter && isset($suspensions[null][Suspension::TYPE_MUTE])) {
+		if (isset($suspensions[null][Suspension::TYPE_MUTE])) {
 			if ($suspensions[null][Suspension::TYPE_MUTE]->isValid()) {
-				$canWrite = false;
+				return false;
 			}
 		}
 		
-		return $canWrite;
+		return true;
 	}
 	
 	/**

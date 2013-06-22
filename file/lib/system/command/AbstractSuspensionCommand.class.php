@@ -89,15 +89,15 @@ abstract class AbstractSuspensionCommand extends AbstractRestrictedCommand {
 	public function checkPermission() {
 		parent::checkPermission();
 		
+		$this->room = $this->commandHandler->getRoom();
 		if (WCF::getSession()->getPermission('admin.chat.canManageSuspensions')) return;
 		
-		$this->room = $this->commandHandler->getRoom();
 		$ph = new \chat\system\permission\PermissionHandler();
 		if (static::IS_GLOBAL) {
-			WCF::getSession()->checkPermission('mod.chat.canG'.static::SUSPENSION_TYPE);
+			WCF::getSession()->checkPermissions((array) 'mod.chat.canG'.static::SUSPENSION_TYPE);
 		}
 		else {
-			if (!WCF::getSession()->checkPermission('mod.chat.canG'.static::SUSPENSION_TYPE)) {
+			if (!WCF::getSession()->getPermission('mod.chat.canG'.static::SUSPENSION_TYPE)) {
 				if (!$ph->getPermission($this->room, 'mod.can'.ucfirst(static::SUSPENSION_TYPE))) {
 					throw new \wcf\system\exception\PermissionDeniedException();
 				}

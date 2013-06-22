@@ -13,64 +13,64 @@
 	<h1>{lang}chat.acp.suspension.list{/lang}</h1>
 </header>
 
-{if $objects|count}
-	<form method="post" action="{link controller='ChatSuspensionList' application='chat'}{/link}">
-		<div class="container containerPadding marginTop">
-			<fieldset>
-				<legend>{lang}wcf.global.filter{/lang}</legend>
-				
-				<dl>
-					<dd>
-						<label><input type="checkbox" id="displayRevoked" name="displayRevoked" value="1"{if $displayRevoked} checked="checked"{/if} /> {lang}chat.acp.suspension.displayRevoked{/lang}</label>
-					</dd>
-				</dl>
-				
-				<dl>
-					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
-					<dd>
-						<input type="text" id="username" name="username" class="medium" value="{$username}" />
-					</dd>
-				</dl>
-				
-				<dl>
-					<dt><label for="issuerUsername">{lang}chat.acp.suspension.issuer{/lang}</label></dt>
-					<dd>
-						<input type="text" id="issuerUsername" name="issuerUsername" class="medium" value="{$issuerUsername}" />
-					</dd>
-				</dl>
-				
-				<dl>
-					<dt><label for="roomID">{lang}chat.general.room{/lang}</label></dt>
-					<dd>
-						<select id="roomID" name="roomID">
-							<option value="-1"{if $roomID == -1} selected="selected"{/if}></option>
-							<option value="0"{if $roomID == 0} selected="selected"{/if}>{lang}chat.room.global{/lang}</option>
-							<option value="" disabled="disabled">-------------</option>
-							{foreach from=$availableRooms key=id item=room}
-								<option value="{$id}" {if $roomID == $id}selected="selected"{/if}>{$room}</option>
-							{/foreach}
-						</select>
-					</dd>
-				</dl>
-				
-				<dl>
-					<dt><label for="suspensionType">{lang}chat.acp.suspension.type{/lang}</label></dt>
-					<dd>
-						<select id="suspensionType" name="suspensionType">
-							<option value=""{if $suspensionType == null} selected="selected"{/if}></option>
-							<option value="{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}"{if $suspensionType == '\chat\data\suspension\Suspension::TYPE_MUTE'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}{/lang}</option>
-							<option value="{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}"{if $suspensionType == '\chat\data\suspension\Suspension::TYPE_BAN'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}{/lang}</option>
-						</select>
-					</dd>
-				</dl>
-			</fieldset>
-		</div>
-		
-		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		</div>
-	</form>
+<form method="post" action="{link controller='ChatSuspensionList' application='chat'}{/link}">
+	<div class="container containerPadding marginTop">
+		<fieldset>
+			<legend>{lang}wcf.global.filter{/lang}</legend>
+			
+			<dl>
+				<dd>
+					<label><input type="checkbox" id="displayRevoked" name="displayRevoked" value="1"{if $displayRevoked} checked="checked"{/if} /> {lang}chat.acp.suspension.displayRevoked{/lang}</label>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+				<dd>
+					<input type="text" id="username" name="username" class="medium" value="{$username}" />
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt><label for="issuerUsername">{lang}chat.acp.suspension.issuer{/lang}</label></dt>
+				<dd>
+					<input type="text" id="issuerUsername" name="issuerUsername" class="medium" value="{$issuerUsername}" />
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt><label for="roomID">{lang}chat.general.room{/lang}</label></dt>
+				<dd>
+					<select id="roomID" name="roomID">
+						<option value="-1"{if $roomID == -1} selected="selected"{/if}></option>
+						<option value="0"{if $roomID == 0} selected="selected"{/if}>{lang}chat.room.global{/lang}</option>
+						<option value="" disabled="disabled">-------------</option>
+						{foreach from=$availableRooms key=id item=room}
+							<option value="{$id}" {if $roomID == $id}selected="selected"{/if}>{$room}</option>
+						{/foreach}
+					</select>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt><label for="suspensionType">{lang}chat.acp.suspension.type{/lang}</label></dt>
+				<dd>
+					<select id="suspensionType" name="suspensionType">
+						<option value=""{if $suspensionType == null} selected="selected"{/if}></option>
+						<option value="{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}"{if $suspensionType == '\chat\data\suspension\Suspension::TYPE_MUTE'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}{/lang}</option>
+						<option value="{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}"{if $suspensionType == '\chat\data\suspension\Suspension::TYPE_BAN'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}{/lang}</option>
+					</select>
+				</dd>
+			</dl>
+		</fieldset>
+	</div>
 	
+	<div class="formSubmit">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+	</div>
+</form>
+
+{if $objects|count}
 	{capture assign=additionalParameters}{*
 		*}{if $userID}&userID={$userID}{/if}{*
 		*}{if $issuerUserID}&issuerUserID={$issuerUserID}{/if}{*
