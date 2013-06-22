@@ -105,7 +105,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 			'link' => $this->link,
 			'expires' => $this->expires,
 			'type' => str_replace(array('chat\system\command\commands\\', 'command'), '', strtolower(get_class($this))),
-			'message' => $this->suspensionMessage
+			'reason' => $this->reason
 		));
 	}
 }
