@@ -39,11 +39,18 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	public function canEnter(\wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
 		if (!$user->userID) return false;
+		$user = new \wcf\data\user\UserProfile($user);
 		
-		$ph = new \chat\system\permission\PermissionHandler($user);
-		$suspensions = Suspension::getSuspensionsForUser($user);
+		if ($user->getPermission('admin.chat.canManageSuspensions')) return true;
+		if ($user->getPermission('mod.chat.canGban')) return true;
+		
+		$ph = new \chat\system\permission\PermissionHandler($user->getDecoratedObject());
+		if ($ph->getPermission($this, 'mod.canAlwaysEnter')) return true;
+		if ($ph->getPermission($this, 'mod.canBan')) return true;
 		
 		$canEnter = $ph->getPermission($this, 'user.canEnter');
+		
+		$suspensions = Suspension::getSuspensionsForUser($user->getDecoratedObject());
 		// room suspension
 		if ($canEnter && isset($suspensions[$this->roomID][Suspension::TYPE_BAN])) {
 			if ($suspensions[$this->roomID][Suspension::TYPE_BAN]->isValid()) {
@@ -58,7 +65,7 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 			}
 		}
 		
-		return $canEnter || $ph->getPermission($this, 'mod.canAlwaysEnter');
+		return $canEnter;
 	}
 	
 	/**
@@ -70,26 +77,33 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	public function canWrite(\wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
 		if (!$user->userID) return false;
+		$user = new \wcf\data\user\UserProfile($user);
 		
-		$ph = new \chat\system\permission\PermissionHandler($user);
-		$suspensions = Suspension::getSuspensionsForUser($user);
+		if ($user->getPermission('admin.chat.canManageSuspensions')) return true;
+		if ($user->getPermission('mod.chat.canGmute')) return true;
 		
-		$canWrite = $ph->getPermission($this, 'user.canWrite');
+		$ph = new \chat\system\permission\PermissionHandler($user->getDecoratedObject());
+		if ($ph->getPermission($this, 'mod.canAlwaysWrite')) return true;
+		if ($ph->getPermission($this, 'mod.canMute')) return true;
+		
+		$canEnter = $ph->getPermission($this, 'user.canWrite');
+		
+		$suspensions = Suspension::getSuspensionsForUser($user->getDecoratedObject());
 		// room suspension
-		if ($canWrite && isset($suspensions[$this->roomID][Suspension::TYPE_MUTE])) {
+		if ($canEnter && isset($suspensions[$this->roomID][Suspension::TYPE_MUTE])) {
 			if ($suspensions[$this->roomID][Suspension::TYPE_MUTE]->isValid()) {
 				$canWrite = false;
 			}
 		}
 		
 		// global suspension
-		if ($canWrite && isset($suspensions[null][Suspension::TYPE_MUTE])) {
+		if ($canEnter && isset($suspensions[null][Suspension::TYPE_MUTE])) {
 			if ($suspensions[null][Suspension::TYPE_MUTE]->isValid()) {
 				$canWrite = false;
 			}
 		}
 		
-		return $canWrite || $ph->getPermission($this, 'mod.canAlwaysWrite');
+		return $canWrite;
 	}
 	
 	/**

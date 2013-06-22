@@ -20,7 +20,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('mod.chat.canViewAllSuspensions');
+	public $neededPermissions = array('admin.chat.canManageSuspensions');
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField

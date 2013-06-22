@@ -42,10 +42,10 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	 */
 	public function isVisible($user = null) {
 		if ($user === null) $user = WCF::getUser();
-		
-		$ph = new \chat\system\permission\PermissionHandler($user);
-		if ($ph->getPermission($this->getRoom(), 'mod.canViewAllSuspensions')) return true;
-		if ($ph->getPermission($this->getRoom(), 'mod.canG'.$this->type)) return true;
+		$user = new \wcf\data\user\UserProfile($user);
+		$ph = new \chat\system\permission\PermissionHandler($user->getDecoratedObject());
+		if ($user->getPermission('admin.chat.canManageSuspensions')) return true;
+		if ($user->getPermission('mod.chat.canG'.$this->type)) return true;
 		if (!$this->room) return false;
 		if ($ph->getPermission($this->getRoom(), 'mod.can'.ucfirst($this->type))) return true;
 		return false;
