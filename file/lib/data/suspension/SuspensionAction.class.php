@@ -26,7 +26,7 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 		
 		$objectAction = new self($this->objectIDs, 'update', array(
 			'data' => array(
-				'expires' => TIME_NOW
+				'expires' => TIME_NOW,
 				'revoker' => $this->parameters['revoker']
 			)
 		));
