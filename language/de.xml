@@ -15,13 +15,17 @@
 		<item name="chat.acp.suspension.list"><![CDATA[Sanktionen]]></item>
 		<item name="chat.acp.suspension.type"><![CDATA[Art der Sanktion]]></item>
 		<item name="chat.acp.suspension.issuer"><![CDATA[Aussteller]]></item>
+		<item name="chat.acp.suspension.displayRevoked"><![CDATA[Abgelaufene Sanktionen anzeigen]]></item>
+		<item name="chat.acp.suspension.reason"><![CDATA[Grund]]></item>
+		<item name="chat.acp.suspension.revoked"><![CDATA[Zurückziehen]]></item>
+		<item name="chat.acp.suspension.revokedBy"><![CDATA[Zurückgezogen von {$suspension->revokerUsername}]]></item>
 	</category>
 	
 	<category name="chat.acp.menu">
 		<item name="chat.acp.menu.link"><![CDATA[Chat]]></item>
 		<item name="chat.acp.menu.link.room.list"><![CDATA[Chaträume auflisten]]></item>
 		<item name="chat.acp.menu.link.room.add"><![CDATA[Chatraum hinzufügen]]></item>
-		<item name="chat.acp.menu.link.suspension.list"><![CDATA[Sperren auflisten]]></item>
+		<item name="chat.acp.menu.link.suspension.list"><![CDATA[Sanktionen auflisten]]></item>
 	</category>
 	
 	<category name="wcf.acp.group">
