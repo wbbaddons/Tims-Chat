@@ -51,7 +51,6 @@ CREATE TABLE chat1_suspension (
 	time		INT(10)		NOT NULL,
 	issuer		INT(10)		DEFAULT NULL,
 	reason		VARCHAR(255)	NOT NULL DEFAULT '',
-	revoked		TINYINT(1)	NOT NULL DEFAULT 0,
 	revoker		INT(10)		DEFAULT NULL,
 	
 	KEY suspension (userID, roomID, type),

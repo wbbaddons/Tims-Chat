@@ -23,7 +23,9 @@ class GmuteCommand extends MuteCommand {
 				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
 			}
 			
-			$action = new suspension\SuspensionAction(array($suspension), 'revoke');
+			$action = new suspension\SuspensionAction(array($suspension), 'revoke', array(
+				'revoker' => WCF::getUser()->userID
+			));
 			$action->executeAction();
 		}
 		

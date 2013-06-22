@@ -17,30 +17,6 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 	protected $className = '\chat\data\suspension\SuspensionEditor';
 	
 	/**
-	 * Revokes expired suspensions.
-	 * 
-	 * @return	array<integer>	Revoked suspensions
-	 */
-	public function prune() {
-		$sql = "SELECT
-				".call_user_func(array($this->className, 'getDatabaseTableIndexName'))."
-			FROM
-				".call_user_func(array($this->className, 'getDatabaseTableName'))."
-			WHERE
-				expires < ?";
-		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array(TIME_NOW));
-		$objectIDs = array();
-		
-		while ($objectID = $stmt->fetchColumn()) $objectIDs[] = $objectID;
-		
-		$suspensionAction = new self($objectIDs, 'revoke');
-		$suspensionAction->executeAction();
-		
-		return $objectIDs;
-	}
-	
-	/**
 	 * Revokes suspensions.
 	 */
 	public function revoke() {
@@ -50,7 +26,7 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 		
 		$objectAction = new self($this->objectIDs, 'update', array(
 			'data' => array(
-				'revoked' => 1,
+				'expires' => TIME_NOW
 				'revoker' => $this->parameters['revoker']
 			)
 		));

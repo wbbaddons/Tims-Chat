@@ -31,7 +31,7 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	 * @return	boolean
 	 */
 	public function isValid() {
-		return $this->expires > TIME_NOW && !$this->revoked;
+		return $this->expires > TIME_NOW;
 	}
 	
 	/**
@@ -56,7 +56,6 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 			$condition = new \wcf\system\database\util\PreparedStatementConditionBuilder();
 			$condition->add('userID = ?', array($user->userID));
 			$condition->add('expires > ?', array(TIME_NOW));
-			$condition->add('revoked = ?', array(0));
 			
 			$sql = "SELECT
 					*
@@ -91,7 +90,6 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 		$condition->add('userID = ?', array($user->userID));
 		$condition->add('type = ?', array($type));
 		$condition->add('expires > ?', array(TIME_NOW));
-		$condition->add('revoked = ?', array(0));
 		if ($room->roomID) $condition->add('roomID = ?', array($room->roomID));
 		else $condition->add('roomID IS NULL');
 		
