@@ -24,7 +24,7 @@ class PlainCommand extends \chat\system\command\AbstractCommand {
 	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return \wcf\system\bbcode\PreParser::getInstance()->parse(\wcf\util\StringUtil::substring($this->commandHandler->getText(), 1), explode(',', \wcf\system\WCF::getSession()->getPermission('user.chat.allowedBBCodes')));
+		return \wcf\system\bbcode\PreParser::getInstance()->parse(\chat\system\command\CommandHandler::COMMAND_CHAR.$this->commandHandler->getParameters(), explode(',', \wcf\system\WCF::getSession()->getPermission('user.chat.allowedBBCodes')));
 	}
 	
 	/**

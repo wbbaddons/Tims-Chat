@@ -17,9 +17,9 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 	protected $className = '\chat\data\suspension\SuspensionEditor';
 	
 	/**
-	 * Deletes expired suspensions.
+	 * Revokes expired suspensions.
 	 * 
-	 * @return	integer		Number of deleted suspensions
+	 * @return	array<integer>	Revoked suspensions
 	 */
 	public function prune() {
 		$sql = "SELECT
@@ -34,6 +34,26 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 		
 		while ($objectID = $stmt->fetchColumn()) $objectIDs[] = $objectID;
 		
-		return call_user_func(array($this->className, 'deleteAll'), $objectIDs);
+		$suspensionAction = new self($objectIDs, 'revoke');
+		$suspensionAction->executeAction();
+		
+		return $objectIDs;
+	}
+	
+	/**
+	 * Revokes suspensions.
+	 */
+	public function revoke() {
+		if (!isset($this->parameters['revoker'])) {
+			$this->parameters['revoker'] = null;
+		}
+		
+		$objectAction = new self($this->objectIDs, 'update', array(
+			'data' => array(
+				'revoked' => 1,
+				'revoker' => $this->parameters['revoker']
+			)
+		));
+		$objectAction->executeAction();
 	}
 }

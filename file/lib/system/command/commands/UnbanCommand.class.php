@@ -20,7 +20,9 @@ class UnbanCommand extends UnmuteCommand {
 	 */
 	public function executeAction() {
 		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $this->room, suspension\Suspension::TYPE_BAN)) {
-			$action = new suspension\SuspensionAction(array($suspension), 'delete');
+			$action = new suspension\SuspensionAction(array($suspension), 'revoke', array(
+				'revoker' => WCF::getUser()->userID
+			));
 			$action->executeAction();
 		}
 		else {

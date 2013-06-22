@@ -15,7 +15,7 @@ class FreeCommand extends MeCommand {
 		parent::__construct($commandHandler);
 		
 		if (\wcf\util\StringUtil::toLowerCase($this->commandHandler->getParameters()) != 'the fish') {
-			throw new \chat\system\command\NotFoundException();
+			throw new \InvalidArgumentException();
 		}
 		
 		$this->didInit();

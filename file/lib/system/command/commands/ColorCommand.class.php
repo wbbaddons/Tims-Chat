@@ -55,7 +55,7 @@ class ColorCommand extends \chat\system\command\AbstractCommand {
 		foreach ($color as $key => $val) {
 			if (isset(self::$colors[$val])) $color[$key] = self::$colors[$val];
 			else {
-				if (!$regex->match($val)) throw new \chat\system\command\NotFoundException();
+				if (!$regex->match($val)) throw new \InvalidArgumentException();
 				
 				$matches = $regex->getMatches();
 				$val = $matches[1];

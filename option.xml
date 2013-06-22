@@ -44,10 +44,12 @@
 				<minvalue>1</minvalue>
 				<maxvalue>5000</maxvalue>
 			</option>
-			<option name="chat_show_version">
+			<option name="chat_command_aliases">
 				<categoryname>chat.general</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<optiontype>textarea</optiontype>
+				<defaultvalue>afk:away
+col:color
+msg:whisper</defaultvalue>
 			</option>
 			<!-- general chat options end -->
 			

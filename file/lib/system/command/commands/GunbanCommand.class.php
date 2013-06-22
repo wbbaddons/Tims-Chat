@@ -22,7 +22,9 @@ class GunbanCommand extends UnmuteCommand {
 		$room = new \chat\data\room\Room(null, array('roomID' => null));
 		
 		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $room, suspension\Suspension::TYPE_BAN)) {
-			$action = new suspension\SuspensionAction(array($suspension), 'delete');
+			$action = new suspension\SuspensionAction(array($suspension), 'revoke', array(
+				'revoker' => WCF::getUser()->userID
+			));
 			$action->executeAction();
 		}
 		else {

@@ -39,7 +39,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 			$this->expires = min(max(-0x80000000, $expires), 0x7FFFFFFF);
 		}
 		catch (\wcf\system\exception\SystemException $e) {
-			throw new \chat\system\command\NotFoundException();
+			throw new \InvalidArgumentException();
 		}
 		
 		$this->user = User::getUserByUsername($username);
@@ -61,7 +61,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
 			}
 			
-			$action = new suspension\SuspensionAction(array($suspension), 'delete');
+			$action = new suspension\SuspensionAction(array($suspension), 'revoke');
 			$action->executeAction();
 		}
 		
