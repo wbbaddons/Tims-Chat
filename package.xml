@@ -5,7 +5,7 @@
 		<packagedescription><![CDATA[Chat for WoltLab Community Framework™.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Chat für WoltLab Community Framework™.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.0.0 Alpha 59</version><!-- Codename: Codenames are overrated -->
+		<version>3.0.0 Alpha 66</version><!-- Codename: Codenames are overrated -->
 		<date>2011-11-26</date>
 		<license><![CDATA[Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>]]></license>
 	</packageinformation>

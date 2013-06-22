@@ -2,7 +2,7 @@
 namespace chat\system\command\commands;
 
 /**
- * Globally mutes a user.
+ * Unbans a user globally.
  *
  * @author 	Tim Düsterhus
  * @copyright	2010-2013 Tim Düsterhus
@@ -10,8 +10,8 @@ namespace chat\system\command\commands;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class GmuteCommand extends \chat\system\command\AbstractSuspensionCommand {
-	const IDENTIFIER = 'gmute';
+class GunbanCommand extends \chat\system\command\AbstractUnsuspensionCommand {
+	const IDENTIFIER = 'gban';
 	const IS_GLOBAL = true;
-	const SUSPENSION_TYPE = \chat\data\suspension\Suspension::TYPE_MUTE;
+	const SUSPENSION_TYPE = \chat\data\suspension\Suspension::TYPE_BAN;
 }

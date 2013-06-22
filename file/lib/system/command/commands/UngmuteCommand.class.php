@@ -2,7 +2,7 @@
 namespace chat\system\command\commands;
 
 /**
- * Globally mutes a user.
+ * Unmutes a user globally.
  *
  * @author 	Tim Düsterhus
  * @copyright	2010-2013 Tim Düsterhus
@@ -10,7 +10,7 @@ namespace chat\system\command\commands;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class GmuteCommand extends \chat\system\command\AbstractSuspensionCommand {
+class UngmuteCommand extends \chat\system\command\AbstractUnsuspensionCommand {
 	const IDENTIFIER = 'gmute';
 	const IS_GLOBAL = true;
 	const SUSPENSION_TYPE = \chat\data\suspension\Suspension::TYPE_MUTE;

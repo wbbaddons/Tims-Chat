@@ -1,6 +1,5 @@
 <?php
 namespace chat\system\command\commands;
-use \chat\data\suspension;
 
 /**
  * Globally bans a user.
@@ -11,6 +10,8 @@ use \chat\data\suspension;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class GbanCommand extends GmuteCommand {
-	const SUSPENSION_TYPE = suspension\Suspension::TYPE_BAN;
+class GbanCommand extends \chat\system\command\AbstractSuspensionCommand {
+	const IDENTIFIER = 'gban';
+	const IS_GLOBAL = true;
+	const SUSPENSION_TYPE = \chat\data\suspension\Suspension::TYPE_BAN;
 }

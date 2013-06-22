@@ -1,6 +1,5 @@
 <?php
 namespace chat\system\command\commands;
-use \chat\data\suspension;
 
 /**
  * Bans a user.
@@ -11,6 +10,8 @@ use \chat\data\suspension;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class BanCommand extends MuteCommand {
-	const SUSPENSION_TYPE = suspension\Suspension::TYPE_BAN;
+class BanCommand extends \chat\system\command\AbstractSuspensionCommand {
+	const IDENTIFIER = 'ban';
+	const IS_GLOBAL = false;
+	const SUSPENSION_TYPE = \chat\data\suspension\Suspension::TYPE_BAN;
 }
