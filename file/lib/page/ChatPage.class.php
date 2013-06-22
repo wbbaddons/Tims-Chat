@@ -146,6 +146,9 @@ class ChatPage extends \wcf\page\AbstractPage {
 			if ($command == 'Plain') continue;
 			$this->commands[] = \wcf\util\StringUtil::toLowerCase($command);
 		}
+		
+		$this->commands = array_merge($this->commands, array_keys(\chat\system\command\CommandHandler::getAliasMap()));
+		sort($this->commands);
 	}
 	
 	/**

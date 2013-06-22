@@ -26,7 +26,7 @@ class WhisperCommand extends \chat\system\command\AbstractCommand {
 			$this->message = \wcf\util\StringUtil::trim($message);
 		}
 		catch (\wcf\system\exception\SystemException $e) {
-			throw new \chat\system\command\NotFoundException();
+			throw new \InvalidArgumentException();
 		}
 		
 		$this->user = User::getUserByUsername($username);
