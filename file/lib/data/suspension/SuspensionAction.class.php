@@ -1,5 +1,6 @@
 <?php
 namespace chat\data\suspension;
+use \wcf\system\WCF;
 
 /**
  * Executes chat-suspension-related actions.
@@ -17,23 +18,28 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 	protected $className = '\chat\data\suspension\SuspensionEditor';
 	
 	/**
-	 * Deletes expired suspensions.
-	 * 
-	 * @return	integer		Number of deleted suspensions
+	 * Validates permissions and parameters
 	 */
-	public function prune() {
-		$sql = "SELECT
-				".call_user_func(array($this->className, 'getDatabaseTableIndexName'))."
-			FROM
-				".call_user_func(array($this->className, 'getDatabaseTableName'))."
-			WHERE
-				expires < ?";
-		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array(TIME_NOW));
-		$objectIDs = array();
+	public function validateRevoke() {
+		WCF::getSession()->checkPermissions((array) 'admin.chat.canManageSuspensions');
 		
-		while ($objectID = $stmt->fetchColumn()) $objectIDs[] = $objectID;
+		$this->parameters['revoker'] = WCF::getUser()->userID;
+	}
+	
+	/**
+	 * Revokes suspensions.
+	 */
+	public function revoke() {
+		if (!isset($this->parameters['revoker'])) {
+			$this->parameters['revoker'] = null;
+		}
 		
-		return call_user_func(array($this->className, 'deleteAll'), $objectIDs);
+		$objectAction = new self($this->objectIDs, 'update', array(
+			'data' => array(
+				'expires' => TIME_NOW,
+				'revoker' => $this->parameters['revoker']
+			)
+		));
+		$objectAction->executeAction();
 	}
 }

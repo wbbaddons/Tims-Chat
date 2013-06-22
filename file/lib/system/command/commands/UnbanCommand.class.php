@@ -1,9 +1,5 @@
 <?php
 namespace chat\system\command\commands;
-use \chat\data\suspension;
-use \chat\util\ChatUtil;
-use \wcf\data\user\User;
-use \wcf\system\WCF;
 
 /**
  * Bans a user.
@@ -14,17 +10,7 @@ use \wcf\system\WCF;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class UnbanCommand extends UnmuteCommand {
-	/**
-	 * @see \chat\system\command\commands\UnmuteCommand::executeAction()
-	 */
-	public function executeAction() {
-		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $this->room, suspension\Suspension::TYPE_BAN)) {
-			$action = new suspension\SuspensionAction(array($suspension), 'delete');
-			$action->executeAction();
-		}
-		else {
-			throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.notExists'));
-		}
-	}
+class UnbanCommand extends \chat\system\command\AbstractUnsuspensionCommand {
+	const IS_GLOBAL = false;
+	const SUSPENSION_TYPE = \chat\data\suspension\Suspension::TYPE_BAN;
 }

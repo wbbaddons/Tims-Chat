@@ -49,7 +49,9 @@
 				<optiontype>textarea</optiontype>
 				<defaultvalue>afk:away
 col:color
-msg:whisper</defaultvalue>
+msg:whisper
+gunban:ungban
+gunmute:ungmute</defaultvalue>
 			</option>
 			<!-- general chat options end -->
 			

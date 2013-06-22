@@ -45,11 +45,11 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 		}
 		
 		// Suspensions
-		// TODO: Permissions
 		$suspensions = \chat\data\suspension\Suspension::getSuspensionsForUser($this->user);
 		foreach ($suspensions as $roomSuspensions) {
 			foreach ($roomSuspensions as $typeSuspension) {
 				if (!$typeSuspension->isValid()) continue;
+				if (!$typeSuspension->isVisible()) continue;
 				
 				$dateTime = DateUtil::getDateTimeByTimestamp($typeSuspension->expires);
 				$name = WCF::getLanguage()->getDynamicVariable('chat.general.information.suspension', array(

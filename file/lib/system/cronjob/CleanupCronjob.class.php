@@ -20,8 +20,6 @@ class CleanupCronjob implements \wcf\system\cronjob\ICronjob {
 		$messageAction->executeAction();
 		$roomAction = new data\room\RoomAction(array(), 'prune');
 		$roomAction->executeAction();
-		$suspensionAction = new data\suspension\SuspensionAction(array(), 'prune');
-		$suspensionAction->executeAction();
 		
 		// kill dead users
 		$roomAction = new data\room\RoomAction(array(), 'removeDeadUsers');
