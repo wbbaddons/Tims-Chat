@@ -104,7 +104,7 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
-			<option name="admin.chat.canViewAllSuspensions">
+			<option name="admin.chat.canManageSuspensions">
 				<categoryname>admin.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
