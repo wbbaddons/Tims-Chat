@@ -127,10 +127,10 @@
 		<item name="chat.message.4"><![CDATA[ist jetzt wieder da.]]></item>
 		<!-- 5 = TYPE_MODERATE -->
 		<item name="chat.message.5.restore"><![CDATA[hat {@$link} zurückgesetzt.]]></item>
-		<item name="chat.message.5.mute"><![CDATA[hat {@$link} bis {@$expires|plainTime} geknebelt.]]></item>
-		<item name="chat.message.5.ban"><![CDATA[hat {@$link} bis {@$expires|plainTime} gebannt.]]></item>
-		<item name="chat.message.5.gmute"><![CDATA[hat {@$link} bis {@$expires|plainTime} global geknebelt.]]></item>
-		<item name="chat.message.5.gban"><![CDATA[hat {@$link} bis {@$expires|plainTime} global gebannt.]]></item>
+		<item name="chat.message.5.mute"><![CDATA[hat {@$link} bis {@$expires|plainTime} geknebelt{if !$reason|empty}: {$reason}{else}.{/if}]]></item>
+		<item name="chat.message.5.ban"><![CDATA[hat {@$link} bis {@$expires|plainTime} gebannt{if !$reason|empty}: {$reason}{else}.{/if}]]></item>
+		<item name="chat.message.5.gmute"><![CDATA[hat {@$link} bis {@$expires|plainTime} global geknebelt{if !$reason|empty}: {$reason}{else}.{/if}]]></item>
+		<item name="chat.message.5.gban"><![CDATA[hat {@$link} bis {@$expires|plainTime} global gebannt{if !$reason|empty}: {$reason}{else}.{/if}]]></item>
 		<item name="chat.message.5.unmute"><![CDATA[hat {@$link} entknebelt.]]></item>
 		<item name="chat.message.5.unban"><![CDATA[hat {@$link} entbannt.]]></item>
 		<item name="chat.message.5.gunmute"><![CDATA[hat {@$link} global entknebelt.]]></item>
