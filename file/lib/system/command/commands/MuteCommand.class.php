@@ -69,7 +69,7 @@ class MuteCommand extends \chat\system\command\AbstractRestrictedCommand {
 			'data' => array(
 				'userID' => $this->user->userID,
 				'roomID' => WCF::getUser()->chatRoomID,
-				'type' => suspension\Suspension::TYPE_MUTE,
+				'type' => static::SUSPENSION_TYPE,
 				'expires' => $this->expires,
 				'time' => TIME_NOW,
 				'issuer' => WCF::getUser()->userID,
