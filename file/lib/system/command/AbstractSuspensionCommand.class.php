@@ -91,7 +91,7 @@ abstract class AbstractSuspensionCommand extends AbstractRestrictedCommand {
 	
 		$this->room = $this->commandHandler->getRoom();
 		$ph = new \chat\system\permission\PermissionHandler();
-		if (!$ph->getPermission($this->room, 'mod.can'.ucfirst(static::IDENTIFIER))) throw new \wcf\system\exception\PermissionDeniedException();
+		if (!$ph->getPermission($this->room, 'mod.can'.ucfirst((static::IS_GLOBAL ? 'g' : '').static::SUSPENSION_TYPE))) throw new \wcf\system\exception\PermissionDeniedException();
 	}
 	
 	/**
@@ -108,7 +108,7 @@ abstract class AbstractSuspensionCommand extends AbstractRestrictedCommand {
 		return serialize(array(
 			'link' => $this->link,
 			'expires' => $this->expires,
-			'type' => static::IDENTIFIER,
+			'type' => (static::IS_GLOBAL ? 'g' : '').static::SUSPENSION_TYPE,
 			'reason' => $this->reason
 		));
 	}

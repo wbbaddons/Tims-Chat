@@ -118,7 +118,7 @@
 						<td id="columnTime">{$suspension->time|plainTime}</td>
 						<td id="columnExpires">
 							<p>{$suspension->expires|plainTime}{if $suspension->expires > TIME_NOW} ({$suspension->expires|dateDiff}){/if}</p>
-							{if $suspension->revoker}<p><small>{lang}chat.acp.suspension.revokedBy{/lang}</small></p>{/if}
+							{if $suspension->revoker && $suspension->expires <= TIME_NOW}<p><small>{lang}chat.acp.suspension.revokedBy{/lang}</small></p>{/if}
 						</td>
 						<td id="columnIssuer"><a href="{link application='chat' controller='ChatSuspensionList'}issuerUserID={$suspension->issuer}{/link}">{$suspension->issuerUsername}</a></td>
 						<td id="columnMessage"{if $suspension->reason != $suspension->reason|truncate:30} class="jsTooltip" title="{$suspension->reason}"{/if}>{$suspension->reason|truncate:30}</a></td>

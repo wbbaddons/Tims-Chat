@@ -20,8 +20,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	// TODO: Permissions
-	public $neededPermissions = array();
+	public $neededPermissions = array('mod.chat.canViewAllSuspensions');
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
@@ -148,7 +147,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 						LEFT JOIN	wcf".WCF_N."_user user_table2
 						ON		suspension.issuer = user_table2.userID
 						LEFT JOIN	wcf".WCF_N."_user user_table3
-						ON              suspension.issuer = user_table3.userID";
+						ON		suspension.issuer = user_table3.userID";
 		$conditionJoins = "	LEFT JOIN	chat".WCF_N."_room room_table
 					ON		suspension.roomID = room_table.roomID";
 		$this->objectList->sqlConditionJoins .= $conditionJoins;

@@ -11,7 +11,6 @@ namespace chat\system\command\commands;
  * @subpackage	system.chat.command.commands
  */
 class UngmuteCommand extends \chat\system\command\AbstractUnsuspensionCommand {
-	const IDENTIFIER = 'gmute';
 	const IS_GLOBAL = true;
 	const SUSPENSION_TYPE = \chat\data\suspension\Suspension::TYPE_MUTE;
 }

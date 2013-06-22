@@ -46,7 +46,7 @@ CREATE TABLE chat1_suspension (
 	suspensionID	INT(10)		NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	userID		INT(10)		NOT NULL,
 	roomID		INT(10)		DEFAULT NULL,
-	type		TINYINT(3)	NOT NULL,
+	type		VARCHAR(15)	NOT NULL,
 	expires		INT(10)		NOT NULL,
 	time		INT(10)		NOT NULL,
 	issuer		INT(10)		DEFAULT NULL,

@@ -11,7 +11,6 @@ namespace chat\system\command\commands;
  * @subpackage	system.chat.command.commands
  */
 class MuteCommand extends \chat\system\command\AbstractSuspensionCommand {
-	const IDENTIFIER = 'mute';
 	const IS_GLOBAL = false;
 	const SUSPENSION_TYPE = \chat\data\suspension\Suspension::TYPE_MUTE;
 }

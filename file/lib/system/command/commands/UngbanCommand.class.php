@@ -10,8 +10,7 @@ namespace chat\system\command\commands;
  * @package	be.bastelstu.chat
  * @subpackage	system.chat.command.commands
  */
-class GunbanCommand extends \chat\system\command\AbstractUnsuspensionCommand {
-	const IDENTIFIER = 'gban';
+class UngbanCommand extends \chat\system\command\AbstractUnsuspensionCommand {
 	const IS_GLOBAL = true;
 	const SUSPENSION_TYPE = \chat\data\suspension\Suspension::TYPE_BAN;
 }

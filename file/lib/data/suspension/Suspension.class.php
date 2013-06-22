@@ -22,8 +22,8 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'suspensionID';
 	
-	const TYPE_MUTE = 1;
-	const TYPE_BAN = 2;
+	const TYPE_MUTE = 'mute';
+	const TYPE_BAN = 'ban';
 	
 	/**
 	 * Returns whether the suspension still is valid.
@@ -32,6 +32,34 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	 */
 	public function isValid() {
 		return $this->expires > TIME_NOW;
+	}
+	
+	/**
+	 * Returns whether the given user may view this suspension.
+	 * 
+	 * @param	\wcf\data\user\User	$user
+	 * @return	boolean
+	 */
+	public function isVisible($user = null) {
+		if ($user === null) $user = WCF::getUser();
+		
+		$ph = new \chat\system\permission\PermissionHandler($user);
+		if ($ph->getPermission($this->getRoom(), 'mod.canViewAllSuspensions')) return true;
+		if ($ph->getPermission($this->getRoom(), 'mod.canG'.$this->type)) return true;
+		if (!$this->room) return false;
+		if ($ph->getPermission($this->getRoom(), 'mod.can'.ucfirst($this->type))) return true;
+		return false;
+	}
+	
+	/**
+	 * Returns the room of this suspension.
+	 * 
+	 * @return	\chat\data\room\Room
+	 */
+	public function getRoom() {
+		if (!$this->roomID) return new \chat\data\room\Room(null, array('roomID' => null));
+		
+		return \chat\data\room\RoomCache::getInstance()->getRoom($this->roomID);
 	}
 	
 	/**

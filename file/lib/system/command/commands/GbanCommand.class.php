@@ -11,7 +11,6 @@ namespace chat\system\command\commands;
  * @subpackage	system.chat.command.commands
  */
 class GbanCommand extends \chat\system\command\AbstractSuspensionCommand {
-	const IDENTIFIER = 'gban';
 	const IS_GLOBAL = true;
 	const SUSPENSION_TYPE = \chat\data\suspension\Suspension::TYPE_BAN;
 }

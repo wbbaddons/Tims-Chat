@@ -144,8 +144,8 @@
 	</category>
 	
 	<category name="chat.suspension">
-		<item name="chat.suspension.1"><![CDATA[Knebel]]></item>
-		<item name="chat.suspension.2"><![CDATA[Bann]]></item>
+		<item name="chat.suspension.mute"><![CDATA[Knebel]]></item>
+		<item name="chat.suspension.ban"><![CDATA[Bann]]></item>
 	</category>
 	
 	<!-- I18N Values -->
