@@ -418,8 +418,9 @@ Insert the given messages into the chat stream.
 					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver
 						createNewMessage = no
 				
-				output = v.messageTemplate.fetch message
 				if createNewMessage
+					message.isFollowUp = no
+					output = v.messageTemplate.fetch message
 					li = $ '<li></li>'
 					li.addClass 'timsChatMessage'
 					li.addClass "timsChatMessage#{message.type}"
@@ -429,6 +430,8 @@ Insert the given messages into the chat stream.
 				
 					li.appendTo $ '#timsChatMessageContainer > ul'
 				else
+					message.isFollowUp = yes
+					output = v.messageTemplate.fetch message
 					$('.timsChatMessage:last-child .text').append $(output).find('.text li:last-child')
 				
 				lastMessage = message
