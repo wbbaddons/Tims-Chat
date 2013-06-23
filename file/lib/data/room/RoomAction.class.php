@@ -223,19 +223,20 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		
 		$newestMessages = message\ViewableMessageList::getNewestMessages($room, CHAT_LASTMESSAGES + CHAT_DISPLAY_JOIN_LEAVE);
 		
-		try {
-			$lastSeen = end($newestMessages)->messageID;
-		}
-		catch (\wcf\system\exception\SystemException $e) {
-			$lastSeen = 0;
-		}
+		// update last seen message
+		$sql = "SELECT
+				MAX(messageID)
+			FROM
+				chat".WCF_N."_message";
+		$stmt = WCF::getDB()->prepareStatement($sql);
+		$stmt->execute();
 		
 		$editor = new \wcf\data\user\UserEditor($this->parameters['user']);
 		$editor->update(array(
 			'chatRoomID' => $room->roomID,
 			'chatAway' => null,
 			'chatLastActivity' => TIME_NOW,
-			'chatLastSeen' => $lastSeen
+			'chatLastSeen' => $stmt->fetchColumn()
 		));
 		
 		// add activity points
