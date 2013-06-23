@@ -221,7 +221,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			$messageAction->executeAction();
 		}
 		
-		$newestMessages = message\ViewableMessageList::getNewestMessages($room, CHAT_LASTMESSAGES);
+		$newestMessages = message\ViewableMessageList::getNewestMessages($room, CHAT_LASTMESSAGES + 1);
 		
 		try {
 			$lastSeen = end($newestMessages)->messageID;
