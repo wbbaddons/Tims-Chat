@@ -55,9 +55,9 @@
 						color: @wcfSelectedColor;
 					}
 					
-					> {
+					> .innerMessageContainer {
 						.markContainer {
-							display: table-cell;
+							display: block;
 						}
 					}
 				}
@@ -95,6 +95,7 @@
 				
 				> .innerMessageContainer {
 					padding: 5px 20px 5px 5px;
+					position: relative;
 					
 					.userAvatar {
 						float: left;
@@ -107,6 +108,13 @@
 						
 						time {
 							float: right;
+						}
+						
+						> .text {
+							img {
+								max-width: 480px;
+								max-height: 320px;
+							}
 						}
 					}
 					
@@ -138,10 +146,6 @@
 									&:last-child {
 										border-style: none;
 										padding: 3px 0 0 0;
-									}
-									
-									> time {
-										font-weight: normal;
 									}
 								}
 							}
