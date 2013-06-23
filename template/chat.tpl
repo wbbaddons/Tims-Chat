@@ -61,7 +61,7 @@
 		//]]>
 	</script>
 	
-	<style type="text/css">
+	<!--<style type="text/css">
 		/*<![CDATA[*/
 		.timsChatMessage::before {
 			content: "";
@@ -80,7 +80,7 @@
 			content: "\f05a";
 		}
 		/*]]>*/
-	</style>
+	</style>-->
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
