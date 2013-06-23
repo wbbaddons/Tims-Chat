@@ -95,7 +95,6 @@
 				
 				> .innerMessageContainer {
 					padding: 5px 20px 5px 5px;
-					position: relative;
 					
 					.userAvatar {
 						float: left;
@@ -105,10 +104,11 @@
 					.innerMessage {
 						margin-left: 46px;
 						padding: 2px 5px 5px;
-					}
-					
-					time {
-						float: right;
+						
+						time {
+							float: right;
+							font-weight: bold;
+						}
 					}
 					
 					&.bubble {
@@ -122,7 +122,8 @@
 							border-color: @wcfContainerBorderColor;
 							border-radius: @wcfContainerBorderRadius;
 							background-color: @wcfContainerBackgroundColor;
-							
+							position: relative;
+									
 							.username {
 								font-weight: bold;
 							}
@@ -138,6 +139,10 @@
 										border-style: none;
 										padding: 3px 0 0 0;
 									}
+									
+									> time {
+										font-weight: normal;
+									}
 								}
 							}
 							
@@ -147,9 +152,9 @@
 								border-width: 6px 6px 6px 0;
 								content: "";
 								display: block;
-								left: 46px;
+								left: -6px;
 								position: absolute;
-								top: 12px;
+								top: 5px;
 								width: 0;
 							}
 							
@@ -159,9 +164,9 @@
 								border-width: 5px 5px 5px 0;
 								content: "";
 								display: block;
-								left: 47px;
+								left: -5px;
 								position: absolute;
-								top: 13px;
+								top: 6px;
 								width: 0;
 							}
 						}
