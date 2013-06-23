@@ -35,6 +35,8 @@ exposed by a function if necessary.
 		chatSession = Date.now()
 		errorVisible = false
 
+		lastMessage = null
+
 		remainingFailures = 3
 
 		events =
@@ -411,16 +413,28 @@ Insert the given messages into the chat stream.
 			for message in messages
 				events.newMessage.fire message
 				
-				output = v.messageTemplate.fetch message
-				li = $ '<li></li>'
-				li.addClass 'timsChatMessage'
-				li.addClass "timsChatMessage#{message.type}"
-				li.addClass "user#{message.sender}"
-				li.addClass 'ownMessage' if message.sender is WCF.User.userID
-				li.append output
+				createNewMessage = yes
+				if  $('.timsChatMessage:last-child .text').is('ul') and lastMessage isnt null and lastMessage.type in [ 0, 7 ]
+					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver
+						createNewMessage = no
 				
-				li.appendTo $ '#timsChatMessageContainer > ul'
-			
+				if createNewMessage
+					message.isFollowUp = no
+					output = v.messageTemplate.fetch message
+					li = $ '<li></li>'
+					li.addClass 'timsChatMessage'
+					li.addClass "timsChatMessage#{message.type}"
+					li.addClass "user#{message.sender}"
+					li.addClass 'ownMessage' if message.sender is WCF.User.userID
+					li.append output
+				
+					li.appendTo $ '#timsChatMessageContainer > ul'
+				else
+					message.isFollowUp = yes
+					output = v.messageTemplate.fetch message
+					$('.timsChatMessage:last-child .text').append $(output).find('.text li:last-child')
+				
+				lastMessage = message
 			$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
 
 Rebuild the userlist based on the given `users`.

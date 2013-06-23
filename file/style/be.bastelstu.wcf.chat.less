@@ -38,7 +38,7 @@
 	}
 	
 	.timsChatMessageContainer {
-		height: 200px;
+		height: 320px;
 		overflow-y: scroll;
 		overflow-x: hidden;
 		display: none;
@@ -84,40 +84,100 @@
 				}
 				
 				&:nth-child(even) {
-					background-color: @wcfContainerAccentBackgroundColor;
+					> .innerMessageContainer.normal .innerMessage {
+						background-color: @wcfContainerAccentBackgroundColor;
+						
+						&:after {
+							border-color: transparent @wcfContainerAccentBackgroundColor;
+						}
+					}
 				}
 				
-				> {
-					time, .usernameContainer, .text, .markContainer {
-						display: table-cell;
-						vertical-align: top;
-						padding: @wcfGapTiny 0;
+				> .innerMessageContainer {
+					padding: 5px 20px 5px 5px;
+					
+					.userAvatar {
+						float: left;
+						margin-left: 16px;
 					}
 					
-					.markContainer {
+					.innerMessage {
+						margin-left: 46px;
+						padding: 2px 5px 5px;
+						
+						time {
+							float: right;
+							font-weight: bold;
+						}
+					}
+					
+					&.bubble {
+						.userAvatar {
+							margin-left: 0;
+						}
+						
+						.innerMessage {
+							border-width: 1px;
+							border-style: solid;
+							border-color: @wcfContainerBorderColor;
+							border-radius: @wcfContainerBorderRadius;
+							background-color: @wcfContainerBackgroundColor;
+							position: relative;
+									
+							.username {
+								font-weight: bold;
+							}
+							
+							> ul.text {
+								li {
+									.clearfix;
+									border-style: solid;
+									border-width: 0 0 1px 0;
+									border-color: @wcfContainerBorderColor;
+									padding: 3px 0 4px;
+									
+									&:last-child {
+										border-style: none;
+										padding: 3px 0 0 0;
+									}
+									
+									> time {
+										font-weight: normal;
+									}
+								}
+							}
+							
+							&:before {
+								border-color: transparent @wcfContainerBorderColor;
+								border-style: solid;
+								border-width: 6px 6px 6px 0;
+								content: "";
+								display: block;
+								left: -6px;
+								position: absolute;
+								top: 5px;
+								width: 0;
+							}
+							
+							&:after {
+								border-color: transparent @wcfContainerBackgroundColor;;
+								border-style: solid;
+								border-width: 5px 5px 5px 0;
+								content: "";
+								display: block;
+								left: -5px;
+								position: absolute;
+								top: 6px;
+								width: 0;
+							}
+						}
+					}
+					
+					> .markContainer {
 						display: none;
-						padding: 0;
-					}
-					
-					time {
-						&::before {
-							content: "[";
-						}
-						&::after {
-							content: "]";
-						}
-					}
-					
-					.usernameContainer {
-						text-align: right;
-						min-width: 100px;
-						padding-right: @wcfGapSmall;
-						white-space: nowrap;
-						font-weight: bold;
-					}
-					
-					.text {
-						width: 100%;
+						position: absolute;
+						right: 0px;
+						top: 6px;
 					}
 				}
 			}
