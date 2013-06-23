@@ -1,5 +1,5 @@
 {literal}
-	<div class="innerMessageContainer{if $type == 0 || $type == 7} normal{/if}">
+	<div class="innerMessageContainer{if $type == 0 || $type == 7} bubble{/if}">
 		<div class="userAvatar framed">
 			{if $type == 0 || $type == 7}
 				{@$avatar[32]}

@@ -111,7 +111,7 @@
 						float: right;
 					}
 					
-					&.normal {
+					&.bubble {
 						.userAvatar {
 							margin-left: 0;
 						}
@@ -125,6 +125,20 @@
 							
 							.username {
 								font-weight: bold;
+							}
+							
+							> ul.text {
+								li {
+									border-style: solid;
+									border-width: 0 0 1px 0;
+									border-color: @wcfContainerBorderColor;
+									padding: 3px 0 4px;
+									
+									&:last-child {
+										border-style: none;
+										padding: 3px 0 0 0;
+									}
+								}
 							}
 							
 							&:before {
