@@ -100,7 +100,7 @@
 		<fieldset>
 			<dl class="wide" id="timsChatInputContainer">
 				<dd>
-					<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}chat.general.submit.default{/lang}" />
+					<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" placeholder="{lang}chat.general.submit.default{/lang}" />
 					<small class="innerError" style="display: none;">Lorem ipsum dolor sit amet.</small>
 				</dd>
 			</dl>
