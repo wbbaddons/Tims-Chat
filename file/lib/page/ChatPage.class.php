@@ -89,6 +89,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 			'roomID' => $this->roomID,
 			'rooms' => $this->rooms,
 			'commands' => $this->commands,
+			'messageTypes' => (new \ReflectionClass('\chat\data\message\Message'))->getConstants(),
 			'defaultSmilies' => $this->defaultSmilies,
 			'smileyCategories' => $this->smileyCategories,
 			'sidebarCollapsed' => \wcf\system\user\collapsible\content\UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'be.bastelstu.chat.ChatPage'),

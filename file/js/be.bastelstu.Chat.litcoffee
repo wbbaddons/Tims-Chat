@@ -420,7 +420,10 @@ Insert the given messages into the chat stream.
 				
 				if createNewMessage
 					message.isFollowUp = no
-					output = v.messageTemplate.fetch message
+					output = v.messageTemplate.fetch
+						'message': message
+						'messageTypes': v.config.messageTypes
+					
 					li = $ '<li></li>'
 					li.addClass 'timsChatMessage'
 					li.addClass "timsChatMessage#{message.type}"
@@ -431,7 +434,10 @@ Insert the given messages into the chat stream.
 					li.appendTo $ '#timsChatMessageContainer > ul'
 				else
 					message.isFollowUp = yes
-					output = v.messageTemplate.fetch message
+					output = v.messageTemplate.fetch
+						'message': message
+						'messageTypes': v.config.messageTypes
+					
 					$('.timsChatMessage:last-child .text').append $(output).find('.text li:last-child')
 				
 				lastMessage = message
