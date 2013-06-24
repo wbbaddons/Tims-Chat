@@ -21,22 +21,24 @@
 						'chat.error.reload': '{lang}chat.error.reload{/lang}'
 					});
 					
-					{event name='beforeInit'}
-					
 					// Boot the chat
 					{if MODULE_SMILEY}WCF.TabMenu.init();{/if}
 					new WCF.Message.Smilies();
 					{capture assign='messageTemplate'}{include application='chat' file='message'}{/capture}
 					{capture assign='userTemplate'}{include application='chat' file='userListUser'}{/capture}
 					
+					var config = {
+						reloadTime: {@CHAT_RELOADTIME},
+						messageURL: '{link application="chat" controller="NewMessages"}{/link}',
+						installedCommands: [ {implode from=$commands item='command'}'{$command|encodeJS}'{/implode} ],
+						messageTypes: { {implode from=$messageTypes key='name' item='messageType'}'{$name|substr:5|encodeJS}': '{$messageType|encodeJS}'{/implode} }
+					};
+					
+					{event name='beforeInit'}
+					
 					be.bastelstu.Chat.init(
 						{$roomID},
-						{
-							reloadTime: {@CHAT_RELOADTIME},
-							messageURL: '{link application="chat" controller="NewMessages"}{/link}',
-							installedCommands: [ {implode from=$commands item='command'}'{$command|encodeJS}'{/implode} ],
-							messageTypes: { {implode from=$messageTypes key='name' item='messageType'}'{$name|substr:5|encodeJS}': '{$messageType|encodeJS}'{/implode} }
-						}, 
+						config,
 						new WCF.Template('{literal}{if $newMessageCount}({#$newMessageCount}) {/if}{$title} - {/literal}{"chat.general.title"|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'),
 						new WCF.Template('{@$messageTemplate|encodeJS}'),
 						new WCF.Template('{@$userTemplate|encodeJS}')
