@@ -15,7 +15,19 @@
 		border-color: @wcfInputHoverBorderColor;
 	}
 }
- 
+
+.__bubbleArrow {
+	border-color: transparent @wcfContainerBorderColor;
+	left: -6px;
+	top: 5px;
+	border-width: 6px 6px 6px 0;
+	border-style: solid;
+	content: "";
+	display: block;
+	position: absolute;
+	width: 0;
+}
+
 #tplChat {
 	#main > div {
 		overflow: hidden;
@@ -77,20 +89,30 @@
 					opacity: .5;
 				}
 				
-				&::before {
-					.icon;
-					.icon16;
-					padding: @wcfGapTiny;
-				}
-				
 				&:nth-child(even) {
-					> .innerMessageContainer.bubble .innerMessage {
+					> .innerMessageContainer.bubble .innerMessage, .innerMessageContainer.right.bubble .innerMessage {
 						background-color: @wcfContainerAccentBackgroundColor;
 						
 						&:after {
 							border-color: transparent @wcfContainerAccentBackgroundColor;
 						}
 					}
+				}
+				
+				&::before {
+					.icon;
+					.icon16;
+					padding: 8px 0 0 4px;
+					height: 16px;
+					width: 16px;
+					margin-right: -16px;
+					float: left;
+				}
+				
+				.messageIcon {
+					float: left;
+					padding: 8px 0 0 4px;
+					margin-right: -16px;
 				}
 				
 				> .innerMessageContainer {
@@ -121,6 +143,10 @@
 					&.bubble {
 						.userAvatar {
 							margin-left: 0;
+							
+							.icon {
+								padding: 2px;
+							}
 						}
 						
 						.innerMessage {
@@ -151,27 +177,51 @@
 							}
 							
 							&:before {
-								border-color: transparent @wcfContainerBorderColor;
-								border-style: solid;
-								border-width: 6px 6px 6px 0;
-								content: "";
-								display: block;
-								left: -6px;
-								position: absolute;
-								top: 5px;
-								width: 0;
+								.__bubbleArrow;
 							}
 							
 							&:after {
-								border-color: transparent @wcfContainerBackgroundColor;;
-								border-style: solid;
-								border-width: 5px 5px 5px 0;
-								content: "";
-								display: block;
+								.__bubbleArrow;
+								border-color: transparent @wcfContainerBackgroundColor;
 								left: -5px;
-								position: absolute;
 								top: 6px;
-								width: 0;
+								border-width: 5px 5px 5px 0;
+							}
+						}
+						
+						&.right {
+							.userAvatar {
+								float: right;
+							}
+							
+							.innerMessage {
+								margin-right: 46px;
+								margin-left: 0px;
+								
+								&:before {
+									.__bubbleArrow;
+									left: auto;
+									right: -6px;
+									border-width: 6px 0 6px 6px;
+								}
+								
+								&:after {
+									.__bubbleArrow;
+									border-color: transparent @wcfContainerBackgroundColor;
+									left: auto;
+									right: -5px;
+									top: 6px;
+									border-width: 5px 0 5px 5px;
+								}
+								
+								time {
+									float: left;
+									margin-right: @wcfGapTiny;
+								}
+								
+								.username {
+									float: right;
+								}
 							}
 						}
 					}
