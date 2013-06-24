@@ -83,13 +83,15 @@ class ChatPage extends \wcf\page\AbstractPage {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-
+		
+		$reflection = new \ReflectionClass('\chat\data\message\Message');
+		
 		WCF::getTPL()->assign(array(
 			'room' => $this->room,
 			'roomID' => $this->roomID,
 			'rooms' => $this->rooms,
 			'commands' => $this->commands,
-			'messageTypes' => (new \ReflectionClass('\chat\data\message\Message'))->getConstants(),
+			'messageTypes' => $reflection->getConstants(),
 			'defaultSmilies' => $this->defaultSmilies,
 			'smileyCategories' => $this->smileyCategories,
 			'sidebarCollapsed' => \wcf\system\user\collapsible\content\UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'be.bastelstu.chat.ChatPage'),
