@@ -35,7 +35,7 @@
 							reloadTime: {@CHAT_RELOADTIME},
 							messageURL: '{link application="chat" controller="NewMessages"}{/link}',
 							installedCommands: [ {implode from=$commands item='command'}'{$command|encodeJS}'{/implode} ],
-							messageTypes: { {implode from=$messageTypes key='name' item='messageType'}'{$name|substr:5|encodeJS}': {$messageType|encodeJS}{/implode} }
+							messageTypes: { {implode from=$messageTypes key='name' item='messageType'}'{$name|substr:5|encodeJS}': '{$messageType|encodeJS}'{/implode} }
 						}, 
 						new WCF.Template('{literal}{if $newMessageCount}({#$newMessageCount}) {/if}{$title} - {/literal}{"chat.general.title"|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'),
 						new WCF.Template('{@$messageTemplate|encodeJS}'),
