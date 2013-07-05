@@ -70,7 +70,10 @@
 	{capture assign='headerNavigation'}{include application='chat' file='navigationInclude'}{/capture}
 	{include file='header' sandbox=false sidebarOrientation='right'}
 	
-	<div id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">{$room->topic|language}</div>
+	<div id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">
+		<span class="icon icon16 icon-remove jsTopicCloser"></span>
+		<span class="topic">{$room->topic|language}</span>
+	</div>
 	
 	<div id="timsChatMessageContainer" class="timsChatMessageContainer marginTop container active">
 		<p class="error noJsOnly" style="display: none;">{lang}chat.general.noJs{/lang}</p>

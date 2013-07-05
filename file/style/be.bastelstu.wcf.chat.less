@@ -40,12 +40,21 @@
 		.transition(padding-top, .2s);
 		.transition(padding-bottom, .2s);
 		
-		&.empty {
+		&.empty, &.hidden {
 			height: 0px;
 			overflow: hidden;
 			border: 0px;
 			padding: 0px;
 			margin: 0px;
+			
+			~ #timsChatMessageContainer {
+				margin-top: 0;
+			}
+		}
+		
+		.jsTopicCloser {
+			cursor: pointer;
+			float: right;
 		}
 	}
 	

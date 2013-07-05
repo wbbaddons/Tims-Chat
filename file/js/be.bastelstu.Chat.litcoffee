@@ -253,13 +253,18 @@ Toggle fullscreen mode.
 				else
 					$('html').removeClass 'fullscreen'
 
-Toggle checkboxes
+Toggle checkboxes.
 
 			$('#timsChatMark').click (event) ->
 				if $(@).data 'status'
 					$('.timsChatMessageContainer').addClass 'markEnabled'
 				else
 					$('.timsChatMessageContainer').removeClass 'markEnabled'
+
+Hide topic container.
+
+			$('.jsTopicCloser').on 'click', ->
+				$('#timsChatTopic').addClass 'hidden'
 
 Visibly mark the message once the associated checkbox is checked.
 
@@ -632,7 +637,9 @@ Joins a room.
 				success: (data) ->
 					loading = false
 					
-					$('#timsChatTopic').text data.returnValues.topic
+					$('#timsChatTopic').removeClass 'hidden'
+					
+					$('#timsChatTopic > .topic').text data.returnValues.topic
 					if data.returnValues.topic.trim() is ''
 						$('#timsChatTopic').addClass 'empty'
 					else
