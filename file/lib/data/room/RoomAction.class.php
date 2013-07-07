@@ -236,7 +236,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			'chatRoomID' => $room->roomID,
 			'chatAway' => null,
 			'chatLastActivity' => TIME_NOW,
-			'chatLastSeen' => $stmt->fetchColumn()
+			'chatLastSeen' => $stmt->fetchColumn() ?: 0
 		));
 		
 		// add activity points
