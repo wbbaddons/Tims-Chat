@@ -5,7 +5,7 @@
 	
 	{include file='headInclude' sandbox=false}
 	{include file='javascriptInclude' application='chat'}
-	<script type="text/javascript">
+	<script>
 		//<![CDATA[
 			(function ($, window) {
 				$(function(){

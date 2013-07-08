@@ -1,6 +1,6 @@
 {include file='header' pageTitle='chat.acp.suspension.list'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 		$(function() {
 			new WCF.Search.User('#username', null, false, [ ], false);
