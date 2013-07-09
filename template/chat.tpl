@@ -75,7 +75,7 @@
 		<span class="topic">{$room->topic|language}</span>
 	</div>
 	
-	<div id="timsChatMessageContainer" class="timsChatMessageContainer marginTop container active">
+	<div id="timsChatMessageContainer0" class="timsChatMessageContainer marginTop container active">
 		<p class="error noJsOnly" style="display: none;">{lang}chat.general.noJs{/lang}</p>
 		<ul>
 		</ul>

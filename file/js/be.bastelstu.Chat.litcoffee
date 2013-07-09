@@ -216,8 +216,8 @@ Clear the chat by removing every single message once the clear button is `clicke
 
 			$('#timsChatClear').click (event) ->
 				event.preventDefault()
-				$('.timsChatMessage').remove()
-				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight')
+				$('.timsChatMessageContainer.active .timsChatMessage').remove()
+				$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop('scrollHeight')
 
 Handle toggling of the toggleable buttons.
 
@@ -278,9 +278,9 @@ Scroll down when autoscroll is being activated.
 
 			$('#timsChatAutoscroll').click (event) ->
 				if $('#timsChatAutoscroll').data 'status'
-					$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight')
+					$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop('scrollHeight')
 			
-			$('#timsChatMessageContainer').on 'scroll', (event) ->
+			$('.timsChatMessageContainer.active').on 'scroll', (event) ->
 				element = $ @
 				scrollTop = element.scrollTop()
 				scrollHeight = element.prop 'scrollHeight'
@@ -413,7 +413,7 @@ Prevent loading messages in parallel.
 Insert the given messages into the chat stream.
 
 		handleMessages = (messages) ->
-			$('#timsChatMessageContainer').trigger 'scroll'
+			$('.timsChatMessageContainer.active').trigger 'scroll'
 			
 			for message in messages
 				events.newMessage.fire message
@@ -435,8 +435,16 @@ Insert the given messages into the chat stream.
 					li.addClass "user#{message.sender}"
 					li.addClass 'ownMessage' if message.sender is WCF.User.userID
 					li.append output
-				
-					li.appendTo $ '#timsChatMessageContainer > ul'
+					
+					if message.type is parseInt v.config.messageTypes.WHISPER
+						if message.sender is WCF.User.userID && $.wcfIsset "timsChatMessageContainer#{message.receiver}"
+							li.appendTo $ "#timsChatMessageContainer#{message.receiver} > ul"
+						else if $.wcfIsset "timsChatMessageContainer#{message.sender}"
+							li.appendTo $ "#timsChatMessageContainer#{message.sender} > ul"
+						else
+							li.appendTo $ '#timsChatMessageContainer0 > ul'
+					else
+						li.appendTo $ '#timsChatMessageContainer0 > ul'
 				else
 					message.isFollowUp = yes
 					output = v.messageTemplate.fetch
@@ -446,7 +454,7 @@ Insert the given messages into the chat stream.
 					$('.timsChatMessage:last-child .text').append $(output).find('.text li:last-child')
 				
 				lastMessage = message
-			$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
+			$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
 
 Rebuild the userlist based on the given `users`.
 
@@ -541,7 +549,7 @@ Send out notifications for the given `message`. The number of unread messages wi
 
 		notify = (message) ->
 			if scrollUpNotifications
-				$('#timsChatMessageContainer').addClass 'notification'
+				$('.timsChatMessageContainer.active').addClass 'notification'
 			
 			return if isActive or $('#timsChatNotify').data('status') is 0
 			
@@ -654,6 +662,28 @@ Joins a room.
 				failure: ->
 					showError WCF.Language.get 'chat.error.join'
 
+Open private channel
+	
+		openPrivateChannel = (userID) ->
+			$('.timsChatMessageContainer').removeClass 'active'
+
+			if !$.wcfIsset "timsChatMessageContainer#{userID}"
+				div = $('<div>')
+				div.attr 'id', "timsChatMessageContainer#{userID}"
+				div.addClass 'timsChatMessageContainer'
+				div.addClass 'marginTop'
+				div.addClass 'container'
+				div.wrapInner '<ul>'
+				$('#timsChatMessageContainer0').after div
+
+			$("#timsChatMessageContainer#{userID}").addClass('active')
+
+Close private channel
+
+		closePrivateChannel = (userID) ->
+			$("#timsChatMessageContainer#{userID}").remove() unless userID isnt 0
+			$("#timsChatMessageContainer0").addClass('active')
+
 Bind the given callback to the given event.
 
 		addListener = (event, callback) ->
@@ -677,6 +707,8 @@ And finally export the public methods and variables.
 			insertText: insertText
 			freeTheFish: freeTheFish
 			join: join
+			closePrivateChannel: closePrivateChannel # TODO: REMOVE AFTER DEBUGGING
+			openPrivateChannel: openPrivateChannel # TODO: REMOVE AFTER DEBUGGING
 			listener:
 				add: addListener
 				remove: removeListener
