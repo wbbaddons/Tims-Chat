@@ -36,6 +36,7 @@ exposed by a function if necessary.
 		errorVisible = false
 
 		lastMessage = null
+		openChannel = 0
 
 		remainingFailures = 3
 
@@ -120,6 +121,9 @@ and afterwards sent to the server by an AJAX request.
 				$('#timsChatInput').val('').focus().keyup()
 				
 				return false if text.length is 0
+				
+				unless openChannel is 0
+					text = "/whisper #{$("#timsChatMessageContainer#{openChannel}").data 'username'}, #{text}"
 				
 				# Free the fish!
 				freeTheFish() if text.toLowerCase() is '/free the fish'
@@ -671,18 +675,21 @@ Joins a room.
 Open private channel
 	
 		openPrivateChannel = (userID) ->
-			$('.timsChatMessageContainer').removeClass 'active'
-
 			if !$.wcfIsset "timsChatMessageContainer#{userID}"
+				return unless $.wcfIsset "timsChatUser#{userID}"
+				
 				div = $('<div>')
 				div.attr 'id', "timsChatMessageContainer#{userID}"
 				div.addClass 'timsChatMessageContainer'
 				div.addClass 'marginTop'
 				div.addClass 'container'
+				div.data 'username', $("#timsChatUser#{userID}").data 'username'
 				div.wrapInner '<ul>'
 				$('#timsChatMessageContainer0').after div
-
-			$("#timsChatMessageContainer#{userID}").addClass('active')
+			
+			$('.timsChatMessageContainer').removeClass 'active'
+			$("#timsChatMessageContainer#{userID}").addClass 'active'
+			openChannel = userID
 
 Close private channel
 
