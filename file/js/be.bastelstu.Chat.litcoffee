@@ -33,7 +33,9 @@ exposed by a function if necessary.
 		newMessageCount = 0
 		scrollUpNotifications = off
 		chatSession = Date.now()
+
 		errorVisible = false
+		inputErrorHidingTimer = null
 
 		lastMessage = null
 
@@ -141,16 +143,13 @@ and afterwards sent to the server by an AJAX request.
 							enableSmilies: $('#timsChatSmilies').data 'status'
 					showLoadingOverlay: false
 					success: ->
-						$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide()
+						hideInputError()
+						
 						getMessages()
 					failure: (data) ->
 						return true unless (data?.returnValues?.errorType?) or (data?.message?)
 						
-						$('#timsChatInputContainer').addClass('formError').find('.innerError').show().html (data?.returnValues?.errorType) ? data.message
-						
-						setTimeout ->
-							$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide()
-						, 5e3
+						showInputError (data?.returnValues?.errorType) ? data.message
 						
 						false
 
@@ -346,6 +345,24 @@ Finished! Enable the input now and join the chat.
 			console.log "Finished initializing"
 			
 			true
+
+Shows an error message below the input.
+
+		showInputError = (message) ->
+			$('#timsChatInputContainer').addClass('formError').find('.innerError').show().html message
+			
+			clearTimeout inputErrorHidingTimer if inputErrorHidingTimer?
+			inputErrorHidingTimer = setTimeout ->
+				hideInputError()
+			, 5e3
+
+Hides the error message below the input.
+
+		hideInputError = ->
+			clearTimeout inputErrorHidingTimer if inputErrorHidingTimer?
+			inputErrorHidingTimer = null
+			
+			$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide()
 
 Free the fish.
 
