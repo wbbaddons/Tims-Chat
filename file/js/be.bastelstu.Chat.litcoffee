@@ -418,11 +418,11 @@ Insert the given messages into the chat stream.
 			for message in messages
 				events.newMessage.fire message
 				
-				message.private = (message.type is parseInt v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") || $.wcfIsset("timsChatMessageContainer#{message.sender}"))
+				message.isInPrivateChannel = (String(message.type) is v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") or $.wcfIsset("timsChatMessageContainer#{message.sender}"))
 
 				createNewMessage = yes
 				if  $('.timsChatMessage:last-child .text').is('ul') and lastMessage isnt null and lastMessage.type in [ 0, 7 ]
-					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver and lastMessage.private is message.private
+					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver and lastMessage.isInPrivateChannel is message.isInPrivateChannel
 						createNewMessage = no
 				
 				if createNewMessage
@@ -438,9 +438,9 @@ Insert the given messages into the chat stream.
 					li.addClass 'ownMessage' if message.sender is WCF.User.userID
 					li.append output
 					
-					if message.private and message.sender is WCF.User.userID
+					if message.isInPrivateChannel and message.sender is WCF.User.userID
 						li.appendTo $ "#timsChatMessageContainer#{message.receiver} > ul"
-					else if message.private
+					else if message.isInPrivateChannel
 						li.appendTo $ "#timsChatMessageContainer#{message.sender} > ul"
 					else
 						li.appendTo $ '#timsChatMessageContainer0 > ul'
@@ -450,9 +450,9 @@ Insert the given messages into the chat stream.
 						message: message
 						messageTypes: v.config.messageTypes
 					
-					if message.private and message.sender is WCF.User.userID
+					if message.isInPrivateChannel and message.sender is WCF.User.userID
 						messageContainerID = message.receiver
-					else if message.private
+					else if message.isInPrivateChannel
 						messageContainerID = message.sender
 					else
 						messageContainerID = 0
@@ -687,8 +687,8 @@ Open private channel
 Close private channel
 
 		closePrivateChannel = (userID) ->
-			$("#timsChatMessageContainer#{userID}").remove() unless userID isnt 0
-			$("#timsChatMessageContainer0").addClass('active')
+			$("#timsChatMessageContainer#{userID}").remove() unless userID is 0
+			openPrivateChannel 0
 
 Bind the given callback to the given event.
 
