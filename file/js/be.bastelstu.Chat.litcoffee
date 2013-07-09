@@ -33,7 +33,9 @@ exposed by a function if necessary.
 		newMessageCount = 0
 		scrollUpNotifications = off
 		chatSession = Date.now()
+
 		errorVisible = false
+		inputErrorHidingTimer = null
 
 		lastMessage = null
 		openChannel = 0
@@ -109,15 +111,15 @@ Make the user leave the chat when **Tims Chat** is about to be unloaded.
 Insert the appropriate smiley code into the input when a smiley is clicked.
 
 			$('#smilies').on 'click', 'img', ->
-				insertText ' ' + $(@).attr('alt') + ' '
+				insertText " #{$(@).attr('alt')} "
 
 Handle submitting the form. The message will be validated by some basic checks, passed to the `submit` eventlisteners
 and afterwards sent to the server by an AJAX request.
 
 			$('#timsChatForm').submit (event) ->
-				event.preventDefault()
+				do event.preventDefault
 				
-				text = $('#timsChatInput').val().trim()
+				text = do $('#timsChatInput').val().trim
 				$('#timsChatInput').val('').focus().keyup()
 				
 				return false if text.length is 0
@@ -126,7 +128,7 @@ and afterwards sent to the server by an AJAX request.
 					text = "/whisper #{$("#timsChatMessageContainer#{openChannel}").data 'username'}, #{text}"
 				
 				# Free the fish!
-				freeTheFish() if text.toLowerCase() is '/free the fish'
+				do freeTheFish if text.toLowerCase() is '/free the fish'
 				
 				text = do (text) ->
 					obj =
@@ -145,16 +147,13 @@ and afterwards sent to the server by an AJAX request.
 							enableSmilies: $('#timsChatSmilies').data 'status'
 					showLoadingOverlay: false
 					success: ->
-						$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide()
-						getMessages()
+						do hideInputError
+						
+						do getMessages
 					failure: (data) ->
 						return true unless (data?.returnValues?.errorType?) or (data?.message?)
 						
-						$('#timsChatInputContainer').addClass('formError').find('.innerError').show().html (data?.returnValues?.errorType) ? data.message
-						
-						setTimeout ->
-							$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide()
-						, 5e3
+						showInputError (data?.returnValues?.errorType) ? data.message
 						
 						false
 
@@ -163,11 +162,11 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 
 			$('#timsChatInput').keydown (event) ->
 				if event.keyCode is $.ui.keyCode.TAB
-					input = $(event.currentTarget)
-					event.preventDefault()
+					do event.preventDefault
+					input = $ @
 					
-					autocomplete.value ?= input.val()
-					autocomplete.caret ?= input.getCaret()
+					autocomplete.value ?= do input.val
+					autocomplete.caret ?= do input.getCaret
 					
 					beforeCaret = autocomplete.value.substring 0, autocomplete.caret
 					lastSpace = beforeCaret.lastIndexOf ' '
@@ -183,7 +182,7 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 					return if toComplete.length is 0
 					console.log "Autocompleting '#{toComplete}'"
 					
-					if beforeComplete is '' and toComplete.substring(0, 1) is '/'
+					if beforeComplete is '' and (toComplete.substring 0, 1) is '/'
 						regex = new RegExp "^#{WCF.String.escapeRegExp toComplete.substring 1}", "i"
 						# TODO: Proper command list
 						commands = (command for command in v.config.installedCommands when regex.test command)
@@ -201,7 +200,7 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 Reset autocompleter to default status, when a key is pressed that is not TAB.
 
 				else
-					$('#timsChatInput').click()
+					do $('#timsChatInput').click
 
 Reset autocompleter to default status, when the input is `click`ed, as the position of the caret may have changed.
 
@@ -214,14 +213,14 @@ Reset autocompleter to default status, when the input is `click`ed, as the posit
 Refresh the room list when the associated button is `click`ed.
 
 			$('#timsChatRoomList button').click ->
-				refreshRoomList()
+				do refreshRoomList
 
 Clear the chat by removing every single message once the clear button is `clicked`.
 
 			$('#timsChatClear').click (event) ->
-				event.preventDefault()
-				$('.timsChatMessageContainer.active .timsChatMessage').remove()
-				$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop('scrollHeight')
+				do event.preventDefault
+				do $('.timsChatMessageContainer.active .timsChatMessage').remove
+				$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
 
 Handle toggling of the toggleable buttons.
 
@@ -236,7 +235,7 @@ Handle toggling of the toggleable buttons.
 					element.addClass 'active'
 					element.attr 'title', element.data 'disableMessage'
 					
-				$('#timsChatInput').focus()
+				do $('#timsChatInput').focus
 
 Mark smilies as disabled when they are disabled.
 
@@ -282,7 +281,7 @@ Scroll down when autoscroll is being activated.
 
 			$('#timsChatAutoscroll').click (event) ->
 				if $('#timsChatAutoscroll').data 'status'
-					$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop('scrollHeight')
+					$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
 			
 			$('.timsChatMessageContainer.active').on 'scroll', (event) ->
 				element = $ @
@@ -293,13 +292,13 @@ Scroll down when autoscroll is being activated.
 				if scrollTop < scrollHeight - height - 25
 					if $('#timsChatAutoscroll').data('status') is 1
 						scrollUpNotifications = on
-						$('#timsChatAutoscroll').click()
+						do $('#timsChatAutoscroll').click
 						
 				if scrollTop > scrollHeight - height - 10
 					if $('#timsChatAutoscroll').data('status') is 0
 						scrollUpNotifications = off
 						$(@).removeClass 'notification'
-						$('#timsChatAutoscroll').click()
+						do $('#timsChatAutoscroll').click
 
 Enable duplicate tab detection.
 
@@ -332,11 +331,11 @@ load messages if the appropriate event arrives.
 			do ->
 				be.bastelstu.wcf.nodePush.onConnect ->
 						console.log 'Disabling periodic loading'
-						pe.getMessages.stop()
+						do pe.getMessages.stop
 						
 				be.bastelstu.wcf.nodePush.onDisconnect ->
 						console.log 'Enabling periodic loading'
-						getMessages()
+						do getMessages
 						pe.getMessages = new WCF.PeriodicalExecuter getMessages, v.config.reloadTime * 1e3
 						
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.newMessage', getMessages
@@ -345,11 +344,29 @@ load messages if the appropriate event arrives.
 Finished! Enable the input now and join the chat.
 
 			join roomID
-			$('#timsChatInput').enable().jCounter().focus();
+			do $('#timsChatInput').enable().jCounter().focus
 			
 			console.log "Finished initializing"
 			
 			true
+
+Shows an error message below the input.
+
+		showInputError = (message) ->
+			$('#timsChatInputContainer').addClass('formError').find('.innerError').show().html message
+			
+			clearTimeout inputErrorHidingTimer if inputErrorHidingTimer?
+			inputErrorHidingTimer = setTimeout ->
+				do hideInputError
+			, 5e3
+
+Hides the error message below the input.
+
+		hideInputError = ->
+			clearTimeout inputErrorHidingTimer if inputErrorHidingTimer?
+			inputErrorHidingTimer = null
+			
+			do $('#timsChatInputContainer').removeClass('formError').find('.innerError').hide
 
 Free the fish.
 
@@ -357,6 +374,7 @@ Free the fish.
 			return if $.wcfIsset 'fish'
 			console.warn 'Freeing the fish'
 			fish = $ """<div id="fish">#{WCF.String.escapeHTML('><((((\u00B0>')}</div>"""
+			
 			fish.css
 				position: 'absolute'
 				top: '150px'
@@ -400,7 +418,7 @@ Fetch new messages from the server and pass them to `handleMessages`. The userli
 				error: ->
 					console.error "Message loading failed, #{--remainingFailures} remaining"
 					if remainingFailures <= 0
-						freeTheFish()
+						do freeTheFish
 						console.error 'To many failures, aborting'
 						
 						showError WCF.Language.get 'chat.error.onMessageLoad'
@@ -532,7 +550,7 @@ Remove all users that left the chat.
 			$('.timsChatUser').each ->
 				unless foundUsers[$(@).attr('id')]?
 					console.log "Removing User: '#{$(@).data('username')}'"
-					$(@).remove();
+					do $(@).remove
 					
 			
 			$('#toggleUsers .badge').text $('.timsChatUser').length
@@ -548,12 +566,12 @@ the existing text. If `options.submit` is true the message will be sent to the s
 			
 			text = $('#timsChatInput').val() + text if options.append
 			$('#timsChatInput').val text
-			$('#timsChatInput').keyup()
+			do $('#timsChatInput').keyup
 			
-			if (options.submit)
-				$('#timsChatForm').submit()
+			if options.submit
+				do $('#timsChatForm').submit
 			else
-				$('#timsChatInput').focus()
+				do $('#timsChatInput').focus
 
 Send out notifications for the given `message`. The number of unread messages will be prepended to `document.title` and if available desktop notifications will be sent.
 
@@ -575,9 +593,9 @@ Send out notifications for the given `message`. The number of unread messages wi
 					notification = new window.Notification title,
 						body: content
 						onclick: ->
-							notification.close()
+							do notification.close
 					setTimeout ->
-						notification.close()
+						do notification.close
 					, 5e3
 
 Fetch the roomlist from the server and update it in the GUI.
@@ -593,7 +611,7 @@ Fetch the roomlist from the server and update it in the GUI.
 				showLoadingOverlay: false
 				suppressErrors: true
 				success: (data) ->
-					$('.timsChatRoom').remove()
+					do $('.timsChatRoom').remove
 					$('#toggleRooms .badge').text data.returnValues.length
 					
 					for room in data.returnValues
@@ -604,8 +622,8 @@ Fetch the roomlist from the server and update it in the GUI.
 					
 					if window.history?.replaceState?
 						$('.timsChatRoom').click (event) ->
-							event.preventDefault()
-							target = $(@)
+							do event.preventDefault
+							target = $ @
 							
 							window.history.replaceState {}, '', target.attr 'href'
 							
@@ -623,8 +641,8 @@ Shows an unrecoverable error with the given text.
 			
 			loading = true
 			
-			pe.refreshRoomList.stop()
-			pe.getMessages.stop()
+			do pe.refreshRoomList.stop
+			do pe.getMessages.stop
 			
 			errorDialog = $("""
 				<div id="timsChatLoadingErrorDialog">
@@ -635,7 +653,7 @@ Shows an unrecoverable error with the given text.
 			formSubmit = $("""<div class="formSubmit"></div>""").appendTo errorDialog
 			reloadButton = $("""<button class="buttonPrimary">#{WCF.Language.get 'chat.error.reload'}</button>""").appendTo formSubmit
 			reloadButton.on 'click', ->
-				window.location.reload()
+				do window.location.reload
 				
 			$('#timsChatLoadingErrorDialog').wcfDialog
 				closable: false
@@ -667,15 +685,15 @@ Joins a room.
 					
 					document.title = v.titleTemplate.fetch data.returnValues
 					handleMessages data.returnValues.messages
-					getMessages()
-					refreshRoomList()
+					do getMessages
+					do refreshRoomList
 				failure: ->
 					showError WCF.Language.get 'chat.error.join'
 
 Open private channel
 	
 		openPrivateChannel = (userID) ->
-			if !$.wcfIsset "timsChatMessageContainer#{userID}"
+			unless $.wcfIsset "timsChatMessageContainer#{userID}"
 				return unless $.wcfIsset "timsChatUser#{userID}"
 				
 				div = $('<div>')
@@ -694,22 +712,24 @@ Open private channel
 Close private channel
 
 		closePrivateChannel = (userID) ->
-			$("#timsChatMessageContainer#{userID}").remove() unless userID is 0
+			do $("#timsChatMessageContainer#{userID}").remove unless userID is 0
 			openPrivateChannel 0
 
 Bind the given callback to the given event.
 
 		addListener = (event, callback) ->
 			return false unless events[event]?
-			
 			events[event].add callback
+			
+			true
 
 Remove the given callback from the given event.
 
 		removeListener = (event, callback) ->
 			return false unless events[event]?
-			
 			events[event].remove callback
+			
+			true
 
 And finally export the public methods and variables.
 
