@@ -490,60 +490,64 @@ Rebuild the userlist based on the given `users`.
 			foundUsers = { }
 			
 			for user in users
-				id = "timsChatUser#{user.userID}"
+				do (user) ->
+					id = "timsChatUser#{user.userID}"
 
 Move the user to the new position if he was found in the old list.
 
-				if $.wcfIsset id
-					console.log "Moving User: '#{user.username}'"
-					element = $("##{id}").detach()
-					
-					if user.awayStatus?
-						element.addClass 'away'
-						element.attr 'title', user.awayStatus
-					else
-						element.removeClass 'away'
-						element.removeAttr 'title'
-						element.data 'tooltip', ''
-					
-					if user.suspended
-						element.addClass 'suspended'
-					else
-						element.removeClass 'suspended'
-					
-					$('#timsChatUserList > ul').append element
+					if $.wcfIsset id
+						console.log "Moving User: '#{user.username}'"
+						element = $("##{id}").detach()
+						
+						if user.awayStatus?
+							element.addClass 'away'
+							element.attr 'title', user.awayStatus
+						else
+							element.removeClass 'away'
+							element.removeAttr 'title'
+							element.data 'tooltip', ''
+						
+						if user.suspended
+							element.addClass 'suspended'
+						else
+							element.removeClass 'suspended'
+						
+						$('#timsChatUserList > ul').append element
 
 Build HTML of the user and insert it into the list, if the users was not found in the chat before.
 
-				else
-					console.log "Inserting User: '#{user.username}'"
-					li = $ '<li></li>'
-					li.attr 'id', id
-					li.addClass 'timsChatUser'
-					li.addClass 'jsTooltip'
-					li.addClass 'dropdown'
-					li.addClass 'you' if user.userID is WCF.User.userID
-					li.addClass 'suspended' if user.suspended
-					if user.awayStatus?
-						li.addClass 'away'
-						li.attr 'title', user.awayStatus
-					li.data 'username', user.username
+					else
+						console.log "Inserting User: '#{user.username}'"
+						li = $ '<li></li>'
+						li.attr 'id', id
+						li.addClass 'timsChatUser'
+						li.addClass 'jsTooltip'
+						li.addClass 'dropdown'
+						li.addClass 'you' if user.userID is WCF.User.userID
+						li.addClass 'suspended' if user.suspended
+						if user.awayStatus?
+							li.addClass 'away'
+							li.attr 'title', user.awayStatus
+						li.data 'username', user.username
+						
+						li.append v.userTemplate.fetch user
+						
+						menu = $ '<ul></ul>'
+						unless user.userID is WCF.User.userID
+							menu.append $("<li><a>#{WCF.Language.get('chat.general.query')}</a></li>").click -> openPrivateChannel user.userID
+							menu.append $ "<li><a>#{WCF.Language.get('chat.general.kick')}</a></li>"
+							menu.append $ "<li><a>#{WCF.Language.get('chat.general.ban')}</a></li>"
+							menu.append $ """<li><a href="#{user.link}">#{WCF.Language.get('chat.general.profile')}</a></li>"""
+						
+						events.userMenu.fire user, menu
+						
+						if menu.find('li').length
+							li.append menu
+							menu.addClass 'dropdownMenu'
+						
+						li.appendTo $ '#timsChatUserList > ul'
 					
-					li.append v.userTemplate.fetch user
-					
-					menu = $ '<ul></ul>'
-					menu.addClass 'dropdownMenu'
-					menu.append $ "<li><a>#{WCF.Language.get('chat.general.query')}</a></li>"
-					menu.append $ "<li><a>#{WCF.Language.get('chat.general.kick')}</a></li>"
-					menu.append $ "<li><a>#{WCF.Language.get('chat.general.ban')}</a></li>"
-					menu.append $ """<li><a href="#{user.link}">#{WCF.Language.get('chat.general.profile')}</a></li>"""
-					
-					events.userMenu.fire user, menu
-					
-					li.append menu
-					li.appendTo $ '#timsChatUserList > ul'
-				
-				foundUsers[id] = true
+					foundUsers[id] = true
 
 Remove all users that left the chat.
 
