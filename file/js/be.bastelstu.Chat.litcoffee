@@ -418,9 +418,11 @@ Insert the given messages into the chat stream.
 			for message in messages
 				events.newMessage.fire message
 				
+				message.private = (message.type is parseInt v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") || $.wcfIsset("timsChatMessageContainer#{message.sender}"))
+
 				createNewMessage = yes
 				if  $('.timsChatMessage:last-child .text').is('ul') and lastMessage isnt null and lastMessage.type in [ 0, 7 ]
-					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver
+					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver and lastMessage.private is message.private
 						createNewMessage = no
 				
 				if createNewMessage
@@ -436,13 +438,10 @@ Insert the given messages into the chat stream.
 					li.addClass 'ownMessage' if message.sender is WCF.User.userID
 					li.append output
 					
-					if message.type is parseInt v.config.messageTypes.WHISPER
-						if message.sender is WCF.User.userID && $.wcfIsset "timsChatMessageContainer#{message.receiver}"
-							li.appendTo $ "#timsChatMessageContainer#{message.receiver} > ul"
-						else if $.wcfIsset "timsChatMessageContainer#{message.sender}"
-							li.appendTo $ "#timsChatMessageContainer#{message.sender} > ul"
-						else
-							li.appendTo $ '#timsChatMessageContainer0 > ul'
+					if message.private and message.sender is WCF.User.userID
+						li.appendTo $ "#timsChatMessageContainer#{message.receiver} > ul"
+					else if message.private
+						li.appendTo $ "#timsChatMessageContainer#{message.sender} > ul"
 					else
 						li.appendTo $ '#timsChatMessageContainer0 > ul'
 				else
@@ -451,7 +450,14 @@ Insert the given messages into the chat stream.
 						message: message
 						messageTypes: v.config.messageTypes
 					
-					$('.timsChatMessage:last-child .text').append $(output).find('.text li:last-child')
+					if message.private and message.sender is WCF.User.userID
+						messageContainerID = message.receiver
+					else if message.private
+						messageContainerID = message.sender
+					else
+						messageContainerID = 0
+
+					$("#timsChatMessageContainer#{messageContainerID} .timsChatMessage:last-child .text").append $(output).find('.text li:last-child')
 				
 				lastMessage = message
 			$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
