@@ -78,11 +78,11 @@
 	<div id="privateChannelsMenu">
 		<ul>
 			<li id="privateChannel0" class="privateChannel active" data-private-channel-id="0">
-				<span class="userAvatar framed jsTooltip small" title="{lang}chat.general.room{/lang}">
-					<span class="icon icon16 icon-comment-alt"></span>
+				<span class="userAvatar framed small">
+					<span class="icon icon16 icon-comment-alt jsTooltip" title="{lang}chat.general.room{/lang}"></span>
 				</span>
-				<span class="userAvatar framed jsTooltip large" title="{lang}chat.general.room{/lang}">
-					<span class="icon icon32 icon-comment-alt"></span>
+				<span class="userAvatar framed large">
+					<span class="icon icon32 icon-comment-alt jsTooltip" title="{lang}chat.general.room{/lang}"></span>
 				</span>
 			</li>
 		</ul>

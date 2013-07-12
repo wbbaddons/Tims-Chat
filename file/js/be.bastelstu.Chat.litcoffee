@@ -736,11 +736,18 @@ Open private channel
 					li.addClass 'privateChannel'
 					
 					span = $ '<span class="userAvatar framed" />'
-					span.addClass 'jsTooltip'
-					span.attr 'title', userList.allTime[userID].username
 					
-					li.append $(userList.allTime[userID].avatar[16]).wrap(span).parent().addClass 'small'
-					li.append $(userList.allTime[userID].avatar[32]).wrap(span).parent().addClass 'large'
+					avatar = $ userList.allTime[userID].avatar[16]
+					avatar.addClass 'jsTooltip'
+					avatar.attr 'title', userList.allTime[userID].username
+					avatar.wrap span
+					li.append avatar.parent().addClass 'small'
+					
+					avatar = $ userList.allTime[userID].avatar[32]
+					avatar.addClass 'jsTooltip'
+					avatar.attr 'title', userList.allTime[userID].username
+					avatar.wrap span
+					li.append avatar.parent().addClass 'large'
 					
 					$('#privateChannelsMenu ul').append li
 					
