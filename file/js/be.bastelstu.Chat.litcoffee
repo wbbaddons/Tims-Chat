@@ -710,12 +710,12 @@ Joins a room.
 					showError WCF.Language.get 'chat.error.join'
 
 Open private channel
-	
+
 		openPrivateChannel = (userID) ->
 			userID = parseInt userID
 			
 			console.log "Opening private channel #{userID}"
-
+			
 			unless $.wcfIsset "timsChatMessageContainer#{userID}"
 				return unless userList.allTime[userID]?
 				
@@ -726,42 +726,28 @@ Open private channel
 				div.addClass 'container'
 				div.wrapInner '<ul>'
 				$('#timsChatMessageContainer0').after div
-
-			channels = $ '#privateChannelsMenu li'
-			channels.removeClass 'active'
-			channels.each (key, channel) ->
-				channel = $ channel;
-				privateChannelID = channel.data 'privateChannelID'
-
-				if privateChannelID isnt 0
-					channel.find('.userAvatar > *').replaceWith userList.allTime[privateChannelID].avatar[16]
-				else
-					channel.find('.icon').removeClass('icon32').addClass 'icon16'
-
+			
+			$('.privateChannel').removeClass 'active'
 			if userID isnt 0
-				if $.wcfIsset "privateChannel#{userID}"
-					$("#privateChannel#{userID} > .userAvatar > img").replaceWith userList.allTime[userID].avatar[32]
-				else
+				unless $.wcfIsset "privateChannel#{userID}"
 					li = $ '<li>'
 					li.attr 'id', "privateChannel#{userID}"
 					li.data 'privateChannelID', userID
 					li.addClass 'privateChannel'
-					li.addClass 'active'
-					li.append userList.allTime[userID].avatar[32]
-
+					
 					span = $ '<span class="userAvatar framed" />'
 					span.addClass 'jsTooltip'
 					span.attr 'title', userList.allTime[userID].username
 					
-					li.wrapInner span
+					li.append $(userList.allTime[userID].avatar[16]).wrap(span).parent().addClass 'small'
+					li.append $(userList.allTime[userID].avatar[32]).wrap(span).parent().addClass 'large'
+					
 					$('#privateChannelsMenu ul').append li
-
+					
 					do WCF.DOMNodeInsertedHandler.execute
-
+					
 				$('#privateChannelsMenu').addClass 'shown'
-			else
-				$("#privateChannel0 > .userAvatar > .icon").removeClass('icon16').addClass 'icon32'
-			
+				
 			$('.timsChatMessageContainer').removeClass 'active'
 			$("#timsChatMessageContainer#{userID}").addClass 'active'
 			$("#privateChannel#{userID}").addClass 'active'
@@ -773,7 +759,7 @@ Close private channel
 			unless userID is 0
 				do $("#privateChannel#{userID}").remove
 				do $("#timsChatMessageContainer#{userID}").remove
-
+				
 			if $('#privateChannelsMenu li').length <= 1
 				$('#privateChannelsMenu').removeClass 'shown'
 			
@@ -809,7 +795,7 @@ And finally export the public methods and variables.
 			listener:
 				add: addListener
 				remove: removeListener
-		
+				
 		window.be ?= {}
 		be.bastelstu ?= {}
 		window.be.bastelstu.Chat = Chat
