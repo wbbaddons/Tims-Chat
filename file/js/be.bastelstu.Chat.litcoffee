@@ -33,13 +33,17 @@ exposed by a function if necessary.
 		newMessageCount = 0
 		scrollUpNotifications = off
 		chatSession = Date.now()
-
+		userList =
+			current: {}
+			allTime: {}
+		
+		
 		errorVisible = false
 		inputErrorHidingTimer = null
 
 		lastMessage = null
 		openChannel = 0
-
+		
 		remainingFailures = 3
 
 		events =
@@ -113,6 +117,11 @@ Insert the appropriate smiley code into the input when a smiley is clicked.
 			$('#smilies').on 'click', 'img', ->
 				insertText " #{$(@).attr('alt')} "
 
+Handle private channel menu
+
+			$('#privateChannelsMenu').on 'click', '.privateChannel', ->
+				openPrivateChannel $(@).data 'privateChannelID'
+
 Handle submitting the form. The message will be validated by some basic checks, passed to the `submit` eventlisteners
 and afterwards sent to the server by an AJAX request.
 
@@ -125,7 +134,7 @@ and afterwards sent to the server by an AJAX request.
 				return false if text.length is 0
 				
 				unless openChannel is 0
-					text = "/whisper #{$("#timsChatMessageContainer#{openChannel}").data 'username'}, #{text}"
+					text = "/whisper #{userList.allTime[openChannel].username}, #{text}"
 				
 				# Free the fish!
 				do freeTheFish if text.toLowerCase() is '/free the fish'
@@ -190,7 +199,10 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 						toComplete = '/' + commands[autocomplete.offset++ % commands.length] + ' ' if commands.length isnt 0
 					else
 						regex = new RegExp "^#{WCF.String.escapeRegExp toComplete}", "i"
-						users = (username for user in $('.timsChatUser') when regex.test(username = $(user).data('username')))
+						
+						users = [ ]
+						for userID, user of userList.current
+							users.push user.username if regex.test user.username
 						
 						toComplete = users[autocomplete.offset++ % users.length] + ', ' if users.length isnt 0
 					
@@ -488,9 +500,12 @@ Rebuild the userlist based on the given `users`.
 
 		handleUsers = (users) ->
 			foundUsers = { }
-			
+			userList.current = { }
+
 			for user in users
 				do (user) ->
+					userList.current[user.userID] = userList.allTime[user.userID] = user
+					
 					id = "timsChatUser#{user.userID}"
 
 Move the user to the new position if he was found in the old list.
@@ -697,26 +712,71 @@ Joins a room.
 Open private channel
 	
 		openPrivateChannel = (userID) ->
+			userID = parseInt userID
+			
+			console.log "Opening private channel #{userID}"
+
 			unless $.wcfIsset "timsChatMessageContainer#{userID}"
-				return unless $.wcfIsset "timsChatUser#{userID}"
+				return unless userList.allTime[userID]?
 				
-				div = $('<div>')
+				div = $ '<div>'
 				div.attr 'id', "timsChatMessageContainer#{userID}"
 				div.addClass 'timsChatMessageContainer'
 				div.addClass 'marginTop'
 				div.addClass 'container'
-				div.data 'username', $("#timsChatUser#{userID}").data 'username'
 				div.wrapInner '<ul>'
 				$('#timsChatMessageContainer0').after div
+
+			channels = $ '#privateChannelsMenu li'
+			channels.removeClass 'active'
+			channels.each (key, channel) ->
+				channel = $ channel;
+				privateChannelID = channel.data 'privateChannelID'
+
+				if privateChannelID isnt 0
+					channel.find('.userAvatar > *').replaceWith userList.allTime[privateChannelID].avatar[16]
+				else
+					channel.find('.icon').removeClass('icon32').addClass 'icon16'
+
+			if userID isnt 0
+				if $.wcfIsset "privateChannel#{userID}"
+					$("#privateChannel#{userID} > .userAvatar > img").replaceWith userList.allTime[userID].avatar[32]
+				else
+					li = $ '<li>'
+					li.attr 'id', "privateChannel#{userID}"
+					li.data 'privateChannelID', userID
+					li.addClass 'privateChannel'
+					li.addClass 'active'
+					li.append userList.allTime[userID].avatar[32]
+
+					span = $ '<span class="userAvatar framed" />'
+					span.addClass 'jsTooltip'
+					span.attr 'title', userList.allTime[userID].username
+					
+					li.wrapInner span
+					$('#privateChannelsMenu ul').append li
+
+					do WCF.DOMNodeInsertedHandler.execute
+
+				$('#privateChannelsMenu').addClass 'shown'
+			else
+				$("#privateChannel0 > .userAvatar > .icon").removeClass('icon16').addClass 'icon32'
 			
 			$('.timsChatMessageContainer').removeClass 'active'
 			$("#timsChatMessageContainer#{userID}").addClass 'active'
+			$("#privateChannel#{userID}").addClass 'active'
 			openChannel = userID
 
 Close private channel
 
 		closePrivateChannel = (userID) ->
-			do $("#timsChatMessageContainer#{userID}").remove unless userID is 0
+			unless userID is 0
+				do $("#privateChannel#{userID}").remove
+				do $("#timsChatMessageContainer#{userID}").remove
+
+			if $('#privateChannelsMenu li').length <= 1
+				$('#privateChannelsMenu').removeClass 'shown'
+			
 			openPrivateChannel 0
 
 Bind the given callback to the given event.
