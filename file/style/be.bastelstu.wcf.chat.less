@@ -58,6 +58,71 @@
 		}
 	}
 	
+	#privateChannelsMenu {
+		.transition(opacity, .2s);
+		.marginTop;
+		z-index: -1;
+		position: absolute;
+		opacity: 0;
+		
+		&.shown {
+			opacity: 1;
+			z-index: 130;
+
+			~ .timsChatMessageContainer {
+				margin-left: 35px;
+				border-top-left-radius: 0;
+			}
+		}
+
+		> ul {
+			text-align: right;
+			
+			> li:first-child {
+				> .userAvatar.framed {
+					 img, > canvas, > .icon {
+						border-radius: @wcfContainerBorderRadius 0 0 0;
+					}
+				}
+			}
+
+			> li:last-child {
+				> .userAvatar.framed {
+					 img, > canvas, > .icon {
+						border-radius: 0 0 0 @wcfContainerBorderRadius;
+					}
+				}
+			}
+
+			> li {
+				margin-bottom: -1px;
+				background-color: @wcfContainerBackgroundColor;
+				
+				> .userAvatar, .userAvatar > .icon {
+					cursor: pointer;
+				}
+
+				> .userAvatar.framed {
+					> .icon {
+						background-color: @wcfContentBackgroundColor;
+						border: 1px solid @wcfContainerBorderColor;
+						padding: 1px;
+					}
+				}
+
+				&.active {
+					> .userAvatar.framed {
+						> img, > canvas, > .icon {
+							border-right-color: @wcfContentBackgroundColor;
+
+							border-radius: @wcfContainerBorderRadius 0 0 @wcfContainerBorderRadius;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	.timsChatMessageContainer {
 		height: 320px;
 		overflow-y: scroll;
