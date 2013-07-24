@@ -15,7 +15,19 @@
 		border-color: @wcfInputHoverBorderColor;
 	}
 }
- 
+
+.__bubbleArrow {
+	border-color: transparent @wcfContainerBorderColor;
+	left: -6px;
+	top: 5px;
+	border-width: 6px 6px 6px 0;
+	border-style: solid;
+	content: "";
+	display: block;
+	position: absolute;
+	width: 0;
+}
+
 #tplChat {
 	#main > div {
 		overflow: hidden;
@@ -28,17 +40,120 @@
 		.transition(padding-top, .2s);
 		.transition(padding-bottom, .2s);
 		
-		&.empty {
+		&.empty, &.hidden {
 			height: 0px;
 			overflow: hidden;
 			border: 0px;
 			padding: 0px;
 			margin: 0px;
+			
+			~ #timsChatMessageContainer {
+				margin-top: 0;
+			}
+		}
+		
+		.jsTopicCloser {
+			cursor: pointer;
+			float: right;
+		}
+	}
+	
+	#privateChannelsMenu {
+		.transition(opacity, .2s);
+		.marginTop;
+		z-index: -1;
+		position: absolute;
+		opacity: 0;
+		
+		&.shown {
+			opacity: 1;
+			z-index: 130;
+
+			~ .timsChatMessageContainer {
+				margin-left: 35px;
+				border-top-left-radius: 0;
+			}
+		}
+
+		> ul {
+			text-align: right;
+			
+			> li:first-child {
+				> .userAvatar.framed {
+					 img, > canvas, > .icon {
+						border-radius: @wcfContainerBorderRadius 0 0 0;
+					}
+				}
+			}
+
+			> li:last-child {
+				> .userAvatar.framed {
+					 img, > canvas, > .icon {
+						border-radius: 0 0 0 @wcfContainerBorderRadius;
+					}
+				}
+			}
+
+			> li {
+				margin-bottom: -1px;
+				background-color: @wcfContainerBackgroundColor;
+				
+				> .userAvatar, .userAvatar > .icon {
+					cursor: pointer;
+				}
+
+				> .userAvatar {
+					&.large {
+						display: none;
+					}
+					
+					&.small {
+						display: block;
+					}
+					
+					&.framed {
+						> .icon {
+							background-color: @wcfContentBackgroundColor;
+							border: 1px solid @wcfContainerBorderColor;
+							padding: 1px;
+						}
+					}
+				}
+
+				&.active {
+					> .userAvatar {
+						&.large {
+							display: block;
+						}
+						
+						&.small {
+							display: none;
+						}
+						
+						&.framed {
+							> img, > canvas, > .icon {
+								border-right-color: @wcfContentBackgroundColor;
+								
+								border-radius: @wcfContainerBorderRadius 0 0 @wcfContainerBorderRadius;
+							}
+						}
+					}
+				}
+				
+				&.notify {
+					> .userAvatar {
+						> * {
+							// TODO
+							opacity: .4;
+						}
+					}
+				}
+			}
 		}
 	}
 	
 	.timsChatMessageContainer {
-		height: 200px;
+		height: 320px;
 		overflow-y: scroll;
 		overflow-x: hidden;
 		display: none;
@@ -55,9 +170,9 @@
 						color: @wcfSelectedColor;
 					}
 					
-					> {
+					> .innerMessageContainer {
 						.markContainer {
-							display: table-cell;
+							display: block;
 						}
 					}
 				}
@@ -77,47 +192,138 @@
 					opacity: .5;
 				}
 				
-				&::before {
-					.icon;
-					.icon16;
-					padding: @wcfGapTiny;
-				}
-				
 				&:nth-child(even) {
-					background-color: @wcfContainerAccentBackgroundColor;
+					> .innerMessageContainer.bubble .innerMessage, .innerMessageContainer.right.bubble .innerMessage {
+						background-color: @wcfContainerAccentBackgroundColor;
+						
+						&:after {
+							border-color: transparent @wcfContainerAccentBackgroundColor;
+						}
+					}
 				}
 				
-				> {
-					time, .usernameContainer, .text, .markContainer {
-						display: table-cell;
-						vertical-align: top;
-						padding: @wcfGapTiny 0;
+				.messageIcon {
+					float: left;
+					padding: 8px 0 0 4px;
+					margin-right: -16px;
+				}
+				
+				> .innerMessageContainer {
+					padding: 5px 20px 5px 5px;
+					position: relative;
+					
+					.userAvatar {
+						float: left;
+						margin-left: 16px;
 					}
 					
-					.markContainer {
+					.innerMessage {
+						margin-left: 46px;
+						padding: 2px 5px 5px;
+						
+						time {
+							float: right;
+						}
+						
+						> .text {
+							img {
+								max-width: 480px;
+								max-height: 320px;
+							}
+						}
+					}
+					
+					&.bubble {
+						.userAvatar {
+							margin-left: 0;
+							
+							.icon {
+								padding: 2px;
+							}
+						}
+						
+						.innerMessage {
+							border-width: 1px;
+							border-style: solid;
+							border-color: @wcfContainerBorderColor;
+							border-radius: @wcfContainerBorderRadius;
+							background-color: @wcfContainerBackgroundColor;
+							position: relative;
+									
+							.username {
+								font-weight: bold;
+							}
+							
+							> ul.text {
+								li {
+									.clearfix;
+									border-style: solid;
+									border-width: 0 0 1px 0;
+									border-color: @wcfContainerBorderColor;
+									padding: 3px 0 4px;
+									
+									&:last-child {
+										border-style: none;
+										padding: 3px 0 0 0;
+									}
+								}
+							}
+							
+							&:before {
+								.__bubbleArrow;
+							}
+							
+							&:after {
+								.__bubbleArrow;
+								border-color: transparent @wcfContainerBackgroundColor;
+								left: -5px;
+								top: 6px;
+								border-width: 5px 5px 5px 0;
+							}
+						}
+						
+						&.right {
+							.userAvatar {
+								float: right;
+							}
+							
+							.innerMessage {
+								margin-right: 46px;
+								margin-left: 0px;
+								
+								&:before {
+									.__bubbleArrow;
+									left: auto;
+									right: -6px;
+									border-width: 6px 0 6px 6px;
+								}
+								
+								&:after {
+									.__bubbleArrow;
+									border-color: transparent @wcfContainerBackgroundColor;
+									left: auto;
+									right: -5px;
+									top: 6px;
+									border-width: 5px 0 5px 5px;
+								}
+								
+								time {
+									float: left;
+									margin-right: @wcfGapTiny;
+								}
+								
+								.username {
+									float: right;
+								}
+							}
+						}
+					}
+					
+					> .markContainer {
 						display: none;
-						padding: 0;
-					}
-					
-					time {
-						&::before {
-							content: "[";
-						}
-						&::after {
-							content: "]";
-						}
-					}
-					
-					.usernameContainer {
-						text-align: right;
-						min-width: 100px;
-						padding-right: @wcfGapSmall;
-						white-space: nowrap;
-						font-weight: bold;
-					}
-					
-					.text {
-						width: 100%;
+						position: absolute;
+						right: 0px;
+						top: 6px;
 					}
 				}
 			}

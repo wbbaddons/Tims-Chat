@@ -116,7 +116,7 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 		}
 		
 		\wcf\system\acl\ACLHandler::getInstance()->save($roomID, $this->objectTypeID);
-		\chat\system\permission\permissionHandler::clearCache();
+		\chat\system\permission\PermissionHandler::clearCache();
 		
 		$this->saved();
 		

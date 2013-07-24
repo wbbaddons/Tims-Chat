@@ -33,8 +33,17 @@ exposed by a function if necessary.
 		newMessageCount = 0
 		scrollUpNotifications = off
 		chatSession = Date.now()
+		userList =
+			current: {}
+			allTime: {}
+		currentRoom = {}
+		
 		errorVisible = false
+		inputErrorHidingTimer = null
 
+		lastMessage = null
+		openChannel = 0
+		
 		remainingFailures = 3
 
 		events =
@@ -106,21 +115,29 @@ Make the user leave the chat when **Tims Chat** is about to be unloaded.
 Insert the appropriate smiley code into the input when a smiley is clicked.
 
 			$('#smilies').on 'click', 'img', ->
-				insertText ' ' + $(@).attr('alt') + ' '
+				insertText " #{$(@).attr('alt')} "
+
+Handle private channel menu
+
+			$('#privateChannelsMenu').on 'click', '.privateChannel', ->
+				openPrivateChannel $(@).data 'privateChannelID'
 
 Handle submitting the form. The message will be validated by some basic checks, passed to the `submit` eventlisteners
 and afterwards sent to the server by an AJAX request.
 
 			$('#timsChatForm').submit (event) ->
-				event.preventDefault()
+				do event.preventDefault
 				
-				text = $('#timsChatInput').val().trim()
+				text = do $('#timsChatInput').val().trim
 				$('#timsChatInput').val('').focus().keyup()
 				
 				return false if text.length is 0
 				
+				unless openChannel is 0
+					text = "/whisper #{userList.allTime[openChannel].username}, #{text}"
+				
 				# Free the fish!
-				freeTheFish() if text.toLowerCase() is '/free the fish'
+				do freeTheFish if text.toLowerCase() is '/free the fish'
 				
 				text = do (text) ->
 					obj =
@@ -139,16 +156,13 @@ and afterwards sent to the server by an AJAX request.
 							enableSmilies: $('#timsChatSmilies').data 'status'
 					showLoadingOverlay: false
 					success: ->
-						$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide()
-						getMessages()
+						do hideInputError
+						
+						do getMessages
 					failure: (data) ->
 						return true unless (data?.returnValues?.errorType?) or (data?.message?)
 						
-						$('#timsChatInputContainer').addClass('formError').find('.innerError').show().html (data?.returnValues?.errorType) ? data.message
-						
-						setTimeout ->
-							$('#timsChatInputContainer').removeClass('formError').find('.innerError').hide()
-						, 5e3
+						showInputError (data?.returnValues?.errorType) ? data.message
 						
 						false
 
@@ -157,11 +171,11 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 
 			$('#timsChatInput').keydown (event) ->
 				if event.keyCode is $.ui.keyCode.TAB
-					input = $(event.currentTarget)
-					event.preventDefault()
+					do event.preventDefault
+					input = $ @
 					
-					autocomplete.value ?= input.val()
-					autocomplete.caret ?= input.getCaret()
+					autocomplete.value ?= do input.val
+					autocomplete.caret ?= do input.getCaret
 					
 					beforeCaret = autocomplete.value.substring 0, autocomplete.caret
 					lastSpace = beforeCaret.lastIndexOf ' '
@@ -177,7 +191,7 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 					return if toComplete.length is 0
 					console.log "Autocompleting '#{toComplete}'"
 					
-					if beforeComplete is '' and toComplete.substring(0, 1) is '/'
+					if beforeComplete is '' and (toComplete.substring 0, 1) is '/'
 						regex = new RegExp "^#{WCF.String.escapeRegExp toComplete.substring 1}", "i"
 						# TODO: Proper command list
 						commands = (command for command in v.config.installedCommands when regex.test command)
@@ -185,7 +199,10 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 						toComplete = '/' + commands[autocomplete.offset++ % commands.length] + ' ' if commands.length isnt 0
 					else
 						regex = new RegExp "^#{WCF.String.escapeRegExp toComplete}", "i"
-						users = (username for user in $('.timsChatUser') when regex.test(username = $(user).data('username')))
+						
+						users = [ ]
+						for userID, user of userList.current
+							users.push user.username if regex.test user.username
 						
 						toComplete = users[autocomplete.offset++ % users.length] + ', ' if users.length isnt 0
 					
@@ -195,7 +212,7 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 Reset autocompleter to default status, when a key is pressed that is not TAB.
 
 				else
-					$('#timsChatInput').click()
+					do $('#timsChatInput').click
 
 Reset autocompleter to default status, when the input is `click`ed, as the position of the caret may have changed.
 
@@ -208,14 +225,14 @@ Reset autocompleter to default status, when the input is `click`ed, as the posit
 Refresh the room list when the associated button is `click`ed.
 
 			$('#timsChatRoomList button').click ->
-				refreshRoomList()
+				do refreshRoomList
 
 Clear the chat by removing every single message once the clear button is `clicked`.
 
 			$('#timsChatClear').click (event) ->
-				event.preventDefault()
-				$('.timsChatMessage').remove()
-				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight')
+				do event.preventDefault
+				do $('.timsChatMessageContainer.active .timsChatMessage').remove
+				$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
 
 Handle toggling of the toggleable buttons.
 
@@ -230,7 +247,7 @@ Handle toggling of the toggleable buttons.
 					element.addClass 'active'
 					element.attr 'title', element.data 'disableMessage'
 					
-				$('#timsChatInput').focus()
+				do $('#timsChatInput').focus
 
 Mark smilies as disabled when they are disabled.
 
@@ -251,7 +268,7 @@ Toggle fullscreen mode.
 				else
 					$('html').removeClass 'fullscreen'
 
-Toggle checkboxes
+Toggle checkboxes.
 
 			$('#timsChatMark').click (event) ->
 				if $(@).data 'status'
@@ -259,6 +276,14 @@ Toggle checkboxes
 				else
 					$('.timsChatMessageContainer').removeClass 'markEnabled'
 
+Hide topic container.
+
+			$('.jsTopicCloser').on 'click', ->
+				if $('.timsChatMessageContainer.active').data('userID') is 0
+					$('#timsChatTopic').addClass 'hidden'
+				else
+					closePrivateChannel $('.timsChatMessageContainer.active').data('userID')
+					
 Visibly mark the message once the associated checkbox is checked.
 
 			$(document).on 'click', '.timsChatMessage :checkbox', (event) ->
@@ -271,9 +296,9 @@ Scroll down when autoscroll is being activated.
 
 			$('#timsChatAutoscroll').click (event) ->
 				if $('#timsChatAutoscroll').data 'status'
-					$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight')
+					$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
 			
-			$('#timsChatMessageContainer').on 'scroll', (event) ->
+			$('.timsChatMessageContainer.active').on 'scroll', (event) ->
 				element = $ @
 				scrollTop = element.scrollTop()
 				scrollHeight = element.prop 'scrollHeight'
@@ -282,13 +307,13 @@ Scroll down when autoscroll is being activated.
 				if scrollTop < scrollHeight - height - 25
 					if $('#timsChatAutoscroll').data('status') is 1
 						scrollUpNotifications = on
-						$('#timsChatAutoscroll').click()
+						do $('#timsChatAutoscroll').click
 						
 				if scrollTop > scrollHeight - height - 10
 					if $('#timsChatAutoscroll').data('status') is 0
 						scrollUpNotifications = off
 						$(@).removeClass 'notification'
-						$('#timsChatAutoscroll').click()
+						do $('#timsChatAutoscroll').click
 
 Enable duplicate tab detection.
 
@@ -321,11 +346,11 @@ load messages if the appropriate event arrives.
 			do ->
 				be.bastelstu.wcf.nodePush.onConnect ->
 						console.log 'Disabling periodic loading'
-						pe.getMessages.stop()
+						do pe.getMessages.stop
 						
 				be.bastelstu.wcf.nodePush.onDisconnect ->
 						console.log 'Enabling periodic loading'
-						getMessages()
+						do getMessages
 						pe.getMessages = new WCF.PeriodicalExecuter getMessages, v.config.reloadTime * 1e3
 						
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.newMessage', getMessages
@@ -334,11 +359,29 @@ load messages if the appropriate event arrives.
 Finished! Enable the input now and join the chat.
 
 			join roomID
-			$('#timsChatInput').enable().jCounter().focus();
+			do $('#timsChatInput').enable().jCounter().focus
 			
 			console.log "Finished initializing"
 			
 			true
+
+Shows an error message below the input.
+
+		showInputError = (message) ->
+			$('#timsChatInputContainer').addClass('formError').find('.innerError').show().html message
+			
+			clearTimeout inputErrorHidingTimer if inputErrorHidingTimer?
+			inputErrorHidingTimer = setTimeout ->
+				do hideInputError
+			, 5e3
+
+Hides the error message below the input.
+
+		hideInputError = ->
+			clearTimeout inputErrorHidingTimer if inputErrorHidingTimer?
+			inputErrorHidingTimer = null
+			
+			do $('#timsChatInputContainer').removeClass('formError').find('.innerError').hide
 
 Free the fish.
 
@@ -346,6 +389,7 @@ Free the fish.
 			return if $.wcfIsset 'fish'
 			console.warn 'Freeing the fish'
 			fish = $ """<div id="fish">#{WCF.String.escapeHTML('><((((\u00B0>')}</div>"""
+			
 			fish.css
 				position: 'absolute'
 				top: '150px'
@@ -389,7 +433,7 @@ Fetch new messages from the server and pass them to `handleMessages`. The userli
 				error: ->
 					console.error "Message loading failed, #{--remainingFailures} remaining"
 					if remainingFailures <= 0
-						freeTheFish()
+						do freeTheFish
 						console.error 'To many failures, aborting'
 						
 						showError WCF.Language.get 'chat.error.onMessageLoad'
@@ -406,90 +450,129 @@ Prevent loading messages in parallel.
 Insert the given messages into the chat stream.
 
 		handleMessages = (messages) ->
-			$('#timsChatMessageContainer').trigger 'scroll'
+			$('.timsChatMessageContainer.active').trigger 'scroll'
 			
 			for message in messages
+				message.isInPrivateChannel = (String(message.type) is v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") or $.wcfIsset("timsChatMessageContainer#{message.sender}"))
+				
 				events.newMessage.fire message
 				
-				output = v.messageTemplate.fetch message
-				li = $ '<li></li>'
-				li.addClass 'timsChatMessage'
-				li.addClass "timsChatMessage#{message.type}"
-				li.addClass "user#{message.sender}"
-				li.addClass 'ownMessage' if message.sender is WCF.User.userID
-				li.append output
+				createNewMessage = yes
+				if  $('.timsChatMessage:last-child .text').is('ul') and lastMessage isnt null and lastMessage.type in [ 0, 7 ]
+					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver and lastMessage.isInPrivateChannel is message.isInPrivateChannel
+						createNewMessage = no
 				
-				li.appendTo $ '#timsChatMessageContainer > ul'
-			
-			$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
+				if createNewMessage
+					message.isFollowUp = no
+					output = v.messageTemplate.fetch
+						message: message
+						messageTypes: v.config.messageTypes
+					
+					li = $ '<li></li>'
+					li.addClass 'timsChatMessage'
+					li.addClass "timsChatMessage#{message.type}"
+					li.addClass "user#{message.sender}"
+					li.addClass 'ownMessage' if message.sender is WCF.User.userID
+					li.append output
+					
+					if message.isInPrivateChannel and message.sender is WCF.User.userID
+						li.appendTo $ "#timsChatMessageContainer#{message.receiver} > ul"
+					else if message.isInPrivateChannel
+						li.appendTo $ "#timsChatMessageContainer#{message.sender} > ul"
+					else
+						li.appendTo $ '#timsChatMessageContainer0 > ul'
+				else
+					message.isFollowUp = yes
+					output = v.messageTemplate.fetch
+						message: message
+						messageTypes: v.config.messageTypes
+					
+					if message.isInPrivateChannel and message.sender is WCF.User.userID
+						messageContainerID = message.receiver
+					else if message.isInPrivateChannel
+						messageContainerID = message.sender
+					else
+						messageContainerID = 0
+
+					$("#timsChatMessageContainer#{messageContainerID} .timsChatMessage:last-child .text").append $(output).find('.text li:last-child')
+				
+				lastMessage = message
+			$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
 
 Rebuild the userlist based on the given `users`.
 
 		handleUsers = (users) ->
 			foundUsers = { }
-			
+			userList.current = { }
+
 			for user in users
-				id = "timsChatUser#{user.userID}"
+				do (user) ->
+					userList.current[user.userID] = userList.allTime[user.userID] = user
+					
+					id = "timsChatUser#{user.userID}"
 
 Move the user to the new position if he was found in the old list.
 
-				if $.wcfIsset id
-					console.log "Moving User: '#{user.username}'"
-					element = $("##{id}").detach()
-					
-					if user.awayStatus?
-						element.addClass 'away'
-						element.attr 'title', user.awayStatus
-					else
-						element.removeClass 'away'
-						element.removeAttr 'title'
-						element.data 'tooltip', ''
-					
-					if user.suspended
-						element.addClass 'suspended'
-					else
-						element.removeClass 'suspended'
-					
-					$('#timsChatUserList > ul').append element
+					if $.wcfIsset id
+						console.log "Moving User: '#{user.username}'"
+						element = $("##{id}").detach()
+						
+						if user.awayStatus?
+							element.addClass 'away'
+							element.attr 'title', user.awayStatus
+						else
+							element.removeClass 'away'
+							element.removeAttr 'title'
+							element.data 'tooltip', ''
+						
+						if user.suspended
+							element.addClass 'suspended'
+						else
+							element.removeClass 'suspended'
+						
+						$('#timsChatUserList > ul').append element
 
 Build HTML of the user and insert it into the list, if the users was not found in the chat before.
 
-				else
-					console.log "Inserting User: '#{user.username}'"
-					li = $ '<li></li>'
-					li.attr 'id', id
-					li.addClass 'timsChatUser'
-					li.addClass 'jsTooltip'
-					li.addClass 'dropdown'
-					li.addClass 'you' if user.userID is WCF.User.userID
-					li.addClass 'suspended' if user.suspended
-					if user.awayStatus?
-						li.addClass 'away'
-						li.attr 'title', user.awayStatus
-					li.data 'username', user.username
+					else
+						console.log "Inserting User: '#{user.username}'"
+						li = $ '<li></li>'
+						li.attr 'id', id
+						li.addClass 'timsChatUser'
+						li.addClass 'jsTooltip'
+						li.addClass 'dropdown'
+						li.addClass 'you' if user.userID is WCF.User.userID
+						li.addClass 'suspended' if user.suspended
+						if user.awayStatus?
+							li.addClass 'away'
+							li.attr 'title', user.awayStatus
+						li.data 'username', user.username
+						
+						li.append v.userTemplate.fetch user
+						
+						menu = $ '<ul></ul>'
+						unless user.userID is WCF.User.userID
+							menu.append $("<li><a>#{WCF.Language.get('chat.general.query')}</a></li>").click -> openPrivateChannel user.userID
+							menu.append $ "<li><a>#{WCF.Language.get('chat.general.kick')}</a></li>"
+							menu.append $ "<li><a>#{WCF.Language.get('chat.general.ban')}</a></li>"
+							menu.append $ """<li><a href="#{user.link}">#{WCF.Language.get('chat.general.profile')}</a></li>"""
+						
+						events.userMenu.fire user, menu
+						
+						if menu.find('li').length
+							li.append menu
+							menu.addClass 'dropdownMenu'
+						
+						li.appendTo $ '#timsChatUserList > ul'
 					
-					li.append v.userTemplate.fetch user
-					
-					menu = $ '<ul></ul>'
-					menu.addClass 'dropdownMenu'
-					menu.append $ "<li><a>#{WCF.Language.get('chat.general.query')}</a></li>"
-					menu.append $ "<li><a>#{WCF.Language.get('chat.general.kick')}</a></li>"
-					menu.append $ "<li><a>#{WCF.Language.get('chat.general.ban')}</a></li>"
-					menu.append $ """<li><a href="#{user.link}">#{WCF.Language.get('chat.general.profile')}</a></li>"""
-					
-					events.userMenu.fire user, menu
-					
-					li.append menu
-					li.appendTo $ '#timsChatUserList > ul'
-				
-				foundUsers[id] = true
+					foundUsers[id] = true
 
 Remove all users that left the chat.
 
 			$('.timsChatUser').each ->
 				unless foundUsers[$(@).attr('id')]?
 					console.log "Removing User: '#{$(@).data('username')}'"
-					$(@).remove();
+					do $(@).remove
 					
 			
 			$('#toggleUsers .badge').text $('.timsChatUser').length
@@ -505,19 +588,30 @@ the existing text. If `options.submit` is true the message will be sent to the s
 			
 			text = $('#timsChatInput').val() + text if options.append
 			$('#timsChatInput').val text
-			$('#timsChatInput').keyup()
+			do $('#timsChatInput').keyup
 			
-			if (options.submit)
-				$('#timsChatForm').submit()
+			if options.submit
+				do $('#timsChatForm').submit
 			else
-				$('#timsChatInput').focus()
+				do $('#timsChatInput').focus
 
 Send out notifications for the given `message`. The number of unread messages will be prepended to `document.title` and if available desktop notifications will be sent.
 
 		notify = (message) ->
 			if scrollUpNotifications
-				$('#timsChatMessageContainer').addClass 'notification'
+				$('.timsChatMessageContainer.active').addClass 'notification'
 			
+			if message.isInPrivateChannel
+				if message.sender is WCF.User.userID
+					privateChannelID = message.receiver
+				else
+					privateChannelID = message.sender
+				
+				if $('.timsChatMessageContainer.active').data('userID') isnt privateChannelID
+					$("#privateChannel#{privateChannelID}").addClass 'notify'
+			else if $('.timsChatMessageContainer.active').data('userID') isnt 0
+				$("#privateChannel0").addClass 'notify'
+				
 			return if isActive or $('#timsChatNotify').data('status') is 0
 			
 			document.title = v.titleTemplate.fetch
@@ -532,9 +626,9 @@ Send out notifications for the given `message`. The number of unread messages wi
 					notification = new window.Notification title,
 						body: content
 						onclick: ->
-							notification.close()
+							do notification.close
 					setTimeout ->
-						notification.close()
+						do notification.close
 					, 5e3
 
 Fetch the roomlist from the server and update it in the GUI.
@@ -550,7 +644,7 @@ Fetch the roomlist from the server and update it in the GUI.
 				showLoadingOverlay: false
 				suppressErrors: true
 				success: (data) ->
-					$('.timsChatRoom').remove()
+					do $('.timsChatRoom').remove
 					$('#toggleRooms .badge').text data.returnValues.length
 					
 					for room in data.returnValues
@@ -561,8 +655,8 @@ Fetch the roomlist from the server and update it in the GUI.
 					
 					if window.history?.replaceState?
 						$('.timsChatRoom').click (event) ->
-							event.preventDefault()
-							target = $(@)
+							do event.preventDefault
+							target = $ @
 							
 							window.history.replaceState {}, '', target.attr 'href'
 							
@@ -580,8 +674,8 @@ Shows an unrecoverable error with the given text.
 			
 			loading = true
 			
-			pe.refreshRoomList.stop()
-			pe.getMessages.stop()
+			do pe.refreshRoomList.stop
+			do pe.getMessages.stop
 			
 			errorDialog = $("""
 				<div id="timsChatLoadingErrorDialog">
@@ -592,7 +686,7 @@ Shows an unrecoverable error with the given text.
 			formSubmit = $("""<div class="formSubmit"></div>""").appendTo errorDialog
 			reloadButton = $("""<button class="buttonPrimary">#{WCF.Language.get 'chat.error.reload'}</button>""").appendTo formSubmit
 			reloadButton.on 'click', ->
-				window.location.reload()
+				do window.location.reload
 				
 			$('#timsChatLoadingErrorDialog').wcfDialog
 				closable: false
@@ -612,34 +706,115 @@ Joins a room.
 				success: (data) ->
 					loading = false
 					
-					$('#timsChatTopic').text data.returnValues.topic
-					if data.returnValues.topic.trim() is ''
+					$('#timsChatTopic').removeClass 'hidden'
+					currentRoom = data.returnValues
+					currentRoom.roomID = roomID
+					
+					$('#timsChatTopic > .topic').text currentRoom.topic
+					if currentRoom.topic.trim() is ''
 						$('#timsChatTopic').addClass 'empty'
 					else
 						$('#timsChatTopic').removeClass 'empty'
 					
 					$('.timsChatMessage').addClass 'unloaded'
 					
-					document.title = v.titleTemplate.fetch data.returnValues
-					handleMessages data.returnValues.messages
-					getMessages()
-					refreshRoomList()
+					document.title = v.titleTemplate.fetch currentRoom
+					handleMessages currentRoom.messages
+					do getMessages
+					do refreshRoomList
 				failure: ->
 					showError WCF.Language.get 'chat.error.join'
+
+Open private channel
+
+		openPrivateChannel = (userID) ->
+			userID = parseInt userID
+			
+			console.log "Opening private channel #{userID}"
+			
+			unless $.wcfIsset "timsChatMessageContainer#{userID}"
+				return unless userList.allTime[userID]?
+				
+				div = $ '<div>'
+				div.attr 'id', "timsChatMessageContainer#{userID}"
+				div.data 'userID', userID
+				div.addClass 'timsChatMessageContainer'
+				div.addClass 'marginTop'
+				div.addClass 'container'
+				div.wrapInner '<ul>'
+				$('#timsChatMessageContainer0').after div
+			
+			$('.privateChannel').removeClass 'active'
+			if userID isnt 0
+				$('#timsChatTopic').removeClass 'hidden empty'
+				$('#timsChatTopic > .topic').text WCF.Language.get 'chat.general.privateChannelTopic', {username: userList.allTime[userID].username}
+				$('#timsChatTopic > .jsTopicCloser').attr 'title', WCF.Language.get 'chat.general.closePrivateChannel'
+				
+				unless $.wcfIsset "privateChannel#{userID}"
+					li = $ '<li>'
+					li.attr 'id', "privateChannel#{userID}"
+					li.data 'privateChannelID', userID
+					li.addClass 'privateChannel'
+					
+					span = $ '<span class="userAvatar framed" />'
+					
+					avatar = $ userList.allTime[userID].avatar[16]
+					avatar.addClass 'jsTooltip'
+					avatar.attr 'title', userList.allTime[userID].username
+					avatar.wrap span
+					li.append avatar.parent().addClass 'small'
+					
+					avatar = $ userList.allTime[userID].avatar[32]
+					avatar.addClass 'jsTooltip'
+					avatar.attr 'title', userList.allTime[userID].username
+					avatar.wrap span
+					li.append avatar.parent().addClass 'large'
+					
+					$('#privateChannelsMenu ul').append li
+					
+				$('#privateChannelsMenu').addClass 'shown'
+			else
+				$('#timsChatTopic > .topic').text currentRoom.topic
+				$('#timsChatTopic > .jsTopicCloser').attr 'title', WCF.Language.get 'chat.general.closeTopic'
+				if currentRoom.topic.trim() is ''
+					$('#timsChatTopic').addClass 'empty'
+				else
+					$('#timsChatTopic').removeClass 'empty'
+			
+			do WCF.DOMNodeInsertedHandler.execute
+			
+			$('.timsChatMessageContainer').removeClass 'active'
+			$("#timsChatMessageContainer#{userID}").addClass 'active'
+			$("#privateChannel#{userID}").addClass('active').removeClass 'notify'
+			openChannel = userID
+
+Close private channel
+
+		closePrivateChannel = (userID) ->
+			unless userID is 0
+				do $("#privateChannel#{userID}").remove
+				do $("#timsChatMessageContainer#{userID}").remove
+				
+			if $('#privateChannelsMenu li').length <= 1
+				$('#privateChannelsMenu').removeClass 'shown'
+			
+			openPrivateChannel 0
 
 Bind the given callback to the given event.
 
 		addListener = (event, callback) ->
 			return false unless events[event]?
-			
 			events[event].add callback
+			
+			true
 
 Remove the given callback from the given event.
 
 		removeListener = (event, callback) ->
 			return false unless events[event]?
-			
 			events[event].remove callback
+			
+			true
 
 And finally export the public methods and variables.
 
@@ -650,10 +825,12 @@ And finally export the public methods and variables.
 			insertText: insertText
 			freeTheFish: freeTheFish
 			join: join
+			closePrivateChannel: closePrivateChannel # TODO: REMOVE AFTER DEBUGGING
+			openPrivateChannel: openPrivateChannel # TODO: REMOVE AFTER DEBUGGING
 			listener:
 				add: addListener
 				remove: removeListener
-		
+				
 		window.be ?= {}
 		be.bastelstu ?= {}
 		window.be.bastelstu.Chat = Chat

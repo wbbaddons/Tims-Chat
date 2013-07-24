@@ -5,7 +5,7 @@
 	
 	{include file='headInclude' sandbox=false}
 	{include file='javascriptInclude' application='chat'}
-	<script type="text/javascript">
+	<script>
 		//<![CDATA[
 			(function ($, window) {
 				$(function(){
@@ -15,13 +15,14 @@
 						'chat.general.ban': '{lang}chat.general.ban{/lang}',
 						'chat.general.profile': '{lang}chat.general.profile{/lang}',
 						'chat.general.notify.title': '{lang}chat.general.notify.title{/lang}',
+						'chat.general.privateChannelTopic': '{lang}chat.general.privateChannelTopic{/lang}',
+						'chat.general.closePrivateChannel': '{lang}chat.general.closePrivateChannel{/lang}',
+						'chat.general.closeTopic': '{lang}chat.general.closeTopic{/lang}',
 						'chat.error.onMessageLoad': '{lang}chat.error.onMessageLoad{/lang}',
 						'chat.error.duplicateTab': '{lang}chat.error.duplicateTab{/lang}',
 						'chat.error.join': '{lang}chat.error.join{/lang}',
 						'chat.error.reload': '{lang}chat.error.reload{/lang}'
 					});
-					
-					{event name='beforeInit'}
 					
 					// Boot the chat
 					{if MODULE_SMILEY}WCF.TabMenu.init();{/if}
@@ -29,13 +30,18 @@
 					{capture assign='messageTemplate'}{include application='chat' file='message'}{/capture}
 					{capture assign='userTemplate'}{include application='chat' file='userListUser'}{/capture}
 					
+					var config = {
+						reloadTime: {@CHAT_RELOADTIME},
+						messageURL: '{link application="chat" controller="NewMessages"}{/link}',
+						installedCommands: [ {implode from=$commands item='command'}'{$command|encodeJS}'{/implode} ],
+						messageTypes: { {implode from=$messageTypes key='name' item='messageType'}'{$name|substr:5|encodeJS}': '{$messageType|encodeJS}'{/implode} }
+					};
+					
+					{event name='beforeInit'}
+					
 					be.bastelstu.Chat.init(
 						{$roomID},
-						{
-							reloadTime: {@CHAT_RELOADTIME},
-							messageURL: '{link application="chat" controller="NewMessages"}{/link}',
-							installedCommands: [ {implode from=$commands item='command'}'{$command|encodeJS}'{/implode} ]
-						}, 
+						config,
 						new WCF.Template('{literal}{if $newMessageCount}({#$newMessageCount}) {/if}{$title} - {/literal}{"chat.general.title"|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'),
 						new WCF.Template('{@$messageTemplate|encodeJS}'),
 						new WCF.Template('{@$userTemplate|encodeJS}')
@@ -54,36 +60,31 @@
 			})(jQuery, this);
 		//]]>
 	</script>
-	
-	<style type="text/css">
-		/*<![CDATA[*/
-		.timsChatMessage::before {
-			content: "";
-		}
-		
-		{assign var='type' value='\chat\data\message\Message::TYPE_'}
-		.timsChatMessage{$type|concat:'JOIN'|constant}::before {
-			content: "\f090";
-		}
-		
-		.timsChatMessage{$type|concat:'LEAVE'|constant}::before {
-			content: "\f08b";
-		}
-		
-		.timsChatMessage{$type|concat:'INFORMATION'|constant}::before {
-			content: "\f05a";
-		}
-		/*]]>*/
-	</style>
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
 	{capture assign='sidebar'}{include application='chat' file='sidebar'}{/capture}
 	{include file='header' sandbox=false sidebarOrientation='right'}
 	
-	<div id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">{$room->topic|language}</div>
+	<div id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">
+		<span class="icon icon16 icon-remove jsTopicCloser jsTooltip" title="{lang}chat.general.closeTopic{/lang}"></span>
+		<span class="topic">{$room->topic|language}</span>
+	</div>
 	
-	<div id="timsChatMessageContainer" class="timsChatMessageContainer marginTop container active">
+	<div id="privateChannelsMenu">
+		<ul>
+			<li id="privateChannel0" class="privateChannel active" data-private-channel-id="0">
+				<span class="userAvatar framed small">
+					<span class="icon icon16 icon-comment-alt jsTooltip" title="{lang}chat.general.room{/lang}"></span>
+				</span>
+				<span class="userAvatar framed large">
+					<span class="icon icon32 icon-comment-alt jsTooltip" title="{lang}chat.general.room{/lang}"></span>
+				</span>
+			</li>
+		</ul>
+	</div>
+	
+	<div id="timsChatMessageContainer0" class="timsChatMessageContainer marginTop container active" data-user-id="0">
 		<p class="error noJsOnly" style="display: none;">{lang}chat.general.noJs{/lang}</p>
 		<ul>
 		</ul>
@@ -93,7 +94,7 @@
 		<fieldset>
 			<dl class="wide" id="timsChatInputContainer">
 				<dd>
-					<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" required="required" placeholder="{lang}chat.general.submit.default{/lang}" />
+					<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" placeholder="{lang}chat.general.submit.default{/lang}" />
 					<small class="innerError" style="display: none;">Lorem ipsum dolor sit amet.</small>
 				</dd>
 			</dl>
@@ -105,7 +106,7 @@
 		{include file='messageFormSmilies' wysiwygSelector=''}
 	{/if}
 	
-	<nav id="timsChatOptions" class="marginTop buttonGroupNavigation">
+	<nav id="timsChatOptions" class="marginTop jsMobileNavigation buttonGroupNavigation">
 		<span class="invisible">{lang}chat.general.controls{/lang}</span>
 		<ul class="smallButtons buttonGroup">
 			<li><a id="timsChatAutoscroll" accesskey="d" class="button active timsChatToggle jsTooltip" title="{lang}chat.general.scroll{/lang}" data-status="1"><span class="icon icon16 icon-arrow-down"></span><span class="invisible">{lang}chat.general.scroll{/lang}</span></a></li>{*

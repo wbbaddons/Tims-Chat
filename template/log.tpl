@@ -4,7 +4,7 @@
 		</ul>
 	</div>
 </div>
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 		var log = new be.bastelstu.Chat.Log(chat);
 		log.handleMessages([

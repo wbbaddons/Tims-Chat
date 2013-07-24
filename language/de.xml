@@ -11,10 +11,32 @@
 		<item name="chat.acp.room.delete.sure"><![CDATA[Wollen Sie den Raum „{$chatRoom}“ wirklich löschen?]]></item>
 	</category>
 	
+	<category name="chat.acp.suspension">
+		<item name="chat.acp.suspension.list"><![CDATA[Sanktionen]]></item>
+		<item name="chat.acp.suspension.type"><![CDATA[Art der Sanktion]]></item>
+		<item name="chat.acp.suspension.issuer"><![CDATA[Aussteller]]></item>
+		<item name="chat.acp.suspension.displayRevoked"><![CDATA[Abgelaufene Sanktionen anzeigen]]></item>
+		<item name="chat.acp.suspension.reason"><![CDATA[Grund]]></item>
+		<item name="chat.acp.suspension.revoked"><![CDATA[Zurückziehen]]></item>
+		<item name="chat.acp.suspension.revokedBy"><![CDATA[Zurückgezogen von {$suspension->revokerUsername}]]></item>
+	</category>
+	
 	<category name="chat.acp.menu">
 		<item name="chat.acp.menu.link"><![CDATA[Chat]]></item>
 		<item name="chat.acp.menu.link.room.list"><![CDATA[Chaträume auflisten]]></item>
 		<item name="chat.acp.menu.link.room.add"><![CDATA[Chatraum hinzufügen]]></item>
+		<item name="chat.acp.menu.link.suspension.list"><![CDATA[Sanktionen auflisten]]></item>
+	</category>
+	
+	<category name="wcf.acl.option">
+		<item name="wcf.acl.option.category.be.bastelstu.chat.room.user"><![CDATA[Benutzerrechte]]></item>
+		<item name="wcf.acl.option.category.be.bastelstu.chat.room.mod"><![CDATA[Moderative Rechte]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.user.canEnter"><![CDATA[Kann Raum betreten]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.user.canWrite"><![CDATA[Kann schreiben]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canAlwaysEnter"><![CDATA[Kann Raum immer betreten]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canAlwaysWrite"><![CDATA[Kann immer schreiben]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canMute"><![CDATA[Kann knebeln]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canBan"><![CDATA[Kann bannen]]></item>
 	</category>
 	
 	<category name="wcf.acp.group">
@@ -24,12 +46,24 @@
 		<item name="wcf.acp.group.option.user.chat.canTempRoom"><![CDATA[Kann temporäre Räume erstellen]]></item>
 		
 		<item name="wcf.acp.group.option.category.mod.chat"><![CDATA[Chat]]></item>
-		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter"><![CDATA[Kann jeden Raum betreten]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter"><![CDATA[Kann Räume immer betreten]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter.description"><![CDATA[Setzt Banns außer Kraft.]]></item>
-		<item name="wcf.acp.group.option.mod.chat.canAlwaysWrite"><![CDATA[Kann in jedem Raum schreiben]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysWrite"><![CDATA[Kann immer schreiben]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canAlwaysWrite.description"><![CDATA[Setzt Knebel außer Kraft.]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canRestore"><![CDATA[Kann User zurücksetzen]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canRestore.description"><![CDATA[Setzt Nutzerdaten (Farbe) zurück.]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canBan"><![CDATA[Kann bannen]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canBan.description"><![CDATA[Impliziert „Kann Chat immer betreten“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canMute"><![CDATA[Kann knebeln]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canMute.description"><![CDATA[Impliziert „Kann immer schreiben“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGban"><![CDATA[Kann global bannen]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGban.description"><![CDATA[Impliziert „Kann bannen“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGmute"><![CDATA[Kann global knebeln]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGmute.description"><![CDATA[Impliziert „Kann knebeln“]]></item>
+		
+		<item name="wcf.acp.group.option.category.admin.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions"><![CDATA[Kann Sanktionen verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions.description"><![CDATA[Impliziert „Kann bannen“, „Kann knebeln“, „Kann global bannen“, „Kann global knebeln“ und gegenbenenfalls weitere Rechte.]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -59,7 +93,7 @@
 	</category>
 	
 	<category name="chat.error">
-		<item name="chat.error.notFound"><![CDATA[Der Befehl wurde nicht gefunden.]]></item>
+		<item name="chat.error.notFound"><![CDATA[Der Befehl „{$exception->getCommand()}“ wurde nicht gefunden.]]></item>
 		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer „{$exception->getUsername()}“ wurde nicht gefunden.]]></item>
 		<item name="chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
 		<item name="chat.error.duplicateTab"><![CDATA[Der Chat wurde in einem weiteren Tab geöffnet.]]></item>
@@ -68,6 +102,9 @@
 	</category>
 	
 	<category name="chat.general">
+		<item name="chat.general.expires"><![CDATA[Ablaufzeitpunkt]]></item>
+		<item name="chat.general.time"><![CDATA[Datum]]></item>
+				
 		<item name="chat.general.title"><![CDATA[{lang}chat.header.menu.chat{/lang}]]></item>
 		<item name="chat.general.protocol"><![CDATA[Protokoll]]></item>
 		
@@ -100,6 +137,10 @@
 		<item name="chat.general.information"><![CDATA[Information]]></item>
 		<item name="chat.general.information.chatUpdate"><![CDATA[Der Chat wurde aktualisiert. Bitte laden Sie die Seite neu, da es sonst zu Fehlern kommen kann.]]></item>
 		<item name="chat.general.information.suspension"><![CDATA[{lang}chat.suspension.{$suspension->type}{/lang} ({if $room}{$room}{else}{lang}chat.room.global{/lang}{/if})]]></item>
+		
+		<item name="chat.general.privateChannelTopic"><![CDATA[{literal}Sie befinden sich in einem privaten Kanal mit „{$username}“, um diesen zu schließen, klicken Sie einfach auf das Kreuz rechts.{/literal}]]></item>
+		<item name="chat.general.closePrivateChannel"><![CDATA[Privaten Kanal schließen]]></item>
+		<item name="chat.general.closeTopic"><![CDATA[Thema ausblenden]]></item>
 	</category>
 	
 	<category name="chat.header">
@@ -117,21 +158,21 @@
 		<item name="chat.message.4"><![CDATA[ist jetzt wieder da.]]></item>
 		<!-- 5 = TYPE_MODERATE -->
 		<item name="chat.message.5.restore"><![CDATA[hat {@$link} zurückgesetzt.]]></item>
-		<item name="chat.message.5.mute"><![CDATA[hat {@$link} bis {@$expires|plainTime} geknebelt.]]></item>
-		<item name="chat.message.5.ban"><![CDATA[hat {@$link} bis {@$expires|plainTime} gebannt.]]></item>
-		<item name="chat.message.5.gmute"><![CDATA[hat {@$link} bis {@$expires|plainTime} global geknebelt.]]></item>
-		<item name="chat.message.5.gban"><![CDATA[hat {@$link} bis {@$expires|plainTime} global gebannt.]]></item>
+		<item name="chat.message.5.mute"><![CDATA[hat {@$link} bis {@$expires|plainTime} geknebelt{if !$reason|empty}: {$reason}{else}.{/if}]]></item>
+		<item name="chat.message.5.ban"><![CDATA[hat {@$link} bis {@$expires|plainTime} gebannt{if !$reason|empty}: {$reason}{else}.{/if}]]></item>
+		<item name="chat.message.5.gmute"><![CDATA[hat {@$link} bis {@$expires|plainTime} global geknebelt{if !$reason|empty}: {$reason}{else}.{/if}]]></item>
+		<item name="chat.message.5.gban"><![CDATA[hat {@$link} bis {@$expires|plainTime} global gebannt{if !$reason|empty}: {$reason}{else}.{/if}]]></item>
 		<item name="chat.message.5.unmute"><![CDATA[hat {@$link} entknebelt.]]></item>
 		<item name="chat.message.5.unban"><![CDATA[hat {@$link} entbannt.]]></item>
-		<item name="chat.message.5.gunmute"><![CDATA[hat {@$link} global entknebelt.]]></item>
-		<item name="chat.message.5.gunban"><![CDATA[hat {@$link} global entbannt.]]></item>
+		<item name="chat.message.5.ungmute"><![CDATA[hat {@$link} global entknebelt.]]></item>
+		<item name="chat.message.5.ungban"><![CDATA[hat {@$link} global entbannt.]]></item>
 		
 		<item name="chat.message.color.success"><![CDATA[Die Farbe wurde erfolgreich geändert.]]></item>
 	</category>
 	
 	<category name="chat.suspension">
-		<item name="chat.suspension.1"><![CDATA[Knebel]]></item>
-		<item name="chat.suspension.2"><![CDATA[Bann]]></item>
+		<item name="chat.suspension.mute"><![CDATA[Knebel]]></item>
+		<item name="chat.suspension.ban"><![CDATA[Bann]]></item>
 	</category>
 	
 	<!-- I18N Values -->

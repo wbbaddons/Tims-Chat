@@ -106,10 +106,7 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 		parent::show();
 		
 		@header('Content-type: application/json');
-		// enable gzip compression
-		if (HTTP_ENABLE_GZIP && HTTP_GZIP_LEVEL > 0 && HTTP_GZIP_LEVEL < 10 && !defined('HTTP_DISABLE_GZIP')) {
-			\wcf\util\HeaderUtil::compressOutput();
-		}
+		\wcf\util\HeaderUtil::sendNoCacheHeaders();
 		
 		$json = array('users' => array(), 'messages' => array());
 		

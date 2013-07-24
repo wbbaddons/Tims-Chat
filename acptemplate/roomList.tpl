@@ -1,6 +1,6 @@
 {include file='header' pageTitle='chat.acp.room.list'}
 	
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('\\chat\\data\\room\\RoomAction', $('.chatRoomRow'));

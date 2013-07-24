@@ -24,6 +24,8 @@ class MessageList extends \wcf\data\DatabaseObjectList {
 	 * @return	array<\chat\data\message\Message>
 	 */
 	public static function getNewestMessages(\chat\data\room\Room $room, $number = CHAT_LASTMESSAGES) {
+		if ($number === 0) return array();
+		
 		$messageList = new static();
 		$messageList->sqlOrderBy = "message.messageID DESC";
 		$messageList->sqlLimit = $number;

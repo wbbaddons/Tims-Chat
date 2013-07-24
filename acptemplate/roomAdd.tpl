@@ -1,7 +1,7 @@
 {include file='header' pageTitle='chat.acp.room.'|concat:$action}
 
-<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.ACL.js"></script>
-<script type="text/javascript">
+<script src="{@$__wcf->getPath('wcf')}js/WCF.ACL.js"></script>
+<script>
 	//<![CDATA[
 	$(function() {
 		new WCF.ACL.List($('#groupPermissions'), {@$objectTypeID}, ''{if $roomID|isset}, {@$roomID}{/if});

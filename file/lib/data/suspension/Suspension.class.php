@@ -22,8 +22,8 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	 */
 	protected static $databaseTableIndexName = 'suspensionID';
 	
-	const TYPE_MUTE = 1;
-	const TYPE_BAN = 2;
+	const TYPE_MUTE = 'mute';
+	const TYPE_BAN = 'ban';
 	
 	/**
 	 * Returns whether the suspension still is valid.
@@ -32,6 +32,36 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	 */
 	public function isValid() {
 		return $this->expires > TIME_NOW;
+	}
+	
+	/**
+	 * Returns whether the given user may view this suspension.
+	 * 
+	 * @param	\wcf\data\user\User	$user
+	 * @return	boolean
+	 */
+	public function isVisible($user = null) {
+		if ($user === null) $user = WCF::getUser();
+		$user = new \wcf\data\user\UserProfile($user);
+		$ph = new \chat\system\permission\PermissionHandler($user->getDecoratedObject());
+		
+		if ($user->getPermission('admin.chat.canManageSuspensions')) return true;
+		if ($user->getPermission('mod.chat.canG'.$this->type)) return true;
+		if (!$this->roomID) return false;
+		if ($ph->getPermission($this->getRoom(), 'mod.can'.ucfirst($this->type))) return true;
+		
+		return false;
+	}
+	
+	/**
+	 * Returns the room of this suspension.
+	 * 
+	 * @return	\chat\data\room\Room
+	 */
+	public function getRoom() {
+		if (!$this->roomID) return new \chat\data\room\Room(null, array('roomID' => null));
+		
+		return \chat\data\room\RoomCache::getInstance()->getRoom($this->roomID);
 	}
 	
 	/**
@@ -53,15 +83,17 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 			if ($suspensions === false) throw new \wcf\system\exception\SystemException();
 		}
 		catch (\wcf\system\exception\SystemException $e) {
+			$condition = new \wcf\system\database\util\PreparedStatementConditionBuilder();
+			$condition->add('userID = ?', array($user->userID));
+			$condition->add('expires > ?', array(TIME_NOW));
+			
 			$sql = "SELECT
 					*
 				FROM
 					chat".WCF_N."_suspension
-				WHERE
-						userID = ?
-					AND	expires > ?";
+				".$condition;
 			$stmt = WCF::getDB()->prepareStatement($sql);
-			$stmt->execute(array($user->userID, TIME_NOW));
+			$stmt->execute($condition->getParameters());
 			
 			$suspensions = array();
 			while ($suspension = $stmt->fetchObject('\chat\data\suspension\Suspension')) {
@@ -76,7 +108,7 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	
 	/**
 	 * Returns the appropriate suspension for user, room and type.
-	 * Returns false if no suspension was found.
+	 * Returns false if no active suspension was found.
 	 * 
 	 * @param	\wcf\data\user\User	$user
 	 * @param	\chat\data\room\Room	$room
@@ -84,23 +116,21 @@ class Suspension extends \chat\data\CHATDatabaseObject {
 	 * @return	\chat\data\suspension\Suspension
 	 */
 	public static function getSuspensionByUserRoomAndType(\wcf\data\user\User $user, \chat\data\room\Room $room, $type) {
+		$condition = new \wcf\system\database\util\PreparedStatementConditionBuilder();
+		$condition->add('userID = ?', array($user->userID));
+		$condition->add('type = ?', array($type));
+		$condition->add('expires > ?', array(TIME_NOW));
+		if ($room->roomID) $condition->add('roomID = ?', array($room->roomID));
+		else $condition->add('roomID IS NULL');
+		
 		$sql = "SELECT
 				*
 			FROM
 				chat".WCF_N."_suspension
-			WHERE	
-					userID = ?
-				AND	type = ?";
-		
-		$parameter = array($user->userID, $type);
-		if ($room->roomID) {
-			$sql .= " AND roomID = ?";
-			$parameter[] = $room->roomID;
-		}
-		else $sql .= " AND roomID IS NULL";
+			".$condition;
 		
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($parameter);
+		$statement->execute($condition->getParameters());
 		$row = $statement->fetchArray();
 		if (!$row) return false;
 		
