@@ -15,6 +15,9 @@
 						'chat.general.ban': '{lang}chat.general.ban{/lang}',
 						'chat.general.profile': '{lang}chat.general.profile{/lang}',
 						'chat.general.notify.title': '{lang}chat.general.notify.title{/lang}',
+						'chat.general.privateChannelTopic': '{lang}chat.general.privateChannelTopic{/lang}',
+						'chat.general.closePrivateChannel': '{lang}chat.general.closePrivateChannel{/lang}',
+						'chat.general.closeTopic': '{lang}chat.general.closeTopic{/lang}',
 						'chat.error.onMessageLoad': '{lang}chat.error.onMessageLoad{/lang}',
 						'chat.error.duplicateTab': '{lang}chat.error.duplicateTab{/lang}',
 						'chat.error.join': '{lang}chat.error.join{/lang}',
@@ -71,7 +74,7 @@
 	{include file='header' sandbox=false sidebarOrientation='right'}
 	
 	<div id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">
-		<span class="icon icon16 icon-remove jsTopicCloser"></span>
+		<span class="icon icon16 icon-remove jsTopicCloser jsTooltip" title="{lang}chat.general.closeTopic{/lang}"></span>
 		<span class="topic">{$room->topic|language}</span>
 	</div>
 	
@@ -88,7 +91,7 @@
 		</ul>
 	</div>
 	
-	<div id="timsChatMessageContainer0" class="timsChatMessageContainer marginTop container active">
+	<div id="timsChatMessageContainer0" class="timsChatMessageContainer marginTop container active" data-user-id="0">
 		<p class="error noJsOnly" style="display: none;">{lang}chat.general.noJs{/lang}</p>
 		<ul>
 		</ul>

@@ -36,7 +36,7 @@ exposed by a function if necessary.
 		userList =
 			current: {}
 			allTime: {}
-		
+		currentRoom = {}
 		
 		errorVisible = false
 		inputErrorHidingTimer = null
@@ -279,8 +279,11 @@ Toggle checkboxes.
 Hide topic container.
 
 			$('.jsTopicCloser').on 'click', ->
-				$('#timsChatTopic').addClass 'hidden'
-
+				if $('.timsChatMessageContainer.active').data('userID') is 0
+					$('#timsChatTopic').addClass 'hidden'
+				else
+					closePrivateChannel $('.timsChatMessageContainer.active').data('userID')
+					
 Visibly mark the message once the associated checkbox is checked.
 
 			$(document).on 'click', '.timsChatMessage :checkbox', (event) ->
@@ -450,10 +453,10 @@ Insert the given messages into the chat stream.
 			$('.timsChatMessageContainer.active').trigger 'scroll'
 			
 			for message in messages
+				message.isInPrivateChannel = (String(message.type) is v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") or $.wcfIsset("timsChatMessageContainer#{message.sender}"))
+				
 				events.newMessage.fire message
 				
-				message.isInPrivateChannel = (String(message.type) is v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") or $.wcfIsset("timsChatMessageContainer#{message.sender}"))
-
 				createNewMessage = yes
 				if  $('.timsChatMessage:last-child .text').is('ul') and lastMessage isnt null and lastMessage.type in [ 0, 7 ]
 					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver and lastMessage.isInPrivateChannel is message.isInPrivateChannel
@@ -598,6 +601,17 @@ Send out notifications for the given `message`. The number of unread messages wi
 			if scrollUpNotifications
 				$('.timsChatMessageContainer.active').addClass 'notification'
 			
+			if message.isInPrivateChannel
+				if message.sender is WCF.User.userID
+					privateChannelID = message.receiver
+				else
+					privateChannelID = message.sender
+				
+				if $('.timsChatMessageContainer.active').data('userID') isnt privateChannelID
+					$("#privateChannel#{privateChannelID}").addClass 'notify'
+			else if $('.timsChatMessageContainer.active').data('userID') isnt 0
+				$("#privateChannel0").addClass 'notify'
+				
 			return if isActive or $('#timsChatNotify').data('status') is 0
 			
 			document.title = v.titleTemplate.fetch
@@ -693,17 +707,19 @@ Joins a room.
 					loading = false
 					
 					$('#timsChatTopic').removeClass 'hidden'
+					currentRoom = data.returnValues
+					currentRoom.roomID = roomID
 					
-					$('#timsChatTopic > .topic').text data.returnValues.topic
-					if data.returnValues.topic.trim() is ''
+					$('#timsChatTopic > .topic').text currentRoom.topic
+					if currentRoom.topic.trim() is ''
 						$('#timsChatTopic').addClass 'empty'
 					else
 						$('#timsChatTopic').removeClass 'empty'
 					
 					$('.timsChatMessage').addClass 'unloaded'
 					
-					document.title = v.titleTemplate.fetch data.returnValues
-					handleMessages data.returnValues.messages
+					document.title = v.titleTemplate.fetch currentRoom
+					handleMessages currentRoom.messages
 					do getMessages
 					do refreshRoomList
 				failure: ->
@@ -721,6 +737,7 @@ Open private channel
 				
 				div = $ '<div>'
 				div.attr 'id', "timsChatMessageContainer#{userID}"
+				div.data 'userID', userID
 				div.addClass 'timsChatMessageContainer'
 				div.addClass 'marginTop'
 				div.addClass 'container'
@@ -729,6 +746,10 @@ Open private channel
 			
 			$('.privateChannel').removeClass 'active'
 			if userID isnt 0
+				$('#timsChatTopic').removeClass 'hidden empty'
+				$('#timsChatTopic > .topic').text WCF.Language.get 'chat.general.privateChannelTopic', {username: userList.allTime[userID].username}
+				$('#timsChatTopic > .jsTopicCloser').attr 'title', WCF.Language.get 'chat.general.closePrivateChannel'
+				
 				unless $.wcfIsset "privateChannel#{userID}"
 					li = $ '<li>'
 					li.attr 'id', "privateChannel#{userID}"
@@ -751,13 +772,20 @@ Open private channel
 					
 					$('#privateChannelsMenu ul').append li
 					
-					do WCF.DOMNodeInsertedHandler.execute
-					
 				$('#privateChannelsMenu').addClass 'shown'
-				
+			else
+				$('#timsChatTopic > .topic').text currentRoom.topic
+				$('#timsChatTopic > .jsTopicCloser').attr 'title', WCF.Language.get 'chat.general.closeTopic'
+				if currentRoom.topic.trim() is ''
+					$('#timsChatTopic').addClass 'empty'
+				else
+					$('#timsChatTopic').removeClass 'empty'
+			
+			do WCF.DOMNodeInsertedHandler.execute
+			
 			$('.timsChatMessageContainer').removeClass 'active'
 			$("#timsChatMessageContainer#{userID}").addClass 'active'
-			$("#privateChannel#{userID}").addClass 'active'
+			$("#privateChannel#{userID}").addClass('active').removeClass 'notify'
 			openChannel = userID
 
 Close private channel
