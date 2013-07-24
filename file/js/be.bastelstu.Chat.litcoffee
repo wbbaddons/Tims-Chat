@@ -38,6 +38,7 @@ exposed by a function if necessary.
 		inputErrorHidingTimer = null
 
 		lastMessage = null
+		openChannel = 0
 
 		remainingFailures = 3
 
@@ -122,6 +123,9 @@ and afterwards sent to the server by an AJAX request.
 				$('#timsChatInput').val('').focus().keyup()
 				
 				return false if text.length is 0
+				
+				unless openChannel is 0
+					text = "/whisper #{$("#timsChatMessageContainer#{openChannel}").data 'username'}, #{text}"
 				
 				# Free the fish!
 				do freeTheFish if text.toLowerCase() is '/free the fish'
@@ -215,8 +219,8 @@ Clear the chat by removing every single message once the clear button is `clicke
 
 			$('#timsChatClear').click (event) ->
 				do event.preventDefault
-				do $('.timsChatMessage').remove
-				$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop 'scrollHeight'
+				do $('.timsChatMessageContainer.active .timsChatMessage').remove
+				$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
 
 Handle toggling of the toggleable buttons.
 
@@ -277,9 +281,9 @@ Scroll down when autoscroll is being activated.
 
 			$('#timsChatAutoscroll').click (event) ->
 				if $('#timsChatAutoscroll').data 'status'
-					$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop 'scrollHeight'
+					$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
 			
-			$('#timsChatMessageContainer').on 'scroll', (event) ->
+			$('.timsChatMessageContainer.active').on 'scroll', (event) ->
 				element = $ @
 				scrollTop = element.scrollTop()
 				scrollHeight = element.prop 'scrollHeight'
@@ -431,14 +435,16 @@ Prevent loading messages in parallel.
 Insert the given messages into the chat stream.
 
 		handleMessages = (messages) ->
-			$('#timsChatMessageContainer').trigger 'scroll'
+			$('.timsChatMessageContainer.active').trigger 'scroll'
 			
 			for message in messages
 				events.newMessage.fire message
 				
+				message.isInPrivateChannel = (String(message.type) is v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") or $.wcfIsset("timsChatMessageContainer#{message.sender}"))
+
 				createNewMessage = yes
 				if  $('.timsChatMessage:last-child .text').is('ul') and lastMessage isnt null and lastMessage.type in [ 0, 7 ]
-					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver
+					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver and lastMessage.isInPrivateChannel is message.isInPrivateChannel
 						createNewMessage = no
 				
 				if createNewMessage
@@ -453,18 +459,30 @@ Insert the given messages into the chat stream.
 					li.addClass "user#{message.sender}"
 					li.addClass 'ownMessage' if message.sender is WCF.User.userID
 					li.append output
-				
-					li.appendTo $ '#timsChatMessageContainer > ul'
+					
+					if message.isInPrivateChannel and message.sender is WCF.User.userID
+						li.appendTo $ "#timsChatMessageContainer#{message.receiver} > ul"
+					else if message.isInPrivateChannel
+						li.appendTo $ "#timsChatMessageContainer#{message.sender} > ul"
+					else
+						li.appendTo $ '#timsChatMessageContainer0 > ul'
 				else
 					message.isFollowUp = yes
 					output = v.messageTemplate.fetch
 						message: message
 						messageTypes: v.config.messageTypes
 					
-					$('.timsChatMessage:last-child .text').append $(output).find('.text li:last-child')
+					if message.isInPrivateChannel and message.sender is WCF.User.userID
+						messageContainerID = message.receiver
+					else if message.isInPrivateChannel
+						messageContainerID = message.sender
+					else
+						messageContainerID = 0
+
+					$("#timsChatMessageContainer#{messageContainerID} .timsChatMessage:last-child .text").append $(output).find('.text li:last-child')
 				
 				lastMessage = message
-			$('#timsChatMessageContainer').scrollTop $('#timsChatMessageContainer').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
+			$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
 
 Rebuild the userlist based on the given `users`.
 
@@ -472,60 +490,64 @@ Rebuild the userlist based on the given `users`.
 			foundUsers = { }
 			
 			for user in users
-				id = "timsChatUser#{user.userID}"
+				do (user) ->
+					id = "timsChatUser#{user.userID}"
 
 Move the user to the new position if he was found in the old list.
 
-				if $.wcfIsset id
-					console.log "Moving User: '#{user.username}'"
-					element = $("##{id}").detach()
-					
-					if user.awayStatus?
-						element.addClass 'away'
-						element.attr 'title', user.awayStatus
-					else
-						element.removeClass 'away'
-						element.removeAttr 'title'
-						element.data 'tooltip', ''
-					
-					if user.suspended
-						element.addClass 'suspended'
-					else
-						element.removeClass 'suspended'
-					
-					$('#timsChatUserList > ul').append element
+					if $.wcfIsset id
+						console.log "Moving User: '#{user.username}'"
+						element = $("##{id}").detach()
+						
+						if user.awayStatus?
+							element.addClass 'away'
+							element.attr 'title', user.awayStatus
+						else
+							element.removeClass 'away'
+							element.removeAttr 'title'
+							element.data 'tooltip', ''
+						
+						if user.suspended
+							element.addClass 'suspended'
+						else
+							element.removeClass 'suspended'
+						
+						$('#timsChatUserList > ul').append element
 
 Build HTML of the user and insert it into the list, if the users was not found in the chat before.
 
-				else
-					console.log "Inserting User: '#{user.username}'"
-					li = $ '<li></li>'
-					li.attr 'id', id
-					li.addClass 'timsChatUser'
-					li.addClass 'jsTooltip'
-					li.addClass 'dropdown'
-					li.addClass 'you' if user.userID is WCF.User.userID
-					li.addClass 'suspended' if user.suspended
-					if user.awayStatus?
-						li.addClass 'away'
-						li.attr 'title', user.awayStatus
-					li.data 'username', user.username
+					else
+						console.log "Inserting User: '#{user.username}'"
+						li = $ '<li></li>'
+						li.attr 'id', id
+						li.addClass 'timsChatUser'
+						li.addClass 'jsTooltip'
+						li.addClass 'dropdown'
+						li.addClass 'you' if user.userID is WCF.User.userID
+						li.addClass 'suspended' if user.suspended
+						if user.awayStatus?
+							li.addClass 'away'
+							li.attr 'title', user.awayStatus
+						li.data 'username', user.username
+						
+						li.append v.userTemplate.fetch user
+						
+						menu = $ '<ul></ul>'
+						unless user.userID is WCF.User.userID
+							menu.append $("<li><a>#{WCF.Language.get('chat.general.query')}</a></li>").click -> openPrivateChannel user.userID
+							menu.append $ "<li><a>#{WCF.Language.get('chat.general.kick')}</a></li>"
+							menu.append $ "<li><a>#{WCF.Language.get('chat.general.ban')}</a></li>"
+							menu.append $ """<li><a href="#{user.link}">#{WCF.Language.get('chat.general.profile')}</a></li>"""
+						
+						events.userMenu.fire user, menu
+						
+						if menu.find('li').length
+							li.append menu
+							menu.addClass 'dropdownMenu'
+						
+						li.appendTo $ '#timsChatUserList > ul'
 					
-					li.append v.userTemplate.fetch user
-					
-					menu = $ '<ul></ul>'
-					menu.addClass 'dropdownMenu'
-					menu.append $ "<li><a>#{WCF.Language.get('chat.general.query')}</a></li>"
-					menu.append $ "<li><a>#{WCF.Language.get('chat.general.kick')}</a></li>"
-					menu.append $ "<li><a>#{WCF.Language.get('chat.general.ban')}</a></li>"
-					menu.append $ """<li><a href="#{user.link}">#{WCF.Language.get('chat.general.profile')}</a></li>"""
-					
-					events.userMenu.fire user, menu
-					
-					li.append menu
-					li.appendTo $ '#timsChatUserList > ul'
-				
-				foundUsers[id] = true
+					foundUsers[id] = true
 
 Remove all users that left the chat.
 
@@ -559,7 +581,7 @@ Send out notifications for the given `message`. The number of unread messages wi
 
 		notify = (message) ->
 			if scrollUpNotifications
-				$('#timsChatMessageContainer').addClass 'notification'
+				$('.timsChatMessageContainer.active').addClass 'notification'
 			
 			return if isActive or $('#timsChatNotify').data('status') is 0
 			
@@ -672,6 +694,31 @@ Joins a room.
 				failure: ->
 					showError WCF.Language.get 'chat.error.join'
 
+Open private channel
+	
+		openPrivateChannel = (userID) ->
+			unless $.wcfIsset "timsChatMessageContainer#{userID}"
+				return unless $.wcfIsset "timsChatUser#{userID}"
+				
+				div = $('<div>')
+				div.attr 'id', "timsChatMessageContainer#{userID}"
+				div.addClass 'timsChatMessageContainer'
+				div.addClass 'marginTop'
+				div.addClass 'container'
+				div.data 'username', $("#timsChatUser#{userID}").data 'username'
+				div.wrapInner '<ul>'
+				$('#timsChatMessageContainer0').after div
+			
+			$('.timsChatMessageContainer').removeClass 'active'
+			$("#timsChatMessageContainer#{userID}").addClass 'active'
+			openChannel = userID
+
+Close private channel
+
+		closePrivateChannel = (userID) ->
+			do $("#timsChatMessageContainer#{userID}").remove unless userID is 0
+			openPrivateChannel 0
+
 Bind the given callback to the given event.
 
 		addListener = (event, callback) ->
@@ -697,6 +744,8 @@ And finally export the public methods and variables.
 			insertText: insertText
 			freeTheFish: freeTheFish
 			join: join
+			closePrivateChannel: closePrivateChannel # TODO: REMOVE AFTER DEBUGGING
+			openPrivateChannel: openPrivateChannel # TODO: REMOVE AFTER DEBUGGING
 			listener:
 				add: addListener
 				remove: removeListener
