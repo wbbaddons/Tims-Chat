@@ -39,6 +39,7 @@
 					<ul>
 						<li><a href="http://www.wbbaddons.de/user/2020-noone/"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>-noone-</a></li>
 						<li><a href="https://github.com/Gabbid"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Gabi</a></li>
+						<li>Alexandra Glass</li>
 						<li><a href="https://github.com/Leon-"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Stefan Hahn</a></li>
 						<li><a href="http://www.wbbaddons.de"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Martin Schwendowius</a></li>
 					</ul>
