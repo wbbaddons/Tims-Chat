@@ -31,7 +31,7 @@
 		</acpmenuitem>
 		
 		<acpmenuitem name="chat.acp.menu.link.log">
-			<controller><![CDATA[chat\acp\page\MessageLogListPage]]></controller>
+			<controller><![CDATA[chat\acp\page\MessageLogPage]]></controller>
 			<parent>chat.acp.menu.link.chat</parent>
 			<permissions>admin.chat.canReadLog</permissions>
 			<showorder>4</showorder>
