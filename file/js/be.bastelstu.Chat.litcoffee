@@ -33,13 +33,17 @@ exposed by a function if necessary.
 		newMessageCount = 0
 		scrollUpNotifications = off
 		chatSession = Date.now()
-
+		userList =
+			current: {}
+			allTime: {}
+		currentRoom = {}
+		
 		errorVisible = false
 		inputErrorHidingTimer = null
 
 		lastMessage = null
 		openChannel = 0
-
+		
 		remainingFailures = 3
 
 		events =
@@ -113,6 +117,11 @@ Insert the appropriate smiley code into the input when a smiley is clicked.
 			$('#smilies').on 'click', 'img', ->
 				insertText " #{$(@).attr('alt')} "
 
+Handle private channel menu
+
+			$('#privateChannelsMenu').on 'click', '.privateChannel', ->
+				openPrivateChannel $(@).data 'privateChannelID'
+
 Handle submitting the form. The message will be validated by some basic checks, passed to the `submit` eventlisteners
 and afterwards sent to the server by an AJAX request.
 
@@ -125,7 +134,7 @@ and afterwards sent to the server by an AJAX request.
 				return false if text.length is 0
 				
 				unless openChannel is 0
-					text = "/whisper #{$("#timsChatMessageContainer#{openChannel}").data 'username'}, #{text}"
+					text = "/whisper #{userList.allTime[openChannel].username}, #{text}"
 				
 				# Free the fish!
 				do freeTheFish if text.toLowerCase() is '/free the fish'
@@ -190,7 +199,10 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 						toComplete = '/' + commands[autocomplete.offset++ % commands.length] + ' ' if commands.length isnt 0
 					else
 						regex = new RegExp "^#{WCF.String.escapeRegExp toComplete}", "i"
-						users = (username for user in $('.timsChatUser') when regex.test(username = $(user).data('username')))
+						
+						users = [ ]
+						for userID, user of userList.current
+							users.push user.username if regex.test user.username
 						
 						toComplete = users[autocomplete.offset++ % users.length] + ', ' if users.length isnt 0
 					
@@ -267,8 +279,11 @@ Toggle checkboxes.
 Hide topic container.
 
 			$('.jsTopicCloser').on 'click', ->
-				$('#timsChatTopic').addClass 'hidden'
-
+				if $('.timsChatMessageContainer.active').data('userID') is 0
+					$('#timsChatTopic').addClass 'hidden'
+				else
+					closePrivateChannel $('.timsChatMessageContainer.active').data('userID')
+					
 Visibly mark the message once the associated checkbox is checked.
 
 			$(document).on 'click', '.timsChatMessage :checkbox', (event) ->
@@ -438,10 +453,10 @@ Insert the given messages into the chat stream.
 			$('.timsChatMessageContainer.active').trigger 'scroll'
 			
 			for message in messages
+				message.isInPrivateChannel = (String(message.type) is v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") or $.wcfIsset("timsChatMessageContainer#{message.sender}"))
+				
 				events.newMessage.fire message
 				
-				message.isInPrivateChannel = (String(message.type) is v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") or $.wcfIsset("timsChatMessageContainer#{message.sender}"))
-
 				createNewMessage = yes
 				if  $('.timsChatMessage:last-child .text').is('ul') and lastMessage isnt null and lastMessage.type in [ 0, 7 ]
 					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver and lastMessage.isInPrivateChannel is message.isInPrivateChannel
@@ -488,9 +503,12 @@ Rebuild the userlist based on the given `users`.
 
 		handleUsers = (users) ->
 			foundUsers = { }
-			
+			userList.current = { }
+
 			for user in users
 				do (user) ->
+					userList.current[user.userID] = userList.allTime[user.userID] = user
+					
 					id = "timsChatUser#{user.userID}"
 
 Move the user to the new position if he was found in the old list.
@@ -583,6 +601,17 @@ Send out notifications for the given `message`. The number of unread messages wi
 			if scrollUpNotifications
 				$('.timsChatMessageContainer.active').addClass 'notification'
 			
+			if message.isInPrivateChannel
+				if message.sender is WCF.User.userID
+					privateChannelID = message.receiver
+				else
+					privateChannelID = message.sender
+				
+				if $('.timsChatMessageContainer.active').data('userID') isnt privateChannelID
+					$("#privateChannel#{privateChannelID}").addClass 'notify'
+			else if $('.timsChatMessageContainer.active').data('userID') isnt 0
+				$("#privateChannel0").addClass 'notify'
+				
 			return if isActive or $('#timsChatNotify').data('status') is 0
 			
 			document.title = v.titleTemplate.fetch
@@ -678,45 +707,97 @@ Joins a room.
 					loading = false
 					
 					$('#timsChatTopic').removeClass 'hidden'
+					currentRoom = data.returnValues
+					currentRoom.roomID = roomID
 					
-					$('#timsChatTopic > .topic').text data.returnValues.topic
-					if data.returnValues.topic.trim() is ''
+					$('#timsChatTopic > .topic').text currentRoom.topic
+					if currentRoom.topic.trim() is ''
 						$('#timsChatTopic').addClass 'empty'
 					else
 						$('#timsChatTopic').removeClass 'empty'
 					
 					$('.timsChatMessage').addClass 'unloaded'
 					
-					document.title = v.titleTemplate.fetch data.returnValues
-					handleMessages data.returnValues.messages
+					document.title = v.titleTemplate.fetch currentRoom
+					handleMessages currentRoom.messages
 					do getMessages
 					do refreshRoomList
 				failure: ->
 					showError WCF.Language.get 'chat.error.join'
 
 Open private channel
-	
+
 		openPrivateChannel = (userID) ->
+			userID = parseInt userID
+			
+			console.log "Opening private channel #{userID}"
+			
 			unless $.wcfIsset "timsChatMessageContainer#{userID}"
-				return unless $.wcfIsset "timsChatUser#{userID}"
+				return unless userList.allTime[userID]?
 				
-				div = $('<div>')
+				div = $ '<div>'
 				div.attr 'id', "timsChatMessageContainer#{userID}"
+				div.data 'userID', userID
 				div.addClass 'timsChatMessageContainer'
 				div.addClass 'marginTop'
 				div.addClass 'container'
-				div.data 'username', $("#timsChatUser#{userID}").data 'username'
 				div.wrapInner '<ul>'
 				$('#timsChatMessageContainer0').after div
 			
+			$('.privateChannel').removeClass 'active'
+			if userID isnt 0
+				$('#timsChatTopic').removeClass 'hidden empty'
+				$('#timsChatTopic > .topic').text WCF.Language.get 'chat.general.privateChannelTopic', {username: userList.allTime[userID].username}
+				$('#timsChatTopic > .jsTopicCloser').attr 'title', WCF.Language.get 'chat.general.closePrivateChannel'
+				
+				unless $.wcfIsset "privateChannel#{userID}"
+					li = $ '<li>'
+					li.attr 'id', "privateChannel#{userID}"
+					li.data 'privateChannelID', userID
+					li.addClass 'privateChannel'
+					
+					span = $ '<span class="userAvatar framed" />'
+					
+					avatar = $ userList.allTime[userID].avatar[16]
+					avatar.addClass 'jsTooltip'
+					avatar.attr 'title', userList.allTime[userID].username
+					avatar.wrap span
+					li.append avatar.parent().addClass 'small'
+					
+					avatar = $ userList.allTime[userID].avatar[32]
+					avatar.addClass 'jsTooltip'
+					avatar.attr 'title', userList.allTime[userID].username
+					avatar.wrap span
+					li.append avatar.parent().addClass 'large'
+					
+					$('#privateChannelsMenu ul').append li
+					
+				$('#privateChannelsMenu').addClass 'shown'
+			else
+				$('#timsChatTopic > .topic').text currentRoom.topic
+				$('#timsChatTopic > .jsTopicCloser').attr 'title', WCF.Language.get 'chat.general.closeTopic'
+				if currentRoom.topic.trim() is ''
+					$('#timsChatTopic').addClass 'empty'
+				else
+					$('#timsChatTopic').removeClass 'empty'
+			
+			do WCF.DOMNodeInsertedHandler.execute
+			
 			$('.timsChatMessageContainer').removeClass 'active'
 			$("#timsChatMessageContainer#{userID}").addClass 'active'
+			$("#privateChannel#{userID}").addClass('active').removeClass 'notify'
 			openChannel = userID
 
 Close private channel
 
 		closePrivateChannel = (userID) ->
-			do $("#timsChatMessageContainer#{userID}").remove unless userID is 0
+			unless userID is 0
+				do $("#privateChannel#{userID}").remove
+				do $("#timsChatMessageContainer#{userID}").remove
+				
+			if $('#privateChannelsMenu li').length <= 1
+				$('#privateChannelsMenu').removeClass 'shown'
+			
 			openPrivateChannel 0
 
 Bind the given callback to the given event.
@@ -749,7 +830,7 @@ And finally export the public methods and variables.
 			listener:
 				add: addListener
 				remove: removeListener
-		
+				
 		window.be ?= {}
 		be.bastelstu ?= {}
 		window.be.bastelstu.Chat = Chat
