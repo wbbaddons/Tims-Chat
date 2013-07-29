@@ -1,5 +1,14 @@
 {include file='header' pageTitle='chat.acp.log.title'}
-	
+
+<script>
+	//<![CDATA[
+	$(function() {
+		WCF.TabMenu.init();
+	});
+	//]]>
+</script>
+
+
 <header class="boxHeadline">
 	<h1>{lang}{@$pageTitle}{/lang}</h1>
 </header>
@@ -44,33 +53,38 @@
 		<p class="info">{lang}wcf.global.noItems{/lang}</p>
 	{/if}
 {else}
-	<div class="tabularBox tabularBoxTitle marginTop">
-		<header>
-			<h2>{lang}chat.acp.log.title{/lang} <span class="badge badgeInverse">{#$messages|count}</span></h2>
-		</header>
+	<div class="tabMenuContainer marginTop" data-active="timeTab-0" data-store="activeTabMenuItem">
+		<nav class="tabMenu">
+			<ul>
+				{section name=tabLoop loop=24 step=3}
+					<li>
+						{assign var=anchor value='timeTab-'|concat:$tabLoop}
+						<a href="{@$__wcf->getAnchor($anchor)}">{if $tabLoop < 10}0{/if}{$tabLoop}:00 - {if $tabLoop + 2 < 10}0{/if}{$tabLoop + 2}:59</a>
+					</li>
+				{/section}
+			</ul>
+		</nav>
 		
-		<table class="table">
-			<thead>
-				<tr>
-					<th>{lang}wcf.global.objectID{/lang}</th>
-					<th>{lang}chat.general.time{/lang}</th>
-					<th colspan="2">{lang}wcf.user.username{/lang}</th>
-					<th>{lang}chat.acp.log.message{/lang}</th>
-				</tr>
-			</thead>
-			
-			<tbody>
-				{foreach from=$messages item='message'}
-					<tr>
-						<td class="columnID">{$message->messageID}</td>
-						<td style="width: 1px !important;">{$message->time|date:'H:i:s'}</td>
-						<td class="columnIcon"><p class="framed">{@$message->getUserProfile()->getAvatar()->getImageTag(24)}</p></td>
-						<td class="columnTitle columnUsername right" style="width: 1px !important;">{$message->username}</td>
-						<td>{@$message->getFormattedMessage('text/simplified-html')}</td>
-					</tr>
-				{/foreach}
-			</tbody>
-		</table>
+		{section name=contentLoop loop=24 step=3}
+			<div id="timeTab-{$contentLoop}" class="container containerPadding tabMenuContainer tabMenuContent">
+				<nav class="menu">
+					<ul>
+						{section name=subTabLoop loop=6}
+							{assign var=subAnchor value='timeTab-'|concat:$contentLoop|concat:'-subTab-'|concat:$subTabLoop}
+							<li><a href="{@$__wcf->getAnchor($subAnchor)}">{if $contentLoop + $subTabLoop / 2 < 10}0{/if}{$contentLoop + $subTabLoop / 2|floor}:{if $subTabLoop % 2 == 0}0{/if}{($subTabLoop % 2) * 30} - {if $contentLoop + $subTabLoop / 2 < 10}0{/if}{$contentLoop + $subTabLoop / 2|floor}:{($subTabLoop % 2) * 30 + 29}</a>
+							</li>
+						{/section}
+					</ul>
+				</nav>
+				
+				{section name=subTabLoop loop=6}
+					{assign var=subAnchor value='timeTab-'|concat:$contentLoop|concat:'-subTab-'|concat:$subTabLoop}
+					<div id="{$subAnchor}" class="hidden">
+						{#$contentLoop / 3} - {#$subTabLoop}
+					</div>
+				{/section}
+			</div>
+		{/section}
 	</div>
 {/if}
 
