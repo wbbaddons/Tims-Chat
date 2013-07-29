@@ -35,7 +35,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 			WHERE
 				time < ?";
 		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array(TIME_NOW - CHAT_LOG_ARCHIVETIME));
+		$stmt->execute(array(TIME_NOW - CHAT_LOG_ARCHIVETIME * 60));
 		
 		$objectIDs = array();
 		while ($objectID = $stmt->fetchColumn()) $objectIDs[] = $objectID;
