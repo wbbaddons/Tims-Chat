@@ -5,7 +5,7 @@
 	
 	{include file='headInclude' sandbox=false}
 	{include file='javascriptInclude' application='chat'}
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 			(function ($, window) {
 				$(function(){
