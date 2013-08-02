@@ -391,9 +391,9 @@ Free the fish.
 			fish = $ """<div id="fish">#{WCF.String.escapeHTML('><((((\u00B0>')}</div>"""
 			
 			fish.css
-				position: 'absolute'
-				top: '150px'
-				left: '400px'
+				position: 'fixed'
+				top: '50%'
+				left: '50%'
 				color: 'black'
 				textShadow: '1px 1px white'
 				zIndex: 9999
@@ -404,8 +404,8 @@ Free the fish.
 				top = Math.random() * 100 - 50
 				fish = $ '#fish'
 				
-				left *= -1 unless fish.width() < (fish.position().left + left) < ($(document).width() - fish.width())
-				top *= -1 unless fish.height() < (fish.position().top + top) < ($(document).height() - fish.height())
+				left *= -1 unless fish.width() < (fish.position().left + left) < ($(window).width() - fish.width())
+				top *= -1 unless fish.height() < (fish.position().top + top) < ($(window).height() - fish.height())
 				
 				if left > 0
 					fish.text '><((((\u00B0>' if left > 0
@@ -413,8 +413,8 @@ Free the fish.
 					fish.text '<\u00B0))))><'
 				
 				fish.animate
-					top: "+=#{top}"
-					left: "+=#{left}"
+					top: (fish.position().top + top)
+					left: (fish.position().left + left)
 				, 1e3
 			, 1.5e3
 
