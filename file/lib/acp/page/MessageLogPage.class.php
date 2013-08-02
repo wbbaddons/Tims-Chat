@@ -81,7 +81,8 @@ class MessageLogPage extends \wcf\page\AbstractPage {
 			if ($this->date > TIME_NOW) {
 				throw new \wcf\system\exception\UserInputException('date', 'inFuture');
 			}
-		} catch (\wcf\system\exception\UserInputException $e) {
+		}
+		catch (\wcf\system\exception\UserInputException $e) {
 			$this->errorField = $e->getField();
 			$this->errorType = $e->getType();
 			
@@ -92,7 +93,8 @@ class MessageLogPage extends \wcf\page\AbstractPage {
 			if ($this->date < strtotime('today 00:00:00 -'.ceil(CHAT_LOG_ARCHIVETIME / 1440).'day')) {
 				throw new \wcf\system\exception\UserInputException('date', 'tooLongAgo');
 			}
-		} catch (\wcf\system\exception\UserInputException $e) {
+		}
+		catch (\wcf\system\exception\UserInputException $e) {
 			$this->errorField = $e->getField();
 			$this->errorType = $e->getType();
 			
