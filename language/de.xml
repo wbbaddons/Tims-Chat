@@ -103,7 +103,7 @@
 	<li>Ihnen wurden die Zugriffsrechte auf den Raum genommen</li>
 	<li>Es gibt Probleme mit Ihrer Internetkonnektivität, die dazu führen, dass die Anfragen nicht durchgeführt werden können</li>
 	<li>Sie haben den Chat mehrmals geöffnet</li>
-	<li>Es gibt Probleme auf Seite des Servers</li>
+	<li>Es gibt Probleme auf Seiten des Servers</li>
 </ul>
 Probieren Sie den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen Sie ihren Arzt oder Administrator -->.]]></item>
 		<item name="chat.error.reload"><![CDATA[Neu laden]]></item>
