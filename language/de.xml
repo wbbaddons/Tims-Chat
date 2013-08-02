@@ -96,8 +96,16 @@
 		<item name="chat.error.notFound"><![CDATA[Der Befehl „{$exception->getCommand()}“ wurde nicht gefunden.]]></item>
 		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer „{$exception->getUsername()}“ wurde nicht gefunden.]]></item>
 		<item name="chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
-		<item name="chat.error.duplicateTab"><![CDATA[Der Chat wurde in einem weiteren Tab geöffnet.]]></item>
-		<item name="chat.error.join"><![CDATA[Der Chatraum konnte nicht betreten werden.]]></item>
+		<item name="chat.error.duplicateTab"><![CDATA[Sie haben den Chat in einem weiteren Browserfenster geöffnet. Diese Instanz wurde daher zur Vermeidung von Problemen deaktiviert.]]></item>
+		<item name="chat.error.join"><![CDATA[Es gibt Probleme den gewählten Chatraum zu betreten.]]></item>
+		<item name="chat.error.onMessageLoad"><![CDATA[Es gibt Probleme beim Laden neuer Nachrichten. Folgende Gründe können zu dieser Meldung führen:
+<ul class="nativeList">
+	<li>Ihnen wurden die Zugriffsrechte auf den Raum genommen</li>
+	<li>Es gibt Probleme mit Ihrer Internetkonnektivität, die dazu führen, dass die Anfragen nicht durchgeführt werden können</li>
+	<li>Sie haben den Chat mehrmals geöffnet</li>
+	<li>Es gibt Probleme auf Seite des Servers</li>
+</ul>
+Probieren Sie den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen Sie ihren Arzt oder Administrator -->.]]></item>
 		<item name="chat.error.reload"><![CDATA[Neu laden]]></item>
 	</category>
 	
