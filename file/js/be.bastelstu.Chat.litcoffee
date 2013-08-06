@@ -572,6 +572,7 @@ Remove all users that left the chat.
 			$('.timsChatUser').each ->
 				unless foundUsers[$(@).attr('id')]?
 					console.log "Removing User: '#{$(@).data('username')}'"
+					WCF.Dropdown.removeDropdown $(@).attr 'id'
 					do $(@).remove
 					
 			
