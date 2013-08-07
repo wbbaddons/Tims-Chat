@@ -77,6 +77,8 @@
 		<item name="wcf.acp.option.chat_display_join_leave"><![CDATA[Join- und Leave-Nachrichten anzeigen]]></item>
 		<item name="wcf.acp.option.chat_display_join_leave.description"><![CDATA[Soll eine Nachricht angezeigt werden, wenn ein Nutzer den Chat betritt oder verlässt?]]></item>
 		<item name="wcf.acp.option.chat_max_length"><![CDATA[Maximale Textlänge]]></item>
+		<item name="wcf.acp.option.chat_command_aliases"><![CDATA[Befehls-Aliase]]></item>
+		<item name="wcf.acp.option.chat_command_aliases.description"><![CDATA[Geben Sie zeilenweise eine Kombination aus Alias und Zielbefehl an. Alias und Zielbefehl werden durch einen Doppelpunkt voneinander getrennt.]]></item>
 		
 		<item name="wcf.acp.option.category.chat.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.option.chat_log_active"><![CDATA[Protokoll aktivieren]]></item>
