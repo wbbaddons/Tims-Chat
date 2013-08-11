@@ -1,0 +1,1 @@
+{if $__chat->isActiveApplication()}<img src="{$__wcf->getPath('chat')}images/chatLogo.png" style="width: 246px; height: 90px;" alt="" />{/if}

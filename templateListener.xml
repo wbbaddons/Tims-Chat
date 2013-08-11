@@ -12,24 +12,21 @@
 			<environment>user</environment>
 			<templatename>header</templatename>
 			<eventname>headerLogo</eventname>
-			<templatecode><![CDATA[{if $__chat->isActiveApplication()}{if !$__wcf->getStyleHandler()->getStyle()->getPageLogo()}<img src="{$__wcf->getPath('chat')}images/chatLogo.png" style="width: 246px; height: 90px;" alt="" />{/if}{/if}]]></templatecode>
+			<templatecode><![CDATA[{include file='__headerLogo' application='chat'}]]></templatecode>
 		</templatelistener>
 		
 		<templatelistener name="headerLogo">
 			<environment>admin</environment>
 			<templatename>header</templatename>
 			<eventname>headerLogo</eventname>
-			<templatecode><![CDATA[{if $__chat->isActiveApplication()}<img src="{$__wcf->getPath('chat')}images/chatLogo.png" style="width: 246px; height: 90px;" alt="" />{/if}]]></templatecode>
+			<templatecode><![CDATA[{include file='__headerLogo' application='wbb'}]]></templatecode>
 		</templatelistener>
 		
 		<templatelistener name="softwareVersions">
 			<environment>admin</environment>
 			<templatename>index</templatename>
 			<eventname>softwareVersions</eventname>
-			<templatecode><![CDATA[<dl>
-	<dt>{lang}wcf.acp.index.system.software.chatVersion{/lang}</dt>
-	<dd>{$__chat->getPackage()->packageVersion}</dd>
-</dl>]]></templatecode>
+			<templatecode><![CDATA[{include file='__softwareVersions' application='wbb'}]]></templatecode>
 		</templatelistener>
 	</import>
 </data>
