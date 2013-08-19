@@ -19,14 +19,14 @@
 			<environment>admin</environment>
 			<templatename>header</templatename>
 			<eventname>headerLogo</eventname>
-			<templatecode><![CDATA[{include file='__headerLogo' application='wbb'}]]></templatecode>
+			<templatecode><![CDATA[{include file='__headerLogo' application='chat'}]]></templatecode>
 		</templatelistener>
 		
 		<templatelistener name="softwareVersions">
 			<environment>admin</environment>
 			<templatename>index</templatename>
 			<eventname>softwareVersions</eventname>
-			<templatecode><![CDATA[{include file='__softwareVersions' application='wbb'}]]></templatecode>
+			<templatecode><![CDATA[{include file='__softwareVersions' application='chat'}]]></templatecode>
 		</templatelistener>
 	</import>
 </data>
