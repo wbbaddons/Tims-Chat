@@ -66,7 +66,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$this->parameters['enableHTML'] = false;
 		
 		// validate text
-		if (\wcf\util\StringUtil::length($this->parameters['text']) > CHAT_MAX_LENGTH) throw new UserInputException('text', 'tooLong');
+		if (mb_strlen($this->parameters['text']) > CHAT_MAX_LENGTH) throw new UserInputException('text', 'tooLong');
 		
 		// search for disallowed bbcodes
 		$disallowedBBCodes = \wcf\system\bbcode\BBCodeParser::getInstance()->validateBBCodes($this->parameters['text'], explode(',', WCF::getSession()->getPermission('user.chat.allowedBBCodes')));

@@ -1,7 +1,6 @@
 <?php
 namespace chat\system\command\commands;
 use \wcf\system\WCF;
-use \wcf\util\StringUtil;
 
 /**
  * Marks the user as away.

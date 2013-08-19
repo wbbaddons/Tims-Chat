@@ -1,6 +1,5 @@
 <?php
 namespace chat\system\command\commands;
-use \wcf\util\StringUtil;
 
 /**
  * Changes the color of the username
