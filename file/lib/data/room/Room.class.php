@@ -24,6 +24,13 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	protected static $databaseTableIndexName = 'roomID';
 	
 	/**
+	 * cached users
+	 * 
+	 * @var	array<\wcf\data\user\UserProfile>
+	 */
+	protected static $users = null;
+	
+	/**
 	 * @see	\wcf\data\chat\room\ChatRoom::getTitle();
 	 */
 	public function __toString() {
@@ -134,35 +141,26 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	}
 	
 	/**
-	 * Returns the number of users currently active in this room.
-	 *
-	 * @return	integer
-	 */
-	public function countUsers() {
-		$sql = "SELECT
-				COUNT(*)
-			FROM
-				wcf".WCF_N."_user
-			WHERE
-				chatRoomID = ?";
-		$stmt = WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array($this->roomID));
-	
-		return $stmt->fetchColumn();
-	}
-	
-	/**
 	 * Returns the users that are currently active in this room.
 	 * 
-	 * @return	\wcf\data\user\UserProfileList
+	 * @return	array<\wcf\data\user\UserProfile>
 	 */
 	public function getUsers() {
-		$userList = new \wcf\data\user\UserProfileList();
-		$userList->getConditionBuilder()->add('user_table.chatRoomID = ?', array($this->roomID));
+		if (self::$users === null) {
+			$userList = new \wcf\data\user\UserProfileList();
+			$userList->getConditionBuilder()->add('user_table.chatRoomID IS NOT NULL', array());
+			
+			$userList->readObjects();
+			$users = $userList->getObjects();
+			
+			foreach ($users as $user) {
+				if (!isset(self::$users[$user->chatRoomID])) self::$users[$user->chatRoomID] = array();
+				self::$users[$user->chatRoomID][] = $user;
+			}
+		}
+		if (!isset(self::$users[$this->roomID])) self::$users[$this->roomID] = array();
 		
-		$userList->readObjects();
-		
-		return $userList;
+		return self::$users[$this->roomID];
 	}
 	
 	/**

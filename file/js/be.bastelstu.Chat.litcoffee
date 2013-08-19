@@ -651,7 +651,7 @@ Fetch the roomlist from the server and update it in the GUI.
 					for room in data.returnValues
 						li = $ '<li></li>'
 						li.addClass 'active' if room.active
-						$("""<a href="#{room.link}">#{room.title}</a>""").addClass('timsChatRoom').data('roomID', room.roomID).appendTo li
+						$("""<a href="#{room.link}">#{room.title} <span class="badge">#{WCF.String.formatNumeric room.userCount}</span></a>""").addClass('timsChatRoom').data('roomID', room.roomID).appendTo li
 						$('#timsChatRoomList ul').append li
 					
 					if window.history?.replaceState?
