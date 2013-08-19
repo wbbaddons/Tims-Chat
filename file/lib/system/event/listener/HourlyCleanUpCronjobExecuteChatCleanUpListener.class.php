@@ -11,7 +11,7 @@ use \chat\data;
  * @package	be.bastelstu.chat
  * @subpackage	system.event.listener
  */
-class HourlyCleanUpCronjobExecuteChatCleanUpListener implements IEventListener {
+class HourlyCleanUpCronjobExecuteChatCleanUpListener implements \wcf\system\event\IEventListener {
 	/**
 	 * @see	\wcf\system\event\IEventListener::execute()
 	 */
