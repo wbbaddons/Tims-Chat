@@ -826,8 +826,6 @@ And finally export the public methods and variables.
 			insertText: insertText
 			freeTheFish: freeTheFish
 			join: join
-			closePrivateChannel: closePrivateChannel # TODO: REMOVE AFTER DEBUGGING
-			openPrivateChannel: openPrivateChannel # TODO: REMOVE AFTER DEBUGGING
 			listener:
 				add: addListener
 				remove: removeListener
