@@ -180,12 +180,7 @@
 		}
 		
 		ul {
-			display: table;
-			width: 100%;
-			
 			.timsChatMessage {
-				display: table-row;
-				height: 20px;
 				.transition(opacity, .2s);
 				
 				&.unloaded {
@@ -227,8 +222,9 @@
 						
 						> .text {
 							img {
-								max-width: 480px;
-								max-height: 320px;
+								max-width: 100%;
+								height: auto;
+								width: auto;
 							}
 						}
 					}
