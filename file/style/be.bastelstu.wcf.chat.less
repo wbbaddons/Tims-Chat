@@ -425,18 +425,8 @@
 	}
 	
 	@media only screen and (max-width: 800px) {
-		#timsChatMessageContainer {
-			overflow: auto;
-			
-			.timsChatMessage {
-				> time {
-					display: none !important;
-				}
-				
-				> .usernameContainer {
-					min-width: 0px !important;
-				}
-			}
+		.timsChatMessage .text li > time, #smilies {
+			display: none !important;
 		}
 	}
 	
