@@ -87,7 +87,7 @@ When **Tims Chat** becomes focused mark the chat as active and remove the number
 
 			$(window).focus ->
 				document.title = v.titleTemplate.fetch
-					title: $('#timsChatRoomList .active a').text()
+					title: currentRoom.title
 				
 				newMessageCount = 0
 				isActive = true
