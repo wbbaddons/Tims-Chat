@@ -86,8 +86,7 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 When **Tims Chat** becomes focused mark the chat as active and remove the number of new messages from the title.
 
 			$(window).focus ->
-				document.title = v.titleTemplate.fetch
-					title: currentRoom.title
+				document.title = v.titleTemplate.fetch currentRoom
 				
 				newMessageCount = 0
 				isActive = true
@@ -615,9 +614,8 @@ Send out notifications for the given `message`. The number of unread messages wi
 				
 			return if isActive or $('#timsChatNotify').data('status') is 0
 			
-			document.title = v.titleTemplate.fetch
-				 title: $('#timsChatRoomList .active a').text()
-				 newMessageCount: ++newMessageCount
+			document.title = v.titleTemplate.fetch $.extend {}, currentRoom,
+				newMessageCount: ++newMessageCount
 			
 			title = WCF.Language.get 'chat.general.notify.title'
 			content = "#{message.username}#{message.separator} #{message.message}"
