@@ -180,12 +180,9 @@
 		}
 		
 		ul {
-			display: table;
-			width: 100%;
-			
 			.timsChatMessage {
-				display: table-row;
-				height: 20px;
+				min-height: 20px;
+				clear: both;
 				.transition(opacity, .2s);
 				
 				&.unloaded {
@@ -227,8 +224,9 @@
 						
 						> .text {
 							img {
-								max-width: 480px;
-								max-height: 320px;
+								max-width: 100%;
+								height: auto;
+								width: auto;
 							}
 						}
 					}
@@ -427,18 +425,8 @@
 	}
 	
 	@media only screen and (max-width: 800px) {
-		#timsChatMessageContainer {
-			overflow: auto;
-			
-			.timsChatMessage {
-				> time {
-					display: none !important;
-				}
-				
-				> .usernameContainer {
-					min-width: 0px !important;
-				}
-			}
+		.timsChatMessage .text li > time, #smilies {
+			display: none !important;
 		}
 	}
 	

@@ -147,7 +147,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 		foreach ($files as $file) {
 			$command = $regex->replace(basename($file), '');
 			if ($command == 'Plain') continue;
-			$this->commands[] = \wcf\util\StringUtil::toLowerCase($command);
+			$this->commands[] = mb_strtolower($command);
 		}
 		
 		$this->commands = array_merge($this->commands, array_keys(\chat\system\command\CommandHandler::getAliasMap()));

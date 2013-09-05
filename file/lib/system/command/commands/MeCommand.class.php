@@ -1,6 +1,5 @@
 <?php
 namespace chat\system\command\commands;
-use \wcf\util\StringUtil;
 
 /**
  * Indicates an action. The message is shown without the colon.

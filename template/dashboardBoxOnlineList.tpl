@@ -35,7 +35,7 @@
 				{@$roomList}
 			</ul>
 		</div>
-		<script>
+		<script data-relocate="true">
 			//<![CDATA[
 			(function($, window, undefined) {
 				proxy = new WCF.Action.Proxy({

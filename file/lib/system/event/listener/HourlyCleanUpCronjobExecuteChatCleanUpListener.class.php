@@ -1,5 +1,5 @@
 <?php
-namespace chat\system\cronjob;
+namespace chat\system\event\listener;
 use \chat\data;
 
 /**
@@ -9,13 +9,13 @@ use \chat\data;
  * @copyright	2010-2013 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.chat
- * @subpackage	system.cronjob
+ * @subpackage	system.event.listener
  */
-class CleanupCronjob implements \wcf\system\cronjob\ICronjob {
+class HourlyCleanUpCronjobExecuteChatCleanUpListener implements \wcf\system\event\IEventListener {
 	/**
-	 * @see wcf\system\ICronjob::execute()
+	 * @see	\wcf\system\event\IEventListener::execute()
 	 */
-	public function execute(\wcf\data\cronjob\Cronjob $cronjob) {
+	public function execute($eventObj, $className, $eventName) {
 		$messageAction = new data\message\MessageAction(array(), 'prune');
 		$messageAction->executeAction();
 		$roomAction = new data\room\RoomAction(array(), 'prune');

@@ -4,7 +4,6 @@ use \chat\util\ChatUtil;
 use \wcf\data\user\User;
 use \wcf\system\WCF;
 use \wcf\util\DateUtil;
-use \wcf\util\StringUtil;
 
 /**
  * Shows information about the specified user.

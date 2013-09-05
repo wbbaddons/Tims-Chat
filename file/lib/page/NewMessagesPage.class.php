@@ -46,7 +46,7 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 	/**
 	 * All the users that are currently in the room $this->room.
 	 * 
-	 * @var array<\wcf\data\user\User>
+	 * @var array<\wcf\data\user\UserProfile>
 	 */
 	public $users = array();
 	
@@ -114,7 +114,7 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 			$json['messages'][] = $message->jsonify(true);
 		}
 		
-		\wcf\system\user\storage\UserStorageHandler::getInstance()->loadStorage(array_keys($this->users->getObjects()));
+		\wcf\system\user\storage\UserStorageHandler::getInstance()->loadStorage(array_keys($this->users));
 		
 		foreach ($this->users as $user) {
 			$json['users'][] = array(

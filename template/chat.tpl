@@ -5,7 +5,7 @@
 	
 	{include file='headInclude' sandbox=false}
 	{include file='javascriptInclude' application='chat'}
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 			(function ($, window) {
 				$(function(){
@@ -18,7 +18,7 @@
 						'chat.general.privateChannelTopic': '{lang}chat.general.privateChannelTopic{/lang}',
 						'chat.general.closePrivateChannel': '{lang}chat.general.closePrivateChannel{/lang}',
 						'chat.general.closeTopic': '{lang}chat.general.closeTopic{/lang}',
-						'chat.error.onMessageLoad': '{lang}chat.error.onMessageLoad{/lang}',
+						'chat.error.onMessageLoad': '{@"chat.error.onMessageLoad"|language|encodeJS}',
 						'chat.error.duplicateTab': '{lang}chat.error.duplicateTab{/lang}',
 						'chat.error.join': '{lang}chat.error.join{/lang}',
 						'chat.error.reload': '{lang}chat.error.reload{/lang}'

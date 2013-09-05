@@ -97,7 +97,7 @@ final class CommandHandler {
 	 * @return	string
 	 */
 	public function getParameters() {
-		$parts = explode(' ', StringUtil::substring($this->text, StringUtil::length(static::COMMAND_CHAR)), 2);
+		$parts = explode(' ', mb_substr($this->text, mb_strlen(static::COMMAND_CHAR)), 2);
 		
 		if (!isset($parts[1])) return '';
 		return $parts[1];
@@ -107,7 +107,7 @@ final class CommandHandler {
 	 * Loads the command.
 	 */
 	public function loadCommand() {
-		$parts = explode(' ', StringUtil::substring($this->text, StringUtil::length(static::COMMAND_CHAR)), 2);
+		$parts = explode(' ', mb_substr($this->text, mb_strlen(static::COMMAND_CHAR)), 2);
 		
 		$class = '\chat\system\command\commands\\'.ucfirst(strtolower($parts[0])).'Command';
 		if (!class_exists($class)) {

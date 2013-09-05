@@ -86,8 +86,7 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 When **Tims Chat** becomes focused mark the chat as active and remove the number of new messages from the title.
 
 			$(window).focus ->
-				document.title = v.titleTemplate.fetch
-					title: $('#timsChatRoomList .active a').text()
+				document.title = v.titleTemplate.fetch currentRoom
 				
 				newMessageCount = 0
 				isActive = true
@@ -391,9 +390,9 @@ Free the fish.
 			fish = $ """<div id="fish">#{WCF.String.escapeHTML('><((((\u00B0>')}</div>"""
 			
 			fish.css
-				position: 'absolute'
-				top: '150px'
-				left: '400px'
+				position: 'fixed'
+				top: '50%'
+				left: '50%'
 				color: 'black'
 				textShadow: '1px 1px white'
 				zIndex: 9999
@@ -404,8 +403,8 @@ Free the fish.
 				top = Math.random() * 100 - 50
 				fish = $ '#fish'
 				
-				left *= -1 unless fish.width() < (fish.position().left + left) < ($(document).width() - fish.width())
-				top *= -1 unless fish.height() < (fish.position().top + top) < ($(document).height() - fish.height())
+				left *= -1 unless fish.width() < (fish.position().left + left) < ($(window).width() - fish.width())
+				top *= -1 unless fish.height() < (fish.position().top + top) < ($(window).height() - fish.height())
 				
 				if left > 0
 					fish.text '><((((\u00B0>' if left > 0
@@ -413,8 +412,8 @@ Free the fish.
 					fish.text '<\u00B0))))><'
 				
 				fish.animate
-					top: "+=#{top}"
-					left: "+=#{left}"
+					top: (fish.position().top + top)
+					left: (fish.position().left + left)
 				, 1e3
 			, 1.5e3
 
@@ -572,6 +571,7 @@ Remove all users that left the chat.
 			$('.timsChatUser').each ->
 				unless foundUsers[$(@).attr('id')]?
 					console.log "Removing User: '#{$(@).data('username')}'"
+					WCF.Dropdown.removeDropdown $(@).attr 'id'
 					do $(@).remove
 					
 			
@@ -614,9 +614,8 @@ Send out notifications for the given `message`. The number of unread messages wi
 				
 			return if isActive or $('#timsChatNotify').data('status') is 0
 			
-			document.title = v.titleTemplate.fetch
-				 title: $('#timsChatRoomList .active a').text()
-				 newMessageCount: ++newMessageCount
+			document.title = v.titleTemplate.fetch $.extend {}, currentRoom,
+				newMessageCount: ++newMessageCount
 			
 			title = WCF.Language.get 'chat.general.notify.title'
 			content = "#{message.username}#{message.separator} #{message.message}"
@@ -650,7 +649,7 @@ Fetch the roomlist from the server and update it in the GUI.
 					for room in data.returnValues
 						li = $ '<li></li>'
 						li.addClass 'active' if room.active
-						$("""<a href="#{room.link}">#{room.title}</a>""").addClass('timsChatRoom').data('roomID', room.roomID).appendTo li
+						$("""<a href="#{room.link}">#{room.title} <span class="badge">#{WCF.String.formatNumeric room.userCount}</span></a>""").addClass('timsChatRoom').data('roomID', room.roomID).appendTo li
 						$('#timsChatRoomList ul').append li
 					
 					if window.history?.replaceState?
@@ -825,8 +824,6 @@ And finally export the public methods and variables.
 			insertText: insertText
 			freeTheFish: freeTheFish
 			join: join
-			closePrivateChannel: closePrivateChannel # TODO: REMOVE AFTER DEBUGGING
-			openPrivateChannel: openPrivateChannel # TODO: REMOVE AFTER DEBUGGING
 			listener:
 				add: addListener
 				remove: removeListener

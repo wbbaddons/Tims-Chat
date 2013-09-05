@@ -58,7 +58,7 @@ final class ChatUtil {
 	 * @return	string
 	 */
 	public static function gradient($string, $start, $end) {
-		if (($length = \wcf\util\StringUtil::length($string)) === 0) return '';
+		if (($length = mb_strlen($string)) === 0) return '';
 		
 		if ($start === $end) {
 			return '<span style="color:rgb('.($start >> 16 & 255).','.($start >> 8 & 255).','.($start & 255).')">'.\wcf\util\StringUtil::encodeHTML($string).'</span>';
@@ -87,8 +87,8 @@ final class ChatUtil {
 	 */
 	public static function str_split($string, $length = 1) {
 		$result = array();
-		for ($i = 0, $max = \wcf\util\StringUtil::length($string); $i < $max; $i += $length) {
-			$result[] = \wcf\util\StringUtil::substring($string, $i, $length);
+		for ($i = 0, $max = mb_strlen($string); $i < $max; $i += $length) {
+			$result[] = mb_substr($string, $i, $length);
 		}
 		return $result;
 	}
