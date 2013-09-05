@@ -101,7 +101,7 @@ class MessageLogPage extends \wcf\page\AbstractPage {
 			return;
 		}
 		
-		$messages = \chat\data\message\ViewableMessageList::getMessagesBetween($this->room, $this->date, $this->date + 86399);
+		$messages = \chat\data\message\ViewableMessageList::getMessagesBetween($this->room, $this->date, $this->date + 1799);
 		
 		foreach ($messages as $message) {
 			$hour = ((int) date('H', $message->time)) * 2;

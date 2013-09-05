@@ -164,4 +164,37 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		// add activity points
 		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.message', $returnValues['returnValues']->messageID, WCF::getUser()->userID);
 	}
+	
+	/**
+	 * Fetches messages in between the specified timestamps.
+	 *
+	 * @return array Array containing message table, containerID and information about an empty message table.
+	 */
+	public function getMessages() {
+		// read messages
+		$messages = \chat\data\message\ViewableMessageList::getMessagesBetween($this->parameters['room'], $this->parameters['start'], $this->parameters['end']);
+		
+		return array(
+			'noMessages' => (count($messages) == 0) ? true : null,
+			'containerID' => $this->parameters['containerID'],
+			'template' => WCF::getTPL()->fetch('__messageLogTable', 'chat', array('messages' => $messages), true)
+		);
+	}
+	
+	/**
+	 * Validates getting messages.
+	 */
+	public function validateGetMessages() {
+		// check permissions
+		WCF::getSession()->checkPermissions(array('mod.chat.canReadLog'));
+		
+		// read parameters
+		$this->readInteger('roomID');
+		$this->readInteger('start');
+		$this->readInteger('end');
+		
+		// read and validate room
+		$this->parameters['room'] = room\RoomCache::getInstance()->getRoom($this->parameters['roomID']);
+		if ($this->parameters['room'] === null) throw new \wcf\system\exception\IllegalLinkException();
+	}
 }
