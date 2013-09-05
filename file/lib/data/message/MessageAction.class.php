@@ -172,7 +172,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	 */
 	public function getMessages() {
 		// read messages
-		$messages = \chat\data\message\ViewableMessageList::getMessagesBetween($this->parameters['room'], $this->parameters['start'], $this->parameters['end']);
+		$messages = ViewableMessageList::getMessagesBetween($this->parameters['room'], $this->parameters['start'], $this->parameters['end']);
 		
 		return array(
 			'noMessages' => (count($messages) == 0) ? true : null,
