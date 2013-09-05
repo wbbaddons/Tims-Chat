@@ -23,6 +23,7 @@
 	
 	<category name="chat.acp.log">
 		<item name="chat.acp.log.title"><![CDATA[Nachrichten-Protokoll]]></item>
+		<item name="chat.acp.log.download"><![CDATA[Tages-Protokoll herunterladen]]></item>
 		<item name="chat.acp.log.message"><![CDATA[Nachricht]]></item>
 		<item name="chat.acp.log.date.error.inFuture"><![CDATA[Das angegebene Datum befindet sich in der Zukunft.]]></item>
 		<item name="chat.acp.log.date.error.tooLongAgo"><![CDATA[Das angegebene Datum befindet sich außerhalb der protokollierten Zeitspanne von {CHAT_LOG_ARCHIVETIME / 1440|ceil} Tagen.]]></item>

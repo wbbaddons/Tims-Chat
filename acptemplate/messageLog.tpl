@@ -53,6 +53,19 @@
 	</div>
 </form>
 
+<div class="contentNavigation">
+	<nav>
+		<ul>
+			<li>
+				<a class="button" href="{link controller='MessageLogDownload' application='chat' object=$room date=$date|date:'Y-m-d'}{/link}">
+					<span class="icon icon16 icon-download-alt"></span>
+					<span>{lang}chat.acp.log.download{/lang}</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+
 {if $errorField === ''}
 	<div id="messageLogContent" class="tabMenuContainer marginTop" data-active="timeTab-0" data-store="activeTabMenuItem" data-base-time="{$date}" data-room-id="{$room->roomID}">
 		<nav class="tabMenu">
