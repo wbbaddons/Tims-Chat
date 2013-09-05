@@ -15,26 +15,12 @@ This is the javascript file providing functions related to the message log for [
 	(($, window) ->
 		"use strict";
 		
-		###
-		# message log content
-		# @var jQuery
-		###
 		_messageLogContent = null
-		
-		###
-		# list of containers
-		# @var object
-		###
 		_hasContent = {}
-		
-		###
-		# action proxy
-		# @var WCF.Action.Proxy
-		###
 		_proxy = null
 		
 		init = ->
-			_messageLogContent = $('#messageLogContent')
+			_messageLogContent = $ '#messageLogContent'
 			
 			activeMenuItem = _messageLogContent.data 'active'
 			enableProxy = false
@@ -42,28 +28,33 @@ This is the javascript file providing functions related to the message log for [
 			_messageLogContent.find('div.tabMenuContent > .subTabMenuContent').each (index, container) ->
 				containerID = $(container).wcfIdentify()
 				
-				if (! $("##{containerID}").hasClass 'empty')
+				unless $("##{containerID}").hasClass 'empty'
 					_hasContent[containerID] = true
 				else
 					_hasContent[containerID] = false
 					enableProxy = true
 					
-			if (enableProxy)
+			if enableProxy
 				_proxy = new WCF.Action.Proxy
 					success: _success
 					
 					_messageLogContent.bind 'wcftabsbeforeactivate',
 					_loadContent
 					
+			if not _hasContent[activeMenuItem]
+				_loadContent {},
+					newPanel: $("##{activeMenuItem}")
+					newTab: $("##{activeMenuItem}").parent().find(".menu > ul > li").first()
+					
 		_loadContent = (event, ui) ->
 			containerID = $(ui.newPanel).attr 'id'
 			
-			if ($("##{$(ui.newPanel).attr('id')}").hasClass 'tabMenuContainer')
+			if $("##{$(ui.newPanel).attr('id')}").hasClass 'tabMenuContainer'
 				containerID = $("##{containerID} > .subTabMenuContent").first().attr 'id'
 				tab = $("##{containerID}").parent().find(".menu > ul > li").first()
 			else
-				tab = $(ui.newTab)
-				
+				tab = $ ui.newTab
+			
 			unless _hasContent[containerID]
 				start = _messageLogContent.data('baseTime') + (tab.data('hour') * 3600) + (tab.data('minutes') * 60)
 				
@@ -74,21 +65,20 @@ This is the javascript file providing functions related to the message log for [
 						containerID: containerID
 						start: start
 						end: start + 1799
-						roomID: _messageLogContent.data('roomID')
-				_proxy.sendRequest()
+						roomID: _messageLogContent.data 'roomID'
+				do _proxy.sendRequest
 				
 		_success = (data, textStatus, jqWHR) ->
 			containerID = data.returnValues.containerID
 			_hasContent[containerID] = true
 			
 			content = _messageLogContent.find "##{containerID}"
-			if(data.returnValues.template != '')
+			unless data.returnValues.template is ''
 				$("<div>#{data.returnValues.template}</div>").hide().appendTo content
-				if(!data.returnValues.noMessages)
+				unless data.returnValues.noMessages
 					content.addClass 'tabularBox'
 				
-			content.children().first().show()
-		
+			do content.children().first().show
 		Log =
 			TabMenu:
 				init: init

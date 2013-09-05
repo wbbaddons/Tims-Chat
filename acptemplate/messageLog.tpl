@@ -2,14 +2,16 @@
 
 <script data-relocate="true" src="{$__wcf->getPath('chat')}acp/js/be.bastelstu.Chat.ACP.Log{if !ENABLE_DEBUG_MODE}.min{/if}.js?version={PACKAGE_VERSION|rawurlencode}"></script>
 
-<script data-relocate="true">
-	//<![CDATA[
-	$(function() {
-		be.bastelstu.Chat.ACP.Log.TabMenu.init();
-		WCF.TabMenu.init();
-	});
-	//]]>
-</script>
+{if $errorField === ''}
+	<script data-relocate="true">
+		//<![CDATA[
+		$(function() {
+			be.bastelstu.Chat.ACP.Log.TabMenu.init();
+			WCF.TabMenu.init();
+		});
+		//]]>
+	</script>
+{/if}
 
 
 <header class="boxHeadline">
@@ -51,11 +53,7 @@
 	</div>
 </form>
 
-{if $messages|count == 0}
-	{if $errorField === ""}
-		<p class="info">{lang}wcf.global.noItems{/lang}</p>
-	{/if}
-{else}
+{if $errorField === ''}
 	<div id="messageLogContent" class="tabMenuContainer marginTop" data-active="timeTab-0" data-store="activeTabMenuItem" data-base-time="{$date}" data-room-id="{$room->roomID}">
 		<nav class="tabMenu">
 			<ul>
