@@ -186,7 +186,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	 */
 	public function validateGetMessages() {
 		// check permissions
-		WCF::getSession()->checkPermissions(array('admin.char.canReadLog'));
+		WCF::getSession()->checkPermissions(array('admin.chat.canReadLog'));
 		
 		// read parameters
 		$this->readInteger('roomID');
