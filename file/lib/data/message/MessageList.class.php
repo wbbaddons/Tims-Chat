@@ -60,4 +60,23 @@ class MessageList extends \wcf\data\DatabaseObjectList {
 		$messageList->readObjects();
 		return $messageList->getObjects();
 	}
+	
+	/**
+	 * Reads the message between the given timestamps for the given room.
+	 * 
+	 * @param	\chat\data\room\Room	$room
+	 * @param	integer			$start
+	 * @param	integer			$end
+	 * @return	array<\chat\data\message\Message>
+	 */
+	public static function getMessagesBetween(\chat\data\room\Room $room, $start, $end) {
+		$messageList = new static();
+		$messageList->sqlOrderBy = "message.messageID ASC";
+		$messageList->getConditionBuilder()->add('message.receiver IS NULL', array());
+		$messageList->getConditionBuilder()->add('message.roomID = ?', array($room->roomID));
+		$messageList->getConditionBuilder()->add('message.time BETWEEN ? AND ?', array($start, $end));
+		
+		$messageList->readObjects();
+		return $messageList->getObjects();
+	}
 }

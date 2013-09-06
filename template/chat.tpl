@@ -56,12 +56,6 @@
 							title: '<img width="246" height="90" alt="" src="{$__wcf->getPath("chat")|encodeJS}images/chatLogo.png"> {if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}'
 						});
 					});
-					
-					$('#chatLogLink').click(function (event) {
-						event.preventDefault();
-						
-						be.bastelstu.Chat.Log.loadOverlay();
-					});
 				});
 			})(jQuery, this);
 		//]]>
@@ -70,7 +64,6 @@
 
 <body id="tpl{$templateName|ucfirst}">
 	{capture assign='sidebar'}{include application='chat' file='sidebar'}{/capture}
-	{capture assign='headerNavigation'}{include application='chat' file='navigationInclude'}{/capture}
 	{include file='header' sandbox=false sidebarOrientation='right'}
 	
 	<div id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">

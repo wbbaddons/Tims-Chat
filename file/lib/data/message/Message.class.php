@@ -70,7 +70,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 	public function getFormattedMessage($type = 'text/html') {
 		$message = $this->message;
 		$messageParser = \wcf\system\bbcode\MessageParser::getInstance();
-		$messageParser->setOutputType('text/html');
+		$messageParser->setOutputType($type);
 		
 		switch ($this->type) {
 			case self::TYPE_JOIN:
@@ -91,7 +91,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 			case self::TYPE_NORMAL:
 			case self::TYPE_ME:
 			default:
-				if ($type !== 'text/html') return $message;
+				if ($type === 'text/plain') return $message;
 				
 				$message = $messageParser->parse($message, $this->enableSmilies, $this->enableHTML, true, false);
 			break;
