@@ -21,7 +21,7 @@ class MessageLogPage extends \wcf\page\AbstractPage {
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array(
-		'mod.chat.canReadLog'
+		'admin.char.canReadLog'
 	);
 	
 	/**
