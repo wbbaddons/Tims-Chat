@@ -66,7 +66,7 @@
 	{capture assign='sidebar'}{include application='chat' file='sidebar'}{/capture}
 	{include file='header' sandbox=false sidebarOrientation='right'}
 	
-	<div id="timsChatTopic" class="container{if $room->topic|language === ''} empty{/if}">
+	<div id="timsChatTopic" class="marginTop container{if $room->topic|language === ''} empty{/if}">
 		<span class="icon icon16 icon-remove jsTopicCloser jsTooltip" title="{lang}chat.general.closeTopic{/lang}"></span>
 		<span class="topic">{$room->topic|language}</span>
 	</div>
