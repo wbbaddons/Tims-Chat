@@ -37,13 +37,6 @@ class MessageLogPage extends \wcf\page\AbstractPage {
 	public $errorType = '';
 	
 	/**
-	 * messages for the given day
-	 * 
-	 * @var	array<\chat\data\message\Message>
-	 */
-	public $messages = array();
-	
-	/**
 	 * given roomID
 	 * 
 	 * @var	integer
@@ -81,16 +74,8 @@ class MessageLogPage extends \wcf\page\AbstractPage {
 			if ($this->date > TIME_NOW) {
 				throw new \wcf\system\exception\UserInputException('date', 'inFuture');
 			}
-		}
-		catch (\wcf\system\exception\UserInputException $e) {
-			$this->errorField = $e->getField();
-			$this->errorType = $e->getType();
 			
-			return;
-		}
-		
-		try {
-			if ($this->date < strtotime('today 00:00:00 -'.ceil(CHAT_LOG_ARCHIVETIME / 1440).'day')) {
+			if (CHAT_LOG_ARCHIVETIME !== -1 && $this->date < strtotime('today 00:00:00 -'.ceil(CHAT_LOG_ARCHIVETIME / 1440).'day')) {
 				throw new \wcf\system\exception\UserInputException('date', 'tooLongAgo');
 			}
 		}
@@ -99,19 +84,6 @@ class MessageLogPage extends \wcf\page\AbstractPage {
 			$this->errorType = $e->getType();
 			
 			return;
-		}
-		
-		$messages = \chat\data\message\ViewableMessageList::getMessagesBetween($this->room, $this->date, $this->date + 1799);
-		
-		foreach ($messages as $message) {
-			$hour = ((int) date('H', $message->time)) * 2;
-			$minutes = (int) date('i', $message->time);
-			
-			if ($minutes >= 30) {
-				$hour += 1;
-			}
-			
-			$this->messages[$hour][] = $message;
 		}
 	}
 	
@@ -148,7 +120,6 @@ class MessageLogPage extends \wcf\page\AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'messages' => $this->messages,
 			'rooms' => $this->rooms,
 			'room' => $this->room,
 			'date' => $this->date,

@@ -73,7 +73,7 @@ class MessageLogDownloadPage extends \wcf\page\AbstractPage {
 			throw new \wcf\system\exception\IllegalLinkException();
 		}
 		
-		if ($this->date < strtotime('today 00:00:00 -'.ceil(CHAT_LOG_ARCHIVETIME / 1440).'day')) {
+		if (CHAT_LOG_ARCHIVETIME !== -1 && $this->date < strtotime('today 00:00:00 -'.ceil(CHAT_LOG_ARCHIVETIME / 1440).'day')) {
 			throw new \wcf\system\exception\IllegalLinkException();
 		}
 		
