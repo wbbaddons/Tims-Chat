@@ -28,6 +28,7 @@ EOT;
 	if (file_exists('acptemplate.tar')) unlink('acptemplate.tar');
 	foreach (glob('file/acp/be.bastelstu.chat.nodePush/lib/*.js') as $nodeFile) unlink($nodeFile);
 	foreach (glob('file/js/*.js') as $jsFile) unlink($jsFile);
+	foreach (glob('file/acp/js/*.js') as $jsFile) unlink($jsFile);
 	if (file_exists('be.bastelstu.chat.tar')) unlink('be.bastelstu.chat.tar');
 echo <<<EOT
 
@@ -42,11 +43,33 @@ foreach (glob('file/js/*.{litcoffee,coffee}', GLOB_BRACE) as $coffeeFile) {
 }
 echo <<<EOT
 
+Building ACP-JavaScript
+-----------------------
+
+EOT;
+foreach (glob('file/acp/js/*.{litcoffee,coffee}', GLOB_BRACE) as $coffeeFile) {
+	echo $coffeeFile."\n";
+	passthru('coffee -c '.escapeshellarg($coffeeFile), $code);
+	if ($code != 0) exit($code);
+}
+echo <<<EOT
+
 Compressing JavaScript
 ----------------------
 
 EOT;
 foreach (glob('file/js/*.js', GLOB_BRACE) as $jsFile) {
+	echo $jsFile."\n";
+	passthru('uglifyjs '.escapeshellarg($jsFile).' --screw-ie8 -m -c --verbose --comments -o '.escapeshellarg(substr($jsFile, 0, -3).'.min.js'), $code);
+	if ($code != 0) exit($code);
+}
+echo <<<EOT
+
+Compressing ACP-JavaScript
+--------------------------
+
+EOT;
+foreach (glob('file/acp/js/*.js', GLOB_BRACE) as $jsFile) {
 	echo $jsFile."\n";
 	passthru('uglifyjs '.escapeshellarg($jsFile).' --screw-ie8 -m -c --verbose --comments -o '.escapeshellarg(substr($jsFile, 0, -3).'.min.js'), $code);
 	if ($code != 0) exit($code);
@@ -122,3 +145,4 @@ if (file_exists('template.tar')) unlink('template.tar');
 if (file_exists('acptemplate.tar')) unlink('acptemplate.tar');
 foreach (glob('file/acp/be.bastelstu.chat.nodePush/lib/*.js') as $nodeFile) unlink($nodeFile);
 foreach (glob('file/js/*.js') as $jsFile) unlink($jsFile);
+foreach (glob('file/acp/js/*.js') as $jsFile) unlink($jsFile);
