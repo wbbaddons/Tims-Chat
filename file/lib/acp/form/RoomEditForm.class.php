@@ -83,6 +83,7 @@ class RoomEditForm extends RoomAddForm {
 		}
 		
 		\wcf\system\acl\ACLHandler::getInstance()->save($this->roomID, $this->objectTypeID);
+		\wcf\system\acl\ACLHandler::getInstance()->disableAssignVariables(); 
 		\chat\system\permission\PermissionHandler::clearCache();
 		
 		// update room

@@ -116,6 +116,7 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 		}
 		
 		\wcf\system\acl\ACLHandler::getInstance()->save($roomID, $this->objectTypeID);
+		\wcf\system\acl\ACLHandler::getInstance()->disableAssignVariables(); 
 		\chat\system\permission\PermissionHandler::clearCache();
 		
 		$this->saved();
@@ -137,6 +138,7 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 		parent::assignVariables();
 		
 		I18nHandler::getInstance()->assignVariables();
+		\wcf\system\acl\ACLHandler::getInstance()->assignVariables($this->objectTypeID);
 		
 		WCF::getTPL()->assign(array(
 			'action' => 'add',
