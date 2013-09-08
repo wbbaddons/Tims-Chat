@@ -124,7 +124,7 @@ class MessageLogPage extends \wcf\page\AbstractPage {
 		$this->rooms = \chat\data\room\RoomCache::getInstance()->getRooms();
 		
 		foreach ($this->rooms as $id => $room) {
-			if (!$room->permanent) unset($this->rooms[$key]);
+			if (!$room->permanent) unset($this->rooms[$id]);
 		}
 		
 		if (isset($_REQUEST['id'])) $this->roomID = intval($_REQUEST['id']);
