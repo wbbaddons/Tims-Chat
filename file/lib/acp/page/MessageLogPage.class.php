@@ -124,8 +124,7 @@ class MessageLogPage extends \wcf\page\AbstractPage {
 		$this->rooms = \chat\data\room\RoomCache::getInstance()->getRooms();
 		
 		foreach ($this->rooms as $id => $room) {
-			if (!$room->permanent)
-					unset($this->rooms[$key]);
+			if (!$room->permanent) unset($this->rooms[$key]);
 		}
 		
 		if (isset($_REQUEST['id'])) $this->roomID = intval($_REQUEST['id']);
@@ -134,7 +133,8 @@ class MessageLogPage extends \wcf\page\AbstractPage {
 		$this->room = \chat\data\room\RoomCache::getInstance()->getRoom($this->roomID);
 		
 		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
-
+		if (!$this->room->permanent) throw new \wcf\system\exception\PermissionDeniedException();
+		
 		if (isset($_REQUEST['date'])) $date = $_REQUEST['date'].' 00:00:00';
 		else $date = 'today 00:00:00';
 		$this->date = @strtotime($date);
