@@ -1,6 +1,6 @@
 {include file='header' pageTitle='chat.acp.log.title'}
 
-<script data-relocate="true" src="{$__wcf->getPath('chat')}acp/js/be.bastelstu.Chat.ACP.Log{if !ENABLE_DEBUG_MODE}.min{/if}.js?version={PACKAGE_VERSION|rawurlencode}"></script>
+<script data-relocate="true" src="{$__wcf->getPath('chat')}acp/js/be.bastelstu.Chat.ACP.Log.js?version={PACKAGE_VERSION|rawurlencode}"></script>
 
 {if $errorField === ''}
 	<script data-relocate="true">

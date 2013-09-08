@@ -65,17 +65,6 @@ foreach (glob('file/js/*.js', GLOB_BRACE) as $jsFile) {
 }
 echo <<<EOT
 
-Compressing ACP-JavaScript
---------------------------
-
-EOT;
-foreach (glob('file/acp/js/*.js', GLOB_BRACE) as $jsFile) {
-	echo $jsFile."\n";
-	passthru('uglifyjs '.escapeshellarg($jsFile).' --screw-ie8 -m -c --verbose --comments -o '.escapeshellarg(substr($jsFile, 0, -3).'.min.js'), $code);
-	if ($code != 0) exit($code);
-}
-echo <<<EOT
-
 Checking PHP for Syntax Errors
 ------------------------------
 
