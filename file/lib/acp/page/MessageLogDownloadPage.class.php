@@ -111,7 +111,8 @@ class MessageLogDownloadPage extends \wcf\page\AbstractPage {
 		}
 		
 		$this->room = \chat\data\room\RoomCache::getInstance()->getRoom($this->roomID);
-		if ($this->room === null) throw new \wcf\system\exception\IllegalLinkException();
+		if (!$this->room) throw new \wcf\system\exception\IllegalLinkException();
+		if (!$this->room->permanent) throw new \wcf\system\exception\PermissionDeniedException();
 		
 		if (isset($_REQUEST['date'])) $date = $_REQUEST['date'].' 00:00:00';
 		else $date = 'today 00:00:00';
