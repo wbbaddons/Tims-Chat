@@ -38,6 +38,13 @@
 				<defaultvalue>none</defaultvalue>
 				<admindefaultvalue>all</admindefaultvalue>
 			</option>
+			<option name="user.chat.canUploadAttachment">
+				<categoryname>user.chat</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>user.chat.maxAttachmentSize,user.chat.allowedAttachmentExtensions</enableoptions>
+				<options>module_attachment</options>
+			</option>
 			<option name="user.chat.maxAttachmentSize">
 				<categoryname>user.chat</categoryname>
 				<optiontype>fileSize</optiontype>
