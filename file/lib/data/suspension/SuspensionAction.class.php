@@ -30,6 +30,7 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 	 * Revokes suspensions.
 	 */
 	public function revoke() {
+		// TODO: ignore revokes if suspension already is revoked
 		if (!isset($this->parameters['revoker'])) {
 			$this->parameters['revoker'] = null;
 		}
