@@ -60,7 +60,7 @@ abstract class AbstractSuspensionCommand extends AbstractRestrictedCommand {
 		
 		if ($suspension = suspension\Suspension::getSuspensionByUserRoomAndType($this->user, $room, static::SUSPENSION_TYPE)) {
 			if ($suspension->expires >= $this->expires) {
-				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.exists'));
+				throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('chat.suspension.exists'));
 			}
 				
 			$action = new suspension\SuspensionAction(array($suspension), 'revoke', array(

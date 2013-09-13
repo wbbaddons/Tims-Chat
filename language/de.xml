@@ -17,8 +17,10 @@
 		<item name="chat.acp.suspension.issuer"><![CDATA[Aussteller]]></item>
 		<item name="chat.acp.suspension.displayRevoked"><![CDATA[Abgelaufene Sanktionen anzeigen]]></item>
 		<item name="chat.acp.suspension.reason"><![CDATA[Grund]]></item>
-		<item name="chat.acp.suspension.revoked"><![CDATA[Zurückziehen]]></item>
-		<item name="chat.acp.suspension.revokedBy"><![CDATA[Zurückgezogen von {$suspension->revokerUsername}]]></item>
+		<item name="chat.acp.suspension.revoke"><![CDATA[Zurückziehen]]></item>
+		<item name="chat.acp.suspension.revoke.sure"><![CDATA[Möchten Sie die Sanktion von „{$suspension->username}“ wirklich zurückziehen?]]></item>
+		<item name="chat.acp.suspension.revoke.success"><![CDATA[Die Sanktion wurde erfolgreich zurückgezogen.]]></item>
+		<item name="chat.acp.suspension.revokedBy"><![CDATA[Zurückgezogen von „{$suspension->revokerUsername}“]]></item>
 	</category>
 	
 	<category name="chat.acp.log">
@@ -86,7 +88,7 @@
 		<item name="wcf.acp.option.chat_lastmessages.description"><![CDATA[Anzahl der Nachrichten, die beim Betreten des Chats angezeigt werden.]]></item>
 		<item name="wcf.acp.option.chat_display_join_leave"><![CDATA[Join- und Leave-Nachrichten anzeigen]]></item>
 		<item name="wcf.acp.option.chat_display_join_leave.description"><![CDATA[Soll eine Nachricht angezeigt werden, wenn ein Nutzer den Chat betritt oder verlässt?]]></item>
-		<item name="wcf.acp.option.chat_max_length"><![CDATA[Maximale Textlänge]]></item>
+		<item name="wcf.acp.option.chat_max_length"><![CDATA[Maximale Nachrichtenlänge]]></item>
 		<item name="wcf.acp.option.chat_command_aliases"><![CDATA[Befehls-Aliase]]></item>
 		<item name="wcf.acp.option.chat_command_aliases.description"><![CDATA[Geben Sie zeilenweise eine Kombination aus Alias und Zielbefehl an. Alias und Zielbefehl werden durch einen Doppelpunkt voneinander getrennt.]]></item>
 		
@@ -107,6 +109,7 @@
 	<category name="chat.error">
 		<item name="chat.error.notFound"><![CDATA[Der Befehl „{$exception->getCommand()}“ wurde nicht gefunden.]]></item>
 		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer „{$exception->getUsername()}“ wurde nicht gefunden.]]></item>
+		<item name="chat.error.invalidArgument"><![CDATA[Sie haben falsche Parameter an den Befehl übergeben.]]></item>
 		<item name="chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
 		<item name="chat.error.duplicateTab"><![CDATA[Sie haben den Chat in einem weiteren Browserfenster geöffnet. Diese Instanz wurde daher zur Vermeidung von Problemen deaktiviert.]]></item>
 		<item name="chat.error.join"><![CDATA[Es gibt Probleme den gewählten Chatraum zu betreten.]]></item>
@@ -188,11 +191,14 @@ Probieren Sie den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen 
 		<item name="chat.message.5.ungban"><![CDATA[hat {@$link} global entbannt.]]></item>
 		
 		<item name="chat.message.color.success"><![CDATA[Die Farbe wurde erfolgreich geändert.]]></item>
+		<item name="chat.message.temproom.success"><![CDATA[Der temporäre Raum „{$roomName}“ wurde erfolgreich erstellt. Laden Sie die Raumliste neu, damit dieser sichtbar wird.]]></item>
 	</category>
 	
 	<category name="chat.suspension">
 		<item name="chat.suspension.mute"><![CDATA[Knebel]]></item>
 		<item name="chat.suspension.ban"><![CDATA[Bann]]></item>
+		<item name="chat.suspension.exists"><![CDATA[Es existiert bereits eine längere Sanktion der gleichen Art.]]></item>
+		<item name="chat.suspension.notExists"><![CDATA[Es existiert keine Sanktion dieser Art.]]></item>
 	</category>
 	
 	<!-- I18N Values -->

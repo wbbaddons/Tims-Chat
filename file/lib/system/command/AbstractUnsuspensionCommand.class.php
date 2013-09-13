@@ -48,7 +48,7 @@ abstract class AbstractUnsuspensionCommand extends AbstractRestrictedCommand {
 			$action->executeAction();
 		}
 		else {
-			throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('wcf.chat.suspension.notExists'));
+			throw new \wcf\system\exception\UserInputException('text', WCF::getLanguage()->get('chat.suspension.notExists'));
 		}
 	}
 	
