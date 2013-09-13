@@ -203,7 +203,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			}
 			
 			$ipAddress = '';
-			if ($this->parameters['user']->userID == WCF::getUser()->userID) $ipAddress = \wcf\util\UserUtil::convertIPv6To4(\wcf\util\UserUtil::getIpAddress());
+			if (LOG_IP_ADDRESS && $this->parameters['user']->userID == WCF::getUser()->userID) $ipAddress = \wcf\util\UserUtil::convertIPv6To4(\wcf\util\UserUtil::getIpAddress());
 			
 			// join message
 			$messageAction = new message\MessageAction(array(), 'create', array(
