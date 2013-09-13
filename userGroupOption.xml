@@ -38,6 +38,27 @@
 				<defaultvalue>none</defaultvalue>
 				<admindefaultvalue>all</admindefaultvalue>
 			</option>
+			<option name="user.chat.maxAttachmentSize">
+				<categoryname>user.chat</categoryname>
+				<optiontype>fileSize</optiontype>
+				<defaultvalue>1000000</defaultvalue>
+				<options>module_attachment</options>
+				<minvalue>10000</minvalue>
+			</option>
+			<option name="user.chat.allowedAttachmentExtensions">
+				<categoryname>user.chat</categoryname>
+				<optiontype>textarea</optiontype>
+				<defaultvalue><![CDATA[gif
+jpg
+jpeg
+png
+bmp
+zip
+txt
+pdf]]></defaultvalue>
+				<options>module_attachment</options>
+				<wildcard><![CDATA[*]]></wildcard>
+			</option>
 			<option name="mod.chat.canAlwaysEnter">
 				<categoryname>mod.chat</categoryname>
 				<optiontype>boolean</optiontype>

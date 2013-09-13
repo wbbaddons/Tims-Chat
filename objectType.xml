@@ -24,5 +24,10 @@
 			<classname>chat\system\user\online\location\ChatLocation</classname>
 			<languagevariable>chat.user.usersOnline.location.ChatPage</languagevariable>
 		</type>
+		<type>
+			<name>be.bastelstu.chat.message</name>
+			<definitionname>com.woltlab.wcf.attachment.objectType</definitionname>
+			<classname>chat\system\attachment\MessageAttachmentObjectType</classname>
+		</type>
 	</import>
 </data>
