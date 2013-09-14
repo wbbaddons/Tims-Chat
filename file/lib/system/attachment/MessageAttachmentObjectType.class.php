@@ -1,5 +1,6 @@
 <?php
 namespace chat\system\attachment;
+use \wcf\system\WCF;
 
 /**
  * Attachment object type implementation for chat messages.
@@ -10,7 +11,7 @@ namespace chat\system\attachment;
  * @package	be.bastelstu.chat
  * @subpackage	system.attachment
  */
-class MessageAttachmentObjectType extends AbstractAttachmentObjectType {
+class MessageAttachmentObjectType extends \wcf\system\attachment\AbstractAttachmentObjectType {
 	/**
 	 * @see	wcf\system\attachment\IAttachmentObjectType::getMaxSize()
 	 */
@@ -22,7 +23,7 @@ class MessageAttachmentObjectType extends AbstractAttachmentObjectType {
 	 * @see	wcf\system\attachment\IAttachmentObjectType::getAllowedExtensions()
 	 */
 	public function getAllowedExtensions() {
-		return ArrayUtil::trim(explode("\n", WCF::getSession()->getPermission('user.chat.allowedAttachmentExtensions')));
+		return \wcf\util\ArrayUtil::trim(explode("\n", WCF::getSession()->getPermission('user.chat.allowedAttachmentExtensions')));
 	}
 	
 	/**
@@ -49,8 +50,8 @@ class MessageAttachmentObjectType extends AbstractAttachmentObjectType {
 	 */
 	public function canUpload($objectID, $parentObjectID = 0) {
 		if ($objectID) {
-			$room = \chat\data\room\RoomCache::getInstance()->getRoom($objectID);
-			if ($room && $room->canWrite()) return true;
+			$room = \chat\data\room\RoomCache::getInstance()->getRoom($parentObjectID);
+			if (!$room || !$room->canWrite()) return false;
 		}
 		
 		return WCF::getSession()->getPermission('user.chat.canUploadAttachment');
