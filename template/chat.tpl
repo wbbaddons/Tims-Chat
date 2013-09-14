@@ -21,12 +21,22 @@
 						'chat.error.onMessageLoad': '{@"chat.error.onMessageLoad"|language|encodeJS}',
 						'chat.error.duplicateTab': '{lang}chat.error.duplicateTab{/lang}',
 						'chat.error.join': '{lang}chat.error.join{/lang}',
-						'chat.error.reload': '{lang}chat.error.reload{/lang}'
+						'chat.error.reload': '{lang}chat.error.reload{/lang}',
+						'wcf.attachment.upload.error.invalidExtension': '{lang}wcf.attachment.upload.error.invalidExtension{/lang}',
+						'wcf.attachment.upload.error.tooLarge': '{lang}wcf.attachment.upload.error.tooLarge{/lang}',
+						'wcf.attachment.upload.error.reachedLimit': '{lang}wcf.attachment.upload.error.reachedLimit{/lang}',
+						'wcf.attachment.upload.error.reachedRemainingLimit': '{lang}wcf.attachment.upload.error.reachedRemainingLimit{/lang}',
+						'wcf.attachment.upload.error.uploadFailed': '{lang}wcf.attachment.upload.error.uploadFailed{/lang}',
+						'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}',
+						'wcf.attachment.insert': '{lang}wcf.attachment.insert{/lang}',
+						'wcf.attachment.delete.sure': '{lang}wcf.attachment.delete.sure{/lang}'
 					});
 					
 					// Boot the chat
 					{if MODULE_SMILEY}WCF.TabMenu.init();{/if}
+					{if MODULE_ATTACHMENT}new be.bastelstu.Chat.Attachment();{/if}
 					new WCF.Message.Smilies();
+					
 					{capture assign='messageTemplate'}{include application='chat' file='message'}{/capture}
 					{capture assign='userTemplate'}{include application='chat' file='userListUser'}{/capture}
 					
@@ -110,10 +120,17 @@
 		<span class="invisible">{lang}chat.general.controls{/lang}</span>
 		<ul class="smallButtons buttonGroup">
 			<li><a id="timsChatAutoscroll" accesskey="d" class="button active timsChatToggle jsTooltip" title="{lang}chat.general.scroll{/lang}" data-status="1"><span class="icon icon16 icon-arrow-down"></span><span class="invisible">{lang}chat.general.scroll{/lang}</span></a></li>{*
+			
 			*}<li><a id="timsChatFullscreen" accesskey="f" class="button timsChatToggle jsTooltip" title="{lang}chat.general.fullscreen{/lang}" data-status="0"><span class="icon icon16 icon-fullscreen"></span><span class="invisible">{lang}chat.general.fullscreen{/lang}</span></a></li>{*
+			
 			*}<li><a id="timsChatNotify" accesskey="n" class="button timsChatToggle jsTooltip" title="{lang}chat.general.notify{/lang}" data-status="0"><span class="icon icon16 icon-bell-alt"></span><span class="invisible">{lang}chat.general.notify{/lang}</span></a></li>{*
+			
 			*}<li{if !MODULE_SMILEY || !$smileyCategories|count} style="display: none;"{/if}><a id="timsChatSmilies" accesskey="e" class="button{if ENABLE_SMILIES_DEFAULT_VALUE} active{/if} timsChatToggle jsTooltip" title="{lang}chat.general.smilies{/lang}" data-status="{@ENABLE_SMILIES_DEFAULT_VALUE}"><span class="icon icon16 icon-smile"></span><span class="invisible">{lang}chat.general.smilies{/lang}</span></a></li>{*
+			
+			*}<li id="timsChatUploadContainer" class="invisible" data-max-size="{$attachmentHandler->getMaxSize()}"></li>{*
+			
 			*}<li><a id="timsChatClear" class="button jsTooltip" title="{lang}chat.general.clear{/lang}"><span class="icon icon16 icon-remove"></span><span class="invisible">{lang}chat.general.clear{/lang}</span></a></li>{*
+			
 			*}<li><a id="timsChatMark" class="button timsChatToggle jsTooltip" title="{lang}chat.general.mark{/lang}" data-status="0"><span class="icon icon16 icon-check"></span><span class="invisible">{lang}chat.general.mark{/lang}</span></a></li>
 		</ul>
 	</nav>

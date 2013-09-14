@@ -813,6 +813,34 @@ Remove the given callback from the given event.
 			events[event].remove callback
 			
 			true
+		
+		if WCF?.Attachment?.Upload?
+			Attachment = WCF.Attachment.Upload.extend
+				init: ->
+					@_super $('#timsChatUploadContainer'), $('<ul>').appendTo('#content'), 'be.bastelstu.chat.message', 0, 0, 0, 1, null
+					
+				_createButton: ->
+					if @_supportsAJAXUpload
+						@_fileUpload = $ """<input type="file" name="#{@_name}" />"""
+						@_fileUpload.change =>
+							do @_upload
+						button = $ """<a id="timsChatUpload" class="button uploadButton jsTooltip" title="#{WCF.Language.get("wcf.global.button.upload")}"><span class="icon icon16 icon-upload-alt"></span><span class="invisible">#{WCF.Language.get("wcf.global.button.upload")}</span></a>"""
+						button.prepend @_fileUpload
+					else
+						button = $ """<a id="timsChatUpload" class="button uploadFallbackButton jsTooltip" title="#{WCF.Language.get("wcf.global.button.upload")}"><span class="icon icon16 icon-upload-alt"></span><span class="invisible">#{WCF.Language.get("wcf.global.button.upload")}</span></a>"""
+						button.click =>
+							do @_showOverlay
+						
+					@_insertButton button
+				
+				_insertButton: (button) ->
+					@_super(button)
+					@_buttonSelector.removeClass 'invisible'
+					
+				_upload: ->
+					@_tmpHash = do Math.random
+					@_objectID = be.bastelstu.Chat.currentRoomID
+					do @_super
 
 And finally export the public methods and variables.
 
@@ -823,10 +851,12 @@ And finally export the public methods and variables.
 			insertText: insertText
 			freeTheFish: freeTheFish
 			join: join
+			currentRoomID: currentRoom.roomID
 			listener:
 				add: addListener
 				remove: removeListener
-				
+		Chat.Attachment = Attachment if Attachment?
+		
 		window.be ?= {}
 		be.bastelstu ?= {}
 		window.be.bastelstu.Chat = Chat
