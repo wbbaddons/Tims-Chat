@@ -319,7 +319,7 @@ Enable duplicate tab detection.
 				window.localStorage.setItem 'be.bastelstu.chat.session', chatSession
 				$(window).on 'storage', (event) ->
 					if event.originalEvent.key is 'be.bastelstu.chat.session'
-						showError WCF.Language.get 'chat.error.duplicateTab' if parseInt(event.originalEvent.newValue) isnt chatSession
+						showError WCF.Language.get 'chat.error.duplicateTab' unless parseInt(event.originalEvent.newValue) is chatSession
 
 Ask for permissions to use Desktop notifications when notifications are activated.
 
