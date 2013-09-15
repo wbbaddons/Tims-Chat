@@ -19,7 +19,9 @@
 				<div>
 					<ul>
 					</ul>
-					<div><button type="button">{lang}chat.general.forceRefresh{/lang}</button></div>
+					<div class="marginTop">
+						<button type="button">{lang}chat.general.forceRefresh{/lang}</button>
+					</div>
 				</div>
 			</nav>
 		</fieldset>
