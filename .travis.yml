@@ -17,4 +17,4 @@ before_script:
 script:
   - find file -type f -name '*.php' |xargs -I file php -l file
   - phpcs -p --extensions=php --standard="`pwd`/WCF/CodeSniff/WCF" file
-  - phpcpd file
+  - phpcpd --verbose --min-lines 10 file
