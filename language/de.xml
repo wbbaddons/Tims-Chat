@@ -93,7 +93,6 @@
 		<item name="wcf.acp.option.chat_command_aliases.description"><![CDATA[Geben Sie zeilenweise eine Kombination aus Alias und Zielbefehl an. Alias und Zielbefehl werden durch einen Doppelpunkt voneinander getrennt.]]></item>
 		
 		<item name="wcf.acp.option.category.chat.log"><![CDATA[Protokoll]]></item>
-		<item name="wcf.acp.option.chat_log_active"><![CDATA[Protokoll aktivieren]]></item>
 		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Speicherzeit]]></item>
 		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Zeit, die eine Nachricht im Protokoll abrufbar bleibt. [Zeit in Minuten, -1 für unendlich]]]></item>
 	</category>

@@ -56,11 +56,6 @@ gunmute:ungmute</defaultvalue>
 			<!-- general chat options end -->
 			
 			<!--log options-->
-			<option name="chat_log_active">
-				<categoryname>chat.log</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
-			</option>
 			<option name="chat_log_archivetime">
 				<categoryname>chat.log</categoryname>
 				<optiontype>integer</optiontype>
