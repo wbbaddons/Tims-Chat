@@ -54,14 +54,19 @@ final class CommandHandler {
 	 * @return	array<string>
 	 */
 	public static function getAliasMap() {
-		$result = array();
-		foreach (explode("\n", StringUtil::unifyNewlines(StringUtil::toLowerCase(CHAT_COMMAND_ALIASES))) as $line) {
-			list($key, $val) = explode(':', $line, 2);
+		try {
+			$result = array();
+			foreach (explode("\n", StringUtil::unifyNewlines(StringUtil::toLowerCase(CHAT_COMMAND_ALIASES))) as $line) {
+				list($key, $val) = explode(':', $line, 2);
+				
+				$result[$key] = $val;
+			}
 			
-			$result[$key] = $val;
+			return $result;
 		}
-		
-		return $result;
+		catch (\wcf\system\exception\SystemException $e) {
+			throw new \wcf\system\exception\SystemException("Invalid alias specified: '".$line."'");
+		}
 	}
 	
 	/**
