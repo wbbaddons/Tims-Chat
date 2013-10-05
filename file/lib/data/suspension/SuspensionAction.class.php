@@ -18,7 +18,7 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 	protected $className = '\chat\data\suspension\SuspensionEditor';
 	
 	/**
-	 * @see  wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see \wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('revoke');
 	
