@@ -18,6 +18,11 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 	protected $className = '\chat\data\suspension\SuspensionEditor';
 	
 	/**
+	 * @see \wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('revoke');
+	
+	/**
 	 * Validates permissions and parameters
 	 */
 	public function validateRevoke() {
@@ -30,6 +35,7 @@ class SuspensionAction extends \wcf\data\AbstractDatabaseObjectAction {
 	 * Revokes suspensions.
 	 */
 	public function revoke() {
+		// TODO: ignore revokes if suspension already is revoked
 		if (!isset($this->parameters['revoker'])) {
 			$this->parameters['revoker'] = null;
 		}

@@ -75,7 +75,7 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 		init = (roomID, config, titleTemplate, messageTemplate, userTemplate) ->
 			return false if initialized
 			initialized = true
-
+			
 			v.config = config
 			v.titleTemplate = titleTemplate
 			v.messageTemplate = messageTemplate
@@ -93,8 +93,7 @@ When **Tims Chat** becomes focused mark the chat as active and remove the number
 
 When **Tims Chat** loses the focus mark the chat as inactive.
 
-			$(window).blur ->
-				isActive = false
+			$(window).blur -> isActive = false
 
 Make the user leave the chat when **Tims Chat** is about to be unloaded.
 
@@ -113,13 +112,11 @@ Make the user leave the chat when **Tims Chat** is about to be unloaded.
 
 Insert the appropriate smiley code into the input when a smiley is clicked.
 
-			$('#smilies').on 'click', 'img', ->
-				insertText " #{$(@).attr('alt')} "
+			$('#smilies').on 'click', 'img', -> insertText " #{$(@).attr('alt')} "
 
 Handle private channel menu
 
-			$('#privateChannelsMenu').on 'click', '.privateChannel', ->
-				openPrivateChannel $(@).data 'privateChannelID'
+			$('#privateChannelsMenu').on 'click', '.privateChannel', -> openPrivateChannel $(@).data 'privateChannelID'
 
 Handle submitting the form. The message will be validated by some basic checks, passed to the `submit` eventlisteners
 and afterwards sent to the server by an AJAX request.
@@ -132,8 +129,7 @@ and afterwards sent to the server by an AJAX request.
 				
 				return false if text.length is 0
 				
-				unless openChannel is 0
-					text = "/whisper #{userList.allTime[openChannel].username}, #{text}"
+				text = "/whisper #{userList.allTime[openChannel].username}, #{text}" unless openChannel is 0
 				
 				# Free the fish!
 				do freeTheFish if text.toLowerCase() is '/free the fish'
@@ -222,8 +218,7 @@ Reset autocompleter to default status, when the input is `click`ed, as the posit
 
 Refresh the room list when the associated button is `click`ed.
 
-			$('#timsChatRoomList button').click ->
-				do refreshRoomList
+			$('#timsChatRoomList button').click -> do refreshRoomList
 
 Clear the chat by removing every single message once the clear button is `clicked`.
 
@@ -261,7 +256,7 @@ Toggle fullscreen mode.
 				# Force dropdowns to reorientate
 				$('.dropdownMenu').data 'orientationX', ''
 				
-				if $('#timsChatFullscreen').data 'status'
+				if $(@).data 'status'
 					$('html').addClass 'fullscreen'
 				else
 					$('html').removeClass 'fullscreen'
@@ -315,18 +310,18 @@ Scroll down when autoscroll is being activated.
 
 Enable duplicate tab detection.
 
-			window.localStorage.setItem 'be.bastelstu.chat.session', chatSession
-			$(window).on 'storage', (event) ->
-				if event.originalEvent.key is 'be.bastelstu.chat.session'
-					if parseInt(event.originalEvent.newValue) isnt chatSession
-						showError WCF.Language.get 'chat.error.duplicateTab'
+			try
+				window.localStorage.setItem 'be.bastelstu.chat.session', chatSession
+				$(window).on 'storage', (event) ->
+					if event.originalEvent.key is 'be.bastelstu.chat.session'
+						showError WCF.Language.get 'chat.error.duplicateTab' unless parseInt(event.originalEvent.newValue) is chatSession
 
 Ask for permissions to use Desktop notifications when notifications are activated.
 
 			if window.Notification?
 				$('#timsChatNotify').click (event) ->
 					return unless $(@).data 'status'
-					if window.Notification.permission isnt 'granted'
+					unless window.Notification.permission is 'granted'
 						window.Notification.requestPermission (permission) ->
 							window.Notification.permission ?= permission
 			
@@ -682,10 +677,10 @@ Shows an unrecoverable error with the given text.
 			""").appendTo 'body'
 			
 			formSubmit = $("""<div class="formSubmit"></div>""").appendTo errorDialog
+			
 			reloadButton = $("""<button class="buttonPrimary">#{WCF.Language.get 'chat.error.reload'}</button>""").appendTo formSubmit
-			reloadButton.on 'click', ->
-				do window.location.reload
-				
+			reloadButton.on 'click', -> do window.location.reload
+			
 			$('#timsChatLoadingErrorDialog').wcfDialog
 				closable: false
 				title: WCF.Language.get 'wcf.global.error.title'
@@ -743,6 +738,7 @@ Open private channel
 				$('#timsChatMessageContainer0').after div
 			
 			$('.privateChannel').removeClass 'active'
+			
 			if userID isnt 0
 				$('#timsChatTopic').removeClass 'hidden empty'
 				$('#timsChatTopic > .topic').text WCF.Language.get 'chat.general.privateChannelTopic', {username: userList.allTime[userID].username}

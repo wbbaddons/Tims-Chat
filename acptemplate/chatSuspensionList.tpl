@@ -135,7 +135,7 @@
 				{foreach from=$objects item=$suspension}
 					<tr class="jsSuspensionRow" data-object-id="{$suspension->suspensionID}">
 						<td class="columnIcon">
-							<span class="icon icon16 icon-undo{if $suspension->expires <= TIME_NOW} disabled{else} pointer{/if} jsRevokeButton" title="{lang}chat.acp.suspension.revoked{/lang}" data-confirm-message="{lang}chat.acp.suspension.revoke.sure{/lang}"></span>
+							<span class="icon icon16 icon-undo{if $suspension->expires <= TIME_NOW} disabled{else} pointer{/if} jsRevokeButton" title="{lang}chat.acp.suspension.revoke{/lang}" data-confirm-message="{lang}chat.acp.suspension.revoke.sure{/lang}"></span>
 							{event name='rowButtons'}
 						</td>
 						<td id="columnID">{#$suspension->suspensionID}</td>

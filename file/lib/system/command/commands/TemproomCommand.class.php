@@ -75,7 +75,7 @@ class TemproomCommand extends \chat\system\command\AbstractRestrictedCommand {
 	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return $this->roomName;
+		return WCF::getLanguage()->getDynamicVariable('chat.message.temproom.success', array('roomName' => $this->roomName));
 	}
 	
 	/**

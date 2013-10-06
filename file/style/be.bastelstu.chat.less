@@ -29,10 +29,6 @@
 }
 
 #tplChat {
-	#main > div {
-		overflow: hidden;
-	}
-	
 	#timsChatTopic {
 		padding: @wcfGapTiny;
 		.transition(height, .2s);
@@ -45,10 +41,6 @@
 			border: 0px;
 			padding: 0px;
 			margin: 0px;
-			
-			~ #timsChatMessageContainer {
-				margin-top: 0;
-			}
 		}
 		
 		.jsTopicCloser {
@@ -67,13 +59,13 @@
 		&.shown {
 			opacity: 1;
 			z-index: 130;
-
+			
 			~ .timsChatMessageContainer {
 				margin-left: 35px;
 				border-top-left-radius: 0;
 			}
 		}
-
+		
 		> ul {
 			text-align: right;
 			
@@ -84,7 +76,7 @@
 					}
 				}
 			}
-
+			
 			> li:last-child {
 				> .userAvatar.framed {
 					 img, > canvas, > .icon {
@@ -92,7 +84,7 @@
 					}
 				}
 			}
-
+			
 			> li {
 				margin-bottom: -1px;
 				background-color: @wcfContainerBackgroundColor;
@@ -108,14 +100,6 @@
 					
 					&.small {
 						display: block;
-					}
-					
-					&.framed {
-						> .icon {
-							background-color: @wcfContentBackgroundColor;
-							border: 1px solid @wcfContainerBorderColor;
-							padding: 1px;
-						}
 					}
 				}
 
@@ -189,7 +173,7 @@
 				}
 				
 				&:nth-child(even) {
-					> .innerMessageContainer.bubble .innerMessage, .innerMessageContainer.right.bubble .innerMessage {
+					> .innerMessageContainer.bubble .innerMessage {
 						background-color: @wcfContainerAccentBackgroundColor;
 						
 						&:after {
@@ -221,7 +205,6 @@
 							float: right;
 						}
 						
-															
 						.username {
 							font-weight: bold;
 						}
@@ -408,13 +391,14 @@
 	#timsChatRoomList {
 		> div {
 			> div {
-				margin-top: @wcfGapMedium;
 				text-align: center;
 			}
 		}
 	}
 	
 	#smilies {
+		margin-top: @wcfGapMedium;
+		
 		li {
 			.transition(opacity, .2s);
 		}
@@ -424,31 +408,12 @@
 				opacity: .5;
 			}
 		}
-		
-		margin-top: @wcfGapMedium;
-	}
-	
-	@media only screen and (max-width: 800px) {
-		.timsChatMessage .text li > time, #smilies {
-			display: none !important;
-		}
 	}
 	
 	#timsChatOptions {
 		> ul {
 			text-align: right;
 		}
-	}
-	
-	#toggleRooms .ajaxLoad {
-		position: absolute;
-		right: 10px;
-		top: 7px;
-		display: none;
-	}
-	
-	#timsChatCopyright {
-		.textShadow(@wcfContentBackgroundColor);
 	}
 	
 	#timsChatCopyrightDialog > div {
@@ -464,6 +429,12 @@
 		animation-direction: alternate;
 		animation-timing-function: linear;
 		border-color: @wcfInputHoverBorderColor;
+	}
+	
+	@media only screen and (max-width: 800px) {
+		.timsChatMessage .text li > time, #smilies {
+			display: none !important;
+		}
 	}
 }
 
