@@ -49,6 +49,11 @@ final class Install {
 				$stmt->execute(array('Tims Chat 3', 'page_title'));
 				\wcf\data\option\OptionEditor::resetCache();
 		}
+		
+		\wcf\system\dashboard\DashboardHandler::setDefaultValues('com.woltlab.wcf.user.DashboardPage', array(
+			// content
+			'be.bastelstu.chat.onlineList' => 1
+		));
 	}
 }
 $install = new Install();
