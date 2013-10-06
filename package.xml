@@ -16,7 +16,7 @@
 	</authorinformation>
 	
 	<requiredpackages>
-		<requiredpackage minversion="2.0.0 Beta 8">com.woltlab.wcf</requiredpackage>
+		<requiredpackage minversion="2.0.0 Beta 11">com.woltlab.wcf</requiredpackage>
 		<requiredpackage file="requirements/be.bastelstu.max.wcf.jCounter.tar">be.bastelstu.max.wcf.jCounter</requiredpackage>
 		<requiredpackage file="requirements/be.bastelstu.wcf.nodePush.tar">be.bastelstu.wcf.nodePush</requiredpackage>
 	</requiredpackages>
