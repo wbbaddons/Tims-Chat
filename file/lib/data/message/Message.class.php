@@ -1,9 +1,9 @@
 <?php
 namespace chat\data\message;
 use \chat\util\ChatUtil;
+use \wcf\system\bbcode\AttachmentBBCode;
 use \wcf\system\Regex;
 use \wcf\system\WCF;
-use \wcf\system\bbcode\AttachmentBBCode;
 
 /**
  * Represents a chat message.
