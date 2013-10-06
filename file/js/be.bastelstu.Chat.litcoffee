@@ -951,28 +951,29 @@ Create a message containing the uploaded attachment
 						li.click (event) => @_insert(event)
 						
 						filename = li.data 'filename'
+						internalFileID = li.data 'internalFileID'
 						
-						if data.returnValues and data.returnValues.attachments[filename]
-							if data.returnValues.attachments[filename].tinyURL
-								li.find('.box32 > div.attachmentImageContainer > .icon-paper-clip').replaceWith $("""<img src="#{data.returnValues.attachments[filename].tinyURL}'" alt="" class="attachmentTinyThumbnail" style="width: 32px; height: 32px;" />""")
+						if data.returnValues and data.returnValues.attachments[internalFileID]
+							if data.returnValues.attachments[internalFileID].tinyURL
+								li.find('.box32 > div.attachmentImageContainer > .icon-paper-clip').replaceWith $("""<img src="#{data.returnValues.attachments[internalFileID].tinyURL}'" alt="" class="attachmentTinyThumbnail" style="width: 32px; height: 32px;" />""")
 								
 							link = $ '<a href="" class="jsTooltip"></a>'
-							link.attr {'href': data.returnValues.attachments[filename].url, 'title': filename}
+							link.attr {'href': data.returnValues.attachments[internalFileID].url, 'title': filename}
 							
-							unless parseInt(data.returnValues.attachments[filename].isImage) is 0
+							unless parseInt(data.returnValues.attachments[internalFileID].isImage) is 0
 								link.addClass('jsImageViewer')
 								
-								if !data.returnValues.attachments[filename].tinyURL
-									li.find('.box32 > div.attachmentImageContainer > .icon-paper-clip').replaceWith $("""<img src="#{data.returnValues.attachments[filename].url}'" alt="" class="attachmentTinyThumbnail" style="width: 32px; height: 32px;" />""")
+								if !data.returnValues.attachments[internalFileID].tinyURL
+									li.find('.box32 > div.attachmentImageContainer > .icon-paper-clip').replaceWith $("""<img src="#{data.returnValues.attachments[internalFileID].url}'" alt="" class="attachmentTinyThumbnail" style="width: 32px; height: 32px;" />""")
 							
 							li.find('.attachmentTinyThumbnail').wrap link
-							li.find('small').append data.returnValues.attachments[filename].formattedFilesize
+							li.find('small').append data.returnValues.attachments[internalFileID].formattedFilesize
 							
-							li.data 'objectID', data.returnValues.attachments[filename].attachmentID
+							li.data 'objectID', data.returnValues.attachments[internalFileID].attachmentID
 							
 							deleteButton = $ """
 								<li>
-									<span class="jsDeleteButton" data-object-id="#{data.returnValues.attachments[filename].attachmentID}" data-confirm-message="#{WCF.Language.get('wcf.attachment.delete.sure')}">
+									<span class="jsDeleteButton" data-object-id="#{data.returnValues.attachments[internalFileID].attachmentID}" data-confirm-message="#{WCF.Language.get('wcf.attachment.delete.sure')}">
 										<span class="icon icon16 icon-remove pointer jsTooltip" />
 										<span>#{WCF.Language.get('wcf.global.button.delete')}</span>
 									</span>
@@ -981,8 +982,8 @@ Create a message containing the uploaded attachment
 						else
 							$('#timsChatUpload .icon-spinner').removeClass('icon-spinner').addClass 'icon-ban-circle'
 							
-							if data.returnValues and data.returnValues.errors[filename]
-								errorMessage = data.returnValues.errors[filename].errorType
+							if data.returnValues and data.returnValues.errors[internalFileID]
+								errorMessage = data.returnValues.errors[internalFileID].errorType
 							else
 								errorMessage = 'uploadFailed'
 							
