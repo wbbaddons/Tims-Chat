@@ -56,6 +56,8 @@
 		<item name="wcf.acp.group.option.user.chat.canEnter"><![CDATA[Kann Chat betreten]]></item>
 		<item name="wcf.acp.group.option.user.chat.canWrite"><![CDATA[Kann im Chat schreiben]]></item>
 		<item name="wcf.acp.group.option.user.chat.canTempRoom"><![CDATA[Kann temporäre Räume erstellen]]></item>
+		<item name="wcf.acp.group.option.user.chat.allowedBBCodes"><![CDATA[Erlaubte BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.chat.allowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitglieder dieser Benutzergruppe verwendet werden.]]></item>
 		
 		<item name="wcf.acp.group.option.category.mod.chat"><![CDATA[Chat]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter"><![CDATA[Kann Räume immer betreten]]></item>
@@ -74,6 +76,10 @@
 		<item name="wcf.acp.group.option.mod.chat.canGmute.description"><![CDATA[Impliziert „Kann knebeln“]]></item>
 		
 		<item name="wcf.acp.group.option.category.admin.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canAddRoom"><![CDATA[Kann Räume erstellen]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canEditRoom"><![CDATA[Kann Räume bearbeiten]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canDeleteRoom"><![CDATA[Kann Räume löschen]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canReadLog"><![CDATA[Kann Protokoll einsehen]]></item>
 		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions"><![CDATA[Kann Sanktionen verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions.description"><![CDATA[Impliziert „Kann bannen“, „Kann knebeln“, „Kann global bannen“, „Kann global knebeln“ und gegenbenenfalls weitere Rechte.]]></item>
 	</category>
