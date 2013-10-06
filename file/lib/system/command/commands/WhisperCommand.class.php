@@ -1,6 +1,6 @@
 <?php
 namespace chat\system\command\commands;
-use \wcf\data\user\User;
+use \wcf\data\user\UserProfile;
 
 /**
  * Whispers a message.
@@ -29,8 +29,13 @@ class WhisperCommand extends \chat\system\command\AbstractCommand {
 			throw new \InvalidArgumentException();
 		}
 		
-		$this->user = User::getUserByUsername($username);
+		$this->user = UserProfile::getUserProfileByUsername($username);
 		if (!$this->user->userID) throw new \chat\system\command\UserNotFoundException($username);
+		if (!\wcf\system\WCF::getSession()->getPermission('user.profile.cannotBeIgnored')) {
+			if ($this->user->isIgnoredUser(\wcf\system\WCF::getUser()->userID)) {
+				throw new \wcf\system\exception\UserInputException('text', \wcf\system\WCF::getLanguage()->getDynamicVariable('chat.error.whisper.ignoresYou', array('user' => $this->user)));
+			}
+		}
 		
 		$this->didInit();
 	}
