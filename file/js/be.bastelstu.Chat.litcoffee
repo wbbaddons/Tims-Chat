@@ -37,6 +37,7 @@ exposed by a function if necessary.
 			current: {}
 			allTime: {}
 		currentRoom = {}
+		fileUploaded = no
 		
 		errorVisible = false
 		inputErrorHidingTimer = null
@@ -809,35 +810,218 @@ Remove the given callback from the given event.
 			events[event].remove callback
 			
 			true
-		
-		if WCF?.Attachment?.Upload?
+			
+The following code handles attachment uploads
+
+Enable attachment code if `WCF.Attachment.Upload` is defined
+
+		if WCF?.Attachment?.Upload? and $('#timsChatUploadContainer').length
 			Attachment = WCF.Attachment.Upload.extend
+				fileUploaded: no
+				
+Initialize WCF.Attachment.Upload
+See WCF.Attachment.Upload.init()
+
 				init: ->
-					@_super $('#timsChatUploadContainer'), $('<ul>').appendTo('#content'), 'be.bastelstu.chat.message', 0, 0, 0, 1, null
+					@_super $('#timsChatUploadContainer'), $(false), 'be.bastelstu.chat.message', 0, 0, 0, 1, null
+					unless @_supportsAJAXUpload
+						$('#timsChatUploadDropdownMenu .uploadButton').click => do @_showOverlay
+						
+					label = $ '#timsChatUploadDropdownMenu li > span > label'
+					parent = do label.parent
+					
+					css = parent.css ['padding-top', 'padding-right', 'padding-bottom', 'padding-left']
+					
+					label.css css
+					label.css 'margin', "-#{css['padding-top']} -#{css['padding-right']} -#{css['padding-bottom']} -#{css['padding-left']}"
+					$('#timsChatUpload').click ->
+						$('#timsChatUpload > span.icon-ban-circle').removeClass('icon-ban-circle').addClass 'icon-paper-clip'
+						do $('#timsChatUploadContainer .innerError').remove
+						
+Overwrite WCF.Attachment.Upload._createButton() to create the upload button as small button into a button group
 					
 				_createButton: ->
 					if @_supportsAJAXUpload
-						@_fileUpload = $ """<input type="file" name="#{@_name}" />"""
-						@_fileUpload.change =>
-							do @_upload
-						button = $ """<a id="timsChatUpload" class="button uploadButton jsTooltip" title="#{WCF.Language.get("wcf.global.button.upload")}"><span class="icon icon16 icon-upload-alt"></span><span class="invisible">#{WCF.Language.get("wcf.global.button.upload")}</span></a>"""
-						button.prepend @_fileUpload
-					else
-						button = $ """<a id="timsChatUpload" class="button uploadFallbackButton jsTooltip" title="#{WCF.Language.get("wcf.global.button.upload")}"><span class="icon icon16 icon-upload-alt"></span><span class="invisible">#{WCF.Language.get("wcf.global.button.upload")}</span></a>"""
-						button.click =>
-							do @_showOverlay
+						@_fileUpload = $ """<input id="timsChatUploadInput" type="file" name="#{@_name}" />"""
+						@_fileUpload.change =>	do @_upload
+						@_fileUpload.appendTo 'body'
 						
-					@_insertButton button
+				_removeButton: ->
+					do @_fileUpload.remove
 				
-				_insertButton: (button) ->
-					@_super(button)
-					@_buttonSelector.removeClass 'invisible'
+See WCF.Attachment.Upload._getParameters()
 					
-				_upload: ->
+				_getParameters: ->
 					@_tmpHash = do Math.random
-					@_objectID = be.bastelstu.Chat.currentRoomID
+					@_parentObjectID = currentRoom.roomID
+					
 					do @_super
-
+					
+				
+				_upload: ->
+					files = @_fileUpload.prop 'files'
+					if files.length
+						$('#timsChatUpload > span.icon').removeClass('icon-paper-clip icon-ban-circle').addClass('icon-spinner')
+						do @_super
+				
+Create a message containing the uploaded attachment
+				
+				_insert: (event) ->
+					objectID = $(event.currentTarget).data 'objectID'
+					
+					new WCF.Action.Proxy
+						autoSend: true
+						data:
+							actionName: 'sendAttachment'
+							className: 'chat\\data\\message\\MessageAction'
+							parameters:
+								objectID: objectID
+								tmpHash: @_tmpHash
+								parentObjectID: 1#@_parentObjectID
+						showLoadingOverlay: false
+						
+						success: ->
+							do $('#timsChatUploadDropdownMenu .jsDeleteButton').parent().remove
+							do $('#timsChatUploadDropdownMenu .sendAttachmentButton').remove
+							do $('#timsChatUploadDropdownMenu .uploadButton').show
+							$('#timsChatUpload > span.icon').removeClass('icon-ok-sign').addClass 'icon-paper-clip'
+							fileUploaded = no
+							
+						failure: (data) ->
+							false
+							
+				_initFile: (file) ->
+					li = $("""<li class="uploadProgress">
+							<span>
+								<progress max="100"></progress>
+							</span>
+						</li>"""
+					).data('filename', file.name)
+					
+					$('#timsChatUploadDropdownMenu').append li
+					do $('#timsChatUploadDropdownMenu .uploadButton').hide
+					# validate file size
+					if @_buttonSelector.data('maxSize') < file.size
+						# remove progress bar
+						do li.find('progress').remove
+						
+						# upload icon
+						$('#timsChatUpload > span.icon-spinner').removeClass('icon-spinner').addClass 'icon-ban-circle'
+						
+						# error message
+						$('#timsChatUploadContainer').append """<small class="innerError">#{WCF.Language.get('wcf.attachment.upload.error.tooLarge')}</small>"""
+						
+						do @_error
+						li.addClass 'uploadFailed'
+					li
+					
+				_validateLimit: ->
+					innerError = @_buttonSelector.next 'small.innerError'
+					
+					if fileUploaded
+						# reached limit
+						unless innerError.length
+							innerError = $('<small class="innerError" />').insertAfter '#timsChatUpload'
+						
+						innerError.html WCF.Language.get('wcf.attachment.upload.error.reachedLimit')
+						innerError.css 'position', 'absolute'
+						
+						return false
+						
+					# remove previous errors
+					do innerError.remove
+					
+					true
+					
+				_success: (uploadID, data) ->
+					for li in @_uploadMatrix[uploadID]
+						do li.find('progress').remove
+						li.removeClass('uploadProgress').addClass 'sendAttachmentButton'
+						
+						li.find('span').addClass('box32').append """
+							<div class="framed attachmentImageContainer">
+								<span class="attachmentTinyThumbnail icon icon32 icon-paper-clip"></span>
+							</div>
+							<div class="containerHeaderline">
+								<p></p>
+								<small></small>
+								<p>#{WCF.Language.get('wcf.global.button.submit')}</p>
+							</div>"""
+						
+						li.click (event) => @_insert(event)
+						
+						filename = li.data 'filename'
+						
+						if data.returnValues and data.returnValues.attachments[filename]
+							if data.returnValues.attachments[filename].tinyURL
+								li.find('.box32 > div.attachmentImageContainer > .icon-paper-clip').replaceWith $("""<img src="#{data.returnValues.attachments[filename].tinyURL}'" alt="" class="attachmentTinyThumbnail" style="width: 32px; height: 32px;" />""")
+								
+							link = $ '<a href="" class="jsTooltip"></a>'
+							link.attr {'href': data.returnValues.attachments[filename].url, 'title': filename}
+							
+							unless parseInt(data.returnValues.attachments[filename].isImage) is 0
+								link.addClass('jsImageViewer')
+								
+								if !data.returnValues.attachments[filename].tinyURL
+									li.find('.box32 > div.attachmentImageContainer > .icon-paper-clip').replaceWith $("""<img src="#{data.returnValues.attachments[filename].url}'" alt="" class="attachmentTinyThumbnail" style="width: 32px; height: 32px;" />""")
+							
+							li.find('.attachmentTinyThumbnail').wrap link
+							li.find('small').append data.returnValues.attachments[filename].formattedFilesize
+							
+							li.data 'objectID', data.returnValues.attachments[filename].attachmentID
+							
+							deleteButton = $ """
+								<li>
+									<span class="jsDeleteButton" data-object-id="#{data.returnValues.attachments[filename].attachmentID}" data-confirm-message="#{WCF.Language.get('wcf.attachment.delete.sure')}">
+										<span class="icon icon16 icon-remove pointer jsTooltip" />
+										<span>#{WCF.Language.get('wcf.global.button.delete')}</span>
+									</span>
+								</li>"""
+							li.parent().append deleteButton
+						else
+							$('#timsChatUpload .icon-spinner').removeClass('icon-spinner').addClass 'icon-ban-circle'
+							
+							if data.returnValues and data.returnValues.errors[filename]
+								errorMessage = data.returnValues.errors[filename].errorType
+							else
+								errorMessage = 'uploadFailed'
+							
+							$('#timsChatUpload').addClass('uploadFailed').after """<small class="innerError">#{WCF.Language.get('wcf.attachment.upload.error.' + errorMessage)}</small>"""
+							do $('#timsChatUploadDropdownMenu .sendAttachmentButton').remove
+							do $('#timsChatUploadDropdownMenu .uploadButton').show
+						
+					do WCF.DOMNodeInsertedHandler.execute
+					
+					fileUploaded = yes
+					$('#timsChatUpload > span.icon').removeClass('icon-spinner').addClass 'icon-ok-sign'
+					do $('#timsChatUploadDropdownMenu .uploadProgress').remove
+					do $('#timsChatUploadDropdownMenu .sendAttachmentButton').show
+					
+				_error: (jqXHR, textStatus, errorThrown) ->
+					$('#timsChatUpload > .icon-spinner').removeClass('icon-spinner').addClass 'icon-ban-circle'
+					$('#timsChatUpload').addClass('uploadFailed').after """<small class="innerError">#{WCF.Language.get('wcf.attachment.upload.error.uploadFailed')}</small>"""
+					
+					do $('#timsChatUploadDropdownMenu .uploadProgress').remove
+					do $('#timsChatUploadDropdownMenu .uploadButton').show
+					
+			Action = {}
+			Action.Delete = WCF.Action.Delete.extend
+				triggerEffect: (objectIDs) ->
+					for index in @_containers
+						container = $ "##{index}"
+						if WCF.inArray container.find(@_buttonSelector).data('objectID'), objectIDs
+							self = @
+							container.wcfBlindOut 'up', (event) ->
+								parent = do $(@).parent
+								do $(@).remove
+								do parent.find('.sendAttachmentButton').remove
+								do parent.find('.uploadButton').show
+								$('#timsChatUpload > .icon-ok-sign').removeClass('icon-ok-sign').addClass 'icon-paper-clip'
+								
+								self._containers.splice(self._containers.indexOf $(@).wcfIdentify(), 1)
+								self._didTriggerEffect($ @)
+							fileUploaded = no
+					return
 And finally export the public methods and variables.
 
 		Chat =
@@ -847,11 +1031,11 @@ And finally export the public methods and variables.
 			insertText: insertText
 			freeTheFish: freeTheFish
 			join: join
-			currentRoomID: currentRoom.roomID
 			listener:
 				add: addListener
 				remove: removeListener
 		Chat.Attachment = Attachment if Attachment?
+		Chat.Action = Action if Attachment?
 		
 		window.be ?= {}
 		be.bastelstu ?= {}

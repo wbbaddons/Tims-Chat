@@ -37,12 +37,19 @@ class MessageAttachmentObjectType extends \wcf\system\attachment\AbstractAttachm
 	 * @see	wcf\system\attachment\IAttachmentObjectType::canDownload()
 	 */
 	public function canDownload($objectID) {
-		if ($objectID) {
+		// TODO get the room ID
+		/*if ($objectID) {
 			$room = \chat\data\room\RoomCache::getInstance()->getRoom($objectID);
 			if ($room && $room->canEnter()) return true;
 		}
 		
-		return false;
+		return false;*/
+		
+		return true;
+	}
+	
+	public function canPreview($objectID) {
+		return $this->canDownload($objectID);
 	}
 	
 	/**
@@ -61,6 +68,7 @@ class MessageAttachmentObjectType extends \wcf\system\attachment\AbstractAttachm
 	 * @see	wcf\system\attachment\IAttachmentObjectType::canDelete()
 	 */
 	public function canDelete($objectID) {
+		// TODO Allow attachments to be deleted in ACP
 		return false;
 	}
 }

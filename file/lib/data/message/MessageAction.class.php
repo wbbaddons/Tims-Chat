@@ -197,4 +197,76 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$this->parameters['room'] = room\RoomCache::getInstance()->getRoom($this->parameters['roomID']);
 		if ($this->parameters['room'] === null) throw new \wcf\system\exception\IllegalLinkException();
 	}
+	
+	public function validateSendAttachment() {
+		// read user data
+		$this->parameters['userData']['color1'] = WCF::getUser()->chatColor1;
+		$this->parameters['userData']['color2'] = WCF::getUser()->chatColor2;
+		$this->parameters['userData']['roomID'] = WCF::getUser()->chatRoomID;
+		$this->parameters['userData']['away'] = WCF::getUser()->chatAway;
+		
+		// read and validate room
+		$this->parameters['room'] = room\RoomCache::getInstance()->getRoom($this->parameters['userData']['roomID']);
+		if ($this->parameters['room'] === null) throw new \wcf\system\exception\IllegalLinkException();
+		if (!$this->parameters['room']->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
+		if (!$this->parameters['room']->canWrite()) throw new \wcf\system\exception\PermissionDeniedException();
+		
+		$this->readInteger('objectID');
+		if (!$this->parameters['objectID']) throw new \wcf\system\exception\IllegalLinkException();
+		
+		$this->readInteger('parentObjectID');
+		if (!$this->parameters['parentObjectID']) throw new \wcf\system\exception\IllegalLinkException();
+		
+		$editor = new \wcf\data\user\UserEditor(WCF::getUser());
+		$editor->update(array(
+			'chatAway' => null,
+			'chatLastActivity' => TIME_NOW
+		));
+		
+		// mark user as back
+		if ($this->parameters['userData']['away'] !== null) {
+			$messageAction = new MessageAction(array(), 'create', array(
+				'data' => array(
+					'roomID' => $this->parameters['room']->roomID,
+					'sender' => WCF::getUser()->userID,
+					'username' => WCF::getUser()->username,
+					'time' => TIME_NOW,
+					'type' => Message::TYPE_BACK,
+					'message' => '',
+					'color1' => $this->parameters['userData']['color1'],
+					'color2' => $this->parameters['userData']['color2']
+				)
+			));
+			$messageAction->executeAction();
+		}
+	}
+	
+	public function sendAttachment() {
+		$this->objectAction = new MessageAction(array(), 'create', array(
+			'data' => array(
+				'roomID' => $this->parameters['room']->roomID,
+				'sender' => WCF::getUser()->userID,
+				'username' => WCF::getUser()->username,
+				'receiver' => null,
+				'time' => TIME_NOW,
+				'type' => Message::TYPE_ATTACHMENT,
+				'message' => $this->parameters['objectID'],
+				'enableSmilies' => 0,
+				'enableHTML' => 0,
+				'color1' => $this->parameters['userData']['color1'],
+				'color2' => $this->parameters['userData']['color2'],
+				'additionalData' => null
+			)
+		));
+		
+		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->getReturnValues();
+		
+		$this->parameters['parentObjectID'] = 0;
+		$attachmentHandler = new \wcf\system\attachment\AttachmentHandler('be.bastelstu.chat.message', $this->parameters['objectID'], $this->parameters['tmpHash'], $this->parameters['parentObjectID']);
+		$attachmentHandler->updateObjectID($returnValues['returnValues']->messageID);
+		
+		// add activity points
+		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.message', $returnValues['returnValues']->messageID, WCF::getUser()->userID);
+	}
 }

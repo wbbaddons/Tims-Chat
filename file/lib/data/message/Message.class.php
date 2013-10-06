@@ -3,6 +3,7 @@ namespace chat\data\message;
 use \chat\util\ChatUtil;
 use \wcf\system\Regex;
 use \wcf\system\WCF;
+use \wcf\system\bbcode\AttachmentBBCode;
 
 /**
  * Represents a chat message.
@@ -36,6 +37,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 	const TYPE_CLEAR = 9;
 	const TYPE_TEAM = 10;
 	const TYPE_GLOBALMESSAGE = 11;
+	const TYPE_ATTACHMENT = 12;
 	
 	/**
 	 * cache for users
@@ -86,6 +88,16 @@ class Message extends \chat\data\CHATDatabaseObject {
 				$message = WCF::getLanguage()->getDynamicVariable('chat.message.'.$this->type.'.'.$message['type'], $message ?: array());
 				
 				$message = $messageParser->parse($message, false, false, true, false);
+			break;
+			case self::TYPE_ATTACHMENT:
+				$attachmentList = new \wcf\data\attachment\GroupedAttachmentList('be.bastelstu.chat.message');
+				$attachmentList->getConditionBuilder()->add('attachment.objectID IN (?)', array($this->messageID));
+				$attachmentList->readObjects();
+				
+				AttachmentBBCode::setAttachmentList($attachmentList);
+				AttachmentBBCode::setObjectID($this->messageID);
+				
+				$message = $messageParser->parse('[attach]'. $message .'[/attach]', 0, 0, true, false);
 			break;
 			case self::TYPE_WHISPER:
 			case self::TYPE_NORMAL:
