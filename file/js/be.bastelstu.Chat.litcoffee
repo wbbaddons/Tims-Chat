@@ -909,7 +909,7 @@ Create a message containing the uploaded attachment
 						$('#timsChatUpload > span.icon-spinner').removeClass('icon-spinner').addClass 'icon-ban-circle'
 						
 						# error message
-						$('#timsChatUploadContainer').append """<small class="innerError">#{WCF.Language.get('wcf.attachment.upload.error.tooLarge')}</small>"""
+						$('#timsChatUpload').addClass('uploadFailed').after """<small class="innerError">#{WCF.Language.get('wcf.attachment.upload.error.tooLarge')}</small>"""
 						
 						do @_error
 						li.addClass 'uploadFailed'
@@ -979,6 +979,7 @@ Create a message containing the uploaded attachment
 									</span>
 								</li>"""
 							li.parent().append deleteButton
+							fileUploaded = yes
 						else
 							$('#timsChatUpload .icon-spinner').removeClass('icon-spinner').addClass 'icon-ban-circle'
 							
@@ -990,20 +991,22 @@ Create a message containing the uploaded attachment
 							$('#timsChatUpload').addClass('uploadFailed').after """<small class="innerError">#{WCF.Language.get('wcf.attachment.upload.error.' + errorMessage)}</small>"""
 							do $('#timsChatUploadDropdownMenu .sendAttachmentButton').remove
 							do $('#timsChatUploadDropdownMenu .uploadButton').show
-						
+							fileUploaded = no
+							
 					do WCF.DOMNodeInsertedHandler.execute
 					
-					fileUploaded = yes
 					$('#timsChatUpload > span.icon').removeClass('icon-spinner').addClass 'icon-ok-sign'
 					do $('#timsChatUploadDropdownMenu .uploadProgress').remove
 					do $('#timsChatUploadDropdownMenu .sendAttachmentButton').show
 					
 				_error: (jqXHR, textStatus, errorThrown) ->
 					$('#timsChatUpload > .icon-spinner').removeClass('icon-spinner').addClass 'icon-ban-circle'
-					$('#timsChatUpload').addClass('uploadFailed').after """<small class="innerError">#{WCF.Language.get('wcf.attachment.upload.error.uploadFailed')}</small>"""
+					unless $('#timsChatUpload').hasClass('uploadFailed')
+						$('#timsChatUpload').addClass('uploadFailed').after """<small class="innerError">#{WCF.Language.get('wcf.attachment.upload.error.uploadFailed')}</small>"""
 					
 					do $('#timsChatUploadDropdownMenu .uploadProgress').remove
 					do $('#timsChatUploadDropdownMenu .uploadButton').show
+					fileUploaded = no
 					
 			Action = {}
 			Action.Delete = WCF.Action.Delete.extend

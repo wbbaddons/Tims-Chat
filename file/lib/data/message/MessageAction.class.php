@@ -247,15 +247,12 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 				'roomID' => $this->parameters['room']->roomID,
 				'sender' => WCF::getUser()->userID,
 				'username' => WCF::getUser()->username,
-				'receiver' => null,
 				'time' => TIME_NOW,
 				'type' => Message::TYPE_ATTACHMENT,
-				'message' => $this->parameters['objectID'],
-				'enableSmilies' => 0,
-				'enableHTML' => 0,
+				'message' => '[attach]'. $this->parameters['objectID'] .'[/attach]',
 				'color1' => $this->parameters['userData']['color1'],
 				'color2' => $this->parameters['userData']['color2'],
-				'additionalData' => null
+				'attachmentID' => $this->parameters['objectID']
 			)
 		));
 		

@@ -1,7 +1,7 @@
 {literal}
 	<div class="messageIcon">
-		{if $message.type == $messageTypes.LEAVE || $message.type == $messageTypes.JOIN}
-			<span class="icon icon16 icon-{if $message.type == $messageTypes.LEAVE}signout{else}signin{/if}"></span>
+		{if $message.type == $messageTypes.LEAVE || $message.type == $messageTypes.JOIN || $message.type == $messageTypes.ATTACHMENT}
+			<span class="icon icon16 icon-{if $message.type == $messageTypes.LEAVE}signout{elseif $message.type == $messageTypes.JOIN}signin{else}paperclip{/if}"></span>
 		{/if}
 	</div>
 	<div class="innerMessageContainer{if $message.type == $messageTypes.NORMAL || $message.type == $messageTypes.WHISPER || $message.type == $messageTypes.INFORMATION} bubble{/if}{if $message.type == $messageTypes.WHISPER && $message.sender != $__wcf.User.userID} right{/if}">
@@ -44,7 +44,24 @@
 					</li>
 				</ul>
 			{else}
-				<span class="text">{@$message.formattedMessage}</span>
+				{if $message.type == $messageTypes.ATTACHMENT && $message.attachment != null}
+					{if parseInt($message.attachment.isImage) == 1}
+						<span class="text">{lang}chat.message.{$messageTypes.ATTACHMENT}{/lang}</span>
+						<ul>
+							<li class="attachmentThumbnail">
+								{@$message.formattedMessage}
+								<div title="{$message.attachment.imageinfo}">
+									<p>{$message.attachment.filename}</p>
+									<small>{$message.attachment.imageinfo}</small>
+								</div>
+							</li>
+						</ul>
+					{else}
+						<span class="text">{lang}chat.message.{$messageTypes.ATTACHMENT}{/lang} {@$message.formattedMessage}</span>
+					{/if}
+				{else}
+					<span class="text">{@$message.formattedMessage}</span>
+				{/if}
 			{/if}
 		</div>
 		<span class="markContainer">

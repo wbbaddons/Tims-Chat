@@ -29,7 +29,8 @@
 						'wcf.attachment.upload.error.uploadFailed': '{lang}wcf.attachment.upload.error.uploadFailed{/lang}',
 						'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}',
 						'wcf.attachment.insert': '{lang}wcf.attachment.insert{/lang}',
-						'wcf.attachment.delete.sure': '{lang}wcf.attachment.delete.sure{/lang}'
+						'wcf.attachment.delete.sure': '{lang}wcf.attachment.delete.sure{/lang}',
+						'chat.message.{$messageTypes[TYPE_ATTACHMENT]}': '{lang}chat.message.{$messageTypes[TYPE_ATTACHMENT]}{/lang}'
 					});
 					
 					// Boot the chat
@@ -135,13 +136,13 @@
 			
 			*}{if MODULE_ATTACHMENT && $__wcf->session->getPermission('user.chat.canUploadAttachment')}{*
 			*}<li id="timsChatUploadContainer" class="dropdown" data-max-size="{$attachmentHandler->getMaxSize()}">
-				<a id="timsChatUpload" class="dropdownToggle button jsTooltip" title="{lang}wcf.global.button.upload{/lang}" data-toggle="timsChatUploadContainer">
+				<a id="timsChatUpload" class="dropdownToggle button jsTooltip" title="{lang}wcf.attachment.attachments{/lang}" data-toggle="timsChatUploadContainer">
 						<span class="icon icon16 icon-paper-clip"></span>
-						<span class="invisible">{lang}wcf.global.button.upload{/lang}</span>
+						<span class="invisible">{lang}wcf.attachment.attachments{/lang}</span>
 				</a>
 				<ul id="timsChatUploadDropdownMenu" class="dropdownMenu">
 					<li class="uploadButton" style="margin-top: 0;">
-						<span><label for="timsChatUploadInput">Upload file</label></span>
+						<span><label for="timsChatUploadInput">{lang}wcf.global.button.upload{/lang}</label></span>
 					</li>
 				</ul>
 			</li>{/if}{*
