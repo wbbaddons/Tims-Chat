@@ -644,7 +644,7 @@ Fetch the roomlist from the server and update it in the GUI.
 					for room in data.returnValues
 						li = $ '<li></li>'
 						li.addClass 'active' if room.active
-						$("""<a href="#{room.link}">#{room.title} <span class="badge">#{WCF.String.formatNumeric room.userCount}</span></a>""").addClass('timsChatRoom').data('roomID', room.roomID).appendTo li
+						$("""<a href="#{room.link}">#{WCF.String.escapeHTML(room.title)} <span class="badge">#{WCF.String.formatNumeric room.userCount}</span></a>""").addClass('timsChatRoom').data('roomID', room.roomID).appendTo li
 						$('#timsChatRoomList ul').append li
 					
 					if window.history?.replaceState?
@@ -742,7 +742,7 @@ Open private channel
 			
 			if userID isnt 0
 				$('#timsChatTopic').removeClass 'hidden empty'
-				$('#timsChatTopic > .topic').text WCF.Language.get 'chat.general.privateChannelTopic', {username: userList.allTime[userID].username}
+				$('#timsChatTopic > .topic').html WCF.Language.get 'chat.general.privateChannelTopic', {username: userList.allTime[userID].username}
 				$('#timsChatTopic > .jsTopicCloser').attr 'title', WCF.Language.get 'chat.general.closePrivateChannel'
 				
 				unless $.wcfIsset "privateChannel#{userID}"
