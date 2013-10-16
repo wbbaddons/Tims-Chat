@@ -140,14 +140,14 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->sqlSelects .= "user_table.username, user_table2.username AS issuerUsername, user_table3.username AS revokerUsername, room_table.title AS roomTitle";
+		$this->objectList->sqlSelects .= "user_table_muted.username, user_table_issuer.username AS issuerUsername, user_table_revoker.username AS revokerUsername, room_table.title AS roomTitle";
 		$this->objectList->sqlJoins .= "
-						LEFT JOIN	wcf".WCF_N."_user user_table
-						ON		suspension.userID = user_table.userID
-						LEFT JOIN	wcf".WCF_N."_user user_table2
-						ON		suspension.issuer = user_table2.userID
-						LEFT JOIN	wcf".WCF_N."_user user_table3
-						ON		suspension.issuer = user_table3.userID";
+						LEFT JOIN	wcf".WCF_N."_user user_table_muted
+						ON		suspension.userID = user_table_muted.userID
+						LEFT JOIN	wcf".WCF_N."_user user_table_issuer
+						ON		suspension.issuer = user_table_issuer.userID
+						LEFT JOIN	wcf".WCF_N."_user user_table_revoker
+						ON		suspension.revoker = user_table_revoker.userID";
 		$conditionJoins = "	LEFT JOIN	chat".WCF_N."_room room_table
 					ON		suspension.roomID = room_table.roomID";
 		$this->objectList->sqlConditionJoins .= $conditionJoins;
