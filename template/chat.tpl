@@ -106,6 +106,9 @@
 	<form id="timsChatForm" action="{link application='chat' controller='Chat' action='Send'}{/link}" method="post">
 		<fieldset>
 			<dl class="wide" id="timsChatInputContainer">
+				<dt>
+					{lang}chat.general.message{/lang}
+				</dt>
 				<dd>
 					<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" placeholder="{lang}chat.general.submit.default{/lang}" />
 					<small class="innerError" style="display: none;">Lorem ipsum dolor sit amet.</small>

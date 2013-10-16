@@ -18,8 +18,16 @@ final class Install {
 	 */
 	private $styles = null;
 	
+	/**
+	 * Do we need to update the page title?
+	 * 
+	 * @var boolean
+	 */
+	private $updateTitle = false;
+	
 	public function __construct() {
 		$this->styles = \wcf\system\style\StyleHandler::getInstance()->getAvailableStyles();
+		if (!defined('PAGE_TITLE') || !PAGE_TITLE) $this->updateTitle = true;
 	}
 	
 	/**
@@ -29,6 +37,23 @@ final class Install {
 		foreach ($this->styles as $style) {
 			\wcf\system\style\StyleHandler::getInstance()->resetStylesheet($style);
 		}
+		
+		if ($this->updateTitle) {
+				$sql = "UPDATE
+						wcf".WCF_N."_option
+					SET
+						optionValue = ?
+					WHERE
+						optionName = ?";
+				$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
+				$stmt->execute(array('Tims Chat 3', 'page_title'));
+				\wcf\data\option\OptionEditor::resetCache();
+		}
+		
+		\wcf\system\dashboard\DashboardHandler::setDefaultValues('com.woltlab.wcf.user.DashboardPage', array(
+			// content
+			'be.bastelstu.chat.onlineList' => 1
+		));
 	}
 }
 $install = new Install();
