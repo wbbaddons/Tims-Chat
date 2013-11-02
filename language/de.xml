@@ -57,7 +57,7 @@
 		<item name="wcf.acp.group.option.user.chat.canWrite"><![CDATA[Kann im Chat schreiben]]></item>
 		<item name="wcf.acp.group.option.user.chat.canTempRoom"><![CDATA[Kann temporäre Räume erstellen]]></item>
 		<item name="wcf.acp.group.option.user.chat.allowedBBCodes"><![CDATA[Erlaubte BBCodes]]></item>
-		<item name="wcf.acp.group.option.user.chat.allowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitglieder dieser Benutzergruppe verwendet werden.]]></item>
+		<item name="wcf.acp.group.option.user.chat.allowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe verwendet werden.]]></item>
 		
 		<item name="wcf.acp.group.option.category.mod.chat"><![CDATA[Chat]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter"><![CDATA[Kann Räume immer betreten]]></item>
@@ -125,7 +125,7 @@
 	<li>Sie haben den Chat mehrmals geöffnet</li>
 	<li>Es gibt Probleme auf Seiten des Servers</li>
 </ul>
-Probieren Sie den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen Sie ihren Arzt oder Administrator -->.]]></item>
+Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen Sie ihren Arzt oder Administrator -->.]]></item>
 		<item name="chat.error.reload"><![CDATA[Neu laden]]></item>
 	</category>
 	
@@ -210,7 +210,7 @@ Probieren Sie den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen 
 	<category name="chat.room">
 		<item name="chat.room.global"><![CDATA[Global]]></item>
 		<item name="chat.room.title1"><![CDATA[Hauptchat]]></item>
-		<item name="chat.room.topic1"><![CDATA[Vielen Dank, dass Sie sich für Tims Chat entschieden haben. Bitte besuchen Sie das ACP um diesen Text anzupassen.]]></item>
+		<item name="chat.room.topic1"><![CDATA[Vielen Dank, dass Sie sich für Tims Chat entschieden haben. Bitte besuchen Sie das ACP, um diesen Text anzupassen.]]></item>
 		<item name="chat.room.titleTemp"><![CDATA[Raum_{$roomID}]]></item>
 	</category>
 	
