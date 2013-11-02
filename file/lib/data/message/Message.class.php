@@ -69,7 +69,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 	 * @param	string	$outputType	outputtype for messageparser
 	 * @return	string
 	 */
-	public function getFormattedMessage($type = 'text/html', $attachmentList = null) {
+	public function getFormattedMessage($type = 'text/html') {
 		$message = $this->message;
 		$messageParser = \wcf\system\bbcode\MessageParser::getInstance();
 		$messageParser->setOutputType($type);
@@ -90,11 +90,9 @@ class Message extends \chat\data\CHATDatabaseObject {
 				$message = $messageParser->parse($message, false, false, true, false);
 			break;
 			case self::TYPE_ATTACHMENT:
-				if ($attachmentList === null) {
-					$attachmentList = new \wcf\data\attachment\GroupedAttachmentList('be.bastelstu.chat.message');
-					$attachmentList->getConditionBuilder()->add('attachment.objectID IN (?)', array($this->messageID));
-					$attachmentList->readObjects();
-				}
+				$attachmentList = new \wcf\data\attachment\GroupedAttachmentList('be.bastelstu.chat.message');
+				$attachmentList->getConditionBuilder()->add('attachment.objectID IN (?)', array($this->messageID));
+				$attachmentList->readObjects();
 				
 				AttachmentBBCode::setAttachmentList($attachmentList);
 				AttachmentBBCode::setObjectID($this->messageID);
@@ -149,28 +147,12 @@ class Message extends \chat\data\CHATDatabaseObject {
 			break;
 		}
 		
-		$attachment = null;
-		$attachmentList = null;
-		
-		if ($this->attachmentID !== 0) {
-			$attachmentList = new \wcf\data\attachment\GroupedAttachmentList('be.bastelstu.chat.message');
-			$attachmentList->getConditionBuilder()->add('attachment.attachmentID = ?', array($this->attachmentID));
-			$attachmentList->getConditionBuilder()->add('attachment.objectID = ?', array($this->messageID));
-			$attachmentList->readObjects();
-			
-			if (isset($attachmentList->objectIDs[0]) && $attachmentList->objectIDs[0] != 0) {
-				$attachment = $attachmentList->objects[$attachmentList->objectIDs[0]];
-				$attachment->data['imageinfo'] = WCF::getLanguage()->getDynamicVariable('wcf.attachment.image.info', array('attachment' => $attachment));
-				$attachment = $attachment->data;
-			}
-		}
-		
 		$array = array(
 			'formattedUsername' => $this->getUsername(true),
-			'formattedMessage' => $this->getFormattedMessage('text/html', ($attachmentList !== null) ? $attachmentList : null),
+			'formattedMessage' => $this->getFormattedMessage('text/html'),
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
 			'separator' => $separator,
-			'message' => $this->getFormattedMessage('text/plain', ($attachmentList !== null) ? $attachmentList : null),
+			'message' => $this->getFormattedMessage('text/plain'),
 			'sender' => (int) $this->sender,
 			'username' => $this->getUsername(),
 			'time' => (int) $this->time,
@@ -178,8 +160,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 			'type' => (int) $this->type,
 			'roomID' => (int) $this->roomID,
 			'messageID' => (int) $this->messageID,
-			'additionalData' => $this->additionalData,
-			'attachment' => $attachment
+			'additionalData' => $this->additionalData
 		);
 		
 		if ($raw) return $array;
