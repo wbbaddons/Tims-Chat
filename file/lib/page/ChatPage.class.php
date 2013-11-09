@@ -74,6 +74,12 @@ class ChatPage extends \wcf\page\AbstractPage {
 	public $smileyCategories = array();
 	
 	/**
+	 * attachment handler
+	 * @see	\wcf\system\attachment\AttachmentHandler
+	 */
+	public $attachmentHandler = null;
+	
+	/**
 	 * @see wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;
@@ -94,6 +100,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 			'messageTypes' => $reflection->getConstants(),
 			'defaultSmilies' => $this->defaultSmilies,
 			'smileyCategories' => $this->smileyCategories,
+			'attachmentHandler' => $this->attachmentHandler,
 			'sidebarCollapsed' => \wcf\system\user\collapsible\content\UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'be.bastelstu.chat.ChatPage'),
 			'sidebarName' => 'be.bastelstu.chat.ChatPage'
 		));
@@ -124,6 +131,10 @@ class ChatPage extends \wcf\page\AbstractPage {
 			if ($firstCategory) {
 				$this->defaultSmilies = \wcf\data\smiley\SmileyCache::getInstance()->getCategorySmilies($firstCategory->categoryID ?: null);
 			}
+		}
+		
+		if (MODULE_ATTACHMENT) {
+			$this->attachmentHandler = new \wcf\system\attachment\AttachmentHandler('be.bastelstu.chat.message', 0, '', 0);
 		}
 	}
 	

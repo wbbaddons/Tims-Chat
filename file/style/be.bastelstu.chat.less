@@ -10,7 +10,7 @@
 	from {
 		border-color: @wcfContainerBorderColor;
 	}
-
+	
 	to {
 		border-color: @wcfInputHoverBorderColor;
 	}
@@ -92,7 +92,7 @@
 				> .userAvatar, .userAvatar > .icon {
 					cursor: pointer;
 				}
-
+				
 				> .userAvatar {
 					&.large {
 						display: none;
@@ -102,7 +102,7 @@
 						display: block;
 					}
 				}
-
+				
 				&.active {
 					> .userAvatar {
 						&.large {
@@ -192,9 +192,24 @@
 					padding: 5px 20px 5px 5px;
 					position: relative;
 					
-					.userAvatar {
-						float: left;
-						margin-left: 16px;
+					> div.avatarContainer {
+						position: absolute;
+						width: 40px;
+						height: 38px;
+						
+						> .userAvatar {
+							float: left;
+							margin-left: 16px;
+						}
+						
+						> .avatarExtra {
+							box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+							position: absolute;
+							left: 24px;
+							bottom: -2px;
+							width: 16px;
+							height: 16px;
+						}
 					}
 					
 					.innerMessage {
@@ -219,11 +234,9 @@
 					}
 					
 					&.bubble {
-						.userAvatar {
-							margin-left: 0;
-							
-							.icon {
-								padding: 2px;
+						> div.avatarContainer {
+							.userAvatar {
+								margin-left: 0;
 							}
 						}
 						
@@ -385,6 +398,16 @@
 					}
 				}
 			}
+		}
+	}
+	
+	#timsChatUploadInput {
+		display: none;
+	}
+	
+	#timsChatUploadContainer {
+		.innerError {
+			position: absolute;
 		}
 	}
 	

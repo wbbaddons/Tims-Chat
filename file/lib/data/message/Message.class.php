@@ -1,6 +1,7 @@
 <?php
 namespace chat\data\message;
 use \chat\util\ChatUtil;
+use \wcf\system\bbcode\AttachmentBBCode;
 use \wcf\system\Regex;
 use \wcf\system\WCF;
 
@@ -36,6 +37,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 	const TYPE_CLEAR = 9;
 	const TYPE_TEAM = 10;
 	const TYPE_GLOBALMESSAGE = 11;
+	const TYPE_ATTACHMENT = 12;
 	
 	/**
 	 * cache for users
@@ -84,6 +86,16 @@ class Message extends \chat\data\CHATDatabaseObject {
 			case self::TYPE_MODERATE:
 				$message = unserialize($message);
 				$message = WCF::getLanguage()->getDynamicVariable('chat.message.'.$this->type.'.'.$message['type'], $message ?: array());
+				
+				$message = $messageParser->parse($message, false, false, true, false);
+			break;
+			case self::TYPE_ATTACHMENT:
+				$attachmentList = new \wcf\data\attachment\GroupedAttachmentList('be.bastelstu.chat.message');
+				$attachmentList->getConditionBuilder()->add('attachment.objectID IN (?)', array($this->messageID));
+				$attachmentList->readObjects();
+				
+				AttachmentBBCode::setAttachmentList($attachmentList);
+				AttachmentBBCode::setObjectID($this->messageID);
 				
 				$message = $messageParser->parse($message, false, false, true, false);
 			break;
@@ -137,7 +149,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 		
 		$array = array(
 			'formattedUsername' => $this->getUsername(true),
-			'formattedMessage' => $this->getFormattedMessage(),
+			'formattedMessage' => $this->getFormattedMessage('text/html'),
 			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
 			'separator' => $separator,
 			'message' => $this->getFormattedMessage('text/plain'),

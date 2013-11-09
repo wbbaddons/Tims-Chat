@@ -22,10 +22,12 @@ CREATE TABLE chat1_message (
 	color1		INT(10)		NOT NULL DEFAULT 0,
 	color2		INT(10)		NOT NULL DEFAULT 0,
 	additionalData	TEXT		DEFAULT NULL,
+	attachmentID	INT(10)		DEFAULT NULL,
 	
 	KEY (roomID),
 	KEY (sender),
-	KEY (receiver)
+	KEY (receiver),
+	KEY (attachmentID)
 );
 
 DROP TABLE IF EXISTS chat1_room;
@@ -69,6 +71,7 @@ ALTER TABLE wcf1_user ADD COLUMN chatLastSeen INT(10) NOT NULL DEFAULT 0;
 ALTER TABLE chat1_message ADD FOREIGN KEY (receiver) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE chat1_message ADD FOREIGN KEY (roomID) REFERENCES chat1_room (roomID) ON DELETE CASCADE;
 ALTER TABLE chat1_message ADD FOREIGN KEY (sender) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+ALTER TABLE chat1_message ADD FOREIGN KEY (attachmentID) REFERENCES wcf1_attachment (attachmentID) ON DELETE CASCADE;
 
 ALTER TABLE chat1_room ADD FOREIGN KEY (owner) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
