@@ -17,8 +17,8 @@ class MessageEditor extends \wcf\data\DatabaseObjectEditor {
 	protected static $baseClass = '\chat\data\message\Message';
 	
 	/**
-	* @see	wcf\data\DatabaseObjectEditor::deleteAll()
-	*/
+	 * @see	wcf\data\DatabaseObjectEditor::deleteAll()
+	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		$count = parent::deleteAll($objectIDs);
 		// delete attached files
