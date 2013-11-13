@@ -2,7 +2,7 @@
 <package name="be.bastelstu.chat" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
 	<packageinformation>
 		<packagename><![CDATA[Tim’s Chat]]></packagename>
-		<packagename langauge="de"><![CDATA[Tims Chat]]></packagename>
+		<packagename language="de"><![CDATA[Tims Chat]]></packagename>
 		<packagedescription><![CDATA[Chat for WoltLab Community Framework™.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Chat für WoltLab Community Framework™.]]></packagedescription>
 		<isapplication>1</isapplication>
