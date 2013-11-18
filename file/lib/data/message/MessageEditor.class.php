@@ -21,8 +21,11 @@ class MessageEditor extends \wcf\data\DatabaseObjectEditor {
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		$count = parent::deleteAll($objectIDs);
-		// delete attached files
-		\wcf\system\attachment\AttachmentHandler::removeAttachments('be.bastelstu.chat.message', $objectIDs);
+		
+		if ($count) {
+			// delete attached files
+			\wcf\system\attachment\AttachmentHandler::removeAttachments('be.bastelstu.chat.message', $objectIDs);
+		}
 		
 		return $count;
 	}
