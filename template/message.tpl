@@ -6,7 +6,7 @@
 	{/if}
 	<div class="innerMessageContainer{if $message.type == $messageTypes.NORMAL || $message.type == $messageTypes.WHISPER || $message.type == $messageTypes.INFORMATION || $message.type == $messageTypes.ATTACHMENT} bubble{/if}{if $message.type == $messageTypes.WHISPER && $message.sender != $__wcf.User.userID} right{/if}">
 		<div class="avatarContainer">
-			<div class="userAvatar framed">
+			<div class="userAvatar{if $message.type != $messageTypes.INFORMATION} framed{/if}">
 				{if $message.type != $messageTypes.INFORMATION}
 					{if $message.type == $messageTypes.NORMAL || $message.type == $messageTypes.WHISPER || $message.type == $messageTypes.ATTACHMENT}
 						{@$message.avatar[32]}
@@ -52,7 +52,7 @@
 					</li>
 				</ul>
 			{else}
-				<span class="text">{@$message.formattedMessage}</span>
+				<div class="text">{@$message.formattedMessage}</div>
 			{/if}
 		</div>
 		<span class="markContainer">
