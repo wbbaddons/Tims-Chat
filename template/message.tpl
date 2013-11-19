@@ -51,7 +51,7 @@
 						{@$message.formattedMessage}
 					</li>
 				</ul>
-			{elseif $messageTypes.INFORMATION}
+			{elseif $message.type == $messageTypes.INFORMATION}
 				<div class="text">{@$message.formattedMessage}</div>
 			{else}
 				<span class="text">{@$message.formattedMessage}</span>
