@@ -51,8 +51,10 @@
 						{@$message.formattedMessage}
 					</li>
 				</ul>
-			{else}
+			{elseif $messageTypes.INFORMATION}
 				<div class="text">{@$message.formattedMessage}</div>
+			{else}
+				<span class="text">{@$message.formattedMessage}</span>
 			{/if}
 		</div>
 		<span class="markContainer">
