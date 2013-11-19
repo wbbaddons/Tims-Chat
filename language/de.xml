@@ -218,8 +218,8 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 	<!-- I18N Values -->
 	<category name="chat.room">
 		<item name="chat.room.global"><![CDATA[Global]]></item>
-		<item name="chat.room.title1"><![CDATA[Hauptchat]]></item>
-		<item name="chat.room.topic1"><![CDATA[Vielen Dank, dass Sie sich für Tims Chat entschieden haben. Bitte besuchen Sie das ACP, um diesen Text anzupassen.]]></item>
+		<item name="chat.room.title1"><![CDATA[Tims Chat]]></item>
+		<item name="chat.room.topic1"><![CDATA[Vielen Dank, dass Sie sich für Tims Chat entschieden haben. Bitte besuchen Sie die Administration, um diesen Text anzupassen.]]></item>
 		<item name="chat.room.titleTemp"><![CDATA[Raum_{$roomID}]]></item>
 	</category>
 	
