@@ -163,6 +163,8 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		
 		// add activity points
 		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.message', $returnValues['returnValues']->messageID, WCF::getUser()->userID);
+		
+		return $returnValues['returnValues'];
 	}
 	
 	/**
@@ -242,28 +244,18 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	}
 	
 	public function sendAttachment() {
-		$this->objectAction = new MessageAction(array(), 'create', array(
-			'data' => array(
-				'roomID' => $this->parameters['room']->roomID,
-				'sender' => WCF::getUser()->userID,
-				'username' => WCF::getUser()->username,
-				'time' => TIME_NOW,
-				'type' => Message::TYPE_ATTACHMENT,
-				'message' => '[attach]'. $this->parameters['objectID'] .'[/attach]',
-				'color1' => $this->parameters['userData']['color1'],
-				'color2' => $this->parameters['userData']['color2'],
-				'attachmentID' => $this->parameters['objectID']
-			)
-		));
+		$this->parameters['type'] = Message::TYPE_ATTACHMENT;
+		$this->parameters['text'] = '[attach]'. $this->parameters['objectID'] .'[/attach]';
+		$this->parameters['additionalData'] = null;
+		$this->parameters['receiver'] = null;
+		$this->parameters['enableSmilies'] = false;
+		$this->parameters['enableHTML'] = false;
 		
-		$this->objectAction->executeAction();
-		$returnValues = $this->objectAction->getReturnValues();
+		$messageAction = new MessageAction(array(), 'send', $this->parameters);
+		$messageAction->executeAction();
+		$returnValues = $messageAction->getReturnValues();
 		
-		$this->parameters['parentObjectID'] = 0;
-		$attachmentHandler = new \wcf\system\attachment\AttachmentHandler('be.bastelstu.chat.message', $this->parameters['objectID'], $this->parameters['tmpHash'], $this->parameters['parentObjectID']);
+		$attachmentHandler = new \wcf\system\attachment\AttachmentHandler('be.bastelstu.chat.message', $this->parameters['objectID'], $this->parameters['tmpHash'], 0);
 		$attachmentHandler->updateObjectID($returnValues['returnValues']->messageID);
-		
-		// add activity points
-		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.message', $returnValues['returnValues']->messageID, WCF::getUser()->userID);
 	}
 }
