@@ -534,7 +534,6 @@ Build HTML of the user and insert it into the list, if the users was not found i
 						li.attr 'id', id
 						li.addClass 'timsChatUser'
 						li.addClass 'jsTooltip'
-						li.addClass 'dropdown'
 						li.addClass 'you' if user.userID is WCF.User.userID
 						li.addClass 'suspended' if user.suspended
 						if user.awayStatus?
@@ -556,7 +555,8 @@ Build HTML of the user and insert it into the list, if the users was not found i
 						if menu.find('li').length
 							li.append menu
 							menu.addClass 'dropdownMenu'
-						
+							li.addClass 'dropdown'
+							
 						li.appendTo $ '#timsChatUserList > ul'
 					
 					foundUsers[id] = true
