@@ -211,7 +211,7 @@ class ColorCommand extends \chat\system\command\AbstractCommand {
 	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return 'color changed';
+		return \wcf\system\WCF::getLanguage()->get('chat.message.color.success');
 	}
 	
 	/**
