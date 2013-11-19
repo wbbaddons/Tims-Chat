@@ -64,6 +64,6 @@ class InviteCommand extends \chat\system\command\AbstractRestrictedCommand {
 	 * @see	\chat\system\command\ICommand::getMessage()
 	 */
 	public function getMessage() {
-		return 'invite derp';
+		return \wcf\system\WCF::getLanguage()->getDynamicVariable('chat.message.invite.success', array('user' => $this->user, 'room' => $this->room));
 	}
 }

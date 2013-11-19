@@ -204,6 +204,7 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.message.12"><![CDATA[hat eine Datei geteilt:]]></item>
 		
 		<item name="chat.message.color.success"><![CDATA[Die Farbe wurde erfolgreich geändert.]]></item>
+		<item name="chat.message.invite.success"><![CDATA[Sie haben „{$user}“ erfolgreich in den Raum „{$room}“ eingeladen.]]></item>
 		<item name="chat.message.temproom.success"><![CDATA[Der temporäre Raum „{$roomName}“ wurde erfolgreich erstellt. Laden Sie die Raumliste neu, damit dieser sichtbar wird.]]></item>
 	</category>
 	
