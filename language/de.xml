@@ -117,7 +117,7 @@
 		<item name="chat.error.invalidArgument"><![CDATA[Sie haben falsche Parameter an den Befehl übergeben.]]></item>
 		<item name="chat.error.permissionDenied"><![CDATA[Sie dürfen diesen Befehl nicht verwenden.]]></item>
 		<item name="chat.error.duplicateTab"><![CDATA[Sie haben den Chat in einem weiteren Browserfenster geöffnet. Diese Instanz wurde daher zur Vermeidung von Problemen deaktiviert.]]></item>
-		<item name="chat.error.join"><![CDATA[Es gibt Probleme den gewählten Chatraum zu betreten.]]></item>
+		<item name="chat.error.join"><![CDATA[{literal}Es gibt Probleme den gewählten Chatraum zu betreten{if $message}: {$message}{else}.{/if}{/literal}]]></item>
 		<item name="chat.error.onMessageLoad"><![CDATA[Es gibt Probleme beim Laden neuer Nachrichten. Folgende Gründe können zu dieser Meldung führen:
 <ul class="nativeList">
 	<li>Ihnen wurden die Zugriffsrechte auf den Raum genommen</li>

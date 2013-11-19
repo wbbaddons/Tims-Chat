@@ -716,8 +716,8 @@ Joins a room.
 					handleMessages currentRoom.messages
 					do getMessages
 					do refreshRoomList
-				failure: ->
-					showError WCF.Language.get 'chat.error.join'
+				failure: (data) ->
+					showError WCF.Language.get 'chat.error.join', data
 
 Open private channel
 
