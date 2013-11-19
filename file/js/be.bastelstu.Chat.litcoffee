@@ -126,7 +126,7 @@ and afterwards sent to the server by an AJAX request.
 				do event.preventDefault
 				
 				text = do $('#timsChatInput').val().trim
-				$('#timsChatInput').val('').focus().keyup()
+				$('#timsChatInput').val('').focus().change()
 				
 				return false if text.length is 0
 				
