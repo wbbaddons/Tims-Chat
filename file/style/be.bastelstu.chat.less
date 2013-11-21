@@ -325,10 +325,45 @@
 			}
 		}
 		
-		#chatSidebarTabContainer {
+		#sidebarContent {
+			fieldset {
+				padding-top: 0px;
+				padding-bottom: 0px;
+			}
+			
+			nav {
+				ul {
+					> li {
+						> a {
+							padding: @wcfGapTiny @wcfGapMedium @wcfGapTiny @wcfGapLarge;
+							height: 24px; // height of avatar image
+						}
+						
+						> a:before {
+							display: inline-block;
+							content: "";
+							height: 100%;
+							vertical-align: middle;
+						}
+						
+						> &.active {
+							margin-top: @wcfGapSmall;
+						}
+					}
+				}
+			}
+			
+			ul:not(.dropdownMenu) {
+				> li {
+					margin-top: @wcfGapSmall;
+				}
+			}
+			
 			#timsChatUserList {
 				.timsChatUser {
 					> a {
+						background: @wcfContentBackgroundColor;
+						
 						img {
 							margin-right: @wcfGapSmall;
 						}
