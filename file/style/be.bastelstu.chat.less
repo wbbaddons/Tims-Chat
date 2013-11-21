@@ -177,7 +177,7 @@
 						background-color: @wcfContainerAccentBackgroundColor;
 						
 						&:after {
-							border-color: transparent @wcfContainerAccentBackgroundColor;
+							border-color: transparent @wcfContainerAccentBackgroundColor !important;
 						}
 					}
 				}
@@ -193,14 +193,9 @@
 					position: relative;
 					
 					> div.avatarContainer {
-						position: absolute;
-						width: 40px;
-						height: 38px;
-						
-						> .userAvatar {
-							float: left;
-							margin-left: 16px;
-						}
+						position: relative;
+						float: left;
+						margin-left: 16px;
 						
 						> .avatarExtra {
 							box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
@@ -235,9 +230,7 @@
 					
 					&.bubble {
 						> div.avatarContainer {
-							.userAvatar {
-								margin-left: 0;
-							}
+							margin-left: 0;
 						}
 						
 						.innerMessage {
@@ -277,7 +270,7 @@
 						}
 						
 						&.right {
-							.userAvatar {
+							.avatarContainer {
 								float: right;
 							}
 							
@@ -299,19 +292,6 @@
 									right: -5px;
 									top: 6px;
 									border-width: 5px 0 5px 5px;
-								}
-								
-								time {
-									float: left;
-									margin-right: @wcfGapTiny;
-								}
-								
-								.username {
-									float: right;
-								}
-								
-								.text {
-									clear: left;
 								}
 							}
 						}
@@ -345,45 +325,10 @@
 			}
 		}
 		
-		#sidebarContent {
-			fieldset {
-				padding-top: 0px;
-				padding-bottom: 0px;
-			}
-			
-			nav {
-				ul {
-					> li {
-						> a {
-							padding: @wcfGapTiny @wcfGapMedium @wcfGapTiny @wcfGapLarge;
-							height: 24px; // height of avatar image
-						}
-						
-						> a:before {
-							display: inline-block;
-							content: "";
-							height: 100%;
-							vertical-align: middle;
-						}
-						
-						> &.active {
-							margin-top: @wcfGapSmall;
-						}
-					}
-				}
-			}
-			
-			ul:not(.dropdownMenu) {
-				> li {
-					margin-top: @wcfGapSmall;
-				}
-			}
-			
+		#chatSidebarTabContainer {
 			#timsChatUserList {
 				.timsChatUser {
 					> a {
-						background: @wcfContentBackgroundColor;
-						
 						img {
 							margin-right: @wcfGapSmall;
 						}
