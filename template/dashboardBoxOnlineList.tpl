@@ -6,10 +6,10 @@
 			<li>
 				<div>
 					<div>
-						<hgroup class="containerHeadline">
+						<div class="containerHeadline">
 							<h3><a href="{link application='chat' controller='Chat' object=$room}{/link}">{$room}</a> <span class="badge">{#$users|count}</span></h3>
 							<p>{$room->topic|language}</p>
-						</hgroup>
+						</div>
 						
 						<ul class="dataList">
 							{foreach from=$users item='user'}
