@@ -88,10 +88,10 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 		parent::save();
 		
 		// save room
-		$this->objectAction = new \chat\data\room\RoomAction(array(), 'create', array('data' => array(
+		$this->objectAction = new \chat\data\room\RoomAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'title' => $this->title,
 			'topic' => $this->topic
-		)));
+		))));
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
 		$roomEditor = new \chat\data\room\RoomEditor($returnValues['returnValues']);

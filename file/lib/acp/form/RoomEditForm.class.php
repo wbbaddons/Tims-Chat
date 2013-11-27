@@ -87,10 +87,10 @@ class RoomEditForm extends RoomAddForm {
 		\chat\system\permission\PermissionHandler::clearCache();
 		
 		// update room
-		$this->objectAction = new \chat\data\room\RoomAction(array($this->roomID), 'update', array('data' => array(
+		$this->objectAction = new \chat\data\room\RoomAction(array($this->roomID), 'update', array('data' => array_merge($this->additionalFields, array(
 			'title' => $this->title,
 			'topic' => $this->topic
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		$this->saved();
