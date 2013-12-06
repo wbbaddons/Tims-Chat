@@ -46,7 +46,8 @@ class ChatPageMenuItemProvider extends \wcf\system\menu\page\DefaultPageMenuItem
 	public function getLink() {
 		return \wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
 			'application' => 'chat',
-			'object' => $this->room
+			'object' => $this->room,
+			'forceFrontend' => true
 		));
 	}
 }
