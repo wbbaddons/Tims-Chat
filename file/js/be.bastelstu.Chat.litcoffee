@@ -293,6 +293,8 @@ Scroll down when autoscroll is being activated.
 					$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
 			
 			$('.timsChatMessageContainer.active').on 'scroll', (event) ->
+				event.stopPropagation();
+				
 				element = $ @
 				scrollTop = element.scrollTop()
 				scrollHeight = element.prop 'scrollHeight'
