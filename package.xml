@@ -4,7 +4,7 @@
 		<packagename><![CDATA[Tim’s Chat]]></packagename>
 		<packagename language="de"><![CDATA[Tims Chat]]></packagename>
 		<packagedescription><![CDATA[Tim’s Chat is a capable chat software for your community. It convices by a seamless integration into your community, advanced permissions, it is feature rich and easily customized via the templates!]]></packagedescription>
-		<packagedescription language="de"><![CDATA[Tims Chat ist ein leistungsfähiges Chatsystem für Ihre Community. Er überzeugt durch eine nahtlose Integration in das Design Ihrer Community, durch ein umfangreiches Rechtesystem, durch Funktionsreichtum und ist über die Templates kinderleicht komplett zu verändern!]]></packagedescription>
+		<packagedescription language="de"><![CDATA[Tims Chat ist ein leistungsfähiges Chatsystem für Ihre Community. Er überzeugt durch eine nahtlose Integration in das Design Ihrer Community, ein umfangreiches Rechtesystem, Funktionsreichtum und ist über die Templates kinderleicht zu verändern!]]></packagedescription>
 		<isapplication>1</isapplication>
 		<version>3.0.0 Alpha 90</version><!-- Codename: Codenames are overrated -->
 		<date>2011-11-26</date>
