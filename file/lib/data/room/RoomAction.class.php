@@ -167,7 +167,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		$this->readInteger('roomID');
 		
 		$room = RoomCache::getInstance()->getRoom($this->parameters['roomID']);
-		if ($room === null) throw new exception\UserInputException();
+		if ($room === null) throw new exception\UserInputException('roomID');
 		if (!$room->canEnter()) throw new exception\PermissionDeniedException();
 	}
 	
