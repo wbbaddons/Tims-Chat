@@ -147,7 +147,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 					'application' => 'chat',
 					'object' => $room
 				)),
-				'roomID' => $room->roomID,
+				'roomID' => (int) $room->roomID,
 				'active' => $this->parameters['room'] && $room->roomID == $this->parameters['room']->roomID,
 				'userCount' => count($room->getUsers())
 			);
