@@ -129,7 +129,6 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		if (!MODULE_CHAT) throw new exception\IllegalLinkException();
 		
 		$this->parameters['room'] = RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID);
-		if ($this->parameters['room'] === null) throw new exception\IllegalLinkException();
 	}
 	
 	/**
@@ -149,7 +148,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 					'object' => $room
 				)),
 				'roomID' => $room->roomID,
-				'active' => $room->roomID == $this->parameters['room']->roomID,
+				'active' => $this->parameters['room'] && $room->roomID == $this->parameters['room']->roomID,
 				'userCount' => count($room->getUsers())
 			);
 		}
