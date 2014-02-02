@@ -109,7 +109,13 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 		if ($this->filterIssuerUsername === null) $this->filterIssuerUsername = \wcf\data\user\UserProfile::getUserProfile($this->filterIssuerUserID);
 		
 		// get room IDs by request
-		if (isset($_REQUEST['roomID']) && $_REQUEST['roomID'] != -1) $this->filterRoomID = intval($_REQUEST['roomID']);
+		if (isset($_REQUEST['roomID']) && $_REQUEST['roomID'] != -1) {
+			$this->filterRoomID = intval($_REQUEST['roomID']);
+			$room = \chat\data\room\RoomCache::getInstance()->getRoom($this->filterRoomID);
+			if (!$room) throw new \wcf\system\exception\IllegalLinkException();
+			if (!$room->permanent) throw new \wcf\system\exception\PermissionDeniedException();
+		}
+		
 		if (isset($_REQUEST['suspensionType']) && !empty($_REQUEST['suspensionType'])) $this->filterSuspensionType = intval($_REQUEST['suspensionType']);
 		
 		// display revoked
@@ -122,8 +128,13 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
+		$rooms = \chat\data\room\RoomCache::getInstance()->getRooms();
+		foreach ($rooms as $id => $room) {
+			if (!$room->permanent) unset($rooms[$id]);
+		}
+		
 		WCF::getTPL()->assign(array(
-			'availableRooms' => \chat\data\room\RoomCache::getInstance()->getRooms(),
+			'availableRooms' => $rooms,
 			'roomID' => ($this->filterRoomID !== null) ? $this->filterRoomID : -1,
 			'username' => $this->filterUsername,
 			'issuerUsername' => $this->filterIssuerUsername,
