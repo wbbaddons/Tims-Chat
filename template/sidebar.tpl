@@ -1,29 +1,19 @@
-<div class="tabMenuContainer chatTabMenuContainer containerPadding">
-	<nav class="menu chatSidebarMenu">
-		<ul>
-			<li id="toggleUsers" class="ui-state-active"><a href="{@$__wcf->getAnchor('timsChatUserList')}" title="{lang}chat.general.users{/lang}">{lang}chat.general.users{/lang} <span class="badge">0</span></a></li>
-			<li id="toggleRooms"><a href="{@$__wcf->getAnchor('timsChatRoomList')}" title="{lang}chat.general.rooms{/lang}">{lang}chat.general.rooms{/lang} <span class="badge">0</span></a></li>
+<fieldset id="timsChatUserListContainer">
+	<legend>{lang}chat.general.users{/lang}</legend>
+	<div id="timsChatUserList">
+		<ul class="sidebarNestedCategoryList">
+			
 		</ul>
-	</nav>
-	
-	<section id="sidebarContent" class="tabMenuContent">
-		<fieldset>
-			<nav id="timsChatUserList">
-				<ul>
-				</ul>
-			</nav>
-		</fieldset>
-		
-		<fieldset>
-			<nav id="timsChatRoomList" style="display: none;">
-				<div>
-					<ul>
-					</ul>
-					<div class="marginTop">
-						<button type="button">{lang}chat.general.forceRefresh{/lang}</button>
-					</div>
-				</div>
-			</nav>
-		</fieldset>
-	</section>
-</div>
+	</div>
+</fieldset>
+<fieldset id="timsChatRoomListContainer">
+	<legend>{lang}chat.general.rooms{/lang}</legend>
+	<div id="timsChatRoomList">
+		<ul class="sidebarNestedCategoryList">
+			
+		</ul>
+	</div>
+	<div class="marginTop">
+		<a id="timsChatRoomListReloadButton" class="button small jsOnly">{lang}chat.general.forceRefresh{/lang}</a>
+	</div>
+</fieldset>

@@ -6,7 +6,7 @@ everything that happens in the GUI of **Tims Chat**.
 
 	### Copyright Information  
 	# @author	Tim Düsterhus  
-	# @copyright	2010-2013 Tim Düsterhus  
+	# @copyright	2010-2014 Tim Düsterhus  
 	# @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>  
 	# @package	be.bastelstu.chat  
 	###
@@ -25,7 +25,7 @@ enabling EMCAScript 5 strict mode and overwriting console to prepend the name of
 				window.console.warn "[be.bastelstu.Chat] #{message}"
 			error: (message) ->
 				window.console.error "[be.bastelstu.Chat] #{message}"
-
+				
 Continue with defining the needed variables. All variables are local to our closure and will be
 exposed by a function if necessary.
 
@@ -73,7 +73,7 @@ exposed by a function if necessary.
 Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 
 		initialized = false
-		init = (roomID, config, titleTemplate, messageTemplate, userTemplate) ->
+		init = (roomID, config, titleTemplate, messageTemplate, userTemplate, userMenuTemplate) ->
 			return false if initialized
 			initialized = true
 			
@@ -81,6 +81,7 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 			v.titleTemplate = titleTemplate
 			v.messageTemplate = messageTemplate
 			v.userTemplate = userTemplate
+			v.userMenuTemplate = userMenuTemplate
 			
 			console.log 'Initializing'
 
@@ -117,7 +118,8 @@ Insert the appropriate smiley code into the input when a smiley is clicked.
 
 Handle private channel menu
 
-			$('#privateChannelsMenu').on 'click', '.privateChannel', -> openPrivateChannel $(@).data 'privateChannelID'
+			$('#timsChatMessageTabMenu > .tabMenu').on 'click', '.timsChatMessageTabMenuAnchor', ->
+				openPrivateChannel $(@).data 'userID' 
 
 Handle submitting the form. The message will be validated by some basic checks, passed to the `submit` eventlisteners
 and afterwards sent to the server by an AJAX request.
@@ -217,9 +219,24 @@ Reset autocompleter to default status, when the input is `click`ed, as the posit
 					value: null
 					caret: null
 
+Bind user menu functions
+
+			$('#dropdownMenuContainer').on 'click', '.jsTimsChatUserMenuWhisper', ->
+				command = "/whisper #{userList.current[$(@).parents('ul').data 'userID'].username}, "
+				return if $('#timsChatInput').val().match(new RegExp WCF.String.escapeRegExp("^#{command}"), 'i')
+				
+				insertText command, prepend: yes
+				
+			$('#dropdownMenuContainer').on 'click', '.jsTimsChatUserMenuQuery', -> openPrivateChannel $(@).parents('ul').data 'userID'
+			$('#dropdownMenuContainer').on 'click', '.jsTimsChatUserMenuBan', ->
+				command = "/ban #{userList.current[$(@).parents('ul').data 'userID'].username}, "
+				return if $('#timsChatInput').val().match(new RegExp WCF.String.escapeRegExp("^#{command}"), 'i')
+				
+				insertText command, prepend: yes
+
 Refresh the room list when the associated button is `click`ed.
 
-			$('#timsChatRoomList button').click -> do refreshRoomList
+			$('#timsChatRoomListReloadButton').click -> do refreshRoomList
 
 Clear the chat by removing every single message once the clear button is `clicked`.
 
@@ -247,9 +264,9 @@ Mark smilies as disabled when they are disabled.
 
 			$('#timsChatSmilies').click (event) ->
 				if $(@).data 'status'
-					$('#smilies').removeClass 'disabled'
+					$('#smilies').removeClass 'invisible'
 				else
-					$('#smilies').addClass 'disabled'
+					$('#smilies').addClass 'invisible'
 
 Toggle fullscreen mode.
 
@@ -272,12 +289,12 @@ Toggle checkboxes.
 
 Hide topic container.
 
-			$('.jsTopicCloser').on 'click', ->
-				if $('.timsChatMessageContainer.active').data('userID') is 0
-					$('#timsChatTopic').addClass 'hidden'
-				else
-					closePrivateChannel $('.timsChatMessageContainer.active').data('userID')
-					
+			$('#timsChatTopicCloser').on 'click', -> $('#timsChatTopic').addClass 'invisible'
+			
+Close private channels
+			
+			$('#timsChatMessageTabMenu').on 'click', '.jsChannelCloser', -> closePrivateChannel $(@).parent().data 'userID'
+			
 Visibly mark the message once the associated checkbox is checked.
 
 			$(document).on 'click', '.timsChatMessage :checkbox', (event) ->
@@ -289,27 +306,20 @@ Visibly mark the message once the associated checkbox is checked.
 Scroll down when autoscroll is being activated.
 
 			$('#timsChatAutoscroll').click (event) ->
-				if $('#timsChatAutoscroll').data 'status'
+				if $(@).data 'status'
 					$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
+					
+					scrollUpNotifications = off
+					$("#timsChatMessageTabMenu > .tabMenu > ul > li.ui-state-active").removeClass 'notify'
+					$(".timsChatMessageContainer.active").removeClass 'notify'
+				else
+					scrollUpNotifications = on
+			
+Bind scroll event on predefined message containers
 			
 			$('.timsChatMessageContainer.active').on 'scroll', (event) ->
-				event.stopPropagation();
-				
-				element = $ @
-				scrollTop = element.scrollTop()
-				scrollHeight = element.prop 'scrollHeight'
-				height = element.height()
-				
-				if scrollTop < scrollHeight - height - 25
-					if $('#timsChatAutoscroll').data('status') is 1
-						scrollUpNotifications = on
-						do $('#timsChatAutoscroll').click
-						
-				if scrollTop > scrollHeight - height - 10
-					if $('#timsChatAutoscroll').data('status') is 0
-						scrollUpNotifications = off
-						$(@).removeClass 'notification'
-						do $('#timsChatAutoscroll').click
+				do event.stopPropagation
+				handleScroll event
 
 Enable duplicate tab detection.
 
@@ -384,35 +394,85 @@ Free the fish.
 		freeTheFish = ->
 			return if $.wcfIsset 'fish'
 			console.warn 'Freeing the fish'
-			fish = $ """<div id="fish">#{WCF.String.escapeHTML('><((((\u00B0>')}</div>"""
+			fish = $ """<div id="fish"><span></span></div>"""
+			fish.direction = 'right'
 			
 			fish.css
 				position: 'fixed'
 				top: '50%'
 				left: '50%'
-				color: 'black'
-				textShadow: '1px 1px white'
-				zIndex: 9999
-			
+				zIndex: 0x7FFFFFFF
+				textShadow: '1px 1px rgb(0, 0, 0)'
+				
 			fish.appendTo $ 'body'
-			pe.fish = new WCF.PeriodicalExecuter ->
-				left = Math.random() * 100 - 50
-				top = Math.random() * 100 - 50
-				fish = $ '#fish'
+			
+			fish.colors = ['78C5D6', '459ba8', '79C267', 'C5D647', 'F5D63D', 'F28C33', 'E868A2', 'BF62A6']
+			fish.colorIndex = 0
+			
+			fish.texts =
+				right: '><((((\u00B0>'
+				left:  '<\u00B0))))><'
+			fish.fishes = {}
+
+Pre build fishes, this allows for faster animation
+
+			$.each fish.texts, (key, value) ->
+				fish.fishes[key] = []
+				index = 0
 				
-				left *= -1 unless fish.width() < (fish.position().left + left) < ($(window).width() - fish.width())
-				top *= -1 unless fish.height() < (fish.position().top + top) < ($(window).height() - fish.height())
-				
-				if left > 0
-					fish.text '><((((\u00B0>' if left > 0
-				else if left < 0
-					fish.text '<\u00B0))))><'
+				while index < value.length
+					html = $ '<span/>'
+					i = 0
+					$(value.split '').each (key, value) ->
+						$("<span>#{value}</span>").css
+							color: '#' + fish.colors[(i++ + index) % fish.colors.length]
+							textShadow: '1px 1px rgb(0, 0, 0)'
+						.appendTo html
+					fish.fishes[key][index++] = html
+				return
+			
+			fish.find('> span').replaceWith fish.fishes[fish.direction][0]
+			
+			fish.updateRainbowText = (key, value) ->
+				key = key || fish.direction
+				return unless fish.fishes[key]? || not fish.texts[key]?
+				value = value || fish.colorIndex++ % fish.texts[key].length
+								
+				fish.find('> span').replaceWith fish.fishes[key][value]
+			
+			fish.pePos = new WCF.PeriodicalExecuter ->
+				loops = 0
+				loop
+					++loops
+					
+					left = Math.random() * 300 - 150
+					top = Math.random() * 300 - 150
+					
+					if (fish.position().top + top) > 0 and (fish.position().left + left + fish.width()) < $(window).width() and (fish.position().top + top + fish.height()) < $(window).height() and (fish.position().left + left) > 0
+						break
+					else if loops is 10
+						console.log 'Magicarp used Splash for the 10th time in a row - it fainted!'
+						fish.css
+							'top': '50%'
+							'left': '50%'
+						break
+						
+				if left > 0 and fish.text() isnt '><((((\u00B0>'
+					fish.direction = 'right'
+					fish.updateRainbowText null, fish.colorIndex % fish.texts.right.length
+				else if left < 0 and fish.text() isnt '<\u00B0))))><'
+					fish.direction = 'left'
+					fish.updateRainbowText null, fish.colorIndex % fish.texts.left.length
 				
 				fish.animate
 					top: (fish.position().top + top)
 					left: (fish.position().left + left)
 				, 1e3
-			, 1.5e3
+			, 1.2e3
+			
+			fish.peColor = new WCF.PeriodicalExecuter ->
+				do fish.updateRainbowText
+			, .125e3
 
 Fetch new messages from the server and pass them to `handleMessages`. The userlist will be passed to `handleUsers`.
 `remainingFailures` will be decreased on failure and message loading will be entirely disabled once it reaches zero.
@@ -446,15 +506,13 @@ Prevent loading messages in parallel.
 Insert the given messages into the chat stream.
 
 		handleMessages = (messages) ->
-			$('.timsChatMessageContainer.active').trigger 'scroll'
-			
 			for message in messages
 				message.isInPrivateChannel = (String(message.type) is v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") or $.wcfIsset("timsChatMessageContainer#{message.sender}"))
 				
 				events.newMessage.fire message
 				
 				createNewMessage = yes
-				if  $('.timsChatMessage:last-child .text').is('ul') and lastMessage isnt null and lastMessage.type in [ 0, 7 ]
+				if  $('.timsChatMessage:last-child .timsChatText').is('ul') and lastMessage isnt null and lastMessage.type in [ v.config.messageTypes.NORMAL, v.config.messageTypes.WHISPER ]
 					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver and lastMessage.isInPrivateChannel is message.isInPrivateChannel
 						createNewMessage = no
 				
@@ -490,10 +548,33 @@ Insert the given messages into the chat stream.
 					else
 						messageContainerID = 0
 
-					$("#timsChatMessageContainer#{messageContainerID} .timsChatMessage:last-child .text").append $(output).find('.text li:last-child')
+					$("#timsChatMessageContainer#{messageContainerID} .timsChatMessage:last-child .timsChatText").append $(output).find('.timsChatText li:last-child')
 				
 				lastMessage = message
+			
 			$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
+
+Handles scroll event of message containers
+
+		handleScroll = (event) ->
+			element = $ event.target
+			
+			if element.hasClass 'active'
+				scrollTop = element.scrollTop()
+				scrollHeight = element.prop 'scrollHeight'
+				height = element.innerHeight()
+				
+				if scrollTop < scrollHeight - height - 25
+					if $('#timsChatAutoscroll').data('status') is 1
+						scrollUpNotifications = on
+						do $('#timsChatAutoscroll').click
+						
+				if scrollTop > scrollHeight - height - 10
+					if $('#timsChatAutoscroll').data('status') is 0
+						scrollUpNotifications = off
+						$("#timsChatMessageTabMenu > .tabMenu > ul > li.ui-state-active").removeClass 'notify'
+						$(".timsChatMessageContainer.active").removeClass 'notify'
+						do $('#timsChatAutoscroll').click
 
 Rebuild the userlist based on the given `users`.
 
@@ -545,14 +626,7 @@ Build HTML of the user and insert it into the list, if the users was not found i
 						
 						li.append v.userTemplate.fetch user
 						
-						menu = $ '<ul></ul>'
-						unless user.userID is WCF.User.userID
-							menu.append $("<li><a>#{WCF.Language.get('chat.general.query')}</a></li>").click -> openPrivateChannel user.userID
-							menu.append $ "<li><a>#{WCF.Language.get('chat.general.kick')}</a></li>"
-							menu.append $ "<li><a>#{WCF.Language.get('chat.general.ban')}</a></li>"
-							menu.append $ """<li><a href="#{user.link}">#{WCF.Language.get('chat.general.profile')}</a></li>"""
-						
-						events.userMenu.fire user, menu
+						menu = $(v.userMenuTemplate.fetch user)
 						
 						if menu.find('li').length
 							li.append menu
@@ -560,7 +634,6 @@ Build HTML of the user and insert it into the list, if the users was not found i
 							li.addClass 'dropdown'
 							
 						li.appendTo $ '#timsChatUserList > ul'
-					
 					foundUsers[id] = true
 
 Remove all users that left the chat.
@@ -578,12 +651,17 @@ Insert the given `text` into the input. If `options.append` is true the given `t
 the existing text. If `options.submit` is true the message will be sent to the server afterwards.
 
 		insertText = (text, options = { }) ->
+			options.append = false if options.prepend? and options.prepend and not options.append?
+			
 			options = $.extend
+				prepend: false
 				append: true
 				submit: false
 			, options
 			
+			text = text + $('#timsChatInput').val() if options.prepend
 			text = $('#timsChatInput').val() + text if options.append
+			
 			$('#timsChatInput').val text
 			do $('#timsChatInput').keyup
 			
@@ -595,19 +673,21 @@ the existing text. If `options.submit` is true the message will be sent to the s
 Send out notifications for the given `message`. The number of unread messages will be prepended to `document.title` and if available desktop notifications will be sent.
 
 		notify = (message) ->
-			if scrollUpNotifications
-				$('.timsChatMessageContainer.active').addClass 'notification'
+			return if message.sender is WCF.User.userID
 			
-			if message.isInPrivateChannel
-				if message.sender is WCF.User.userID
-					privateChannelID = message.receiver
-				else
-					privateChannelID = message.sender
+			if scrollUpNotifications
+				$("#timsChatMessageTabMenu > .tabMenu > ul > li.ui-state-active").addClass 'notify'
+				$(".timsChatMessageContainer.active").addClass 'notify'
 				
-				if $('.timsChatMessageContainer.active').data('userID') isnt privateChannelID
-					$("#privateChannel#{privateChannelID}").addClass 'notify'
+			if message.isInPrivateChannel
+				id = if message.sender is WCF.User.userID then message.receiver else message.sender
+				
+				if $('.timsChatMessageContainer.active').data('userID') isnt id
+					$("#timsChatMessageTabMenuAnchor#{id}").parent().addClass 'notify'
+					$("#timsChatMessageContainer#{id}").addClass 'notify'
 			else if $('.timsChatMessageContainer.active').data('userID') isnt 0
-				$("#privateChannel0").addClass 'notify'
+				$("#timsChatMessageTabMenuAnchor0").parent().addClass 'notify'
+				$("#timsChatMessageContainer0").addClass 'notify'
 				
 			return if isActive or $('#timsChatNotify').data('status') is 0
 			
@@ -645,8 +725,9 @@ Fetch the roomlist from the server and update it in the GUI.
 					
 					for room in data.returnValues
 						li = $ '<li></li>'
+						li.addClass('timsChatRoom').data('roomID', room.roomID)
 						li.addClass 'active' if room.active
-						$("""<a href="#{room.link}">#{WCF.String.escapeHTML(room.title)} <span class="badge">#{WCF.String.formatNumeric room.userCount}</span></a>""").addClass('timsChatRoom').data('roomID', room.roomID).appendTo li
+						$("""<a href="#{room.link}">#{WCF.String.escapeHTML(room.title)}</a> <span class="badge">#{WCF.String.formatNumeric room.userCount}</span>""").appendTo li
 						$('#timsChatRoomList ul').append li
 					
 					if window.history?.replaceState?
@@ -702,7 +783,7 @@ Joins a room.
 				success: (data) ->
 					loading = false
 					
-					$('#timsChatTopic').removeClass 'hidden'
+					$('#timsChatTopic').removeClass 'invisible'
 					currentRoom = data.returnValues
 					currentRoom.roomID = roomID
 					
@@ -734,66 +815,72 @@ Open private channel
 				div = $ '<div>'
 				div.attr 'id', "timsChatMessageContainer#{userID}"
 				div.data 'userID', userID
+				div.addClass 'tabMenuContent'
 				div.addClass 'timsChatMessageContainer'
-				div.addClass 'marginTop'
 				div.addClass 'container'
-				div.wrapInner '<ul>'
+				div.addClass 'containerPadding'
+				div.wrapInner "<ul></ul>"
+				div.on 'scroll', (event) ->
+					do event.stopPropagation
+					handleScroll event
+					
 				$('#timsChatMessageContainer0').after div
 			
-			$('.privateChannel').removeClass 'active'
-			
 			if userID isnt 0
-				$('#timsChatTopic').removeClass 'hidden empty'
+				$('#timsChatTopic').removeClass 'empty'
 				$('#timsChatTopic > .topic').html WCF.Language.get 'chat.general.privateChannelTopic', {username: userList.allTime[userID].username}
-				$('#timsChatTopic > .jsTopicCloser').attr 'title', WCF.Language.get 'chat.general.closePrivateChannel'
+				$('#timsChatMessageTabMenu').removeClass 'singleTab'
 				
-				unless $.wcfIsset "privateChannel#{userID}"
+				unless $.wcfIsset "timsChatMessageTabMenuAnchor#{userID}"
 					li = $ '<li>'
-					li.attr 'id', "privateChannel#{userID}"
-					li.data 'privateChannelID', userID
-					li.addClass 'privateChannel'
 					
-					span = $ '<span class="userAvatar framed" />'
+					anchor = $ """<a id="timsChatMessageTabMenuAnchor#{userID}" class="timsChatMessageTabMenuAnchor" href="#{window.location.toString().replace /#.+$/, ''}#timsChatMessageContainer#{userID}" />"""
+					anchor.data 'userID', userID
 					
 					avatar = $ userList.allTime[userID].avatar[16]
-					avatar.addClass 'jsTooltip'
-					avatar.attr 'title', userList.allTime[userID].username
-					avatar.wrap span
-					li.append avatar.parent().addClass 'small'
+					avatar = $('<span class="userAvatar framed" />').wrapInner avatar
+					avatar.append "<span>#{userList.allTime[userID].username}</span>"
 					
-					avatar = $ userList.allTime[userID].avatar[32]
-					avatar.addClass 'jsTooltip'
-					avatar.attr 'title', userList.allTime[userID].username
-					avatar.wrap span
-					li.append avatar.parent().addClass 'large'
+					anchor.wrapInner avatar
+					anchor.prepend '<span class="icon icon16 icon-warning-sign notifyIcon"></span>'
+					anchor.append """<span class="jsChannelCloser icon icon16 icon-remove jsTooltip" title="#{WCF.Language.get('chat.global.closePrivateChannel')}" />"""
 					
-					$('#privateChannelsMenu ul').append li
+					li.append anchor
 					
-				$('#privateChannelsMenu').addClass 'shown'
+					$('#timsChatMessageTabMenu > .tabMenu > ul').append li
+					$('#timsChatMessageTabMenu').wcfTabs 'refresh'
+					WCF.System.FlexibleMenu.rebuild $('#timsChatMessageTabMenu > .tabMenu').attr 'id'
 			else
 				$('#timsChatTopic > .topic').text currentRoom.topic
-				$('#timsChatTopic > .jsTopicCloser').attr 'title', WCF.Language.get 'chat.general.closeTopic'
 				if currentRoom.topic.trim() is ''
 					$('#timsChatTopic').addClass 'empty'
 				else
 					$('#timsChatTopic').removeClass 'empty'
 			
-			do WCF.DOMNodeInsertedHandler.execute
-			
 			$('.timsChatMessageContainer').removeClass 'active'
 			$("#timsChatMessageContainer#{userID}").addClass 'active'
-			$("#privateChannel#{userID}").addClass('active').removeClass 'notify'
+			$("#timsChatMessageTabMenuAnchor#{userID}").parent().removeClass 'notify'
+			$("#timsChatMessageContainer#{userID}").removeClass 'notify'
+			if $('#timsChatAutoscroll').data('status')
+				do $('#timsChatAutoscroll').click
+				scrollUpNotifications = on
+			
+			$('#timsChatMessageTabMenu').wcfTabs 'select', $("#timsChatMessageTabMenuAnchor#{userID}").parent().index()
+			do WCF.DOMNodeInsertedHandler.execute
+			
 			openChannel = userID
 
 Close private channel
 
 		closePrivateChannel = (userID) ->
 			unless userID is 0
-				do $("#privateChannel#{userID}").remove
+				do $("#timsChatMessageTabMenuAnchor#{userID}").parent().remove
 				do $("#timsChatMessageContainer#{userID}").remove
+				$('#timsChatMessageTabMenu').wcfTabs 'refresh'
+				WCF.System.FlexibleMenu.rebuild $('#timsChatMessageTabMenu > .tabMenu').wcfIdentify()
 				
-			if $('#privateChannelsMenu li').length <= 1
-				$('#privateChannelsMenu').removeClass 'shown'
+			if $('#timsChatMessageTabMenu > .tabMenu > ul > li').length <= 1
+				$('#timsChatMessageTabMenu').addClass 'singleTab'
 			
 			openPrivateChannel 0
 
@@ -965,7 +1052,7 @@ Create a message containing the uploaded attachment
 							unless parseInt(data.returnValues.attachments[internalFileID].isImage) is 0
 								link.addClass('jsImageViewer')
 								
-								if !data.returnValues.attachments[internalFileID].tinyURL
+								unless data.returnValues.attachments[internalFileID].tinyURL
 									li.find('.box32 > div.attachmentImageContainer > .icon-paper-clip').replaceWith $("""<img src="#{data.returnValues.attachments[internalFileID].url}'" alt="" class="attachmentTinyThumbnail" style="width: 32px; height: 32px;" />""")
 							
 							li.find('.attachmentTinyThumbnail').wrap link

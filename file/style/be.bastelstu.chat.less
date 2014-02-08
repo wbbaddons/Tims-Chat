@@ -1,11 +1,42 @@
 /**
- * Styles for Tims Chat
- * 
+ * Styles for Tim’s Chat
+ *
  * @author	Tim Düsterhus, Maximilian Mader
- * @copyright	2010-2013 Tim Düsterhus
+ * @copyright	2010-2014 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.chat
  */
+
+@-webkit-keyframes timsChatNotify {
+	from {
+		border-color: @wcfContainerBorderColor;
+	}
+	
+	to {
+		border-color: @wcfInputHoverBorderColor;
+	}
+}
+
+@-moz-keyframes timsChatNotify {
+	from {
+		border-color: @wcfContainerBorderColor;
+	}
+	
+	to {
+		border-color: @wcfInputHoverBorderColor;
+	}
+}
+
+@-o-keyframes timsChatNotify {
+	from {
+		border-color: @wcfContainerBorderColor;
+	}
+	
+	to {
+		border-color: @wcfInputHoverBorderColor;
+	}
+}
+
 @keyframes timsChatNotify {
 	from {
 		border-color: @wcfContainerBorderColor;
@@ -16,365 +47,400 @@
 	}
 }
 
-.__bubbleArrow {
-	border-color: transparent @wcfContainerBorderColor;
-	left: -6px;
-	top: 5px;
-	border-width: 6px 6px 6px 0;
-	border-style: solid;
-	content: "";
-	display: block;
-	position: absolute;
-	width: 0;
-}
-
+// only apply styles to Tim’s Chat
 #tplChat {
-	#timsChatTopic {
-		padding: @wcfGapTiny;
-		.transition(height, .2s);
-		.transition(padding-top, .2s);
-		.transition(padding-bottom, .2s);
-		
-		&.empty, &.hidden {
-			height: 0px;
-			overflow: hidden;
-			border: 0px;
-			padding: 0px;
-			margin: 0px;
-		}
-		
-		.jsTopicCloser {
-			cursor: pointer;
-			float: right;
-		}
-	}
-	
-	#privateChannelsMenu {
-		.transition(opacity, .2s);
-		.marginTop;
-		z-index: -1;
-		position: absolute;
-		opacity: 0;
-		
-		&.shown {
-			opacity: 1;
-			z-index: 130;
+	#content {
+		// styles related to the topic container
+		#timsChatTopic {
+			position: relative;
 			
-			~ .timsChatMessageContainer {
-				margin-left: 35px;
-				border-top-left-radius: 0;
+			#timsChatTopicCloser {
+				position: absolute;
+				top: @wcfGapSmall;
+				right: @wcfGapSmall;
+				cursor: pointer;
+				
+				&:hover {
+					color: @wcfLinkColor;
+				}
 			}
 		}
 		
-		> ul {
-			text-align: right;
-			
-			> li:first-child {
-				> .userAvatar.framed {
-					 img, > canvas, > .icon {
-						border-radius: @wcfContainerBorderRadius 0 0 0;
-					}
-				}
-			}
-			
-			> li:last-child {
-				> .userAvatar.framed {
-					 img, > canvas, > .icon {
-						border-radius: 0 0 0 @wcfContainerBorderRadius;
-					}
-				}
-			}
-			
-			> li {
-				margin-bottom: -1px;
-				background-color: @wcfContainerBackgroundColor;
-				
-				> .userAvatar, .userAvatar > .icon {
-					cursor: pointer;
+		#timsChatMessageTabMenu {
+			&.singleTab {
+				> nav.tabMenu {
+					// hide tab menu when single tabbed
+					// this is “a bit” hacky
+					display: none !important;
 				}
 				
-				> .userAvatar {
-					&.large {
-						display: none;
-					}
-					
-					&.small {
-						display: block;
-					}
+				// overwrite WCF margin overwrite on tab menu content with WCF marginTop like margin
+				// this is “a bit” hacky
+				margin-top: @wcfGapMedium !important;
+				
+				> .tabMenuContent {
 				}
 				
-				&.active {
-					> .userAvatar {
-						&.large {
-							display: block;
-						}
+				.timsChatMessageContainer {
+					&.notify {
+						-webkit-animation-duration: .2s;
+						-webkit-animation-name: timsChatNotify;
+						-webkit-animation-iteration-count: 5;
+						-webkit-animation-direction: alternate;
+						-webkit-animation-timing-function: linear;
 						
-						&.small {
-							display: none;
-						}
+						-moz-animation-duration: .2s;
+						-moz-animation-name: timsChatNotify;
+						-moz-animation-iteration-count: 5;
+						-moz-animation-direction: alternate;
+						-moz-animation-timing-function: linear;
 						
-						&.framed {
-							> img, > canvas, > .icon {
-								border-right-color: @wcfContentBackgroundColor;
-								
-								border-radius: @wcfContainerBorderRadius 0 0 @wcfContainerBorderRadius;
+						-o-animation-duration: .2s;
+						-o-animation-name: timsChatNotify;
+						-o-animation-iteration-count: 5;
+						-o-animation-direction: alternate;
+						-o-animation-timing-function: linear;
+						
+						animation-duration: .2s;
+						animation-name: timsChatNotify;
+						animation-iteration-count: 5;
+						animation-direction: alternate;
+						animation-timing-function: linear;
+						
+						border-color: @wcfInputHoverBorderColor;
+					}
+				}
+			}
+			
+			> nav.tabMenu {
+				> ul {
+					> li {
+						> a {
+							.notifyIcon {
+								display: none;
 							}
-						}
-					}
-				}
-				
-				&.notify {
-					> .userAvatar {
-						> * {
-							// TODO
-							opacity: .4;
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	.timsChatMessageContainer {
-		height: 320px;
-		overflow-y: scroll;
-		overflow-x: hidden;
-		display: none;
-		
-		&.active {
-			display: block;
-		}
-		
-		&.markEnabled {
-			ul {
-				.timsChatMessage {
-					&.jsMarked {
-						background-color: @wcfSelectedBackgroundColor;
-						color: @wcfSelectedColor;
-					}
-					
-					> .innerMessageContainer {
-						.markContainer {
-							display: block;
-						}
-					}
-				}
-			}
-		}
-		
-		ul {
-			.timsChatMessage {
-				min-height: 20px;
-				clear: both;
-				.transition(opacity, .2s);
-				
-				&.unloaded {
-					opacity: .5;
-				}
-				
-				&:nth-child(even) {
-					> .innerMessageContainer.bubble .innerMessage {
-						background-color: @wcfContainerAccentBackgroundColor;
-						
-						&:after {
-							border-color: transparent @wcfContainerAccentBackgroundColor !important;
-						}
-					}
-				}
-				
-				.messageIcon {
-					float: left;
-					padding: 8px 0 0 4px;
-					margin-right: -16px;
-				}
-				
-				> .innerMessageContainer {
-					padding: 5px 20px 5px 5px;
-					position: relative;
-					
-					> div.avatarContainer {
-						position: relative;
-						float: left;
-						margin-left: 16px;
-						
-						> .avatarExtra {
-							box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
-							position: absolute;
-							left: 24px;
-							bottom: -2px;
-							width: 16px;
-							height: 16px;
-						}
-					}
-					
-					.innerMessage {
-						margin-left: 46px;
-						padding: 2px 5px 5px;
-						
-						time {
-							float: right;
-						}
-						
-						.username {
-							font-weight: bold;
-						}
-						
-						> .text {
-							img {
-								max-width: 100%;
-								height: auto;
-								width: auto;
-							}
-						}
-					}
-					
-					&.bubble {
-						> div.avatarContainer {
-							margin-left: 0;
-						}
-						
-						.innerMessage {
-							border-width: 1px;
-							border-style: solid;
-							border-color: @wcfContainerBorderColor;
-							border-radius: @wcfContainerBorderRadius;
-							background-color: @wcfContainerBackgroundColor;
-							position: relative;
 							
-							> ul.text {
-								li {
-									.clearfix;
-									border-style: solid;
-									border-width: 0 0 1px 0;
-									border-color: @wcfContainerBorderColor;
-									padding: 3px 0 4px;
-									
-									&:last-child {
-										border-style: none;
-										padding: 3px 0 0 0;
-									}
+							> .icon, img {
+								// fix vertical alignment of images in tabs
+								vertical-align: middle;
+								margin-right: @wcfGapTiny;
+							}
+							
+							// styles related to the close button of private channels in tabs
+							.jsChannelCloser {
+								&:hover {
+									color: @wcfLinkColor;
+								}
+							}
+						}
+						
+						&.notify {
+							.notifyIcon {
+								display: inline;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		.timsChatMessageContainer {
+			height: 300px;
+			overflow-y: scroll;
+			overflow-x: hidden;
+			
+			.timsChatMarkContainer {
+				display: none;
+			}
+			
+			> ul {
+				> .timsChatMessage {
+					clear: both;
+					
+					&.unloaded {
+						opacity: 0.5;
+					}
+					
+					> .timsChatMessageIcon {
+						float: left;
+						margin-right: -16px;
+					}
+					
+					> .timsChatInnerMessageContainer {
+						position: relative;
+						
+						> .timsChatAvatarContainer {
+							position: relative;
+							float: left;
+							margin-left: 16px;
+							
+							> .timsChatAvatarExtraIcon {
+								position: absolute;
+								bottom: -8px;
+								right: -8px;
+							}
+						}
+						
+						.timsChatInnerMessage {
+							margin-left: 32 + @wcfGapMedium; // size of avatars + a small gap
+							padding-right: @wcfGapSmall;
+							
+							.timsChatUsernameContainer {
+								// sender username
+								> span:first-child {
+									font-weight: bold;
 								}
 							}
 							
-							&:before {
-								.__bubbleArrow;
-							}
-							
-							&:after {
-								.__bubbleArrow;
-								border-color: transparent @wcfContainerBackgroundColor;
-								left: -5px;
-								top: 6px;
-								border-width: 5px 5px 5px 0;
+							time {
+								float: right;
 							}
 						}
 						
-						&.right {
-							.avatarContainer {
-								float: right;
+						&.bubble {
+							> .timsChatAvatarContainer {
+								margin-left: 0px;
 							}
 							
-							.innerMessage {
-								margin-right: 46px;
-								margin-left: 0px;
+							.timsChatInnerMessage {
+								position: relative;
 								
-								&:before {
-									.__bubbleArrow;
-									left: auto;
-									right: -6px;
-									border-width: 6px 0 6px 6px;
+								padding: @wcfGapSmall;
+								border-radius: @wcfContainerBorderRadius;
+								border-style: solid;
+								border-width: 1px;
+								border-color: @wcfContainerBorderColor;
+								
+								> .timsChatText {
+									li {
+										border-style: solid;
+										border-width: 0 0 1px 0;
+										border-color:  @wcfContainerBorderColor;
+										padding: (@wcfGapTiny - 1) 0  @wcfGapTiny;
+										
+										&:last-child {
+											border-style: none;
+											padding: (@wcfGapTiny - 1)  0 0 0;
+										}
+									}
+								}
+								
+								// :before and :after are used to create the little arrows on the “speech bubble containers”
+								&:before, &:after {
+									content: "";
+									display: block;
+									position: absolute;
+									width: 0;
+									border-style: solid;
+								}
+								
+								&:before{
+									border-color: transparent @wcfContainerBorderColor;
+									left: -@wcfGapSmall;
+									top: @wcfGapSmall;
+									border-width: @wcfGapSmall @wcfGapSmall @wcfGapSmall 0;
 								}
 								
 								&:after {
-									.__bubbleArrow;
 									border-color: transparent @wcfContainerBackgroundColor;
-									left: auto;
-									right: -5px;
-									top: 6px;
-									border-width: 5px 0 5px 5px;
+									left: -@wcfGapSmall + 1;
+									top: @wcfGapSmall + 1;
+									border-width: (@wcfGapSmall - 1) (@wcfGapSmall - 1) (@wcfGapSmall - 1) 0;
+								}
+							}
+							
+							&.right {
+								> .timsChatAvatarContainer {
+									float: right;
+								}
+								
+								.timsChatInnerMessage {
+									margin-right: 32 + @wcfGapMedium;
+									margin-left: 0;
+									
+									&:before{
+										border-color: transparent @wcfContainerBorderColor;
+										left: auto;
+										right: -@wcfGapSmall;
+										top: @wcfGapSmall;
+										border-width: @wcfGapSmall 0 @wcfGapSmall @wcfGapSmall;
+									}
+									
+									&:after {
+										border-color: transparent @wcfContainerBackgroundColor;
+										left: auto;
+										right: -@wcfGapSmall + 1;
+										top: @wcfGapSmall + 1;
+										border-width: (@wcfGapSmall - 1) 0 (@wcfGapSmall - 1) (@wcfGapSmall - 1);
+									}
 								}
 							}
 						}
 					}
 					
-					> .markContainer {
-						display: none;
-						position: absolute;
-						right: 0px;
-						top: 6px;
+					&:nth-child(even) {
+						> .timsChatInnerMessageContainer {
+							&.bubble {
+								.timsChatInnerMessage {
+									background-color: @wcfContainerAccentBackgroundColor;
+									
+									&:after {
+										border-color: transparent @wcfContainerAccentBackgroundColor;
+									}
+								}
+							}
+						}
+					}
+					
+					&:not(:last-child) {
+						> .timsChatInnerMessageContainer {
+							margin-bottom: @wcfGapSmall;
+						}
 					}
 				}
+			}
+			
+			&.markEnabled {
+				> ul {
+					> .timsChatMessage {
+						&.jsMarked {
+							> .timsChatInnerMessageContainer {
+								.timsChatInnerMessage {
+									background-color: @wcfSelectedBackgroundColor;
+									color: @wcfSelectedColor;
+								}
+								
+								&.bubble {
+									.timsChatInnerMessage {
+										&:after {
+											border-color: transparent @wcfSelectedBackgroundColor;
+										}
+									}
+									
+									&.right {
+										.timsChatInnerMessage {
+											&:after {
+												border-color: transparent @wcfSelectedBackgroundColor;
+											}
+										}
+									}
+								}
+							}
+						}
+						
+						> .timsChatInnerMessageContainer {
+							.timsChatMarkContainer {
+								display: inline-block;
+								position: absolute;
+								right: -@wcfGapLarge;
+								top: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		#smilies {
+			.marginTop();
+			
+			// don't display the smiley box on low resolution devices as a button will be shown instead
+			@media only screen and (max-width: 800px) {
+				display: none;
+			}
+			
+			&, &.invisible {
+				-webkit-transition: opacity .2s ease-in-out;
+				   -moz-transition: opacity .2s ease-in-out;
+				    -ms-transition: opacity .2s ease-in-out;
+				     -o-transition: opacity .2s ease-in-out;
+				        transition: opacity .2s ease-in-out;
+			}
+			
+			&.invisible {
+				opacity: .5;
+			}
+		}
+		
+		#timsChatOptions {
+			float: right;
+			
+			// styles related to the smiley button that replaces the smiley box on low resolution devices
+			#timsChatSmileyPopupButton {
+				display: none;
+				
+				@media only screen and (max-width: 800px) {
+					display: inline-block;
+				}
+			}
+			
+			// fix option buttons on low resolution devices, it will become a dropup not a dropdown
+			> nav.buttonGroupNavigation {
+				position: relative;
+				display: inline-block;
+				vertical-align: middle;
+				
+				@media only screen and (max-width: 800px) {
+					margin-right: @wcfGapSmall;
+					
+					> ul {
+						right: 1px;
+						top: auto;
+						bottom: 24px;
+					}
+				}
+			}
+			
+			// clear the float on the first element after the option container, maybe someone alters their templates and puts an element down there ;)
+			+ * {
+				clear: right;
 			}
 		}
 	}
 	
 	.sidebar {
-		padding-top: 0px !important;
-		
 		> div {
-			height: 400px;
-			overflow: auto !important;
-			> .chatTabMenuContainer {
-				padding: 14px 0 21px;
+			> fieldset{
+				padding-right: @wcfGapTiny;
 				
-				> .chatSidebarMenu {
-					background: @wcfContentBackgroundColor;
-					margin: -14px 0 0;
-					border-radius: 0px;
+				> div {
+					overflow-y: auto;
+					
+					> ul {
+						padding-right: @wcfGapSmall;
+					}
+				}
+				
+				&#timsChatUserListContainer {
+					> div {
+						height: 250px;
+					}
+				}
+				
+				&#timsChatRoomListContainer {
+					> div#timsChatRoomList {
+						height: 150px;
+					}
 				}
 			}
 		}
 		
-		#sidebarContent {
-			fieldset {
-				padding-top: 0px;
-				padding-bottom: 0px;
-			}
-			
-			nav {
-				ul {
-					> li {
-						> a {
-							padding: @wcfGapTiny @wcfGapMedium @wcfGapTiny @wcfGapLarge;
-							height: 24px; // height of avatar image
-						}
-						
-						> a:before {
-							display: inline-block;
-							content: "";
-							height: 100%;
-							vertical-align: middle;
-						}
-						
-						> &.active {
-							margin-top: @wcfGapSmall;
-						}
-					}
-				}
-			}
-			
-			ul:not(.dropdownMenu) {
+		#timsChatUserList {
+			> ul {
 				> li {
-					margin-top: @wcfGapSmall;
-				}
-			}
-			
-			#timsChatUserList {
-				.timsChatUser {
-					> a {
-						background: @wcfContentBackgroundColor;
-						
-						img {
-							margin-right: @wcfGapSmall;
+					&.you {
+						a {
+							&:hover {
+								text-decoration: none;
+								cursor: default;
+							}
 						}
 					}
 					
-					&.away {
-						opacity: .5;
-					}
-					
-					&.suspended a {
-						text-decoration: line-through;
+					a {
+						img {
+							margin-right: @wcfGapTiny;
+						}
 					}
 				}
 			}
@@ -391,116 +457,35 @@
 		}
 	}
 	
-	#timsChatRoomList {
+	#timsChatCopyrightDialog {
 		> div {
-			> div {
-				text-align: center;
-			}
+			background-repeat: no-repeat;
+			background-position: right top;
 		}
 	}
 	
-	#smilies {
-		margin-top: @wcfGapMedium;
-		
-		li {
-			.transition(opacity, .2s);
-		}
-		
-		&.disabled {
-			li {
-				opacity: .5;
-			}
-		}
-	}
-	
-	#timsChatOptions {
-		> ul {
-			text-align: right;
-		}
-	}
-	
-	#timsChatCopyrightDialog > div {
-		background-position: right center;
-		background-repeat: no-repeat;
-		min-height: 150px;
-	}
-	
-	.notification {
-		animation-duration: .2s;
-		animation-name: timsChatNotify;
-		animation-iteration-count: 5;
-		animation-direction: alternate;
-		animation-timing-function: linear;
-		border-color: @wcfInputHoverBorderColor;
-	}
-	
-	@media only screen and (max-width: 800px) {
-		.timsChatMessage .text li > time, #smilies {
-			display: none !important;
-		}
+	#fish {
+		font-size: 2rem;
 	}
 }
 
+// TODO
 html.fullscreen {
-	#top {
-		height: 0px;
-	}
-	
-	height: 100%;
-	overflow: hidden;
-	
-	#content {
+	&,
+	body,
+	#tplChat #main,
+	#tplChat #main > div,
+	#tplChat #main > div > div,
+	#tplChat #content {
+		width: 100%;
 		height: 100%;
-		
-		-moz-box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		box-sizing: border-box;
-		
-		display: -moz-box;
-		display: -webkit-box;
-		display: -webkit-flex;
-		display: -ms-flexbox;
-		display: flex;
-		
-		-webkit-box-orient: vertical;
-		-moz-box-orient: vertical;
-		-webkit-box-direction: normal;
-		-moz-box-direction: normal;
-		-webkit-flex-direction: column;
-		-ms-flex-direction: column;
-		flex-direction: column;
-		
-		.timsChatMessageContainer {
-			-webkit-box-flex: 1;
-			-moz-box-flex: 1;
-			-webkit-flex: 1 0 auto;
-			-ms-flex: 1 0 auto;
-			flex: 1 0 auto;
-		}
+		max-width: 100%;
+		max-height: 100%;
 	}
 	
-	#timsChatOptions {
-		margin-bottom: @wcfGapMedium;
-	}
-	
-	#tplChat {
-		height: 100%;
-		overflow: hidden;
-		
-		#pageHeader, #pageFooter {
-			display: none;
-		}
-		
-		#main {
-			height: 100%;
-			margin: 0;
-			padding: 0;
-			max-width: 100%;
-			width: 100%;
-			
-			> div, .sidebar, #sidebarContainer {
-				height: 100%;
-			}
-		}
+	#top,
+	#pageHeader,
+	#pageFooter {
+		display: none;
 	}
 }
