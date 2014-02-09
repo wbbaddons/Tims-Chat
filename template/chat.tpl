@@ -53,7 +53,7 @@
 						reloadTime: {@CHAT_RELOADTIME},
 						messageURL: '{link application="chat" controller="NewMessages"}{/link}',
 						installedCommands: [ {implode from=$commands item='command'}'{$command|encodeJS}'{/implode} ],
-						messageTypes: { {implode from=$messageTypes key='name' item='messageType'}'{$name|substr:5|encodeJS}': '{$messageType|encodeJS}'{/implode} }
+						messageTypes: { {implode from=$messageTypes key='name' item='messageType'}'{$name|substr:5|encodeJS}': {$messageType}{/implode} }
 					};
 					
 					{event name='beforeInit'}
