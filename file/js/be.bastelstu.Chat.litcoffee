@@ -507,7 +507,7 @@ Insert the given messages into the chat stream.
 
 		handleMessages = (messages) ->
 			for message in messages
-				message.isInPrivateChannel = (String(message.type) is v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") or $.wcfIsset("timsChatMessageContainer#{message.sender}"))
+				message.isInPrivateChannel = (message.type is v.config.messageTypes.WHISPER) and ($.wcfIsset("timsChatMessageContainer#{message.receiver}") or $.wcfIsset("timsChatMessageContainer#{message.sender}"))
 				
 				events.newMessage.fire message
 				
