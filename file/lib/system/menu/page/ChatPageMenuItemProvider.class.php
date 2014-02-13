@@ -44,6 +44,8 @@ class ChatPageMenuItemProvider extends \wcf\system\menu\page\DefaultPageMenuItem
 	 * @see	\wcf\system\menu\page\PageMenuItemProvider::getLink()
 	 */
 	public function getLink() {
+		if (CHAT_FORCE_ROOM_SELECT) return parent::getLink();
+		
 		return \wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
 			'application' => 'chat',
 			'object' => $this->room,

@@ -173,16 +173,21 @@ class ChatPage extends \wcf\page\AbstractPage {
 		
 		if ($this->roomID === 0) {
 			// no room given
-			$room = reset($this->rooms);
-			if ($room === null) {
-				// no valid room found
-				throw new exception\IllegalLinkException();
+			if (CHAT_FORCE_ROOM_SELECT) {
+				return;
 			}
-			// redirect to first chat-room
-			\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
-				'object' => $room
-			)));
-			exit;
+			else {
+				$room = reset($this->rooms);
+				if ($room === null) {
+					// no valid room found
+					throw new exception\IllegalLinkException();
+				}
+				// redirect to first chat-room
+				\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
+					'object' => $room
+				)));
+				exit;
+			}
 		}
 		
 		if (!isset($this->rooms[$this->roomID])) throw new exception\IllegalLinkException();
