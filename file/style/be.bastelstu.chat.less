@@ -292,10 +292,8 @@
 						}
 					}
 					
-					&:not(:last-child) {
-						> .timsChatInnerMessageContainer {
-							margin-bottom: @wcfGapSmall;
-						}
+					> .timsChatInnerMessageContainer {
+						margin-bottom: @wcfGapSmall;
 					}
 				}
 			}
@@ -471,6 +469,11 @@
 
 // TODO
 html.fullscreen {
+	html, body {
+		padding: 0;
+		margin: 0;
+	}
+	
 	&,
 	body,
 	#tplChat #main,
@@ -485,7 +488,17 @@ html.fullscreen {
 	
 	#top,
 	#pageHeader,
-	#pageFooter {
+	#pageFooter,
+	#mainMenu,
+	#topMenu {
 		display: none;
+	}
+	
+	.sidebar, #main, #content {
+		padding-top: 0;
+		padding-bottom: 0;
+		border-top: none;
+		border-bottom: none;
+		border-radius: 0;
 	}
 }

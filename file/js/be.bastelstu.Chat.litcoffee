@@ -45,6 +45,8 @@ exposed by a function if necessary.
 		lastMessage = null
 		openChannel = 0
 		
+		messageContainerSize = 0
+		
 		remainingFailures = 3
 
 		events =
@@ -76,6 +78,8 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 		init = (roomID, config, titleTemplate, messageTemplate, userTemplate, userMenuTemplate) ->
 			return false if initialized
 			initialized = true
+			
+			messageContainerSize = $('.timsChatMessageContainer').height()
 			
 			v.config = config
 			v.titleTemplate = titleTemplate
@@ -111,7 +115,23 @@ Make the user leave the chat when **Tims Chat** is about to be unloaded.
 					async: false
 					suppressErrors: true
 				undefined
-
+			
+			$(window).resize ->
+				# TODO
+				return if WCF.System.Mobile.UX._enabled
+				
+				return unless $('html').hasClass 'fullscreen'
+				
+				verticalContentPadding = $('#content').innerHeight() - $('#content').height()
+				verticalSizeOfContentElements = do ->
+					height = 0
+					$('#content > *:visible').each (k, v) -> height += $(v).outerHeight()
+					height
+					
+				freeSpace = $('body').height() - verticalContentPadding - verticalSizeOfContentElements
+				
+				$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height() + freeSpace
+			
 Insert the appropriate smiley code into the input when a smiley is clicked.
 
 			$('#smilies').on 'click', 'img', -> insertText " #{$(@).attr('alt')} "
@@ -276,7 +296,9 @@ Toggle fullscreen mode.
 				
 				if $(@).data 'status'
 					$('html').addClass 'fullscreen'
+					do $(window).resize
 				else
+					$('.timsChatMessageContainer').height messageContainerSize
 					$('html').removeClass 'fullscreen'
 
 Toggle checkboxes.
@@ -289,7 +311,9 @@ Toggle checkboxes.
 
 Hide topic container.
 
-			$('#timsChatTopicCloser').on 'click', -> $('#timsChatTopic').addClass 'invisible'
+			$('#timsChatTopicCloser').on 'click', ->
+				$('#timsChatTopic').addClass 'invisible'
+				do $(window).resize
 			
 Close private channels
 			
