@@ -87,6 +87,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 				$message = unserialize($message);
 				$message = WCF::getLanguage()->getDynamicVariable('chat.message.'.$this->type.'.'.$message['type'], $message ?: array());
 				
+				if ($type === 'text/plain') return $message;
 				$message = $messageParser->parse($message, false, false, true, false);
 			break;
 			case self::TYPE_ATTACHMENT:
