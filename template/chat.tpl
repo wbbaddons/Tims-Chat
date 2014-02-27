@@ -161,29 +161,33 @@
 			<h1>{lang}chat.general.title{/lang}</h1>
 		</header>
 		
-		<div class="container marginTop">
+		<div id="chatRoomListContainer" class="container marginTop">
 			<ul class="containerList">
-				{foreach from=$rooms item='room'}
-					{assign var='users' value=$room->getUsers()}
-					
-					<li>
-						<div>
-							<div>
-								<div class="containerHeadline">
-									<h3><a href="{link application='chat' controller='Chat' object=$room}{/link}">{$room}</a> <span class="badge">{#$users|count}</span></h3>
-									<p>{$room->topic|language}</p>
-								</div>
-								
-								<ul class="dataList">
-									{foreach from=$users item='user'}
-										<li><a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{$user->userID}">{$user}</a></li>
-									{/foreach}
-								</ul>
-							</div>
-						</div>
-					</li>
-				{/foreach}
+				{include application='chat' file='boxRoomList' showEmptyRooms=true}
 			</ul>
+			<script data-relocate="true">
+				//<![CDATA[
+				(function($, window, undefined) {
+					proxy = new WCF.Action.Proxy({
+						data: {
+							actionName: 'getBoxRoomList',
+							className: 'chat\\data\\room\\RoomAction',
+							parameters: {
+								showEmptyRooms: 1
+							}
+						},
+						showLoadingOverlay: false,
+						suppressErrors: true,
+						success: function(data) {
+							$('#chatRoomListContainer ul').html(data.returnValues.template);
+						}
+					});
+					
+					be.bastelstu.wcf.nodePush.onMessage('be.bastelstu.chat.join', $.proxy(proxy.sendRequest, proxy));
+					be.bastelstu.wcf.nodePush.onMessage('be.bastelstu.chat.leave', $.proxy(proxy.sendRequest, proxy));
+				})(jQuery, this);
+				//]]>
+			</script>
 		</div>
 	{/if}
 	

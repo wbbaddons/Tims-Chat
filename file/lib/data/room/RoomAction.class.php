@@ -323,27 +323,28 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	/**
 	 * Validates permissions.
 	 */
-	public function validateGetDashboardRoomList() {
+	public function validateGetBoxRoomList() {
 		if (!MODULE_CHAT) throw new \wcf\system\exception\IllegalLinkException();
 	}
 	
 	/**
 	 * Returns dashboard roomlist.
 	 */
-	public function getDashboardRoomList() {
+	public function getBoxRoomList() {
 		$rooms = RoomCache::getInstance()->getRooms();
 		
 		foreach ($rooms as $key => $room) {
 			if (!$room->canEnter()) unset($rooms[$key]);
 		}
 		
+		$this->readBoolean('showEmptyRooms', true);
 		\wcf\system\WCF::getTPL()->assign(array(
 			'rooms' => $rooms,
-			'onlyList' => true
+			'showEmptyRooms' => $this->parameters['showEmptyRooms']
 		));
 		
 		return array(
-			'template' => \wcf\system\WCF::getTPL()->fetch('dashboardBoxOnlineList', 'chat')
+			'template' => \wcf\system\WCF::getTPL()->fetch('boxRoomList', 'chat')
 		);
 	}
 }
