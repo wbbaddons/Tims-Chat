@@ -119,32 +119,32 @@ Make the user leave the chat when **Tims Chat** is about to be unloaded.
 					async: false
 					suppressErrors: true
 				undefined
-			
+				
 			$(window).resize ->
 				# TODO
 				return if WCF.System.Mobile.UX._enabled
 				
-				return unless $('html').hasClass 'fullscreen'
-				
-				do ->
-					verticalContentPadding = $('#content').innerHeight() - $('#content').height()
-					verticalSizeOfContentElements = do ->
-						height = 0
-						$('#content > *:visible').each (k, v) -> height += $(v).outerHeight()
-						height
-					
-					freeSpace = $('body').height() - verticalContentPadding - verticalSizeOfContentElements
-				
-					$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height() + freeSpace
-				do ->
-					verticalUserListContainerPadding = $('#timsChatUserListContainer').innerHeight() - $('#timsChatUserListContainer').height()
-					sidebarHeight = $('.sidebar > div').height()
-					
-					freeSpace = $('body').height() - verticalUserListContainerPadding - sidebarHeight
-					$('#timsChatUserList').height $('#timsChatUserList').height() + freeSpace
-				
-				
-			
+				if $('html').hasClass 'fullscreen'
+					do ->
+						verticalContentPadding = $('#content').innerHeight() - $('#content').height()
+						verticalSizeOfContentElements = do ->
+							height = 0
+							$('#content > *:visible').each (k, v) -> height += $(v).outerHeight()
+							height
+							
+						freeSpace = $('body').height() - verticalContentPadding - verticalSizeOfContentElements
+						
+						$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height() + freeSpace
+					do ->
+						verticalUserListContainerPadding = $('#timsChatUserListContainer').innerHeight() - $('#timsChatUserListContainer').height()
+						sidebarHeight = $('.sidebar > div').height()
+						
+						freeSpace = $('body').height() - verticalUserListContainerPadding - sidebarHeight
+						$('#timsChatUserList').height $('#timsChatUserList').height() + freeSpace
+						
+				if $('#timsChatAutoscroll').data 'status'
+					$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
+
 Insert the appropriate smiley code into the input when a smiley is clicked.
 
 			$('#smilies').on 'click', 'img', -> insertText " #{$(@).attr('alt')} "
@@ -334,6 +334,7 @@ Toggle fullscreen mode.
 					$('.timsChatMessageContainer').height messageContainerSize
 					$('#timsChatUserList').height userListSize
 					$('html').removeClass 'fullscreen'
+					do $(window).resize
 
 Toggle checkboxes.
 
