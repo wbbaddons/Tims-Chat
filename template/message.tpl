@@ -29,7 +29,7 @@
 			
 				{if $message.type == $messageTypes.WHISPER}
 					<span class="icon icon16 icon-double-angle-right jsTooltip pointer" title="{/literal}{lang}chat.global.whispers{/lang}{literal}" onclick="be.bastelstu.Chat.insertText('/whisper {if $message.receiver == WCF.User.userID}{$message.username.replace("\\", "\\\\").replace("'", "\\'")}{else}{$message.additionalData.receiverUsername.replace("\\", "\\\\").replace("'", "\\'")}{/if}, ', { append: false });"></span>
-					<span class="reciever">{$message.additionalData.receiverUsername}</span>
+					<span class="receiver">{$message.additionalData.receiverUsername}</span>
 				{/if}
 			</span>
 			
