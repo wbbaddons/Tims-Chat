@@ -212,7 +212,7 @@
 								border-color: @wcfContainerBorderColor;
 								
 								> .timsChatText {
-									li {
+									> li {
 										border-style: solid;
 										border-width: 0 0 1px 0;
 										border-color:  @wcfContainerBorderColor;
@@ -425,7 +425,7 @@
 		
 		#timsChatUserList {
 			> ul {
-				> li {
+				> .timsChatUser {
 					&.you {
 						a {
 							&:hover {
@@ -433,6 +433,10 @@
 								cursor: default;
 							}
 						}
+					}
+					
+					&.away {
+						opacity: 0.5;
 					}
 					
 					a {
@@ -455,6 +459,10 @@
 		}
 	}
 	
+	#timsChatUploadDropdownMenu {
+		z-index: 398;
+	}
+	
 	#timsChatCopyrightDialog {
 		> div {
 			background-repeat: no-repeat;
@@ -464,6 +472,18 @@
 	
 	#fish {
 		font-size: 2rem;
+	}
+	
+	.dialogContent {
+		.smileyList {
+			> li {
+				> a {
+					img {
+						margin: @wcfGapTiny;
+					}
+				}
+			}
+		}
 	}
 }
 

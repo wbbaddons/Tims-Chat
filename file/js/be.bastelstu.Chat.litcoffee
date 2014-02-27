@@ -49,7 +49,9 @@ exposed by a function if necessary.
 		userListSize = 0
 		
 		remainingFailures = 3
-
+		
+		overlaySmileyList = null
+		
 		events =
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
@@ -117,36 +119,56 @@ Make the user leave the chat when **Tims Chat** is about to be unloaded.
 					async: false
 					suppressErrors: true
 				undefined
-			
+				
 			$(window).resize ->
 				# TODO
 				return if WCF.System.Mobile.UX._enabled
 				
-				return unless $('html').hasClass 'fullscreen'
-				
-				do ->
-					verticalContentPadding = $('#content').innerHeight() - $('#content').height()
-					verticalSizeOfContentElements = do ->
-						height = 0
-						$('#content > *:visible').each (k, v) -> height += $(v).outerHeight()
-						height
-					
-					freeSpace = $('body').height() - verticalContentPadding - verticalSizeOfContentElements
-				
-					$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height() + freeSpace
-				do ->
-					verticalUserListContainerPadding = $('#timsChatUserListContainer').innerHeight() - $('#timsChatUserListContainer').height()
-					sidebarHeight = $('.sidebar > div').height()
-					
-					freeSpace = $('body').height() - verticalUserListContainerPadding - sidebarHeight
-					$('#timsChatUserList').height $('#timsChatUserList').height() + freeSpace
-				
-				
-			
+				if $('html').hasClass 'fullscreen'
+					do ->
+						verticalContentPadding = $('#content').innerHeight() - $('#content').height()
+						verticalSizeOfContentElements = do ->
+							height = 0
+							$('#content > *:visible').each (k, v) -> height += $(v).outerHeight()
+							height
+							
+						freeSpace = $('body').height() - verticalContentPadding - verticalSizeOfContentElements
+						
+						$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height() + freeSpace
+					do ->
+						verticalUserListContainerPadding = $('#timsChatUserListContainer').innerHeight() - $('#timsChatUserListContainer').height()
+						sidebarHeight = $('.sidebar > div').height()
+						
+						freeSpace = $('body').height() - verticalUserListContainerPadding - sidebarHeight
+						$('#timsChatUserList').height $('#timsChatUserList').height() + freeSpace
+						
+				if $('#timsChatAutoscroll').data 'status'
+					$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
+
 Insert the appropriate smiley code into the input when a smiley is clicked.
 
 			$('#smilies').on 'click', 'img', -> insertText " #{$(@).attr('alt')} "
 
+Copy the first loaded category of smilies so it won't get detached by wcfDialog
+
+			overlaySmileyList = $('<ul class="smileyList">').append $('#smilies .smileyList').clone().children()
+
+Add click event to smilies in the overlay
+
+			overlaySmileyList.on 'click', 'img', ->
+				insertText " #{$(@).attr('alt')} "
+				overlaySmileyList.wcfDialog 'close'
+
+Open the smiley wcfDialog
+
+			$('#timsChatSmileyPopupButton').on 'click', ->
+				overlaySmileyList.wcfDialog
+					title: WCF.Language.get 'chat.general.smilies'
+					
+				overlaySmileyList.css
+					'max-height': $(window).height() - overlaySmileyList.parent().siblings('.dialogTitlebar').outerHeight()
+					'overflow': 'auto'
+			
 Handle private channel menu
 
 			$('#timsChatMessageTabMenu > .tabMenu').on 'click', '.timsChatMessageTabMenuAnchor', ->
@@ -312,6 +334,7 @@ Toggle fullscreen mode.
 					$('.timsChatMessageContainer').height messageContainerSize
 					$('#timsChatUserList').height userListSize
 					$('html').removeClass 'fullscreen'
+					do $(window).resize
 
 Toggle checkboxes.
 
@@ -828,9 +851,9 @@ Joins a room.
 					
 					$('#timsChatTopic > .topic').text currentRoom.topic
 					if currentRoom.topic.trim() is ''
-						$('#timsChatTopic').addClass 'empty'
+						$('#timsChatTopic').addClass 'invisible'
 					else
-						$('#timsChatTopic').removeClass 'empty'
+						$('#timsChatTopic').removeClass 'invisible'
 					
 					$('.timsChatMessage').addClass 'unloaded'
 					
@@ -867,7 +890,7 @@ Open private channel
 				$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height()
 			
 			if userID isnt 0
-				$('#timsChatTopic').removeClass 'empty'
+				$('#timsChatTopic').removeClass 'invisible'
 				$('#timsChatTopic > .topic').html WCF.Language.get 'chat.global.privateChannelTopic', {username: userList.allTime[userID].username}
 				$('#timsChatMessageTabMenu').removeClass 'singleTab'
 				
@@ -893,9 +916,9 @@ Open private channel
 			else
 				$('#timsChatTopic > .topic').text currentRoom.topic
 				if currentRoom.topic.trim() is ''
-					$('#timsChatTopic').addClass 'empty'
+					$('#timsChatTopic').addClass 'invisible'
 				else
-					$('#timsChatTopic').removeClass 'empty'
+					$('#timsChatTopic').removeClass 'invisible'
 			
 			$('.timsChatMessageContainer').removeClass 'active'
 			$("#timsChatMessageContainer#{userID}").addClass 'active'
