@@ -48,8 +48,8 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 		if (!$user->userID) return false;
 		$user = new \wcf\data\user\UserProfile($user);
 		
-		if ($user->getPermission('admin.chat.canManageSuspensions')) return true;
-		if ($user->getPermission('mod.chat.canGban')) return true;
+		if ($this->isPermanent && $user->getPermission('admin.chat.canManageSuspensions')) return true;
+		if ($this->isPermanent && $user->getPermission('mod.chat.canGban')) return true;
 		
 		$ph = new \chat\system\permission\PermissionHandler($user->getDecoratedObject());
 		if ($ph->getPermission($this, 'mod.canAlwaysEnter')) return true;
