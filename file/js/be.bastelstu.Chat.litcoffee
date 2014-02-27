@@ -46,6 +46,7 @@ exposed by a function if necessary.
 		openChannel = 0
 		
 		messageContainerSize = 0
+		userListSize = 0
 		
 		remainingFailures = 3
 
@@ -80,6 +81,7 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 			initialized = true
 			
 			messageContainerSize = $('.timsChatMessageContainer').height()
+			userListSize = $('#timsChatUserList').height()
 			
 			v.config = config
 			v.titleTemplate = titleTemplate
@@ -122,15 +124,24 @@ Make the user leave the chat when **Tims Chat** is about to be unloaded.
 				
 				return unless $('html').hasClass 'fullscreen'
 				
-				verticalContentPadding = $('#content').innerHeight() - $('#content').height()
-				verticalSizeOfContentElements = do ->
-					height = 0
-					$('#content > *:visible').each (k, v) -> height += $(v).outerHeight()
-					height
+				do ->
+					verticalContentPadding = $('#content').innerHeight() - $('#content').height()
+					verticalSizeOfContentElements = do ->
+						height = 0
+						$('#content > *:visible').each (k, v) -> height += $(v).outerHeight()
+						height
 					
-				freeSpace = $('body').height() - verticalContentPadding - verticalSizeOfContentElements
+					freeSpace = $('body').height() - verticalContentPadding - verticalSizeOfContentElements
 				
-				$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height() + freeSpace
+					$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height() + freeSpace
+				do ->
+					verticalUserListContainerPadding = $('#timsChatUserListContainer').innerHeight() - $('#timsChatUserListContainer').height()
+					sidebarHeight = $('.sidebar > div').height()
+					
+					freeSpace = $('body').height() - verticalUserListContainerPadding - sidebarHeight
+					$('#timsChatUserList').height $('#timsChatUserList').height() + freeSpace
+				
+				
 			
 Insert the appropriate smiley code into the input when a smiley is clicked.
 
@@ -299,6 +310,7 @@ Toggle fullscreen mode.
 					do $(window).resize
 				else
 					$('.timsChatMessageContainer').height messageContainerSize
+					$('#timsChatUserList').height userListSize
 					$('html').removeClass 'fullscreen'
 
 Toggle checkboxes.
