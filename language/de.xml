@@ -164,6 +164,8 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.global.fullscreen"><![CDATA[Vollbild]]></item>
 		<item name="chat.global.forceRefresh"><![CDATA[Räume neu laden]]></item>
 		
+		<item name="chat.global.noJs"><![CDATA[In Ihrem Webbrowser ist JavaScript deaktiviert. Um diesen Chat nutzen zu können, muss JavaScript aktiviert sein.]]></item>
+		
 		<item name="chat.global.whisper"><![CDATA[Flüstern]]></item>
 		<item name="chat.global.query"><![CDATA[Privates Gespräch]]></item>
 		<item name="chat.global.kick"><![CDATA[Kicken]]></item>
