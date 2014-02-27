@@ -425,7 +425,7 @@
 		
 		#timsChatUserList {
 			> ul {
-				> li {
+				> .timsChatUser {
 					&.you {
 						a {
 							&:hover {
@@ -433,6 +433,10 @@
 								cursor: default;
 							}
 						}
+					}
+					
+					&.away {
+						opacity: 0.5;
 					}
 					
 					a {
@@ -468,6 +472,18 @@
 	
 	#fish {
 		font-size: 2rem;
+	}
+	
+	.dialogContent {
+		.smileyList {
+			> li {
+				> a {
+					img {
+						margin: @wcfGapTiny;
+					}
+				}
+			}
+		}
 	}
 }
 

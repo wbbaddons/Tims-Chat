@@ -49,7 +49,9 @@ exposed by a function if necessary.
 		userListSize = 0
 		
 		remainingFailures = 3
-
+		
+		overlaySmileyList = null
+		
 		events =
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
@@ -147,6 +149,26 @@ Insert the appropriate smiley code into the input when a smiley is clicked.
 
 			$('#smilies').on 'click', 'img', -> insertText " #{$(@).attr('alt')} "
 
+Copy the first loaded category of smilies so it won't get detached by wcfDialog
+
+			overlaySmileyList = $('<ul class="smileyList">').append $('#smilies .smileyList').clone().children()
+
+Add click event to smilies in the overlay
+
+			overlaySmileyList.on 'click', 'img', ->
+				insertText " #{$(@).attr('alt')} "
+				overlaySmileyList.wcfDialog 'close'
+
+Open the smiley wcfDialog
+
+			$('#timsChatSmileyPopupButton').on 'click', ->
+				overlaySmileyList.wcfDialog
+					title: WCF.Language.get 'chat.general.smilies'
+					
+				overlaySmileyList.css
+					'max-height': $(window).height() - overlaySmileyList.parent().siblings('.dialogTitlebar').outerHeight()
+					'overflow': 'auto'
+			
 Handle private channel menu
 
 			$('#timsChatMessageTabMenu > .tabMenu').on 'click', '.timsChatMessageTabMenuAnchor', ->
