@@ -121,7 +121,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 	 */
 	public function getUsername($colored = false) {
 		$username = $this->username;
-		if ($this->type == self::TYPE_INFORMATION) return WCF::getLanguage()->get('chat.general.information');
+		if ($this->type == self::TYPE_INFORMATION) return WCF::getLanguage()->get('chat.global.information');
 		
 		if ($colored) {
 			$username = \chat\util\ChatUtil::gradient($username, $this->color1, $this->color2);

@@ -27,7 +27,7 @@
 				<legend>{lang}wcf.global.filter{/lang}</legend>
 				
 				<dl>
-					<dt><label for="id">{lang}chat.general.room{/lang}</label></dt>
+					<dt><label for="id">{lang}chat.global.room{/lang}</label></dt>
 					<dd>
 						<select id="id" name="id">
 							{foreach from=$rooms item='roomBit'}
@@ -38,7 +38,7 @@
 				</dl>
 				
 				<dl{if $errorField == 'date'} class="formError"{/if}>
-					<dt><label for="date">{lang}chat.general.time{/lang}</label></dt>
+					<dt><label for="date">{lang}chat.global.time{/lang}</label></dt>
 					<dd>
 						<input id="date" type="date" name="date" min="{TIME_NOW-CHAT_LOG_ARCHIVETIME*60|date:'Y-m-d'}" max="{TIME_NOW|date:'Y-m-d'}" value="{$date|date:'Y-m-d'}" />
 						{if $errorField == 'date'}

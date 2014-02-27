@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<th>{lang}wcf.global.objectID{/lang}</th>
-				<th>{lang}chat.general.time{/lang}</th>
+				<th>{lang}chat.global.time{/lang}</th>
 				<th colspan="2">{lang}wcf.user.username{/lang}</th>
 				<th>{lang}chat.acp.log.message{/lang}</th>
 			</tr>
