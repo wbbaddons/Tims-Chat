@@ -825,9 +825,9 @@ Joins a room.
 					
 					$('#timsChatTopic > .topic').text currentRoom.topic
 					if currentRoom.topic.trim() is ''
-						$('#timsChatTopic').addClass 'empty'
+						$('#timsChatTopic').addClass 'invisible'
 					else
-						$('#timsChatTopic').removeClass 'empty'
+						$('#timsChatTopic').removeClass 'invisible'
 					
 					$('.timsChatMessage').addClass 'unloaded'
 					
@@ -864,7 +864,7 @@ Open private channel
 				$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height()
 			
 			if userID isnt 0
-				$('#timsChatTopic').removeClass 'empty'
+				$('#timsChatTopic').removeClass 'invisible'
 				$('#timsChatTopic > .topic').html WCF.Language.get 'chat.global.privateChannelTopic', {username: userList.allTime[userID].username}
 				$('#timsChatMessageTabMenu').removeClass 'singleTab'
 				
@@ -890,9 +890,9 @@ Open private channel
 			else
 				$('#timsChatTopic > .topic').text currentRoom.topic
 				if currentRoom.topic.trim() is ''
-					$('#timsChatTopic').addClass 'empty'
+					$('#timsChatTopic').addClass 'invisible'
 				else
-					$('#timsChatTopic').removeClass 'empty'
+					$('#timsChatTopic').removeClass 'invisible'
 			
 			$('.timsChatMessageContainer').removeClass 'active'
 			$("#timsChatMessageContainer#{userID}").addClass 'active'
