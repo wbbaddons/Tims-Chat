@@ -41,7 +41,7 @@ final class Update {
 					'roomID' => $room->roomID,
 					'time' => TIME_NOW,
 					'type' => \chat\data\message\Message::TYPE_INFORMATION,
-					'message' => \wcf\system\WCF::getLanguage()->get('chat.general.information.chatUpdate')
+					'message' => \wcf\system\WCF::getLanguage()->get('chat.global.information.chatUpdate')
 				)
 			));
 			$messageAction->executeAction();

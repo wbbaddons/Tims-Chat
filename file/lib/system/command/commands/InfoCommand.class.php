@@ -39,7 +39,7 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 		// Room
 		$room = \chat\data\room\RoomCache::getInstance()->getRoom($this->user->chatRoomID);
 		if ($room !== null && $room->canEnter()) {
-			$this->lines[WCF::getLanguage()->get('chat.general.room')] = $room->getTitle();
+			$this->lines[WCF::getLanguage()->get('chat.global.room')] = $room->getTitle();
 		}
 		
 		// Suspensions
@@ -50,7 +50,7 @@ class InfoCommand extends \chat\system\command\AbstractCommand {
 				if (!$typeSuspension->isVisible()) continue;
 				
 				$dateTime = DateUtil::getDateTimeByTimestamp($typeSuspension->expires);
-				$name = WCF::getLanguage()->getDynamicVariable('chat.general.information.suspension', array(
+				$name = WCF::getLanguage()->getDynamicVariable('chat.global.information.suspension', array(
 					'suspension' => $typeSuspension,
 					'room' => \chat\data\room\RoomCache::getInstance()->getRoom($typeSuspension->roomID)
 				));

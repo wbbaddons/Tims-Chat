@@ -7,7 +7,6 @@
 		<item name="chat.acp.room.title"><![CDATA[Titel]]></item>
 		<item name="chat.acp.room.topic"><![CDATA[Thema]]></item>
 		
-		<item name="chat.acp.room.noneItems"><![CDATA[Es wurden noch keine Chaträume angelegt.]]></item>
 		<item name="chat.acp.room.delete.sure"><![CDATA[Wollen Sie den Raum „{$chatRoom}“ wirklich löschen?]]></item>
 	</category>
 	
@@ -101,6 +100,8 @@
 		<item name="wcf.acp.option.chat_max_length"><![CDATA[Maximale Nachrichtenlänge]]></item>
 		<item name="wcf.acp.option.chat_command_aliases"><![CDATA[Befehls-Aliase]]></item>
 		<item name="wcf.acp.option.chat_command_aliases.description"><![CDATA[Geben Sie zeilenweise eine Kombination aus Alias und Zielbefehl an. Alias und Zielbefehl werden durch einen Doppelpunkt voneinander getrennt.]]></item>
+		<item name="wcf.acp.option.chat_force_room_select"><![CDATA[Raumauswahl anzeigen]]></item>
+		<item name="wcf.acp.option.chat_force_room_select.description"><![CDATA[Zeigt eine Auswahl der verfügbaren Räume an, anstatt den ersten verfügbaren Raum zu betreten.]]></item>
 		
 		<item name="wcf.acp.option.category.chat.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Speicherzeit]]></item>
@@ -135,46 +136,49 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.error.whisper.ignoresYou"><![CDATA[„{$user}“ hat Sie blockiert.]]></item>
 	</category>
 	
-	<category name="chat.general">
-		<item name="chat.general.expires"><![CDATA[Ablaufzeitpunkt]]></item>
-		<item name="chat.general.time"><![CDATA[Datum]]></item>
-				
-		<item name="chat.general.title"><![CDATA[{lang}chat.header.menu.chat{/lang}]]></item>
-		<item name="chat.general.protocol"><![CDATA[Protokoll]]></item>
+	<category name="chat.global">
+		<item name="chat.global.expires"><![CDATA[Ablaufzeitpunkt]]></item>
+		<item name="chat.global.time"><![CDATA[Datum]]></item>
 		
-		<item name="chat.general.room"><![CDATA[Chatraum]]></item>
-		<item name="chat.general.rooms"><![CDATA[Chaträume]]></item>
-		<item name="chat.general.users"><![CDATA[Nutzer]]></item>
+		<item name="chat.global.title"><![CDATA[{lang}chat.header.menu.chat{/lang}]]></item>
+		<item name="chat.global.protocol"><![CDATA[Protokoll]]></item>
 		
-		<item name="chat.general.copyright"><![CDATA[<a href="http://tims.bastelstu.be"><strong>Tims Chat</strong>{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}, entwickelt in <strong>Tims Bastelstube</strong></a>]]></item>
-		<item name="chat.general.copyright.leader"><![CDATA[Projektleiter]]></item>
-		<item name="chat.general.copyright.developer"><![CDATA[Entwickler]]></item>
-		<item name="chat.general.copyright.graphics"><![CDATA[Grafisches]]></item>
-		<item name="chat.general.copyright.translation"><![CDATA[Übersetzung]]></item>
-		<item name="chat.general.copyright.thanks"><![CDATA[Weiteren Dank an]]></item>
+		<item name="chat.global.room"><![CDATA[Chatraum]]></item>
+		<item name="chat.global.rooms"><![CDATA[Chaträume]]></item>
+		<item name="chat.global.users"><![CDATA[Nutzer]]></item>
 		
-		<item name="chat.general.submit.default"><![CDATA[Zum Senden Enter drücken]]></item>
-		<item name="chat.general.scroll"><![CDATA[Scrollen]]></item>
-		<item name="chat.general.notify"><![CDATA[Benachrichtigen]]></item>
-		<item name="chat.general.notify.title"><![CDATA[Neue Nachrichten]]></item>
-		<item name="chat.general.smilies"><![CDATA[Smilies]]></item>
-		<item name="chat.general.clear"><![CDATA[Chat leeren]]></item>
-		<item name="chat.general.mark"><![CDATA[Markieren]]></item>
-		<item name="chat.general.fullscreen"><![CDATA[Vollbild]]></item>
-		<item name="chat.general.forceRefresh"><![CDATA[Räume neu laden]]></item>
+		<item name="chat.global.copyright"><![CDATA[<a href="http://tims.bastelstu.be"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}><strong>Tims Chat</strong>{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}, entwickelt in <strong>Tims Bastelstube</strong></a>]]></item>
+		<item name="chat.global.copyright.leader"><![CDATA[Projektleiter]]></item>
+		<item name="chat.global.copyright.developer"><![CDATA[Entwickler]]></item>
+		<item name="chat.global.copyright.graphics"><![CDATA[Grafisches]]></item>
+		<item name="chat.global.copyright.translation"><![CDATA[Übersetzung]]></item>
+		<item name="chat.global.copyright.thanks"><![CDATA[Weiteren Dank an]]></item>
 		
-		<item name="chat.general.query"><![CDATA[Privates Gespräch]]></item>
-		<item name="chat.general.kick"><![CDATA[Kicken]]></item>
-		<item name="chat.general.ban"><![CDATA[Bannen]]></item>
-		<item name="chat.general.profile"><![CDATA[Profil]]></item>
+		<item name="chat.global.submit.default"><![CDATA[Zum Senden Enter drücken]]></item>
+		<item name="chat.global.scroll"><![CDATA[Scrollen]]></item>
+		<item name="chat.global.notify"><![CDATA[Benachrichtigen]]></item>
+		<item name="chat.global.notify.title"><![CDATA[Neue Nachrichten]]></item>
+		<item name="chat.global.smilies"><![CDATA[Smilies]]></item>
+		<item name="chat.global.clear"><![CDATA[Chat leeren]]></item>
+		<item name="chat.global.mark"><![CDATA[Markieren]]></item>
+		<item name="chat.global.fullscreen"><![CDATA[Vollbild]]></item>
+		<item name="chat.global.forceRefresh"><![CDATA[Räume neu laden]]></item>
 		
-		<item name="chat.general.information"><![CDATA[Information]]></item>
-		<item name="chat.general.information.chatUpdate"><![CDATA[Der Chat wurde aktualisiert. Bitte laden Sie die Seite neu, da es sonst zu Fehlern kommen kann.]]></item>
-		<item name="chat.general.information.suspension"><![CDATA[{lang}chat.suspension.{$suspension->type}{/lang} ({if $room}{$room}{else}{lang}chat.room.global{/lang}{/if})]]></item>
+		<item name="chat.global.query"><![CDATA[Privates Gespräch]]></item>
+		<item name="chat.global.kick"><![CDATA[Kicken]]></item>
+		<item name="chat.global.ban"><![CDATA[Bannen]]></item>
+		<item name="chat.global.profile"><![CDATA[Profil]]></item>
 		
-		<item name="chat.general.privateChannelTopic"><![CDATA[{literal}Sie befinden sich in einem privaten Kanal mit „{$username}“, um diesen zu schließen, klicken Sie einfach auf das Kreuz rechts.{/literal}]]></item>
-		<item name="chat.general.closePrivateChannel"><![CDATA[Privaten Kanal schließen]]></item>
-		<item name="chat.general.closeTopic"><![CDATA[Thema ausblenden]]></item>
+		<item name="chat.global.message"><![CDATA[Nachricht]]></item>
+		<item name="chat.global.whisper"><![CDATA[anflüstern]]></item>
+		
+		<item name="chat.global.information"><![CDATA[Information]]></item>
+		<item name="chat.global.information.chatUpdate"><![CDATA[Der Chat wurde aktualisiert. Bitte laden Sie die Seite neu, da es sonst zu Fehlern kommen kann.]]></item>
+		<item name="chat.global.information.suspension"><![CDATA[{lang}chat.suspension.{$suspension->type}{/lang} ({if $room}{$room}{else}{lang}chat.room.global{/lang}{/if})]]></item>
+		
+		<item name="chat.global.privateChannelTopic"><![CDATA[{literal}Sie befinden sich in einem privaten Kanal mit „{$username}“, um diesen zu schließen.{/literal}]]></item>
+		<item name="chat.global.closePrivateChannel"><![CDATA[Privaten Kanal schließen]]></item>
+		<item name="chat.global.closeTopic"><![CDATA[Thema ausblenden]]></item>
 	</category>
 	
 	<category name="chat.header">
@@ -211,7 +215,7 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 	<category name="chat.suspension">
 		<item name="chat.suspension.mute"><![CDATA[Knebel]]></item>
 		<item name="chat.suspension.ban"><![CDATA[Bann]]></item>
-		<item name="chat.suspension.exists"><![CDATA[Es existiert bereits eine längere Sanktion der gleichen Art.]]></item>
+		<item name="chat.suspension.exists"><![CDATA[Es existiert bereits eine länger andauernde Sanktion der gleichen Art.]]></item>
 		<item name="chat.suspension.notExists"><![CDATA[Es existiert keine Sanktion dieser Art.]]></item>
 	</category>
 	

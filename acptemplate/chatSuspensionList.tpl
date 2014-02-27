@@ -66,7 +66,7 @@
 			</dl>
 			
 			<dl>
-				<dt><label for="roomID">{lang}chat.general.room{/lang}</label></dt>
+				<dt><label for="roomID">{lang}chat.global.room{/lang}</label></dt>
 				<dd>
 					<select id="roomID" name="roomID">
 						<option value="-1"{if $roomID == -1} selected="selected"{/if}></option>
@@ -120,10 +120,10 @@
 				<tr>
 					<th class="columnID{if $sortField == 'suspensionID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=suspensionID&sortOrder={if $sortField == 'suspensionID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$additionalParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnUsername{if $sortField == 'username'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=username&sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$additionalParameters}{/link}">{lang}wcf.user.username{/lang}</a></th>
-					<th class="columnRoomID{if $sortField == 'roomID'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=roomID&sortOrder={if $sortField == 'roomID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$additionalParameters}{/link}">{lang}chat.general.room{/lang}</a></th>
+					<th class="columnRoomID{if $sortField == 'roomID'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=roomID&sortOrder={if $sortField == 'roomID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$additionalParameters}{/link}">{lang}chat.global.room{/lang}</a></th>
 					<th class="columnSuspensionType{if $sortField == 'type'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=type&sortOrder={if $sortField == 'type' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$additionalParameters}{/link}">{lang}chat.acp.suspension.type{/lang}</a></th>
-					<th class="columnTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$additionalParameters}{/link}">{lang}chat.general.time{/lang}</a></th>
-					<th class="columnExpires{if $sortField == 'expires'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=expires&sortOrder={if $sortField == 'expires' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$additionalParameters}{/link}">{lang}chat.general.expires{/lang}</a></th>
+					<th class="columnTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$additionalParameters}{/link}">{lang}chat.global.time{/lang}</a></th>
+					<th class="columnExpires{if $sortField == 'expires'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=expires&sortOrder={if $sortField == 'expires' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$additionalParameters}{/link}">{lang}chat.global.expires{/lang}</a></th>
 					<th class="columnIssuer{if $sortField == 'issuer'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=issuer&sortOrder={if $sortField == 'issuer' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$additionalParameters}{/link}">{lang}chat.acp.suspension.issuer{/lang}</a></th>
 					<th class="columnMessage{if $sortField == 'reason'} active {@$sortOrder}{/if}"><a href="{link application='chat' controller='ChatSuspensionList'}pageNo={@$pageNo}&sortField=reason&sortOrder={if $sortField == 'reason' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$additionalParameters}{/link}">{lang}chat.acp.suspension.reason{/lang}</a></th>
 					

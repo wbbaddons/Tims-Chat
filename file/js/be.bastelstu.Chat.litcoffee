@@ -730,7 +730,7 @@ Send out notifications for the given `message`. The number of unread messages wi
 			document.title = v.titleTemplate.fetch $.extend {}, currentRoom,
 				newMessageCount: ++newMessageCount
 			
-			title = WCF.Language.get 'chat.general.notify.title'
+			title = WCF.Language.get 'chat.global.notify.title'
 			content = "#{message.username}#{message.separator} #{message.message}"
 			
 			if window.Notification?.permission is 'granted'
@@ -865,7 +865,7 @@ Open private channel
 			
 			if userID isnt 0
 				$('#timsChatTopic').removeClass 'empty'
-				$('#timsChatTopic > .topic').html WCF.Language.get 'chat.general.privateChannelTopic', {username: userList.allTime[userID].username}
+				$('#timsChatTopic > .topic').html WCF.Language.get 'chat.global.privateChannelTopic', {username: userList.allTime[userID].username}
 				$('#timsChatMessageTabMenu').removeClass 'singleTab'
 				
 				unless $.wcfIsset "timsChatMessageTabMenuAnchor#{userID}"

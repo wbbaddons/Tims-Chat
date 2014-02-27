@@ -1,7 +1,7 @@
 {include file='documentHeader'}
 
 <head>
-	<title>{$room} - {lang}chat.general.title{/lang} - {PAGE_TITLE|language}</title>
+	<title>{$room} - {lang}chat.global.title{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude' sandbox=false}
 	{include file='javascriptInclude' application='chat'}
@@ -10,14 +10,14 @@
 			(function ($, window) {
 				$(function(){
 					WCF.Language.addObject({
-						'chat.general.ban': '{lang}chat.general.ban{/lang}',
-						'chat.general.closePrivateChannel': '{lang}chat.general.closePrivateChannel{/lang}',
-						'chat.general.closeTopic': '{lang}chat.general.closeTopic{/lang}',
-						'chat.general.notify.title': '{lang}chat.general.notify.title{/lang}',
-						'chat.general.privateChannelTopic': '{lang}chat.general.privateChannelTopic{/lang}',
-						'chat.general.profile': '{lang}chat.general.profile{/lang}',
-						'chat.general.query': '{lang}chat.general.query{/lang}',
-						'chat.general.whisper': '{lang}chat.general.whisper{/lang}',
+						'chat.global.ban': '{lang}chat.global.ban{/lang}',
+						'chat.global.closePrivateChannel': '{lang}chat.global.closePrivateChannel{/lang}',
+						'chat.global.closeTopic': '{lang}chat.global.closeTopic{/lang}',
+						'chat.global.notify.title': '{lang}chat.global.notify.title{/lang}',
+						'chat.global.privateChannelTopic': '{lang}chat.global.privateChannelTopic{/lang}',
+						'chat.global.profile': '{lang}chat.global.profile{/lang}',
+						'chat.global.query': '{lang}chat.global.query{/lang}',
+						'chat.global.whisper': '{lang}chat.global.whisper{/lang}',
 						'chat.error.duplicateTab': '{lang}chat.error.duplicateTab{/lang}',
 						'chat.error.join': '{lang}chat.error.join{/lang}',
 						'chat.error.onMessageLoad': '{@"chat.error.onMessageLoad"|language|encodeJS}',
@@ -61,7 +61,7 @@
 					be.bastelstu.Chat.init(
 						{$roomID},
 						config,
-						new WCF.Template('{literal}{if $newMessageCount}({#$newMessageCount}) {/if}{$title} - {/literal}{"chat.general.title"|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'),
+						new WCF.Template('{literal}{if $newMessageCount}({#$newMessageCount}) {/if}{$title} - {/literal}{"chat.global.title"|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'),
 						new WCF.Template('{@$messageTemplate|encodeJS}'),
 						new WCF.Template('{@$userTemplate|encodeJS}'),
 						new WCF.Template('{@$userMenuTemplate|encodeJS}')
@@ -88,7 +88,7 @@
 	
 	<div class="clearfix">
 		<div id="timsChatTopic" class="container containerPadding marginTop{if $room->topic|language === ''} empty{/if}">
-			<span id="timsChatTopicCloser" class="icon icon16 icon-remove jsTooltip" title="{lang}chat.general.closeTopic{/lang}"></span>
+			<span id="timsChatTopicCloser" class="icon icon16 icon-remove jsTooltip" title="{lang}chat.global.closeTopic{/lang}"></span>
 			<span class="topic">{$room->topic|language}</span>
 		</div>
 		
@@ -108,7 +108,7 @@
 			</nav>
 			
 			<div id="timsChatMessageContainer0" class="tabMenuContent timsChatMessageContainer container containerPadding active" data-user-id="0">
-				<p class="error noJsOnly" style="display: none;">{lang}chat.general.noJs{/lang}</p>
+				<p class="error noJsOnly" style="display: none;">{lang}chat.global.noJs{/lang}</p>
 				<ul></ul>
 			</div>
 		</div>
@@ -117,10 +117,10 @@
 			<fieldset>
 				<dl class="wide" id="timsChatInputContainer">
 					<dt>
-						{lang}chat.general.message{/lang}
+						{lang}chat.global.message{/lang}
 					</dt>
 					<dd>
-						<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" placeholder="{lang}chat.general.submit.default{/lang}" />
+						<input id="timsChatInput" accesskey="w" type="text" class="inputText long" name="text" autocomplete="off" maxlength="{@CHAT_MAX_LENGTH}" disabled="disabled" placeholder="{lang}chat.global.submit.default{/lang}" />
 						<small class="innerError" style="display: none;">Lorem ipsum dolor sit amet.</small>
 					</dd>
 				</dl>
@@ -135,35 +135,35 @@
 		<div id="timsChatOptions" class="marginTop">
 			<span id="timsChatSmileyPopupButton" class="button smallButtons">
 				<span class="icon icon16 icon-smile"></span>
-				<span>{lang}chat.general.smilies{/lang}</span>
+				<span>{lang}chat.global.smilies{/lang}</span>
 			</span>
 			
 			<nav class="jsMobileNavigation buttonGroupNavigation">
 				<ul class="buttonGroup">
 					<li>
-						<a id="timsChatAutoscroll" accesskey="d" class="button active timsChatToggle jsTooltip" title="{lang}chat.general.scroll{/lang}" data-status="1">
+						<a id="timsChatAutoscroll" accesskey="d" class="button active timsChatToggle jsTooltip" title="{lang}chat.global.scroll{/lang}" data-status="1">
 							<span class="icon icon16 icon-arrow-down"></span>
-							<span class="invisible">{lang}chat.general.scroll{/lang}</span>
+							<span class="invisible">{lang}chat.global.scroll{/lang}</span>
 						</a>
 					</li>
 					<li>
-						<a id="timsChatFullscreen" accesskey="f" class="button timsChatToggle jsTooltip" title="{lang}chat.general.fullscreen{/lang}" data-status="0">
+						<a id="timsChatFullscreen" accesskey="f" class="button timsChatToggle jsTooltip" title="{lang}chat.global.fullscreen{/lang}" data-status="0">
 								<span class="icon icon16 icon-fullscreen"></span>
-								<span class="invisible">{lang}chat.general.fullscreen{/lang}</span>
+								<span class="invisible">{lang}chat.global.fullscreen{/lang}</span>
 						</a>
 					</li>
 					<li>
-						<a id="timsChatNotify" accesskey="n" class="button timsChatToggle jsTooltip" title="{lang}chat.general.notify{/lang}" data-status="0">
+						<a id="timsChatNotify" accesskey="n" class="button timsChatToggle jsTooltip" title="{lang}chat.global.notify{/lang}" data-status="0">
 							<span class="icon icon16 icon-bell-alt"></span>
-							<span class="invisible">{lang}chat.general.notify{/lang}</span>
+							<span class="invisible">{lang}chat.global.notify{/lang}</span>
 						</a>
 					</li>
 					
 					{if MODULE_SMILEY && $smileyCategories|count}
 					<li>
-						<a id="timsChatSmilies" accesskey="e" class="button{if ENABLE_SMILIES_DEFAULT_VALUE} active{/if} timsChatToggle jsTooltip" title="{lang}chat.general.smilies{/lang}" data-status="{@ENABLE_SMILIES_DEFAULT_VALUE}">
+						<a id="timsChatSmilies" accesskey="e" class="button{if ENABLE_SMILIES_DEFAULT_VALUE} active{/if} timsChatToggle jsTooltip" title="{lang}chat.global.smilies{/lang}" data-status="{@ENABLE_SMILIES_DEFAULT_VALUE}">
 							<span class="icon icon16 icon-smile"></span>
-							<span class="invisible">{lang}chat.general.smilies{/lang}</span>
+							<span class="invisible">{lang}chat.global.smilies{/lang}</span>
 						</a>
 					</li>
 					{/if}
@@ -183,15 +183,15 @@
 					{/if}
 					
 					<li>
-						<a id="timsChatClear" class="button jsTooltip" title="{lang}chat.general.clear{/lang}">
+						<a id="timsChatClear" class="button jsTooltip" title="{lang}chat.global.clear{/lang}">
 							<span class="icon icon16 icon-remove"></span>
-							<span class="invisible">{lang}chat.general.clear{/lang}</span>
+							<span class="invisible">{lang}chat.global.clear{/lang}</span>
 						</a>
 					</li>
 					<li>
-						<a id="timsChatMark" class="button timsChatToggle jsTooltip" title="{lang}chat.general.mark{/lang}" data-status="0">
+						<a id="timsChatMark" class="button timsChatToggle jsTooltip" title="{lang}chat.global.mark{/lang}" data-status="0">
 							<span class="icon icon16 icon-check"></span>
-							<span class="invisible">{lang}chat.general.mark{/lang}</span>
+							<span class="invisible">{lang}chat.global.mark{/lang}</span>
 						</a>
 					</li>
 				</ul>

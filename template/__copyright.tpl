@@ -1,9 +1,9 @@
 {if $__chat->isActiveApplication()}
-	{if $templateName != '__copyright'}<address id="timsChatCopyright" class="copyright marginTop">{lang}chat.general.copyright{/lang}</address>
+	{if $templateName != '__copyright'}<address id="timsChatCopyright" class="copyright marginTop">{lang}chat.global.copyright{/lang}</address>
 	{elseif $templateName == '__copyright'}
 		<div style="background-image: url('data:image/png;base64,{$background}');">
 			<dl>
-				<dt>{lang}chat.general.copyright.leader{/lang}</dt>
+				<dt>{lang}chat.global.copyright.leader{/lang}</dt>
 				<dd>
 					<ul>
 						<li><a href="http://tims.bastelstu.be/" class="externalURL" {if EXTERNAL_LINK_TARGET_BLANK}target="_blank"{/if}>Tim D&uuml;sterhus</a></li>
@@ -11,7 +11,7 @@
 				</dd>
 			</dl>
 			<dl>
-				<dt>{lang}chat.general.copyright.developer{/lang}</dt>
+				<dt>{lang}chat.global.copyright.developer{/lang}</dt>
 				<dd>
 					<ul>
 						<li><a href="http://tims.bastelstu.be/" class="externalURL" {if EXTERNAL_LINK_TARGET_BLANK}target="_blank"{/if}>Tim D&uuml;sterhus</a></li>
@@ -20,19 +20,19 @@
 				</dd>
 			</dl>
 			{*<dl>
-				<dt>{lang}chat.general.copyright.graphics{/lang}</dt>
+				<dt>{lang}chat.global.copyright.graphics{/lang}</dt>
 				<dd>
 					
 				</dd>
 			</dl>
 			<dl>
-				<dt>{lang}chat.general.copyright.translation{/lang}</dt>
+				<dt>{lang}chat.global.copyright.translation{/lang}</dt>
 				<dd>
 					
 				</dd>
 			</dl>*}
 			<dl>
-				<dt>{lang}chat.general.copyright.thanks{/lang}</dt>
+				<dt>{lang}chat.global.copyright.thanks{/lang}</dt>
 				<dd>
 					<ul>
 						<li><a href="http://www.wbbaddons.de/user/2020-noone/" class="externalURL" {if EXTERNAL_LINK_TARGET_BLANK}target="_blank"{/if}>-noone-</a></li>
