@@ -3,8 +3,8 @@
 <head>
 	<title>{if $room}{$room} - {/if}{lang}chat.global.title{/lang} - {PAGE_TITLE|language}</title>
 	
+	{include file='headInclude' sandbox=false}
 	{if $room}
-		{include file='headInclude' sandbox=false}
 		{include file='javascriptInclude' application='chat'}
 		<script data-relocate="true">
 			//<![CDATA[
