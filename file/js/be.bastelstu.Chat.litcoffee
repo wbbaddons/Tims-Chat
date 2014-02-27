@@ -351,6 +351,7 @@ load messages if the appropriate event arrives.
 						
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.newMessage', getMessages
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.wcf.nodePush.tick60', getMessages
+				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.roomChange', refreshRoomList
 
 Finished! Enable the input now and join the chat.
 

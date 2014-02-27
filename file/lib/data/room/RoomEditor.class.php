@@ -61,5 +61,6 @@ class RoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data\IEd
 	public static function resetCache() {
 		\chat\system\cache\builder\RoomCacheBuilder::getInstance()->reset();
 		\chat\system\cache\builder\PermissionCacheBuilder::getInstance()->reset();
+		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.roomChange');
 	}
 }
