@@ -164,13 +164,14 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.global.fullscreen"><![CDATA[Vollbild]]></item>
 		<item name="chat.global.forceRefresh"><![CDATA[Räume neu laden]]></item>
 		
+		<item name="chat.global.whisper"><![CDATA[Flüstern]]></item>
 		<item name="chat.global.query"><![CDATA[Privates Gespräch]]></item>
 		<item name="chat.global.kick"><![CDATA[Kicken]]></item>
 		<item name="chat.global.ban"><![CDATA[Bannen]]></item>
 		<item name="chat.global.profile"><![CDATA[Profil]]></item>
 		
 		<item name="chat.global.message"><![CDATA[Nachricht]]></item>
-		<item name="chat.global.whisper"><![CDATA[anflüstern]]></item>
+		<item name="chat.global.whispers"><![CDATA[Flüstert]]></item>
 		
 		<item name="chat.global.information"><![CDATA[Information]]></item>
 		<item name="chat.global.information.chatUpdate"><![CDATA[Der Chat wurde aktualisiert. Bitte laden Sie die Seite neu, da es sonst zu Fehlern kommen kann.]]></item>
