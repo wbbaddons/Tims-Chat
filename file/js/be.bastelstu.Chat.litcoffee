@@ -861,6 +861,7 @@ Open private channel
 					handleScroll event
 					
 				$('#timsChatMessageContainer0').after div
+				$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height()
 			
 			if userID isnt 0
 				$('#timsChatTopic').removeClass 'empty'
@@ -903,6 +904,7 @@ Open private channel
 			
 			$('#timsChatMessageTabMenu').wcfTabs 'select', $("#timsChatMessageTabMenuAnchor#{userID}").parent().index()
 			do WCF.DOMNodeInsertedHandler.execute
+			do $(window).resize
 			
 			openChannel = userID
 
