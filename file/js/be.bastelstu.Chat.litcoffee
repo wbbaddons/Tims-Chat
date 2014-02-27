@@ -82,7 +82,6 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 			return false if initialized
 			initialized = true
 			
-			messageContainerSize = $('.timsChatMessageContainer').height()
 			userListSize = $('#timsChatUserList').height()
 			
 			v.config = config
@@ -328,6 +327,8 @@ Toggle fullscreen mode.
 				$('.dropdownMenu').data 'orientationX', ''
 				
 				if $(@).data 'status'
+					messageContainerSize = $('.timsChatMessageContainer').height()
+					
 					$('html').addClass 'fullscreen'
 					do $(window).resize
 				else

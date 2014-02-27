@@ -145,9 +145,11 @@
 		}
 		
 		.timsChatMessageContainer {
+			min-height: 100px;
 			height: 300px;
 			overflow-y: scroll;
 			overflow-x: hidden;
+			resize: vertical;
 			
 			.timsChatMarkContainer {
 				display: none;
@@ -487,7 +489,6 @@
 	}
 }
 
-// TODO
 html.fullscreen {
 	html, body {
 		padding: 0;
@@ -516,6 +517,14 @@ html.fullscreen {
 	
 	.sidebar, #main, #content {
 		padding-bottom: 0;
+	}
+	
+	#tplChat {
+		#content {
+			.timsChatMessageContainer {
+				resize: none;
+			}
+		}
 	}
 	
 	#main, #content {
