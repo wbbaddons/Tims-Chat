@@ -5,7 +5,7 @@ This is the javascript file providing functions related to the message log for [
 
 	### Copyright Information
 	# @author	Maximilian Mader
-	# @copyright	2010-2013 Tim Düsterhus
+	# @copyright	2010-2014 Tim Düsterhus
 	# @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
 	# @package	be.bastelstu.chat
 	###

@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * Caches the chat permissions for a combination of user groups.
  * 
  * @author 	Tim Düsterhus, Marcel Werk
- * @copyright	2010-2013 WoltLab GmbH
+ * @copyright	2010-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	be.bastelstu.chat
  * @subpackage	system.cache.builder
