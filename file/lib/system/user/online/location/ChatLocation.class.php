@@ -23,10 +23,10 @@ class ChatLocation implements \wcf\system\user\online\location\IUserOnlineLocati
 	public function get(\wcf\data\user\online\UserOnline $user, $languageVariable = '') {
 		$rooms = data\room\RoomCache::getInstance()->getRooms();
 		
-		if (isset($cache[$user->objectID])) {
-			if ($cache[$user->objectID]->canEnter()) {
+		if (isset($rooms[$user->objectID])) {
+			if ($rooms[$user->objectID]->canEnter()) {
 				return \wcf\system\WCF::getLanguage()->getDynamicVariable($languageVariable, array(
-					'room' => $cache[$user->objectID]
+					'room' => $rooms[$user->objectID]
 				));
 			}
 		}
