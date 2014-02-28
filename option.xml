@@ -10,7 +10,7 @@
 				<parent>chat</parent>
 			</category>
 		</categories>
-
+		
 		<options>
 			<!-- general chat options -->
 			<option name="module_chat">

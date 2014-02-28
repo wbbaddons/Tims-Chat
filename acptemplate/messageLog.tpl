@@ -2,7 +2,7 @@
 
 {if CHAT_LOG_ARCHIVETIME !== 0}
 	<script data-relocate="true" src="{$__wcf->getPath('chat')}acp/js/be.bastelstu.Chat.ACP.Log.js?version={PACKAGE_VERSION|rawurlencode}"></script>
-
+	
 	{if $errorField === ''}
 		<script data-relocate="true">
 			//<![CDATA[
@@ -14,7 +14,6 @@
 		</script>
 	{/if}
 {/if}
-
 
 <header class="boxHeadline">
 	<h1>{lang}{@$pageTitle}{/lang}</h1>
@@ -55,7 +54,7 @@
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		</div>
 	</form>
-
+	
 	<div class="contentNavigation">
 		<nav>
 			<ul>
@@ -68,7 +67,7 @@
 			</ul>
 		</nav>
 	</div>
-
+	
 	{if $errorField === ''}
 		<div id="messageLogContent" class="tabMenuContainer marginTop" data-active="timeTab-0" data-store="activeTabMenuItem" data-base-time="{$date}" data-room-id="{$room->roomID}">
 			<nav class="tabMenu">

@@ -15,14 +15,14 @@
 			<permissions>admin.chat.canEditRoom,admin.chat.canDeleteRoom</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
-
+		
 		<acpmenuitem name="chat.acp.menu.link.room.add">
 			<controller><![CDATA[chat\acp\form\RoomAddForm]]></controller>
 			<parent>chat.acp.menu.link.chat</parent>
 			<permissions>admin.chat.canAddRoom</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
-
+		
 		<acpmenuitem name="chat.acp.menu.link.suspension.list">
 			<controller><![CDATA[chat\acp\page\ChatSuspensionListPage]]></controller>
 			<parent>chat.acp.menu.link.chat</parent>

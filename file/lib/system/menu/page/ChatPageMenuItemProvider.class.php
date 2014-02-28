@@ -3,7 +3,7 @@ namespace chat\system\menu\page;
 
 /**
  * PageMenuItemProvider for chat.
- *
+ * 
  * @author 	Tim Düsterhus
  * @copyright	2010-2014 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
@@ -20,7 +20,7 @@ class ChatPageMenuItemProvider extends \wcf\system\menu\page\DefaultPageMenuItem
 	
 	/**
 	 * Hides the button when there is no valid room
-	 *
+	 * 
 	 * @see	\wcf\system\menu\page\PageMenuItemProvider::isVisible()
 	 */
 	public function isVisible() {

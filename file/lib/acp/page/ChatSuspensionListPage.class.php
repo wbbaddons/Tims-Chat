@@ -53,7 +53,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	
 	/*
 	 * username
-	 *
+	 * 
 	 * @var String
 	 */
 	public $filterUsername = null;
@@ -67,7 +67,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 	
 	/*
 	 * issuer username
-	 *
+	 * 
 	 * @var String
 	 */
 	public $filterIssuerUsername = null;

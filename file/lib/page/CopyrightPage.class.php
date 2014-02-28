@@ -3,7 +3,7 @@ namespace chat\page;
 
 /**
  * Shows information about Tims chat.
- *
+ * 
  * @author 	Tim Düsterhus
  * @copyright	2010-2014 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
@@ -32,7 +32,7 @@ class CopyrightPage extends \wcf\page\AbstractPage {
 	public $templateName = '__copyright';
 	
 	/**
-	 * @see	\wcf\page\IPage::assignVariables()
+	 * @see \wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

@@ -7,7 +7,7 @@ use wcf\util\MessageUtil;
 
 /**
  * Executes message related actions.
- *
+ * 
  * @author 	Tim Düsterhus
  * @copyright	2010-2014 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
@@ -168,22 +168,6 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Fetches messages in between the specified timestamps.
-	 *
-	 * @return array Array containing message table, containerID and information about an empty message table.
-	 */
-	public function getMessages() {
-		// read messages
-		$messages = ViewableMessageList::getMessagesBetween($this->parameters['room'], $this->parameters['start'], $this->parameters['end']);
-		
-		return array(
-			'noMessages' => (count($messages) == 0) ? true : null,
-			'containerID' => $this->parameters['containerID'],
-			'template' => WCF::getTPL()->fetch('__messageLogTable', 'chat', array('messages' => $messages), true)
-		);
-	}
-	
-	/**
 	 * Validates getting messages.
 	 */
 	public function validateGetMessages() {
@@ -200,6 +184,25 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		if ($this->parameters['room'] === null) throw new \wcf\system\exception\IllegalLinkException();
 	}
 	
+	/**
+	 * Fetches messages in between the specified timestamps.
+	 * 
+	 * @return array Array containing message table, containerID and information about an empty message table.
+	 */
+	public function getMessages() {
+		// read messages
+		$messages = ViewableMessageList::getMessagesBetween($this->parameters['room'], $this->parameters['start'], $this->parameters['end']);
+		
+		return array(
+			'noMessages' => (count($messages) == 0) ? true : null,
+			'containerID' => $this->parameters['containerID'],
+			'template' => WCF::getTPL()->fetch('__messageLogTable', 'chat', array('messages' => $messages), true)
+		);
+	}
+	
+	/**
+	 * Validates setting an attachment.
+	 */
 	public function validateSendAttachment() {
 		// read user data
 		$this->parameters['userData']['color1'] = WCF::getUser()->chatColor1;
@@ -243,6 +246,9 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		}
 	}
 	
+	/**
+	 * Creates a message linked to an attachment
+	 */
 	public function sendAttachment() {
 		$this->parameters['type'] = Message::TYPE_ATTACHMENT;
 		$this->parameters['text'] = '[attach]'. $this->parameters['objectID'] .'[/attach]';

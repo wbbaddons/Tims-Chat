@@ -3,7 +3,7 @@
 <head>
 	<title>{if $room}{$room} - {/if}{lang}chat.global.title{/lang} - {PAGE_TITLE|language}</title>
 	
-	{include file='headInclude' sandbox=false}
+	{include file='headInclude'}
 	{if $room}
 		{include file='javascriptInclude' application='chat'}
 		<script data-relocate="true">
@@ -130,7 +130,7 @@
 				</fieldset>
 				<button type="submit" class="marginTop invisible" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
 			</form>
-
+			
 			{if MODULE_SMILEY && $smileyCategories|count}
 				{include file='messageFormSmilies' wysiwygSelector=''}
 			{/if}

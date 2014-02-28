@@ -6,7 +6,7 @@ use \wcf\system\WCF;
 
 /**
  * Handles chat-permissions.
- *
+ * 
  * @author 	Tim Düsterhus, Marcel Werk
  * @copyright	2010-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -80,7 +80,7 @@ class PermissionHandler {
 	
 	/**
 	 * Fetches the given permission for the given room
-	 *
+	 * 
 	 * @param	\chat\data\room\Room	$room
 	 * @param	string			$permission
 	 * @return	boolean

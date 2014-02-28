@@ -18,7 +18,7 @@ class MessageList extends \wcf\data\DatabaseObjectList {
 	
 	/**
 	 * Reads the newest messages for the given room.
-	 *
+	 * 
 	 * @param	\chat\data\room\Room	$room
 	 * @param	integer			$number
 	 * @return	array<\chat\data\message\Message>

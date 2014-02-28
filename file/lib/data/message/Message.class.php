@@ -7,7 +7,7 @@ use \wcf\system\WCF;
 
 /**
  * Represents a chat message.
- *
+ * 
  * @author	Tim Düsterhus
  * @copyright	2010-2014 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
@@ -132,7 +132,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 	
 	/**
 	 * Converts this message into json-form.
-	 *
+	 * 
 	 * @param	boolean	$raw
 	 * @return	string
 	 */

@@ -4,7 +4,7 @@
 	<header class="boxHeadline boxSubHeadline">
 		<h2>{lang}chat.header.menu.chat{/lang}</h2>
 	</header>
-
+	
 	<div class="container marginTop">
 		<ul class="containerList">
 			{@$roomList}

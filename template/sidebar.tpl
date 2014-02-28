@@ -6,6 +6,7 @@
 		</ul>
 	</div>
 </fieldset>
+
 <fieldset id="timsChatRoomListContainer">
 	<legend>{lang}chat.global.rooms{/lang}</legend>
 	<div id="timsChatRoomList">

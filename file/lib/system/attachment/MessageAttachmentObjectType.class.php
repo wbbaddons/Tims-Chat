@@ -4,7 +4,7 @@ use \wcf\system\WCF;
 
 /**
  * Attachment object type implementation for chat messages.
- *
+ * 
  * @author 	Maximilian Mader
  * @copyright	2010-2014 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
@@ -46,10 +46,6 @@ class MessageAttachmentObjectType extends \wcf\system\attachment\AbstractAttachm
 		}
 		
 		return false;
-	}
-	
-	public function canPreview($objectID) {
-		return $this->canDownload($objectID);
 	}
 	
 	/**

@@ -51,7 +51,7 @@ final class ChatUtil {
 	 * Creates a gradient out of two colors represented by an integer.
 	 * The first byte is red, the second byte is green, the third one is blue.
 	 * The numbers can be easily expressed in hexadecimal notation: 0xFF0000 being red.
-	 *
+	 * 
 	 * @param	string	$string
 	 * @param	integer	$start
 	 * @param	integer	$end

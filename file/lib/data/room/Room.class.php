@@ -5,7 +5,7 @@ use \wcf\system\WCF;
 
 /**
  * Represents a chat room.
- *
+ * 
  * @author 	Tim Düsterhus
  * @copyright	2010-2014 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
@@ -77,7 +77,7 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	
 	/**
 	 * Returns whether the user is allowed to write messages in this room.
-	 *
+	 * 
 	 * @param	\wcf\data\user\User	$user
 	 * @return	boolean
 	 */
@@ -115,7 +115,7 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	
 	/**
 	 * Returns the ID of this chatroom.
-	 *
+	 * 
 	 * @see	\wcf\system\request\IRouteController
 	 */
 	public function getID() {

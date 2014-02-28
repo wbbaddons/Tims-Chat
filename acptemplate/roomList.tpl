@@ -1,5 +1,5 @@
 {include file='header' pageTitle='chat.acp.room.list'}
-	
+
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
@@ -8,7 +8,7 @@
 	});
 	//]]>
 </script>
-	
+
 <header class="boxHeadline">
 	<h1>{lang}chat.acp.room.list{/lang}</h1>
 </header>
@@ -27,6 +27,7 @@
 		</nav>
 	{/hascontent}
 </div>
+
 {if $objects|count}
 	<section id="roomList" class="container containerPadding sortableListContainer marginTop">
 		<ol class="sortableList" data-object-id="0">
