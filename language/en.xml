@@ -14,7 +14,7 @@
 		<item name="chat.acp.suspension.list"><![CDATA[Suspensions]]></item>
 		<item name="chat.acp.suspension.type"><![CDATA[Type of suspension]]></item>
 		<item name="chat.acp.suspension.issuer"><![CDATA[Issuer]]></item>
-		<item name="chat.acp.suspension.displayRevoked"><![CDATA[Show expires suspensions]]></item>
+		<item name="chat.acp.suspension.displayRevoked"><![CDATA[Show expired suspensions]]></item>
 		<item name="chat.acp.suspension.reason"><![CDATA[Reason]]></item>
 		<item name="chat.acp.suspension.revoke"><![CDATA[Revoke]]></item>
 		<item name="chat.acp.suspension.revoke.sure"><![CDATA[Do you really want to revoke the suspension of “{$suspension->username}”?]]></item>
@@ -70,13 +70,13 @@
 		<item name="wcf.acp.group.option.mod.chat.canRestore"><![CDATA[Can restore users]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canRestore.description"><![CDATA[Restores user data (such as the color)]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canBan"><![CDATA[Can ban]]></item>
-		<item name="wcf.acp.group.option.mod.chat.canBan.description"><![CDATA[Implies „Can enter rooms (Override)“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canBan.description"><![CDATA[Implies “Can enter rooms (Override)”]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canMute"><![CDATA[Can mute]]></item>
-		<item name="wcf.acp.group.option.mod.chat.canMute.description"><![CDATA[Implies „Can write messages (Override)“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canMute.description"><![CDATA[Implies “Can write messages (Override)”]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canGban"><![CDATA[Can ban globally]]></item>
-		<item name="wcf.acp.group.option.mod.chat.canGban.description"><![CDATA[Implies „Can ban“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGban.description"><![CDATA[Implies “Can ban”]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canGmute"><![CDATA[Can mute globally]]></item>
-		<item name="wcf.acp.group.option.mod.chat.canGmute.description"><![CDATA[Implies „Can mute“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGmute.description"><![CDATA[Implies “Can mute”]]></item>
 		
 		<item name="wcf.acp.group.option.category.admin.chat"><![CDATA[Chat]]></item>
 		<item name="wcf.acp.group.option.admin.chat.canAddRoom"><![CDATA[Can create rooms]]></item>
@@ -84,7 +84,7 @@
 		<item name="wcf.acp.group.option.admin.chat.canDeleteRoom"><![CDATA[Can delete rooms]]></item>
 		<item name="wcf.acp.group.option.admin.chat.canReadLog"><![CDATA[Can see protocol]]></item>
 		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions"><![CDATA[Can manage suspensions]]></item>
-		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions.description"><![CDATA[Implies „Can ban“, „Can mute“, „Can ban globally“, „Can mute globally“ und possibly other permissions.]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions.description"><![CDATA[Implies “Can ban”, “Can mute”, “Can ban globally”, “Can mute globally” und possibly other permissions.]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
