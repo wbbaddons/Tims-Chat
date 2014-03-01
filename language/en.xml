@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="en">
+	<category name="chat.acp.room">
+		<item name="chat.acp.room.list"><![CDATA[Chatrooms]]></item>
+		<item name="chat.acp.room.add"><![CDATA[Add Chatroom]]></item>
+		<item name="chat.acp.room.edit"><![CDATA[Edit Chatroom]]></item>
+		<item name="chat.acp.room.title"><![CDATA[Title]]></item>
+		<item name="chat.acp.room.topic"><![CDATA[Topic]]></item>
+		
+		<item name="chat.acp.room.delete.sure"><![CDATA[Do you really want to delete the chatroom “{$chatRoom}”?]]></item>
+	</category>
+	
+	<category name="chat.acp.suspension">
+		<item name="chat.acp.suspension.list"><![CDATA[Suspensions]]></item>
+		<item name="chat.acp.suspension.type"><![CDATA[Type of suspension]]></item>
+		<item name="chat.acp.suspension.issuer"><![CDATA[Issuer]]></item>
+		<item name="chat.acp.suspension.displayRevoked"><![CDATA[Show expires suspensions]]></item>
+		<item name="chat.acp.suspension.reason"><![CDATA[Reason]]></item>
+		<item name="chat.acp.suspension.revoke"><![CDATA[Revoke]]></item>
+		<item name="chat.acp.suspension.revoke.sure"><![CDATA[Do you really want to revoke the suspension of “{$suspension->username}”?]]></item>
+		<item name="chat.acp.suspension.revoke.success"><![CDATA[The suspension has been successfully revoked.]]></item>
+		<item name="chat.acp.suspension.revokedBy"><![CDATA[Revoked by “{$suspension->revokerUsername}”]]></item>
+	</category>
+	
+	<category name="chat.acp.log">
+		<item name="chat.acp.log.title"><![CDATA[Message Protocol]]></item>
+		<item name="chat.acp.log.download"><![CDATA[Download Daily Message Protocol]]></item>
+		<item name="chat.acp.log.message"><![CDATA[Message]]></item>
+		<item name="chat.acp.log.error.disabled"><![CDATA[The message protocol is disabled. You can enable the protocol in the options (“System » Options » Chat » Protocol”).]]></item>
+		<item name="chat.acp.log.date.error.inFuture"><![CDATA[The given date is in the future.]]></item>
+		<item name="chat.acp.log.date.error.tooLongAgo"><![CDATA[The given date exceeds the maximum archiving time of {CHAT_LOG_ARCHIVETIME / 1440|ceil} days.]]></item>
+	</category>
+	
+	<category name="chat.acp.menu">
+		<item name="chat.acp.menu.link"><![CDATA[Chat]]></item>
+		<item name="chat.acp.menu.link.log"><![CDATA[Message Protocol]]></item>
+		<item name="chat.acp.menu.link.room.list"><![CDATA[List Chatrooms]]></item>
+		<item name="chat.acp.menu.link.room.add"><![CDATA[Add Chatroom]]></item>
+		<item name="chat.acp.menu.link.suspension.list"><![CDATA[List Suspensions]]></item>
+	</category>
+	
+	<category name="wcf.acl.option">
+		<item name="wcf.acl.option.category.be.bastelstu.chat.room.user"><![CDATA[User Permissions]]></item>
+		<item name="wcf.acl.option.category.be.bastelstu.chat.room.mod"><![CDATA[Moderator Permissions]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.user.canEnter"><![CDATA[Can enter room]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.user.canWrite"><![CDATA[Can write messages]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canAlwaysEnter"><![CDATA[Can enter room (Override)]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canAlwaysWrite"><![CDATA[Can write messages (Override)]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canMute"><![CDATA[Can mute]]></item>
+		<item name="wcf.acl.option.be.bastelstu.chat.room.mod.canBan"><![CDATA[Can ban]]></item>
+	</category>
+	
+	<category name="wcf.acp.group">
+		<item name="wcf.acp.group.option.category.user.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.acp.group.option.user.chat.canEnter"><![CDATA[Can enter chat]]></item>
+		<item name="wcf.acp.group.option.user.chat.canWrite"><![CDATA[Can write messages]]></item>
+		<item name="wcf.acp.group.option.user.chat.canTempRoom"><![CDATA[Can create temporary rooms]]></item>
+		<item name="wcf.acp.group.option.user.chat.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.chat.allowedBBCodes.description"><![CDATA[Selected BBCodes may be used by members of this group.]]></item>
+		<item name="wcf.acp.group.option.user.chat.canUploadAttachment"><![CDATA[Can upload attachments]]></item>
+		<item name="wcf.acp.group.option.user.chat.maxAttachmentSize"><![CDATA[Maximum File Size]]></item>
+		<item name="wcf.acp.group.option.user.chat.allowedAttachmentExtensions"><![CDATA[Allowed File Extensions]]></item>
+		<item name="wcf.acp.group.option.user.chat.allowedAttachmentExtensions.description"><![CDATA[One extension per line]]></item>
+		
+		<item name="wcf.acp.group.option.category.mod.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter"><![CDATA[Can enter rooms (Override)]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysEnter.description"><![CDATA[Allows to ignores Bans.]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysWrite"><![CDATA[Can write messages (Override)]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canAlwaysWrite.description"><![CDATA[Allows to ignore Mutes]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canRestore"><![CDATA[Can restore users]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canRestore.description"><![CDATA[Restores user data (such as the color)]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canBan"><![CDATA[Can ban]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canBan.description"><![CDATA[Implies „Can enter rooms (Override)“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canMute"><![CDATA[Can mute]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canMute.description"><![CDATA[Implies „Can write messages (Override)“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGban"><![CDATA[Can ban globally]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGban.description"><![CDATA[Implies „Can ban“]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGmute"><![CDATA[Can mute globally]]></item>
+		<item name="wcf.acp.group.option.mod.chat.canGmute.description"><![CDATA[Implies „Can mute“]]></item>
+		
+		<item name="wcf.acp.group.option.category.admin.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canAddRoom"><![CDATA[Can create rooms]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canEditRoom"><![CDATA[Can edit rooms]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canDeleteRoom"><![CDATA[Can delete rooms]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canReadLog"><![CDATA[Can see protocol]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions"><![CDATA[Can manage suspensions]]></item>
+		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions.description"><![CDATA[Implies „Can ban“, „Can mute“, „Can ban globally“, „Can mute globally“ und possibly other permissions.]]></item>
+	</category>
+	
+	<category name="wcf.acp.option">
+		<item name="wcf.acp.option.category.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.acp.option.category.chat.general"><![CDATA[General]]></item>
+		<item name="wcf.acp.option.module_chat"><![CDATA[Tim’s Chat]]></item>
+		<item name="wcf.acp.option.chat_reloadtime"><![CDATA[Reload time]]></item>
+		<item name="wcf.acp.option.chat_reloadtime.description"><![CDATA[Time between to requests to the server [time in seconds]]]></item>
+		<item name="wcf.acp.option.chat_lastmessages"><![CDATA[Number of old messages]]></item>
+		<item name="wcf.acp.option.chat_lastmessages.description"><![CDATA[Number of messages that will be shown when entering a chat room.]]></item>
+		<item name="wcf.acp.option.chat_display_join_leave"><![CDATA[Show join and leaves]]></item>
+		<item name="wcf.acp.option.chat_display_join_leave.description"><![CDATA[Should a message be shown when a user joins or leaves the chat?]]></item>
+		<item name="wcf.acp.option.chat_max_length"><![CDATA[Maximum Message Length]]></item>
+		<item name="wcf.acp.option.chat_command_aliases"><![CDATA[Command Aliases]]></item>
+		<item name="wcf.acp.option.chat_command_aliases.description"><![CDATA[Enter a combination of alias and target separated by newlines. Alias and target are separated by colons.]]></item>
+		<item name="wcf.acp.option.chat_force_room_select"><![CDATA[Show Room Selection]]></item>
+		<item name="wcf.acp.option.chat_force_room_select.description"><![CDATA[Shows a list of available rooms instead of joining the first available one.]]></item>
+		
+		<item name="wcf.acp.option.category.chat.log"><![CDATA[Protocol]]></item>
+		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Archive Time]]></item>
+		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Time a message will be available in the protocol. [time in minutes, -1 for infinite]]]></item>
+	</category>
+	
+	<category name="wcf.dashboard">
+		<item name="wcf.dashboard.box.be.bastelstu.chat.onlineList"><![CDATA[Chat]]></item>
+	</category>
+	
+	<category name="wcf.acp.index">
+		<item name="wcf.acp.index.system.software.chatVersion"><![CDATA[Tim’s Chat Version]]></item>
+	</category>
+	
+	<category name="chat.error">
+		<item name="chat.error.notFound"><![CDATA[The command “{$exception->getCommand()}” could not be found.]]></item>
+		<item name="chat.error.userNotFound"><![CDATA[The user “{$exception->getUsername()}” could not be found.]]></item>
+		<item name="chat.error.invalidArgument"><![CDATA[You have provided invalid arguments.]]></item>
+		<item name="chat.error.permissionDenied"><![CDATA[You may not use this command.]]></item>
+		<item name="chat.error.duplicateTab"><![CDATA[You have opened the chat in another browser windows. This instance was disabled.]]></item>
+		<item name="chat.error.join"><![CDATA[{literal}Unable to enter the selected chat room{if $message}: {$message}{else}.{/if}{/literal}]]></item>
+		<item name="chat.error.onMessageLoad"><![CDATA[Unable to load new messages. The following reason may cause this error:
+<ul class="nativeList">
+	<li>Permissions for this chat room were revoked</li>
+	<li>Your internet connectivity is bad, which causes the requests to time out</li>
+	<li>You opened the chat twice</li>
+	<li>The server is unable to handle your request</li>
+</ul>
+Please try to reload the chat.]]></item>
+		<item name="chat.error.reload"><![CDATA[Reload]]></item>
+		
+		<item name="chat.error.whisper.ignoresYou"><![CDATA[“{$user}” has blocked you.]]></item>
+	</category>
+	
+	<category name="chat.global">
+		<item name="chat.global.expires"><![CDATA[Expires]]></item>
+		<item name="chat.global.time"><![CDATA[Date]]></item>
+		
+		<item name="chat.global.title"><![CDATA[{lang}chat.header.menu.chat{/lang}]]></item>
+		<item name="chat.global.protocol"><![CDATA[Protocol]]></item>
+		
+		<item name="chat.global.room"><![CDATA[Chatroom]]></item>
+		<item name="chat.global.rooms"><![CDATA[Chatrooms]]></item>
+		<item name="chat.global.users"><![CDATA[Users]]></item>
+		
+		<item name="chat.global.copyright"><![CDATA[<a href="http://tims.bastelstu.be"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}><strong>Tim’s Chat</strong>{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}, developed in <strong>Tim’s Bastelstube</strong></a>]]></item>
+		<item name="chat.global.copyright.leader"><![CDATA[Project Lead]]></item>
+		<item name="chat.global.copyright.developer"><![CDATA[Developers]]></item>
+		<item name="chat.global.copyright.graphics"><![CDATA[Graphics]]></item>
+		<item name="chat.global.copyright.translation"><![CDATA[Translation]]></item>
+		<item name="chat.global.copyright.thanks"><![CDATA[Thanks to]]></item>
+		
+		<item name="chat.global.submit.default"><![CDATA[Press Enter to send]]></item>
+		<item name="chat.global.scroll"><![CDATA[Automatically Scroll]]></item>
+		<item name="chat.global.notify"><![CDATA[Notifications]]></item>
+		<item name="chat.global.notify.title"><![CDATA[New messages]]></item>
+		<item name="chat.global.smilies"><![CDATA[Smilies]]></item>
+		<item name="chat.global.clear"><![CDATA[Clear Chat]]></item>
+		<item name="chat.global.mark"><![CDATA[Mark messages]]></item>
+		<item name="chat.global.fullscreen"><![CDATA[Full screen]]></item>
+		<item name="chat.global.forceRefresh"><![CDATA[Reload Room List]]></item>
+		
+		<item name="chat.global.noJs"><![CDATA[Your browser has JavaScript disabled. JavaScript is required for chatting.]]></item>
+		
+		<item name="chat.global.whisper"><![CDATA[Whisper]]></item>
+		<item name="chat.global.query"><![CDATA[Private conversation]]></item>
+		<item name="chat.global.kick"><![CDATA[Kick]]></item>
+		<item name="chat.global.ban"><![CDATA[Ban]]></item>
+		<item name="chat.global.profile"><![CDATA[Profile]]></item>
+		
+		<item name="chat.global.message"><![CDATA[Message]]></item>
+		<item name="chat.global.whispers"><![CDATA[Whispers]]></item>
+		
+		<item name="chat.global.information"><![CDATA[Information]]></item>
+		<item name="chat.global.information.chatUpdate"><![CDATA[The chat was updated. Please reload the page.]]></item>
+		<item name="chat.global.information.suspension"><![CDATA[{lang}chat.suspension.{$suspension->type}{/lang} ({if $room}{$room}{else}{lang}chat.room.global{/lang}{/if})]]></item>
+		
+		<item name="chat.global.privateChannelTopic"><![CDATA[{literal}You are in a private conversation with “{$username}”{/literal}]]></item>
+		<item name="chat.global.closePrivateChannel"><![CDATA[Close Private Conversation]]></item>
+		<item name="chat.global.closeTopic"><![CDATA[Hide Topic]]></item>
+	</category>
+	
+	<category name="chat.header">
+		<item name="chat.header.menu.chat"><![CDATA[Chat]]></item>
+	</category>
+	
+	<category name="chat.message">
+		<!-- 1 = TYPE_JOIN -->
+		<item name="chat.message.1"><![CDATA[joined the chat.{if $__wcf->session->getPermission('admin.user.canViewIpAddress') && $ipAddress} ({$ipAddress}){/if}]]></item>
+		<!-- 2 = TYPE_LEAVE -->
+		<item name="chat.message.2"><![CDATA[{if !$room|isset || $room === null}left the chat.{else}went into the room “{$room}”.{/if}]]></item>
+		<!-- 3 = TYPE_AWAY -->
+		<item name="chat.message.3"><![CDATA[is now away{if $message}: {$message}{else}.{/if}]]></item>
+		<!-- 4 = TYPE_BACK -->
+		<item name="chat.message.4"><![CDATA[is back.]]></item>
+		<!-- 5 = TYPE_MODERATE -->
+		<item name="chat.message.5.restore"><![CDATA[restored {@$link}.]]></item>
+		<item name="chat.message.5.mute"><![CDATA[muted {@$link} until {@$expires|plainTime}{if !$reason|empty}: {@$reason}{else}.{/if}]]></item>
+		<item name="chat.message.5.ban"><![CDATA[banned {@$link} until {@$expires|plainTime}{if !$reason|empty}: {@$reason}{else}.{/if}]]></item>
+		<item name="chat.message.5.gmute"><![CDATA[muted {@$link} globally until {@$expires|plainTime}{if !$reason|empty}: {@$reason}{else}.{/if}]]></item>
+		<item name="chat.message.5.gban"><![CDATA[banned {@$link} globally until {@$expires|plainTime}{if !$reason|empty}: {@$reason}{else}.{/if}]]></item>
+		<item name="chat.message.5.unmute"><![CDATA[unmuted {@$link}.]]></item>
+		<item name="chat.message.5.unban"><![CDATA[unbanned {@$link}.]]></item>
+		<item name="chat.message.5.ungmute"><![CDATA[unmuted {@$link} globally.]]></item>
+		<item name="chat.message.5.ungban"><![CDATA[unbanned {@$link} globally.]]></item>
+		<!-- 12 = TYPE_ATTACHMENT -->
+		<item name="chat.message.12"><![CDATA[shared a file:]]></item>
+		
+		<item name="chat.message.color.success"><![CDATA[Your color successfully was changed.]]></item>
+		<item name="chat.message.invite.success"><![CDATA[You successfully invited “{$user}” into the room “{$room}”.]]></item>
+		<item name="chat.message.temproom.success"><![CDATA[The temporary room “{$roomName}” successfully was created. Please reload the room list to see it.]]></item>
+	</category>
+	
+	<category name="chat.suspension">
+		<item name="chat.suspension.mute"><![CDATA[Mute]]></item>
+		<item name="chat.suspension.ban"><![CDATA[Ban]]></item>
+		<item name="chat.suspension.exists"><![CDATA[There already is a suspension of this kind with a longer duration.]]></item>
+		<item name="chat.suspension.notExists"><![CDATA[There is no suspension of this kind.]]></item>
+	</category>
+	
+	<!-- I18N Values -->
+	<category name="chat.room">
+		<item name="chat.room.global"><![CDATA[Global]]></item>
+		<item name="chat.room.title1"><![CDATA[Tim’s Chat]]></item>
+		<item name="chat.room.topic1"><![CDATA[Thank you for choosing Tim’s Chat. You can edit this message in your Administrators Control Panel.]]></item>
+		<item name="chat.room.titleTemp"><![CDATA[Room_{$roomID}]]></item>
+	</category>
+	
+	<category name="chat.user">
+		<item name="chat.user.usersOnline.location.ChatPage"><![CDATA[<a href="{link controller='Chat' application='chat' object=$room}{/link}">Chatroom “{$room}”</a>]]></item>
+	</category>
+</language>
