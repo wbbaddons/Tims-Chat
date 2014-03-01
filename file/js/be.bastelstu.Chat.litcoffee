@@ -163,7 +163,7 @@ Open the smiley wcfDialog
 
 			$('#timsChatSmileyPopupButton').on 'click', ->
 				overlaySmileyList.wcfDialog
-					title: WCF.Language.get 'chat.general.smilies'
+					title: WCF.Language.get 'chat.global.smilies'
 					
 				overlaySmileyList.css
 					'max-height': $(window).height() - overlaySmileyList.parent().siblings('.dialogTitlebar').outerHeight()
