@@ -179,7 +179,7 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.global.information.chatUpdate"><![CDATA[Der Chat wurde aktualisiert. Bitte laden Sie die Seite neu, da es sonst zu Fehlern kommen kann.]]></item>
 		<item name="chat.global.information.suspension"><![CDATA[{lang}chat.suspension.{$suspension->type}{/lang} ({if $room}{$room}{else}{lang}chat.room.global{/lang}{/if})]]></item>
 		
-		<item name="chat.global.privateChannelTopic"><![CDATA[{literal}Sie befinden sich in einem privaten Kanal mit „{$username}“, um diesen zu schließen.{/literal}]]></item>
+		<item name="chat.global.privateChannelTopic"><![CDATA[{literal}Sie befinden sich in einem privaten Kanal mit „{$username}“.{/literal}]]></item>
 		<item name="chat.global.closePrivateChannel"><![CDATA[Privaten Kanal schließen]]></item>
 		<item name="chat.global.closeTopic"><![CDATA[Thema ausblenden]]></item>
 	</category>
