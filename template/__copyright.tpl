@@ -19,13 +19,15 @@
 					</ul>
 				</dd>
 			</dl>
-			{*<dl>
+			<dl>
 				<dt>{lang}chat.global.copyright.graphics{/lang}</dt>
 				<dd>
-					
+					<ul>
+						<li><a href="https://github.com/max-m" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Maximilian Mader</a></li>
+					</ul>
 				</dd>
 			</dl>
-			<dl>
+			{*<dl>
 				<dt>{lang}chat.global.copyright.translation{/lang}</dt>
 				<dd>
 					
