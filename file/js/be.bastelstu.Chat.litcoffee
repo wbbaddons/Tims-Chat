@@ -51,6 +51,7 @@ exposed by a function if necessary.
 		remainingFailures = 3
 		
 		overlaySmileyList = null
+		markedMessages = {}
 		
 		events =
 			newMessage: $.Callbacks()
@@ -357,11 +358,39 @@ Close private channels
 			
 Visibly mark the message once the associated checkbox is checked.
 
-			$(document).on 'click', '.timsChatMessage :checkbox', (event) ->
-				if $(@).is ':checked'
-					$(@).parents('.timsChatMessage').addClass 'jsMarked'
+			$(document).on 'click', '.timsChatMessage .timsChatMessageMarker', (event) ->
+				elem = $(event.target)
+				parent = elem.parent()
+				messageID = elem.attr('value')
+				
+				if elem.is ':checked'
+					markedMessages[messageID] = messageID
+					checked = true
+					
+					parent.addClass 'checked'
+					parent.siblings().each (key, value) ->
+						checked = $(value).find('.timsChatMessageMarker').is ':checked'
+						
+						checked
+						
+					if checked
+						elem.parents('.timsChatMessage').addClass 'checked'
+						elem.parents('.timsChatTextContainer').siblings('.timsChatMessageBlockMarker').prop 'checked', true
 				else
-					$(@).parents('.timsChatMessage').removeClass 'jsMarked'
+					delete markedMessages[messageID]
+					
+					parent.removeClass 'checked'
+					elem.parents('.timsChatMessage').removeClass 'checked'
+					elem.parents('.timsChatTextContainer').siblings('.timsChatMessageBlockMarker').prop 'checked', false
+					
+			$(document).on 'click', '.timsChatMessageBlockMarker', (event) ->
+				$(event.target).siblings('.timsChatTextContainer').children('li').each (key, value) ->
+					elem = $(value).find '.timsChatMessageMarker'
+					
+					if $(event.target).is ':checked'
+						do elem.click unless elem.is ':checked'
+					else
+						do elem.click if elem.is ':checked'
 
 Scroll down when autoscroll is being activated.
 
@@ -575,7 +604,7 @@ Insert the given messages into the chat stream.
 				events.newMessage.fire message
 				
 				createNewMessage = yes
-				if  $('.timsChatMessage:last-child .timsChatText').is('ul') and lastMessage isnt null and lastMessage.type in [ v.config.messageTypes.NORMAL, v.config.messageTypes.WHISPER ]
+				if  $('.timsChatMessage:last-child .timsChatTextContainer').is('ul') and lastMessage isnt null and lastMessage.type in [ v.config.messageTypes.NORMAL, v.config.messageTypes.WHISPER ]
 					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver and lastMessage.isInPrivateChannel is message.isInPrivateChannel
 						createNewMessage = no
 				
@@ -611,7 +640,7 @@ Insert the given messages into the chat stream.
 					else
 						messageContainerID = 0
 
-					$("#timsChatMessageContainer#{messageContainerID} .timsChatMessage:last-child .timsChatText").append $(output).find('.timsChatText li:last-child')
+					$("#timsChatMessageContainer#{messageContainerID} .timsChatMessage:last-child .timsChatTextContainer").append $(output).find('.timsChatTextContainer li:last-child')
 				
 				lastMessage = message
 			
@@ -1185,6 +1214,11 @@ And finally export the public methods and variables.
 		Chat =
 			init: init
 			getMessages: getMessages
+
+Return a copy of the object containing the IDs of the marked messages
+
+			getMarkedMessages: -> JSON.parse JSON.stringify markedMessages
+			
 			refreshRoomList: refreshRoomList
 			insertText: insertText
 			freeTheFish: freeTheFish

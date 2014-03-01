@@ -151,10 +151,6 @@
 			overflow-x: hidden;
 			resize: vertical;
 			
-			.timsChatMarkContainer {
-				display: none;
-			}
-			
 			> ul {
 				> .timsChatMessage {
 					clear: both;
@@ -213,8 +209,8 @@
 								border-width: 1px;
 								border-color: @wcfContainerBorderColor;
 								
-								> .timsChatText {
-									> li {
+								> .timsChatTextContainer {
+									> li.timsChatText {
 										border-style: solid;
 										border-width: 0 0 1px 0;
 										border-color:  @wcfContainerBorderColor;
@@ -300,40 +296,85 @@
 				}
 			}
 			
+			.timsChatMessageMarker, .timsChatMessageBlockMarker {
+				display: none;
+			}
+			
 			&.markEnabled {
-				> ul {
-					> .timsChatMessage {
-						&.jsMarked {
-							> .timsChatInnerMessageContainer {
-								.timsChatInnerMessage {
+				.timsChatText {
+					ul + .timsChatMessageMarker {
+						top: 0;
+					}
+				}
+				
+				.timsChatMessage {
+					&.checked {
+						> .timsChatInnerMessageContainer {
+							&.bubble {
+								> .timsChatInnerMessage {
 									background-color: @wcfSelectedBackgroundColor;
 									color: @wcfSelectedColor;
+									
+									&:after {
+										border-color: transparent @wcfSelectedBackgroundColor;
+									}
 								}
 								
-								&.bubble {
-									.timsChatInnerMessage {
+								&.right {
+									> .timsChatInnerMessage {
 										&:after {
 											border-color: transparent @wcfSelectedBackgroundColor;
 										}
 									}
-									
-									&.right {
-										.timsChatInnerMessage {
-											&:after {
-												border-color: transparent @wcfSelectedBackgroundColor;
-											}
-										}
+								}
+							}
+							
+							&:not(.bubble) {
+								.timsChatInnerMessage {
+									background-color: @wcfSelectedBackgroundColor;
+									color: @wcfSelectedColor;
+								}
+							}
+						}
+					}
+					
+					&:not(.checked) {
+						> .timsChatInnerMessageContainer {
+							&.bubble {
+								.timsChatText {
+									&.checked {
+										background-color: @wcfSelectedBackgroundColor;
+										color: @wcfSelectedColor;
 									}
 								}
 							}
 						}
-						
-						> .timsChatInnerMessageContainer {
-							.timsChatMarkContainer {
+					}
+					
+					> .timsChatInnerMessageContainer {
+							.timsChatMessageMarker {
 								display: inline-block;
-								position: absolute;
-								right: -@wcfGapLarge;
+							}
+							
+							.timsChatMessageBlockMarker {
 								top: 0;
+							}
+							
+							.timsChatMessageMarker, .timsChatMessageBlockMarker {
+								position: absolute;
+								right: -@wcfGapLarge ;
+							}
+							
+						&.bubble {
+							.timsChatMessageMarker, .timsChatMessageBlockMarker {
+								right: -@wcfGapLarge - 1;
+							}
+							
+							&.right {
+								.timsChatMessageMarker, .timsChatMessageBlockMarker {
+									// maybe find a better way, will do it for now
+									right: -@wcfGapLarge - @wcfGapMedium - 32 - 1;
+								}
 							}
 						}
 					}

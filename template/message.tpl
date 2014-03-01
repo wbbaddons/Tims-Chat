@@ -37,20 +37,25 @@
 			
 			{if $message.type == $messageTypes.NORMAL || $message.type == $messageTypes.WHISPER || $message.type == $messageTypes.ATTACHMENT}
 				{if $message.type == $messageTypes.ATTACHMENT}<span>{lang}chat.message.{$messageTypes.ATTACHMENT}{/lang}</span>{/if}
-				<ul class="timsChatText">
-					<li>
+				<ul class="timsChatTextContainer">
+					<li class="timsChatText" data-message-id="{@$message.messageID}">
 						{if $message.isFollowUp} <time>{@$message.formattedTime}</time>{/if}
 						{@$message.formattedMessage}
+						
+						<input type="checkbox" class="timsChatMessageMarker jsTooltip" value="{@$message.messageID}" title="{lang}chat.global.mark{/lang}"/>
 					</li>
 				</ul>
-			{elseif $message.type == $messageTypes.INFORMATION}
-				<div class="timsChatText">{@$message.formattedMessage}</div>
+				
+				<input type="checkbox" class="timsChatMessageBlockMarker jsTooltip" value="{@$message.messageID}" title="{lang}chat.global.markAll{/lang}" />
 			{else}
-				<span class="timsChatText">{@$message.formattedMessage}</span>
+				<span class="timsChatTextContainer">
+					<span class="timsChatText" data-message-id="{@$message.messageID}">
+						{@$message.formattedMessage}
+						
+						<input type="checkbox" class="timsChatMessageMarker jsTooltip" value="{@$message.messageID}" title="{lang}chat.global.mark{/lang}"/>
+					</span>
+				</span>
 			{/if}
 		</div>
-		<span class="timsChatMarkContainer">
-			<input type="checkbox" value="{@$message.messageID}" />
-		</span>
 	</div>
 {/literal}

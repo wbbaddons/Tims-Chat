@@ -161,6 +161,7 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.global.smilies"><![CDATA[Smileys]]></item>
 		<item name="chat.global.clear"><![CDATA[Chat leeren]]></item>
 		<item name="chat.global.mark"><![CDATA[Markieren]]></item>
+		<item name="chat.global.markAll"><![CDATA[Alle Einzelnachrichten markieren]]></item>
 		<item name="chat.global.fullscreen"><![CDATA[Vollbild]]></item>
 		<item name="chat.global.forceRefresh"><![CDATA[Räume neu laden]]></item>
 		
