@@ -885,7 +885,6 @@ Joins a room.
 					loading = false
 					
 					roomList.active = data.returnValues
-					roomList.active.roomID = roomID
 					
 					$('#timsChatTopic').removeClass 'invisible'
 					

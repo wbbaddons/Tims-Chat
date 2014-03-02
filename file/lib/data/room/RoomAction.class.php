@@ -262,6 +262,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 				'application' => 'chat',
 				'object' => $room
 			)),
+			'roomID' => (int) $room->roomID,
 			'userCount' => count($room->getUsers()),
 			'permissions' => array(
 				'canBan' => (boolean) $room->canBan(),
