@@ -116,7 +116,7 @@ class ChatSuspensionListPage extends \wcf\page\SortablePage {
 			if (!$room->permanent) throw new \wcf\system\exception\PermissionDeniedException();
 		}
 		
-		if (isset($_REQUEST['suspensionType']) && !empty($_REQUEST['suspensionType'])) $this->filterSuspensionType = intval($_REQUEST['suspensionType']);
+		if (isset($_REQUEST['suspensionType']) && !empty($_REQUEST['suspensionType'])) $this->filterSuspensionType = \wcf\util\StringUtil::trim($_REQUEST['suspensionType']);
 		
 		// display revoked
 		if (isset($_REQUEST['displayRevoked'])) $this->displayRevoked = intval($_REQUEST['displayRevoked']);

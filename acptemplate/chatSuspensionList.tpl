@@ -83,7 +83,7 @@
 				<dt><label for="suspensionType">{lang}chat.acp.suspension.type{/lang}</label></dt>
 				<dd>
 					<select id="suspensionType" name="suspensionType">
-						<option value=""{if $suspensionType == null} selected="selected"{/if}></option>
+						<option value=""{if $suspensionType === null} selected="selected"{/if}></option>
 						<option value="{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}"{if $suspensionType == '\chat\data\suspension\Suspension::TYPE_MUTE'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_MUTE'|constant}{/lang}</option>
 						<option value="{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}"{if $suspensionType == '\chat\data\suspension\Suspension::TYPE_BAN'|constant} selected="selected"{/if}>{lang}chat.suspension.{'\chat\data\suspension\Suspension::TYPE_BAN'|constant}{/lang}</option>
 					</select>
