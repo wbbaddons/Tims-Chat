@@ -14,7 +14,7 @@
 			
 		</ul>
 	</div>
-	<div class="marginTop">
+	<div class="marginTop overflowVisible">
 		<a id="timsChatRoomListReloadButton" class="button small jsOnly">{lang}chat.global.forceRefresh{/lang}</a>
 	</div>
 </fieldset>
