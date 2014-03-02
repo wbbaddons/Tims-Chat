@@ -161,6 +161,7 @@ Please try to reload the chat.]]></item>
 		<item name="chat.global.smilies"><![CDATA[Smilies]]></item>
 		<item name="chat.global.clear"><![CDATA[Clear Chat]]></item>
 		<item name="chat.global.mark"><![CDATA[Mark messages]]></item>
+		<item name="chat.global.markAll"><![CDATA[Mark all messages of this group]]></item>
 		<item name="chat.global.fullscreen"><![CDATA[Full screen]]></item>
 		<item name="chat.global.forceRefresh"><![CDATA[Reload Room List]]></item>
 		
@@ -170,6 +171,7 @@ Please try to reload the chat.]]></item>
 		<item name="chat.global.query"><![CDATA[Private conversation]]></item>
 		<item name="chat.global.kick"><![CDATA[Kick]]></item>
 		<item name="chat.global.ban"><![CDATA[Ban]]></item>
+		<item name="chat.global.mute"><![CDATA[Mute]]></item>
 		<item name="chat.global.profile"><![CDATA[Profile]]></item>
 		
 		<item name="chat.global.message"><![CDATA[Message]]></item>
