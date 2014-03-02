@@ -446,7 +446,7 @@ load messages if the appropriate event arrives.
 				be.bastelstu.wcf.nodePush.onDisconnect ->
 						console.log 'Enabling periodic loading'
 						do getMessages
-						pe.getMessages = new WCF.PeriodicalExecuter getMessages, v.config.reloadTime * 1e3
+						do pe.getMessages.resume
 						
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.newMessage', getMessages
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.wcf.nodePush.tick60', getMessages
