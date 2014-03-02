@@ -121,9 +121,6 @@ Make the user leave the chat when **Tims Chat** is about to be unloaded.
 				undefined
 				
 			$(window).resize ->
-				# TODO
-				return if WCF.System.Mobile.UX._enabled
-				
 				if $('html').hasClass 'fullscreen'
 					do ->
 						verticalContentPadding = $('#content').innerHeight() - $('#content').height()
@@ -132,19 +129,26 @@ Make the user leave the chat when **Tims Chat** is about to be unloaded.
 							$('#content > *:visible').each (k, v) -> height += $(v).outerHeight()
 							height
 							
+						return if verticalSizeOfContentElements is 0
+						
 						freeSpace = $('body').height() - verticalContentPadding - verticalSizeOfContentElements
 						
 						$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height() + freeSpace
+						
 					do ->
+						verticalSidebarPadding = $('.sidebar').innerHeight() - $('.sidebar').height()
 						verticalUserListContainerPadding = $('#timsChatUserListContainer').innerHeight() - $('#timsChatUserListContainer').height()
 						sidebarHeight = $('.sidebar > div').height()
 						
-						freeSpace = $('body').height() - verticalUserListContainerPadding - sidebarHeight
+						freeSpace = $('body').height() - verticalSidebarPadding - verticalUserListContainerPadding - sidebarHeight
 						$('#timsChatUserList').height $('#timsChatUserList').height() + freeSpace
 						
 				if $('#timsChatAutoscroll').data 'status'
 					$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
-
+					
+			$('.mobileSidebarToggleButton').on 'click', ->
+				do $(window).resize
+				
 Insert the appropriate smiley code into the input when a smiley is clicked.
 
 			$('#smilies').on 'click', 'img', -> insertText " #{$(@).attr('alt')} "
@@ -453,6 +457,10 @@ load messages if the appropriate event arrives.
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.roomChange', refreshRoomList
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.join', refreshRoomList
 				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.leave', refreshRoomList
+
+Switch to fullscreen mode on mobile devices
+
+			do $('#timsChatFullscreen').click if WCF.System.Mobile.UX._enabled
 
 Finished! Enable the input now and join the chat.
 
