@@ -114,6 +114,32 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	}
 	
 	/**
+	 * Returns whether the user is allowed to mute other users in this room.
+	 *
+	 * @return	boolean
+	 */
+	public function canMute() {
+		if (WCF::getSession()->getPermission('admin.chat.canManageSuspensions')) return true;
+		if (WCF::getSession()->getPermission('mod.chat.canGmute')) return true;
+		
+		$ph = new \chat\system\permission\PermissionHandler();
+		return $ph->getPermission($this, 'mod.canMute');
+	}
+	
+	/**
+	 * Returns whether the user is allowed to ban other users in this room.
+	 *
+	 * @return	boolean
+	 */
+	public function canBan() {
+		if (WCF::getSession()->getPermission('admin.chat.canManageSuspensions')) return true;
+		if (WCF::getSession()->getPermission('mod.chat.canGban')) return true;
+		
+		$ph = new \chat\system\permission\PermissionHandler();
+		return $ph->getPermission($this, 'mod.canBan');
+	}
+	
+	/**
 	 * Returns the ID of this chatroom.
 	 * 
 	 * @see	\wcf\system\request\IRouteController

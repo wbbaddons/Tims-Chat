@@ -171,6 +171,7 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.global.query"><![CDATA[Privates Gespräch]]></item>
 		<item name="chat.global.kick"><![CDATA[Kicken]]></item>
 		<item name="chat.global.ban"><![CDATA[Bannen]]></item>
+		<item name="chat.global.mute"><![CDATA[Knebeln]]></item>
 		<item name="chat.global.profile"><![CDATA[Profil]]></item>
 		
 		<item name="chat.global.message"><![CDATA[Nachricht]]></item>

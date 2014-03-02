@@ -143,13 +143,18 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			
 			$result[] = array(
 				'title' => (string) $room,
+				'topic' => $room->getTopic(),
 				'link' => \wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
 					'application' => 'chat',
 					'object' => $room
 				)),
 				'roomID' => (int) $room->roomID,
 				'active' => $this->parameters['room'] && $room->roomID == $this->parameters['room']->roomID,
-				'userCount' => count($room->getUsers())
+				'userCount' => count($room->getUsers()),
+				'permissions' => array(
+					'canBan' => (boolean) $room->canBan(),
+					'canMute' => (boolean) $room->canMute()
+				)
 			);
 		}
 		
@@ -253,7 +258,16 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		return array(
 			'title' => (string) $room,
 			'topic' => $room->getTopic(),
-			'messages' => $messages
+			'link' => \wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
+				'application' => 'chat',
+				'object' => $room
+			)),
+			'userCount' => count($room->getUsers()),
+			'permissions' => array(
+				'canBan' => (boolean) $room->canBan(),
+				'canMute' => (boolean) $room->canMute()
+			),
+			'messages' => $messages,
 		);
 	}
 	

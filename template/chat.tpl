@@ -15,6 +15,7 @@
 							'chat.global.closePrivateChannel': '{lang}chat.global.closePrivateChannel{/lang}',
 							'chat.global.closeTopic': '{lang}chat.global.closeTopic{/lang}',
 							'chat.global.notify.title': '{lang}chat.global.notify.title{/lang}',
+							'chat.global.mute': '{lang}chat.global.mute{/lang}',
 							'chat.global.privateChannelTopic': '{lang}chat.global.privateChannelTopic{/lang}',
 							'chat.global.profile': '{lang}chat.global.profile{/lang}',
 							'chat.global.query': '{lang}chat.global.query{/lang}',

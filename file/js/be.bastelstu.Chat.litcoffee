@@ -33,23 +33,23 @@ exposed by a function if necessary.
 		newMessageCount = 0
 		scrollUpNotifications = off
 		chatSession = Date.now()
+		
 		userList =
 			current: {}
 			allTime: {}
-		currentRoom = {}
+			
+		roomList =
+			active: {}
+			available: {}
+			
 		fileUploaded = no
-		
 		errorVisible = false
 		inputErrorHidingTimer = null
-
 		lastMessage = null
 		openChannel = 0
-		
 		messageContainerSize = 0
 		userListSize = 0
-		
 		remainingFailures = 3
-		
 		overlaySmileyList = null
 		markedMessages = {}
 		
@@ -57,19 +57,19 @@ exposed by a function if necessary.
 			newMessage: $.Callbacks()
 			userMenu: $.Callbacks()
 			submit: $.Callbacks()
-
+			
 		pe =
 			getMessages: null
 			refreshRoomList: null
 			fish: null
-
+			
 		loading = false
-
+		
 		autocomplete =
 				offset: 0
 				value: null
 				caret: 0
-
+				
 		v =
 			titleTemplate: null
 			messageTemplate: null
@@ -96,7 +96,7 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 When **Tims Chat** becomes focused mark the chat as active and remove the number of new messages from the title.
 
 			$(window).focus ->
-				document.title = v.titleTemplate.fetch currentRoom
+				document.title = v.titleTemplate.fetch(roomList.active) if roomList.active?.title? and roomList.active.topic.trim() isnt ''
 				
 				newMessageCount = 0
 				isActive = true
@@ -718,7 +718,9 @@ Build HTML of the user and insert it into the list, if the users was not found i
 						
 						li.append v.userTemplate.fetch user
 						
-						menu = $(v.userMenuTemplate.fetch user)
+						menu = $ v.userMenuTemplate.fetch
+								user: user
+								room: roomList.active
 						
 						if menu.find('li').length
 							li.append menu
@@ -783,7 +785,7 @@ Send out notifications for the given `message`. The number of unread messages wi
 				
 			return if isActive or $('#timsChatNotify').data('status') is 0
 			
-			document.title = v.titleTemplate.fetch $.extend {}, currentRoom,
+			document.title = v.titleTemplate.fetch $.extend {}, roomList.active,
 				newMessageCount: ++newMessageCount
 			
 			title = WCF.Language.get 'chat.global.notify.title'
@@ -812,10 +814,17 @@ Fetch the roomlist from the server and update it in the GUI.
 				showLoadingOverlay: false
 				suppressErrors: true
 				success: (data) ->
+					roomList =
+						active: {}
+						available: {}
+					
 					do $('.timsChatRoom').remove
 					$('#toggleRooms .badge').text data.returnValues.length
 					
 					for room in data.returnValues
+						roomList.available[room.roomID] = room
+						roomList.active = room if room.active
+						
 						li = $ '<li></li>'
 						li.addClass('timsChatRoom').data('roomID', room.roomID)
 						li.addClass 'active' if room.active
@@ -875,20 +884,21 @@ Joins a room.
 				success: (data) ->
 					loading = false
 					
-					$('#timsChatTopic').removeClass 'invisible'
-					currentRoom = data.returnValues
-					currentRoom.roomID = roomID
+					roomList.active = data.returnValues
+					roomList.active.roomID = roomID
 					
-					$('#timsChatTopic > .topic').text currentRoom.topic
-					if currentRoom.topic.trim() is ''
+					$('#timsChatTopic').removeClass 'invisible'
+					
+					$('#timsChatTopic > .topic').text roomList.active.topic
+					if roomList.active.topic.trim() is ''
 						$('#timsChatTopic').addClass 'invisible'
 					else
 						$('#timsChatTopic').removeClass 'invisible'
 					
 					$('.timsChatMessage').addClass 'unloaded'
 					
-					document.title = v.titleTemplate.fetch currentRoom
-					handleMessages currentRoom.messages
+					document.title = v.titleTemplate.fetch roomList.active
+					handleMessages roomList.active.messages
 					do getMessages
 					do refreshRoomList
 				failure: (data) ->
@@ -944,8 +954,8 @@ Open private channel
 					$('#timsChatMessageTabMenu').wcfTabs 'refresh'
 					WCF.System.FlexibleMenu.rebuild $('#timsChatMessageTabMenu > .tabMenu').attr 'id'
 			else
-				$('#timsChatTopic > .topic').text currentRoom.topic
-				if currentRoom.topic.trim() is ''
+				$('#timsChatTopic > .topic').text roomList.active.topic
+				if roomList.active.topic.trim() is ''
 					$('#timsChatTopic').addClass 'invisible'
 				else
 					$('#timsChatTopic').removeClass 'invisible'
@@ -1036,7 +1046,7 @@ See WCF.Attachment.Upload._getParameters()
 					
 				_getParameters: ->
 					@_tmpHash = do Math.random
-					@_parentObjectID = currentRoom.roomID
+					@_parentObjectID = roomList.active.roomID
 					
 					do @_super
 					
@@ -1218,6 +1228,8 @@ And finally export the public methods and variables.
 Return a copy of the object containing the IDs of the marked messages
 
 			getMarkedMessages: -> JSON.parse JSON.stringify markedMessages
+			getUserList: -> JSON.parse JSON.stringify userList
+			getRoomList: -> JSON.parse JSON.stringify roomList
 			
 			refreshRoomList: refreshRoomList
 			insertText: insertText
