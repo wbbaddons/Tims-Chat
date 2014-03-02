@@ -245,7 +245,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		if ($result > 0x7FFFFFFF) $result -= 0x80000000;
 		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.join', $result, WCF::getUser()->userID);
 		
-		// break if not using ajax
+		// send push message about join
 		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.join');
 		
 		$messages = array();
