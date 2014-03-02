@@ -28,5 +28,12 @@
 			<eventname>softwareVersions</eventname>
 			<templatecode><![CDATA[{include file='__softwareVersions' application='chat'}]]></templatecode>
 		</templatelistener>
+		
+		<templatelistener name="bastelstubeChat">
+			<environment>admin</environment>
+			<templatename>__bastelstubeTopMenu</templatename>
+			<eventname>links</eventname>
+			<templatecode><![CDATA[<li class="dropdownDivider"></li><li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://tims.bastelstu.be/forum/index.php/Board/3-Tims-Chat/"|rawurlencode}">{lang}wcf.acp.option.module_chat{/lang}</a></li>]]></templatecode>
+		</templatelistener>
 	</import>
 </data>
