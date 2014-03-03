@@ -205,7 +205,7 @@
 	{else}
 		{include file='header' sandbox=false}
 		<header class="boxHeadline">
-			<h1>{lang}chat.general.title{/lang}</h1>
+			<h1>{lang}chat.global.title{/lang}</h1>
 		</header>
 		
 		<div id="chatRoomListContainer" class="container marginTop">
