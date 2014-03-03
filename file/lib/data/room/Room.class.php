@@ -179,9 +179,9 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 			$userList->readObjects();
 			$users = $userList->getObjects();
 			
-			foreach ($users as $user) {
+			foreach ($users as $userID => $user) {
 				if (!isset(self::$users[$user->chatRoomID])) self::$users[$user->chatRoomID] = array();
-				self::$users[$user->chatRoomID][] = $user;
+				self::$users[$user->chatRoomID][$userID] = $user;
 			}
 		}
 		if (!isset(self::$users[$this->roomID])) self::$users[$this->roomID] = array();
