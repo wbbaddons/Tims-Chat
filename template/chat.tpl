@@ -150,12 +150,14 @@
 								<span class="invisible">{lang}chat.global.scroll{/lang}</span>
 							</a>
 						</li>
+						
 						<li>
 							<a id="timsChatFullscreen" accesskey="f" class="button timsChatToggle jsTooltip" title="{lang}chat.global.fullscreen{/lang}" data-status="0">
 									<span class="icon icon16 icon-fullscreen"></span>
 									<span class="invisible">{lang}chat.global.fullscreen{/lang}</span>
 							</a>
 						</li>
+						
 						<li>
 							<a id="timsChatNotify" accesskey="n" class="button timsChatToggle jsTooltip" title="{lang}chat.global.notify{/lang}" data-status="0">
 								<span class="icon icon16 icon-bell-alt"></span>
@@ -192,12 +194,15 @@
 								<span class="invisible">{lang}chat.global.clear{/lang}</span>
 							</a>
 						</li>
+						
 						<li>
 							<a id="timsChatMark" class="button timsChatToggle jsTooltip" title="{lang}chat.global.mark{/lang}" data-status="0">
 								<span class="icon icon16 icon-check"></span>
 								<span class="invisible">{lang}chat.global.mark{/lang}</span>
 							</a>
 						</li>
+						
+						{event name='buttons'}
 					</ul>
 				</nav>
 			</div>
@@ -207,6 +212,8 @@
 		<header class="boxHeadline">
 			<h1>{lang}chat.global.title{/lang}</h1>
 		</header>
+		
+		{include file='userNotice'}
 		
 		<div id="chatRoomListContainer" class="container marginTop">
 			<ul class="containerList">
