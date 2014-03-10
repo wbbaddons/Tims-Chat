@@ -54,12 +54,14 @@ final class CommandHandler {
 	 * @return	array<string>
 	 */
 	public static function getAliasMap() {
+		if (StringUtil::trim(CHAT_COMMAND_ALIASES) === '') return array();
+		
 		try {
 			$result = array();
 			foreach (explode("\n", StringUtil::unifyNewlines(StringUtil::toLowerCase(CHAT_COMMAND_ALIASES))) as $line) {
 				list($key, $val) = explode(':', $line, 2);
 				
-				$result[$key] = $val;
+				$result[StringUtil::trim($key)] = StringUtil::trim($val);
 			}
 			
 			return $result;
