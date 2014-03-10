@@ -278,15 +278,9 @@ Reset autocompleter to default status, when the input is `click`ed, as the posit
 
 Bind user menu functions
 
-			$('#dropdownMenuContainer').on 'click', '.jsTimsChatUserMenuWhisper', ->
-				command = "/whisper #{userList.current[$(@).parents('ul').data 'userID'].username}, "
-				return if $('#timsChatInput').val().match(new RegExp WCF.String.escapeRegExp("^#{command}"), 'i')
-				
-				insertText command, prepend: yes
-				
 			$('#dropdownMenuContainer').on 'click', '.jsTimsChatUserMenuQuery', -> openPrivateChannel $(@).parents('ul').data 'userID'
-			$('#dropdownMenuContainer').on 'click', '.jsTimsChatUserMenuBan', ->
-				command = "/ban #{userList.current[$(@).parents('ul').data 'userID'].username}, "
+			$('#dropdownMenuContainer').on 'click', '.jsTimsChatUserMenuCommand', ->
+				command = "/#{$(@).data 'command'} #{userList.current[$(@).parents('ul').data 'userID'].username}, "
 				return if $('#timsChatInput').val().match(new RegExp WCF.String.escapeRegExp("^#{command}"), 'i')
 				
 				insertText command, prepend: yes
