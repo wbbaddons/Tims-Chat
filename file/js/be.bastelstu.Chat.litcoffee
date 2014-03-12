@@ -20,11 +20,11 @@ enabling EMCAScript 5 strict mode and overwriting console to prepend the name of
 		
 		console =
 			log: (message) ->
-				window.console.log "[be.bastelstu.Chat] #{message}"
+				window.console.log "[be.bastelstu.Chat] #{message}" unless production?
 			warn: (message) ->
-				window.console.warn "[be.bastelstu.Chat] #{message}"
+				window.console.warn "[be.bastelstu.Chat] #{message}" unless production?
 			error: (message) ->
-				window.console.error "[be.bastelstu.Chat] #{message}"
+				window.console.error "[be.bastelstu.Chat] #{message}" unless production?
 				
 Continue with defining the needed variables. All variables are local to our closure and will be
 exposed by a function if necessary.
