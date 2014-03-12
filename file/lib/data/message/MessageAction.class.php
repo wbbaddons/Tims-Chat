@@ -61,7 +61,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		
 		// read parameters
 		$this->readString('text');
-		$this->readBoolean('enableSmilies');
+		$this->readBoolean('enableSmilies', true);
 		$this->parameters['text'] = MessageUtil::stripCrap($this->parameters['text']);
 		$this->parameters['enableHTML'] = false;
 		
