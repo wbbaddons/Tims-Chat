@@ -42,6 +42,7 @@ exposed by a function if necessary.
 			active: {}
 			available: {}
 			
+		hiddenTopics = {}
 		fileUploaded = no
 		errorVisible = false
 		inputErrorHidingTimer = null
@@ -347,9 +348,12 @@ Toggle checkboxes.
 Hide topic container.
 
 			$('#timsChatTopicCloser').on 'click', ->
-				$('#timsChatTopic').addClass 'invisible'
-				do $(window).resize
-			
+				unless hiddenTopics[roomList.active.roomID]?
+					hiddenTopics[roomList.active.roomID] = true
+					
+					$('#timsChatTopic').addClass 'invisible'
+					do $(window).resize
+					
 Close private channels
 			
 			$('#timsChatMessageTabMenu').on 'click', '.jsChannelCloser', -> closePrivateChannel $(@).parent().data 'userID'
@@ -885,13 +889,10 @@ Joins a room.
 						roomID: roomID
 				success: (data) ->
 					loading = false
-					
 					roomList.active = data.returnValues
 					
-					$('#timsChatTopic').removeClass 'invisible'
-					
 					$('#timsChatTopic > .topic').text roomList.active.topic
-					if roomList.active.topic.trim() is ''
+					if roomList.active.topic.trim() is '' or hiddenTopics[roomList.active.roomID]?
 						$('#timsChatTopic').addClass 'invisible'
 					else
 						$('#timsChatTopic').removeClass 'invisible'
