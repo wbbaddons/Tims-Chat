@@ -43,6 +43,7 @@ exposed by a function if necessary.
 			available: {}
 			
 		hiddenTopics = {}
+		isJoining = no
 		fileUploaded = no
 		errorVisible = false
 		inputErrorHidingTimer = null
@@ -840,7 +841,9 @@ Fetch the roomlist from the server and update it in the GUI.
 					if window.history?.replaceState?
 						$('.timsChatRoom').click (event) ->
 							do event.preventDefault
+							
 							target = $ @
+							return if target.data('roomID') is roomList.active.roomID
 							
 							window.history.replaceState {}, '', target.attr 'href'
 							
@@ -879,6 +882,11 @@ Shows an unrecoverable error with the given text.
 Joins a room.
 
 		join = (roomID) ->
+			return if isJoining or roomID is roomList.active.roomID
+			isJoining = yes
+			
+			do $('#timsChatInput').disable
+			
 			loading = true
 			new WCF.Action.Proxy
 				autoSend: true
@@ -903,8 +911,12 @@ Joins a room.
 					handleMessages roomList.active.messages
 					do getMessages
 					do refreshRoomList
+					
+					do $('#timsChatInput').enable().focus
 				failure: (data) ->
 					showError WCF.Language.get 'chat.error.join', data
+				after: ->
+					isJoining = no
 
 Open private channel
 
