@@ -19,6 +19,7 @@
 							'chat.global.privateChannelTopic': '{lang}chat.global.privateChannelTopic{/lang}',
 							'chat.global.profile': '{lang}chat.global.profile{/lang}',
 							'chat.global.query': '{lang}chat.global.query{/lang}',
+							'chat.global.smilies': '{lang}chat.global.smilies{/lang}',
 							'chat.global.whisper': '{lang}chat.global.whisper{/lang}',
 							'chat.error.duplicateTab': '{lang}chat.error.duplicateTab{/lang}',
 							'chat.error.join': '{lang}chat.error.join{/lang}',
