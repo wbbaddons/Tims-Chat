@@ -43,6 +43,8 @@ exposed by a function if necessary.
 			available: {}
 			
 		hiddenTopics = {}
+		hidePrivateChannelTopic = no
+		
 		isJoining = no
 		fileUploaded = no
 		errorVisible = false
@@ -349,12 +351,14 @@ Toggle checkboxes.
 Hide topic container.
 
 			$('#timsChatTopicCloser').on 'click', ->
-				unless hiddenTopics[roomList.active.roomID]?
+				if openChannel is 0
 					hiddenTopics[roomList.active.roomID] = true
+				else
+					hidePrivateChannelTopic = yes
 					
-					$('#timsChatTopic').addClass 'invisible'
-					do $(window).resize
-					
+				$('#timsChatTopic').addClass 'invisible'
+				do $(window).resize
+				
 Close private channels
 			
 			$('#timsChatMessageTabMenu').on 'click', '.jsChannelCloser', -> closePrivateChannel $(@).parent().data 'userID'
@@ -899,11 +903,12 @@ Joins a room.
 					loading = false
 					roomList.active = data.returnValues
 					
-					$('#timsChatTopic > .topic').text roomList.active.topic
-					if roomList.active.topic.trim() is '' or hiddenTopics[roomList.active.roomID]?
-						$('#timsChatTopic').addClass 'invisible'
-					else
-						$('#timsChatTopic').removeClass 'invisible'
+					if openChannel is 0
+						$('#timsChatTopic > .topic').text roomList.active.topic
+						if roomList.active.topic.trim() is '' or hiddenTopics[roomList.active.roomID]?
+							$('#timsChatTopic').addClass 'invisible'
+						else
+							$('#timsChatTopic').removeClass 'invisible'
 					
 					$('.timsChatMessage').addClass 'unloaded'
 					
@@ -944,7 +949,11 @@ Open private channel
 				$('.timsChatMessageContainer').height $('.timsChatMessageContainer').height()
 			
 			if userID isnt 0
-				$('#timsChatTopic').removeClass 'invisible'
+				if hidePrivateChannelTopic
+					$('#timsChatTopic').addClass 'invisible'
+				else
+					$('#timsChatTopic').removeClass 'invisible'
+					
 				$('#timsChatTopic > .topic').html WCF.Language.get 'chat.global.privateChannelTopic', {username: userList.allTime[userID].username}
 				$('#timsChatMessageTabMenu').removeClass 'singleTab'
 				
@@ -969,7 +978,7 @@ Open private channel
 					WCF.System.FlexibleMenu.rebuild $('#timsChatMessageTabMenu > .tabMenu').attr 'id'
 			else
 				$('#timsChatTopic > .topic').text roomList.active.topic
-				if roomList.active.topic.trim() is ''
+				if roomList.active.topic.trim() is '' or hiddenTopics[roomList.active.roomID]?
 					$('#timsChatTopic').addClass 'invisible'
 				else
 					$('#timsChatTopic').removeClass 'invisible'
