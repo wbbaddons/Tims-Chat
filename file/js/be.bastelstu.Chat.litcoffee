@@ -978,9 +978,7 @@ Open private channel
 			$("#timsChatMessageContainer#{userID}").addClass 'active'
 			$("#timsChatMessageTabMenuAnchor#{userID}").parent().removeClass 'notify'
 			$("#timsChatMessageContainer#{userID}").removeClass 'notify'
-			if $('#timsChatAutoscroll').data('status')
-				do $('#timsChatAutoscroll').click
-				scrollUpNotifications = on
+			$("#timsChatMessageContainer#{userID}").trigger 'scroll'
 			
 			$('#timsChatMessageTabMenu').wcfTabs 'select', $("#timsChatMessageTabMenuAnchor#{userID}").parent().index()
 			do WCF.DOMNodeInsertedHandler.execute
