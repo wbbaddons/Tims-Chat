@@ -21,7 +21,7 @@ class RoomEditForm extends RoomAddForm {
 	/**
 	 * @see	\wcf\acp\form\ACPForm::$activeMenuItem
 	 */
-	public $activeMenuItem = 'chat.acp.menu.link.room.list';
+	public $activeMenuItem = 'chat.acp.menu.link.chat';
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
