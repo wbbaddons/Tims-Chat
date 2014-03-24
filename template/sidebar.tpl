@@ -1,3 +1,4 @@
+{event name='beforeSidebar'}
 <fieldset id="timsChatUserListContainer">
 	<legend>{lang}chat.global.users{/lang}</legend>
 	<div id="timsChatUserList">
@@ -18,3 +19,4 @@
 		<a id="timsChatRoomListReloadButton" class="button small jsOnly">{lang}chat.global.forceRefresh{/lang}</a>
 	</div>
 </fieldset>
+{event name='afterSidebar'}
