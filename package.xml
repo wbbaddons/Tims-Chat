@@ -6,8 +6,8 @@
 		<packagedescription><![CDATA[Tim’s Chat is a capable chat software for your community. It convices by a seamless integration into your community, advanced permissions, it is feature rich and easily customized via the templates!]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Tims Chat ist ein leistungsfähiges Chatsystem für Ihre Community. Er überzeugt durch eine nahtlose Integration in das Design Ihrer Community, ein umfangreiches Rechtesystem, Funktionsreichtum und ist über die Templates kinderleicht zu verändern!]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.0.0 RC 1</version><!-- Codename: Codenames are overrated -->
-		<date>2014-03-02</date>
+		<version>3.0.0 RC 2</version><!-- Codename: Codenames are overrated -->
+		<date>2014-03-24</date>
 		<license><![CDATA[Creative Commons Attribution-NonCommercial-ShareAlike <https://github.com/wbbaddons/Tims-Chat/blob/master/LICENSE>]]></license>
 	</packageinformation>
 	
@@ -40,14 +40,9 @@
 		<instruction type="script" run="standalone">acp/be.bastelstu.chat.install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="3.0.0 Beta *">
-		<instruction type="language">language/*.xml</instruction>
+	<instructions type="update" fromversion="3.0.0 RC 1">
 		<instruction type="file">file.tar</instruction>
 		<instruction type="template">template.tar</instruction>
-		<instruction type="acpTemplate">acptemplate.tar</instruction>
-		<instruction type="option">option.xml</instruction>
-		<instruction type="templateListener">templateListener.xml</instruction>
-		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="script" run="standalone">acp/be.bastelstu.chat.update.php</instruction>
 	</instructions>
 </package>
