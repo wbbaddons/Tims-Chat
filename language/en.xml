@@ -116,6 +116,11 @@
 		<item name="wcf.acp.index.system.software.chatVersion"><![CDATA[Tim’s Chat Version]]></item>
 	</category>
 	
+	<category name="wcf.user">
+		<item name="wcf.user.activityPoint.objectType.be.bastelstu.chat.activityPointEvent.join"><![CDATA[Chat Joins]]></item>
+		<item name="wcf.user.activityPoint.objectType.be.bastelstu.chat.activityPointEvent.message"><![CDATA[Chat Messages]]></item>
+	</category>
+	
 	<category name="chat.error">
 		<item name="chat.error.notFound"><![CDATA[The command “{$exception->getCommand()}” could not be found.]]></item>
 		<item name="chat.error.userNotFound"><![CDATA[The user “{$exception->getUsername()}” could not be found.]]></item>
