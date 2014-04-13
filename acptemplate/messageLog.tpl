@@ -39,7 +39,7 @@
 				<dl{if $errorField == 'date'} class="formError"{/if}>
 					<dt><label for="date">{lang}chat.global.time{/lang}</label></dt>
 					<dd>
-						<input id="date" type="date" name="date" min="{TIME_NOW-CHAT_LOG_ARCHIVETIME*60|date:'Y-m-d'}" max="{TIME_NOW|date:'Y-m-d'}" value="{$date|date:'Y-m-d'}" />
+						<input id="date" type="date" name="date"{if CHAT_LOG_ARCHIVETIME != -1} min="{TIME_NOW-CHAT_LOG_ARCHIVETIME*60|date:'Y-m-d'}"{/if} max="{TIME_NOW|date:'Y-m-d'}" value="{$date|date:'Y-m-d'}" />
 						{if $errorField == 'date'}
 							<small class="innerError">
 								{lang}chat.acp.log.date.error.{$errorType}{/lang}
