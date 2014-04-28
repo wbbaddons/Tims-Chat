@@ -768,8 +768,8 @@ the existing text. If `options.submit` is true the message will be sent to the s
 			text = $('#timsChatInput').val() + text if options.append
 			
 			$('#timsChatInput').val text
-			do $('#timsChatInput').keyup
-			
+			$('#timsChatInput').trigger 'change'
+
 			if options.submit
 				do $('#timsChatForm').submit
 			else
