@@ -767,9 +767,13 @@ the existing text. If `options.submit` is true the message will be sent to the s
 			text = text + $('#timsChatInput').val() if options.prepend
 			text = $('#timsChatInput').val() + text if options.append
 			
+			# do not insert text if it would exceed the allowed length
+			maxLength = $('#timsChatInput').attr 'maxlength'
+			return if maxLength? and text.length > maxLength
+			
 			$('#timsChatInput').val text
 			$('#timsChatInput').trigger 'change'
-
+			
 			if options.submit
 				do $('#timsChatForm').submit
 			else
