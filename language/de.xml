@@ -32,7 +32,7 @@
 	</category>
 	
 	<category name="chat.acp.menu">
-		<item name="chat.acp.menu.link"><![CDATA[Chat]]></item>
+		<item name="chat.acp.menu.link.chat"><![CDATA[Chat]]></item>
 		<item name="chat.acp.menu.link.log"><![CDATA[Nachrichten-Protokoll]]></item>
 		<item name="chat.acp.menu.link.room.list"><![CDATA[Chaträume auflisten]]></item>
 		<item name="chat.acp.menu.link.room.add"><![CDATA[Chatraum hinzufügen]]></item>
