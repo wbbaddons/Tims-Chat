@@ -297,8 +297,7 @@ Clear the chat by removing every single message once the clear button is `clicke
 
 			$('#timsChatClear').click (event) ->
 				do event.preventDefault
-				do $('.timsChatMessageContainer.active .timsChatMessage').remove
-				$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop 'scrollHeight'
+				clearChannel openChannel
 
 Handle toggling of the toggleable buttons.
 
@@ -618,6 +617,10 @@ Insert the given messages into the chat stream.
 				if  $('.timsChatMessage:last-child .timsChatTextContainer').is('ul') and lastMessage isnt null and lastMessage.type in [ v.config.messageTypes.NORMAL, v.config.messageTypes.WHISPER ]
 					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver and lastMessage.isInPrivateChannel is message.isInPrivateChannel
 						createNewMessage = no
+				
+				if message.type is v.config.messageTypes.CLEAR
+					createNewMessage = yes
+					clearChannel 0
 				
 				if createNewMessage
 					message.isFollowUp = no
@@ -1012,6 +1015,12 @@ Close private channel
 				$('#timsChatMessageTabMenu').addClass 'singleTab'
 			
 			openPrivateChannel 0
+
+Clears a channel
+
+		clearChannel = (userID) ->
+			do $("#timsChatMessageContainer#{userID} .timsChatMessage").remove
+			$("#timsChatMessageContainer#{userID}").scrollTop $("#timsChatMessageContainer#{userID}").prop 'scrollHeight'
 
 Bind the given callback to the given event.
 
