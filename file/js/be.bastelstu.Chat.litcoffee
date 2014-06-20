@@ -844,13 +844,16 @@ Fetch the roomlist from the server and update it in the GUI.
 						roomList.active = room if room.active
 						
 						li = $ '<li></li>'
-						li.addClass('timsChatRoom').data('roomID', room.roomID)
+						li.addClass 'timsChatRoom'
 						li.addClass 'active' if room.active
-						$("""<a href="#{room.link}">#{WCF.String.escapeHTML(room.title)}</a> <span class="badge">#{WCF.String.formatNumeric room.userCount}</span>""").appendTo li
+						a = $("""<a href="#{room.link}">#{WCF.String.escapeHTML(room.title)}</a>""")
+						a.data 'roomID', room.roomID
+						a.appendTo li
+						$("""<span class="badge">#{WCF.String.formatNumeric room.userCount}</span>""").appendTo li
 						$('#timsChatRoomList ul').append li
 					
 					if window.history?.replaceState?
-						$('.timsChatRoom').click (event) ->
+						$('.timsChatRoom a').click (event) ->
 							do event.preventDefault
 							
 							target = $ @
