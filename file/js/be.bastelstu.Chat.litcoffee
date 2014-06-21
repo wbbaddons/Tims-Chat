@@ -381,15 +381,17 @@ Visibly mark the message once the associated checkbox is checked.
 						
 					if checked
 						elem.parents('.timsChatMessage').addClass 'checked'
-						elem.parents('.timsChatTextContainer').siblings('.timsChatMessageBlockMarker').prop 'checked', true
+						elem.parents('.timsChatTextContainer').siblings('.timsChatMessageGroupMarker').prop 'checked', true
 				else
 					delete markedMessages[messageID]
 					
 					parent.removeClass 'checked'
 					elem.parents('.timsChatMessage').removeClass 'checked'
-					elem.parents('.timsChatTextContainer').siblings('.timsChatMessageBlockMarker').prop 'checked', false
+					elem.parents('.timsChatTextContainer').siblings('.timsChatMessageGroupMarker').prop 'checked', false
 					
-			$(document).on 'click', '.timsChatMessageBlockMarker', (event) ->
+			# This function can be used to toggle the marking state of every “submessage” of one message container (speech bubble)
+			# The according element with the class “.timsChatMessageGroupMarker” has to be made visible via CSS.
+			$(document).on 'click', '.timsChatMessageGroupMarker', (event) ->
 				$(event.target).siblings('.timsChatTextContainer').children('li').each (key, value) ->
 					elem = $(value).find '.timsChatMessageMarker'
 					
@@ -617,17 +619,17 @@ Insert the given messages into the chat stream.
 				if  $('.timsChatMessage:last-child .timsChatTextContainer').is('ul') and lastMessage isnt null and lastMessage.type in [ v.config.messageTypes.NORMAL, v.config.messageTypes.WHISPER ]
 					if lastMessage.type is message.type and lastMessage.sender is message.sender and lastMessage.receiver is message.receiver and lastMessage.isInPrivateChannel is message.isInPrivateChannel
 						createNewMessage = no
-				
+						
 				if message.type is v.config.messageTypes.CLEAR
 					createNewMessage = yes
 					clearChannel 0
-				
+					
 				if createNewMessage
 					message.isFollowUp = no
 					output = v.messageTemplate.fetch
 						message: message
 						messageTypes: v.config.messageTypes
-					
+						
 					li = $ '<li></li>'
 					li.addClass 'timsChatMessage'
 					li.addClass "timsChatMessage#{message.type}"
@@ -653,11 +655,16 @@ Insert the given messages into the chat stream.
 						messageContainerID = message.sender
 					else
 						messageContainerID = 0
-
-					$("#timsChatMessageContainer#{messageContainerID} .timsChatMessage:last-child .timsChatTextContainer").append $(output).find('.timsChatTextContainer li:last-child')
-				
+						
+					textContainer = $("#timsChatMessageContainer#{messageContainerID}").find '.timsChatMessage:last-child .timsChatTextContainer'
+					textContainer.append $(output).find('.timsChatTextContainer li:last-child')
+					
+					# unmark messages
+					textContainer.parents('.timsChatMessage').removeClass 'checked'
+					textContainer.siblings('.timsChatMessageGroupMarker').prop 'checked', false
+					
 				lastMessage = message
-			
+				
 			$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1
 
 Handles scroll event of message containers

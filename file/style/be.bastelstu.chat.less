@@ -296,7 +296,7 @@
 				}
 			}
 			
-			.timsChatMessageMarker, .timsChatMessageBlockMarker {
+			.timsChatMessageMarker, .timsChatMessageGroupMarker {
 				display: none;
 			}
 			
@@ -356,22 +356,22 @@
 								display: inline-block;
 							}
 							
-							.timsChatMessageBlockMarker {
+							.timsChatMessageGroupMarker {
 								top: 0;
 							}
 							
-							.timsChatMessageMarker, .timsChatMessageBlockMarker {
+							.timsChatMessageMarker, .timsChatMessageGroupMarker {
 								position: absolute;
 								right: -@wcfGapLarge ;
 							}
 							
 						&.bubble {
-							.timsChatMessageMarker, .timsChatMessageBlockMarker {
+							.timsChatMessageMarker, .timsChatMessageGroupMarker {
 								right: -@wcfGapLarge - 1;
 							}
 							
 							&.right {
-								.timsChatMessageMarker, .timsChatMessageBlockMarker {
+								.timsChatMessageMarker, .timsChatMessageGroupMarker {
 									// maybe find a better way, will do it for now
 									right: -@wcfGapLarge - @wcfGapMedium - 32 - 1;
 								}

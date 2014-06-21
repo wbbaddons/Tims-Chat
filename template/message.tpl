@@ -46,7 +46,7 @@
 					</li>
 				</ul>
 				
-				<input type="checkbox" class="timsChatMessageBlockMarker jsTooltip" value="{@$message.messageID}" title="{lang}chat.global.markAll{/lang}" />
+				<input type="checkbox" class="timsChatMessageGroupMarker jsTooltip" value="{@$message.messageID}" title="{lang}chat.global.markAll{/lang}" />
 			{elseif $message.type == $messageTypes.INFORMATION}
 				<div class="timsChatTextContainer">
 					<span class="timsChatText" data-message-id="{@$message.messageID}">
