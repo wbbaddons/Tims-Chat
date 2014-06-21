@@ -993,13 +993,17 @@ Open private channel
 					$('#timsChatMessageTabMenu > .tabMenu > ul').append li
 					$('#timsChatMessageTabMenu').wcfTabs 'refresh'
 					WCF.System.FlexibleMenu.rebuild $('#timsChatMessageTabMenu > .tabMenu').attr 'id'
+					
+				do $('#timsChatUpload').parent().hide
 			else
 				$('#timsChatTopic > .topic').text roomList.active.topic
 				if roomList.active.topic.trim() is '' or hiddenTopics[roomList.active.roomID]?
 					$('#timsChatTopic').addClass 'invisible'
 				else
 					$('#timsChatTopic').removeClass 'invisible'
-			
+					
+				do $('#timsChatUpload').parent().show
+				
 			$('.timsChatMessageContainer').removeClass 'active'
 			$("#timsChatMessageContainer#{userID}").addClass 'active'
 			$("#timsChatMessageTabMenuAnchor#{userID}").parent().removeClass 'notify'
