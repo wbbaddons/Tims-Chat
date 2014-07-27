@@ -720,6 +720,11 @@ Move the user to the new position if he was found in the old list.
 						else
 							element.removeClass 'suspended'
 						
+						if user.mod
+							element.addClass 'mod'
+						else
+							element.removeClass 'mod'
+						
 						$('#timsChatUserList > ul').append element
 
 Build HTML of the user and insert it into the list, if the users was not found in the chat before.
@@ -732,6 +737,7 @@ Build HTML of the user and insert it into the list, if the users was not found i
 						li.addClass 'jsTooltip'
 						li.addClass 'you' if user.userID is WCF.User.userID
 						li.addClass 'suspended' if user.suspended
+						li.addClass 'mod' if user.mod
 						if user.awayStatus?
 							li.addClass 'away'
 							li.attr 'title', user.awayStatus

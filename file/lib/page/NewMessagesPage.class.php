@@ -122,6 +122,7 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 				'username' => $user->username,
 				'awayStatus' => $user->chatAway,
 				'suspended' => (boolean) !$this->room->canWrite($user->getDecoratedObject()),
+				'mod' => $this->room->canBan($user->getDecoratedObject()) || $this->room->canMute($user->getDecoratedObject()),
 				'avatar' => array(
 					16 => $user->getAvatar()->getImageTag(16),
 					24 => $user->getAvatar()->getImageTag(24),
