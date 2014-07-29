@@ -116,26 +116,36 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	/**
 	 * Returns whether the user is allowed to mute other users in this room.
 	 *
+	 * @param	\wcf\data\user\User	$user
 	 * @return	boolean
 	 */
-	public function canMute() {
-		if (WCF::getSession()->getPermission('admin.chat.canManageSuspensions')) return true;
-		if (WCF::getSession()->getPermission('mod.chat.canGmute')) return true;
+	public function canMute(\wcf\data\user\User $user = null) {
+		if ($user === null) $user = WCF::getUser();
+		if (!$user->userID) return false;
+		$user = new \wcf\data\user\UserProfile($user);
 		
-		$ph = new \chat\system\permission\PermissionHandler();
+		if ($user->getPermission('admin.chat.canManageSuspensions')) return true;
+		if ($user->getPermission('mod.chat.canGmute')) return true;
+		
+		$ph = new \chat\system\permission\PermissionHandler($user->getDecoratedObject());
 		return $ph->getPermission($this, 'mod.canMute');
 	}
 	
 	/**
 	 * Returns whether the user is allowed to ban other users in this room.
 	 *
+	 * @param	\wcf\data\user\User	$user
 	 * @return	boolean
 	 */
-	public function canBan() {
-		if (WCF::getSession()->getPermission('admin.chat.canManageSuspensions')) return true;
-		if (WCF::getSession()->getPermission('mod.chat.canGban')) return true;
+	public function canBan(\wcf\data\user\User $user = null) {
+		if ($user === null) $user = WCF::getUser();
+		if (!$user->userID) return false;
+		$user = new \wcf\data\user\UserProfile($user);
 		
-		$ph = new \chat\system\permission\PermissionHandler();
+		if ($user->getPermission('admin.chat.canManageSuspensions')) return true;
+		if ($user->getPermission('mod.chat.canGban')) return true;
+		
+		$ph = new \chat\system\permission\PermissionHandler($user->getDecoratedObject());
 		return $ph->getPermission($this, 'mod.canBan');
 	}
 	
