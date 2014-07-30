@@ -820,7 +820,7 @@ Send out notifications for the given `message`. The number of unread messages wi
 				newMessageCount: ++newMessageCount
 			
 			title = WCF.Language.get 'chat.global.notify.title'
-			content = "#{message.username}#{message.separator} #{message.message}"
+			content = "#{message.username}#{message.separator} #{if message.message.length > 50 then message.message[0..50] + '\u2026' else message.message}"
 			
 			if window.Notification?.permission is 'granted'
 				do ->
