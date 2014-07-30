@@ -19,24 +19,28 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.chat.canWrite">
 				<categoryname>user.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.chat.canTempRoom">
 				<categoryname>user.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.chat.allowedBBCodes">
 				<categoryname>user.chat</categoryname>
 				<optiontype>BBCodeSelect</optiontype>
 				<defaultvalue>none</defaultvalue>
 				<admindefaultvalue>all</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.chat.canUploadAttachment">
 				<categoryname>user.chat</categoryname>
@@ -44,6 +48,7 @@
 				<defaultvalue>1</defaultvalue>
 				<enableoptions>user.chat.maxAttachmentSize,user.chat.allowedAttachmentExtensions</enableoptions>
 				<options>module_attachment</options>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.chat.maxAttachmentSize">
 				<categoryname>user.chat</categoryname>
@@ -51,6 +56,7 @@
 				<defaultvalue>1000000</defaultvalue>
 				<options>module_attachment</options>
 				<minvalue>10000</minvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.chat.allowedAttachmentExtensions">
 				<categoryname>user.chat</categoryname>
@@ -65,78 +71,91 @@ txt
 pdf]]></defaultvalue>
 				<options>module_attachment</options>
 				<wildcard><![CDATA[*]]></wildcard>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="mod.chat.canAlwaysEnter">
 				<categoryname>mod.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="mod.chat.canAlwaysWrite">
 				<categoryname>mod.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="mod.chat.canRestore">
 				<categoryname>mod.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="mod.chat.canMute">
 				<categoryname>mod.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="mod.chat.canGmute">
 				<categoryname>mod.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="mod.chat.canBan">
 				<categoryname>mod.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="mod.chat.canGban">
 				<categoryname>mod.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="admin.chat.canAddRoom">
 				<categoryname>admin.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="admin.chat.canEditRoom">
 				<categoryname>admin.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="admin.chat.canDeleteRoom">
 				<categoryname>admin.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="admin.chat.canReadLog">
 				<categoryname>admin.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="admin.chat.canManageSuspensions">
 				<categoryname>admin.chat</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 		</options>
 	</import>
