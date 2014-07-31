@@ -152,7 +152,7 @@ Please try to reload the chat.]]></item>
 		<item name="chat.global.rooms"><![CDATA[Chatrooms]]></item>
 		<item name="chat.global.users"><![CDATA[Users]]></item>
 		
-		<item name="chat.global.copyright"><![CDATA[<a href="http://tims.bastelstu.be"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}><strong>Tim’s Chat</strong>{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}, developed in <strong>Tim’s Bastelstube</strong></a>]]></item>
+		<item name="chat.global.copyright"><![CDATA[<a href="http://tims.bastelstu.be"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}><strong>Tim’s Chat{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}</strong>, developed in <strong>Tim’s Bastelstube</strong></a>]]></item>
 		<item name="chat.global.copyright.leader"><![CDATA[Project Lead]]></item>
 		<item name="chat.global.copyright.developer"><![CDATA[Developers]]></item>
 		<item name="chat.global.copyright.graphics"><![CDATA[Graphics]]></item>
