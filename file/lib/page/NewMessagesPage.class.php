@@ -120,6 +120,7 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 			$json['users'][] = array(
 				'userID' => (int) $user->userID,
 				'username' => $user->username,
+				'roomID' => (int) $user->chatRoomID,
 				'awayStatus' => $user->chatAway,
 				'suspended' => (boolean) !$this->room->canWrite($user->getDecoratedObject()),
 				'mod' => $this->room->canBan($user->getDecoratedObject()) || $this->room->canMute($user->getDecoratedObject()),
