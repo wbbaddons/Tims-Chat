@@ -105,7 +105,7 @@
 		
 		<item name="wcf.acp.option.category.chat.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Speicherzeit]]></item>
-		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Zeit, die eine Nachricht im Protokoll abrufbar bleibt. [Zeit in Minuten, -1 für unendlich]]]></item>
+		<item name="wcf.acp.option.chat_log_archivetime.description"><![CDATA[Zeit, die eine Nachricht im Protokoll abrufbar bleibt. [Zeit in Minuten, -1 für unbeschränkt]]]></item>
 	</category>
 	
 	<category name="wcf.dashboard">
