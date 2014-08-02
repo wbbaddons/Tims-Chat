@@ -54,6 +54,11 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$this->parameters['userData']['away'] = WCF::getUser()->chatAway;
 		
 		// read and validate room
+		$this->readInteger('roomID', true);
+		if (\wcf\system\WCF::getSession()->getPermission('admin.chat.isInAllRooms') && $this->parameters['roomID'] !== 0) {
+			$this->parameters['userData']['roomID'] = $this->parameters['roomID'];
+		}
+		
 		$this->parameters['room'] = room\RoomCache::getInstance()->getRoom($this->parameters['userData']['roomID']);
 		if ($this->parameters['room'] === null) throw new \wcf\system\exception\IllegalLinkException();
 		if (!$this->parameters['room']->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();

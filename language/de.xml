@@ -85,6 +85,8 @@
 		<item name="wcf.acp.group.option.admin.chat.canReadLog"><![CDATA[Kann Protokoll einsehen]]></item>
 		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions"><![CDATA[Kann Sanktionen verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions.description"><![CDATA[Impliziert „Kann bannen“, „Kann knebeln“, „Kann global bannen“, „Kann global knebeln“ und gegenbenenfalls weitere Rechte.]]></item>
+		<item name="wcf.acp.group.option.admin.chat.isInAllRooms"><![CDATA[Ist in allen Räumen]]></item>
+		<item name="wcf.acp.group.option.admin.chat.isInAllRooms.description"><![CDATA[Eine Aktivierung dieser Option bewirkt, dass Nachrichten aus allen Räumen an den Benutzer gesendet werden.<br /><strong>Achtung:</strong> Die Aktivierung dieser Option führt dazu, dass der Chat für Ihre Mitglieder unbenutzbar wird. Ziehen Sie das Aktivieren dieser Option nur für computergestützte Anwendungen (Bots) in Betracht!<!-- HC SVNT DRACONES -->]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">

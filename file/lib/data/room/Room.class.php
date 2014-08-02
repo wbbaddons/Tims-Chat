@@ -31,6 +31,11 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	protected static $users = null;
 	
 	/**
+	 * room id of the “global” pseudo chat room
+	 */
+	const GLOBAL_ROOM = -1;
+	
+	/**
 	 * @see	\wcf\data\chat\room\ChatRoom::getTitle();
 	 */
 	public function __toString() {
@@ -194,6 +199,13 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 				self::$users[$user->chatRoomID][$userID] = $user;
 			}
 		}
+		
+		if ($this->roomID === self::GLOBAL_ROOM) {
+			return array_reduce(self::$users, function($a, $b) {
+				return $a + $b;
+			}, array());
+		}
+
 		if (!isset(self::$users[$this->roomID])) self::$users[$this->roomID] = array();
 		
 		return self::$users[$this->roomID];

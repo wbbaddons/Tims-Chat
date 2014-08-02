@@ -94,7 +94,13 @@ class NewMessagesPage extends \wcf\page\AbstractPage {
 	 * Initializes the room databaseobject.
 	 */
 	public function readRoom() {
-		$this->room = \chat\data\room\RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID);
+		if (\wcf\system\WCF::getSession()->getPermission('admin.chat.isInAllRooms')) {
+			$this->room = new \chat\data\room\Room(null, array('roomID' => \chat\data\room\Room::GLOBAL_ROOM));
+		}
+		else {
+			$this->room = \chat\data\room\RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID);
+		}
+		
 		if (!$this->room) throw new IllegalLinkException();
 		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 	}

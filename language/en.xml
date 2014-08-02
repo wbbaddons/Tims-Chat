@@ -85,6 +85,8 @@
 		<item name="wcf.acp.group.option.admin.chat.canReadLog"><![CDATA[Can see protocol]]></item>
 		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions"><![CDATA[Can manage suspensions]]></item>
 		<item name="wcf.acp.group.option.admin.chat.canManageSuspensions.description"><![CDATA[Implies “Can ban”, “Can mute”, “Can ban globally”, “Can mute globally” und possibly other permissions.]]></item>
+		<item name="wcf.acp.group.option.admin.chat.isInAllRooms"><![CDATA[Is in all rooms]]></item>
+		<item name="wcf.acp.group.option.admin.chat.isInAllRooms.description"><![CDATA[Enabling this option will send messages from all rooms to the client.<br /><strong>Warning:</strong> Enabling this option might render the chat useless for your members! Only activate it for bots accessing the chat.<!-- HC SVNT DRACONES -->]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
