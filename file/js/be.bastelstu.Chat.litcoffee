@@ -229,48 +229,51 @@ Autocomplete a username when TAB is pressed. The name to autocomplete is based o
 The the word the caret is in will be passed to `autocomplete` and replaced if a match was found.
 
 			$('#timsChatInput').keydown (event) ->
-				if event.keyCode is $.ui.keyCode.TAB
-					do event.preventDefault
-					input = $ @
-					
-					autocomplete.value ?= do input.val
-					autocomplete.caret ?= do input.getCaret
-					
-					beforeCaret = autocomplete.value.substring 0, autocomplete.caret
-					lastSpace = beforeCaret.lastIndexOf ' '
-					beforeComplete = autocomplete.value.substring 0, lastSpace + 1
-					toComplete = autocomplete.value.substring lastSpace + 1
-					nextSpace = toComplete.indexOf ' '
-					if nextSpace is -1
-						afterComplete = '';
-					else
-						afterComplete = toComplete.substring nextSpace + 1
-						toComplete = toComplete.substring 0, nextSpace
-					
-					return if toComplete.length is 0
-					console.log "Autocompleting '#{toComplete}'"
-					
-					if beforeComplete is '' and (toComplete.substring 0, 1) is '/'
-						regex = new RegExp "^#{WCF.String.escapeRegExp toComplete.substring 1}", "i"
-						commands = (command for command in v.config.installedCommands when regex.test command)
+				switch event.keyCode
+					when 229
+						return
+					when $.ui.keyCode.TAB
+						do event.preventDefault
+						input = $ @
 						
-						toComplete = '/' + commands[autocomplete.offset++ % commands.length] + ' ' if commands.length isnt 0
-					else
-						regex = new RegExp "^#{WCF.String.escapeRegExp toComplete}", "i"
+						autocomplete.value ?= do input.val
+						autocomplete.caret ?= do input.getCaret
 						
-						users = [ ]
-						for userID, user of userList.current
-							users.push user.username if regex.test user.username
+						beforeCaret = autocomplete.value.substring 0, autocomplete.caret
+						lastSpace = beforeCaret.lastIndexOf ' '
+						beforeComplete = autocomplete.value.substring 0, lastSpace + 1
+						toComplete = autocomplete.value.substring lastSpace + 1
+						nextSpace = toComplete.indexOf ' '
+						if nextSpace is -1
+							afterComplete = '';
+						else
+							afterComplete = toComplete.substring nextSpace + 1
+							toComplete = toComplete.substring 0, nextSpace
 						
-						toComplete = users[autocomplete.offset++ % users.length] + ', ' if users.length isnt 0
-					
-					input.val "#{beforeComplete}#{toComplete}#{afterComplete}"
-					input.setCaret (beforeComplete + toComplete).length
+						return if toComplete.length is 0
+						console.log "Autocompleting '#{toComplete}'"
+						
+						if beforeComplete is '' and (toComplete.substring 0, 1) is '/'
+							regex = new RegExp "^#{WCF.String.escapeRegExp toComplete.substring 1}", "i"
+							commands = (command for command in v.config.installedCommands when regex.test command)
+							
+							toComplete = '/' + commands[autocomplete.offset++ % commands.length] + ' ' if commands.length isnt 0
+						else
+							regex = new RegExp "^#{WCF.String.escapeRegExp toComplete}", "i"
+							
+							users = [ ]
+							for userID, user of userList.current
+								users.push user.username if regex.test user.username
+							
+							toComplete = users[autocomplete.offset++ % users.length] + ', ' if users.length isnt 0
+						
+						input.val "#{beforeComplete}#{toComplete}#{afterComplete}"
+						input.setCaret (beforeComplete + toComplete).length
 
 Reset autocompleter to default status, when a key is pressed that is not TAB.
 
-				else
-					do $('#timsChatInput').click
+					else
+						do $('#timsChatInput').click
 
 Reset autocompleter to default status, when the input is `click`ed, as the position of the caret may have changed.
 
