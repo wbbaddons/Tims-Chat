@@ -174,6 +174,10 @@ class ChatPage extends \wcf\page\AbstractPage {
 		if ($this->roomID === 0) {
 			// no room given
 			if (CHAT_FORCE_ROOM_SELECT) {
+				$this->rooms = array_filter($this->rooms, function ($room) {
+					return $room->canEnter();
+				});
+				
 				return;
 			}
 			else {
