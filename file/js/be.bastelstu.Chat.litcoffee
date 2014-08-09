@@ -68,6 +68,7 @@ exposed by a function if necessary.
 			fish: null
 			
 		loading = false
+		loadingAwaiting = false
 		
 		autocomplete =
 				offset: 0
@@ -602,12 +603,18 @@ Fetch new messages from the server and pass them to `handleMessages`. The userli
 						showError WCF.Language.get 'chat.error.onMessageLoad'
 				complete: ->
 					loading = false
+					
+					if loadingAwaiting
+						loadingAwaiting = false
+						do getMessages
 
 Prevent loading messages in parallel.
 
 				beforeSend: ->
-					return false if loading
-					
+					if loading
+						loadingAwaiting = true
+						return false
+						
 					loading = true
 
 Insert the given messages into the chat stream.
