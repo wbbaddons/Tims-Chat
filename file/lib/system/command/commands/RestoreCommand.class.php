@@ -32,8 +32,8 @@ class RestoreCommand extends \chat\system\command\AbstractRestrictedCommand {
 		
 		$editor = new \wcf\data\user\UserEditor($this->user);
 		$editor->update(array(
-			'chatColor1' => 0,
-			'chatColor2' => 0
+			'chatColor1' => null,
+			'chatColor2' => null
 		));
 		$this->didInit();
 	}

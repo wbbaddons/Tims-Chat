@@ -124,7 +124,12 @@ class Message extends \chat\data\CHATDatabaseObject {
 		if ($this->type == self::TYPE_INFORMATION) return WCF::getLanguage()->get('chat.global.information');
 		
 		if ($colored) {
-			$username = \chat\util\ChatUtil::gradient($username, $this->color1, $this->color2);
+			if ($this->color1 !== null || $this->color2 !== null) {
+				$username = \chat\util\ChatUtil::gradient($username, $this->color1, $this->color2);
+			}
+			else {
+				$username = '<span class="defaultColor">'.$username.'</span>';
+			}
 		}
 		
 		return $username;
