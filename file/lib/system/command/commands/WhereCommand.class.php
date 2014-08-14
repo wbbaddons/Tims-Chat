@@ -25,6 +25,8 @@ class WhereCommand extends \chat\system\command\AbstractCommand {
 		$rooms = \chat\data\room\RoomCache::getInstance()->getRooms();
 		
 		foreach ($rooms as $room) {
+			if (!$room->canEnter()) continue;
+			
 			$users = $room->getUsers();
 			$tmp = array();
 			foreach ($users as $user) {
