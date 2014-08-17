@@ -77,10 +77,7 @@
 				// overwrite WCF margin overwrite on tab menu content with WCF marginTop like margin
 				// this is “a bit” hacky
 				margin-top: @wcfGapMedium !important;
-				
-				> .tabMenuContent {
-				}
-				
+
 				.timsChatMessageContainer {
 					&.notify {
 						-webkit-animation-duration: .2s;
@@ -399,11 +396,7 @@
 			}
 			
 			&, &.invisible {
-				-webkit-transition: opacity .2s ease-in-out;
-				   -moz-transition: opacity .2s ease-in-out;
-				    -ms-transition: opacity .2s ease-in-out;
-				     -o-transition: opacity .2s ease-in-out;
-				        transition: opacity .2s ease-in-out;
+				.transition(opacity, .2s, ease-in-out);
 			}
 			
 			&.invisible {
