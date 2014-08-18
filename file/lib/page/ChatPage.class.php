@@ -188,6 +188,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 				}
 				// redirect to first chat-room
 				\wcf\util\HeaderUtil::redirect(\wcf\system\request\LinkHandler::getInstance()->getLink('Chat', array(
+					'application' => 'chat',
 					'object' => $room
 				)));
 				exit;
