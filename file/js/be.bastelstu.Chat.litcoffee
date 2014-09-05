@@ -101,7 +101,7 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 When **Tims Chat** becomes focused mark the chat as active and remove the number of new messages from the title.
 
 			$(window).focus ->
-				document.title = v.titleTemplate.fetch(roomList.active) if roomList.active?.title? and roomList.active.topic.trim() isnt ''
+				document.title = v.titleTemplate.fetch(roomList.active) if roomList.active?.title? and roomList.active.title.trim() isnt ''
 				
 				newMessageCount = 0
 				isActive = true
