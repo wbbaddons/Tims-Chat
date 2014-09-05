@@ -22,6 +22,12 @@
 				<categoryname>chat.general</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<enableoptions>chat_enable_menu_badge</enableoptions>
+			</option>
+			<option name="chat_enable_menu_badge">
+				<categoryname>chat.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="chat_reloadtime">
 				<categoryname>chat.general</categoryname>
@@ -70,4 +76,4 @@ gunmute:ungmute</defaultvalue>
 			<!--log options end-->
 		</options>
 	</import>
-</data>			
+</data>

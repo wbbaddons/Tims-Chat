@@ -104,6 +104,8 @@
 		<item name="wcf.acp.option.chat_command_aliases.description"><![CDATA[Enter a combination of alias and target separated by newlines. Alias and target are separated by colons.]]></item>
 		<item name="wcf.acp.option.chat_force_room_select"><![CDATA[Show Room Selection]]></item>
 		<item name="wcf.acp.option.chat_force_room_select.description"><![CDATA[Shows a list of available rooms instead of joining the first available one.]]></item>
+		<item name="wcf.acp.option.chat_enable_menu_badge"><![CDATA[Chatter Count in main menu]]></item>
+		<item name="wcf.acp.option.chat_enable_menu_badge.description"><![CDATA[Shows the number of active chatters as a badge in the main menu.]]></item>
 		
 		<item name="wcf.acp.option.category.chat.log"><![CDATA[Protocol]]></item>
 		<item name="wcf.acp.option.chat_log_archivetime"><![CDATA[Archive Time]]></item>
