@@ -31,8 +31,8 @@
 				}
 			});
 			
-			be.bastelstu.wcf.nodePush.onMessage('be.bastelstu.chat.join', $.proxy(proxy.sendRequest, proxy));
-			be.bastelstu.wcf.nodePush.onMessage('be.bastelstu.chat.leave', $.proxy(proxy.sendRequest, proxy));
+			be.bastelstu.wcf.push.onMessage('be.bastelstu.chat.join', $.proxy(proxy.sendRequest, proxy));
+			be.bastelstu.wcf.push.onMessage('be.bastelstu.chat.leave', $.proxy(proxy.sendRequest, proxy));
 		})(jQuery, this);
 		//]]>
 	</script>
