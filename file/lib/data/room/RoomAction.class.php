@@ -318,7 +318,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			'chatRoomID' => null
 		));
 		
-		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.join');
+		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.leave');
 	}
 	
 	/**
