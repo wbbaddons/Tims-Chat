@@ -47,22 +47,14 @@
 				</ul>
 				
 				<input type="checkbox" class="timsChatMessageGroupMarker jsTooltip" value="{@$message.messageID}" title="{lang}chat.global.markAll{/lang}" />
-			{elseif $message.type == $messageTypes.INFORMATION}
-				<div class="timsChatTextContainer">
-					<span class="timsChatText" data-message-id="{@$message.messageID}">
-						{@$message.formattedMessage}
-						
-						<input type="checkbox" class="timsChatMessageMarker jsTooltip" value="{@$message.messageID}" title="{lang}chat.global.mark{/lang}"/>
-					</span>
-				</div>
 			{else}
-				<span class="timsChatTextContainer">
-					<span class="timsChatText" data-message-id="{@$message.messageID}">
+				<div class="timsChatTextContainer">
+					<div class="timsChatText" data-message-id="{@$message.messageID}">
 						{@$message.formattedMessage}
 						
 						<input type="checkbox" class="timsChatMessageMarker jsTooltip" value="{@$message.messageID}" title="{lang}chat.global.mark{/lang}"/>
-					</span>
-				</span>
+					</div>
+				</div>
 			{/if}
 		</div>
 	</div>
