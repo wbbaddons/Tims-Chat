@@ -34,7 +34,7 @@ class MessageEditor extends \wcf\data\DatabaseObjectEditor {
 	 * Notify the Push-Server.
 	 */
 	public static function create(array $parameters = array()) {
-		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.newMessage');
+		\wcf\system\push\PushHandler::getInstance()->sendMessage('be.bastelstu.chat.newMessage');
 		
 		return parent::create($parameters);
 	}

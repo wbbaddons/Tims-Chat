@@ -251,7 +251,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		\wcf\system\user\activity\point\UserActivityPointHandler::getInstance()->fireEvent('be.bastelstu.chat.activityPointEvent.join', $result, WCF::getUser()->userID);
 		
 		// send push message about join
-		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.join');
+		\wcf\system\push\PushHandler::getInstance()->sendMessage('be.bastelstu.chat.join');
 		
 		$messages = array();
 		foreach ($newestMessages as $message) $messages[] = $message->jsonify(true);
@@ -318,7 +318,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			'chatRoomID' => null
 		));
 		
-		\wcf\system\nodePush\NodePushHandler::getInstance()->sendMessage('be.bastelstu.chat.leave');
+		\wcf\system\push\PushHandler::getInstance()->sendMessage('be.bastelstu.chat.leave');
 	}
 	
 	/**

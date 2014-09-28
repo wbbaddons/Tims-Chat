@@ -446,25 +446,25 @@ Initialize the `PeriodicalExecuter`s
 			pe.refreshRoomList = new WCF.PeriodicalExecuter refreshRoomList, 60e3
 			pe.getMessages = new WCF.PeriodicalExecuter getMessages, v.config.reloadTime * 1e3
 
-Initialize the [**nodePush**](https://github.com/wbbaddons/nodePush) integration of **Tims Chat**. Once
-the browser is connected to **nodePush** periodic message loading will be disabled and **Tims Chat** will
+Initialize the [**Push**](https://github.com/wbbaddons/Push) integration of **Tims Chat**. Once
+the browser is connected to **Push** periodic message loading will be disabled and **Tims Chat** will
 load messages if the appropriate event arrives.
 
 			do ->
-				be.bastelstu.wcf.nodePush.onConnect ->
+				be.bastelstu.wcf.push.onConnect ->
 						console.log 'Disabling periodic loading'
 						do pe.getMessages.stop
 						
-				be.bastelstu.wcf.nodePush.onDisconnect ->
+				be.bastelstu.wcf.push.onDisconnect ->
 						console.log 'Enabling periodic loading'
 						do getMessages
 						do pe.getMessages.resume
 						
-				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.newMessage', getMessages
-				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.wcf.nodePush.tick60', getMessages
-				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.roomChange', refreshRoomList
-				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.join', refreshRoomList
-				be.bastelstu.wcf.nodePush.onMessage 'be.bastelstu.chat.leave', refreshRoomList
+				be.bastelstu.wcf.push.onMessage 'be.bastelstu.chat.newMessage', getMessages
+				be.bastelstu.wcf.push.onMessage 'be.bastelstu.wcf.push.tick60', getMessages
+				be.bastelstu.wcf.push.onMessage 'be.bastelstu.chat.roomChange', refreshRoomList
+				be.bastelstu.wcf.push.onMessage 'be.bastelstu.chat.join', refreshRoomList
+				be.bastelstu.wcf.push.onMessage 'be.bastelstu.chat.leave', refreshRoomList
 
 Switch to fullscreen mode on mobile devices
 
