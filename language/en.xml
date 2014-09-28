@@ -39,6 +39,11 @@
 		<item name="chat.acp.menu.link.suspension.list"><![CDATA[List Suspensions]]></item>
 	</category>
 	
+	<category name="chat.notification">
+		<item name="chat.notification.invited.title"><![CDATA[TODO: Jemand möchte mit Ihnen chatten!]]></item>
+		<item name="chat.notification.invited.message"><![CDATA[TODO: „{$author->username}“ möchte mit Ihnen im Chatraum „{$userNotificationObject->getTitle()}“ chatten!]]></item>
+	</category>
+	
 	<category name="wcf.acl.option">
 		<item name="wcf.acl.option.category.be.bastelstu.chat.room.user"><![CDATA[User Permissions]]></item>
 		<item name="wcf.acl.option.category.be.bastelstu.chat.room.mod"><![CDATA[Moderator Permissions]]></item>

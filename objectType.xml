@@ -27,5 +27,11 @@
 			<definitionname>com.woltlab.wcf.attachment.objectType</definitionname>
 			<classname>chat\system\attachment\MessageAttachmentObjectType</classname>
 		</type>
+		<type>
+			<name>be.bastelstu.chat.room</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>chat\system\user\notification\object\type\RoomUserNotificationObjectType</classname>
+			<category>be.bastelstu.chat</category>
+		</type>
 	</import>
 </data>
