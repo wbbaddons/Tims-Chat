@@ -9,13 +9,11 @@
 			<name>be.bastelstu.chat.activityPointEvent.join</name>
 			<definitionname>com.woltlab.wcf.user.activityPointEvent</definitionname>
 			<points>0</points>
-			<classname>wcf\system\user\activity\point\DefaultUserActivityPointObjectProcessor</classname><!-- We are unable to recalc those points -->
 		</type>
 		<type>
 			<name>be.bastelstu.chat.activityPointEvent.message</name>
 			<definitionname>com.woltlab.wcf.user.activityPointEvent</definitionname>
 			<points>0</points>
-			<classname>wcf\system\user\activity\point\DefaultUserActivityPointObjectProcessor</classname><!-- We are unable to recalc those points -->
 		</type>
 		<type>
 			<name>be.bastelstu.chat.ChatPage</name>
