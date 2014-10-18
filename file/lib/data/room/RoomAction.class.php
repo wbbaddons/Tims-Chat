@@ -69,16 +69,12 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			WHERE
 					permanent = ?
 				AND 	roomID NOT IN (
-					SELECT
-						fieldValue AS roomID 
-					FROM
-						wcf".WCF_N."_user_storage
-					WHERE
-							field = ?
-						AND	fieldValue IS NOT NULL
-				)";
+						SELECT	chatRoomID
+						FROM	wcf".WCF_N."_user
+						WHERE	chatRoomID IS NOT NULL
+					)";
 		$stmt = \wcf\system\WCF::getDB()->prepareStatement($sql);
-		$stmt->execute(array(0, 'roomID'));
+		$stmt->execute(array(0));
 		$objectIDs = array();
 		
 		while ($objectID = $stmt->fetchColumn()) $objectIDs[] = $objectID;
