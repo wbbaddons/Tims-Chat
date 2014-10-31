@@ -193,6 +193,9 @@ Please try to reload the chat.]]></item>
 		<item name="chat.global.privateChannelTopic"><![CDATA[{literal}You are in a private conversation with “{$username}”{/literal}]]></item>
 		<item name="chat.global.closePrivateChannel"><![CDATA[Close Private Conversation]]></item>
 		<item name="chat.global.closeTopic"><![CDATA[Hide Topic]]></item>
+		
+		<item name="chat.global.timeFormat"><![CDATA[g:i:sa]]></item>
+		<item name="chat.global.dateFormat"><![CDATA[Y-m-d]]></item>
 	</category>
 	
 	<category name="chat.header">

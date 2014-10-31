@@ -153,10 +153,12 @@ class Message extends \chat\data\CHATDatabaseObject {
 			break;
 		}
 		
+		$time = \wcf\util\DateUtil::getDateTimeByTimestamp($this->time);
+		$startOfDay = new \DateTime('today', WCF::getUser()->getTimezone());
 		$array = array(
 			'formattedUsername' => $this->getUsername(true),
 			'formattedMessage' => $this->getFormattedMessage('text/html'),
-			'formattedTime' => \wcf\util\DateUtil::format(\wcf\util\DateUtil::getDateTimeByTimestamp($this->time), 'H:i:s'),
+			'formattedTime' => ($time->getTimestamp() < $startOfDay->getTimestamp() ? \wcf\util\DateUtil::format($time, 'chat.global.dateFormat').' ' : '').\wcf\util\DateUtil::format($time, 'chat.global.timeFormat'),
 			'separator' => $separator,
 			'message' => $this->getFormattedMessage('text/plain'),
 			'sender' => (int) $this->sender,

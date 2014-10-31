@@ -193,6 +193,9 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.global.privateChannelTopic"><![CDATA[{literal}Sie befinden sich in einem privaten Kanal mit „{$username}“.{/literal}]]></item>
 		<item name="chat.global.closePrivateChannel"><![CDATA[Privaten Kanal schließen]]></item>
 		<item name="chat.global.closeTopic"><![CDATA[Thema ausblenden]]></item>
+		
+		<item name="chat.global.timeFormat"><![CDATA[H:i:s]]></item>
+		<item name="chat.global.dateFormat"><![CDATA[Y-m-d]]></item>
 	</category>
 	
 	<category name="chat.header">
