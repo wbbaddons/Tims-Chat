@@ -38,6 +38,9 @@ class OnlineListDashboardBox extends \wcf\system\dashboard\box\AbstractContentDa
 	 * @see	wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
+		if (!MODULE_CHAT) return false;
+		if (!\wcf\system\WCF::getUser()->userID) return false;
+		
 		\wcf\system\WCF::getTPL()->assign(array(
 			'rooms' => $this->rooms
 		));
