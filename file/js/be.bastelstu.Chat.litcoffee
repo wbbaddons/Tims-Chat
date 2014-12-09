@@ -101,7 +101,7 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 When **Tims Chat** becomes focused mark the chat as active and remove the number of new messages from the title.
 
 			$(window).focus ->
-				document.title = v.titleTemplate.fetch(roomList.active) if roomList.active?.title? and roomList.active.title.trim() isnt ''
+				document.title = v.titleTemplate.fetch(getRoomList().active) if roomList.active?.title? and roomList.active.title.trim() isnt ''
 				
 				newMessageCount = 0
 				isActive = true
@@ -177,7 +177,7 @@ Open the smiley wcfDialog
 				overlaySmileyList.css
 					'max-height': $(window).height() - overlaySmileyList.parent().siblings('.dialogTitlebar').outerHeight()
 					'overflow': 'auto'
-			
+					
 Handle private channel menu
 
 			$('#timsChatMessageTabMenu > .tabMenu').on 'click', '.timsChatMessageTabMenuAnchor', ->
@@ -350,6 +350,25 @@ Toggle checkboxes.
 					$('.timsChatMessageContainer').addClass 'markEnabled'
 				else
 					$('.timsChatMessageContainer').removeClass 'markEnabled'
+
+Show invite dialog.
+
+			$('#timsChatInvite').click (event) ->
+					do event.preventDefault
+					
+					new WCF.Action.Proxy
+						autoSend: true
+						data:
+							actionName: 'prepareInvite'
+							className: 'chat\\data\\user\\UserAction'
+						showLoadingOverlay: true
+						suppressErrors: false
+						success: (data) ->
+							$('<div id="timsChatInviteDialog"></div>').appendTo 'body' unless $.wcfIsset 'timsChatInviteDialog'
+							
+							$('#timsChatInviteDialog').html(data.returnValues.template).wcfDialog
+								title: WCF.Language.get 'chat.global.invite'
+								
 
 Hide topic container.
 
@@ -858,7 +877,7 @@ Fetch the roomlist from the server and update it in the GUI.
 					roomList =
 						active: {}
 						available: {}
-					
+						
 					do $('.timsChatRoom').remove
 					$('#toggleRooms .badge').text data.returnValues.length
 					
@@ -874,7 +893,7 @@ Fetch the roomlist from the server and update it in the GUI.
 						a.appendTo li
 						$("""<span class="badge">#{WCF.String.formatNumeric room.userCount}</span>""").appendTo li
 						$('#timsChatRoomList ul').append li
-					
+						
 					if window.history?.replaceState?
 						$('.timsChatRoom a').click (event) ->
 							do event.preventDefault
@@ -887,7 +906,7 @@ Fetch the roomlist from the server and update it in the GUI.
 							join target.data 'roomID'
 							$('#timsChatRoomList .active').removeClass 'active'
 							target.parent().addClass 'active'
-					
+							
 					console.log "Found #{data.returnValues.length} rooms"
 
 Shows an unrecoverable error with the given text.
@@ -945,7 +964,7 @@ Joins a room.
 					
 					$('.timsChatMessage').addClass 'unloaded'
 					
-					document.title = v.titleTemplate.fetch roomList.active
+					document.title = v.titleTemplate.fetch getRoomList().active
 					handleMessages roomList.active.messages
 					do getMessages
 					do refreshRoomList
@@ -1068,6 +1087,8 @@ Remove the given callback from the given event.
 			
 			true
 			
+		getRoomList = -> JSON.parse JSON.stringify roomList
+				
 The following code handles attachment uploads
 
 Enable attachment code if `WCF.Attachment.Upload` is defined
@@ -1293,8 +1314,8 @@ Return a copy of the object containing the IDs of the marked messages
 
 			getMarkedMessages: -> JSON.parse JSON.stringify markedMessages
 			getUserList: -> JSON.parse JSON.stringify userList
-			getRoomList: -> JSON.parse JSON.stringify roomList
-			
+			getRoomList: getRoomList
+				
 			refreshRoomList: refreshRoomList
 			insertText: insertText
 			freeTheFish: freeTheFish

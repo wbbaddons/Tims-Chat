@@ -161,6 +161,9 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.global.rooms"><![CDATA[Chaträume]]></item>
 		<item name="chat.global.users"><![CDATA[Nutzer]]></item>
 		
+		<item name="chat.global.invite"><![CDATA[Benutzer einladen]]></item>
+		<item name="chat.global.invite.noFollowing"><![CDATA[Keine Benutzer gefunden, verwenden Sie bitte die Suche.]]></item>
+		
 		<item name="chat.global.copyright"><![CDATA[<a href="http://tims.bastelstu.be"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}><strong>Tims Chat{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}</strong>, entwickelt in <strong>Tims Bastelstu.be</strong></a>]]></item>
 		<item name="chat.global.copyright.leader"><![CDATA[Projektleiter]]></item>
 		<item name="chat.global.copyright.developer"><![CDATA[Entwickler]]></item>
@@ -251,5 +254,6 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 	
 	<category name="chat.user">
 		<item name="chat.user.usersOnline.location.ChatPage"><![CDATA[<a href="{link controller='Chat' application='chat' object=$room}{/link}">Chatraum „{$room}“</a>]]></item>
+		<item name="chat.user.search"><![CDATA[Benutzer suchen]]></item>
 	</category>
 </language>
