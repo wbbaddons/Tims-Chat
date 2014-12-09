@@ -60,6 +60,6 @@ class UserAction extends \wcf\data\AbstractDatabaseObjectAction {
 	 * Invites users.
 	 */
 	public function invite() {
-		\wcf\system\user\notification\UserNotificationHandler::getInstance()->fireEvent('invited', 'be.bastelstu.chat.room', new \chat\system\user\notification\object\RoomUserNotificationObject($this->room), $this->parameters['recipients'], array('userID' => WCF::getUser()->userID));
+		\wcf\system\user\notification\UserNotificationHandler::getInstance()->fireEvent('invited', 'be.bastelstu.chat.room', new \chat\system\user\notification\object\RoomUserNotificationObject($this->room), \wcf\util\ArrayUtil::toIntegerArray($this->parameters['recipients']), array('userID' => WCF::getUser()->userID));
 	}
 }
