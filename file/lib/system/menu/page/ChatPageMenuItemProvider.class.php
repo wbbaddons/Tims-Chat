@@ -87,6 +87,8 @@ class ChatPageMenuItemProvider extends \wcf\system\menu\page\DefaultPageMenuItem
 		if (!CHAT_ENABLE_MENU_BADGE) return 0;
 		
 		$rooms = $this->getRooms();
-		return array_reduce($rooms, function ($carry, $room) { return $carry + count($room->getUsers()); }, 0);
+		return array_reduce($rooms, function ($carry, $room) {
+			return $carry + count($room->getUsers());
+		}, 0);
 	}
 }
