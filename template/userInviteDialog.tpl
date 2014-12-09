@@ -70,7 +70,9 @@
 					data: {
 						actionName: 'invite',
 						className: 'chat\\data\\user\\UserAction',
-						recipients: userList
+						parameters: {
+							recipients: userList
+						}
 					},
 					success: function (data) {
 						new WCF.System.Notification('{lang}wcf.global.success{/lang}').show();
