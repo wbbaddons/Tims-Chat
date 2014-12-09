@@ -1,7 +1,6 @@
 <?php
 namespace chat\util;
 use \wcf\data\package\PackageCache;
-use \wcf\system\user\storage\UserStorageHandler;
 use \wcf\system\WCF;
 
 /**

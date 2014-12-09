@@ -43,9 +43,9 @@ class MessageLogDownloadPage extends \wcf\page\AbstractPage {
 	/**
 	 * given date
 	 * 
-	 * @var integer
+	 * @var \DateTime
 	 */
-	public $date = 0;
+	public $date = null;
 	
 	/**
 	 * active room
@@ -69,11 +69,13 @@ class MessageLogDownloadPage extends \wcf\page\AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		if ($this->date > TIME_NOW) {
+		$now = new \DateTime('now', WCF::getUser()->getTimeZone());
+		if ($this->date->getTimestamp() > $now->getTimestamp()) {
 			throw new \wcf\system\exception\IllegalLinkException();
 		}
 		
-		if (CHAT_LOG_ARCHIVETIME !== -1 && $this->date < strtotime('today 00:00:00 -'.ceil(CHAT_LOG_ARCHIVETIME / 1440).'day')) {
+		$oldest = new \DateTime('today -'.ceil(CHAT_LOG_ARCHIVETIME / 1440).'day', WCF::getUser()->getTimeZone());
+		if (CHAT_LOG_ARCHIVETIME !== -1 && $this->date->getTimestamp() < $oldest->getTimestamp()) {
 			throw new \wcf\system\exception\IllegalLinkException();
 		}
 		
@@ -85,7 +87,7 @@ class MessageLogDownloadPage extends \wcf\page\AbstractPage {
 			$file = new \wcf\system\io\File($this->tmpFile);
 			$file->write(WCF::getLanguage()->get('chat.acp.log.title') . ': ' . (string) $this->room . "\n");
 			
-			for ($start = $this->date, $end = $start + 86399; $start < $end; $start += 1800) {
+			for ($start = $this->date->getTimestamp(), $end = $this->date->add(\DateInterval::createFromDateString('1day'))->sub(\DateInterval::createFromDateString('1second'))->getTimestamp(); $start < $end; $start += 1800) {
 				$file->write(WCF::getTpl()->fetch('messageLogDownload', 'chat', array('messages' => \chat\data\message\MessageList::getMessagesBetween($this->room, $start, $start + 1799))));
 			}
 			
@@ -117,8 +119,12 @@ class MessageLogDownloadPage extends \wcf\page\AbstractPage {
 		if (isset($_REQUEST['date'])) $date = $_REQUEST['date'].' 00:00:00';
 		else $date = 'today 00:00:00';
 		
-		$this->date = @strtotime($date);
-		if ($this->date === false) throw new \wcf\system\exception\IllegalLinkException();
+		try {
+			$this->date = new \DateTime($date, WCF::getUser()->getTimeZone());
+		}
+		catch (\Exception $e) {
+			throw new \wcf\system\exception\IllegalLinkException();
+		}
 	}
 	
 	/**
@@ -127,9 +133,7 @@ class MessageLogDownloadPage extends \wcf\page\AbstractPage {
 	public function show() {
 		parent::show();
 		
-		$dateTime = \wcf\util\DateUtil::getDateTimeByTimestamp($this->date);
-		
-		$fileReader = new \wcf\util\FileReader($this->tmpFile, array('mimeType' => 'text/plain', 'filename' => str_replace(' ', '-', WCF::getLanguage()->get('chat.acp.log.title') . ' ' . $this->room.'-'.\wcf\util\DateUtil::format($dateTime, 'Y-m-d').'.txt')));
+		$fileReader = new \wcf\util\FileReader($this->tmpFile, array('mimeType' => 'text/plain', 'filename' => str_replace(' ', '-', WCF::getLanguage()->get('chat.acp.log.title') . ' ' . $this->room.'-'.\wcf\util\DateUtil::format($this->date, 'Y-m-d').'.txt')));
 		$fileReader->send();
 		
 		exit;

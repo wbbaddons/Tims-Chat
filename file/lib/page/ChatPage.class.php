@@ -134,7 +134,7 @@ class ChatPage extends \wcf\page\AbstractPage {
 		}
 		
 		if (MODULE_ATTACHMENT) {
-			$this->attachmentHandler = new \wcf\system\attachment\AttachmentHandler('be.bastelstu.chat.message', 0, '', 0);
+			$this->attachmentHandler = new \wcf\system\attachment\AttachmentHandler('be.bastelstu.chat.message', 0, \wcf\util\StringUtil::getRandomID(), 0);
 		}
 	}
 	

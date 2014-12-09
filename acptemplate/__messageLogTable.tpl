@@ -13,7 +13,7 @@
 			{foreach from=$messages item="message"}
 				<tr>
 					<td class="columnID">{$message->messageID}</td>
-					<td style="width: 1px !important;">{$message->time|date:"H:i:s"}</td>
+					<td style="width: 1px !important;">{$message->time|date:"chat.global.timeFormat"}</td>
 					<td class="columnIcon"><p class="framed">{@$message->getUserProfile()->getAvatar()->getImageTag(24)}</p></td>
 					<td class="columnTitle columnUsername right" style="width: 1px !important;">{$message->username}</td>
 					<td>{@$message->getFormattedMessage("text/simplified-html")}</td>
