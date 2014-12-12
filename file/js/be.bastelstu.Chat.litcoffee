@@ -84,7 +84,7 @@ exposed by a function if necessary.
 Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 
 		initialized = false
-		init = (roomID, config, titleTemplate, messageTemplate, userTemplate, userMenuTemplate) ->
+		init = (roomID, config, titleTemplate, messageTemplate, userTemplate, userMenuTemplate, userInviteDialogTemplate) ->
 			return false if initialized
 			initialized = true
 			
@@ -95,6 +95,17 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 			v.messageTemplate = messageTemplate
 			v.userTemplate = userTemplate
 			v.userMenuTemplate = userMenuTemplate
+			v.userInviteDialogTemplate = userInviteDialogTemplate
+			v.userInviteDialogUserListEntryTemplate = new WCF.Template """
+				<dl>
+					<dt></dt>
+					<dd>
+						<label>
+							<input type="checkbox" id="userInviteDialogUserID-{$user.objectID}" value="{$user.objectID}" checked="checked" /> {$user.label}
+						</label>
+					</dd>
+				</dl>
+			"""
 			
 			console.log 'Initializing'
 
@@ -246,7 +257,7 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 						toComplete = autocomplete.value.substring lastSpace + 1
 						nextSpace = toComplete.indexOf ' '
 						if nextSpace is -1
-							afterComplete = '';
+							afterComplete = ''
 						else
 							afterComplete = toComplete.substring nextSpace + 1
 							toComplete = toComplete.substring 0, nextSpace
@@ -361,12 +372,47 @@ Show invite dialog.
 						data:
 							actionName: 'prepareInvite'
 							className: 'chat\\data\\user\\UserAction'
-						showLoadingOverlay: true
-						suppressErrors: false
 						success: (data) ->
 							$('<div id="timsChatInviteDialog"></div>').appendTo 'body' unless $.wcfIsset 'timsChatInviteDialog'
 							
-							$('#timsChatInviteDialog').html(data.returnValues.template).wcfDialog
+							timsChatInviteDialog = $ '#timsChatInviteDialog'
+							
+							# Remove old event listeners
+							do timsChatInviteDialog.find('#userInviteDialogUsernameInput').off().remove
+							
+							timsChatInviteDialog.html v.userInviteDialogTemplate.fetch
+								users: data.returnValues.users
+								
+							new WCF.Search.User '#userInviteDialogUsernameInput', (user) ->
+								if $.wcfIsset "userInviteDialogUserID-#{user.objectID}"
+									$("#userInviteDialogUserID-#{user.objectID}").prop 'checked', true
+								else
+									$('#userInviteDialogUserList').append v.userInviteDialogUserListEntryTemplate.fetch
+										user: user
+										
+								$('#userInviteDialogUsernameInput').val ""
+							, false, [ WCF.User.username ], false
+							
+							$('#userInviteDialogFormSubmit').on 'click', (event) ->
+								checked = $ '#userInviteDialogUserList input[type=checkbox]:checked, #userInviteDialogFollowingList input[type=checkbox]:checked'
+								inviteUserList = [ ]
+								
+								checked.each (k, v) -> inviteUserList.push do $(v).val
+								
+								if inviteUserList.length
+									new WCF.Action.Proxy
+										autoSend: true
+										data:
+											actionName: 'invite'
+											className: 'chat\\data\\user\\UserAction'
+											parameters:
+												recipients: inviteUserList
+										success: (data) ->
+											do new WCF.System.Notification(WCF.Language.get 'wcf.global.success').show
+											
+								$('#timsChatInviteDialog').wcfDialog 'close'
+								
+							timsChatInviteDialog.wcfDialog
 								title: WCF.Language.get 'chat.global.invite'
 								
 

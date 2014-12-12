@@ -33,12 +33,16 @@ class UserAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$followingList->readObjects();
 		$users = $followingList->getObjects();
 		
-		WCF::getTPL()->assign(array(
-			'users' => $users
-		));
+		$json = array();
+		foreach ($users as $user) {
+			$json[] = array(
+				'userID' => $user->userID,
+				'username' => $user->username
+			);
+		}
 		
 		return array(
-			'template' => WCF::getTPL()->fetch('userInviteDialog', 'chat')
+			'users' => $json
 		);
 	}
 	

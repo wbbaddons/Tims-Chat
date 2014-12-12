@@ -52,6 +52,7 @@
 						{capture assign='messageTemplate'}{include application='chat' file='message'}{/capture}
 						{capture assign='userTemplate'}{include application='chat' file='userListUser'}{/capture}
 						{capture assign='userMenuTemplate'}{include application='chat' file='userListUserMenu'}{/capture}
+						{capture assign='userInviteDialogTemplate'}{include application='chat' file='userInviteDialog'}{/capture}
 						
 						var config = {
 							reloadTime: {@CHAT_RELOADTIME},
@@ -68,7 +69,8 @@
 							new WCF.Template('{literal}{if $newMessageCount}({#$newMessageCount}) {/if}{$title} - {/literal}{"chat.global.title"|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'),
 							new WCF.Template('{@$messageTemplate|encodeJS}'),
 							new WCF.Template('{@$userTemplate|encodeJS}'),
-							new WCF.Template('{@$userMenuTemplate|encodeJS}')
+							new WCF.Template('{@$userMenuTemplate|encodeJS}'),
+							new WCF.Template('{@$userInviteDialogTemplate|encodeJS}')
 						);
 						
 						{event name='afterInit'}
