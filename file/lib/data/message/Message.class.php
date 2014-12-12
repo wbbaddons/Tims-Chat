@@ -128,7 +128,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 				$username = \chat\util\ChatUtil::gradient($username, $this->color1, $this->color2);
 			}
 			else {
-				$username = '<span class="defaultColor">'.$username.'</span>';
+				$username = '<span class="defaultColor">'.\wcf\util\StringUtil::encodeHTML($username).'</span>';
 			}
 		}
 		
