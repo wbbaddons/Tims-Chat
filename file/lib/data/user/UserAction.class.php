@@ -27,7 +27,8 @@ class UserAction extends \wcf\data\AbstractDatabaseObjectAction {
 		
 		$room = \chat\data\room\RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID);
 		
-		if (!$room || !$room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
+		if ($room === null) throw new \wcf\system\exception\IllegalLinkException();
+		if (!$room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 	}
 	
 	/**
@@ -62,7 +63,8 @@ class UserAction extends \wcf\data\AbstractDatabaseObjectAction {
 		
 		$this->room = \chat\data\room\RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID);
 		
-		if (!$this->room || !$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
+		if ($this->room === null) throw new \wcf\system\exception\IllegalLinkException();
+		if (!$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 		
 		if (!isset($this->parameters['recipients'])) throw new \wcf\system\exception\UserInputException("recipients");
 	}
