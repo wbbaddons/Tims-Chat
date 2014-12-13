@@ -40,8 +40,8 @@
 	</category>
 	
 	<category name="chat.notification">
-		<item name="chat.notification.invited.title"><![CDATA[TODO: Jemand möchte mit Ihnen chatten!]]></item>
-		<item name="chat.notification.invited.message"><![CDATA[TODO: „{$author->username}“ möchte mit Ihnen im Chatraum „{$userNotificationObject->getTitle()}“ chatten!]]></item>
+		<item name="chat.notification.invited.title"><![CDATA[Someone wants to chat with you!]]></item>
+		<item name="chat.notification.invited.message"><![CDATA[“{$author->username}” wants to chat with you in “{$userNotificationObject->getTitle()}”!]]></item>
 	</category>
 	
 	<category name="wcf.acl.option">
@@ -60,6 +60,7 @@
 		<item name="wcf.acp.group.option.user.chat.canEnter"><![CDATA[Can enter chat]]></item>
 		<item name="wcf.acp.group.option.user.chat.canWrite"><![CDATA[Can write messages]]></item>
 		<item name="wcf.acp.group.option.user.chat.canTempRoom"><![CDATA[Can create temporary rooms]]></item>
+		<item name="wcf.acp.group.option.user.chat.canInvite"><![CDATA[Can invite users to chat]]></item>
 		<item name="wcf.acp.group.option.user.chat.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.chat.allowedBBCodes.description"><![CDATA[Selected BBCodes may be used by members of this group.]]></item>
 		<item name="wcf.acp.group.option.user.chat.canUploadAttachment"><![CDATA[Can upload attachments]]></item>

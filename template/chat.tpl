@@ -192,12 +192,14 @@
 							</li>
 						{/if}
 						
-						<li>
-							<a id="timsChatInvite" class="button jsTooltip" title="{lang}chat.global.invite{/lang}">
-								<span class="icon icon16 icon-user"></span>
-								<span class="invisible">{lang}chat.global.invite{/lang}</span>
-							</a>
-						</li>
+						{if $__wcf->session->getPermission('user.chat.canInvite')}
+							<li>
+								<a id="timsChatInvite" class="button jsTooltip" title="{lang}chat.global.invite{/lang}">
+									<span class="icon icon16 icon-user"></span>
+									<span class="invisible">{lang}chat.global.invite{/lang}</span>
+								</a>
+							</li>
+						{/if}
 						
 						<li>
 							<a id="timsChatClear" class="button jsTooltip" title="{lang}chat.global.clear{/lang}">

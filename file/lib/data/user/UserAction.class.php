@@ -21,7 +21,13 @@ class UserAction extends \wcf\data\AbstractDatabaseObjectAction {
 	 * Validates invite preparation.
 	 */
 	public function validatePrepareInvite() {
-		// Todo: Proper validation
+		WCF::getSession()->checkPermissions(array('user.chat.canInvite'));
+		
+		if (!WCF::getUser()->chatRoomID) throw new \wcf\system\exception\PermissionDeniedException();
+		
+		$room = \chat\data\room\RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID);
+		
+		if (!$room || !$room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
 	}
 	
 	/**
@@ -50,14 +56,15 @@ class UserAction extends \wcf\data\AbstractDatabaseObjectAction {
 	 * Validates invites.
 	 */
 	public function validateInvite() {
-		if (!isset($this->parameters['recipients'])) throw new \wcf\system\exception\UserInputException("recipients");
+		WCF::getSession()->checkPermissions(array('user.chat.canInvite'));
 		
-		if (WCF::getUser()->chatRoomID) {
-			$this->room = \chat\data\room\RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID);
-		}
-		else {
-			throw new \wcf\system\exception\UserInputException("roomID");
-		}
+		if (!WCF::getUser()->chatRoomID) throw new \wcf\system\exception\PermissionDeniedException();
+		
+		$this->room = \chat\data\room\RoomCache::getInstance()->getRoom(WCF::getUser()->chatRoomID);
+		
+		if (!$this->room || !$this->room->canEnter()) throw new \wcf\system\exception\PermissionDeniedException();
+		
+		if (!isset($this->parameters['recipients'])) throw new \wcf\system\exception\UserInputException("recipients");
 	}
 	
 	/**

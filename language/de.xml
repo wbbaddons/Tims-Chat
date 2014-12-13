@@ -60,6 +60,7 @@
 		<item name="wcf.acp.group.option.user.chat.canEnter"><![CDATA[Kann Chat betreten]]></item>
 		<item name="wcf.acp.group.option.user.chat.canWrite"><![CDATA[Kann im Chat schreiben]]></item>
 		<item name="wcf.acp.group.option.user.chat.canTempRoom"><![CDATA[Kann temporäre Räume erstellen]]></item>
+		<item name="wcf.acp.group.option.user.chat.canInvite"><![CDATA[Kann Benutzer zum Chatten einladen]]></item>
 		<item name="wcf.acp.group.option.user.chat.allowedBBCodes"><![CDATA[Erlaubte BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.chat.allowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe verwendet werden.]]></item>
 		<item name="wcf.acp.group.option.user.chat.canUploadAttachment"><![CDATA[Kann Dateien anhängen]]></item>
