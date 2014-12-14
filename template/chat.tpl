@@ -153,14 +153,14 @@
 						</li>
 						
 						<li>
-							<a id="timsChatFullscreen" accesskey="f" class="button timsChatToggle jsTooltip" title="{lang}chat.global.fullscreen{/lang}" data-status="0">
+							<a id="timsChatFullscreen" accesskey="f" class="button{if $__wcf->getUser()->chatButtonFullscreen} active{/if} timsChatToggle persists jsTooltip" title="{lang}chat.global.fullscreen{/lang}" data-status="{@$__wcf->getUser()->chatButtonFullscreen}">
 									<span class="icon icon16 icon-fullscreen"></span>
 									<span class="invisible">{lang}chat.global.fullscreen{/lang}</span>
 							</a>
 						</li>
 						
 						<li>
-							<a id="timsChatNotify" accesskey="n" class="button timsChatToggle jsTooltip" title="{lang}chat.global.notify{/lang}" data-status="0">
+							<a id="timsChatNotify" accesskey="n" class="button{if $__wcf->getUser()->chatButtonNotify} active{/if} timsChatToggle persists jsTooltip" title="{lang}chat.global.notify{/lang}" data-status="{@$__wcf->getUser()->chatButtonNotify}">
 								<span class="icon icon16 icon-bell-alt"></span>
 								<span class="invisible">{lang}chat.global.notify{/lang}</span>
 							</a>
@@ -168,7 +168,7 @@
 						
 						{if MODULE_SMILEY && $smileyCategories|count}
 						<li>
-							<a id="timsChatSmilies" accesskey="e" class="button{if ENABLE_SMILIES_DEFAULT_VALUE} active{/if} timsChatToggle jsTooltip" title="{lang}chat.global.smilies{/lang}" data-status="{@ENABLE_SMILIES_DEFAULT_VALUE}">
+							<a id="timsChatSmilies" accesskey="e" class="button{if $__wcf->getUser()->chatButtonSmilies} active{/if} timsChatToggle persists jsTooltip" title="{lang}chat.global.smilies{/lang}" data-status="{@$__wcf->getUser()->chatButtonSmilies}">
 								<span class="icon icon16 icon-smile"></span>
 								<span class="invisible">{lang}chat.global.smilies{/lang}</span>
 							</a>
