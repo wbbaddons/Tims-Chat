@@ -34,6 +34,7 @@
 		<instruction type="pageMenu">pageMenu.xml</instruction>
 		<instruction type="aclOption">aclOption.xml</instruction>
 		<instruction type="acpMenu">acpMenu.xml</instruction>
+		<instruction type="userOption">userOption.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 		<instruction type="eventListener">eventListener.xml</instruction>
 		<instruction type="dashboardBox">dashboardBox.xml</instruction>

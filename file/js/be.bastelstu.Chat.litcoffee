@@ -181,7 +181,7 @@ Open the smiley wcfDialog
 Handle private channel menu
 
 			$('#timsChatMessageTabMenu > .tabMenu').on 'click', '.timsChatMessageTabMenuAnchor', ->
-				openPrivateChannel $(@).data 'userID' 
+				openPrivateChannel $(@).data 'userID'
 
 Handle submitting the form. The message will be validated by some basic checks, passed to the `submit` eventlisteners
 and afterwards sent to the server by an AJAX request.
@@ -318,8 +318,30 @@ Handle toggling of the toggleable buttons.
 					
 				do $('#timsChatInput').focus
 
+Handle saving of persistent toggleable buttons
+
+			$('.timsChatToggle.persists').click (event) ->
+				do event.preventDefault
+				
+				new WCF.Action.Proxy
+					autoSend: true
+					data:
+						actionName: 'updateOption'
+						className: 'chat\\data\\user\\UserAction'
+						parameters:
+							optionName: "chatButton#{$(@).attr('id').replace /^timsChat/, ''}"
+							optionValue: $(@).data 'status'
+					showLoadingOverlay: false
+					suppressErrors: true
+					
+
 Mark smilies as disabled when they are disabled.
 
+			if $('#timsChatSmilies').data('status') is 0
+				$('#smilies').addClass 'invisible'
+			else
+				$('#smilies').removeClass 'invisible'
+				
 			$('#timsChatSmilies').click (event) ->
 				if $(@).data 'status'
 					$('#smilies').removeClass 'invisible'
@@ -328,20 +350,34 @@ Mark smilies as disabled when they are disabled.
 
 Toggle fullscreen mode.
 
-			$('#timsChatFullscreen').click (event) ->
-				# Force dropdowns to reorientate
-				$('.dropdownMenu').data 'orientationX', ''
-				
-				if $(@).data 'status'
-					messageContainerSize = $('.timsChatMessageContainer').height()
+			do ->
+				fullscreen = (status = true) ->
+					if status
+						messageContainerSize = $('.timsChatMessageContainer').height()
+						
+						$('html').addClass 'fullscreen'
+						do $(window).resize
+					else
+						$('.timsChatMessageContainer').height messageContainerSize
+						$('#timsChatUserList').height userListSize
+						$('html').removeClass 'fullscreen'
+						do $(window).resize
+						
+				$('#timsChatFullscreen').click (event) ->
+					# Force dropdowns to reorientate
+					$('.dropdownMenu').data 'orientationX', ''
 					
-					$('html').addClass 'fullscreen'
-					do $(window).resize
+					if $(@).data 'status'
+						fullscreen on
+					else
+						fullscreen off
+
+Switch to fullscreen mode on mobile devices or if fullscreen is active on boot
+
+				if $('#timsChatFullscreen').data('status') is 1
+					fullscreen on
 				else
-					$('.timsChatMessageContainer').height messageContainerSize
-					$('#timsChatUserList').height userListSize
-					$('html').removeClass 'fullscreen'
-					do $(window).resize
+					do $('#timsChatFullscreen').click if WCF.System.Mobile.UX._enabled
 
 Toggle checkboxes.
 
@@ -433,12 +469,20 @@ Enable duplicate tab detection.
 Ask for permissions to use Desktop notifications when notifications are activated.
 
 			if window.Notification?
-				$('#timsChatNotify').click (event) ->
-					return unless $(@).data 'status'
-					unless window.Notification.permission is 'granted'
-						window.Notification.requestPermission (permission) ->
-							window.Notification.permission ?= permission
-			
+				do ->
+					askForPermission = ->
+						unless window.Notification.permission is 'granted'
+							window.Notification.requestPermission (permission) ->
+								window.Notification.permission ?= permission
+								
+					if $('#timsChatNotify').data('status') is 1
+						do askForPermission
+						
+					$('#timsChatNotify').click (event) ->
+						return unless $(@).data 'status'
+						
+						do askForPermission
+						
 			events.newMessage.add notify
 
 Initialize the `PeriodicalExecuter`s
@@ -465,10 +509,6 @@ load messages if the appropriate event arrives.
 				be.bastelstu.wcf.push.onMessage 'be.bastelstu.chat.roomChange', refreshRoomList
 				be.bastelstu.wcf.push.onMessage 'be.bastelstu.chat.join', refreshRoomList
 				be.bastelstu.wcf.push.onMessage 'be.bastelstu.chat.leave', refreshRoomList
-
-Switch to fullscreen mode on mobile devices
-
-			do $('#timsChatFullscreen').click if WCF.System.Mobile.UX._enabled
 
 Finished! Enable the input now and join the chat.
 
