@@ -186,6 +186,8 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.global.message"><![CDATA[Nachricht]]></item>
 		<item name="chat.global.whispers"><![CDATA[Flüstert]]></item>
 		
+		<item name="chat.global.autoAway"><![CDATA[{literal}Automatische Abwesenheit{if $time}: {$time}{/if}{/literal}]]></item>
+		
 		<item name="chat.global.information"><![CDATA[Information]]></item>
 		<item name="chat.global.information.chatUpdate"><![CDATA[Der Chat wurde aktualisiert. Bitte laden Sie die Seite neu, da es sonst zu Fehlern kommen kann.]]></item>
 		<item name="chat.global.information.suspension"><![CDATA[{lang}chat.suspension.{$suspension->type}{/lang} ({if $room}{$room}{else}{lang}chat.room.global{/lang}{/if})]]></item>

@@ -94,7 +94,7 @@
 		<item name="wcf.acp.option.category.chat.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.module_chat"><![CDATA[Tim’s Chat]]></item>
 		<item name="wcf.acp.option.chat_reloadtime"><![CDATA[Reload time]]></item>
-		<item name="wcf.acp.option.chat_reloadtime.description"><![CDATA[Time between to requests to the server [time in seconds]]]></item>
+		<item name="wcf.acp.option.chat_reloadtime.description"><![CDATA[Time between two requests to the server [time in seconds]]]></item>
 		<item name="wcf.acp.option.chat_lastmessages"><![CDATA[Number of old messages]]></item>
 		<item name="wcf.acp.option.chat_lastmessages.description"><![CDATA[Number of messages that will be shown when entering a chat room.]]></item>
 		<item name="wcf.acp.option.chat_display_join_leave"><![CDATA[Show join and leaves]]></item>
@@ -185,6 +185,8 @@ Please try to reload the chat.]]></item>
 		
 		<item name="chat.global.message"><![CDATA[Message]]></item>
 		<item name="chat.global.whispers"><![CDATA[Whispers]]></item>
+		
+		<item name="chat.global.autoAway"><![CDATA[{literal}Automatically set to away{if $time} at {$time}{/if}{/literal}]]></item>
 		
 		<item name="chat.global.information"><![CDATA[Information]]></item>
 		<item name="chat.global.information.chatUpdate"><![CDATA[The chat was updated. Please reload the page.]]></item>

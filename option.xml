@@ -36,6 +36,12 @@
 				<minvalue>1</minvalue>
 				<maxvalue>15</maxvalue>
 			</option>
+			<option name="chat_autoaway">
+				<categoryname>chat.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1800</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
 			<option name="chat_lastmessages">
 				<categoryname>chat.general</categoryname>
 				<optiontype>integer</optiontype>

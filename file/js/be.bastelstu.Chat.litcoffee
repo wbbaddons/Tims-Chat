@@ -46,6 +46,7 @@ exposed by a function if necessary.
 		hidePrivateChannelTopic = no
 		
 		isJoining = no
+		awayStatus = null
 		fileUploaded = no
 		errorVisible = false
 		inputErrorHidingTimer = null
@@ -205,7 +206,7 @@ and afterwards sent to the server by an AJAX request.
 					events.submit.fire obj
 					
 					obj.text
-				
+					
 				new WCF.Action.Proxy
 					autoSend: true
 					data:
@@ -283,6 +284,10 @@ Reset autocompleter to default status, when the input is `click`ed, as the posit
 					offset: 0
 					value: null
 					caret: null
+					
+			$('#timsChatInput').on 'input change', (event) ->
+				do pe.autoAway?.resume unless userList.current?[WCF.User.userID]?.awayStatus?
+				
 
 Bind user menu functions
 
@@ -489,6 +494,7 @@ Initialize the `PeriodicalExecuter`s
 
 			pe.refreshRoomList = new WCF.PeriodicalExecuter refreshRoomList, 60e3
 			pe.getMessages = new WCF.PeriodicalExecuter getMessages, v.config.reloadTime * 1e3
+			pe.autoAway = new WCF.PeriodicalExecuter autoAway, v.config.autoAwayTime * 1e3 if v.config.autoAwayTime > 0
 
 Initialize the [**Push**](https://github.com/wbbaddons/Push) integration of **Tims Chat**. Once
 the browser is connected to **Push** periodic message loading will be disabled and **Tims Chat** will
@@ -536,6 +542,29 @@ Hides the error message below the input.
 			inputErrorHidingTimer = null
 			
 			do $('#timsChatInputContainer').removeClass('formError').find('.innerError').hide
+			
+
+Sets user’s status to away
+
+		autoAway = ->
+			do pe.autoAway?.stop
+			
+			return if userList.current[WCF.User.userID].awayStatus?
+			
+			text = $('#timsChatInput').val()
+			caret = do $('#timsChatInput').getCaret
+			
+			insertText "/away #{WCF.Language.get 'chat.global.autoAway', {time: do (new Date).toTimeString}}",
+				prepend: false
+				append: false
+				submit: true
+				
+			if text.length > 0
+				insertText text,
+					prepend: false
+					append: false
+					caret: caret
+					
 
 Free the fish.
 
@@ -744,7 +773,7 @@ Rebuild the userlist based on the given `users`.
 		handleUsers = (users) ->
 			foundUsers = { }
 			userList.current = { }
-
+			
 			for user in users
 				do (user) ->
 					userList.current[user.userID] = userList.allTime[user.userID] = user
@@ -764,7 +793,15 @@ Move the user to the new position if he was found in the old list.
 							element.removeClass 'away'
 							element.removeAttr 'title'
 							element.data 'tooltip', ''
-						
+							
+						if user.userID is WCF.User.userID and user.awayStatus isnt awayStatus
+							if user.awayStatus?
+								do pe.autoAway?.stop # Away
+							else
+								do pe.autoAway?.resume # Back
+								
+							awayStatus = user.awayStatus
+							
 						if user.suspended
 							element.addClass 'suspended'
 						else
@@ -828,6 +865,7 @@ the existing text. If `options.submit` is true the message will be sent to the s
 				prepend: false
 				append: true
 				submit: false
+				caret: false
 			, options
 			
 			text = text + $('#timsChatInput').val() if options.prepend
@@ -843,6 +881,8 @@ the existing text. If `options.submit` is true the message will be sent to the s
 			if options.submit
 				do $('#timsChatForm').submit
 			else
+				$('#timsChatInput').setCaret options.caret if options.caret
+				
 				do $('#timsChatInput').focus
 
 Send out notifications for the given `message`. The number of unread messages will be prepended to `document.title` and if available desktop notifications will be sent.

@@ -11,6 +11,7 @@
 				(function ($, window) {
 					$(function(){
 						WCF.Language.addObject({
+							'chat.global.autoAway': '{lang}chat.global.autoAway{/lang}',
 							'chat.global.ban': '{lang}chat.global.ban{/lang}',
 							'chat.global.closePrivateChannel': '{lang}chat.global.closePrivateChannel{/lang}',
 							'chat.global.closeTopic': '{lang}chat.global.closeTopic{/lang}',
@@ -56,7 +57,8 @@
 							reloadTime: {@CHAT_RELOADTIME},
 							messageURL: '{link application="chat" controller="NewMessages"}{/link}',
 							installedCommands: [ {implode from=$commands item='command'}'{$command|encodeJS}'{/implode} ],
-							messageTypes: { {implode from=$messageTypes key='name' item='messageType'}'{$name|substr:5|encodeJS}': {$messageType}{/implode} }
+							messageTypes: { {implode from=$messageTypes key='name' item='messageType'}'{$name|substr:5|encodeJS}': {$messageType}{/implode} },
+							autoAwayTime: {@CHAT_AUTOAWAY}
 						};
 						
 						{event name='beforeInit'}
