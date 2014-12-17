@@ -703,6 +703,13 @@ Insert the given messages into the chat stream.
 					createNewMessage = yes
 					clearChannel 0
 					
+				if message.isInPrivateChannel and message.sender is WCF.User.userID
+					container = $ "#timsChatMessageContainer#{message.receiver} > ul"
+				else if message.isInPrivateChannel
+					container = $ "#timsChatMessageContainer#{message.sender} > ul"
+				else
+					container = $ '#timsChatMessageContainer0 > ul'
+					
 				if createNewMessage
 					message.isFollowUp = no
 					output = v.messageTemplate.fetch
@@ -716,32 +723,35 @@ Insert the given messages into the chat stream.
 					li.addClass 'ownMessage' if message.sender is WCF.User.userID
 					li.append output
 					
-					if message.isInPrivateChannel and message.sender is WCF.User.userID
-						li.appendTo $ "#timsChatMessageContainer#{message.receiver} > ul"
-					else if message.isInPrivateChannel
-						li.appendTo $ "#timsChatMessageContainer#{message.sender} > ul"
-					else
-						li.appendTo $ '#timsChatMessageContainer0 > ul'
+					li.appendTo container
 				else
 					message.isFollowUp = yes
 					output = v.messageTemplate.fetch
 						message: message
 						messageTypes: v.config.messageTypes
-					
-					if message.isInPrivateChannel and message.sender is WCF.User.userID
-						messageContainerID = message.receiver
-					else if message.isInPrivateChannel
-						messageContainerID = message.sender
-					else
-						messageContainerID = 0
 						
-					textContainer = $("#timsChatMessageContainer#{messageContainerID}").find '.timsChatMessage:last-child .timsChatTextContainer'
+					textContainer = container.find '.timsChatMessage:last-child .timsChatTextContainer'
 					textContainer.append $(output).find('.timsChatTextContainer li:last-child')
 					
 					# unmark messages
 					textContainer.parents('.timsChatMessage').removeClass 'checked'
 					textContainer.siblings('.timsChatMessageGroupMarker').prop 'checked', false
 					
+				if v.config.messagesPerTab
+					timsChatText = container.find '.timsChatText'
+					
+					if timsChatText.length > v.config.messagesPerTab
+						firstMessage = do timsChatText.first
+						timsChatMessage = firstMessage.parents '.timsChatMessage'
+						
+						if timsChatMessage.find('.timsChatTextContainer').children().length > 1
+							time = firstMessage.siblings(':first').find '> time'
+							timsChatMessage.find('.timsChatInnerMessage > time').replaceWith time
+							
+							do firstMessage.remove
+						else
+							do timsChatMessage.remove
+							
 				lastMessage = message
 				
 			$('.timsChatMessageContainer.active').scrollTop $('.timsChatMessageContainer.active').prop('scrollHeight') if $('#timsChatAutoscroll').data('status') is 1

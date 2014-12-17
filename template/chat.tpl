@@ -58,7 +58,8 @@
 							messageURL: '{link application="chat" controller="NewMessages"}{/link}',
 							installedCommands: [ {implode from=$commands item='command'}'{$command|encodeJS}'{/implode} ],
 							messageTypes: { {implode from=$messageTypes key='name' item='messageType'}'{$name|substr:5|encodeJS}': {$messageType}{/implode} },
-							autoAwayTime: {@CHAT_AUTOAWAY}
+							autoAwayTime: {@CHAT_AUTOAWAY},
+							messagesPerTab: {@$__wcf->getUser()->chatMessagesPerTab}
 						};
 						
 						{event name='beforeInit'}

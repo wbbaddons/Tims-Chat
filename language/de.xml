@@ -125,6 +125,11 @@
 		<item name="wcf.user.activityPoint.objectType.be.bastelstu.chat.activityPointEvent.message"><![CDATA[Chat-Nachrichten]]></item>
 	</category>
 	
+	<category name="wcf.user.option">
+		<item name="wcf.user.option.chatMessagesPerTab"><![CDATA[Chat-Nachrichten]]></item>
+		<item name="wcf.user.option.chatMessagesPerTab.description"><![CDATA[Anzahl der Chat-Nachrichten, die pro Tab angezeigt werden. [0 für unbeschränkt]]]></item>
+	</category>
+	
 	<category name="chat.error">
 		<item name="chat.error.notFound"><![CDATA[Der Befehl „{$exception->getCommand()}“ wurde nicht gefunden.]]></item>
 		<item name="chat.error.userNotFound"><![CDATA[Der Benutzer „{$exception->getUsername()}“ wurde nicht gefunden.]]></item>

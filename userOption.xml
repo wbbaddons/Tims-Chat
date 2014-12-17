@@ -19,6 +19,15 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			
+			<option name="chatMessagesPerTab">
+				<categoryname>settings.general.interface</categoryname>
+				<optiontype>integer</optiontype>
+				<visible>1</visible>
+				<editable>1</editable>
+				<defaultvalue>0</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
 		</options>
 	</import>
 </data>
