@@ -207,25 +207,17 @@ and afterwards sent to the server by an AJAX request.
 					
 					obj.text
 					
-				new WCF.Action.Proxy
-					autoSend: true
-					data:
-						actionName: 'send'
-						className: 'chat\\data\\message\\MessageAction'
-						parameters:
-							text: text
-							enableSmilies: $('#timsChatSmilies').data 'status'
-					showLoadingOverlay: false
-					success: ->
-						do hideInputError
-						
-						do getMessages
+				sendMessage text,
 					failure: (data) ->
-						return true unless (data?.returnValues?.errorType?) or (data?.message?)
+						if data.returnValues?.errorType?
+							error = data.returnValues.errorType
+						else if data.returnValues?.errorMessage
+							error = data.returnValues.errorMessage
+						else if data.message?
+							error = data.message
+							
+						showInputError error if error
 						
-						showInputError (data?.returnValues?.errorType) ? data.message
-						
-						false
 
 Autocomplete a username when TAB is pressed. The name to autocomplete is based on the current caret position.
 The the word the caret is in will be passed to `autocomplete` and replaced if a match was found.
@@ -525,6 +517,36 @@ Finished! Enable the input now and join the chat.
 			
 			true
 
+Send messages
+
+		sendMessage = (text, options) ->
+			options = $.extend
+				showLoadingOverlay: false
+				suppressErrors: false
+			, options
+			
+			new WCF.Action.Proxy
+				autoSend: true
+				data:
+					actionName: 'send'
+					className: 'chat\\data\\message\\MessageAction'
+					parameters:
+						text: text
+						enableSmilies: $('#timsChatSmilies').data 'status'
+				showLoadingOverlay: options.showLoadingOverlay
+				suppressErrors: options.suppressErrors
+				success: ->
+					do hideInputError
+					options.success?()
+					do getMessages
+					
+				failure: (data) ->
+					return true unless (data?.returnValues?.errorType?) or (data?.message?)
+					
+					options.failure? data
+					
+					false
+
 Shows an error message below the input.
 
 		showInputError = (message) ->
@@ -551,20 +573,9 @@ Sets user’s status to away
 			
 			return if userList.current[WCF.User.userID].awayStatus?
 			
-			text = $('#timsChatInput').val()
-			caret = do $('#timsChatInput').getCaret
-			
-			insertText "/away #{WCF.Language.get 'chat.global.autoAway', {time: do (new Date).toTimeString}}",
-				prepend: false
-				append: false
-				submit: true
+			sendMessage "/away #{WCF.Language.get 'chat.global.autoAway', { time: do (new Date).toTimeString }}",
+				suppressErrors: true
 				
-			if text.length > 0
-				insertText text,
-					prepend: false
-					append: false
-					caret: caret
-					
 
 Free the fish.
 
@@ -883,7 +894,7 @@ the existing text. If `options.submit` is true the message will be sent to the s
 			
 			# do not insert text if it would exceed the allowed length
 			maxLength = $('#timsChatInput').attr 'maxlength'
-			return if maxLength? and text.length > maxLength
+			return false if maxLength? and text.length > maxLength
 			
 			$('#timsChatInput').val text
 			$('#timsChatInput').trigger 'change'
@@ -894,6 +905,9 @@ the existing text. If `options.submit` is true the message will be sent to the s
 				$('#timsChatInput').setCaret options.caret if options.caret
 				
 				do $('#timsChatInput').focus
+				
+			true
+			
 
 Send out notifications for the given `message`. The number of unread messages will be prepended to `document.title` and if available desktop notifications will be sent.
 
