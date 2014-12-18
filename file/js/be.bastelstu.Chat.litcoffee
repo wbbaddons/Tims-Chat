@@ -992,7 +992,7 @@ Open private channel
 					
 					avatar = $ userList.allTime[userID].avatar[16]
 					avatar = $('<span class="userAvatar framed" />').wrapInner avatar
-					avatar.append "<span>#{userList.allTime[userID].username}</span>"
+					avatar.append "<span>#{WCF.String.escapeHTML userList.allTime[userID].username}</span>"
 					
 					anchor.wrapInner avatar
 					anchor.prepend '<span class="icon icon16 icon-warning-sign notifyIcon"></span>'
