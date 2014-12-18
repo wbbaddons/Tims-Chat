@@ -21,7 +21,7 @@
 			<option name="chat_force_room_select">
 				<categoryname>chat.general</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
+				<defaultvalue>1</defaultvalue>
 				<enableoptions>chat_enable_menu_badge</enableoptions>
 			</option>
 			<option name="chat_enable_menu_badge">
