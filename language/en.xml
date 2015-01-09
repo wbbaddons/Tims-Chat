@@ -161,6 +161,8 @@ Please try to reload the chat.]]></item>
 		<item name="chat.global.rooms"><![CDATA[Chatrooms]]></item>
 		<item name="chat.global.users"><![CDATA[Users]]></item>
 		
+		<item name="chat.global.error.join.full"><![CDATA[The room “{$room}” has reached the maximum amount of concurrent chatters. Please try again later.]]></item>
+		
 		<item name="chat.global.copyright"><![CDATA[<a href="http://tims.bastelstu.be"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}><strong>Tim’s Chat{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}</strong>, developed in <strong>Tim’s Bastelstu.be</strong></a>]]></item>
 		<item name="chat.global.copyright.leader"><![CDATA[Project Lead]]></item>
 		<item name="chat.global.copyright.developer"><![CDATA[Developers]]></item>
