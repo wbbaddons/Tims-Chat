@@ -71,6 +71,22 @@
 			
 			{include file='multipleLanguageInputJavascript' elementIdentifier='topic' forceSelection=false}
 			
+			<dl{if $errorField == 'maxUsers'} class="formError"{/if}>
+				<dt><label for="maxUsers">{lang}chat.acp.room.maxUsers{/lang}</label></dt>
+				<dd>
+					<input id="maxUsers" class="tiny" type="number" min="0" value="{$maxUsers}" name="maxUsers" />
+					{if $errorField == 'topic'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}chat.acp.room.topic.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+			
 			<dl id="groupPermissions">
 				<dt>{lang}wcf.acl.permissions{/lang}</dt>
 				<dd></dd>
