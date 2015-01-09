@@ -46,6 +46,10 @@
 						
 						{if MODULE_SMILEY}
 							new WCF.Message.Smilies();
+							
+							if (typeof $.fn.messageTabMenu === 'function') {
+								$('.messageTabMenu > .messageTabMenu').messageTabMenu().show();
+							}
 						{/if}
 						
 						{capture assign='messageTemplate'}{include application='chat' file='message'}{/capture}
@@ -134,7 +138,9 @@
 			</form>
 			
 			{if MODULE_SMILEY && $smileyCategories|count}
-				{include file='messageFormSmilies' wysiwygSelector=''}
+				<div id="timsChatSmileyContainer" class="messageTabMenu marginTop">
+					{include file='messageFormSmilies' wysiwygSelector=''}
+				</div>
 			{/if}
 			
 			<div id="timsChatOptions" class="marginTop">

@@ -156,11 +156,11 @@ Make the user leave the chat when **Tims Chat** is about to be unloaded.
 				
 Insert the appropriate smiley code into the input when a smiley is clicked.
 
-			$('#smilies').on 'click', 'img', -> insertText " #{$(@).attr('alt')} "
+			$('#timsChatSmileyContainer').on 'click', 'img', -> insertText " #{$(@).attr('alt')} "
 
 Copy the first loaded category of smilies so it won't get detached by wcfDialog
 
-			overlaySmileyList = $('<ul class="smileyList">').append $('#smilies .smileyList').clone().children()
+			overlaySmileyList = $('<ul class="smileyList">').append $('#timsChatSmileyContainer .smileyList').clone().children()
 
 Add click event to smilies in the overlay
 
@@ -322,9 +322,9 @@ Mark smilies as disabled when they are disabled.
 
 			$('#timsChatSmilies').click (event) ->
 				if $(@).data 'status'
-					$('#smilies').removeClass 'invisible'
+					$('#timsChatSmileyContainer').removeClass 'invisible'
 				else
-					$('#smilies').addClass 'invisible'
+					$('#timsChatSmileyContainer').addClass 'invisible'
 
 Toggle fullscreen mode.
 
