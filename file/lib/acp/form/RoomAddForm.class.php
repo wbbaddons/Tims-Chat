@@ -39,6 +39,13 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 	public $topic = '';
 	
 	/**
+	 * Maximum number of users
+	 * 
+	 * @var	integer
+	 */
+	public $maxUsers = 0;
+	
+	/**
 	 * @see	\wcf\page\AbstractPage::__construct()
 	 */
 	public function __run() {
@@ -67,6 +74,7 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 		
 		if (I18nHandler::getInstance()->isPlainValue('title')) $this->title = I18nHandler::getInstance()->getValue('title');
 		if (I18nHandler::getInstance()->isPlainValue('topic')) $this->topic = I18nHandler::getInstance()->getValue('topic');
+		if (isset($_POST['maxUsers']) $this->maxUsers = intval($_POST['maxUsers']);
 	}
 	
 	/**
@@ -90,7 +98,8 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 		// save room
 		$this->objectAction = new \chat\data\room\RoomAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'title' => $this->title,
-			'topic' => $this->topic
+			'topic' => $this->topic,
+			'maxUsers' => $this->maxUsers
 		))));
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
@@ -116,7 +125,7 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 		}
 		
 		\wcf\system\acl\ACLHandler::getInstance()->save($roomID, $this->objectTypeID);
-		\wcf\system\acl\ACLHandler::getInstance()->disableAssignVariables(); 
+		\wcf\system\acl\ACLHandler::getInstance()->disableAssignVariables();
 		\chat\system\permission\PermissionHandler::clearCache();
 		
 		$this->saved();
@@ -144,6 +153,7 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 			'action' => 'add',
 			'title' => $this->title,
 			'topic' => $this->topic,
+			'maxUsers' => $this->maxUsers,
 			'objectTypeID' => $this->objectTypeID
 		));
 	}
