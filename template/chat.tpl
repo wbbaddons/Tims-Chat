@@ -4,7 +4,7 @@
 	<title>{if $room}{$room} - {/if}{lang}chat.global.title{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude'}
-	{if $room}
+	{if $room && (!$room->maxUsers || $room->getUsers()|count < $room->maxUsers)}
 		{include file='javascriptInclude' application='chat'}
 		<script data-relocate="true">
 			//<![CDATA[
@@ -94,7 +94,7 @@
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
-	{if $room}
+	{if $room && (!$room->maxUsers || $room->getUsers()|count < $room->maxUsers)}
 		{capture assign='sidebar'}{include application='chat' file='sidebar'}{/capture}
 		{include file='header' sandbox=false sidebarOrientation='right'}
 		
@@ -224,6 +224,10 @@
 		</header>
 		
 		{include file='userNotice'}
+		
+		{if $room && ($room->getUsers()|count >= $room->maxUsers)}
+			<p class="warning">{lang room=$room}chat.global.error.join.full{/lang}</p>
+		{/if}
 		
 		<div id="chatRoomListContainer" class="container marginTop">
 			<ul class="containerList">
