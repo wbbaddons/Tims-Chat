@@ -1,12 +1,9 @@
 language: php
 php:
-  - 5.5
-  - 5.4
+  - 5.6
   - 5.3
 before_install:
-  - pear config-set auto_discover 1
-  - pear install pear/PHP_CodeSniffer
-  - pear install pear.phpunit.de/phpcpd
+  - pyrus install pear/PHP_CodeSniffer
   - phpenv rehash
 before_script:
   - git clone --branch=master --depth=1 --quiet git://github.com/WoltLab/WCF.git WCF
@@ -17,4 +14,3 @@ before_script:
 script:
   - find file -type f -name '*.php' |xargs -I file php -l file
   - phpcs -p --extensions=php --standard="`pwd`/WCF/CodeSniff/WCF" file
-  - phpcpd --verbose --min-lines 10 file ;  exit 0
