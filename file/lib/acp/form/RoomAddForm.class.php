@@ -74,7 +74,7 @@ class RoomAddForm extends \wcf\form\AbstractForm {
 		
 		if (I18nHandler::getInstance()->isPlainValue('title')) $this->title = I18nHandler::getInstance()->getValue('title');
 		if (I18nHandler::getInstance()->isPlainValue('topic')) $this->topic = I18nHandler::getInstance()->getValue('topic');
-		if (isset($_POST['maxUsers']) $this->maxUsers = intval($_POST['maxUsers']);
+		if (isset($_POST['maxUsers'])) $this->maxUsers = intval($_POST['maxUsers']);
 	}
 	
 	/**
