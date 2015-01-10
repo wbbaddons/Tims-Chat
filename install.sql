@@ -38,6 +38,7 @@ CREATE TABLE chat1_room (
 	showOrder	INT(10)		NOT NULL DEFAULT 0,
 	permanent	TINYINT(1)	NOT NULL DEFAULT 1,
 	owner		INT(10)		DEFAULT NULL,
+	maxUsers	INT(10)		NOT NULL DEFAULT 0
 	
 	KEY (showOrder),
 	KEY (owner)

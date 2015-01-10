@@ -83,13 +83,14 @@ class RoomEditForm extends RoomAddForm {
 		}
 		
 		\wcf\system\acl\ACLHandler::getInstance()->save($this->roomID, $this->objectTypeID);
-		\wcf\system\acl\ACLHandler::getInstance()->disableAssignVariables(); 
+		\wcf\system\acl\ACLHandler::getInstance()->disableAssignVariables();
 		\chat\system\permission\PermissionHandler::clearCache();
 		
 		// update room
 		$this->objectAction = new \chat\data\room\RoomAction(array($this->roomID), 'update', array('data' => array_merge($this->additionalFields, array(
 			'title' => $this->title,
-			'topic' => $this->topic
+			'topic' => $this->topic,
+			'maxUsers' => $this->maxUsers
 		))));
 		$this->objectAction->executeAction();
 		
@@ -113,6 +114,7 @@ class RoomEditForm extends RoomAddForm {
 			
 			$this->title = $this->roomObj->title;
 			$this->topic = $this->roomObj->topic;
+			$this->maxUsers = $this->roomObj->maxUsers;
 		}
 	}
 	

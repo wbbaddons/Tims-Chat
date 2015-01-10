@@ -6,7 +6,7 @@
 			<div>
 				<div>
 					<div class="containerHeadline">
-						<h3><a href="{link application='chat' controller='Chat' object=$room}{/link}">{$room}</a> <span class="badge">{#$users|count}</span></h3>
+						<h3><a href="{link application='chat' controller='Chat' object=$room}{/link}">{$room}</a> <span class="badge">{#$users|count}{if $room->maxUsers} / {#$room->maxUsers}{/if}</span></h3>
 						<p>{$room->topic|language}</p>
 					</div>
 					

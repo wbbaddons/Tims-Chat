@@ -962,7 +962,7 @@ Fetch the roomlist from the server and update it in the GUI.
 					roomList =
 						active: {}
 						available: {}
-					
+						
 					do $('.timsChatRoom').remove
 					$('#toggleRooms .badge').text data.returnValues.length
 					
@@ -970,15 +970,21 @@ Fetch the roomlist from the server and update it in the GUI.
 						roomList.available[room.roomID] = room
 						roomList.active = room if room.active
 						
-						li = $ '<li></li>'
+						li = $ '<li />'
 						li.addClass 'timsChatRoom'
 						li.addClass 'active' if room.active
 						a = $("""<a href="#{room.link}">#{WCF.String.escapeHTML(room.title)}</a>""")
 						a.data 'roomID', room.roomID
 						a.appendTo li
-						$("""<span class="badge">#{WCF.String.formatNumeric room.userCount}</span>""").appendTo li
+						
+						span = $ '<span />'
+						span.addClass 'badge'
+						span.text WCF.String.formatNumeric room.userCount
+						span.append " / #{WCF.String.formatNumeric room.maxUsers}" if room.maxUsers > 0
+						
+						span.appendTo li
 						$('#timsChatRoomList ul').append li
-					
+						
 					if window.history?.replaceState?
 						$('.timsChatRoom a').click (event) ->
 							do event.preventDefault
@@ -991,7 +997,7 @@ Fetch the roomlist from the server and update it in the GUI.
 							join target.data 'roomID'
 							$('#timsChatRoomList .active').removeClass 'active'
 							target.parent().addClass 'active'
-					
+							
 					console.log "Found #{data.returnValues.length} rooms"
 
 Shows an unrecoverable error with the given text.
@@ -1036,6 +1042,7 @@ Joins a room.
 					className: 'chat\\data\\room\\RoomAction'
 					parameters:
 						roomID: roomID
+				suppressErrors: true
 				success: (data) ->
 					loading = false
 					roomList.active = data.returnValues
@@ -1056,7 +1063,19 @@ Joins a room.
 					
 					do $('#timsChatInput').enable().focus
 				failure: (data) ->
-					showError WCF.Language.get 'chat.error.join', data
+					if data?.returnValues?.fieldName is 'room'
+						isJoining = no
+						loading = false
+						
+						window.history.replaceState {}, '', roomList.active.link if window.history?.replaceState?
+						
+						$('<div>').attr('id', 'timsChatJoinErrorDialog').append("<p>#{data.returnValues.errorType}</p>").wcfDialog
+							title: WCF.Language.get 'wcf.global.error.title'
+							
+						do $('#timsChatInput').enable().focus
+						do refreshRoomList
+					else
+						showError WCF.Language.get 'chat.error.join', data
 				after: ->
 					isJoining = no
 

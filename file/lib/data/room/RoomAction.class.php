@@ -147,6 +147,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 				'roomID' => (int) $room->roomID,
 				'active' => $this->parameters['room'] && $room->roomID == $this->parameters['room']->roomID,
 				'userCount' => count($room->getUsers()),
+				'maxUsers' => (int) $room->maxUsers,
 				'permissions' => array(
 					'canBan' => (boolean) $room->canBan(),
 					'canMute' => (boolean) $room->canMute()
@@ -169,6 +170,12 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		$room = RoomCache::getInstance()->getRoom($this->parameters['roomID']);
 		if ($room === null) throw new exception\UserInputException('roomID');
 		if (!$room->canEnter()) throw new exception\PermissionDeniedException();
+		
+		if ($room->maxUsers && count($room->getUsers()) >= $room->maxUsers) {
+			$errorMessage = WCF::getLanguage()->getDynamicVariable('chat.global.error.join.full', array('room' => $room));
+			
+			throw new exception\UserInputException('room', $errorMessage);
+		}
 	}
 	
 	/**
@@ -260,6 +267,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			)),
 			'roomID' => (int) $room->roomID,
 			'userCount' => count($room->getUsers()),
+			'maxUsers' => (int) $room->maxUsers,
 			'permissions' => array(
 				'canBan' => (boolean) $room->canBan(),
 				'canMute' => (boolean) $room->canMute()
