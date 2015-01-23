@@ -236,7 +236,7 @@
 			<script data-relocate="true">
 				//<![CDATA[
 				(function($, window, undefined) {
-					proxy = new WCF.Action.Proxy({
+					var proxy = new WCF.Action.Proxy({
 						data: {
 							actionName: 'getBoxRoomList',
 							className: 'chat\\data\\room\\RoomAction',
@@ -251,8 +251,10 @@
 						}
 					});
 					
-					be.bastelstu.wcf.push.onMessage('be.bastelstu.chat.join', $.proxy(proxy.sendRequest, proxy));
-					be.bastelstu.wcf.push.onMessage('be.bastelstu.chat.leave', $.proxy(proxy.sendRequest, proxy));
+					$(function () {
+						be.bastelstu.wcf.push.onMessage('be.bastelstu.chat.join', proxy.sendRequest.bind(proxy));
+						be.bastelstu.wcf.push.onMessage('be.bastelstu.chat.leave', proxy.sendRequest.bind(proxy));
+					});
 				})(jQuery, this);
 				//]]>
 			</script>
