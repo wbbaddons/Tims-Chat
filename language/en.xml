@@ -149,6 +149,7 @@ Please try to reload the chat.]]></item>
 		<item name="chat.error.reload"><![CDATA[Reload]]></item>
 		
 		<item name="chat.error.whisper.ignoresYou"><![CDATA[“{$user}” has blocked you.]]></item>
+		<item name="chat.error.invite.ignored"><![CDATA[The following users have blocked you: {implode from=$usernames item=username}{$username}{/implode}]]></item>
 	</category>
 	
 	<category name="chat.global">

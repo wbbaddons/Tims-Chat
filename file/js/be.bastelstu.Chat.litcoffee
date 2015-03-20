@@ -192,7 +192,7 @@ Open the smiley wcfDialog
 Handle private channel menu
 
 			$('#timsChatMessageTabMenu > .tabMenu').on 'click', '.timsChatMessageTabMenuAnchor', ->
-				openPrivateChannel $(@).data 'userID' 
+				openPrivateChannel $(@).data 'userID'
 
 Handle submitting the form. The message will be validated by some basic checks, passed to the `submit` eventlisteners
 and afterwards sent to the server by an AJAX request.
@@ -410,11 +410,19 @@ Show invite dialog.
 										success: (data) ->
 											do new WCF.System.Notification(WCF.Language.get 'wcf.global.success').show
 											
+										failure: (data) ->
+											return true unless (data?.returnValues?.errorType?) or (data?.message?)
+											
+											$("""<div class="ajaxDebugMessage">#{(data?.returnValues?.errorType) ? data.message}</div>""").wcfDialog title: WCF.Language.get 'wcf.global.error.title'
+											
+											return false
+											
 								$('#timsChatInviteDialog').wcfDialog 'close'
 								
 							timsChatInviteDialog.wcfDialog
 								title: WCF.Language.get 'chat.global.invite'
-								
+								onShow: ->  do $('#userInviteDialogUsernameInput').focus
+									
 
 Hide topic container.
 

@@ -149,6 +149,7 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.error.reload"><![CDATA[Neu laden]]></item>
 		
 		<item name="chat.error.whisper.ignoresYou"><![CDATA[„{$user}“ hat Sie blockiert.]]></item>
+		<item name="chat.error.invite.ignored"><![CDATA[Die folgenden Nutzer haben Sie blockiert: {implode from=$usernames item=username}{$username}{/implode}]]></item>
 	</category>
 	
 	<category name="chat.global">
