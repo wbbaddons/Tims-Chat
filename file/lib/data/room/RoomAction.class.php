@@ -171,7 +171,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		if ($room === null) throw new exception\UserInputException('roomID');
 		if (!$room->canEnter()) throw new exception\PermissionDeniedException();
 		
-		if ($room->maxUsers && count($room->getUsers()) >= $room->maxUsers) {
+		if ($room->maxUsers && count($room->getUsers()) >= $room->maxUsers && !$room->canAlwaysEnter()) {
 			$errorMessage = WCF::getLanguage()->getDynamicVariable('chat.global.error.join.full', array('room' => $room));
 			
 			throw new exception\UserInputException('room', $errorMessage);

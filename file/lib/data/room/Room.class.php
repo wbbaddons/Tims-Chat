@@ -41,14 +41,14 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 	public function __toString() {
 		return $this->getTitle();
 	}
-	
+
 	/**
-	 * Returns whether the user is allowed to enter the room.
+	 * Returns whther the user is allowed to always enter the room.
 	 * 
 	 * @param	\wcf\data\user\User	$user
 	 * @return	boolean
 	 */
-	public function canEnter(\wcf\data\user\User $user = null) {
+	public function canAlwaysEnter(\wcf\data\user\User $user = null) {
 		if ($user === null) $user = WCF::getUser();
 		if (!$user->userID) return false;
 		$user = new \wcf\data\user\UserProfile($user);
@@ -59,7 +59,23 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 		$ph = new \chat\system\permission\PermissionHandler($user->getDecoratedObject());
 		if ($ph->getPermission($this, 'mod.canAlwaysEnter')) return true;
 		if ($ph->getPermission($this, 'mod.canBan')) return true;
+
+		return false;
+	}
+	
+	/**
+	 * Returns whether the user is allowed to enter the room.
+	 * 
+	 * @param	\wcf\data\user\User	$user
+	 * @return	boolean
+	 */
+	public function canEnter(\wcf\data\user\User $user = null) {
+		if ($user === null) $user = WCF::getUser();
+		if (!$user->userID) return false;
+		if ($this->canAlwaysEnter($user)) return true;
+		$user = new \wcf\data\user\UserProfile($user);
 		
+		$ph = new \chat\system\permission\PermissionHandler($user->getDecoratedObject());
 		if (!$ph->getPermission($this, 'user.canEnter')) return false;
 		
 		$suspensions = Suspension::getSuspensionsForUser($user->getDecoratedObject());
