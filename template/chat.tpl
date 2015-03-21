@@ -22,6 +22,7 @@
 							'chat.global.query': '{lang}chat.global.query{/lang}',
 							'chat.global.smilies': '{lang}chat.global.smilies{/lang}',
 							'chat.global.whisper': '{lang}chat.global.whisper{/lang}',
+							'chat.global.invite': '{lang}chat.global.invite{/lang}',
 							'chat.error.duplicateTab': '{lang}chat.error.duplicateTab{/lang}',
 							'chat.error.join': '{lang}chat.error.join{/lang}',
 							'chat.error.onMessageLoad': '{@"chat.error.onMessageLoad"|language|encodeJS}',
@@ -56,6 +57,7 @@
 						{capture assign='messageTemplate'}{include application='chat' file='message'}{/capture}
 						{capture assign='userTemplate'}{include application='chat' file='userListUser'}{/capture}
 						{capture assign='userMenuTemplate'}{include application='chat' file='userListUserMenu'}{/capture}
+						{capture assign='userInviteDialogTemplate'}{include application='chat' file='userInviteDialog'}{/capture}
 						
 						var config = {
 							reloadTime: {@CHAT_RELOADTIME},
@@ -74,7 +76,8 @@
 							new WCF.Template('{literal}{if $newMessageCount}({#$newMessageCount}) {/if}{$title} - {/literal}{"chat.global.title"|language|encodeJS} - {PAGE_TITLE|language|encodeJS}'),
 							new WCF.Template('{@$messageTemplate|encodeJS}'),
 							new WCF.Template('{@$userTemplate|encodeJS}'),
-							new WCF.Template('{@$userMenuTemplate|encodeJS}')
+							new WCF.Template('{@$userMenuTemplate|encodeJS}'),
+							new WCF.Template('{@$userInviteDialogTemplate|encodeJS}')
 						);
 						
 						{event name='afterInit'}
@@ -195,6 +198,15 @@
 										<span><label for="timsChatUploadInput" class="pointer">{lang}wcf.global.button.upload{/lang}</label></span>
 									</li>
 								</ul>
+							</li>
+						{/if}
+						
+						{if $__wcf->session->getPermission('user.chat.canInvite')}
+							<li>
+								<a id="timsChatInvite" class="button jsTooltip" title="{lang}chat.global.invite{/lang}">
+									<span class="icon icon16 icon-user"></span>
+									<span class="invisible">{lang}chat.global.invite{/lang}</span>
+								</a>
 							</li>
 						{/if}
 						

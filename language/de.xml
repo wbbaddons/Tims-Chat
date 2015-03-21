@@ -39,6 +39,11 @@
 		<item name="chat.acp.menu.link.suspension.list"><![CDATA[Sanktionen auflisten]]></item>
 	</category>
 	
+	<category name="chat.notification">
+		<item name="chat.notification.invited.title"><![CDATA[Jemand möchte mit Ihnen chatten!]]></item>
+		<item name="chat.notification.invited.message"><![CDATA[„{$author->username}“ möchte mit Ihnen im Chatraum „{$userNotificationObject->getTitle()}“ chatten!]]></item>
+	</category>
+	
 	<category name="wcf.acl.option">
 		<item name="wcf.acl.option.category.be.bastelstu.chat.room.user"><![CDATA[Benutzerrechte]]></item>
 		<item name="wcf.acl.option.category.be.bastelstu.chat.room.mod"><![CDATA[Moderative Rechte]]></item>
@@ -55,6 +60,7 @@
 		<item name="wcf.acp.group.option.user.chat.canEnter"><![CDATA[Kann Chat betreten]]></item>
 		<item name="wcf.acp.group.option.user.chat.canWrite"><![CDATA[Kann im Chat schreiben]]></item>
 		<item name="wcf.acp.group.option.user.chat.canTempRoom"><![CDATA[Kann temporäre Räume erstellen]]></item>
+		<item name="wcf.acp.group.option.user.chat.canInvite"><![CDATA[Kann Benutzer zum Chatten einladen]]></item>
 		<item name="wcf.acp.group.option.user.chat.allowedBBCodes"><![CDATA[Erlaubte BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.chat.allowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe verwendet werden.]]></item>
 		<item name="wcf.acp.group.option.user.chat.canUploadAttachment"><![CDATA[Kann Dateien anhängen]]></item>
@@ -148,6 +154,7 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.error.reload"><![CDATA[Neu laden]]></item>
 		
 		<item name="chat.error.whisper.ignoresYou"><![CDATA[„{$user}“ hat Sie blockiert.]]></item>
+		<item name="chat.error.invite.ignored"><![CDATA[Die folgenden Nutzer haben Sie blockiert: {implode from=$usernames item=username}{$username}{/implode}]]></item>
 	</category>
 	
 	<category name="chat.global">
@@ -162,6 +169,9 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 		<item name="chat.global.users"><![CDATA[Nutzer]]></item>
 		
 		<item name="chat.global.error.join.full"><![CDATA[Der Raum „{$room}“ hat die maximale Anzahl an Mitgliedern erreicht. Bitte versuchen Sie es später erneut.]]></item>
+		
+		<item name="chat.global.invite"><![CDATA[Benutzer einladen]]></item>
+		<item name="chat.global.invite.noFollowing"><![CDATA[Sie folgen niemandem, verwenden Sie bitte die Suche.]]></item>
 		
 		<item name="chat.global.copyright"><![CDATA[<a href="http://tims.bastelstu.be"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}><strong>Tims Chat{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}</strong>, entwickelt in <strong>Tims Bastelstu.be</strong></a>]]></item>
 		<item name="chat.global.copyright.leader"><![CDATA[Projektleiter]]></item>
@@ -255,5 +265,6 @@ Probieren Sie, den Chat neu zu laden<!-- , bei Risiken und Nebenwirkungen fragen
 	
 	<category name="chat.user">
 		<item name="chat.user.usersOnline.location.ChatPage"><![CDATA[<a href="{link controller='Chat' application='chat' object=$room}{/link}">Chatraum „{$room}“</a>]]></item>
+		<item name="chat.user.search"><![CDATA[Benutzer suchen]]></item>
 	</category>
 </language>

@@ -39,6 +39,11 @@
 		<item name="chat.acp.menu.link.suspension.list"><![CDATA[List Suspensions]]></item>
 	</category>
 	
+	<category name="chat.notification">
+		<item name="chat.notification.invited.title"><![CDATA[Someone wants to chat with you!]]></item>
+		<item name="chat.notification.invited.message"><![CDATA[“{$author->username}” wants to chat with you in “{$userNotificationObject->getTitle()}”!]]></item>
+	</category>
+	
 	<category name="wcf.acl.option">
 		<item name="wcf.acl.option.category.be.bastelstu.chat.room.user"><![CDATA[User Permissions]]></item>
 		<item name="wcf.acl.option.category.be.bastelstu.chat.room.mod"><![CDATA[Moderator Permissions]]></item>
@@ -55,6 +60,7 @@
 		<item name="wcf.acp.group.option.user.chat.canEnter"><![CDATA[Can enter chat]]></item>
 		<item name="wcf.acp.group.option.user.chat.canWrite"><![CDATA[Can write messages]]></item>
 		<item name="wcf.acp.group.option.user.chat.canTempRoom"><![CDATA[Can create temporary rooms]]></item>
+		<item name="wcf.acp.group.option.user.chat.canInvite"><![CDATA[Can invite users to chat]]></item>
 		<item name="wcf.acp.group.option.user.chat.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.chat.allowedBBCodes.description"><![CDATA[Selected BBCodes may be used by members of this group.]]></item>
 		<item name="wcf.acp.group.option.user.chat.canUploadAttachment"><![CDATA[Can upload attachments]]></item>
@@ -148,6 +154,7 @@ Please try to reload the chat.]]></item>
 		<item name="chat.error.reload"><![CDATA[Reload]]></item>
 		
 		<item name="chat.error.whisper.ignoresYou"><![CDATA[“{$user}” has blocked you.]]></item>
+		<item name="chat.error.invite.ignored"><![CDATA[The following users have blocked you: {implode from=$usernames item=username}{$username}{/implode}]]></item>
 	</category>
 	
 	<category name="chat.global">
@@ -162,6 +169,9 @@ Please try to reload the chat.]]></item>
 		<item name="chat.global.users"><![CDATA[Users]]></item>
 		
 		<item name="chat.global.error.join.full"><![CDATA[The room “{$room}” has reached the maximum amount of concurrent chatters. Please try again later.]]></item>
+
+		<item name="chat.global.invite"><![CDATA[Invite users]]></item>
+		<item name="chat.global.invite.noFollowing"><![CDATA[You do not follow anybody, please use the search function instead.]]></item>
 		
 		<item name="chat.global.copyright"><![CDATA[<a href="http://tims.bastelstu.be"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}><strong>Tim’s Chat{if SHOW_VERSION_NUMBER} {PACKAGE_VERSION}{/if}</strong>, developed in <strong>Tim’s Bastelstu.be</strong></a>]]></item>
 		<item name="chat.global.copyright.leader"><![CDATA[Project Lead]]></item>
@@ -255,5 +265,6 @@ Please try to reload the chat.]]></item>
 	
 	<category name="chat.user">
 		<item name="chat.user.usersOnline.location.ChatPage"><![CDATA[<a href="{link controller='Chat' application='chat' object=$room}{/link}">Chatroom “{$room}”</a>]]></item>
+		<item name="chat.user.search"><![CDATA[Search for users]]></item>
 	</category>
 </language>

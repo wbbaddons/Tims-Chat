@@ -85,7 +85,7 @@ exposed by a function if necessary.
 Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 
 		initialized = false
-		init = (roomID, config, titleTemplate, messageTemplate, userTemplate, userMenuTemplate) ->
+		init = (roomID, config, titleTemplate, messageTemplate, userTemplate, userMenuTemplate, userInviteDialogTemplate) ->
 			return false if initialized
 			initialized = true
 			
@@ -96,13 +96,24 @@ Initialize **Tims Chat**. Bind needed DOM events and initialize data structures.
 			v.messageTemplate = messageTemplate
 			v.userTemplate = userTemplate
 			v.userMenuTemplate = userMenuTemplate
+			v.userInviteDialogTemplate = userInviteDialogTemplate
+			v.userInviteDialogUserListEntryTemplate = new WCF.Template """
+				<dl>
+					<dt></dt>
+					<dd>
+						<label>
+							<input type="checkbox" id="userInviteDialogUserID-{$user.objectID}" value="{$user.objectID}" checked="checked" /> {$user.label}
+						</label>
+					</dd>
+				</dl>
+			"""
 			
 			console.log 'Initializing'
 
 When **Tims Chat** becomes focused mark the chat as active and remove the number of new messages from the title.
 
 			$(window).focus ->
-				document.title = v.titleTemplate.fetch(roomList.active) if roomList.active?.title? and roomList.active.title.trim() isnt ''
+				document.title = v.titleTemplate.fetch(getRoomList().active) if roomList.active?.title? and roomList.active.title.trim() isnt ''
 				
 				newMessageCount = 0
 				isActive = true
@@ -178,7 +189,7 @@ Open the smiley wcfDialog
 				overlaySmileyList.css
 					'max-height': $(window).height() - overlaySmileyList.parent().siblings('.dialogTitlebar').outerHeight()
 					'overflow': 'auto'
-			
+					
 Handle private channel menu
 
 			$('#timsChatMessageTabMenu > .tabMenu').on 'click', '.timsChatMessageTabMenuAnchor', ->
@@ -239,7 +250,7 @@ The the word the caret is in will be passed to `autocomplete` and replaced if a 
 						toComplete = autocomplete.value.substring lastSpace + 1
 						nextSpace = toComplete.indexOf ' '
 						if nextSpace is -1
-							afterComplete = '';
+							afterComplete = ''
 						else
 							afterComplete = toComplete.substring nextSpace + 1
 							toComplete = toComplete.substring 0, nextSpace
@@ -383,6 +394,68 @@ Toggle checkboxes.
 					$('.timsChatMessageContainer').addClass 'markEnabled'
 				else
 					$('.timsChatMessageContainer').removeClass 'markEnabled'
+
+Show invite dialog.
+
+			$('#timsChatInvite').click (event) ->
+					do event.preventDefault
+					
+					new WCF.Action.Proxy
+						autoSend: true
+						data:
+							actionName: 'prepareInvite'
+							className: 'chat\\data\\user\\UserAction'
+						success: (data) ->
+							$('<div id="timsChatInviteDialog"></div>').appendTo 'body' unless $.wcfIsset 'timsChatInviteDialog'
+							
+							timsChatInviteDialog = $ '#timsChatInviteDialog'
+							
+							# Remove old event listeners
+							do timsChatInviteDialog.find('#userInviteDialogUsernameInput').off().remove
+							
+							timsChatInviteDialog.html v.userInviteDialogTemplate.fetch
+								users: data.returnValues.users
+								
+							new WCF.Search.User '#userInviteDialogUsernameInput', (user) ->
+								if $.wcfIsset "userInviteDialogUserID-#{user.objectID}"
+									$("#userInviteDialogUserID-#{user.objectID}").prop 'checked', true
+								else
+									$('#userInviteDialogUserList').append v.userInviteDialogUserListEntryTemplate.fetch
+										user: user
+										
+								$('#userInviteDialogUsernameInput').val ""
+							, false, [ WCF.User.username ], false
+							
+							$('#userInviteDialogFormSubmit').on 'click', (event) ->
+								checked = $ '#userInviteDialogUserList input[type=checkbox]:checked, #userInviteDialogFollowingList input[type=checkbox]:checked'
+								inviteUserList = [ ]
+								
+								checked.each (k, v) -> inviteUserList.push do $(v).val
+								
+								if inviteUserList.length
+									new WCF.Action.Proxy
+										autoSend: true
+										data:
+											actionName: 'invite'
+											className: 'chat\\data\\user\\UserAction'
+											parameters:
+												recipients: inviteUserList
+										success: (data) ->
+											do new WCF.System.Notification(WCF.Language.get 'wcf.global.success').show
+											
+										failure: (data) ->
+											return true unless (data?.returnValues?.errorType?) or (data?.message?)
+											
+											$("""<div class="ajaxDebugMessage">#{(data?.returnValues?.errorType) ? data.message}</div>""").wcfDialog title: WCF.Language.get 'wcf.global.error.title'
+											
+											return false
+											
+								$('#timsChatInviteDialog').wcfDialog 'close'
+								
+							timsChatInviteDialog.wcfDialog
+								title: WCF.Language.get 'chat.global.invite'
+								onShow: ->  do $('#userInviteDialogUsernameInput').focus
+									
 
 Hide topic container.
 
@@ -1056,7 +1129,7 @@ Joins a room.
 					
 					$('.timsChatMessage').addClass 'unloaded'
 					
-					document.title = v.titleTemplate.fetch roomList.active
+					document.title = v.titleTemplate.fetch getRoomList().active
 					handleMessages roomList.active.messages
 					do getMessages
 					do refreshRoomList
@@ -1191,6 +1264,8 @@ Remove the given callback from the given event.
 			
 			true
 			
+		getRoomList = -> JSON.parse JSON.stringify roomList
+				
 The following code handles attachment uploads
 
 Enable attachment code if `WCF.Attachment.Upload` is defined
@@ -1416,8 +1491,8 @@ Return a copy of the object containing the IDs of the marked messages
 
 			getMarkedMessages: -> JSON.parse JSON.stringify markedMessages
 			getUserList: -> JSON.parse JSON.stringify userList
-			getRoomList: -> JSON.parse JSON.stringify roomList
-			
+			getRoomList: getRoomList
+				
 			refreshRoomList: refreshRoomList
 			insertText: insertText
 			freeTheFish: freeTheFish
