@@ -75,7 +75,7 @@
 				<dt><label for="maxUsers">{lang}chat.acp.room.maxUsers{/lang}</label></dt>
 				<dd>
 					<input id="maxUsers" class="tiny" type="number" min="0" value="{$maxUsers}" name="maxUsers" />
-					{if $errorField == 'topic'}
+					{if $errorField == 'maxUsers'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
