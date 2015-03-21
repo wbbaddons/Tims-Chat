@@ -136,6 +136,11 @@
 		<item name="wcf.user.option.chatMessagesPerTab.description"><![CDATA[Amount of messages per tab being displayed at once. [0 for infinite]]]></item>
 	</category>
 	
+	<category name="wcf.user.notification">
+		<item name="wcf.user.notification.be.bastelstu.chat"><![CDATA[Chat]]></item>
+		<item name="wcf.user.notification.be.bastelstu.chat.room.invited"><![CDATA[Invitation to chat]]></item>
+	</category>
+	
 	<category name="chat.error">
 		<item name="chat.error.notFound"><![CDATA[The command “{$exception->getCommand()}” could not be found.]]></item>
 		<item name="chat.error.userNotFound"><![CDATA[The user “{$exception->getUsername()}” could not be found.]]></item>
