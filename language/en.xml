@@ -6,6 +6,7 @@
 		<item name="chat.acp.room.edit"><![CDATA[Edit Chatroom]]></item>
 		<item name="chat.acp.room.title"><![CDATA[Title]]></item>
 		<item name="chat.acp.room.topic"><![CDATA[Topic]]></item>
+		<item name="chat.acp.room.maxUsers"><![CDATA[Maximum user count]]></item>
 		
 		<item name="chat.acp.room.delete.sure"><![CDATA[Do you really want to delete the chatroom “{$chatRoom}”?]]></item>
 	</category>
