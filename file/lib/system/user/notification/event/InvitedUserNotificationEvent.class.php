@@ -2,10 +2,10 @@
 namespace chat\system\user\notification\event;
 
 /**
- * 
+ * Notification event for invites.
  * 
  * @author	Tim Düsterhus
- * @copyright	2010-2014 Tim Düsterhus
+ * @copyright	2010-2015 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.chat
  * @subpackage	system.user.notification.event
@@ -27,7 +27,8 @@ class InvitedUserNotificationEvent extends \wcf\system\user\notification\event\A
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getAuthor()
 	 */
 	public function getAuthor() {
-		// TODO: caching
+		// TODO: Change to AbstractSharedUserNotificationEvent w/ Tims Chat 4
+		
 		return new \wcf\data\user\UserProfile(new \wcf\data\user\User($this->additionalData['userID']));
 	}
 	
@@ -69,7 +70,6 @@ class InvitedUserNotificationEvent extends \wcf\system\user\notification\event\A
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::checkAccess()
 	 */
 	public function checkAccess() {
-		// TODO
-		return true;
+		return $this->userNotificationObject->getDecoratedObject();
 	}
 }

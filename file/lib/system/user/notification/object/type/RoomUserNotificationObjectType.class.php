@@ -2,7 +2,7 @@
 namespace chat\system\user\notification\object\type;
 
 /**
- * 
+ * Chat room user notification object type.
  * 
  * @author	Tim Düsterhus
  * @copyright	2010-2014 Tim Düsterhus
