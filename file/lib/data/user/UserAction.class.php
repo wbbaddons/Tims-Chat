@@ -63,6 +63,7 @@ class UserAction extends \wcf\data\AbstractDatabaseObjectAction {
 	public function prepareInvite() {
 		$followingList = new \wcf\data\user\follow\UserFollowingList();
 		$followingList->getConditionBuilder()->add('user_follow.userID = ?', array(WCF::getUser()->userID));
+		$followingList->sqlOrderBy = 'username ASC';
 		$followingList->readObjects();
 		$users = $followingList->getObjects();
 		
