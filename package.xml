@@ -42,7 +42,7 @@
 	
 	<instructions type="update" fromversion="3.0.3">
 		<instruction type="file">file.tar</instruction>
-	</instrunctions>
+	</instructions>
 	
 	<instructions type="update" fromversion="3.0.2">
 		<instruction type="language">language/*.xml</instruction>
