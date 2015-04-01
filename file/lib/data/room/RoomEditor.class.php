@@ -47,7 +47,9 @@ class RoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data\IEd
 		
 		foreach ($objectIDs as $objectID) {
 			$select->execute(array($objectID));
-			$update->execute(array($select->fetchColumn()));
+			$showOrder = $select->fetchColumn();
+			$select->closeCursor();
+			$update->execute(array($showOrder));
 		}
 		
 		$return = parent::deleteAll($objectIDs);
