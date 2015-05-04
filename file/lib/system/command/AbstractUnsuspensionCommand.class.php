@@ -63,7 +63,7 @@ abstract class AbstractUnsuspensionCommand extends AbstractRestrictedCommand {
 		
 		$ph = new \chat\system\permission\PermissionHandler();
 		if (static::IS_GLOBAL) {
-			WCF::getSession()->checkPermission(array('mod.chat.canG'.static::SUSPENSION_TYPE));
+			WCF::getSession()->checkPermissions(array('mod.chat.canG'.static::SUSPENSION_TYPE));
 		}
 		else {
 			if (!WCF::getSession()->getPermission('mod.chat.canG'.static::SUSPENSION_TYPE)) {
