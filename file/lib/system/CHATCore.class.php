@@ -19,5 +19,5 @@ class CHATCore extends \wcf\system\application\AbstractApplication {
 	/**
 	 * @see	wcf\system\application\AbstractApplication::$primaryController
 	 */
-	protected $primaryController = 'chat\\page\\Chat';
+	protected $primaryController = 'chat\\page\\ChatPage';
 }
