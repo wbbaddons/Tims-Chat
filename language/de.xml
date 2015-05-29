@@ -102,6 +102,8 @@
 		<item name="wcf.acp.option.module_chat"><![CDATA[Tims Chat]]></item>
 		<item name="wcf.acp.option.chat_reloadtime"><![CDATA[Nachladezeit]]></item>
 		<item name="wcf.acp.option.chat_reloadtime.description"><![CDATA[Wartezeit zwischen zwei Anfragen zum Server. [Zeit in Sekunden]]]></item>
+		<item name="wcf.acp.option.chat_autoaway"><![CDATA[Automatische Abwesenheit]]></item>
+		<item name="wcf.acp.option.chat_autoaway.description"><![CDATA[Zeit, nach der ein Benutzer automatisch als abwesend markiert wird. [Zeit in Sekunden, 0 zum deaktivieren]]]></item>
 		<item name="wcf.acp.option.chat_lastmessages"><![CDATA[Anzahl der letzten Nachrichten]]></item>
 		<item name="wcf.acp.option.chat_lastmessages.description"><![CDATA[Anzahl der Nachrichten, die beim Betreten des Chats angezeigt werden.]]></item>
 		<item name="wcf.acp.option.chat_display_join_leave"><![CDATA[Join- und Leave-Nachrichten anzeigen]]></item>
