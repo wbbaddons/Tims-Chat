@@ -202,7 +202,10 @@ and afterwards sent to the server by an AJAX request.
 				do event.preventDefault
 				
 				text = do $('#timsChatInput').val().trim
-				$('#timsChatInput').val('').focus().change()
+				input = $ '#timsChatInput'
+				input.val ''
+				do input.focus
+				do input.change
 				
 				return false if text.length is 0
 				
