@@ -329,6 +329,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 	 * Forces dead users to leave the chat.
 	 */
 	public function removeDeadUsers() {
+		WCF::getDB()->beginTransaction();
 		$deadUsers = Room::getDeadUsers();
 		
 		foreach ($deadUsers as $deadUser) {
@@ -337,6 +338,7 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			));
 			$roomAction->executeAction();
 		}
+		WCF::getDB()->commitTransaction();
 	}
 	
 	/**

@@ -240,9 +240,23 @@ class Room extends \chat\data\CHATDatabaseObject implements \wcf\system\request\
 			$time = TIME_NOW;
 		}
 		
+		$sql = "SELECT	userID
+			FROM	wcf".WCF_N."_user
+			WHERE	chatRoomID IS NOT NULL
+			AND	chatLastActivity < ?
+			FOR UPDATE";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([ $time - 30 ]);
+		$userIDs = [];
+		while ($userID = $statement->fetchColumn()) $userIDs[] = $userID;
+
 		$userList = new \wcf\data\user\UserList();
-		$userList->getConditionBuilder()->add('user_table.chatRoomID IS NOT NULL', array());
-		$userList->getConditionBuilder()->add('user_table.chatLastActivity < ?', array($time - 30));
+		if (!empty($userIDs)) {
+			$userList->getConditionBuilder()->add('user_table.userID IN (?)', array($userIDs));
+		}
+		else {
+			$userList->getConditionBuilder()->add('1 = 0', []);
+		}
 		
 		$userList->readObjects();
 		
