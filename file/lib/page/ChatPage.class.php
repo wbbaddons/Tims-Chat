@@ -8,7 +8,7 @@ use \wcf\system\WCF;
  * Shows the chat-interface
  * 
  * @author 	Tim Düsterhus
- * @copyright	2010-2014 Tim Düsterhus
+ * @copyright	2010-2016 Tim Düsterhus
  * @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
  * @package	be.bastelstu.chat
  * @subpackage	page
@@ -172,12 +172,12 @@ class ChatPage extends \wcf\page\AbstractPage {
 		$this->rooms = data\room\RoomCache::getInstance()->getRooms();
 		
 		if ($this->roomID === 0) {
+			$this->rooms = array_filter($this->rooms, function ($room) {
+				return $room->canEnter();
+			});
+			
 			// no room given
-			if (CHAT_FORCE_ROOM_SELECT) {
-				$this->rooms = array_filter($this->rooms, function ($room) {
-					return $room->canEnter();
-				});
-				
+			if (CHAT_FORCE_ROOM_SELECT && !(CHAT_SKIP_ROOM_SELECT && count($this->rooms) == 1)) {
 				return;
 			}
 			else {

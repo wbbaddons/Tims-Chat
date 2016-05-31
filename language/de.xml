@@ -113,6 +113,8 @@
 		<item name="wcf.acp.option.chat_command_aliases.description"><![CDATA[Geben Sie zeilenweise eine Kombination aus Alias und Zielbefehl an. Alias und Zielbefehl werden durch einen Doppelpunkt voneinander getrennt.]]></item>
 		<item name="wcf.acp.option.chat_force_room_select"><![CDATA[Raumauswahl anzeigen]]></item>
 		<item name="wcf.acp.option.chat_force_room_select.description"><![CDATA[Zeigt eine Auswahl der verfügbaren Räume an, anstatt den ersten verfügbaren Raum zu betreten.]]></item>
+		<item name="wcf.acp.option.chat_skip_room_select"><![CDATA[Raumauswahl überspringen]]></item>
+		<item name="wcf.acp.option.chat_skip_room_select.description"><![CDATA[Überspringt die Raumauswahl, wennn nur ein Chatraum zur Verfügung steht.]]></item>
 		<item name="wcf.acp.option.chat_enable_menu_badge"><![CDATA[Chatter im Hauptmenü]]></item>
 		<item name="wcf.acp.option.chat_enable_menu_badge.description"><![CDATA[Zeigt die Anzahl der Chatter als Badge im Hauptmenü an.]]></item>
 		
