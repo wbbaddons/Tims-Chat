@@ -142,11 +142,15 @@ class Message extends \chat\data\CHATDatabaseObject {
 	 * @return	string
 	 */
 	public function jsonify($raw = false) {
+		$additionalData = $this->additionalData;
 		switch ($this->type) {
 			case self::TYPE_WHISPER:
 			case self::TYPE_NORMAL:
 			case self::TYPE_INFORMATION:
 				$separator = ':';
+			break;
+			case self::TYPE_JOIN:
+				unset($additionalData['ipAddress']);
 			break;
 			default:
 				$separator = '';
@@ -168,7 +172,7 @@ class Message extends \chat\data\CHATDatabaseObject {
 			'type' => (int) $this->type,
 			'roomID' => (int) $this->roomID,
 			'messageID' => (int) $this->messageID,
-			'additionalData' => $this->additionalData
+			'additionalData' => $additionalData
 		);
 		
 		if ($raw) return $array;
