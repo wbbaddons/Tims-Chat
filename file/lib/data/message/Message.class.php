@@ -144,13 +144,12 @@ class Message extends \chat\data\CHATDatabaseObject {
 			case self::TYPE_INFORMATION:
 				$separator = ':';
 			break;
-			case self::TYPE_JOIN:
-				unset($additionalData['ipAddress']);
-			break;
 			default:
 				$separator = '';
 			break;
 		}
+
+		if ($this->type == self::TYPE_JOIN) unset($additionalData['ipAddress']);
 		
 		$array = array(
 			'formattedUsername' => $this->getUsername(true),
