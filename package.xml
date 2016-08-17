@@ -63,21 +63,7 @@
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="3.0.5">
-		<instruction type="language">language/*.xml</instruction>
-		<instruction type="file">file.tar</instruction>
-		<instruction type="template">template.tar</instruction>
-		<instruction type="acpTemplate">acptemplate.tar</instruction>
-		<instruction type="sql">update_3.0.x_3.1.0.sql</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
-		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
-		<instruction type="option">option.xml</instruction>
-		<instruction type="userOption">userOption.xml</instruction>
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-		<instruction type="script" run="standalone">acp/be.bastelstu.chat.update.php</instruction>
-	</instructions>
-
-	<instructions type="update" fromversion="3.0.4">
+	<instructions type="update" fromversion="3.0.6">
 		<instruction type="language">language/*.xml</instruction>
 		<instruction type="file">file.tar</instruction>
 		<instruction type="template">template.tar</instruction>
