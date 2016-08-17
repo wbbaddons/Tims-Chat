@@ -21,6 +21,10 @@
 		<requiredpackage file="requirements/be.bastelstu.max.wcf.jCounter.tar" minversion="1.0.0 Beta 4">be.bastelstu.max.wcf.jCounter</requiredpackage>
 		<requiredpackage file="requirements/be.bastelstu.wcf.nodePush.tar" minversion="1.0.0 Beta 1">be.bastelstu.wcf.nodePush</requiredpackage>
 	</requiredpackages>
+
+	<excludedpackages>
+		<excludedpackage version="2.2.0 Alpha 1">com.woltlab.wcf</excludedpackage>
+	</excludedpackages>
 	
 	<instructions type="install">
 		<instruction type="language">language/*.xml</instruction>
