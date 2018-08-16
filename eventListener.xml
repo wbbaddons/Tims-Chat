@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/eventListener.xsd">
+	<import>
+		<!-- Hourly Cleanup -->
+		<eventlistener name="hourlyCleanUpUser">
+			<eventclassname>wcf\system\cronjob\HourlyCleanUpCronjob</eventclassname>
+			<eventname>execute</eventname>
+			<listenerclassname>chat\system\event\listener\HourlyCleanUpCronjobExecuteChatCleanUpListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+		<eventlistener name="hourlyCleanUpAdmin">
+			<eventclassname>wcf\system\cronjob\HourlyCleanUpCronjob</eventclassname>
+			<eventname>execute</eventname>
+			<listenerclassname>chat\system\event\listener\HourlyCleanUpCronjobExecuteChatCleanUpListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
+
+		<!-- Temprooms -->
+		<eventlistener name="temproomHourlyCleanUpUser">
+			<eventclassname>wcf\system\cronjob\HourlyCleanUpCronjob</eventclassname>
+			<eventname>execute</eventname>
+			<listenerclassname>chat\system\event\listener\HourlyCleanUpCronjobExecuteTemproomListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+		<eventlistener name="temproomHourlyCleanUpAdmin">
+			<eventclassname>wcf\system\cronjob\HourlyCleanUpCronjob</eventclassname>
+			<eventname>execute</eventname>
+			<listenerclassname>chat\system\event\listener\HourlyCleanUpCronjobExecuteTemproomListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
+		<eventlistener name="temproomCanSee">
+			<eventclassname>chat\data\room\Room</eventclassname>
+			<eventname>canSee</eventname>
+			<listenerclassname>chat\system\event\listener\RoomCanSeeTemproomListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+		<eventlistener name="temproomRoomList">
+			<eventclassname>chat\acp\page\RoomListPage</eventclassname>
+			<eventname>calculateNumberOfPages</eventname>
+			<listenerclassname>chat\system\event\listener\RoomListPageTemproomListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
+		<eventlistener name="temproomRoomEdit">
+			<eventclassname>chat\acp\form\RoomEditForm</eventclassname>
+			<eventname>readParameters</eventname>
+			<listenerclassname>chat\system\event\listener\RoomEditFormTemproomListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
+		<eventlistener name="temproomSuspensionList">
+			<eventclassname>chat\acp\page\SuspensionListPage</eventclassname>
+			<eventname>readData</eventname>
+			<listenerclassname>chat\system\event\listener\SuspensionListPageTemproomListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
+
+		<!-- User Limit -->
+		<eventlistener name="userLimitCanJoin">
+			<eventclassname>chat\data\room\Room</eventclassname>
+			<eventname>canJoin</eventname>
+			<listenerclassname>chat\system\event\listener\RoomCanJoinUserLimitListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+
+		<!-- Suspensions -->
+		<eventlistener name="suspensionCanJoin">
+			<eventclassname>chat\data\room\Room</eventclassname>
+			<eventname>canJoin</eventname>
+			<listenerclassname>chat\system\event\listener\RoomCanJoinBanListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+		<eventlistener name="suspensionCanWritePublicly">
+			<eventclassname>chat\data\room\Room</eventclassname>
+			<eventname>canWritePublicly</eventname>
+			<listenerclassname>chat\system\event\listener\RoomCanWritePubliclyMuteListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+		<eventlistener name="suspensionInfoCommand">
+			<eventclassname>chat\system\command\InfoCommand</eventclassname>
+			<eventname>execute</eventname>
+			<listenerclassname>chat\system\event\listener\InfoCommandSuspensionsListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+		<eventlistener name="moderatorPermissions">
+			<eventclassname>chat\data\room\RoomAction</eventclassname>
+			<eventname>getUsers</eventname>
+			<listenerclassname>chat\system\event\listener\RoomActionGetUsersModeratorListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+	</import>
+
+	<delete>
+		<!-- Hourly Cleanup -->
+		<eventlistener>
+			<eventclassname>wcf\system\cronjob\HourlyCleanUpCronjob</eventclassname>
+			<eventname>execute</eventname>
+			<listenerclassname>chat\system\event\listener\HourlyCleanUpCronjobExecuteChatCleanUpListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+		<eventlistener>
+			<eventclassname>wcf\system\cronjob\HourlyCleanUpCronjob</eventclassname>
+			<eventname>execute</eventname>
+			<listenerclassname>chat\system\event\listener\HourlyCleanUpCronjobExecuteChatCleanUpListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
+
+		<!-- Temprooms -->
+		<eventlistener>
+			<eventclassname>wcf\system\cronjob\HourlyCleanUpCronjob</eventclassname>
+			<eventname>execute</eventname>
+			<listenerclassname>chat\system\event\listener\HourlyCleanUpCronjobExecuteTemproomListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+		<eventlistener>
+			<eventclassname>wcf\system\cronjob\HourlyCleanUpCronjob</eventclassname>
+			<eventname>execute</eventname>
+			<listenerclassname>chat\system\event\listener\HourlyCleanUpCronjobExecuteTemproomListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
+		<eventlistener>
+			<eventclassname>chat\data\room\Room</eventclassname>
+			<eventname>canSee</eventname>
+			<listenerclassname>chat\system\event\listener\RoomCanSeeTemproomListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+		<eventlistener>
+			<eventclassname>chat\acp\page\RoomListPage</eventclassname>
+			<eventname>calculateNumberOfPages</eventname>
+			<listenerclassname>chat\system\event\listener\RoomListPageTemproomListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
+		<eventlistener>
+			<eventclassname>chat\acp\form\RoomEditForm</eventclassname>
+			<eventname>readParameters</eventname>
+			<listenerclassname>chat\system\event\listener\RoomEditFormTemproomListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
+
+		<!-- User Limit -->
+		<eventlistener>
+			<eventclassname>chat\data\room\Room</eventclassname>
+			<eventname>canJoin</eventname>
+			<listenerclassname>chat\system\event\listener\RoomCanJoinUserLimitListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+
+		<!-- Suspensions -->
+		<eventlistener>
+			<eventclassname>chat\data\room\Room</eventclassname>
+			<eventname>canJoin</eventname>
+			<listenerclassname>chat\system\event\listener\RoomCanJoinBanListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+		<eventlistener>
+			<eventclassname>chat\data\room\Room</eventclassname>
+			<eventname>canWritePublicly</eventname>
+			<listenerclassname>chat\system\event\listener\RoomCanWritePubliclyMuteListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+		<eventlistener>
+			<eventclassname>chat\system\command\InfoCommand</eventclassname>
+			<eventname>execute</eventname>
+			<listenerclassname>chat\system\event\listener\InfoCommandSuspensionsListener</listenerclassname>
+			<environment>user</environment>
+		</eventlistener>
+	</delete>
+</data>

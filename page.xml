@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/page.xsd">
+	<import>
+		<page identifier="be.bastelstu.chat.RoomList">
+			<pageType>system</pageType>
+			<controller>chat\page\RoomListPage</controller>
+			<handler>chat\system\page\handler\RoomListPageHandler</handler>
+			<name language="de">Chatraum-Liste</name>
+			<name language="en">Chat Room List</name>
+
+			<content language="en">
+				<title>Chat</title>
+			</content>
+			<content language="de">
+				<title>Chat</title>
+			</content>
+		</page>
+
+		<page identifier="be.bastelstu.chat.Room">
+			<pageType>system</pageType>
+			<controller>chat\page\RoomPage</controller>
+			<handler>chat\system\page\handler\RoomPageHandler</handler>
+			<name language="de">Chatraum</name>
+			<name language="en">Chat Room</name>
+			<requireObjectID>1</requireObjectID>
+			<parent>be.bastelstu.chat.RoomList</parent>
+		</page>
+
+		<page identifier="be.bastelstu.chat.Log">
+			<pageType>system</pageType>
+			<controller>chat\page\LogPage</controller>
+			<handler>chat\system\page\handler\LogPageHandler</handler>
+			<name language="de">Chatlog</name>
+			<name language="en">Chat Log</name>
+			<requireObjectID>1</requireObjectID>
+			<hasFixedParent>1</hasFixedParent>
+			<parent>be.bastelstu.chat.Room</parent>
+
+			<content language="en">
+				<title>Chat Log</title>
+			</content>
+			<content language="de">
+				<title>Chatlog</title>
+			</content>
+		</page>
+	</import>
+</data>

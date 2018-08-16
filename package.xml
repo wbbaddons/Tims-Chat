@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="be.bastelstu.chat" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
+	<packageinformation>
+		<packagename>Tim’s Chat</packagename>
+		<packagename language="de">Tims Chat</packagename>
+		<isapplication>1</isapplication>
+		<applicationdirectory>chat</applicationdirectory>
+		<version>4.0.0 RC 2</version>
+		<date>2018-08-16</date>
+	</packageinformation>
+
+	<authorinformation>
+		<author>Tim Düsterhus</author>
+		<authorurl>http://tims.bastelstu.be</authorurl>
+	</authorinformation>
+
+	<requiredpackages>
+		<requiredpackage minversion="3.0.10">com.woltlab.wcf</requiredpackage>
+		<requiredpackage minversion="2.4.1">be.bastelstu.core-js</requiredpackage>
+		<requiredpackage minversion="1.1.0">be.bastelstu.promiseWrap</requiredpackage>
+		<requiredpackage minversion="0.6.1">be.bastelstu.parserCombinator</requiredpackage>
+		<requiredpackage minversion="1.6.1">be.bastelstu.bottle</requiredpackage>
+		<requiredpackage minversion="2.1.0 Alpha 1">be.bastelstu.wcf.push</requiredpackage>
+	</requiredpackages>
+
+	<compatibility>
+		<api version="2017" />
+		<api version="2018" />
+	</compatibility>
+
+	<instructions type="install">
+		<instruction type="sql">sql/0001-chat1_room.sql</instruction>
+		<instruction type="sql">sql/0002-Default-Room.sql</instruction>
+		<instruction type="sql">sql/0003-chat1_room_to_user.sql</instruction>
+		<instruction type="sql">sql/0004-chat1_message.sql</instruction>
+		<instruction type="sql">sql/0005-chat1_room_to_user-FOREIGN_KEY.sql</instruction>
+		<instruction type="sql">sql/0006-chat1_room_to_user-Timestamps.sql</instruction>
+		<instruction type="sql">sql/0007-chat1_room_to_user_lastPull.sql</instruction>
+		<instruction type="sql">sql/0008-chat1_message-Username-Width.sql</instruction>
+		<instruction type="sql">sql/0009-chat1_command.sql</instruction>
+		<instruction type="sql">sql/0010-chat1_command_trigger.sql</instruction>
+		<instruction type="sql">sql/0011-chat1_session.sql</instruction>
+		<instruction type="sql">sql/0012-chat1_message-Nullroom.sql</instruction>
+		<instruction type="sql">sql/0013-chat1_session-Index.sql</instruction>
+		<instruction type="sql">sql/0014-chat1_message-Embedded-Objects.sql</instruction>
+		<instruction type="sql">sql/0015-chat1_user-Away.sql</instruction>
+		<instruction type="sql">sql/0016-chat1_command_trigger-PRIMARY_KEY.sql</instruction>
+		<instruction type="sql">sql/0017-chat1_command-Unique-className.sql</instruction>
+		<instruction type="sql">sql/0018-wcf1_user-Color.sql</instruction>
+		<instruction type="sql">sql/0019-chat1_room-User-Limit.sql</instruction>
+		<instruction type="sql">sql/0019-chat1_suspension.sql</instruction>
+		<instruction type="sql">sql/0020-chat1_suspension-Revoked.sql</instruction>
+		<instruction type="sql">sql/0021-chat1_room-Temporary.sql</instruction>
+		<instruction type="sql">sql/0022-chat1_room_temporary_invite.sql</instruction>
+		<instruction type="sql">sql/0023-chat1_message-isDeleted.sql</instruction>
+		<instruction type="sql">sql/0024-chat1_room-topicUseHtml.sql</instruction>
+		<instruction type="sql">sql/0025-chat1_room-topic-text.sql</instruction>
+
+		<instruction type="file" application="wcf" run="standalone">files_wcf.tar</instruction>
+		<instruction type="packageInstallationPlugin" run="standalone" />
+		<instruction type="file" />
+		<instruction type="chatCommand" /> <!-- This needs to be performed in the same request as 'file' -->
+		<instruction type="template" />
+		<instruction type="acpTemplate" />
+
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+
+		<instruction type="eventListener" />
+		<instruction type="templateListener" />
+
+		<instruction type="page" />
+		<instruction type="menuItem" />
+		<instruction type="acpMenu" />
+
+		<instruction type="aclOption" />
+		<instruction type="userGroupOption" />
+		<instruction type="option" />
+
+		<instruction type="language" />
+
+		<instruction type="box" />
+
+		<instruction type="script" run="standalone">acp/be.bastelstu.chat_install.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="4.0.0 RC 1">
+		<instruction type="file" application="wcf" run="standalone">files_wcf.tar</instruction>
+		<instruction type="file" />
+		<instruction type="template" />
+		<instruction type="acpTemplate" />
+
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+
+		<instruction type="eventListener" />
+		<instruction type="templateListener" />
+
+		<instruction type="page" />
+		<instruction type="menuItem" />
+		<instruction type="acpMenu" />
+
+		<instruction type="aclOption" />
+		<instruction type="userGroupOption" />
+		<instruction type="option" />
+
+		<instruction type="language" />
+
+		<instruction type="box" />
+
+		<instruction type="script" run="standalone">acp/be.bastelstu.chat_update.php</instruction>
+	</instructions>
+</package>

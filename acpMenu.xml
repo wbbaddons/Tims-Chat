@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/acpMenu.xsd">
+	<import>
+		<acpmenuitem name="chat.acp.menu.link.chat">
+			<parent>wcf.acp.menu.link.application</parent>
+		</acpmenuitem>
+
+		<acpmenuitem name="chat.acp.menu.link.room.list">
+			<controller>chat\acp\page\RoomListPage</controller>
+			<parent>chat.acp.menu.link.chat</parent>
+			<permissions>admin.chat.canManageRoom</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+
+		<acpmenuitem name="chat.acp.menu.link.room.add">
+			<controller>chat\acp\form\RoomAddForm</controller>
+			<parent>chat.acp.menu.link.room.list</parent>
+			<permissions>admin.chat.canManageRoom</permissions>
+			<icon>fa-plus</icon>
+		</acpmenuitem>
+
+		<acpmenuitem name="chat.acp.menu.link.command.trigger.list">
+			<controller>chat\acp\page\CommandTriggerListPage</controller>
+			<parent>chat.acp.menu.link.chat</parent>
+			<permissions>admin.chat.canManageTriggers</permissions>
+		</acpmenuitem>
+
+		<acpmenuitem name="chat.acp.menu.link.command.trigger.add">
+			<controller>chat\acp\form\CommandTriggerAddForm</controller>
+			<parent>chat.acp.menu.link.command.trigger.list</parent>
+			<permissions>admin.chat.canManageTriggers</permissions>
+			<icon>fa-plus</icon>
+		</acpmenuitem>
+
+		<acpmenuitem name="chat.acp.menu.link.suspension.list">
+			<controller>chat\acp\page\SuspensionListPage</controller>
+			<parent>chat.acp.menu.link.chat</parent>
+			<permissions>admin.chat.canManageSuspensions</permissions>
+		</acpmenuitem>
+	</import>
+</data>
+

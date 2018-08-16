@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/box.xsd">
+	<import>
+		<box identifier="be.bastelstu.chat.roomListDashboard">
+			<name language="de">Chaträume (Inhaltsbereich)</name>
+			<name language="en">Chat Rooms (Content)</name>
+			<boxType>system</boxType>
+			<objectType>be.bastelstu.chat.roomList</objectType>
+			<position>contentTop</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Dashboard</page>
+			</visibilityExceptions>
+			<content language="de">
+				<title>Chaträume</title>
+			</content>
+			<content language="en">
+				<title>Chat Rooms</title>
+			</content>
+		</box>
+
+		<box identifier="be.bastelstu.chat.roomListSidebar">
+			<name language="de">Chaträume (Seitenleiste)</name>
+			<name language="en">Chat Rooms (Sidebar)</name>
+			<boxType>system</boxType>
+			<objectType>be.bastelstu.chat.roomList</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>be.bastelstu.chat.Room</page>
+			</visibilityExceptions>
+			<content language="de">
+				<title>Chaträume</title>
+			</content>
+			<content language="en">
+				<title>Chat Rooms</title>
+			</content>
+		</box>
+	</import>
+</data>

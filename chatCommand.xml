@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<import>
+		<command name="away">
+			<classname>chat\system\command\AwayCommand</classname>
+			<triggers>
+				<trigger>away</trigger>
+			</triggers>
+		</command>
+
+		<command name="back">
+			<classname>chat\system\command\BackCommand</classname>
+		</command>
+
+		<command name="ban">
+			<classname>chat\system\command\BanCommand</classname>
+			<triggers>
+				<trigger>ban</trigger>
+			</triggers>
+		</command>
+
+		<command name="broadcast">
+			<classname>chat\system\command\BroadcastCommand</classname>
+			<triggers>
+				<trigger>broadcast</trigger>
+			</triggers>
+		</command>
+
+		<command name="color">
+			<classname>chat\system\command\ColorCommand</classname>
+			<triggers>
+				<trigger>color</trigger>
+			</triggers>
+		</command>
+
+		<command name="info">
+			<classname>chat\system\command\InfoCommand</classname>
+			<triggers>
+				<trigger>info</trigger>
+			</triggers>
+		</command>
+
+		<command name="me">
+			<classname>chat\system\command\MeCommand</classname>
+			<triggers>
+				<trigger>me</trigger>
+			</triggers>
+		</command>
+
+		<command name="mute">
+			<classname>chat\system\command\MuteCommand</classname>
+			<triggers>
+				<trigger>mute</trigger>
+			</triggers>
+		</command>
+
+		<command name="plain">
+			<classname>chat\system\command\PlainCommand</classname>
+		</command>
+
+		<command name="team">
+			<classname>chat\system\command\TeamCommand</classname>
+			<triggers>
+				<trigger>team</trigger>
+			</triggers>
+		</command>
+
+		<command name="temproom">
+			<classname>chat\system\command\TemproomCommand</classname>
+			<triggers>
+				<trigger>temproom</trigger>
+			</triggers>
+		</command>
+
+		<command name="unban">
+			<classname>chat\system\command\UnbanCommand</classname>
+			<triggers>
+				<trigger>unban</trigger>
+			</triggers>
+		</command>
+
+		<command name="unmute">
+			<classname>chat\system\command\UnmuteCommand</classname>
+			<triggers>
+				<trigger>unmute</trigger>
+			</triggers>
+		</command>
+
+		<command name="where">
+			<classname>chat\system\command\WhereCommand</classname>
+			<triggers>
+				<trigger>where</trigger>
+			</triggers>
+		</command>
+
+		<command name="whisper">
+			<classname>chat\system\command\WhisperCommand</classname>
+			<triggers>
+				<trigger>whisper</trigger>
+			</triggers>
+		</command>
+	</import>
+</data>

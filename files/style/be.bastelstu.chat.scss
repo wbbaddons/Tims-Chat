@@ -1,0 +1,635 @@
+/*
+ * Copyright (c) 2010-2018 Tim Düsterhus.
+ *
+ * Use of this software is governed by the Business Source License
+ * included in the LICENSE file.
+ *
+ * Change Date: 2022-08-16
+ *
+ * On the date above, in accordance with the Business Source
+ * License, use of this software will be governed by version 2
+ * or later of the General Public License.
+ */
+
+$chatEmbedMaxWidth: 400px;
+
+#tpl_chat_room #chatMessageStream {
+	margin-top: 0;
+}
+
+#tpl_chat_room,
+#tpl_chat_log {
+	@include screen-md-down {
+		.main > .layoutBoundary {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 auto;
+		}
+
+		.sidebar {
+			display: none;
+		}
+	}
+
+	// Enable WSC 3.1 sidebar toggle on smartphones
+	@include screen-xs {
+		.sidebar {
+			&[data-show-sidebar][data-hide-sidebar] {
+				display: block;
+				flex: 0 0 auto;
+			}
+		}
+
+		.boxesSidebarLeft,
+		.boxesSidebarRight {
+			.box .boxMenu {
+				.boxMenuLink,
+				.boxMenuLinkTitle {
+					white-space: pre-wrap;
+				}
+			}
+		}
+	}
+
+	@include screen-sm-up {
+		.sidebar {
+			overflow-y: auto;
+		}
+	}
+
+	@include screen-sm-md {
+		.main > .layoutBoundary {
+			flex-direction: row !important;
+		}
+
+		#content {
+			width: auto !important;
+		}
+
+		#chatMessageStream {
+			margin-right: 10px;
+		}
+
+		.sidebar.boxesSidebarRight {
+			display: flex;
+			flex: 0.5 0 auto;
+			flex-direction: column;
+			margin-left: 10px;
+			max-width: 310px;
+
+			> .boxContainer {
+				-webkit-columns: 1;
+				-moz-columns: 1;
+				columns: 1;
+			}
+		}
+	}
+
+	@include screen-lg {
+		.boxesSidebarRight {
+			&,
+			> .boxContainer {
+				display: flex;
+				flex-direction: column;
+			}
+
+			> .boxContainer {
+				&,
+				> .box.chatUserList,
+				> [data-box-identifier="be.bastelstu.chat.roomListSidebar"] {
+					flex: 1 1 0px;
+				}
+
+				> .box {
+					&.chatUserList {
+						min-height: 15rem;
+
+						> .boxContent {
+							flex-basis: 6rem;
+						}
+					}
+
+					&[data-box-identifier="be.bastelstu.chat.roomListSidebar"] {
+						min-height: 12rem;
+
+						.badge {
+							float: right;
+							padding-left: 7px;
+						}
+
+						> .boxContent {
+							height: 6rem;
+						}
+					}
+
+					&.chatUserList,
+					&[data-box-identifier="be.bastelstu.chat.roomListSidebar"] {
+						display: flex;
+						flex-direction: column;
+
+						> .boxContent {
+							overflow-y: auto;
+							flex: 1 1 auto;
+						}
+					}
+				}
+			}
+		}
+
+		#chatQuickSettings {
+			display: none;
+		}
+	}
+
+	.main {
+		display: flex;
+
+		> .layoutBoundary {
+			flex: 1 1 auto;
+		}
+	}
+
+	.chatRoomTopic {
+		border-left: 5px solid $wcfContentBorderInner;
+		padding: 5px 0px 5px 10px;
+		margin-bottom: 10px;
+
+		.jsDismissRoomTopicButton {
+			float: right;
+		}
+	}
+
+	#content {
+		display: flex;
+		flex-direction: column;
+		flex: 1 1 auto;
+		width: 100%;
+	}
+
+	#chatMessageStream > .scrollContainer,
+	#chatUserList > .boxContent,
+	[data-box-identifier="be.bastelstu.chat.roomListSidebar"] > .boxContent {
+		position: relative;
+		overflow-y: scroll;
+		padding-right: 5px;
+	}
+
+	[data-box-identifier="be.bastelstu.chat.roomListSidebar"] > .boxContent {
+		overflow-x: hidden;
+
+		// Fixes issues with backgrounds being cut by the overflow-x
+		margin-left: -20px;
+
+		> div > .boxMenu {
+			margin-left: 0;
+		}
+	}
+
+	#chatUserList {
+		li.box24 {
+			> :nth-child(2) {
+				flex: 1 1 auto;
+				overflow: hidden;
+			}
+
+			> :last-child.iconColumn {
+				flex: 0 1 auto;
+			}
+		}
+	}
+
+	#chatMessageStream {
+		display: flex;
+		flex: 1 1 auto;
+		flex-direction: column;
+
+		&:not(.activity) .activityInfo {
+			@extend .invisible;
+		}
+
+		> .infoMessages {
+			position: relative;
+
+			> * {
+				margin-top: 0;
+				margin-bottom: 20px;
+			}
+		}
+
+		> .scrollContainer {
+			display: flex;
+			flex: 1 1 15em;
+			flex-direction: column;
+
+			> ul {
+				> li {
+					&.dateMarker {
+						text-align: center;
+						@include wcfFontBold;
+					}
+
+					&:target {
+						background-color: rgba(255, 255, 102, 0.4); // .codeBoxJumpAnchor:target::after
+					}
+
+					&.readMarker {
+						border-bottom: 2px dashed rgba(204, 0, 0, 1); // .badge.red
+						margin-bottom: 0px !important;
+
+						& + .first {
+							border-top: none;
+						}
+					}
+
+					&:first-child.first {
+						border-top: none;
+					}
+
+					.chatMessageContainer {
+						display: flex;
+						margin-top: 3px;
+						margin-bottom: 3px;
+						position: relative;
+
+						// Allows to easily add a marker for special messages like mentions
+						border-left: 3px solid transparent;
+
+						.chatMessageContent {
+							flex: 1 1 auto;
+
+							// Limit embedded images and videos to a reasonable size
+							img:not(.smiley):not(.userAvatarImage) {
+								width: 100%;
+								max-width: $chatEmbedMaxWidth;
+							}
+
+							.videoContainer {
+								@media screen and (min-width: $chatEmbedMaxWidth) {
+									padding-bottom: ($chatEmbedMaxWidth / 16 * 9);
+								}
+
+								> iframe {
+									max-width: $chatEmbedMaxWidth;
+									max-height: ($chatEmbedMaxWidth / 16 * 9);
+								}
+							}
+						}
+
+						.chatMessageIcon {
+							float: left;
+							margin-right: 5px;
+						}
+
+						&,
+						&.inline {
+							.chatMessageSide > .chatUserAvatar,
+							.chatMessageContent > .chatMessageHeader {
+								display: none;
+							}
+						}
+
+						.chatMessageSide {
+							min-width: 58px;
+							display: flex;
+							flex: 0 0 auto;
+							flex-direction: column;
+							align-items: center;
+
+							-webkit-user-select: none;
+							-moz-user-select: none;
+							user-select: none;
+
+							> time {
+								@extend .small;
+								display: none;
+							}
+						}
+
+						.chatMessageHeader {
+							.username {
+								font-weight: bold;
+							}
+						}
+					}
+
+					&.first,
+					&:hover {
+						.chatMessageSide > time {
+							display: inline-block;
+						}
+					}
+
+					&.first {
+						border-top: 1px solid $wcfContentBorderInner;
+
+						.chatMessageContainer {
+							.chatMessageSide {
+								> .chatUserAvatar {
+									margin-top: 3px;
+									display: block;
+								}
+
+								> time {
+									display: none;
+								}
+							}
+
+							.chatMessageContent {
+								> .chatMessageHeader {
+									display: block;
+								}
+							}
+
+							&.inline {
+								.chatMessageSide {
+									> .chatUserAvatar {
+										display: none;
+									}
+
+									> time {
+										display: inline-block;
+									}
+								}
+
+								.chatMessageContent {
+									> .chatMessageHeader {
+										display: none;
+									}
+								}
+							}
+						}
+					}
+
+					.buttonList {
+						display: none;
+
+						-webkit-user-select: none;
+						-moz-user-select: none;
+						user-select: none;
+					}
+				}
+			}
+		}
+	}
+
+	#chatInputContainer {
+		margin-top: 10px;
+		clear: both;
+
+		textarea {
+			resize: none;
+		}
+
+		.charCounter {
+			float: right;
+			color: $wcfContentDimmedText;
+		}
+
+		> div {
+			display: flex;
+			align-items: center;
+
+			> .flexibleTextarea {
+				flex: 1 0 auto;
+				max-width: 100%;
+			}
+
+			> #chatQuickSettings {
+				flex: 0 0 auto;
+			}
+		}
+
+		.innerError {
+			float: left;
+		}
+	}
+
+	#chatQuickSettingsNavigation {
+		@extend .buttonGroupNavigation;
+
+		position: relative;
+
+		> .buttonGroup {
+			@include screen-lg {
+				justify-content: flex-end;
+
+				> li > .button {
+					@extend .small;
+				}
+			}
+
+			@include screen-md-down {
+				@include dropdownMenu;
+
+				&.open {
+					display: block;
+					visibility: visible;
+					position: absolute;
+					right: 24px !important;
+					bottom: 0;
+
+					> li {
+						margin-right: 0;
+					}
+
+					// these rules are required to work around the .button default styling
+					.button {
+						@include wcfFontDefault;
+
+						&.active,
+						&.active:hover {
+							color: $wcfButtonTextActive !important;
+						}
+
+						&:not(.active) {
+							background-color: transparent;
+							color: $wcfDropdownLink;
+						}
+
+						border-radius: 0;
+					}
+				}
+			}
+		}
+	}
+
+	.smiliesToggleMobileButton {
+		margin-right: 5px;
+	}
+
+	#chatQuickSettings {
+		margin-left: 5px;
+	}
+
+	#smileyPickerContainer {
+		#smilies-text {
+			@if variable_exists(wcfContentContainerBackground) {
+				background-color: $wcfContentContainerBackground;
+			}
+			@else {
+				// Compatibility with API_VERSION 3.0
+				background-color: rgba(255, 255, 255, 1);
+			}
+
+			border: 1px solid $wcfContentBorderInner;
+			padding: 20px;
+			margin-top: 20px;
+			margin-bottom: 20px;
+
+			> .smileyList {
+				overflow: auto;
+			}
+		}
+
+		#smileyPickerCloseButton {
+			display: none;
+		}
+
+		@include screen-md-down {
+			&[data-show="true"] {
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				z-index: 9001;
+				display: flex;
+				flex-direction: column;
+				pointer-events: all;
+
+				#smileyPickerCloseButton {
+					background-color: $wcfSidebarBackground;
+					color: $wcfSidebarLink;
+					display: block;
+					padding: 10px 20px;
+					text-align: center;
+					flex: 0 0 auto;
+					cursor: pointer;
+				}
+
+				#smilies-text {
+					border-top: none;
+					border-right: none;
+					border-left: none;
+
+					margin: 0;
+					height: 0;
+					flex: 1 1 auto;
+					position: relative;
+					display: flex;
+					flex-direction: column;
+
+					> nav > ul {
+						margin-bottom: -5px;
+
+						> li {
+							margin-right: 10px;
+							margin-bottom: 5px;
+							border-right: 1px solid $wcfContentBorderInner;
+							padding-right: 9px;
+
+							> a {
+								font-size: 15px;
+							}
+						}
+					}
+
+					.messageTabMenuContent {
+						overflow: auto;
+						flex: 1 1 auto;
+					}
+				}
+			}
+		}
+	}
+}
+
+html.fullscreen {
+	#tpl_chat_room,
+	#tpl_chat_log {
+		.pageHeaderContainer,
+		.pageNavigation,
+		.pageFooter {
+			display: none;
+		}
+
+		.main {
+			@include screen-sm-up {
+				height: 0; // Workaround to get Firefox and Chrome to behave the same regarding page overflow
+			}
+
+			padding: 14px 0;
+
+			.layoutBoundary {
+				max-width: none;
+				width: auto;
+			}
+		}
+
+		#chatMessageStream {
+			> .scrollContainer {
+			//	flex: 1 1 0; // Disable min height in fullscreen mode
+			}
+		}
+
+		// The to top button is clickable even when invisible and may lay over the chat input
+		// This button is unnecessary in the chat, therefore we hide it completely.
+		// If necessary, we should change the selector to .toTop[aria-hidden="true"].
+		.pageAction > .toTop {
+			display: none;
+			pointer-events: none;
+		}
+	}
+}
+
+html:not(.mobile) {
+	#tpl_chat_room,
+	#tpl_chat_log {
+		#chatMessageStream {
+			.chatMessageContainer {
+				.buttonList {
+					position: absolute;
+					bottom: -1px;
+					right: 0px;
+
+					.button {
+						padding: 4px 6px;
+					}
+				}
+
+				&:hover {
+					> .buttonList {
+						display: flex;
+					}
+				}
+			}
+		}
+	}
+}
+
+// based on https://github.com/alexdunphy/flexText
+.flexibleTextarea {
+	position: relative;
+
+	> .flexibleTextareaContent,
+	> .flexibleTextareaMirror {
+		max-height: 200px;
+		overflow: auto;
+	}
+
+	> .flexibleTextareaContent {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		resize: none;
+	}
+
+	> .flexibleTextareaMirror {
+		display: block;
+		visibility: hidden;
+
+		@extend textarea;
+	}
+}

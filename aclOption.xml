@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/aclOption.xsd">
+	<import>
+		<categories>
+			<category name="user">
+				<objecttype>be.bastelstu.chat.room</objecttype>
+			</category>
+			<category name="mod">
+				<objecttype>be.bastelstu.chat.room</objecttype>
+			</category>
+		</categories>
+
+		<options>
+			<option name="user.canSee">
+				<objecttype>be.bastelstu.chat.room</objecttype>
+				<categoryname>user</categoryname>
+			</option>
+			<option name="user.canSeeLog">
+				<objecttype>be.bastelstu.chat.room</objecttype>
+				<categoryname>user</categoryname>
+			</option>
+			<option name="user.canWrite">
+				<objecttype>be.bastelstu.chat.room</objecttype>
+				<categoryname>user</categoryname>
+			</option>
+			<option name="mod.canIgnoreUserLimit">
+				<objecttype>be.bastelstu.chat.room</objecttype>
+				<categoryname>mod</categoryname>
+			</option>
+			<option name="mod.canMute">
+				<objecttype>be.bastelstu.chat.room</objecttype>
+				<categoryname>mod</categoryname>
+			</option>
+			<option name="mod.canIgnoreMute">
+				<objecttype>be.bastelstu.chat.room</objecttype>
+				<categoryname>mod</categoryname>
+			</option>
+			<option name="mod.canBan">
+				<objecttype>be.bastelstu.chat.room</objecttype>
+				<categoryname>mod</categoryname>
+			</option>
+			<option name="mod.canIgnoreBan">
+				<objecttype>be.bastelstu.chat.room</objecttype>
+				<categoryname>mod</categoryname>
+			</option>
+		</options>
+	</import>
+</data>

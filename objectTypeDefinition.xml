@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/objectTypeDefinition.xsd">
+	<import>
+		<definition>
+			<name>be.bastelstu.chat.messageType</name>
+			<interfacename>chat\system\message\type\IMessageType</interfacename>
+		</definition>
+
+		<definition>
+			<name>be.bastelstu.chat.box.roomList.condition</name>
+			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
+		</definition>
+
+		<definition>
+			<name>be.bastelstu.chat.suspension</name>
+			<interfacename>chat\system\suspension\ISuspension</interfacename>
+		</definition>
+	</import>
+</data>

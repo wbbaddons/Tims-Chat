@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/option.xsd">
+	<import>
+		<categories>
+			<category name="chat" />
+			<category name="chat.general">
+				<parent>chat</parent>
+			</category>
+		</categories>
+
+		<options>
+			<option name="chat_reloadtime">
+				<categoryname>chat.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>3</defaultvalue>
+				<minvalue>0</minvalue>
+				<maxvalue>5</maxvalue>
+				<suffix>seconds</suffix>
+			</option>
+
+			<option name="chat_autoawaytime">
+				<categoryname>chat.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<minvalue>0</minvalue>
+				<maxvalue>1440</maxvalue>
+				<suffix>minutes</suffix>
+			</option>
+
+			<option name="chat_max_length">
+				<categoryname>chat.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>500</defaultvalue>
+				<minvalue>50</minvalue>
+				<maxvalue>5000</maxvalue>
+			</option>
+
+			<option name="chat_archive_after">
+				<categoryname>chat.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>90</defaultvalue>
+				<minvalue>30</minvalue>
+				<maxvalue>600</maxvalue>
+				<suffix>seconds</suffix>
+			</option>
+
+			<option name="chat_log_archivetime">
+				<categoryname>chat.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>7</defaultvalue>
+				<minvalue>0</minvalue>
+				<suffix>days</suffix>
+			</option>
+		</options>
+	</import>
+</data>

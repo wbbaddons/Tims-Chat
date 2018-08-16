@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/templatelistener.xsd">
+	<import>
+		<!-- admin -->
+		<templatelistener name="chatVersion">
+			<environment>admin</environment>
+			<templatename>index</templatename>
+			<eventname>softwareVersions</eventname>
+			<templatecode><![CDATA[{include file='__chatVersion' application='chat'}]]></templatecode>
+		</templatelistener>
+		<!-- /admin -->
+
+		<!-- user -->
+		<templatelistener name="chatCopyright">
+			<environment>user</environment>
+			<templatename>pageFooterCopyright</templatename>
+			<eventname>copyright</eventname>
+			<templatecode><![CDATA[{include file='__chatCopyright' application='chat'}]]></templatecode>
+		</templatelistener>
+
+		<templatelistener name="infoCommandSuspensions">
+			<environment>user</environment>
+			<templatename>messageTypes</templatename>
+			<eventname>infoCommandContents</eventname>
+			<templatecode><![CDATA[{include file='infoCommandSuspensions' application='chat'}]]></templatecode>
+		</templatelistener>
+		<templatelistener name="infoCommandSuspensionsDecorator">
+			<environment>user</environment>
+			<templatename>room</templatename>
+			<eventname>beforeBootstrap</eventname>
+			<templatecode><![CDATA[{include file='infoCommandSuspensionsDecorator' application='chat'}]]></templatecode>
+		</templatelistener>
+		<templatelistener name="infoCommandSuspensionsLanguage">
+			<environment>user</environment>
+			<templatename>room</templatename>
+			<eventname>language</eventname>
+			<templatecode><![CDATA['chat.suspension.type.be.bastelstu.chat.suspension.ban':  '{lang __literal=true}chat.suspension.type.be.bastelstu.chat.suspension.ban{/lang}',
+			                       'chat.suspension.type.be.bastelstu.chat.suspension.mute': '{lang __literal=true}chat.suspension.type.be.bastelstu.chat.suspension.mute{/lang}',]]></templatecode>
+		</templatelistener>
+		<templatelistener name="userListModerator">
+			<environment>user</environment>
+			<templatename>userList</templatename>
+			<eventname>icons</eventname>
+			<templatecode><![CDATA[{include file='userListModerator' application='chat'}]]></templatecode>
+		</templatelistener>
+
+		<templatelistener name="temproomCommandMessageTypes">
+			<environment>user</environment>
+			<templatename>messageTypes</templatename>
+			<eventname>messageTypes</eventname>
+			<templatecode><![CDATA[{include file='temproomCommandMessageTypes' application='chat'}]]></templatecode>
+		</templatelistener>
+
+		<templatelistener name="temproomCommandLanguage">
+			<environment>user</environment>
+			<templatename>messageTypes</templatename>
+			<eventname>language</eventname>
+			<templatecode><![CDATA[{include file='temproomCommandLanguage' application='chat'}]]></templatecode>
+		</templatelistener>
+		<!-- /user -->
+	</import>
+</data>

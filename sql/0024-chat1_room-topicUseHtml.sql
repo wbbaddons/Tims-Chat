@@ -1,0 +1,1 @@
+ALTER TABLE chat1_room ADD topicUseHtml TINYINT(1) NOT NULL DEFAULT 0;

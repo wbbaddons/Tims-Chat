@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/menuItem.xsd">
+	<import>
+		<item identifier="be.bastelstu.chat.RoomList">
+			<menu>com.woltlab.wcf.MainMenu</menu>
+			<title language="de">Chat</title>
+			<title language="en">Chat</title>
+			<page>be.bastelstu.chat.RoomList</page>
+		</item>
+	</import>
+</data>

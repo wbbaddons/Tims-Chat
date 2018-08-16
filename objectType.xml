@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/object-type.xsd">
+	<import>
+		<!-- ACL -->
+		<type>
+			<name>be.bastelstu.chat.room</name>
+			<definitionname>com.woltlab.wcf.acl</definitionname>
+		</type>
+		<!-- /ACL -->
+
+		<!-- box controllers -->
+		<type>
+			<name>be.bastelstu.chat.roomList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>chat\system\box\RoomListBoxController</classname>
+		</type>
+		<!-- /box controllers -->
+
+		<!-- room list box condition -->
+		<type>
+			<name>be.bastelstu.chat.roomFilled</name>
+			<definitionname>be.bastelstu.chat.box.roomList.condition</definitionname>
+			<classname>chat\system\condition\room\RoomFilledCondition</classname>
+		</type>
+		<!-- /room list box condition -->
+
+		<!-- message types -->
+		<type>
+			<name>be.bastelstu.chat.messageType.away</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\AwayMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.back</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\BackMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.broadcast</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\BroadcastMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.chatUpdate</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\ChatUpdateMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.color</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\ColorMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.info</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\InfoMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.join</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\JoinMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.leave</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\LeaveMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.me</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\MeMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.plain</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\PlainMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.suspend</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\SuspendMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.team</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\TeamMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.temproomCreated</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\TemproomCreatedMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.temproomInvited</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\TemproomInvitedMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.tombstone</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\TombstoneMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.unsuspend</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\UnsuspendMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.where</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\WhereMessageType</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.whisper</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\WhisperMessageType</classname>
+		</type>
+		<!-- /message types -->
+
+		<!-- suspensions -->
+		<type>
+			<name>be.bastelstu.chat.suspension.ban</name>
+			<definitionname>be.bastelstu.chat.suspension</definitionname>
+			<classname>chat\system\suspension\BanSuspension</classname>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.suspension.mute</name>
+			<definitionname>be.bastelstu.chat.suspension</definitionname>
+			<classname>chat\system\suspension\MuteSuspension</classname>
+		</type>
+		<!-- /suspensions -->
+
+		<!-- messages -->
+		<type>
+			<name>be.bastelstu.chat.message</name>
+			<definitionname>com.woltlab.wcf.message</definitionname>
+		</type>
+		<!-- /messages -->
+
+		<!-- activity points -->
+		<type>
+			<name>be.bastelstu.chat.activityPointEvent.join</name>
+			<definitionname>com.woltlab.wcf.user.activityPointEvent</definitionname>
+			<points>10</points>
+		</type>
+
+		<type>
+			<name>be.bastelstu.chat.activityPointEvent.message</name>
+			<definitionname>com.woltlab.wcf.user.activityPointEvent</definitionname>
+			<points>1</points>
+		</type>
+		<!-- /activity points -->
+	</import>
+</data>

@@ -1,0 +1,17 @@
+{ "presets": [ [ "env"
+               , { "targets": { "browsers": [ "last 2 chrome versions"
+                                            , "last 2 chromeandroid versions"
+                                            , "firefox esr"
+                                            , "not firefox 52"
+                                            , "last 2 firefox versions"
+                                            , "edge >= 15"
+                                            , "safari >= 11"
+                                            , "ios >= 11"
+                                            ]
+                              }
+                 , "debug": true
+                 , "include": [ ]
+                 }
+               ]
+             ]
+}
