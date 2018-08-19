@@ -547,6 +547,17 @@ $chatEmbedMaxWidth: 400px;
 html.fullscreen {
 	#tpl_chat_room,
 	#tpl_chat_log {
+		// Some styles might limit the pageContainers width and height,
+		// we remove margins and paddings here as it shouldn’t cause problems
+		// in most styles but might fix more.
+		.pageContainer {
+			margin: 0;
+			padding: 0;
+			max-height: 100%;
+			max-width: 100%;
+			width: 100%;
+		}
+
 		.pageHeaderContainer,
 		.pageNavigation,
 		.pageFooter {
@@ -555,7 +566,7 @@ html.fullscreen {
 
 		.main {
 			@include screen-sm-up {
-				height: 0; // Workaround to get Firefox and Chrome to behave the same regarding page overflow
+				height: 100vh;
 			}
 
 			padding: 14px 0;
