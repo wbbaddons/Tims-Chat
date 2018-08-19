@@ -151,8 +151,8 @@
 		<item name="chat.suspension.message.new.be.bastelstu.chat.suspension.mute"><![CDATA[<span class="username">{@$author.coloredUsername}</span> hat <span class="username">{@$message.payload.target.username}</span> {if $message.payload.globally} global{/if} {if $message.payload.suspension.expires === null}für immer{else}bis {$message.payload.suspension.formattedExpires}{/if} geknebelt{if $message.payload.suspension.reason}: {$message.payload.suspension.reason}{else}.{/if}]]></item>
 		<item name="chat.suspension.message.revoke.be.bastelstu.chat.suspension.ban"><![CDATA[<span class="username">{@$author.coloredUsername}</span> hat <span class="username">{@$message.payload.target.username}</span>{if $message.payload.globally} global{/if} entbannt.]]></item>
 		<item name="chat.suspension.message.revoke.be.bastelstu.chat.suspension.mute"><![CDATA[<span class="username">{@$author.coloredUsername}</span> hat <span class="username">{@$message.payload.target.username}</span>{if $message.payload.globally} global{/if} entknebelt.]]></item>
-		<item name="chat.suspension.info.be.bastelstu.chat.suspension.ban"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du{else}Sie{/if} sind aus diesem Chatraum gebannt.]]></item>
-		<item name="chat.suspension.info.be.bastelstu.chat.suspension.mute"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du{else}Sie{/if} sind geknebelt.]]></item>
+		<item name="chat.suspension.info.be.bastelstu.chat.suspension.ban"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} aus diesem Chatraum gebannt.]]></item>
+		<item name="chat.suspension.info.be.bastelstu.chat.suspension.mute"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} geknebelt.]]></item>
 	</category>
 
 	<category name="chat.user">
