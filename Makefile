@@ -8,7 +8,7 @@ be.bastelstu.chat.tar.gz: be.bastelstu.chat.tar
 	gzip -9 < $< > $@
 
 be.bastelstu.chat.tar: files.tar files_wcf.tar acptemplates.tar templates.tar *.xml LICENSE sql/*.sql language/*.xml
-	tar cvf be.bastelstu.chat.tar --numeric-owner --exclude-vcs -- $^
+	tar cvf $@ --mtime="@$(shell git log -1 --format=%ct)" --owner=0 --group=0 --numeric-owner --exclude-vcs -- $^
 
 files.tar: $(FILES)
 files_wcf.tar: $(WCF_FILES) files_wcf/js/Bastelstu.be.Chat.min.js
@@ -16,7 +16,7 @@ acptemplates.tar: acptemplates/*.tpl
 templates.tar: templates/*.tpl
 
 %.tar:
-	tar cvf $@ --numeric-owner --exclude-vcs -C $* -- $(^:$*/%=%)
+	tar cvf $@ --mtime="@$(shell git log -1 --format=%ct)" --owner=0 --group=0 --numeric-owner --exclude-vcs -C $* -- $(^:$*/%=%)
 
 files_wcf/js/Bastelstu.be.Chat.min.js: Bastelstu.be.Chat.babel.js
 	yarn run terser --comments '/Copyright|stackoverflow/' -m -c pure_funcs=[console.debug] --verbose --timings -o $@ $^
