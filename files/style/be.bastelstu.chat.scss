@@ -4,7 +4,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2022-08-22
+ * Change Date: 2022-08-23
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -51,12 +51,6 @@ $chatEmbedMaxWidth: 400px;
 		}
 	}
 
-	@include screen-sm-up {
-		.sidebar {
-			overflow-y: auto;
-		}
-	}
-
 	@include screen-sm-md {
 		.main > .layoutBoundary {
 			flex-direction: row !important;
@@ -94,7 +88,7 @@ $chatEmbedMaxWidth: 400px;
 			}
 
 			> .boxContainer {
-				flex: 1 1 0px;
+				flex: 1 1 auto;
 
 				> .box {
 					&.chatUserList {
@@ -578,6 +572,12 @@ html.fullscreen {
 		#chatMessageStream {
 			> .scrollContainer {
 			//	flex: 1 1 0; // Disable min height in fullscreen mode
+			}
+		}
+
+		@include screen-sm-up {
+			.sidebar {
+				overflow-y: auto;
 			}
 		}
 
