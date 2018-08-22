@@ -16,7 +16,6 @@
 
 	<requiredpackages>
 		<requiredpackage minversion="3.0.10">com.woltlab.wcf</requiredpackage>
-		<requiredpackage minversion="2.4.1">be.bastelstu.core-js</requiredpackage>
 		<requiredpackage minversion="1.1.0">be.bastelstu.promiseWrap</requiredpackage>
 		<requiredpackage minversion="0.6.1">be.bastelstu.parserCombinator</requiredpackage>
 		<requiredpackage minversion="1.6.1">be.bastelstu.bottle</requiredpackage>
