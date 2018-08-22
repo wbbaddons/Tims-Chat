@@ -4,7 +4,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2022-08-16
+ * Change Date: 2022-08-22
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -47,6 +47,11 @@ define([ '../console'
 
 		handleInputKeyDown(event) {
 			if (EventKey.Enter(event) && !event.shiftKey) {
+				if (event.isComposing) {
+					console.debug('Ui/Input.handleInputKeyDown', 'Ignored Enter key while composing characters.')
+					return
+				}
+
 				// prevent generation of a new line
 				event.preventDefault()
 
