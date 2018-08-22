@@ -4,7 +4,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2022-08-16
+ * Change Date: 2022-08-22
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -94,14 +94,11 @@ $chatEmbedMaxWidth: 400px;
 			}
 
 			> .boxContainer {
-				&,
-				> .box.chatUserList,
-				> [data-box-identifier="be.bastelstu.chat.roomListSidebar"] {
-					flex: 1 1 0px;
-				}
+				flex: 1 1 0px;
 
 				> .box {
 					&.chatUserList {
+						flex: 2 0 0px;
 						min-height: 15rem;
 
 						> .boxContent {
@@ -110,6 +107,7 @@ $chatEmbedMaxWidth: 400px;
 					}
 
 					&[data-box-identifier="be.bastelstu.chat.roomListSidebar"] {
+						flex: 1 1 0px;
 						min-height: 12rem;
 
 						.badge {
