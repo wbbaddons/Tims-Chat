@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2022-08-16
+ * Change Date: 2022-10-23
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -17,6 +17,7 @@ namespace chat\system\command;
 use \chat\data\room\Room;
 use \wcf\data\object\type\ObjectTypeCache;
 use \wcf\data\user\UserProfile;
+use \wcf\system\exception\UserInputException;
 
 /**
  * Default implemention for command processors.
