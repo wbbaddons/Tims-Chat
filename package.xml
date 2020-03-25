@@ -5,8 +5,8 @@
 		<packagename language="de">Tims Chat</packagename>
 		<isapplication>1</isapplication>
 		<applicationdirectory>chat</applicationdirectory>
-		<version>4.0.0 RC 3</version>
-		<date>2018-11-27</date>
+		<version>4.0.0 RC 4</version>
+		<date>2020-03-25</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -81,6 +81,33 @@
 		<instruction type="box" />
 
 		<instruction type="script" run="standalone">acp/be.bastelstu.chat_install.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="4.0.0 RC 3">
+		<instruction type="file" application="wcf" run="standalone">files_wcf.tar</instruction>
+		<instruction type="file" />
+		<instruction type="template" />
+		<instruction type="acpTemplate" />
+
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+
+		<instruction type="eventListener" />
+		<instruction type="templateListener" />
+
+		<instruction type="page" />
+		<instruction type="menuItem" />
+		<instruction type="acpMenu" />
+
+		<instruction type="aclOption" />
+		<instruction type="userGroupOption" />
+		<instruction type="option" />
+
+		<instruction type="language" />
+
+		<instruction type="box" />
+
+		<instruction type="script" run="standalone">acp/be.bastelstu.chat_update.php</instruction>
 	</instructions>
 
 	<instructions type="update" fromversion="4.0.0 RC 2">
