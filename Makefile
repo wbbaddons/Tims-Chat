@@ -25,7 +25,7 @@ Bastelstu.be.Chat.babel.js: Bastelstu.be.Chat.js .babelrc
 	yarn run babel $< --out-file $@
 
 Bastelstu.be.Chat.js: $(JS_MODULE_FILES)
-	yarn run r.js -o require.build.js
+	yarn run r_js -o require.build.js
 
 clean:
 	-rm -f files.tar
