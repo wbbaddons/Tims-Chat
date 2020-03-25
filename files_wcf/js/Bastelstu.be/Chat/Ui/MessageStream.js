@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2010-2018 Tim Düsterhus.
+ * Copyright (c) 2010-2020 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2022-11-27
+ * Change Date: 2024-03-25
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,11 +14,12 @@
 define([ '../Helper'
        , 'WoltLabSuite/Core/Date/Util'
        , 'WoltLabSuite/Core/Dom/Change/Listener'
+       , 'WoltLabSuite/Core/Language'
        , 'WoltLabSuite/Core/User'
        , 'WoltLabSuite/Core/Dom/Traverse'
        , '../DataStructure/EventEmitter'
        , '../DataStructure/RedBlackTree/Tree'
-       ], function (Helper, DateUtil, DomChangeListener, User, DOMTraverse, EventEmitter, Tree) {
+       ], function (Helper, DateUtil, DomChangeListener, Language, User, DOMTraverse, EventEmitter, Tree) {
 	"use strict";
 
 	const enableAutoscroll = Symbol('enableAutoscroll')
@@ -314,6 +315,10 @@ define([ '../Helper'
 					if (el.classList.contains('dateMarker')) return `== ${el.textContent.trim()} ==`
 
 					if (!message) return
+
+					if (el.classList.contains('tombstone')) {
+						return `[${message.formattedTime}] ${Language.get('chat.messageType.be.bastelstu.chat.messageType.tombstone.message')}`
+					}
 
 					const elem = elBySel('.chatMessage', el)
 
