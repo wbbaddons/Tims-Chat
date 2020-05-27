@@ -56,7 +56,7 @@
 			<dl{if $errorField == 'topic'} class="formError"{/if}>
 				<dt><label for="topic">{lang}chat.acp.room.topic{/lang}</label></dt>
 				<dd>
-					<input type="text" id="topic" name="topic" value="{$i18nPlainValues['topic']}" class="medium">
+					<input type="text" id="topic" name="topic" value="{$i18nPlainValues['topic']}" class="long">
 
 					{if $errorField == 'topic'}
 						<small class="innerError">
