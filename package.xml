@@ -22,10 +22,9 @@
 		<requiredpackage minversion="2.1.0 Alpha 1">be.bastelstu.wcf.push</requiredpackage>
 	</requiredpackages>
 
-	<compatibility>
-		<api version="2017" />
-		<api version="2018" />
-	</compatibility>
+	<excludedpackages>
+		<excludedpackage version="6.0.0 Alpha 1">com.woltlab.wcf</excludedpackage>
+	</excludedpackages>
 
 	<instructions type="install">
 		<instruction type="sql">sql/0001-chat1_room.sql</instruction>
