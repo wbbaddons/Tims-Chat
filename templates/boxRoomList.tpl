@@ -33,7 +33,7 @@ data-is-sidebar="0"
 									{if !$room->getUsers()|empty}
 										<ul class="inlineList commaSeparated">
 											{foreach from=$room->getUsers() item='user'}
-												<li><a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{$user->userID}">{$user->username}</a></li>
+												<li{if $user->chatAway} class="away"{/if}><a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{$user->userID}">{$user->username}</a></li>
 											{/foreach}
 										</ul>
 									{/if}
