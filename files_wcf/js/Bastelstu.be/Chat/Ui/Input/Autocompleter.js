@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2010-2018 Tim Düsterhus.
+ * Copyright (c) 2010-2020 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2024-10-20
+ * Change Date: 2024-10-31
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -21,12 +21,13 @@ define([ 'WoltLabSuite/Core/Dom/Util'
 	class Autocompleter extends Suggestion {
 		constructor(input) {
 			const elementId = DomUtil.identify(input.input)
-			const options = { callbackSelect: (() => null) }
+			const options = { callbackSelect: (_elementId, selection) => this.insertSelection(selection) }
 
 			super(elementId, options)
 
 			this.input = input
-			this._options.callbackSelect = this.callbackSelect.bind(this)
+			this.completions = new Map()
+			this.completionId = 0
 		}
 
 		bootstrap() {
@@ -40,30 +41,49 @@ define([ 'WoltLabSuite/Core/Dom/Util'
 			})
 		}
 
+		keyDown(...args) {
+			return this._keyDown(...args)
+		}
+
 		_keyDown(event) {
-			const result = super._keyDown(event)
+			const result = (super.keyDown || super._keyDown).call(this, event)
 
 			if (!result && EventKey.Enter(event)) {
 				this.cancelNextSubmit = true
 			}
 		}
 
+		keyUp(...args) {
+			return this._keyUp(...args)
+		}
+
 		_keyUp(event) {
 			const value = this.input.getText(true)
 
 			if (this._value !== value) {
-				this._ajaxSuccess({ returnValues: [] })
+				this.sendCompletions([])
 				this._value = value
 			}
 		}
 
-		callbackSelect(_, selected) {
-			this.input.insertText(selected.objectId, { append: false })
+		insertSelection(selection) {
+			let text
+			if ((text = this.completions.get(parseInt(selection.objectId, 10)))) {
+				this.input.insertText(text, { append: false })
+			}
 		}
 
-		_ajaxSuccess(...args) {
-			this._value = this.input.getText(true)
-			return super._ajaxSuccess(...args)
+		sendCompletions(completions) {
+			this.completions = new Map()
+
+			const returnValues = completions.map(completion => {
+				this.completions.set(++this.completionId, completion)
+				return { label: completion
+				       , objectID: this.completionId
+				       }
+			})
+
+			this._ajaxSuccess({ returnValues })
 		}
 	}
 	Autocompleter.DEPENDENCIES = DEPENDENCIES

@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2010-2018 Tim Düsterhus.
+ * Copyright (c) 2010-2020 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2024-10-20
+ * Change Date: 2024-10-31
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -335,14 +335,13 @@ define([ './Chat/console'
 			console.debug('Chat.onAutocomplete', `Autocompleting message: ${value}`)
 
 			const result = this.bottle.container.Autocompleter.autocomplete(value)
-			const returnValues = []
+			const completions = []
 			for (const item of result) {
-				returnValues.push({ label: item, objectID: item })
-				if (returnValues.length == 5) break
+				completions.push(item)
+				if (completions.length == 5) break
 			}
 
-			const payload = { returnValues }
-			this.ui.autocompleter._ajaxSuccess(payload)
+			this.ui.autocompleter.sendCompletions(completions)
 		}
 
 		async pullMessages() {
