@@ -26,6 +26,13 @@ class RoomPage extends \wcf\page\AbstractPage {
 	use TConfiguredPage;
 
 	/**
+	 * Almost dummy attachment handler (used in language variable)
+	 *
+	 * @var	\wcf\system\attachment\AttachmentHandler
+	 */
+	public $attachmentHandler;
+
+	/**
 	 * @inheritDoc
 	 */
 	public $loginRequired = true;
@@ -65,7 +72,7 @@ class RoomPage extends \wcf\page\AbstractPage {
 	 */
 	public function checkPermissions() {
 		parent::checkPermissions();
-		
+
 		$package = \wcf\data\package\PackageCache::getInstance()->getPackageByIdentifier('be.bastelstu.chat');
 		if (stripos($package->packageVersion, 'Alpha') !== false) {
 			$sql = "SELECT COUNT(*) FROM wcf".WCF_N."_user";
@@ -91,6 +98,9 @@ class RoomPage extends \wcf\page\AbstractPage {
 
 		parent::readData();
 
+		// This attachment handler gets only used for the language variable `wcf.attachment.upload.limits`!
+		$this->attachmentHandler = new \wcf\system\attachment\AttachmentHandler('be.bastelstu.chat.message', 0, 'DEADC0DE00000000DEADC0DE00000000DEADC0DE', $this->room->roomID);
+
 		$pushHandler = \wcf\system\push\PushHandler::getInstance();
 		$pushHandler->joinChannel('be.bastelstu.chat');
 		$pushHandler->joinChannel('be.bastelstu.chat.room-'.$this->room->roomID);
@@ -104,6 +114,7 @@ class RoomPage extends \wcf\page\AbstractPage {
 
 		WCF::getTPL()->assign([ 'room' => $this->room
 		                      , 'config' => $this->getConfig()
+		                      , 'attachmentHandler' => $this->attachmentHandler
 		                      ]);
 	}
 }

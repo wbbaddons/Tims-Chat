@@ -71,6 +71,7 @@
 {include file='messageTypes' application='chat'}
 {include file='userList' application='chat'}
 {include file='userListDropdownMenuItems' application='chat'}
+{include file='__attachmentDialog' application='chat'}
 
 {if !ENABLE_DEBUG_MODE}{js application='wcf' file='Bastelstu.be.Chat'}{/if}
 <script data-relocate="true">

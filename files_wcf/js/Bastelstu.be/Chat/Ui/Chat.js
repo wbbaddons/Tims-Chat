@@ -14,7 +14,8 @@
 define([ '../Ui' ], function (Ui) {
 	"use strict";
 
-	const DEPENDENCIES = [ 'UiAutoAway'
+	const DEPENDENCIES = [ 'UiAttachmentUpload'
+	                     , 'UiAutoAway'
 	                     , 'UiConnectionWarning'
 	                     , 'UiInput'
 	                     , 'UiInputAutocompleter'
@@ -29,7 +30,7 @@ define([ '../Ui' ], function (Ui) {
 	                     , 'UiUserList'
 	                     ]
 	class Chat extends Ui {
-		constructor(autoAway, connectionWarning, input, autocompleter, messageStream, messageActionDelete, mobile, notification, readMarker, settings, topic, userActionDropdownHandler, userList) {
+		constructor(attachmentUpload, autoAway, connectionWarning, input, autocompleter, messageStream, messageActionDelete, mobile, notification, readMarker, settings, topic, userActionDropdownHandler, userList) {
 			super()
 
 			this.actionDropdownHandler = userActionDropdownHandler
@@ -45,6 +46,7 @@ define([ '../Ui' ], function (Ui) {
 			this.settings              = settings
 			this.topic                 = topic
 			this.userList              = userList
+			this.attachmentUpload      = attachmentUpload
 		}
 
 		bootstrap() {
@@ -61,6 +63,7 @@ define([ '../Ui' ], function (Ui) {
 			this.settings.bootstrap()
 			this.topic.bootstrap()
 			this.userList.bootstrap()
+			this.attachmentUpload.bootstrap()
 		}
 	}
 	Chat.DEPENDENCIES = DEPENDENCIES

@@ -27,6 +27,7 @@ define([ './Chat/console'
        , './Chat/ProfileStore'
        , './Chat/Room'
        , './Chat/Template'
+       , './Chat/Ui/Attachment/Upload'
        , './Chat/Ui/AutoAway'
        , './Chat/Ui/Chat'
        , './Chat/Ui/ConnectionWarning'
@@ -43,7 +44,7 @@ define([ './Chat/console'
        , './Chat/Ui/UserActionDropdownHandler'
        , './Chat/Ui/UserList'
        ], function (console, Bottle, Push, Core, Language, RepeatingTimer, CoreUser, Autocompleter,
-                    CommandHandler, Throttle, Message, Messenger, ParseError, ProfileStore, Room, Template, UiAutoAway, Ui,
+                    CommandHandler, Throttle, Message, Messenger, ParseError, ProfileStore, Room, Template, UiAttachmentUpload, UiAutoAway, Ui,
                     UiConnectionWarning, ErrorDialog, UiInput, UiInputAutocompleter, UiMessageStream, UiMessageActionDelete, UiMobile, UiNotification,
                     UiReadMarker, UiSettings, UiTopic, UiUserActionDropdownHandler, UiUserList) {
 	"use strict";
@@ -85,6 +86,7 @@ define([ './Chat/console'
 			this.service('UiTopic', UiTopic)
 			this.service('UiUserActionDropdownHandler', UiUserActionDropdownHandler)
 			this.service('UiUserList', UiUserList)
+			this.service('UiAttachmentUpload', UiAttachmentUpload)
 
 			// Register Models
 			this.bottle.instanceFactory('Message', (container, m) => {
