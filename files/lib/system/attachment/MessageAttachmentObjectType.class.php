@@ -82,6 +82,17 @@ class MessageAttachmentObjectType extends \wcf\system\attachment\AbstractAttachm
 	/**
 	 * @inheritDoc
 	 */
+	public function getAllowedExtensions() {
+		return [ 'png'
+		       , 'gif'
+		       , 'jpg'
+		       , 'jpeg'
+		       ];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function cacheObjects(array $objectIDs) {
 		$messageList = new MessageList();
 		$messageList->setObjectIDs($objectIDs);
