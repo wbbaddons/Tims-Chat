@@ -132,6 +132,12 @@
 			<definitionname>be.bastelstu.chat.messageType</definitionname>
 			<classname>chat\system\message\type\WhisperMessageType</classname>
 		</type>
+
+		<type>
+			<name>be.bastelstu.chat.messageType.attachment</name>
+			<definitionname>be.bastelstu.chat.messageType</definitionname>
+			<classname>chat\system\message\type\AttachmentMessageType</classname>
+		</type>
 		<!-- /message types -->
 
 		<!-- suspensions -->
@@ -168,5 +174,13 @@
 			<points>1</points>
 		</type>
 		<!-- /activity points -->
+		
+		<!-- attachments -->
+		<type>
+			<name>be.bastelstu.chat.message</name>
+			<definitionname>com.woltlab.wcf.attachment.objectType</definitionname>
+			<classname>chat\system\attachment\MessageAttachmentObjectType</classname>
+		</type>
+		<!-- attachments -->
 	</import>
 </data>
