@@ -63,7 +63,7 @@ define([ './ToggleButton'
 		 */
 		setupMobile() {
 			this.shadowToggleButton = document.createElement('span')
-			this.shadowToggleButton.classList.add('smiliesToggleMobileButton')
+			this.shadowToggleButton.classList.add('smiliesToggleMobileButton', 'button', 'small')
 			this.shadowToggleButton.innerHTML = '<span class="icon icon24 fa-smile-o"></span>'
 			this.shadowToggleButton.addEventListener('mousedown', this.onClick.bind(this))
 

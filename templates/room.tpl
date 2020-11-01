@@ -58,6 +58,7 @@
 			<div class="chatAttachButton">
 				<span id="chatAttachmentUploadButton" class="button small" title="{lang}wcf.attachment.attachments{/lang}">
 					<span class="icon icon16 fa-paperclip"></span>
+					<span class="icon icon24 fa-paperclip"></span>
 				</span>
 			</div>
 		{/if}

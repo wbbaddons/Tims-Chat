@@ -57,6 +57,7 @@ $chatEmbedMaxWidth: 400px;
 		}
 
 		#content {
+			margin-left: 20px;
 			width: auto !important;
 		}
 
@@ -383,6 +384,20 @@ $chatEmbedMaxWidth: 400px;
 				flex-grow: 0;
 				flex-shrink: 0;
 				margin-right: 5px;
+
+				.icon16 {
+					display: none;
+				}
+
+				@include screen-lg {
+					.icon16 {
+						display: inline-block;
+					}
+
+					.icon24 {
+						display: none;
+					}
+				}
 			}
 
 			> div.chatInputWrapper {
