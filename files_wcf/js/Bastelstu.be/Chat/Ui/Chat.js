@@ -19,8 +19,8 @@ define([ '../Ui' ], function (Ui) {
 	                     , 'UiConnectionWarning'
 	                     , 'UiInput'
 	                     , 'UiInputAutocompleter'
-	                     , 'UiMessageStream'
 	                     , 'UiMessageActionDelete'
+	                     , 'UiMessageStream'
 	                     , 'UiMobile'
 	                     , 'UiNotification'
 	                     , 'UiReadMarker'
@@ -30,40 +30,40 @@ define([ '../Ui' ], function (Ui) {
 	                     , 'UiUserList'
 	                     ]
 	class Chat extends Ui {
-		constructor(attachmentUpload, autoAway, connectionWarning, input, autocompleter, messageStream, messageActionDelete, mobile, notification, readMarker, settings, topic, userActionDropdownHandler, userList) {
+		constructor(attachmentUpload, autoAway, connectionWarning, input, autocompleter, messageActionDelete, messageStream, mobile, notification, readMarker, settings, topic, userActionDropdownHandler, userList) {
 			super()
 
 			this.actionDropdownHandler = userActionDropdownHandler
+			this.attachmentUpload      = attachmentUpload
 			this.autoAway              = autoAway
 			this.autocompleter         = autocompleter
 			this.connectionWarning     = connectionWarning
 			this.input                 = input
-			this.messageStream         = messageStream
 			this.messageActionDelete   = messageActionDelete
+			this.messageStream         = messageStream
 			this.mobile                = mobile
 			this.notification          = notification
 			this.readMarker            = readMarker
 			this.settings              = settings
 			this.topic                 = topic
 			this.userList              = userList
-			this.attachmentUpload      = attachmentUpload
 		}
 
 		bootstrap() {
 			this.actionDropdownHandler.bootstrap()
+			this.attachmentUpload.bootstrap()
 			this.autoAway.bootstrap()
 			this.autocompleter.bootstrap()
 			this.connectionWarning.bootstrap()
 			this.input.bootstrap()
-			this.messageStream.bootstrap()
 			this.messageActionDelete.bootstrap()
+			this.messageStream.bootstrap()
 			this.mobile.bootstrap()
 			this.notification.bootstrap()
 			this.readMarker.bootstrap()
 			this.settings.bootstrap()
 			this.topic.bootstrap()
 			this.userList.bootstrap()
-			this.attachmentUpload.bootstrap()
 		}
 	}
 	Chat.DEPENDENCIES = DEPENDENCIES
