@@ -82,9 +82,11 @@ define([ 'WoltLabSuite/Core/Language'
 			elShow(this.uploadDescription)
 		}
 
-		async send(event) {
+		async send(attachmentId, event) {
 			event.preventDefault()
-			const parameters = { promise: Promise.resolve() }
+			const parameters = { promise: Promise.resolve()
+			                   , attachmentId
+			                   }
 			this.emit('send', parameters)
 
 			try {
@@ -115,7 +117,7 @@ define([ 'WoltLabSuite/Core/Language'
 			sendButton.classList.add('button')
 			sendButton.dataset.objectId = objectID
 			sendButton.innerText = Language.get('wcf.global.button.submit')
-			sendButton.addEventListener('click', (e) => this.send(e))
+			sendButton.addEventListener('click', (e) => this.send(objectID, e))
 			li.appendChild(sendButton)
 			buttonGroup.appendChild(li)
 
