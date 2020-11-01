@@ -23,9 +23,9 @@ define([ 'WoltLabSuite/Core/Language'
 	const DIALOG_BUTTON_ID    = 'chatAttachmentUploadButton'
 	const DIALOG_CONTAINER_ID = 'chatAttachmentUploadDialog'
 
-	const DEPENDENCIES = [ 'Room' ];
+	const DEPENDENCIES = [ 'UiInput', 'Room' ];
 	class UiAttachmentUpload extends Upload {
-		constructor(room) {
+		constructor(input, room) {
 			const buttonContainer = document.querySelector(`#${DIALOG_CONTAINER_ID} > .upload`)
 			const buttonContainerId = DomUtil.identify(buttonContainer)
 
@@ -37,6 +37,7 @@ define([ 'WoltLabSuite/Core/Language'
 				acceptableFiles: [ '.png', '.gif', '.jpg', '.jpeg' ]
 			})
 
+			this.input = input
 			this.room = room
 			this.previewContainer = previewContainer
 			this.tmpHash = undefined
@@ -64,6 +65,15 @@ define([ 'WoltLabSuite/Core/Language'
 
 				const deleteAction = new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', `#${this.previewContainer.id} > p`)
 				deleteAction.setCallback(() => this.closeDialog())
+
+				this.input.on('input', (event) => {
+					if (event.target.input.value.length == 0) {
+						button.classList.remove('disabled')
+					}
+					else {
+						button.classList.add('disabled')
+					}
+				})
 			}
 		}
 

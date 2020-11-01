@@ -385,6 +385,12 @@ $chatEmbedMaxWidth: 400px;
 				flex-shrink: 0;
 				margin-right: 5px;
 
+				@include screen-xs {
+					> .disabled {
+						display: none;
+					}
+				}
+
 				.icon16 {
 					display: none;
 				}
