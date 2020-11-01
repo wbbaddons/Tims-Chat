@@ -198,6 +198,7 @@
 		<item name="wcf.acp.group.option.mod.chat.canMute"><![CDATA[Kann knebeln]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canMute.description"><![CDATA[Achtung: Diese Berechtigung kann nicht über Raumspezifische Rechte entzogen werden.]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canTeam"><![CDATA[Kann Teamnachrichten versenden]]></item>
+		<item name="wcf.acp.group.option.user.chat.canAttach"><![CDATA[Kann Dateianhänge hochladen]]></item>
 		<item name="wcf.acp.group.option.user.chat.canSee"><![CDATA[Kann Chaträume sehen]]></item>
 		<item name="wcf.acp.group.option.user.chat.canSeeLog"><![CDATA[Kann das Protokoll sehen]]></item>
 		<item name="wcf.acp.group.option.user.chat.canSetColor"><![CDATA[Kann den Benutzernamen färben]]></item>
