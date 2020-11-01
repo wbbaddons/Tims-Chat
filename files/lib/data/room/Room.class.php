@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2024-10-20
+ * Change Date: 2024-11-01
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -23,14 +23,21 @@ use \wcf\util\StringUtil;
 
 /**
  * Represents a chat room.
+ *
+ * @property-read	integer	$roomID
+ * @property-read	string	$title
+ * @property-read	string	$topic
+ * @property-read	integer	$position
+ * @property-read	integer	$userLimit
+ * @property-read	integer	$isTemporary
+ * @property-read	integer	$ownerID
+ * @property-read	integer	$topicUseHtml
  */
 final class Room extends \wcf\data\DatabaseObject implements \wcf\system\request\IRouteController
                                                            , \wcf\data\ITitledLinkObject
                                                            , \JsonSerializable {
 	/**
-	 * User to Room mapping.
-	 *
-	 * @param	int[]
+	 * @var	?(integer[])
 	 */
 	private static $userToRoom = null;
 
