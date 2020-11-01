@@ -1,11 +1,11 @@
 <?php
 /*
- * Copyright (c) 2010-2018 Tim Düsterhus.
+ * Copyright (c) 2010-2020 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2024-10-20
+ * Change Date: 2024-11-01
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -19,6 +19,7 @@ use \chat\data\message\MessageEditor;
 use \chat\data\room\Room;
 use \wcf\data\user\UserProfile;
 use \wcf\system\exception\PermissionDeniedException;
+use \wcf\system\WCF;
 
 /**
  * The plain command creates a normal chat message
@@ -58,6 +59,8 @@ class PlainCommand extends AbstractInputProcessedCommand implements ICommand {
 
 		$objectTypeID = $this->getMessageObjectTypeID('be.bastelstu.chat.messageType.plain');
 		$this->setText($this->assertParameter($parameters, 'text'));
+		
+		WCF::getDB()->beginTransaction();
 		$message = (new MessageAction([ ], 'create', [ 'data' => [ 'roomID'       => $room->roomID
 		                                                         , 'userID'       => $user->userID
 		                                                         , 'username'     => $user->username
@@ -77,5 +80,6 @@ class PlainCommand extends AbstractInputProcessedCommand implements ICommand {
 				'hasEmbeddedObjects' => 1
 			]);
 		}
+		WCF::getDB()->commitTransaction();
 	}
 }
