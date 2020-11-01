@@ -52,11 +52,8 @@ final class Room extends \wcf\data\DatabaseObject implements \wcf\system\request
 	 * Returns whether the given user can see at least
 	 * one chat room. If no user is given the current user
 	 * should be assumed
-	 *
-	 * @param	\wcf\data\user\UserProfile	$user
-	 * @return	boolean
 	 */
-	public static function canSeeAny(\wcf\data\user\UserProfile $user = null) {
+	public static function canSeeAny(\wcf\data\user\UserProfile $user = null): bool {
 		$rooms = RoomCache::getInstance()->getRooms();
 		foreach ($rooms as $room) {
 			if ($room->canSee($user)) return true;
@@ -68,11 +65,8 @@ final class Room extends \wcf\data\DatabaseObject implements \wcf\system\request
 	/**
 	 * Returns whether the given user can see this room.
 	 * If no user is given the current user should be assumed.
-	 *
-	 * @param	\wcf\data\user\UserProfile	$user
-	 * @return	boolean
 	 */
-	public function canSee(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null) {
+	public function canSee(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null): bool {
 		static $cache = [ ];
 		if ($user === null) $user = new \wcf\data\user\UserProfile(WCF::getUser());
 
@@ -107,11 +101,8 @@ final class Room extends \wcf\data\DatabaseObject implements \wcf\system\request
 	/**
 	 * Returns whether the given user can see the log of this room.
 	 * If no user is given the current user should be assumed.
-	 *
-	 * @param	\wcf\data\user\UserProfile	$user
-	 * @return	boolean
 	 */
-	public function canSeeLog(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null) {
+	public function canSeeLog(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null): bool {
 		static $cache = [ ];
 		if ($user === null) $user = new \wcf\data\user\UserProfile(WCF::getUser());
 
@@ -141,11 +132,8 @@ final class Room extends \wcf\data\DatabaseObject implements \wcf\system\request
 	/**
 	 * Returns whether the given user can join this room.
 	 * If no user is given the current user should be assumed.
-	 *
-	 * @param	\wcf\data\user\UserProfile	$user
-	 * @return	boolean
 	 */
-	public function canJoin(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null) {
+	public function canJoin(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null): bool {
 		static $cache = [ ];
 		if ($user === null) $user = new \wcf\data\user\UserProfile(WCF::getUser());
 
@@ -170,11 +158,8 @@ final class Room extends \wcf\data\DatabaseObject implements \wcf\system\request
 	/**
 	 * Returns whether the given user can write public messages in this room.
 	 * If no user is given the current user should be assumed.
-	 *
-	 * @param	\wcf\data\user\UserProfile	$user
-	 * @return	boolean
 	 */
-	public function canWritePublicly(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null) {
+	public function canWritePublicly(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null): bool {
 		static $cache = [ ];
 		if ($user === null) $user = new \wcf\data\user\UserProfile(WCF::getUser());
 

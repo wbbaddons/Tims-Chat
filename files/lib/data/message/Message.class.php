@@ -14,6 +14,10 @@
 
 namespace chat\data\message;
 
+use \chat\data\room\Room;
+use \wcf\data\object\type\ObjectType;
+use \wcf\data\object\type\ObjectTypeCache;
+
 /**
  * Represents a chat message.
  *
@@ -42,28 +46,22 @@ class Message extends \wcf\data\DatabaseObject {
 
 	/**
 	 * Returns whether this message already is inside the log.
-	 *
-	 * @return	boolean
 	 */
-	public function isInLog() {
+	public function isInLog(): bool {
 		return $this->time < (TIME_NOW - CHAT_ARCHIVE_AFTER);
 	}
 
 	/**
 	 * Returns the message type object of this message.
-	 *
-	 * @return	\wcf\data\object\type\ObjectType
 	 */
-	public function getMessageType() {
-		return \wcf\data\object\type\ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
+	public function getMessageType(): ObjectType {
+		return ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
 	}
 
 	/**
 	 * Returns the chat room that contains this message.
-	 *
-	 * @return	\chat\data\room\Room
 	 */
-	public function getRoom() {
+	public function getRoom(): Room {
 		return \chat\data\room\RoomCache::getInstance()->getRoom($this->roomID);
 	}
 }
