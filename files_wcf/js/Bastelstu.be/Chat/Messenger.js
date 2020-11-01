@@ -56,9 +56,9 @@ define([ './console'
 			return Ajax.api(this, payload)
 		}
 
-		async pushAttachment(attachmentId) {
+		async pushAttachment(tmpHash) {
 			const payload = { actionName: 'pushAttachment'
-			                , parameters: { attachmentId }
+			                , parameters: { tmpHash }
 			                }
 
 			return Ajax.api(this, payload)

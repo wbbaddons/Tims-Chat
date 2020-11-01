@@ -334,7 +334,7 @@ define([ './Chat/console'
 		}
 
 		async onSendAttachment(event) {
-			return this.bottle.container.Messenger.pushAttachment(event.detail.attachmentId)
+			return this.bottle.container.Messenger.pushAttachment(event.detail.tmpHash)
 		}
 
 		onAutocomplete(event) {

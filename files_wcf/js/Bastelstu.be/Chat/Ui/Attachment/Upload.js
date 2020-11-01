@@ -39,6 +39,7 @@ define([ 'WoltLabSuite/Core/Language'
 
 			this.room = room
 			this.previewContainer = previewContainer
+			this.tmpHash = undefined
 		}
 
 		bootstrap() {
@@ -82,10 +83,10 @@ define([ 'WoltLabSuite/Core/Language'
 			elShow(this.uploadDescription)
 		}
 
-		async send(attachmentId, event) {
+		async send(tmpHash, event) {
 			event.preventDefault()
 			const parameters = { promise: Promise.resolve()
-			                   , attachmentId
+			                   , tmpHash
 			                   }
 			this.emit('send', parameters)
 
@@ -99,14 +100,14 @@ define([ 'WoltLabSuite/Core/Language'
 			}
 		}
 
-		createButtonGroup(uploadId, objectID) {
+		createButtonGroup(uploadId, objectId, tmpHash) {
 			const buttonGroup = document.createElement('ul')
 			buttonGroup.classList.add('buttonGroup')
 
 			let li = document.createElement('li')
 			const cancelButton = document.createElement('span')
 			cancelButton.classList.add('button', 'jsDeleteButton')
-			cancelButton.dataset.objectId = objectID
+			cancelButton.dataset.objectId = objectId
 			cancelButton.dataset.eventName = 'attachment'
 			cancelButton.innerText = Language.get('wcf.global.button.cancel')
 			li.appendChild(cancelButton)
@@ -115,9 +116,8 @@ define([ 'WoltLabSuite/Core/Language'
 			li = document.createElement('li')
 			const sendButton = document.createElement('span')
 			sendButton.classList.add('button')
-			sendButton.dataset.objectId = objectID
 			sendButton.innerText = Language.get('wcf.global.button.submit')
-			sendButton.addEventListener('click', (e) => this.send(objectID, e))
+			sendButton.addEventListener('click', (e) => this.send(tmpHash, e))
 			li.appendChild(sendButton)
 			buttonGroup.appendChild(li)
 
@@ -131,13 +131,13 @@ define([ 'WoltLabSuite/Core/Language'
 		 * @see	WoltLabSuite/Core/Upload#_getParameters
 		 */
 		_getParameters() {
-			const hash = [ ...crypto.getRandomValues(new Uint8Array(20)) ]
+			this.tmpHash = [ ...crypto.getRandomValues(new Uint8Array(20)) ]
 				.map(m => ('0' + m.toString(16)).slice(-2))
 				.join('')
 
 			return { objectType: "be.bastelstu.chat.message"
 			       , parentObjectID: this.room.roomID
-			       , tmpHash: hash
+			       , tmpHash: this.tmpHash
 			       }
 		}
 
@@ -186,7 +186,7 @@ define([ 'WoltLabSuite/Core/Language'
 
 				DomUtil.replaceElement(progress, img)
 
-				this.createButtonGroup(uploadId, attachment.attachmentID)
+				this.createButtonGroup(uploadId, attachment.attachmentID, this.tmpHash)
 			}
 		}
 	}
