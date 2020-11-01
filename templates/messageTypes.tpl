@@ -433,6 +433,37 @@
 	</div>
 </script>
 
+<script type="x-text/template" data-application="be.bastelstu.chat" data-template-name="be-bastelstu-chat-messageType-attachment" data-template-includes="DeleteButton">
+	<div class="chatMessageContainer">
+		<div class="chatMessageSide">
+			<div class="chatUserAvatar jsUserActionDropdown" data-user-id="{$author.userID}">
+				<a href="{$author.link}">{@$author.image32}</a>
+			</div>
+			<time><a href="{$message.link}">{$message.formattedTime}</a></time>
+		</div>
+		<div class="chatMessageContent">
+			<div class="chatMessageHeader">
+				<span class="username">
+					<a href="{$author.link}" class="jsUserActionDropdown" data-user-id="{$author.userID}">
+						{@$author.coloredUsername}
+					</a>
+				</span>
+				<small class="separatorLeft">
+					<time><a href="{$message.link}">{$message.formattedTime}</a></time>
+				</small>
+			</div>
+			<div class="chatMessage htmlContent">{@$message.payload.formattedMessage}</div>
+		</div>
+		<ul class="buttonGroup buttonList smallButtons">
+			{/literal}
+			{if $__wcf->session->getPermission('mod.chat.canDelete')}
+				{ldelim}include file=$t.DeleteButton}
+			{/if}
+			{literal}
+		</ul>
+	</div>
+</script>
+
 <script type="x-text/template" data-application="be.bastelstu.chat" data-template-name="be-bastelstu-chat-messageType-color">
 	<div class="chatMessageContainer inline">
 		<div class="chatMessageSide">

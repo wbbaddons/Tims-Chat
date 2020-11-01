@@ -1,11 +1,11 @@
 <?php
 /*
- * Copyright (c) 2010-2018 Tim Düsterhus.
+ * Copyright (c) 2010-2020 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2024-10-20
+ * Change Date: 2024-11-01
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -17,6 +17,7 @@ namespace chat\data\message;
 use \chat\data\command\CommandCache;
 use \chat\data\room\RoomCache;
 use \wcf\data\object\type\ObjectTypeCache;
+use \wcf\system\attachment\AttachmentHandler;
 use \wcf\system\exception\PermissionDeniedException;
 use \wcf\system\exception\UserInputException;
 use \wcf\system\user\activity\point\UserActivityPointHandler;
@@ -303,5 +304,67 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$processor = $command->getProcessor();
 		$processor->validate($this->parameters['parameters'], $room);
 		$processor->execute($this->parameters['parameters'], $room);
+	}
+
+	/**
+	 * Validates parameters and permissions.
+	 */
+	public function validatePushAttachment() {
+		$this->readInteger('roomID');
+
+		$room = RoomCache::getInstance()->getRoom($this->parameters['roomID']);
+		if ($room === null) throw new UserInputException('roomID');
+		if (!$room->canSee($user = null, $reason)) throw $reason;
+		$user = new \chat\data\user\User(WCF::getUser());
+		if (!$user->isInRoom($room)) throw new PermissionDeniedException();
+
+		$this->readString('tmpHash');
+	}
+
+	/**
+	 * Pushes a new attachment into the given room.
+	 */
+	public function pushAttachment() {
+		$objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('be.bastelstu.chat.messageType', 'be.bastelstu.chat.messageType.attachment');
+		if (!$objectTypeID) throw new \LogicException('Missing object type');
+
+		$room = RoomCache::getInstance()->getRoom($this->parameters['roomID']);
+		if ($room === null) throw new UserInputException('roomID');
+
+		$attachmentHandler = new AttachmentHandler('be.bastelstu.chat.message', 0, $this->parameters['tmpHash'], $room->roomID);
+		$attachments = $attachmentHandler->getAttachmentList();
+		$attachmentIDs = [];
+		foreach ($attachments as $attachment) {
+			$attachmentIDs[] = $attachment->attachmentID;
+		}
+		
+		$processor = new \wcf\system\html\input\HtmlInputProcessor();
+		$processor->process(implode(' ', array_map(function ($attachmentID) {
+			return '[attach='.$attachmentID.',none,true][/attach]';
+		}, $attachmentIDs)), 'be.bastelstu.chat.message', 0);
+
+		WCF::getDB()->beginTransaction();
+		/** @var Message $message */
+		$message = (new MessageAction([ ], 'create', [ 'data' => [ 'roomID'       => $room->roomID
+		                                                         , 'userID'       => WCF::getUser()->userID
+		                                                         , 'username'     => WCF::getUser()->username
+		                                                         , 'time'         => TIME_NOW
+		                                                         , 'objectTypeID' => $objectTypeID
+		                                                         , 'payload'      => serialize([ 'attachmentIDs' => $attachmentIDs
+		                                                                                       , 'message' => $processor->getHtml()
+		                                                                                       ])
+		                                                         ]
+		                                             ]
+		                             )
+		           )->executeAction()['returnValues'];
+
+		$attachmentHandler->updateObjectID($message->messageID);
+		$processor->setObjectID($message->messageID);
+		if (\wcf\system\message\embedded\object\MessageEmbeddedObjectManager::getInstance()->registerObjects($processor)) {
+			(new MessageEditor($message))->update([
+				'hasEmbeddedObjects' => 1
+			]);
+		}
+		WCF::getDB()->commitTransaction();
 	}
 }

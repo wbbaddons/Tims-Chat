@@ -4,7 +4,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2024-10-31
+ * Change Date: 2024-11-01
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -27,6 +27,7 @@ define([ './Chat/console'
        , './Chat/ProfileStore'
        , './Chat/Room'
        , './Chat/Template'
+       , './Chat/Ui/Attachment/Upload'
        , './Chat/Ui/AutoAway'
        , './Chat/Ui/Chat'
        , './Chat/Ui/ConnectionWarning'
@@ -43,7 +44,7 @@ define([ './Chat/console'
        , './Chat/Ui/UserActionDropdownHandler'
        , './Chat/Ui/UserList'
        ], function (console, Bottle, Push, Core, Language, RepeatingTimer, CoreUser, Autocompleter,
-                    CommandHandler, Throttle, Message, Messenger, ParseError, ProfileStore, Room, Template, UiAutoAway, Ui,
+                    CommandHandler, Throttle, Message, Messenger, ParseError, ProfileStore, Room, Template, UiAttachmentUpload, UiAutoAway, Ui,
                     UiConnectionWarning, ErrorDialog, UiInput, UiInputAutocompleter, UiMessageStream, UiMessageActionDelete, UiMobile, UiNotification,
                     UiReadMarker, UiSettings, UiTopic, UiUserActionDropdownHandler, UiUserList) {
 	"use strict";
@@ -85,6 +86,7 @@ define([ './Chat/console'
 			this.service('UiTopic', UiTopic)
 			this.service('UiUserActionDropdownHandler', UiUserActionDropdownHandler)
 			this.service('UiUserList', UiUserList)
+			this.service('UiAttachmentUpload', UiAttachmentUpload)
 
 			// Register Models
 			this.bottle.instanceFactory('Message', (container, m) => {
@@ -176,8 +178,11 @@ define([ './Chat/console'
 			this.ui = this.bottle.container.Ui
 			this.ui.bootstrap()
 
-			this.bottle.container.UiInput.on('submit', this.onSubmit.bind(this))
-			this.bottle.container.UiInput.on('autocomplete', this.onAutocomplete.bind(this))
+			this.ui.input.on('submit', this.onSubmit.bind(this))
+			this.ui.input.on('autocomplete', this.onAutocomplete.bind(this))
+			this.ui.attachmentUpload.on('send', (event) => {
+				event.detail.promise = this.onSendAttachment(event)
+			})
 
 			await this.bottle.container.Room.join()
 
@@ -326,6 +331,10 @@ define([ './Chat/console'
 			catch (err) {
 				console.error('Chat.markAsBack', err)
 			}
+		}
+
+		async onSendAttachment(event) {
+			return this.bottle.container.Messenger.pushAttachment(event.detail.tmpHash)
 		}
 
 		onAutocomplete(event) {

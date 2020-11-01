@@ -49,6 +49,12 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
+			<option name="user.chat.canAttach">
+				<categoryname>user.chat</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<usersonly>1</usersonly>
+			</option>
 			<option name="user.chat.disallowedBBCodes">
 				<categoryname>user.chat</categoryname>
 				<optiontype>BBCodeSelect</optiontype>

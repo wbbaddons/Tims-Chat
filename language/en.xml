@@ -198,6 +198,7 @@
 		<item name="wcf.acp.group.option.mod.chat.canMute"><![CDATA[Can mute]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canMute.description"><![CDATA[Note: If this permission is granted it cannot be revoked in the room specific permissions.]]></item>
 		<item name="wcf.acp.group.option.mod.chat.canTeam"><![CDATA[Can use team internal messages]]></item>
+		<item name="wcf.acp.group.option.user.chat.canAttach"><![CDATA[Can upload attachments]]></item>
 		<item name="wcf.acp.group.option.user.chat.canSee"><![CDATA[Can see chat rooms]]></item>
 		<item name="wcf.acp.group.option.user.chat.canSeeLog"><![CDATA[Can see chat log]]></item>
 		<item name="wcf.acp.group.option.user.chat.canSetColor"><![CDATA[Can choose to color their name]]></item>

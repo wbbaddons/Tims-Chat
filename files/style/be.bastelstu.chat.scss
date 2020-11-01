@@ -57,6 +57,7 @@ $chatEmbedMaxWidth: 400px;
 		}
 
 		#content {
+			margin-left: 20px;
 			width: auto !important;
 		}
 
@@ -378,15 +379,46 @@ $chatEmbedMaxWidth: 400px;
 
 		> div {
 			display: flex;
-			align-items: center;
 
-			> .flexibleTextarea {
-				flex: 1 0 auto;
-				max-width: 100%;
+			> div.chatAttachButton {
+				flex-grow: 0;
+				flex-shrink: 0;
+				margin-right: 5px;
+
+				@include screen-xs {
+					> .disabled {
+						display: none;
+					}
+				}
+
+				.icon16 {
+					display: none;
+				}
+
+				@include screen-lg {
+					.icon16 {
+						display: inline-block;
+					}
+
+					.icon24 {
+						display: none;
+					}
+				}
 			}
 
-			> #chatQuickSettings {
-				flex: 0 0 auto;
+			> div.chatInputWrapper {
+				flex-grow: 1;
+				display: flex;
+				align-items: center;
+
+				> .flexibleTextarea {
+					flex: 1 0 auto;
+					max-width: 100%;
+				}
+
+				> #chatQuickSettings {
+					flex: 0 0 auto;
+				}
 			}
 		}
 
