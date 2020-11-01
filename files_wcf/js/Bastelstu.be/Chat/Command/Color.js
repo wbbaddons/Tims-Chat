@@ -18,7 +18,10 @@ define(['../Command', '../Parser'], function (Command, Parser) {
 		getParameterParser() {
 			// Either match a color in hexadecimal RGB notation or a color name (just letters)
 			const color = Parser.F.try(
-				Parser.RGBHex.map((color) => ({ type: 'hex', value: color }))
+				Parser.RGBHex.map((color) => ({
+					type: 'hex',
+					value: color.replace(/^#/, ''),
+				}))
 			).or(new Parser.X().word().map((word) => ({ type: 'word', value: word })))
 
 			// Either match a single color or two colors separated by a space
