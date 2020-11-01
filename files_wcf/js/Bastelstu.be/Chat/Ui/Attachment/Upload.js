@@ -155,18 +155,20 @@ define([ 'WoltLabSuite/Core/Language'
 		 * @see	WoltLabSuite/Core/Upload#_success
 		 */
 		_success(uploadId, data, responseText, xhr, requestOptions) {
-			if (data.returnValues?.errors?.[0]) {
+			if (data.returnValues.errors && data.returnValues.errors[0]) {
 				const error = data.returnValues.errors[0]
 
 				elInnerError(this._button, Language.get(`wcf.attachment.upload.error.${error.errorType}`, {
 					filename: error.filename
 				}))
+
+				return
 			}
 			else {
 				elInnerError(this._button, '')
 			}
 
-			if (data.returnValues?.attachments?.[uploadId]) {
+			if (data.returnValues.attachments && data.returnValues.attachments[uploadId]) {
 				this._removeButton()
 				elHide(this.uploadDescription)
 
@@ -197,6 +199,10 @@ define([ 'WoltLabSuite/Core/Language'
 				DomUtil.replaceElement(progress, img)
 
 				this.createButtonGroup(uploadId, attachment.attachmentID, this.tmpHash)
+			}
+			else {
+				console.error("Received neither an error nor an attachment response")
+				console.error(data.returnValues)
 			}
 		}
 	}
