@@ -11,35 +11,42 @@
  * or later of the General Public License.
  */
 
-define([ './CommandHandler'
-       , './Parser'
-       ], function (CommandHandler, Parser) {
-	"use strict";
+define(['./CommandHandler', './Parser'], function (CommandHandler, Parser) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'CommandHandler' ]
+	const DEPENDENCIES = ['CommandHandler']
 	class Autocompleter {
 		constructor(commandHandler) {
-			if (!(commandHandler instanceof CommandHandler)) throw new TypeError('You must pass a CommandHandler to the Autocompleter')
+			if (!(commandHandler instanceof CommandHandler))
+				throw new TypeError(
+					'You must pass a CommandHandler to the Autocompleter'
+				)
 
 			this.commandHandler = commandHandler
 		}
 
-		* autocomplete(text) {
+		*autocomplete(text) {
 			if (text === '/') {
-				yield * this.autocompleteCommandTrigger(text, '')
+				yield* this.autocompleteCommandTrigger(text, '')
 				return
 			}
 
-			const [ trigger, parameterString ] = this.commandHandler.splitCommand(text)
+			const [trigger, parameterString] = this.commandHandler.splitCommand(text)
 
 			let command
 			if (trigger === null) {
-				command = this.commandHandler.getCommandByIdentifier('be.bastelstu.chat', 'plain')
-			}
-			else {
-				const triggerDone = Parser.Slash.thenRight(Parser.AlnumTrigger.or(Parser.SymbolicTrigger).thenLeft(Parser.Whitespace)).parse(Parser.Streams.ofString(text))
+				command = this.commandHandler.getCommandByIdentifier(
+					'be.bastelstu.chat',
+					'plain'
+				)
+			} else {
+				const triggerDone = Parser.Slash.thenRight(
+					Parser.AlnumTrigger.or(Parser.SymbolicTrigger).thenLeft(
+						Parser.Whitespace
+					)
+				).parse(Parser.Streams.ofString(text))
 				if (!triggerDone.isAccepted()) {
-					yield * this.autocompleteCommandTrigger(text, trigger)
+					yield* this.autocompleteCommandTrigger(text, trigger)
 					return
 				}
 
@@ -56,13 +63,12 @@ define([ './CommandHandler'
 				for (const item of values) {
 					yield `/${trigger} ${item}`
 				}
-			}
-			else {
-				yield * values
+			} else {
+				yield* values
 			}
 		}
 
-		* autocompleteCommandTrigger(text, prefix) {
+		*autocompleteCommandTrigger(text, prefix) {
 			const triggers = Array.from(this.commandHandler.getTriggers())
 
 			triggers.sort()
@@ -70,7 +76,8 @@ define([ './CommandHandler'
 			for (const trigger of triggers) {
 				if (trigger === '') continue
 				if (!trigger.startsWith(prefix)) continue
-				if (!this.commandHandler.getCommandByTrigger(trigger).isAvailable) continue
+				if (!this.commandHandler.getCommandByTrigger(trigger).isAvailable)
+					continue
 
 				yield `/${trigger} `
 			}
@@ -79,4 +86,4 @@ define([ './CommandHandler'
 	Autocompleter.DEPENDENCIES = DEPENDENCIES
 
 	return Autocompleter
-});
+})

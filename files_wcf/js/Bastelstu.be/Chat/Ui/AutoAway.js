@@ -11,25 +11,46 @@
  * or later of the General Public License.
  */
 
-define([ '../console'
-       , '../CommandHandler'
-       , '../LocalStorage'
-       , '../Messenger'
-       , '../ProfileStore'
-       , 'WoltLabSuite/Core/Language'
-       , 'WoltLabSuite/Core/Timer/Repeating'
-       ], function (console, CommandHandler, LocalStorage, Messenger, ProfileStore, Language, RepeatingTimer) {
-	"use strict";
+define([
+	'../console',
+	'../CommandHandler',
+	'../LocalStorage',
+	'../Messenger',
+	'../ProfileStore',
+	'WoltLabSuite/Core/Language',
+	'WoltLabSuite/Core/Timer/Repeating',
+], function (
+	console,
+	CommandHandler,
+	LocalStorage,
+	Messenger,
+	ProfileStore,
+	Language,
+	RepeatingTimer
+) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'config', 'CommandHandler', 'Messenger', 'ProfileStore', 'UiInput' ]
+	const DEPENDENCIES = [
+		'config',
+		'CommandHandler',
+		'Messenger',
+		'ProfileStore',
+		'UiInput',
+	]
 	class AutoAway {
 		constructor(config, commandHandler, messenger, profileStore, input) {
-			if (!(commandHandler instanceof CommandHandler)) throw new TypeError('You must pass a CommandHandler to the AutoAway')
-			if (!(messenger instanceof Messenger)) throw new TypeError('You must pass a Messenger to the AutoAway')
-			if (!(profileStore instanceof ProfileStore)) throw new TypeError('You must pass a ProfileStore to the AutoAway')
+			if (!(commandHandler instanceof CommandHandler))
+				throw new TypeError('You must pass a CommandHandler to the AutoAway')
+			if (!(messenger instanceof Messenger))
+				throw new TypeError('You must pass a Messenger to the AutoAway')
+			if (!(profileStore instanceof ProfileStore))
+				throw new TypeError('You must pass a ProfileStore to the AutoAway')
 
 			this.storage = new LocalStorage('AutoAway.')
-			this.awayCommand = commandHandler.getCommandByIdentifier('be.bastelstu.chat', 'away')
+			this.awayCommand = commandHandler.getCommandByIdentifier(
+				'be.bastelstu.chat',
+				'away'
+			)
 			if (this.awayCommand == null) {
 				throw new Error('Unreachable')
 			}
@@ -47,16 +68,22 @@ define([ '../console'
 				return
 			}
 
-			this.timer = new RepeatingTimer(this.setAway.bind(this), this.config.autoAwayTime * 60e3)
-			this.input.on('input', this.inputListener = (event) => {
-				this.storage.set('channel', Date.now())
-				this.reset()
-			})
+			this.timer = new RepeatingTimer(
+				this.setAway.bind(this),
+				this.config.autoAwayTime * 60e3
+			)
+			this.input.on(
+				'input',
+				(this.inputListener = (event) => {
+					this.storage.set('channel', Date.now())
+					this.reset()
+				})
+			)
 			this.storage.observe('channel', this.reset.bind(this))
 		}
-		
+
 		ingest(messages) {
-			if (messages.some(message => message.isOwnMessage())) this.reset()
+			if (messages.some((message) => message.isOwnMessage())) this.reset()
 		}
 
 		reset() {
@@ -70,8 +97,11 @@ define([ '../console'
 		async setAway() {
 			console.debug('AutoAway.setAway', `Attempting to set as away`)
 
-			if (this.storage.get('setAway') >= (Date.now() - 10e3)) {
-				console.debug('AutoAway.setAway', `setAway called within the last 10 seconds in another Tab`)
+			if (this.storage.get('setAway') >= Date.now() - 10e3) {
+				console.debug(
+					'AutoAway.setAway',
+					`setAway called within the last 10 seconds in another Tab`
+				)
 				return
 			}
 			this.storage.set('setAway', Date.now())
@@ -81,10 +111,13 @@ define([ '../console'
 				return
 			}
 
-			this.messenger.push({ commandID: this.awayCommand.id, parameters: { reason: Language.get('chat.user.autoAway') } })
+			this.messenger.push({
+				commandID: this.awayCommand.id,
+				parameters: { reason: Language.get('chat.user.autoAway') },
+			})
 		}
 	}
 	AutoAway.DEPENDENCIES = DEPENDENCIES
 
 	return AutoAway
-});
+})

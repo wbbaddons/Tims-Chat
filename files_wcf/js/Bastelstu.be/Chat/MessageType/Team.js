@@ -11,8 +11,8 @@
  * or later of the General Public License.
  */
 
-define([ './Plain' ], function (Plain) {
-	"use strict";
+define(['./Plain'], function (Plain) {
+	'use strict'
 
 	class Team extends Plain {
 		joinable(a, b) {
@@ -25,4 +25,4 @@ define([ './Plain' ], function (Plain) {
 	}
 
 	return Team
-});
+})

@@ -11,25 +11,22 @@
  * or later of the General Public License.
  */
 
-define([ '../console'
-       ], function (console) {
-	"use strict";
+define(['../console'], function (console) {
+	'use strict'
 
 	class ConnectionWarning {
 		constructor() {
 			this.warning = elById('chatConnectionWarning')
 		}
 
-		bootstrap() {
-
-		}
+		bootstrap() {}
 
 		show() {
 			elShow(this.warning)
 			if (this.timeout) return
 
 			console.debug('ConnectionWarning.show', 'Setting timeout')
-			this.timeout = setTimeout(_ => {
+			this.timeout = setTimeout((_) => {
 				console.debug('ConnectionWarning.show', 'Timeout has passed')
 				this.timeout = undefined
 
@@ -44,9 +41,11 @@ define([ '../console'
 			if (!this.timeout || force) {
 				elHide(this.warning)
 				window.clearTimeout(this.timeout)
-			}
-			else {
-				console.debug('ConnectionWarning.hide', 'Automatically hiding after timeout has passed')
+			} else {
+				console.debug(
+					'ConnectionWarning.hide',
+					'Automatically hiding after timeout has passed'
+				)
 				this.autoHide = true
 			}
 		}
@@ -57,4 +56,4 @@ define([ '../console'
 	}
 
 	return ConnectionWarning
-});
+})

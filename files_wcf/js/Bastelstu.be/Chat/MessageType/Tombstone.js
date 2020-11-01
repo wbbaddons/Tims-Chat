@@ -11,10 +11,12 @@
  * or later of the General Public License.
  */
 
-define([ '../MessageType' ], function (MessageType) {
-	"use strict";
+define(['../MessageType'], function (MessageType) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiMessageStream' ].concat(MessageType.DEPENDENCIES || [ ])
+	const DEPENDENCIES = ['UiMessageStream'].concat(
+		MessageType.DEPENDENCIES || []
+	)
 	class Tombstone extends MessageType {
 		constructor(messageStream, ...superDeps) {
 			super(...superDeps)
@@ -37,17 +39,21 @@ define([ '../MessageType' ], function (MessageType) {
 			if (!chatMessage) return false
 
 			const rendered = super.render(message)
-			const oldIcon = node.querySelector('.chatMessageContent > .chatMessageIcon')
+			const oldIcon = node.querySelector(
+				'.chatMessageContent > .chatMessageIcon'
+			)
 			const newIcon = rendered.querySelector('.chatMessageIcon')
 
 			if (oldIcon) {
 				oldIcon.parentNode.replaceChild(newIcon, oldIcon)
-			}
-			else {
+			} else {
 				chatMessage.parentNode.insertBefore(newIcon, chatMessage)
 			}
 
-			chatMessage.parentNode.replaceChild(rendered.querySelector('.chatMessage'), chatMessage)
+			chatMessage.parentNode.replaceChild(
+				rendered.querySelector('.chatMessage'),
+				chatMessage
+			)
 
 			return false
 		}
@@ -55,4 +61,4 @@ define([ '../MessageType' ], function (MessageType) {
 	Tombstone.DEPENDENCIES = DEPENDENCIES
 
 	return Tombstone
-});
+})

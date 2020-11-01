@@ -11,13 +11,20 @@
  * or later of the General Public License.
  */
 
-define([ './ToggleButton' ], function (ToggleButton) {
-	'use strict';
+define(['./ToggleButton'], function (ToggleButton) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiNotification' ].concat(ToggleButton.DEPENDENCIES || [ ])
+	const DEPENDENCIES = ['UiNotification'].concat(
+		ToggleButton.DEPENDENCIES || []
+	)
 	class NotificationsButton extends ToggleButton {
 		constructor(element, notification, ...superDeps) {
-			super(element, false, 'Bastelstu.be/Chat/Ui/Settings/NotificationsButton', ...superDeps)
+			super(
+				element,
+				false,
+				'Bastelstu.be/Chat/Ui/Settings/NotificationsButton',
+				...superDeps
+			)
 
 			this.notification = notification
 		}
@@ -26,14 +33,17 @@ define([ './ToggleButton' ], function (ToggleButton) {
 			super.bootstrap()
 
 			// Hide the button if notifications are not supported or the permission has been denied
-			if (!this.notification.systemSupported || this.notification.systemDenied) {
+			if (
+				!this.notification.systemSupported ||
+				this.notification.systemDenied
+			) {
 				elRemove(this.element.closest('li'))
 			}
 		}
 
 		enable() {
 			super.enable()
-			this.notification.enableSystemNotifications().catch(error => {
+			this.notification.enableSystemNotifications().catch((error) => {
 				this.disable()
 
 				if (this.notification.systemDenied) elRemove(this.element)
@@ -48,4 +58,4 @@ define([ './ToggleButton' ], function (ToggleButton) {
 	NotificationsButton.DEPENDENCIES = DEPENDENCIES
 
 	return NotificationsButton
-});
+})

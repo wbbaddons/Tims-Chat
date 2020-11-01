@@ -11,8 +11,8 @@
  * or later of the General Public License.
  */
 
-define([ './Node' ], function (Node) {
-	"use strict";
+define(['./Node'], function (Node) {
+	'use strict'
 
 	class Tree {
 		constructor() {
@@ -29,22 +29,22 @@ define([ './Node' ], function (Node) {
 			if (this.root === undefined) {
 				this.root = node
 				this.fix(node)
-				return [ 'RIGHT', undefined ]
+				return ['RIGHT', undefined]
 			}
 
 			const search = this.search(value)
-			const [ side, parent ] = search
+			const [side, parent] = search
 
-			if (side === 'IS') return [ side, parent.value ]
+			if (side === 'IS') return [side, parent.value]
 			if (side === 'LEFT') {
 				parent.left = node
 				this.fix(node)
-				return [ side, parent.value ]
+				return [side, parent.value]
 			}
 			if (side === 'RIGHT') {
 				parent.right = node
 				this.fix(node)
-				return [ side, parent.value ]
+				return [side, parent.value]
 			}
 			throw new Error('Unreachable')
 		}
@@ -74,8 +74,7 @@ define([ './Node' ], function (Node) {
 			if (N.isRightChild && N.parent.isLeftChild) {
 				this.rotateLeft(N.parent)
 				N = N.left
-			}
-			else if (N.isLeftChild && N.parent.isRightChild) {
+			} else if (N.isLeftChild && N.parent.isRightChild) {
 				this.rotateRight(N.parent)
 				N = N.right
 			}
@@ -86,8 +85,7 @@ define([ './Node' ], function (Node) {
 			G.color = 'RED'
 			if (N.isLeftChild) {
 				this.rotateRight(G)
-			}
-			else {
+			} else {
 				this.rotateLeft(G)
 			}
 		}
@@ -99,11 +97,9 @@ define([ './Node' ], function (Node) {
 			N.right = right.left
 			if (N.parent === undefined) {
 				this.root = right
-			}
-			else if (N.isLeftChild) {
+			} else if (N.isLeftChild) {
 				N.parent.left = right
-			}
-			else if (N.isRightChild) {
+			} else if (N.isRightChild) {
 				N.parent.right = right
 			}
 
@@ -117,11 +113,9 @@ define([ './Node' ], function (Node) {
 			N.left = left.right
 			if (N.parent === undefined) {
 				this.root = left
-			}
-			else if (N.isLeftChild) {
+			} else if (N.isLeftChild) {
 				N.parent.left = left
-			}
-			else if (N.isRightChild) {
+			} else if (N.isRightChild) {
 				N.parent.right = left
 			}
 			left.right = N
@@ -129,4 +123,4 @@ define([ './Node' ], function (Node) {
 	}
 
 	return Tree
-});
+})

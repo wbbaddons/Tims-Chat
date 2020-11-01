@@ -11,14 +11,14 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	"use strict";
+define([], function () {
+	'use strict'
 
 	class Action {
-		constructor() { }
+		constructor() {}
 
-		onClick(userID, event) { }
+		onClick(userID, event) {}
 	}
 
 	return Action
-});
+})

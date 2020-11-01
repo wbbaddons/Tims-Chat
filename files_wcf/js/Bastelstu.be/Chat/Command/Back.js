@@ -11,10 +11,8 @@
  * or later of the General Public License.
  */
 
-define([ '../Command'
-       , '../Parser'
-       ], function (Command, Parser) {
-	"use strict";
+define(['../Command', '../Parser'], function (Command, Parser) {
+	'use strict'
 
 	class Back extends Command {
 		getParameterParser() {
@@ -23,4 +21,4 @@ define([ '../Command'
 	}
 
 	return Back
-});
+})

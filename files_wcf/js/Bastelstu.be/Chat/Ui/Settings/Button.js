@@ -11,13 +11,14 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	'use strict';
+define([], function () {
+	'use strict'
 
-	const DEPENDENCIES = [ ]
+	const DEPENDENCIES = []
 	class Button {
 		constructor(element) {
-			if (!element || !element instanceof Element) throw new Error('No DOM element provided')
+			if (!element || !element instanceof Element)
+				throw new Error('No DOM element provided')
 
 			this.element = element
 		}
@@ -33,4 +34,4 @@ define([ ], function () {
 	Button.DEPENDENCIES = DEPENDENCIES
 
 	return Button
-});
+})

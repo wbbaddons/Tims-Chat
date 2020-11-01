@@ -11,28 +11,31 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Language'
-       , 'WoltLabSuite/Core/Template'
-       , 'WoltLabSuite/Core/Ui/Dialog'
-       ], function (Language, Template, UiDialog) {
-	"use strict";
+define([
+	'WoltLabSuite/Core/Language',
+	'WoltLabSuite/Core/Template',
+	'WoltLabSuite/Core/Ui/Dialog',
+], function (Language, Template, UiDialog) {
+	'use strict'
 
-	const html = [ '[type="x-text/template"]'
-	             , '[data-application="be.bastelstu.chat"]'
-	             , '[data-template-name="be-bastelstu-chat-errorDialog"]'
-	             ].join('')
+	const html = [
+		'[type="x-text/template"]',
+		'[data-application="be.bastelstu.chat"]',
+		'[data-template-name="be-bastelstu-chat-errorDialog"]',
+	].join('')
 
 	const wrapper = new Template(elBySel(html).textContent)
 
 	class ErrorDialog {
 		constructor(message) {
-			const options = { title: Language.get('wcf.global.error.title')
-			                , closable: false
-			                }
+			const options = {
+				title: Language.get('wcf.global.error.title'),
+				closable: false,
+			}
 
 			UiDialog.openStatic('chatError', wrapper.fetch({ message }), options)
 		}
 	}
 
 	return ErrorDialog
-});
+})

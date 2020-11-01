@@ -11,14 +11,14 @@
  * or later of the General Public License.
  */
 
-define([ './Plain', '../Parser' ], function (Plain, Parser) {
-	"use strict";
+define(['./Plain', '../Parser'], function (Plain, Parser) {
+	'use strict'
 
 	class Me extends Plain {
 		getParameterParser() {
-			return Parser.Rest1.map(text => ({ text }))
+			return Parser.Rest1.map((text) => ({ text }))
 		}
 	}
 
 	return Me
-});
+})

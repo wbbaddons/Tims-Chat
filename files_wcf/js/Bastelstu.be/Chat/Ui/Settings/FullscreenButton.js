@@ -11,12 +11,17 @@
  * or later of the General Public License.
  */
 
-define([ './ToggleButton' ], function (ToggleButton) {
-	'use strict';
+define(['./ToggleButton'], function (ToggleButton) {
+	'use strict'
 
 	class FullscreenButton extends ToggleButton {
 		constructor(element, ...superDeps) {
-			super(element, false, 'Bastelstu.be/Chat/Ui/Settings/FullscreenButton', ...superDeps)
+			super(
+				element,
+				false,
+				'Bastelstu.be/Chat/Ui/Settings/FullscreenButton',
+				...superDeps
+			)
 		}
 
 		enable() {
@@ -31,4 +36,4 @@ define([ './ToggleButton' ], function (ToggleButton) {
 	}
 
 	return FullscreenButton
-});
+})

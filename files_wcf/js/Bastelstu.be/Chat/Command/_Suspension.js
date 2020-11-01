@@ -11,12 +11,10 @@
  * or later of the General Public License.
  */
 
-define([ '../Command'
-       , '../Parser'
-       ], function (Command, Parser) {
-	"use strict";
+define(['../Command', '../Parser'], function (Command, Parser) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'ProfileStore' ]
+	const DEPENDENCIES = ['ProfileStore']
 	class Suspension extends Command {
 		constructor(profileStore, id) {
 			super(id)
@@ -24,51 +22,68 @@ define([ '../Command'
 		}
 
 		getParameterParser() {
-			const Globally = Parser.C.string('global').thenLeft(Parser.C.string('ly').opt())
+			const Globally = Parser.C.string('global').thenLeft(
+				Parser.C.string('ly').opt()
+			)
 			const Forever = Parser.C.string('forever').thenReturns(null)
-			const Timespan = Parser.N.digits.then(Parser.C.charIn('dhm')).map(function ([ span, unit ]) {
-				switch (unit) {
-					case 'd':
-						return span * 86400;
-					case 'h':
-						return span * 3600;
-					case 'm':
-						return span * 60;
-				}
-				throw new Error('Unreachable')
-			})
-			.rep()
-			.map(parts => parts.array().reduce((carry, item) => carry + item, 0))
-			.map(offset => Math.floor(Date.now() / 1000) + offset)
+			const Timespan = Parser.N.digits
+				.then(Parser.C.charIn('dhm'))
+				.map(function ([span, unit]) {
+					switch (unit) {
+						case 'd':
+							return span * 86400
+						case 'h':
+							return span * 3600
+						case 'm':
+							return span * 60
+					}
+					throw new Error('Unreachable')
+				})
+				.rep()
+				.map((parts) => parts.array().reduce((carry, item) => carry + item, 0))
+				.map((offset) => Math.floor(Date.now() / 1000) + offset)
 
-			const Duration = Forever.or(Timespan).or(Parser.ISODate.map(item => Math.floor(item.valueOf() / 1000)))
+			const Duration = Forever.or(Timespan).or(
+				Parser.ISODate.map((item) => Math.floor(item.valueOf() / 1000))
+			)
 
 			return Parser.Username.thenLeft(Parser.Whitespace.rep())
-			.then(Globally.thenLeft(Parser.Whitespace.rep()).thenReturns(true).or(Parser.F.returns(false)))
-			.then(Duration)
-			.then(Parser.Whitespace.rep().thenRight(Parser.Rest1).or(Parser.F.eos.thenReturns(null)))
-			.map(([ username, globally, duration, reason ]) => {
-				return { username
-				       , globally
-				       , duration
-				       , reason
-				       }
-			})
+				.then(
+					Globally.thenLeft(Parser.Whitespace.rep())
+						.thenReturns(true)
+						.or(Parser.F.returns(false))
+				)
+				.then(Duration)
+				.then(
+					Parser.Whitespace.rep()
+						.thenRight(Parser.Rest1)
+						.or(Parser.F.eos.thenReturns(null))
+				)
+				.map(([username, globally, duration, reason]) => {
+					return { username, globally, duration, reason }
+				})
 		}
 
-		* autocomplete(parameterString) {
-			const usernameDone = Parser.Username.thenLeft(Parser.Whitespace.rep()).map(username => `"${username.replace(/"/g, '""')}"`)
-			const globallyDone = usernameDone.then(Parser.C.string('global').thenLeft(Parser.C.string('ly').opt())).thenLeft(Parser.Whitespace.rep())
+		*autocomplete(parameterString) {
+			const usernameDone = Parser.Username.thenLeft(
+				Parser.Whitespace.rep()
+			).map((username) => `"${username.replace(/"/g, '""')}"`)
+			const globallyDone = usernameDone
+				.then(Parser.C.string('global').thenLeft(Parser.C.string('ly').opt()))
+				.thenLeft(Parser.Whitespace.rep())
 
-			const usernameCheck = usernameDone.parse(Parser.Streams.ofString(parameterString))
+			const usernameCheck = usernameDone.parse(
+				Parser.Streams.ofString(parameterString)
+			)
 			if (usernameCheck.isAccepted()) {
-				const globallyCheck = globallyDone.parse(Parser.Streams.ofString(parameterString))
+				const globallyCheck = globallyDone.parse(
+					Parser.Streams.ofString(parameterString)
+				)
 				let prefix, rest
 				if (globallyCheck.isAccepted()) {
 					prefix = parameterString.substring(0, globallyCheck.offset)
 					rest = parameterString.substring(globallyCheck.offset)
-				}
-				else {
+				} else {
 					prefix = parameterString.substring(0, usernameCheck.offset)
 					rest = parameterString.substring(usernameCheck.offset)
 				}
@@ -101,4 +116,4 @@ define([ '../Command'
 	Suspension.DEPENDENCIES = DEPENDENCIES
 
 	return Suspension
-});
+})

@@ -11,28 +11,26 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Dom/Util' ], function (DomUtil) {
-	"use strict";
+define(['WoltLabSuite/Core/Dom/Util'], function (DomUtil) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'Template.UserList' ]
+	const DEPENDENCIES = ['Template.UserList']
 	class UserList {
 		constructor(userListTemplate) {
-			this.userListTemplate  = userListTemplate
-			this.chatUserList      = elById('chatUserList')
+			this.userListTemplate = userListTemplate
+			this.chatUserList = elById('chatUserList')
 		}
 
-		bootstrap() {
-
-		}
+		bootstrap() {}
 
 		render(users) {
 			users.sort((a, b) => a.username.localeCompare(b.username))
-			const html     = this.userListTemplate.fetch({ users })
+			const html = this.userListTemplate.fetch({ users })
 			const fragment = DomUtil.createFragmentFromHtml(html)
 
 			// Replace the current user list with the new one
 			const currentList = elBySel('#chatUserList > .boxContent > ul')
-			const parentNode  = currentList.parentNode
+			const parentNode = currentList.parentNode
 			parentNode.removeChild(currentList)
 			parentNode.appendChild(fragment)
 		}
@@ -40,4 +38,4 @@ define([ 'WoltLabSuite/Core/Dom/Util' ], function (DomUtil) {
 	UserList.DEPENDENCIES = DEPENDENCIES
 
 	return UserList
-});
+})

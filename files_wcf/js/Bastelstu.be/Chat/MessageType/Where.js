@@ -11,11 +11,12 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Dom/Traverse'
-       , 'WoltLabSuite/Core/Language'
-       , '../MessageType'
-       ], function (DomTraverse, Language, MessageType) {
-	"use strict";
+define([
+	'WoltLabSuite/Core/Dom/Traverse',
+	'WoltLabSuite/Core/Language',
+	'../MessageType',
+], function (DomTraverse, Language, MessageType) {
+	'use strict'
 
 	class Where extends MessageType {
 		render(message) {
@@ -24,7 +25,9 @@ define([ 'WoltLabSuite/Core/Dom/Traverse'
 			const icon = elCreate('span')
 			icon.classList.add('icon', 'icon16', 'fa-times', 'jsTooltip', 'hideIcon')
 			icon.setAttribute('title', Language.get('wcf.global.button.hide'))
-			icon.addEventListener('click', () => elHide(DomTraverse.parentBySel(icon, '.chatMessageBoundary')))
+			icon.addEventListener('click', () =>
+				elHide(DomTraverse.parentBySel(icon, '.chatMessageBoundary'))
+			)
 
 			const elem = fragment.querySelector('.jsRoomInfo > .containerHeadline')
 			elem.insertBefore(icon, elem.firstChild)
@@ -34,4 +37,4 @@ define([ 'WoltLabSuite/Core/Dom/Traverse'
 	}
 
 	return Where
-});
+})

@@ -11,10 +11,10 @@
  * or later of the General Public License.
  */
 
-define([ '../Ui' ], function (Ui) {
-	"use strict";
+define(['../Ui'], function (Ui) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiMessageStream', 'UiMessageActionDelete' ]
+	const DEPENDENCIES = ['UiMessageStream', 'UiMessageActionDelete']
 	class Log extends Ui {
 		constructor(messageStream, messageActionDelete) {
 			super()
@@ -32,4 +32,4 @@ define([ '../Ui' ], function (Ui) {
 	Log.DEPENDENCIES = DEPENDENCIES
 
 	return Log
-});
+})

@@ -11,39 +11,44 @@
  * or later of the General Public License.
  */
 
-define([ '../Command'
-       , '../Parser'
-       ], function (Command, Parser) {
-	"use strict";
+define(['../Command', '../Parser'], function (Command, Parser) {
+	'use strict'
 
 	class Temproom extends Command {
 		getParameterParser() {
 			const Create = Parser.C.string('create').thenReturns({ type: 'create' })
-			const Invite = Parser.C.string('invite').thenLeft(Parser.Whitespace.rep()).thenRight(Parser.Username).map((username) => {
-				return { type: 'invite'
-				       , username
-				       }
-			})
+			const Invite = Parser.C.string('invite')
+				.thenLeft(Parser.Whitespace.rep())
+				.thenRight(Parser.Username)
+				.map((username) => {
+					return { type: 'invite', username }
+				})
 			const Delete = Parser.C.string('delete').thenReturns({ type: 'delete' })
 
 			return Create.or(Invite).or(Delete)
 		}
 
-		* autocomplete(parameterString) {
+		*autocomplete(parameterString) {
 			const Create = Parser.C.string('create')
 			const Invite = Parser.C.string('invite')
 			const Delete = Parser.C.string('delete')
 
-			const subcommandDone = Create.or(Invite).or(Delete).thenLeft(Parser.Whitespace)
+			const subcommandDone = Create.or(Invite)
+				.or(Delete)
+				.thenLeft(Parser.Whitespace)
 
-			const subcommandCheck = subcommandDone.parse(Parser.Streams.ofString(parameterString))
+			const subcommandCheck = subcommandDone.parse(
+				Parser.Streams.ofString(parameterString)
+			)
 			if (subcommandCheck.isAccepted()) {
 				return
 			}
 
-			yield * [ 'create', 'invite ', 'delete' ].filter(item => item.startsWith(parameterString))
+			yield* ['create', 'invite ', 'delete'].filter((item) =>
+				item.startsWith(parameterString)
+			)
 		}
 	}
 
 	return Temproom
-});
+})

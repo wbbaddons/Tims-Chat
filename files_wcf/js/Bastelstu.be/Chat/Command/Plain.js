@@ -11,13 +11,14 @@
  * or later of the General Public License.
  */
 
-define([ '../Command'
-       , '../Parser'
-       , 'WoltLabSuite/Core/StringUtil'
-       ], function (Command, Parser, StringUtil) {
-	"use strict";
+define(['../Command', '../Parser', 'WoltLabSuite/Core/StringUtil'], function (
+	Command,
+	Parser,
+	StringUtil
+) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'ProfileStore' ]
+	const DEPENDENCIES = ['ProfileStore']
 	class Plain extends Command {
 		constructor(profileStore, id) {
 			super(id)
@@ -25,12 +26,12 @@ define([ '../Command'
 		}
 
 		getParameterParser() {
-			return Parser.Rest1
-			.map(StringUtil.escapeHTML.bind(StringUtil))
-			.map(text => ({ text }))
+			return Parser.Rest1.map(
+				StringUtil.escapeHTML.bind(StringUtil)
+			).map((text) => ({ text }))
 		}
 
-		* autocomplete(parameterString) {
+		*autocomplete(parameterString) {
 			const parts = parameterString.split(/ /)
 			const lastWord = parts.pop().toLowerCase()
 
@@ -41,13 +42,21 @@ define([ '../Command'
 			for (const userID of this.profileStore.getLastActivity()) {
 				const user = this.profileStore.get(userID)
 				const username = user.username.toLowerCase()
-				if (!username.startsWith(parameterString) && !username.startsWith(lastWord.replace(/^@/, ''))) continue
+				if (
+					!username.startsWith(parameterString) &&
+					!username.startsWith(lastWord.replace(/^@/, ''))
+				)
+					continue
 
-				yield `${parts.concat([ lastWord.startsWith('@') ? `@${user.username}` : user.username ]).join(' ')} `
+				yield `${parts
+					.concat([
+						lastWord.startsWith('@') ? `@${user.username}` : user.username,
+					])
+					.join(' ')} `
 			}
 		}
 	}
 	Plain.DEPENDENCIES = DEPENDENCIES
 
 	return Plain
-});
+})

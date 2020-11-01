@@ -11,21 +11,22 @@
  * or later of the General Public License.
  */
 
-define([ '../Command'
-       , '../Parser'
-       ], function (Command, Parser) {
-	"use strict";
+define(['../Command', '../Parser'], function (Command, Parser) {
+	'use strict'
 
 	class Color extends Command {
 		getParameterParser() {
 			// Either match a color in hexadecimal RGB notation or a color name (just letters)
-			const color = Parser.F.try(Parser.RGBHex.map(color => ({ type: 'hex', value: color })))
-			              .or(new Parser.X().word().map(word => ({ type: 'word', value: word })))
+			const color = Parser.F.try(
+				Parser.RGBHex.map((color) => ({ type: 'hex', value: color }))
+			).or(new Parser.X().word().map((word) => ({ type: 'word', value: word })))
 
 			// Either match a single color or two colors separated by a space
-			return Parser.F.try(color.then(Parser.C.char(' ').thenRight(color))).or(color.map(item => [ item ]))
+			return Parser.F.try(color.then(Parser.C.char(' ').thenRight(color))).or(
+				color.map((item) => [item])
+			)
 		}
 	}
 
 	return Color
-});
+})

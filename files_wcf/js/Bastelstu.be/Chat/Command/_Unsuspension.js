@@ -11,12 +11,10 @@
  * or later of the General Public License.
  */
 
-define([ '../Command'
-       , '../Parser'
-       ], function (Command, Parser) {
-	"use strict";
+define(['../Command', '../Parser'], function (Command, Parser) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'ProfileStore' ]
+	const DEPENDENCIES = ['ProfileStore']
 	class Unsuspension extends Command {
 		constructor(profileStore, id) {
 			super(id)
@@ -24,30 +22,39 @@ define([ '../Command'
 		}
 
 		getParameterParser() {
-			const Globally = Parser.C.string('global').thenLeft(Parser.C.string('ly').opt())
+			const Globally = Parser.C.string('global').thenLeft(
+				Parser.C.string('ly').opt()
+			)
 
-			return Parser.Username
-			.then(Parser.Whitespace.rep().thenRight(Globally.thenReturns(true)).or(Parser.F.returns(false)))
-			.map(([ username, globally ]) => {
-				return { username
-				       , globally
-				       }
+			return Parser.Username.then(
+				Parser.Whitespace.rep()
+					.thenRight(Globally.thenReturns(true))
+					.or(Parser.F.returns(false))
+			).map(([username, globally]) => {
+				return { username, globally }
 			})
 		}
 
-		* autocomplete(parameterString) {
-			const usernameDone = Parser.Username.thenLeft(Parser.Whitespace.rep()).map(username => `"${username.replace(/"/g, '""')}"`)
-			const globallyDone = usernameDone.then(Parser.C.string('global').thenLeft(Parser.C.string('ly').opt())).thenLeft(Parser.Whitespace.rep())
+		*autocomplete(parameterString) {
+			const usernameDone = Parser.Username.thenLeft(
+				Parser.Whitespace.rep()
+			).map((username) => `"${username.replace(/"/g, '""')}"`)
+			const globallyDone = usernameDone
+				.then(Parser.C.string('global').thenLeft(Parser.C.string('ly').opt()))
+				.thenLeft(Parser.Whitespace.rep())
 
-			const usernameCheck = usernameDone.parse(Parser.Streams.ofString(parameterString))
+			const usernameCheck = usernameDone.parse(
+				Parser.Streams.ofString(parameterString)
+			)
 			if (usernameCheck.isAccepted()) {
-				const globallyCheck = globallyDone.parse(Parser.Streams.ofString(parameterString))
+				const globallyCheck = globallyDone.parse(
+					Parser.Streams.ofString(parameterString)
+				)
 				let prefix, rest
 				if (globallyCheck.isAccepted()) {
 					prefix = parameterString.substring(0, globallyCheck.offset)
 					rest = parameterString.substring(globallyCheck.offset)
-				}
-				else {
+				} else {
 					prefix = parameterString.substring(0, usernameCheck.offset)
 					rest = parameterString.substring(usernameCheck.offset)
 				}
@@ -68,4 +75,4 @@ define([ '../Command'
 	Unsuspension.DEPENDENCIES = DEPENDENCIES
 
 	return Unsuspension
-});
+})

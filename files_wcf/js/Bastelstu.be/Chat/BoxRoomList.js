@@ -11,13 +11,14 @@
  * or later of the General Public License.
  */
 
-define([ './console'
-       , 'Bastelstu.be/_Push'
-       , 'WoltLabSuite/Core/Dom/Util'
-       , 'WoltLabSuite/Core/Timer/Repeating'
-       , 'Bastelstu.be/PromiseWrap/Ajax'
-       ], function (console, Push, DomUtil, RepeatingTimer, Ajax) {
-	"use strict";
+define([
+	'./console',
+	'Bastelstu.be/_Push',
+	'WoltLabSuite/Core/Dom/Util',
+	'WoltLabSuite/Core/Timer/Repeating',
+	'Bastelstu.be/PromiseWrap/Ajax',
+], function (console, Push, DomUtil, RepeatingTimer, Ajax) {
+	'use strict'
 
 	let timer = undefined
 	const mapping = new Map()
@@ -29,26 +30,44 @@ define([ './console'
 			mapping.set(container, this)
 
 			if (timer == null) {
-				timer = new RepeatingTimer(BoxRoomList.updateBoxes.bind(BoxRoomList), 60e3)
+				timer = new RepeatingTimer(
+					BoxRoomList.updateBoxes.bind(BoxRoomList),
+					60e3
+				)
 			}
 
-			Push.onConnect(timer.setDelta.bind(timer, 300e3)).catch(error => { console.debug(error) })
-			Push.onDisconnect(timer.setDelta.bind(timer, 60e3)).catch(error => { console.debug(error) })
-			Push.onMessage('be.bastelstu.chat.join', BoxRoomList.updateBoxes.bind(BoxRoomList)).catch(error => { console.debug(error) })
-			Push.onMessage('be.bastelstu.chat.leave', BoxRoomList.updateBoxes.bind(BoxRoomList)).catch(error => { console.debug(error) })
+			Push.onConnect(timer.setDelta.bind(timer, 300e3)).catch((error) => {
+				console.debug(error)
+			})
+			Push.onDisconnect(timer.setDelta.bind(timer, 60e3)).catch((error) => {
+				console.debug(error)
+			})
+			Push.onMessage(
+				'be.bastelstu.chat.join',
+				BoxRoomList.updateBoxes.bind(BoxRoomList)
+			).catch((error) => {
+				console.debug(error)
+			})
+			Push.onMessage(
+				'be.bastelstu.chat.leave',
+				BoxRoomList.updateBoxes.bind(BoxRoomList)
+			).catch((error) => {
+				console.debug(error)
+			})
 		}
 
 		static updateBoxes() {
-			mapping.forEach(object => {
+			mapping.forEach((object) => {
 				object.update()
 			})
 		}
 
 		async update() {
-			const payload = { className: 'chat\\data\\room\\RoomAction'
-			                , actionName: 'getBoxRoomList'
-			                , parameters: { }
-			                }
+			const payload = {
+				className: 'chat\\data\\room\\RoomAction',
+				actionName: 'getBoxRoomList',
+				parameters: {},
+			}
 
 			payload.parameters.activeRoomID = this.container.dataset.activeRoomId
 			payload.parameters.boxID = this.container.dataset.boxId
@@ -59,9 +78,12 @@ define([ './console'
 		}
 
 		replace(data) {
-			if (data.returnValues.template == null) throw new Error('template could not be found in returnValues')
+			if (data.returnValues.template == null)
+				throw new Error('template could not be found in returnValues')
 
-			const fragment = DomUtil.createFragmentFromHtml(data.returnValues.template)
+			const fragment = DomUtil.createFragmentFromHtml(
+				data.returnValues.template
+			)
 			const oldRoomList = this.container.querySelector('.chatBoxRoomList')
 			const newRoomList = fragment.querySelector('.chatBoxRoomList')
 
@@ -69,7 +91,9 @@ define([ './console'
 				throw new Error('.chatBoxRoomList could not be found in container')
 			}
 			if (newRoomList == null) {
-				throw new Error('.chatBoxRoomList could not be found in returned template')
+				throw new Error(
+					'.chatBoxRoomList could not be found in returned template'
+				)
 			}
 
 			if (oldRoomList.dataset.hash !== newRoomList.dataset.hash) {
@@ -78,11 +102,9 @@ define([ './console'
 		}
 
 		_ajaxSetup() {
-			return { silent: true
-			       , ignoreError: true
-			       }
+			return { silent: true, ignoreError: true }
 		}
 	}
 
 	return BoxRoomList
-});
+})

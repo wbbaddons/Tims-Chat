@@ -11,11 +11,11 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	"use strict";
+define([], function () {
+	'use strict'
 
 	const start = Date.now()
-	let last    = start
+	let last = start
 
 	const group = function () {
 		if (window.console.group) window.console.group()
@@ -46,13 +46,12 @@ define([ ], function () {
 	}
 
 	const debug = function (handler, ...args) {
-		const now  = Date.now()
-		const time = [ (now - start), `\t+${(now - last)}ms\t` ]
+		const now = Date.now()
+		const time = [now - start, `\t+${now - last}ms\t`]
 
 		if (args.length) {
 			println('debug', ...time, `[${handler}]\t`, ...args)
-		}
-		else {
+		} else {
 			println('debug', ...time, handler)
 		}
 
@@ -61,7 +60,7 @@ define([ ], function () {
 
 	const debugException = function (error) {
 		if (error instanceof Error) {
-			let message  = `[${error.name}] „${error.message}“ in ${error.fileName} on line ${error.lineNumber}\n`
+			let message = `[${error.name}] „${error.message}“ in ${error.fileName} on line ${error.lineNumber}\n`
 
 			if (error.stack) {
 				message += 'Stacktrace:\n'
@@ -69,8 +68,7 @@ define([ ], function () {
 			}
 
 			println('error', message)
-		}
-		else if (error.code && error.message) {
+		} else if (error.code && error.message) {
 			debugAjaxException(error)
 		}
 	}
@@ -79,20 +77,21 @@ define([ ], function () {
 		groupCollapsed()
 		let details = `[${error.code}] ${error.message}`
 
-		const br2nl = (string) => string.split('\n')
-		                                .map(line => line.replace(/<br\s*\/?>$/i, ''))
-		                                .join('\n')
+		const br2nl = (string) =>
+			string
+				.split('\n')
+				.map((line) => line.replace(/<br\s*\/?>$/i, ''))
+				.join('\n')
 
 		if (error.stacktrace) {
 			details += `\nStacktrace:\n${br2nl(error.stacktrace)}`
-		}
-		else if (error.exceptionID) {
+		} else if (error.exceptionID) {
 			details += `\nException ID: ${error.exceptionID}`
 		}
 
 		println('debug', details)
 
-		error.previous.forEach(previous => {
+		error.previous.forEach((previous) => {
 			let details = ''
 
 			group()
@@ -103,17 +102,18 @@ define([ ], function () {
 			println('debug', details)
 		})
 
-		error.previous.forEach(_ => groupEnd())
+		error.previous.forEach((_) => groupEnd())
 		groupEnd()
 	}
 
-	return { log
-	       , warn
-	       , error
-	       , debug
-	       , debugException
-	       , group
-	       , groupCollapsed
-	       , groupEnd
-	       }
-});
+	return {
+		log,
+		warn,
+		error,
+		debug,
+		debugException,
+		group,
+		groupCollapsed,
+		groupEnd,
+	}
+})

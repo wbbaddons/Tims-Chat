@@ -11,12 +11,10 @@
  * or later of the General Public License.
  */
 
-define([ '../Command'
-       , '../Parser'
-       ], function (Command, Parser) {
-	"use strict";
+define(['../Command', '../Parser'], function (Command, Parser) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'ProfileStore' ]
+	const DEPENDENCIES = ['ProfileStore']
 	class Info extends Command {
 		constructor(profileStore, id) {
 			super(id)
@@ -24,10 +22,10 @@ define([ '../Command'
 		}
 
 		getParameterParser() {
-			return Parser.Username.map(username => ({ username }))
+			return Parser.Username.map((username) => ({ username }))
 		}
 
-		* autocomplete(parameterString) {
+		*autocomplete(parameterString) {
 			for (const userID of this.profileStore.getLastActivity()) {
 				const user = this.profileStore.get(userID)
 				if (!user.username.startsWith(parameterString)) continue
@@ -39,4 +37,4 @@ define([ '../Command'
 	Info.DEPENDENCIES = DEPENDENCIES
 
 	return Info
-});
+})

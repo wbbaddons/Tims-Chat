@@ -11,15 +11,15 @@
  * or later of the General Public License.
  */
 
-define([ './Action', '../../console' ], function (Action, console) {
-	"use strict";
+define(['./Action', '../../console'], function (Action, console) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiInput' ]
+	const DEPENDENCIES = ['UiInput']
 	class WhisperAction extends Action {
 		constructor(input) {
 			super()
 
-			this.input    = input
+			this.input = input
 		}
 
 		onClick(user, event) {
@@ -38,4 +38,4 @@ define([ './Action', '../../console' ], function (Action, console) {
 	WhisperAction.DEPENDENCIES = DEPENDENCIES
 
 	return WhisperAction
-});
+})

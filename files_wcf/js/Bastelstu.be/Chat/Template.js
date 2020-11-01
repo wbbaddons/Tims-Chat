@@ -11,30 +11,30 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Template' ], function (_Template) {
-	"use strict";
+define(['WoltLabSuite/Core/Template'], function (_Template) {
+	'use strict'
 
 	/**
 	 * Template extends WoltLab Suite's Templates by passing in a list of
 	 * re-usable sub-templates.
 	 */
 	class Template extends _Template {
-		constructor(string, templates = { }) {
+		constructor(string, templates = {}) {
 			super(string)
 
 			this.templates = templates
 
 			const oldFetch = this.fetch
-			this.fetch = (function (variables) {
-				variables = Object.assign({ }, variables)
+			this.fetch = function (variables) {
+				variables = Object.assign({}, variables)
 
-				const templates = Object.assign({ }, this.templates, variables.t || { })
+				const templates = Object.assign({}, this.templates, variables.t || {})
 				variables.t = templates
 
 				return oldFetch(variables)
-			}).bind(this)
+			}.bind(this)
 		}
 	}
 
 	return Template
-});
+})

@@ -11,30 +11,42 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Language'
-       , 'WoltLabSuite/Core/Upload'
-       , 'WoltLabSuite/Core/Dom/Change/Listener'
-       , 'WoltLabSuite/Core/Dom/Util'
-       , 'WoltLabSuite/Core/Ui/Dialog'
-       , '../../DataStructure/EventEmitter'
-       ], function(Language, Upload, DomChangeListener, DomUtil, Dialog, EventEmitter) {
-	"use strict";
+define([
+	'WoltLabSuite/Core/Language',
+	'WoltLabSuite/Core/Upload',
+	'WoltLabSuite/Core/Dom/Change/Listener',
+	'WoltLabSuite/Core/Dom/Util',
+	'WoltLabSuite/Core/Ui/Dialog',
+	'../../DataStructure/EventEmitter',
+], function (
+	Language,
+	Upload,
+	DomChangeListener,
+	DomUtil,
+	Dialog,
+	EventEmitter
+) {
+	'use strict'
 
-	const DIALOG_BUTTON_ID    = 'chatAttachmentUploadButton'
+	const DIALOG_BUTTON_ID = 'chatAttachmentUploadButton'
 	const DIALOG_CONTAINER_ID = 'chatAttachmentUploadDialog'
 
-	const DEPENDENCIES = [ 'UiInput', 'Room' ];
+	const DEPENDENCIES = ['UiInput', 'Room']
 	class UiAttachmentUpload extends Upload {
 		constructor(input, room) {
-			const buttonContainer = document.querySelector(`#${DIALOG_CONTAINER_ID} > .upload`)
+			const buttonContainer = document.querySelector(
+				`#${DIALOG_CONTAINER_ID} > .upload`
+			)
 			const buttonContainerId = DomUtil.identify(buttonContainer)
 
-			const previewContainer = document.querySelector(`#${DIALOG_CONTAINER_ID} > .attachmentPreview`)
+			const previewContainer = document.querySelector(
+				`#${DIALOG_CONTAINER_ID} > .attachmentPreview`
+			)
 			const previewContainerId = DomUtil.identify(previewContainer)
 
 			super(buttonContainerId, previewContainerId, {
 				className: 'wcf\\data\\attachment\\AttachmentAction',
-				acceptableFiles: [ '.png', '.gif', '.jpg', '.jpeg' ]
+				acceptableFiles: ['.png', '.gif', '.jpg', '.jpeg'],
 			})
 
 			this.input = input
@@ -44,7 +56,9 @@ define([ 'WoltLabSuite/Core/Language'
 		}
 
 		bootstrap() {
-			this.uploadDescription = document.querySelector(`#${DIALOG_CONTAINER_ID} > small`)
+			this.uploadDescription = document.querySelector(
+				`#${DIALOG_CONTAINER_ID} > small`
+			)
 
 			const button = document.getElementById(DIALOG_BUTTON_ID)
 			const container = document.getElementById(DIALOG_CONTAINER_ID)
@@ -59,18 +73,20 @@ define([ 'WoltLabSuite/Core/Language'
 
 					Dialog.openStatic(container.id, null, {
 						title: elData(container, 'title'),
-						onShow: () => this.showDialog()
+						onShow: () => this.showDialog(),
 					})
 				})
 
-				const deleteAction = new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', `#${this.previewContainer.id} > p`)
+				const deleteAction = new WCF.Action.Delete(
+					'wcf\\data\\attachment\\AttachmentAction',
+					`#${this.previewContainer.id} > p`
+				)
 				deleteAction.setCallback(() => this.closeDialog())
 
 				this.input.on('input', (event) => {
 					if (event.target.input.value.length == 0) {
 						button.classList.remove('disabled')
-					}
-					else {
+					} else {
 						button.classList.add('disabled')
 					}
 				})
@@ -95,16 +111,13 @@ define([ 'WoltLabSuite/Core/Language'
 
 		async send(tmpHash, event) {
 			event.preventDefault()
-			const parameters = { promise: Promise.resolve()
-			                   , tmpHash
-			                   }
+			const parameters = { promise: Promise.resolve(), tmpHash }
 			this.emit('send', parameters)
 
 			try {
 				await parameters.promise
 				this.closeDialog()
-			}
-			catch (error) {
+			} catch (error) {
 				// TODO: Error handling
 				console.error(error)
 			}
@@ -141,14 +154,15 @@ define([ 'WoltLabSuite/Core/Language'
 		 * @see	WoltLabSuite/Core/Upload#_getParameters
 		 */
 		_getParameters() {
-			this.tmpHash = [ ...crypto.getRandomValues(new Uint8Array(20)) ]
-				.map(m => ('0' + m.toString(16)).slice(-2))
+			this.tmpHash = [...crypto.getRandomValues(new Uint8Array(20))]
+				.map((m) => ('0' + m.toString(16)).slice(-2))
 				.join('')
 
-			return { objectType: "be.bastelstu.chat.message"
-			       , parentObjectID: this.room.roomID
-			       , tmpHash: this.tmpHash
-			       }
+			return {
+				objectType: 'be.bastelstu.chat.message',
+				parentObjectID: this.room.roomID,
+				tmpHash: this.tmpHash,
+			}
 		}
 
 		/**
@@ -158,22 +172,28 @@ define([ 'WoltLabSuite/Core/Language'
 			if (data.returnValues.errors && data.returnValues.errors[0]) {
 				const error = data.returnValues.errors[0]
 
-				elInnerError(this._button, Language.get(`wcf.attachment.upload.error.${error.errorType}`, {
-					filename: error.filename
-				}))
+				elInnerError(
+					this._button,
+					Language.get(`wcf.attachment.upload.error.${error.errorType}`, {
+						filename: error.filename,
+					})
+				)
 
 				return
-			}
-			else {
+			} else {
 				elInnerError(this._button, '')
 			}
 
-			if (data.returnValues.attachments && data.returnValues.attachments[uploadId]) {
+			if (
+				data.returnValues.attachments &&
+				data.returnValues.attachments[uploadId]
+			) {
 				this._removeButton()
 				elHide(this.uploadDescription)
 
 				const attachment = data.returnValues.attachments[uploadId]
-				const url = attachment.thumbnailURL || attachment.tinyURL || attachment.url
+				const url =
+					attachment.thumbnailURL || attachment.tinyURL || attachment.url
 
 				if (!url) {
 					throw new Error('Missing image URL')
@@ -188,8 +208,7 @@ define([ 'WoltLabSuite/Core/Language'
 
 				if (url === attachment.thumbnailURL) {
 					img.classList.add('attachmentThumbnail')
-				}
-				else if (url === attachment.tinyURL) {
+				} else if (url === attachment.tinyURL) {
 					img.classList.add('attachmentTinyThumbnail')
 				}
 
@@ -199,9 +218,8 @@ define([ 'WoltLabSuite/Core/Language'
 				DomUtil.replaceElement(progress, img)
 
 				this.createButtonGroup(uploadId, attachment.attachmentID, this.tmpHash)
-			}
-			else {
-				console.error("Received neither an error nor an attachment response")
+			} else {
+				console.error('Received neither an error nor an attachment response')
 				console.error(data.returnValues)
 			}
 		}

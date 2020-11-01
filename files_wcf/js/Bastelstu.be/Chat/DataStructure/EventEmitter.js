@@ -11,13 +11,13 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	"use strict";
+define([], function () {
+	'use strict'
 
 	const listeners = new WeakMap()
 	const EventEmitter = function (target) {
 		Object.assign(target, {
-			on(type, listener, options = { }) {
+			on(type, listener, options = {}) {
 				if (!listeners.has(this)) {
 					listeners.set(this, new Map())
 				}
@@ -33,22 +33,24 @@ define([ ], function () {
 				listeners.get(this).get(type).delete(listener)
 			},
 
-			emit(type, detail = { }) {
+			emit(type, detail = {}) {
 				if (!listeners.has(this)) return
 				if (!listeners.get(this).has(type)) return
 
 				const set = listeners.get(this).get(type)
 
-				set.forEach((function ({ listener, options }) {
-					if (options.once) {
-						set.delete(listener)
-					}
+				set.forEach(
+					function ({ listener, options }) {
+						if (options.once) {
+							set.delete(listener)
+						}
 
-					listener({ target: this, detail })
-				}).bind(this))
-			}
+						listener({ target: this, detail })
+					}.bind(this)
+				)
+			},
 		})
 	}
 
 	return EventEmitter
-});
+})

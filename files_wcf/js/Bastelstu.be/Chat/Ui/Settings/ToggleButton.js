@@ -11,13 +11,14 @@
  * or later of the General Public License.
  */
 
-define([ './Button'
-       , '../../LocalStorage'
-       , '../../DataStructure/EventEmitter'
-       ], function (Button, LocalStorage, EventEmitter) {
-	'use strict';
+define([
+	'./Button',
+	'../../LocalStorage',
+	'../../DataStructure/EventEmitter',
+], function (Button, LocalStorage, EventEmitter) {
+	'use strict'
 
-	const DEPENDENCIES = [ ].concat(Button.DEPENDENCIES || [ ])
+	const DEPENDENCIES = [].concat(Button.DEPENDENCIES || [])
 	class ToggleButton extends Button {
 		constructor(element, defaultState, storageKey, ...superDeps) {
 			super(element, ...superDeps)
@@ -38,8 +39,7 @@ define([ './Button'
 
 			if (this.defaultState) {
 				this.enable()
-			}
-			else {
+			} else {
 				this.disable()
 			}
 		}
@@ -69,8 +69,7 @@ define([ './Button'
 
 			if (this.enabled) {
 				this.disable()
-			}
-			else {
+			} else {
 				this.enable()
 			}
 		}
@@ -79,4 +78,4 @@ define([ './Button'
 	ToggleButton.DEPENDENCIES = DEPENDENCIES
 
 	return ToggleButton
-});
+})

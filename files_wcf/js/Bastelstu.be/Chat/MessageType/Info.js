@@ -11,12 +11,13 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Dom/Traverse'
-       , 'WoltLabSuite/Core/Language'
-       , '../Helper'
-       , '../MessageType'
-       ], function (DomTraverse, Language, Helper, MessageType) {
-	"use strict";
+define([
+	'WoltLabSuite/Core/Dom/Traverse',
+	'WoltLabSuite/Core/Language',
+	'../Helper',
+	'../MessageType',
+], function (DomTraverse, Language, Helper, MessageType) {
+	'use strict'
 
 	const decorators = Symbol('decorators')
 
@@ -36,16 +37,19 @@ define([ 'WoltLabSuite/Core/Dom/Traverse'
 		}
 
 		getReferencedUsers(message) {
-			return super.getReferencedUsers(message).concat([ message.payload.user.userID ])
+			return super
+				.getReferencedUsers(message)
+				.concat([message.payload.user.userID])
 		}
 
 		render(message) {
 			const rooms = message.payload.rooms.map(function (item) {
-				const aug = { lastPull: null
-				            , lastPullHTML: null
-				            , lastPush: null
-				            , lastPushHTML: null
-				            }
+				const aug = {
+					lastPull: null,
+					lastPullHTML: null,
+					lastPush: null,
+					lastPushHTML: null,
+				}
 
 				if (item.lastPull) {
 					aug.lastPull = new Date(item.lastPull * 1000)
@@ -57,28 +61,35 @@ define([ 'WoltLabSuite/Core/Dom/Traverse'
 					aug.lastPushHTML = Helper.getTimeElementHTML(aug.lastPush)
 				}
 
-				return Object.assign({ }, item, aug)
+				return Object.assign({}, item, aug)
 			})
 
 			const payload = Helper.deepFreeze(
-				Array.from(this[decorators]).reduce( (payload, decorator) => decorator(payload)
-				                                   , Object.assign({ }, message.payload, { rooms })
-				                                   )
+				Array.from(this[decorators]).reduce(
+					(payload, decorator) => decorator(payload),
+					Object.assign({}, message.payload, { rooms })
+				)
 			)
 
-			const fragment = super.render(new Proxy(message, {
-				get: function (target, property) {
-					if (property === 'payload') return payload
-					return target[property]
-				}
-			}))
+			const fragment = super.render(
+				new Proxy(message, {
+					get: function (target, property) {
+						if (property === 'payload') return payload
+						return target[property]
+					},
+				})
+			)
 
 			const icon = elCreate('span')
 			icon.classList.add('icon', 'icon16', 'fa-times', 'jsTooltip', 'hideIcon')
 			icon.setAttribute('title', Language.get('wcf.global.button.hide'))
-			icon.addEventListener('click', () => elHide(DomTraverse.parentBySel(icon, '.chatMessageBoundary')))
+			icon.addEventListener('click', () =>
+				elHide(DomTraverse.parentBySel(icon, '.chatMessageBoundary'))
+			)
 
-			const elem = fragment.querySelector('.chatMessage .containerList > li:first-child .containerHeadline')
+			const elem = fragment.querySelector(
+				'.chatMessage .containerList > li:first-child .containerHeadline'
+			)
 			elem.insertBefore(icon, elem.firstChild)
 
 			return fragment
@@ -86,4 +97,4 @@ define([ 'WoltLabSuite/Core/Dom/Traverse'
 	}
 
 	return Info
-});
+})

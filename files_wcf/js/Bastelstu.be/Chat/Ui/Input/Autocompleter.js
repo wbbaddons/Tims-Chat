@@ -11,17 +11,21 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Dom/Util'
-       , 'WoltLabSuite/Core/Event/Key'
-       , 'WoltLabSuite/Core/Ui/Suggestion'
-       ], function (DomUtil, EventKey, Suggestion) {
-	"use strict";
+define([
+	'WoltLabSuite/Core/Dom/Util',
+	'WoltLabSuite/Core/Event/Key',
+	'WoltLabSuite/Core/Ui/Suggestion',
+], function (DomUtil, EventKey, Suggestion) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiInput' ]
+	const DEPENDENCIES = ['UiInput']
 	class Autocompleter extends Suggestion {
 		constructor(input) {
 			const elementId = DomUtil.identify(input.input)
-			const options = { callbackSelect: (_elementId, selection) => this.insertSelection(selection) }
+			const options = {
+				callbackSelect: (_elementId, selection) =>
+					this.insertSelection(selection),
+			}
 
 			super(elementId, options)
 
@@ -76,11 +80,9 @@ define([ 'WoltLabSuite/Core/Dom/Util'
 		sendCompletions(completions) {
 			this.completions = new Map()
 
-			const returnValues = completions.map(completion => {
+			const returnValues = completions.map((completion) => {
 				this.completions.set(++this.completionId, completion)
-				return { label: completion
-				       , objectID: this.completionId
-				       }
+				return { label: completion, objectID: this.completionId }
 			})
 
 			this._ajaxSuccess({ returnValues })
@@ -89,4 +91,4 @@ define([ 'WoltLabSuite/Core/Dom/Util'
 	Autocompleter.DEPENDENCIES = DEPENDENCIES
 
 	return Autocompleter
-});
+})

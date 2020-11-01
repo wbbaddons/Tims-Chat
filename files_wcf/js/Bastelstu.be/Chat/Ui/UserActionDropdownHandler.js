@@ -11,18 +11,23 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Dom/Traverse'
-       , 'WoltLabSuite/Core/Dom/Util'
-       , 'WoltLabSuite/Core/Ui/Dropdown/Simple'
-       ], function (DomTraverse, DomUtil, SimpleDropdown) {
-	"use strict";
+define([
+	'WoltLabSuite/Core/Dom/Traverse',
+	'WoltLabSuite/Core/Dom/Util',
+	'WoltLabSuite/Core/Ui/Dropdown/Simple',
+], function (DomTraverse, DomUtil, SimpleDropdown) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'ProfileStore', 'Template.UserListDropdownMenuItems', 'bottle' ]
+	const DEPENDENCIES = [
+		'ProfileStore',
+		'Template.UserListDropdownMenuItems',
+		'bottle',
+	]
 	class UserActionDropdownHandler {
 		constructor(profiles, dropdownTemplate, bottle) {
-			this.profiles          = profiles
-			this.dropdownTemplate  = dropdownTemplate
-			this.bottle            = bottle
+			this.profiles = profiles
+			this.dropdownTemplate = dropdownTemplate
+			this.bottle = bottle
 
 			this.container = elById('main')
 		}
@@ -32,7 +37,15 @@ define([ 'WoltLabSuite/Core/Dom/Traverse'
 		}
 
 		onClick(event) {
-			const userElement = event.target.classList.contains('jsUserActionDropdown') ? event.target : DomTraverse.parentByClass(event.target, 'jsUserActionDropdown', this.container)
+			const userElement = event.target.classList.contains(
+				'jsUserActionDropdown'
+			)
+				? event.target
+				: DomTraverse.parentByClass(
+						event.target,
+						'jsUserActionDropdown',
+						this.container
+				  )
 
 			if (!userElement) return
 
@@ -46,23 +59,37 @@ define([ 'WoltLabSuite/Core/Dom/Traverse'
 
 			// Note: We would usually use firstElementChild here, but this
 			//       is not supported in Safari and Edge
-			const dropdown = DomUtil.createFragmentFromHtml(this.dropdownTemplate.fetch({ user })).querySelector('*')
+			const dropdown = DomUtil.createFragmentFromHtml(
+				this.dropdownTemplate.fetch({ user })
+			).querySelector('*')
 
-			Array.from(elBySelAll('[data-module]', dropdown)).forEach(element => {
+			Array.from(elBySelAll('[data-module]', dropdown)).forEach((element) => {
 				const moduleName = element.dataset.module
 				let userAction
-				if (!this.bottle.container.UserAction || (userAction = this.bottle.container.UserAction[`${moduleName.replace(/\./g, '-')}`]) == null) {
-					this.bottle.factory(`UserAction.${moduleName.replace(/\./g, '-')}`, _ => {
-						const UserAction = require(moduleName)
-						const deps = this.bottle.digest(UserAction.DEPENDENCIES || [])
+				if (
+					!this.bottle.container.UserAction ||
+					(userAction = this.bottle.container.UserAction[
+						`${moduleName.replace(/\./g, '-')}`
+					]) == null
+				) {
+					this.bottle.factory(
+						`UserAction.${moduleName.replace(/\./g, '-')}`,
+						(_) => {
+							const UserAction = require(moduleName)
+							const deps = this.bottle.digest(UserAction.DEPENDENCIES || [])
 
-						return new UserAction(...deps)
-					})
+							return new UserAction(...deps)
+						}
+					)
 
-					userAction = this.bottle.container.UserAction[`${moduleName.replace(/\./g, '-')}`]
+					userAction = this.bottle.container.UserAction[
+						`${moduleName.replace(/\./g, '-')}`
+					]
 				}
 
-				element.addEventListener(WCF_CLICK_EVENT, (event) => userAction.onClick(user, event))
+				element.addEventListener(WCF_CLICK_EVENT, (event) =>
+					userAction.onClick(user, event)
+				)
 			})
 
 			SimpleDropdown.initFragment(userElement, dropdown)
@@ -77,4 +104,4 @@ define([ 'WoltLabSuite/Core/Dom/Traverse'
 	UserActionDropdownHandler.DEPENDENCIES = DEPENDENCIES
 
 	return UserActionDropdownHandler
-});
+})

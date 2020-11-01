@@ -11,12 +11,13 @@
  * or later of the General Public License.
  */
 
-define([ './ToggleButton'
-       , 'WoltLabSuite/Core/Ui/Screen'
-       ], function (ToggleButton, UiScreen) {
-	'use strict';
+define(['./ToggleButton', 'WoltLabSuite/Core/Ui/Screen'], function (
+	ToggleButton,
+	UiScreen
+) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiInput' ].concat(ToggleButton.DEPENDENCIES || [ ])
+	const DEPENDENCIES = ['UiInput'].concat(ToggleButton.DEPENDENCIES || [])
 	class SmiliesButton extends ToggleButton {
 		constructor(element, input, ...superDeps) {
 			super(element, false, undefined, ...superDeps)
@@ -25,7 +26,7 @@ define([ './ToggleButton'
 		}
 
 		bootstrap() {
-			this.container   = elById('smileyPickerContainer')
+			this.container = elById('smileyPickerContainer')
 
 			// Remove this button if smileys are disabled
 			if (!this.container) {
@@ -37,7 +38,11 @@ define([ './ToggleButton'
 			// Initialize the smiley picker tab menu
 			$('.messageTabMenu').messageTabMenu()
 
-			$('#smilies-text').on('mousedown', '.jsSmiley', this.insertSmiley.bind(this))
+			$('#smilies-text').on(
+				'mousedown',
+				'.jsSmiley',
+				this.insertSmiley.bind(this)
+			)
 			this.closeButton.addEventListener('mousedown', this.disable.bind(this))
 
 			// Start in desktop mode
@@ -48,9 +53,9 @@ define([ './ToggleButton'
 
 			// Setup media queries
 			UiScreen.on('screen-md-down', {
-				match:   this.enableMobile.bind(this),
+				match: this.enableMobile.bind(this),
 				unmatch: this.disableMobile.bind(this),
-				setup:   this.setupMobile.bind(this)
+				setup: this.setupMobile.bind(this),
 			})
 		}
 
@@ -63,12 +68,23 @@ define([ './ToggleButton'
 		 */
 		setupMobile() {
 			this.shadowToggleButton = document.createElement('span')
-			this.shadowToggleButton.classList.add('smiliesToggleMobileButton', 'button', 'small')
-			this.shadowToggleButton.innerHTML = '<span class="icon icon24 fa-smile-o"></span>'
-			this.shadowToggleButton.addEventListener('mousedown', this.onClick.bind(this))
+			this.shadowToggleButton.classList.add(
+				'smiliesToggleMobileButton',
+				'button',
+				'small'
+			)
+			this.shadowToggleButton.innerHTML =
+				'<span class="icon icon24 fa-smile-o"></span>'
+			this.shadowToggleButton.addEventListener(
+				'mousedown',
+				this.onClick.bind(this)
+			)
 
 			const shadowContainer = elBySel('#chatInputContainer > div')
-			shadowContainer.insertBefore(this.shadowToggleButton, shadowContainer.firstChild)
+			shadowContainer.insertBefore(
+				this.shadowToggleButton,
+				shadowContainer.firstChild
+			)
 
 			this.enableMobile()
 		}
@@ -156,4 +172,4 @@ define([ './ToggleButton'
 	SmiliesButton.DEPENDENCIES = DEPENDENCIES
 
 	return SmiliesButton
-});
+})

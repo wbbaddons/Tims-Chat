@@ -11,12 +11,10 @@
  * or later of the General Public License.
  */
 
-define([ '../MessageType' ], function (MessageType) {
-	"use strict";
+define(['../MessageType'], function (MessageType) {
+	'use strict'
 
-	class TemproomInvited extends MessageType {
-
-	}
+	class TemproomInvited extends MessageType {}
 
 	return TemproomInvited
-});
+})

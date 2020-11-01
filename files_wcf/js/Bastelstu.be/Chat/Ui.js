@@ -11,13 +11,12 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	"use strict";
+define([], function () {
+	'use strict'
 
 	class Ui {
-		constructor() {
-		}
+		constructor() {}
 	}
 
 	return Ui
-});
+})

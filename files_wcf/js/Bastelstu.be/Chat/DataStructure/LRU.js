@@ -11,8 +11,8 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	"use strict";
+define([], function () {
+	'use strict'
 
 	const s = Symbol('s')
 	const start = Symbol('start')
@@ -24,7 +24,7 @@ define([ ], function () {
 		}
 
 		add(value) {
-			if (this[start] && this[start].value === value)  {
+			if (this[start] && this[start].value === value) {
 				return
 			}
 
@@ -45,14 +45,13 @@ define([ ], function () {
 			this[s].set(value, obj)
 		}
 
-		* [Symbol.iterator]() {
+		*[Symbol.iterator]() {
 			let current = this[start]
 			do {
 				yield current.value
-			}
-			while ((current = current.next))
+			} while ((current = current.next))
 		}
 	}
 
 	return LRU
-});
+})

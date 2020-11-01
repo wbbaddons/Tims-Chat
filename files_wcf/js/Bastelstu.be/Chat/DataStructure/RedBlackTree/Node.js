@@ -11,8 +11,8 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	"use strict";
+define([], function () {
+	'use strict'
 
 	class Node {
 		constructor(value) {
@@ -93,39 +93,52 @@ define([ ], function () {
 		}
 
 		search(value) {
-			if (value === this.value) return [ 'IS', this ]
+			if (value === this.value) return ['IS', this]
 			if (value < this.value) {
 				if (this.left !== undefined) return this.left.search(value)
-				return [ 'LEFT', this ]
+				return ['LEFT', this]
 			}
 			if (value > this.value) {
 				if (this.right !== undefined) return this.right.search(value)
-				return [ 'RIGHT', this ]
+				return ['RIGHT', this]
 			}
 			throw new Error('Unreachable')
 		}
 
 		print(depth = 0) {
-			console.log("  ".repeat(depth) + `${this.value}: ${this.color} (Parent: ${this.parent ? this.parent.value : '-'})`)
+			console.log(
+				'  '.repeat(depth) +
+					`${this.value}: ${this.color} (Parent: ${
+						this.parent ? this.parent.value : '-'
+					})`
+			)
 			if (this.left) this.left.print(depth + 1)
-			else console.log("  ".repeat(depth + 1) + '-')
+			else console.log('  '.repeat(depth + 1) + '-')
 			if (this.right) this.right.print(depth + 1)
-			else console.log("  ".repeat(depth + 1) + '-')
+			else console.log('  '.repeat(depth + 1) + '-')
 		}
 
 		check() {
-			if (this.left && this.left.value >= this.value) throw new Error('Invalid' + this.value);
-			if (this.right && this.right.value <= this.value) throw new Error('Invalid' + this.value);
-			if (this.color === 'RED' && ((this.left && this.left.color !== 'BLACK') || (this.right && this.right.color !== 'BLACK'))) throw new Error('Invalid' + this.value);
+			if (this.left && this.left.value >= this.value)
+				throw new Error('Invalid' + this.value)
+			if (this.right && this.right.value <= this.value)
+				throw new Error('Invalid' + this.value)
+			if (
+				this.color === 'RED' &&
+				((this.left && this.left.color !== 'BLACK') ||
+					(this.right && this.right.color !== 'BLACK'))
+			)
+				throw new Error('Invalid' + this.value)
 
-			let leftBlacks = 1, rightBlacks = 1
+			let leftBlacks = 1,
+				rightBlacks = 1
 			if (this.left) {
 				leftBlacks = this.left.check()
 			}
 			if (this.right) {
 				rightBlacks = this.right.check()
 			}
-			if (leftBlacks !== rightBlacks) throw new Error('Invalid' + this.value);
+			if (leftBlacks !== rightBlacks) throw new Error('Invalid' + this.value)
 
 			if (this.color === 'BLACK') return leftBlacks + 1
 			return leftBlacks
@@ -133,4 +146,4 @@ define([ ], function () {
 	}
 
 	return Node
-});
+})

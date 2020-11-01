@@ -11,14 +11,15 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Date/Util'
-       , 'WoltLabSuite/Core/Language'
-       , 'WoltLabSuite/Core/Dom/Util'
-       , 'Bastelstu.be/Chat/User'
-       ], function (DateUtil, Language, DomUtil, User) {
-	"use strict";
+define([
+	'WoltLabSuite/Core/Date/Util',
+	'WoltLabSuite/Core/Language',
+	'WoltLabSuite/Core/Dom/Util',
+	'Bastelstu.be/Chat/User',
+], function (DateUtil, Language, DomUtil, User) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'ProfileStore', 'Template' ]
+	const DEPENDENCIES = ['ProfileStore', 'Template']
 	class MessageType {
 		constructor(profileStore, templates, objectType) {
 			this.profileStore = profileStore
@@ -32,32 +33,31 @@ define([ 'WoltLabSuite/Core/Date/Util'
 		}
 
 		getReferencedUsers(message) {
-			if (message.userID === null) return [ ]
+			if (message.userID === null) return []
 
-			return [ message.userID ]
+			return [message.userID]
 		}
 
-		preProcess(message) {
+		preProcess(message) {}
 
-		}
-
-		preRender(message) {
-
-		}
+		preRender(message) {}
 
 		render(message) {
-			const variables = { message
-			                  , users: this.profileStore
-			                  , author: this.profileStore.get(message.userID)
-			                  , DateUtil
-			                  , Language
-			                  }
+			const variables = {
+				message,
+				users: this.profileStore,
+				author: this.profileStore.get(message.userID),
+				DateUtil,
+				Language,
+			}
 
 			if (variables.author == null) {
 				variables.author = User.getGuest(message.username)
 			}
 
-			return DomUtil.createFragmentFromHtml(this.templates[message.objectType.replace(/\./g, '-')].fetch(variables))
+			return DomUtil.createFragmentFromHtml(
+				this.templates[message.objectType.replace(/\./g, '-')].fetch(variables)
+			)
 		}
 
 		renderPlainText(message) {
@@ -71,4 +71,4 @@ define([ 'WoltLabSuite/Core/Date/Util'
 	MessageType.DEPENDENCIES = DEPENDENCIES
 
 	return MessageType
-});
+})

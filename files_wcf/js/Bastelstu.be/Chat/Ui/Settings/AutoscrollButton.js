@@ -11,10 +11,12 @@
  * or later of the General Public License.
  */
 
-define([ './ToggleButton' ], function (ToggleButton) {
-	'use strict';
+define(['./ToggleButton'], function (ToggleButton) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiMessageStream' ].concat(ToggleButton.DEPENDENCIES || [ ])
+	const DEPENDENCIES = ['UiMessageStream'].concat(
+		ToggleButton.DEPENDENCIES || []
+	)
 	class AutoscrollButton extends ToggleButton {
 		constructor(element, messageStream, ...superDeps) {
 			super(element, true, undefined, ...superDeps)
@@ -40,4 +42,4 @@ define([ './ToggleButton' ], function (ToggleButton) {
 	AutoscrollButton.DEPENDENCIES = DEPENDENCIES
 
 	return AutoscrollButton
-});
+})

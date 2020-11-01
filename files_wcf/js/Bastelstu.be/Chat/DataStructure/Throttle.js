@@ -11,8 +11,8 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	"use strict";
+define([], function () {
+	'use strict'
 
 	class Throttler {
 		constructor(callback, delay = 125) {
@@ -37,7 +37,7 @@ define([ ], function () {
 				clearTimeout(this.timer)
 			}
 
-			this.timer = setTimeout(_ => {
+			this.timer = setTimeout((_) => {
 				this.timer = null
 				this.hot = false
 
@@ -60,8 +60,7 @@ define([ ], function () {
 		guardedExecute() {
 			if (this.hot) {
 				this.awaiting = true
-			}
-			else {
+			} else {
 				this.execute()
 			}
 		}
@@ -71,11 +70,10 @@ define([ ], function () {
 		}
 
 		set delay(newDelay) {
-			if (this.awaiting && (Date.now() - this.last) > newDelay) {
+			if (this.awaiting && Date.now() - this.last > newDelay) {
 				this._delay = 0
 				this.setTimer()
-			}
-			else if (this.timer) {
+			} else if (this.timer) {
 				this._delay = Math.max(0, newDelay - (Date.now() - this.last))
 				this.setTimer()
 			}
@@ -98,4 +96,4 @@ define([ ], function () {
 	}
 
 	return throttle
-});
+})

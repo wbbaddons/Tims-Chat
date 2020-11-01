@@ -11,8 +11,8 @@
  * or later of the General Public License.
  */
 
-define([ '../MessageType' ], function (MessageType) {
-	"use strict";
+define(['../MessageType'], function (MessageType) {
+	'use strict'
 
 	class ChatUpdate extends MessageType {
 		preRender(message) {
@@ -25,4 +25,4 @@ define([ '../MessageType' ], function (MessageType) {
 	}
 
 	return ChatUpdate
-});
+})

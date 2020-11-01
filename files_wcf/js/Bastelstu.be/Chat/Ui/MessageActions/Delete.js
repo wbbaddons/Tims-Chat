@@ -11,10 +11,14 @@
  * or later of the General Public License.
  */
 
-define([ 'Bastelstu.be/Chat/Message', 'Bastelstu.be/PromiseWrap/Ajax', 'Bastelstu.be/PromiseWrap/Ui/Confirmation' ], function (Message, Ajax, Confirmation) {
-	"use strict";
+define([
+	'Bastelstu.be/Chat/Message',
+	'Bastelstu.be/PromiseWrap/Ajax',
+	'Bastelstu.be/PromiseWrap/Ui/Confirmation',
+], function (Message, Ajax, Confirmation) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiMessageStream', 'Message' ]
+	const DEPENDENCIES = ['UiMessageStream', 'Message']
 	class Delete {
 		constructor(messageStream, message) {
 			this.messageStream = messageStream
@@ -26,19 +30,19 @@ define([ 'Bastelstu.be/Chat/Message', 'Bastelstu.be/PromiseWrap/Ajax', 'Bastelst
 		}
 
 		bindListener({ detail }) {
-			detail.forEach(item => {
+			detail.forEach((item) => {
 				if (!item) return
 
 				const { node, message } = item
 				const button = node.querySelector('.jsDeleteButton')
 				if (!button) return
 
-				button.addEventListener('click', async event => {
+				button.addEventListener('click', async (event) => {
 					event.preventDefault()
 
 					await Confirmation.show({
 						message: button.dataset.confirmMessageHtml,
-						messageIsHtml: true
+						messageIsHtml: true,
 					})
 
 					await this.delete(message.messageID)
@@ -50,31 +54,31 @@ define([ 'Bastelstu.be/Chat/Message', 'Bastelstu.be/PromiseWrap/Ajax', 'Bastelst
 
 		async delete(messageID) {
 			{
-				const payload = { objectIDs: [ messageID ] }
+				const payload = { objectIDs: [messageID] }
 
 				await Ajax.api(this, payload)
 			}
 
 			{
 				const objectType = 'be.bastelstu.chat.messageType.tombstone'
-				const payload = { messageID
-				                , userID: null
-				                }
+				const payload = { messageID, userID: null }
 				const message = this.Message.instance({ objectType, payload })
 				message.getMessageType().render(message)
 			}
 		}
 
 		_ajaxSetup() {
-			return { silent: true
-			       , ignoreError: true
-			       , data: { className: 'chat\\data\\message\\MessageAction'
-			               , actionName: 'trash'
-			               }
-			       }
+			return {
+				silent: true,
+				ignoreError: true,
+				data: {
+					className: 'chat\\data\\message\\MessageAction',
+					actionName: 'trash',
+				},
+			}
 		}
 	}
 	Delete.DEPENDENCIES = DEPENDENCIES
 
 	return Delete
-});
+})

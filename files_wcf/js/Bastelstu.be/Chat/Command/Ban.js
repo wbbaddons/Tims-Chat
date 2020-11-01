@@ -11,12 +11,10 @@
  * or later of the General Public License.
  */
 
-define([ './_Suspension' ], function (Suspension) {
-	"use strict";
+define(['./_Suspension'], function (Suspension) {
+	'use strict'
 
-	class Ban extends Suspension {
-
-	}
+	class Ban extends Suspension {}
 
 	return Ban
-});
+})

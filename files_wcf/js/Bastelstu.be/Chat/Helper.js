@@ -11,10 +11,11 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Date/Util'
-       , 'WoltLabSuite/Core/Language'
-       ], function (DateUtil, Language) {
-	"use strict";
+define(['WoltLabSuite/Core/Date/Util', 'WoltLabSuite/Core/Language'], function (
+	DateUtil,
+	Language
+) {
+	'use strict'
 
 	class Helper {
 		static deepFreeze(obj) {
@@ -38,11 +39,13 @@ define([ 'WoltLabSuite/Core/Date/Util'
 		 */
 		static isInput(element) {
 			if (element.tagName === 'INPUT') {
-				if (element.getAttribute('type') !== 'text' && element.getAttribute('type') !== 'password') {
+				if (
+					element.getAttribute('type') !== 'text' &&
+					element.getAttribute('type') !== 'password'
+				) {
 					return false
 				}
-			}
-			else if (element.tagName !== 'TEXTAREA') {
+			} else if (element.tagName !== 'TEXTAREA') {
 				return false
 			}
 
@@ -53,21 +56,20 @@ define([ 'WoltLabSuite/Core/Date/Util'
 			let last = 0
 			let deferTimer = null
 
-			return function() {
-				const now     = new Date().getTime()
-				const args    = arguments
+			return function () {
+				const now = new Date().getTime()
+				const args = arguments
 				const context = scope || this
 
-				if (last && (now < (last + threshold))) {
+				if (last && now < last + threshold) {
 					clearTimeout(deferTimer)
 
-					return deferTimer = setTimeout(function() {
+					return (deferTimer = setTimeout(function () {
 						last = now
 
 						return fn.apply(context, args)
-					}, threshold)
-				}
-				else {
+					}, threshold))
+				} else {
 					last = now
 
 					return fn.apply(context, args)
@@ -108,8 +110,7 @@ define([ 'WoltLabSuite/Core/Date/Util'
 
 			if (element.nextSibling) {
 				element.parentNode.insertBefore(wrapper, element.nextSibling)
-			}
-			else {
+			} else {
 				element.parentNode.appendChild(wrapper)
 			}
 
@@ -122,7 +123,7 @@ define([ 'WoltLabSuite/Core/Date/Util'
 				throw new Error(`Unsupported element type: ${textarea.tagName}`)
 			}
 
-			const pre  = document.createElement('pre')
+			const pre = document.createElement('pre')
 			const span = document.createElement('span')
 
 			const mirror = function () {
@@ -141,7 +142,7 @@ define([ 'WoltLabSuite/Core/Date/Util'
 			pre.appendChild(document.createElement('br'))
 			textarea.parentNode.insertBefore(pre, textarea)
 
-			textarea.addEventListener('input',  mirror)
+			textarea.addEventListener('input', mirror)
 			mirror()
 		}
 
@@ -150,11 +151,12 @@ define([ 'WoltLabSuite/Core/Date/Util'
 				constructor(size) {
 					super()
 
-					Object.defineProperty(this, 'size', { enumerable: false
-					                                    , value: size
-					                                    , writable: false
-					                                    , configurable: false
-					                                    });
+					Object.defineProperty(this, 'size', {
+						enumerable: false,
+						value: size,
+						writable: false,
+						configurable: false,
+					})
 				}
 
 				push() {
@@ -164,7 +166,7 @@ define([ 'WoltLabSuite/Core/Date/Util'
 						super.shift()
 					}
 
-					return this.length;
+					return this.length
 				}
 
 				unshift() {
@@ -174,7 +176,7 @@ define([ 'WoltLabSuite/Core/Date/Util'
 						super.pop()
 					}
 
-					return this.length;
+					return this.length
 				}
 
 				first() {
@@ -190,9 +192,9 @@ define([ 'WoltLabSuite/Core/Date/Util'
 		}
 
 		static intToRGBHex(integer) {
-			const r = ((integer >> 16) & 0xFF).toString(16)
-			const g = ((integer >>  8) & 0xFF).toString(16)
-			const b = ((integer >>  0) & 0xFF).toString(16)
+			const r = ((integer >> 16) & 0xff).toString(16)
+			const g = ((integer >> 8) & 0xff).toString(16)
+			const b = ((integer >> 0) & 0xff).toString(16)
 
 			const rr = r.length == 1 ? `0${r}` : r
 			const gg = g.length == 1 ? `0${g}` : g
@@ -263,8 +265,7 @@ define([ 'WoltLabSuite/Core/Date/Util'
 			if (firstTextNode) {
 				nodeRange.setStart(firstTextNode, 0)
 				nodeRange.setEnd(lastTextNode, lastTextNode.length)
-			}
-			else {
+			} else {
 				nodeRange.selectNodeContents(node)
 			}
 
@@ -282,9 +283,10 @@ define([ 'WoltLabSuite/Core/Date/Util'
 		 * @return {String}
 		 */
 		static getTextContent(node) {
-			const acceptNode = node => {
+			const acceptNode = (node) => {
 				if (node instanceof Element) {
-					if (node.tagName === 'SCRIPT' || node.tagName === 'STYLE') return NodeFilter.FILTER_REJECT
+					if (node.tagName === 'SCRIPT' || node.tagName === 'STYLE')
+						return NodeFilter.FILTER_REJECT
 				}
 
 				return NodeFilter.FILTER_ACCEPT
@@ -295,33 +297,34 @@ define([ 'WoltLabSuite/Core/Date/Util'
 			const flags = NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT
 			const treeWalker = document.createTreeWalker(node, flags, { acceptNode })
 
-			const ignoredLinks = [ ]
+			const ignoredLinks = []
 
 			while (treeWalker.nextNode()) {
 				const node = treeWalker.currentNode
 
 				if (node instanceof Text) {
-					if (node.parentNode.tagName === 'A' && ignoredLinks.indexOf(node.parentNode) >= 0) {
+					if (
+						node.parentNode.tagName === 'A' &&
+						ignoredLinks.indexOf(node.parentNode) >= 0
+					) {
 						continue
 					}
 
 					out += node.nodeValue.replace(/\n/g, '')
-				}
-				else {
+				} else {
 					switch (node.tagName) {
 						case 'IMG': {
 							const alt = node.getAttribute('alt')
 
 							if (node.classList.contains('smiley')) {
 								out += ` ${alt} `
-							}
-							else if (alt && alt !== '') {
+							} else if (alt && alt !== '') {
 								out += ` ${alt} [Image ${node.src}] `
-							}
-							else {
+							} else {
 								out += ` [Image ${node.src}] `
 							}
-						break }
+							break
+						}
 
 						case 'BR':
 						case 'LI':
@@ -329,16 +332,16 @@ define([ 'WoltLabSuite/Core/Date/Util'
 						case 'DIV':
 						case 'TR':
 							out += '\n'
-						break
+							break
 
 						case 'TH':
 						case 'TD':
 							out += '\t'
-						break
+							break
 
 						case 'P':
 							out += '\n\n'
-						break
+							break
 
 						case 'A': {
 							let link = node.href
@@ -354,7 +357,9 @@ define([ 'WoltLabSuite/Core/Date/Util'
 									const parts = text.split(/\u2026/)
 
 									if (parts.length === 2) {
-										truncated = node.href.startsWith(parts[0]) && node.href.endsWith(parts[1])
+										truncated =
+											node.href.startsWith(parts[0]) &&
+											node.href.endsWith(parts[1])
 									}
 								}
 
@@ -364,7 +369,8 @@ define([ 'WoltLabSuite/Core/Date/Util'
 							}
 
 							out += link
-						break }
+							break
+						}
 					}
 				}
 			}
@@ -374,5 +380,4 @@ define([ 'WoltLabSuite/Core/Date/Util'
 	}
 
 	return Helper
-});
-
+})

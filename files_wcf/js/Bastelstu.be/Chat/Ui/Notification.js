@@ -11,10 +11,10 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Language' ], function (Language) {
-	"use strict";
+define(['WoltLabSuite/Core/Language'], function (Language) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'ProfileStore' ]
+	const DEPENDENCIES = ['ProfileStore']
 	class Notification {
 		constructor(profileStore) {
 			this.profileStore = profileStore
@@ -27,11 +27,14 @@ define([ 'WoltLabSuite/Core/Language' ], function (Language) {
 		}
 
 		bootstrap() {
-			document.addEventListener('visibilitychange', this.onVisibilitychange.bind(this))
+			document.addEventListener(
+				'visibilitychange',
+				this.onVisibilitychange.bind(this)
+			)
 		}
 
 		get systemSupported() {
-			return "Notification" in window
+			return 'Notification' in window
 		}
 
 		get systemDenied() {
@@ -40,7 +43,10 @@ define([ 'WoltLabSuite/Core/Language' ], function (Language) {
 
 		get systemGranted() {
 			if (this.systemDenied) {
-				console.warn('[Notification]', 'System Notifications: permission denied')
+				console.warn(
+					'[Notification]',
+					'System Notifications: permission denied'
+				)
 			}
 
 			return window.Notification.permission === 'granted'
@@ -57,7 +63,7 @@ define([ 'WoltLabSuite/Core/Language' ], function (Language) {
 
 		ingest(messages) {
 			if (!this.active) {
-				messages.forEach(message => {
+				messages.forEach((message) => {
 					const body = message.getMessageType().renderPlainText(message)
 
 					if (body === false) return
@@ -70,10 +76,7 @@ define([ 'WoltLabSuite/Core/Language' ], function (Language) {
 						// The user information is guaranteed to be cached at this point
 						const user = this.profileStore.get(message.userID)
 						const title = Language.get('chat.notification.title', { message })
-						const options = { body
-							        , icon:  user.imageUrl
-							        , badge: user.imageUrl
-							        }
+						const options = { body, icon: user.imageUrl, badge: user.imageUrl }
 
 						const notification = new window.Notification(title, options)
 
@@ -88,14 +91,14 @@ define([ 'WoltLabSuite/Core/Language' ], function (Language) {
 		updateBrowserTitle() {
 			if (this.unread > 0) {
 				document.title = `(${this.unread}) ${this.browserTitle}`
-			}
-			else {
+			} else {
 				document.title = this.browserTitle
 			}
 		}
 
 		enableSystemNotifications() {
-			if (!this.systemSupported) return Promise.reject(new Error('Notifications are not supported'))
+			if (!this.systemSupported)
+				return Promise.reject(new Error('Notifications are not supported'))
 
 			if (this.systemGranted) {
 				this.systemEnabled = true
@@ -104,13 +107,12 @@ define([ 'WoltLabSuite/Core/Language' ], function (Language) {
 			}
 
 			return new Promise((resolve, reject) => {
-				window.Notification.requestPermission(permission => {
+				window.Notification.requestPermission((permission) => {
 					this.systemEnabled = permission === 'granted'
 
 					if (this.systemEnabled) {
 						resolve()
-					}
-					else {
+					} else {
 						reject(new Error(permission))
 					}
 				})
@@ -124,4 +126,4 @@ define([ 'WoltLabSuite/Core/Language' ], function (Language) {
 	Notification.DEPENDENCIES = DEPENDENCIES
 
 	return Notification
-});
+})

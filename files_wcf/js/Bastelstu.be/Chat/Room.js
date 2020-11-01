@@ -11,20 +11,21 @@
  * or later of the General Public License.
  */
 
-define([ 'Bastelstu.be/PromiseWrap/Ajax'
-       , 'WoltLabSuite/Core/Core'
-       , './User'
-       ], function (Ajax, Core, User) {
-	"use strict";
+define([
+	'Bastelstu.be/PromiseWrap/Ajax',
+	'WoltLabSuite/Core/Core',
+	'./User',
+], function (Ajax, Core, User) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'sessionID', 'roomID' ]
+	const DEPENDENCIES = ['sessionID', 'roomID']
 	/**
 	 * Represents a chat room.
 	 */
 	class Room {
 		constructor(sessionID, roomID) {
 			this.sessionID = sessionID
-			this.roomID    = roomID
+			this.roomID = roomID
 		}
 
 		/**
@@ -33,12 +34,11 @@ define([ 'Bastelstu.be/PromiseWrap/Ajax'
 		 * @returns {Promise}
 		 */
 		async join() {
-			const payload = { className: 'chat\\data\\room\\RoomAction'
-			                , actionName: 'join'
-			                , parameters: { roomID: this.roomID
-			                              , sessionID: this.sessionID
-			                              }
-			                }
+			const payload = {
+				className: 'chat\\data\\room\\RoomAction',
+				actionName: 'join',
+				parameters: { roomID: this.roomID, sessionID: this.sessionID },
+			}
 
 			return Ajax.api(this, payload)
 		}
@@ -49,12 +49,11 @@ define([ 'Bastelstu.be/PromiseWrap/Ajax'
 		 * @param {boolean} unload Send a beacon if true'ish and a regular AJAX request otherwise.
 		 */
 		leave(unload = false) {
-			const payload = { className: 'chat\\data\\room\\RoomAction'
-			                , actionName: 'leave'
-			                , parameters: { roomID: this.roomID
-			                              , sessionID: this.sessionID
-			                              }
-			                }
+			const payload = {
+				className: 'chat\\data\\room\\RoomAction',
+				actionName: 'leave',
+				parameters: { roomID: this.roomID, sessionID: this.sessionID },
+			}
 
 			if (unload && FormData && (navigator.sendBeacon || window.fetch)) {
 				// Ordinary AJAX requests are unreliable during unload:
@@ -65,22 +64,26 @@ define([ 'Bastelstu.be/PromiseWrap/Ajax'
 
 				const formData = new FormData()
 				Core.serialize(payload)
-				    .split('&')
-				    .map((item) => item.split('='))
-				    .map((item) => item.map(decodeURIComponent))
-				    .forEach((item) => formData.append(item[0], item[1]))
+					.split('&')
+					.map((item) => item.split('='))
+					.map((item) => item.map(decodeURIComponent))
+					.forEach((item) => formData.append(item[0], item[1]))
 
 				if (navigator.sendBeacon) {
 					navigator.sendBeacon(url, formData)
 				}
 
 				if (window.fetch) {
-					fetch(url, { method: 'POST', keepalive: true, redirect: 'follow', body: formData })
+					fetch(url, {
+						method: 'POST',
+						keepalive: true,
+						redirect: 'follow',
+						body: formData,
+					})
 				}
 
 				return Promise.resolve()
-			}
-			else {
+			} else {
 				return Ajax.api(this, payload)
 			}
 		}
@@ -91,23 +94,22 @@ define([ 'Bastelstu.be/PromiseWrap/Ajax'
 		 * @returns {Promise}
 		 */
 		async getUsers() {
-			const payload = { className: 'chat\\data\\room\\RoomAction'
-			                , actionName: 'getUsers'
-			                , objectIDs: [ this.roomID ]
-			                }
+			const payload = {
+				className: 'chat\\data\\room\\RoomAction',
+				actionName: 'getUsers',
+				objectIDs: [this.roomID],
+			}
 
 			const result = await Ajax.api(this, payload)
 
-			return Object.values(result.returnValues).map(user => new User(user))
+			return Object.values(result.returnValues).map((user) => new User(user))
 		}
 
 		_ajaxSetup() {
-			return { silent: true
-			       , ignoreError: true
-			       }
+			return { silent: true, ignoreError: true }
 		}
 	}
 	Room.DEPENDENCIES = DEPENDENCIES
 
 	return Room
-});
+})

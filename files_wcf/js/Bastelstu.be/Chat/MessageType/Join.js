@@ -11,8 +11,11 @@
  * or later of the General Public License.
  */
 
-define([ '../MessageType', 'WoltLabSuite/Core/Language' ], function (MessageType, Language) {
-	"use strict";
+define(['../MessageType', 'WoltLabSuite/Core/Language'], function (
+	MessageType,
+	Language
+) {
+	'use strict'
 
 	class Join extends MessageType {
 		shouldUpdateUserList(message) {
@@ -20,9 +23,15 @@ define([ '../MessageType', 'WoltLabSuite/Core/Language' ], function (MessageType
 		}
 
 		renderPlainText(message) {
-			return '[➡️] ' + Language.get('chat.messageType.be.bastelstu.chat.messageType.join.plain', { author: { username: message.username } })
+			return (
+				'[➡️] ' +
+				Language.get(
+					'chat.messageType.be.bastelstu.chat.messageType.join.plain',
+					{ author: { username: message.username } }
+				)
+			)
 		}
 	}
 
 	return Join
-});
+})

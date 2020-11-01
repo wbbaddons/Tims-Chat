@@ -11,21 +11,22 @@
  * or later of the General Public License.
  */
 
-define([ '../console'
-       , '../Helper'
-       , 'WoltLabSuite/Core/Core'
-       , 'WoltLabSuite/Core/Event/Key'
-       , '../DataStructure/EventEmitter'
-       , '../DataStructure/Throttle'
-       ], function (console, Helper, Core, EventKey, EventEmitter, Throttle) {
-	"use strict";
+define([
+	'../console',
+	'../Helper',
+	'WoltLabSuite/Core/Core',
+	'WoltLabSuite/Core/Event/Key',
+	'../DataStructure/EventEmitter',
+	'../DataStructure/Throttle',
+], function (console, Helper, Core, EventKey, EventEmitter, Throttle) {
+	'use strict'
 
 	class Input {
 		constructor() {
 			this.inputContainer = elById('chatInputContainer')
-			this.input          = elBySel('textarea', this.inputContainer)
-			this.charCounter    = elBySel('.charCounter', this.inputContainer)
-			this.errorElement   = elBySel('.innerError', this.inputContainer)
+			this.input = elBySel('textarea', this.inputContainer)
+			this.charCounter = elBySel('.charCounter', this.inputContainer)
+			this.errorElement = elBySel('.innerError', this.inputContainer)
 		}
 
 		bootstrap() {
@@ -34,21 +35,29 @@ define([ '../console'
 			}
 
 			this.input.addEventListener('keydown', this.handleInputKeyDown.bind(this))
-			this.input.addEventListener('input',   Throttle(this.handleInput.bind(this)))
+			this.input.addEventListener(
+				'input',
+				Throttle(this.handleInput.bind(this))
+			)
 
 			Helper.makeFlexible(this.input)
 			this.handleInput()
 		}
 
 		handleInput(event) {
-			this.charCounter.textContent = `${this.input.value.length} / ${this.input.getAttribute('maxlength')}`
+			this.charCounter.textContent = `${
+				this.input.value.length
+			} / ${this.input.getAttribute('maxlength')}`
 			this.emit('input')
 		}
 
 		handleInputKeyDown(event) {
 			if (EventKey.Enter(event) && !event.shiftKey) {
 				if (event.isComposing) {
-					console.debug('Ui/Input.handleInputKeyDown', 'Ignored Enter key while composing characters.')
+					console.debug(
+						'Ui/Input.handleInputKeyDown',
+						'Ignored Enter key while composing characters.'
+					)
 					return
 				}
 
@@ -62,8 +71,7 @@ define([ '../console'
 				if (!parameters.cancel) {
 					this.emit('submit')
 				}
-			}
-			else if (EventKey.Tab(event)) {
+			} else if (EventKey.Tab(event)) {
 				// prevent leaving the input
 				event.preventDefault()
 
@@ -92,9 +100,7 @@ define([ '../console'
 		insertText(text, options) {
 			this.focus()
 
-			options = Object.assign({ append:  true
-			                        , prepend: false
-			                        }, options)
+			options = Object.assign({ append: true, prepend: false }, options)
 
 			if (!(options.append || options.prepend)) {
 				// replace
@@ -102,11 +108,11 @@ define([ '../console'
 			}
 
 			if (options.append) {
-				this.input.value += text;
+				this.input.value += text
 			}
 
 			if (options.prepend) {
-				this.input.value = text + this.input.value;
+				this.input.value = text + this.input.value
 			}
 
 			// always position caret at the end
@@ -119,8 +125,7 @@ define([ '../console'
 		inputError(message) {
 			if (typeof window.elInnerError === 'function') {
 				elInnerError(this.inputContainer.firstElementChild, message)
-			}
-			else {
+			} else {
 				this.inputContainer.classList.add('formError')
 				this.errorElement.textContent = message
 				elShow(this.errorElement)
@@ -130,8 +135,7 @@ define([ '../console'
 		hideInputError() {
 			if (typeof window.elInnerError === 'function') {
 				elInnerError(this.inputContainer.firstElementChild, false)
-			}
-			else {
+			} else {
 				this.inputContainer.classList.remove('formError')
 				this.errorElement.textContent = ''
 				elHide(this.errorElement)
@@ -141,4 +145,4 @@ define([ '../console'
 	EventEmitter(Input.prototype)
 
 	return Input
-});
+})

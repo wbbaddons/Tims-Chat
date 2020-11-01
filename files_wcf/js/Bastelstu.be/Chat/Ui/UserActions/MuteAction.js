@@ -11,17 +11,15 @@
  * or later of the General Public License.
  */
 
-define([ '../../console'
-       , './Action'
-       ], function (console, Action) {
-	"use strict";
+define(['../../console', './Action'], function (console, Action) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiInput' ]
+	const DEPENDENCIES = ['UiInput']
 	class MuteAction extends Action {
 		constructor(input) {
 			super()
 
-			this.input    = input
+			this.input = input
 		}
 
 		onClick(user, event) {
@@ -35,7 +33,7 @@ define([ '../../console'
 
 			this.input.insertText(command, { append: false, prepend: true })
 			this.input.focus()
-			setTimeout(_ => {
+			setTimeout((_) => {
 				this.input.emit('autocomplete')
 			}, 1)
 		}
@@ -43,4 +41,4 @@ define([ '../../console'
 	MuteAction.DEPENDENCIES = DEPENDENCIES
 
 	return MuteAction
-});
+})

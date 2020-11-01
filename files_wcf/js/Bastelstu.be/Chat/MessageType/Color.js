@@ -11,15 +11,14 @@
  * or later of the General Public License.
  */
 
-define([ '../MessageType' ], function (MessageType) {
-	"use strict";
+define(['../MessageType'], function (MessageType) {
+	'use strict'
 
 	class Color extends MessageType {
 		render(message) {
 			if (message.isOwnMessage()) {
 				return super.render(message)
-			}
-			else {
+			} else {
 				return false
 			}
 		}
@@ -34,4 +33,4 @@ define([ '../MessageType' ], function (MessageType) {
 	}
 
 	return Color
-});
+})

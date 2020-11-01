@@ -11,16 +11,19 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	'use strict';
+define([], function () {
+	'use strict'
 
 	class LocalStorageEmulator {
-		constructor () {
+		constructor() {
 			this._data = new Map()
 			return new Proxy(this, {
 				get(target, property) {
 					// Check if the property exists on the object or its prototype
-					if (target.hasOwnProperty(property) || Object.getPrototypeOf(target)[property]) {
+					if (
+						target.hasOwnProperty(property) ||
+						Object.getPrototypeOf(target)[property]
+					) {
 						return target[property]
 					}
 
@@ -29,18 +32,22 @@ define([ ], function () {
 				},
 				set(target, property, value) {
 					// Check if the property exists on the object or its prototype
-					if (target.hasOwnProperty(property) || Object.getPrototypeOf(target)[property]) {
+					if (
+						target.hasOwnProperty(property) ||
+						Object.getPrototypeOf(target)[property]
+					) {
 						target[property] = value
-					}
-					else {
+					} else {
 						// Proxy to the underlying map
 						target.setItem(property, value)
 					}
 				},
 				has(target, property) {
-					return target.hasOwnProperty(property) // check the properties of the object
-					    || Object.getPrototypeOf(target)[property] // check its prototype
-					    || target._data.has(property) // check the underlying map
+					return (
+						target.hasOwnProperty(property) || // check the properties of the object
+						Object.getPrototypeOf(target)[property] || // check its prototype
+						target._data.has(property)
+					) // check the underlying map
 				},
 				ownKeys(target) {
 					// Proxy to the underlying map
@@ -50,9 +57,9 @@ define([ ], function () {
 					// Make the properties of the map visible
 					return {
 						enumerable: true,
-						configurable: true
+						configurable: true,
 					}
-				}
+				},
 			})
 		}
 
@@ -80,10 +87,10 @@ define([ ], function () {
 			this._data.clear()
 		}
 
-		* [Symbol.iterator]() {
-			yield * this._data.values()
+		*[Symbol.iterator]() {
+			yield* this._data.values()
 		}
 	}
 
 	return LocalStorageEmulator
-});
+})

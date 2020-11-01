@@ -11,8 +11,8 @@
  * or later of the General Public License.
  */
 
-define([ './Parser' ], function (Parser) {
-	"use strict";
+define(['./Parser'], function (Parser) {
+	'use strict'
 
 	const data = Symbol('data')
 
@@ -28,9 +28,7 @@ define([ './Parser' ], function (Parser) {
 			return Parser.Rest
 		}
 
-		* autocomplete(parameterString) {
-
-		}
+		*autocomplete(parameterString) {}
 
 		get id() {
 			return this[data].commandID
@@ -54,4 +52,4 @@ define([ './Parser' ], function (Parser) {
 	}
 
 	return Command
-});
+})

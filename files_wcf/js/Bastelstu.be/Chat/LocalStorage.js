@@ -11,10 +11,13 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Core', './LocalStorageEmulator' ], function (Core, LocalStorageEmulator) {
-	'use strict';
+define(['WoltLabSuite/Core/Core', './LocalStorageEmulator'], function (
+	Core,
+	LocalStorageEmulator
+) {
+	'use strict'
 
-	const DEPENDENCIES = [ ]
+	const DEPENDENCIES = []
 	class LocalStorage {
 		constructor(subprefix) {
 			this.subprefix = subprefix
@@ -23,15 +26,17 @@ define([ 'WoltLabSuite/Core/Core', './LocalStorageEmulator' ], function (Core, L
 		}
 
 		static isQuotaExceeded(error) {
-			return error instanceof DOMException && (
+			return (
+				error instanceof DOMException &&
 				// everything except Firefox
-				error.code === 22 ||
-				// Firefox
-				error.code === 1014 ||
-				// everything except Firefox
-				error.name === 'QuotaExceededError' ||
-				// Firefox
-				error.name === 'NS_ERROR_DOM_QUOTA_REACHED')
+				(error.code === 22 ||
+					// Firefox
+					error.code === 1014 ||
+					// everything except Firefox
+					error.name === 'QuotaExceededError' ||
+					// Firefox
+					error.name === 'NS_ERROR_DOM_QUOTA_REACHED')
+			)
 		}
 
 		static isAvailable() {
@@ -40,8 +45,7 @@ define([ 'WoltLabSuite/Core/Core', './LocalStorageEmulator' ], function (Core, L
 				window.localStorage.setItem(x, x)
 				window.localStorage.removeItem(x)
 				return true
-			}
-			catch (error) {
+			} catch (error) {
 				return LocalStorage.isQuotaExceeded(error)
 			}
 		}
@@ -50,8 +54,7 @@ define([ 'WoltLabSuite/Core/Core', './LocalStorageEmulator' ], function (Core, L
 			if (LocalStorage.isAvailable()) {
 				this.storage = window.localStorage
 				this.hasLocalStorage = true
-			}
-			else {
+			} else {
 				console.info('Falling back to in-memory local storage emulation')
 				this.storage = new LocalStorageEmulator()
 			}
@@ -97,13 +100,19 @@ define([ 'WoltLabSuite/Core/Core', './LocalStorageEmulator' ], function (Core, L
 		 */
 		set(key, value) {
 			try {
-				this.storage.setItem(`${this.storagePrefix}${key}`, JSON.stringify(value))
-			}
-			catch (error) {
+				this.storage.setItem(
+					`${this.storagePrefix}${key}`,
+					JSON.stringify(value)
+				)
+			} catch (error) {
 				if (!LocalStorage.isQuotaExceeded(error)) throw error
 
-				console.warn(`Your localStorage has exceeded the size quota for this domain`)
-				console.warn(`We are falling back to an in-memory storage, this does not persist data!`)
+				console.warn(
+					`Your localStorage has exceeded the size quota for this domain`
+				)
+				console.warn(
+					`We are falling back to an in-memory storage, this does not persist data!`
+				)
 				console.error(error)
 
 				const storage = new LocalStorageEmulator()
@@ -152,7 +161,7 @@ define([ 'WoltLabSuite/Core/Core', './LocalStorageEmulator' ], function (Core, L
 		 * @returns {string}     The last value of the provided setting
 		 */
 		remove(key) {
-			const value      = this.get(key)
+			const value = this.get(key)
 			const storageKey = `${this.storagePrefix}${key}`
 
 			this.storage.removeItem(storageKey)
@@ -167,13 +176,20 @@ define([ 'WoltLabSuite/Core/Core', './LocalStorageEmulator' ], function (Core, L
 		clear() {
 			const _clear = (target) => {
 				for (let key in target) {
-					if (!key.startsWith(this.storagePrefix) || !target.hasOwnProperty(key)) continue
+					if (
+						!key.startsWith(this.storagePrefix) ||
+						!target.hasOwnProperty(key)
+					)
+						continue
 
 					target.removeItem(key)
 				}
 			}
 
-			if (this.hasLocalStorage && this.storage instanceof LocalStorageEmulator) {
+			if (
+				this.hasLocalStorage &&
+				this.storage instanceof LocalStorageEmulator
+			) {
 				try {
 					// Try to clear the real localStorage
 					_clear(localStorage)
@@ -188,8 +204,9 @@ define([ 'WoltLabSuite/Core/Core', './LocalStorageEmulator' ], function (Core, L
 					this.storage = localStorage
 
 					console.log('Switched back to using the localStorage')
+				} catch (error) {
+					/* no we can’t */
 				}
-				catch (error) { /* no we can’t */ }
 			}
 
 			_clear(this.storage)
@@ -198,4 +215,4 @@ define([ 'WoltLabSuite/Core/Core', './LocalStorageEmulator' ], function (Core, L
 	LocalStorage.DEPENDENCIES = DEPENDENCIES
 
 	return LocalStorage
-});
+})

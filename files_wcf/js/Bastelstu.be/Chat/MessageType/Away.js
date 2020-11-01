@@ -11,10 +11,12 @@
  * or later of the General Public License.
  */
 
-define([ '../MessageType' ], function (MessageType) {
-	"use strict";
+define(['../MessageType'], function (MessageType) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'ProfileStore', 'roomID' ].concat(MessageType.DEPENDENCIES || [ ])
+	const DEPENDENCIES = ['ProfileStore', 'roomID'].concat(
+		MessageType.DEPENDENCIES || []
+	)
 	class Away extends MessageType {
 		constructor(profileStore, roomID, ...superDeps) {
 			super(...superDeps)
@@ -24,12 +26,13 @@ define([ '../MessageType' ], function (MessageType) {
 		}
 
 		render(message) {
-			const isSilent = message.payload.rooms.find(room => room.roomID === this.roomID).isSilent
+			const isSilent = message.payload.rooms.find(
+				(room) => room.roomID === this.roomID
+			).isSilent
 
 			if (!isSilent) {
 				return super.render(message)
-			}
-			else {
+			} else {
 				return false
 			}
 		}
@@ -45,4 +48,4 @@ define([ '../MessageType' ], function (MessageType) {
 	Away.DEPENDENCIES = DEPENDENCIES
 
 	return Away
-});
+})

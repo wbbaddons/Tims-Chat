@@ -11,10 +11,10 @@
  * or later of the General Public License.
  */
 
-define([ './Plain' ], function (Plain) {
-	"use strict";
+define(['./Plain'], function (Plain) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiInput' ].concat(Plain.DEPENDENCIES || [ ])
+	const DEPENDENCIES = ['UiInput'].concat(Plain.DEPENDENCIES || [])
 	class Whisper extends Plain {
 		constructor(input, ...superDeps) {
 			super(...superDeps)
@@ -26,28 +26,39 @@ define([ './Plain' ], function (Plain) {
 			const fragment = super.render(message)
 
 			if (this.input != null) {
-				Array.prototype.forEach.call(fragment.querySelectorAll('[data-insert-whisper]'), (function (el) {
-					el.addEventListener('click', (function () {
-						const username = el.dataset.insertWhisper
-						const sanitizedUsername = username.replace(/"/g, '""')
-						const command = `/whisper "${sanitizedUsername}"`
+				Array.prototype.forEach.call(
+					fragment.querySelectorAll('[data-insert-whisper]'),
+					function (el) {
+						el.addEventListener(
+							'click',
+							function () {
+								const username = el.dataset.insertWhisper
+								const sanitizedUsername = username.replace(/"/g, '""')
+								const command = `/whisper "${sanitizedUsername}"`
 
-						if (this.input.getText().indexOf(command) !== 0) {
-							this.input.insertText(`${command} `, { prepend: true, append: false })
-							this.input.focus()
-						}
-					}).bind(this))
-				}).bind(this))
+								if (this.input.getText().indexOf(command) !== 0) {
+									this.input.insertText(`${command} `, {
+										prepend: true,
+										append: false,
+									})
+									this.input.focus()
+								}
+							}.bind(this)
+						)
+					}.bind(this)
+				)
 			}
 
 			return fragment
 		}
 
 		joinable(a, b) {
-			return a.userID === b.userID && a.payload.recipient === b.payload.recipient
+			return (
+				a.userID === b.userID && a.payload.recipient === b.payload.recipient
+			)
 		}
 	}
 	Whisper.DEPENDENCIES = DEPENDENCIES
 
 	return Whisper
-});
+})

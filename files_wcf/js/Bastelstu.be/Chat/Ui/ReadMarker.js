@@ -11,28 +11,34 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	"use strict";
+define([], function () {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiMessageStream' ]
+	const DEPENDENCIES = ['UiMessageStream']
 	class ReadMarker {
 		constructor(messageStream) {
 			this.messageStream = messageStream
 		}
 
 		bootstrap() {
-			document.addEventListener('visibilitychange', this.onVisibilitychange.bind(this))
+			document.addEventListener(
+				'visibilitychange',
+				this.onVisibilitychange.bind(this)
+			)
 		}
 
 		onVisibilitychange() {
 			if (document.hidden) {
 				const ul = elBySel('ul', this.messageStream.stream)
-				let   lc = ul.lastElementChild
+				let lc = ul.lastElementChild
 
 				// delete previous markers
-				Array.prototype.forEach.call(document.querySelectorAll('.readMarker'), marker => {
-					marker.classList.remove('readMarker')
-				})
+				Array.prototype.forEach.call(
+					document.querySelectorAll('.readMarker'),
+					(marker) => {
+						marker.classList.remove('readMarker')
+					}
+				)
 
 				if (lc) {
 					lc.classList.add('readMarker')
@@ -43,4 +49,4 @@ define([ ], function () {
 	ReadMarker.DEPENDENCIES = DEPENDENCIES
 
 	return ReadMarker
-});
+})

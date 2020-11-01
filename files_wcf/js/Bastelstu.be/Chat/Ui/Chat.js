@@ -11,42 +11,58 @@
  * or later of the General Public License.
  */
 
-define([ '../Ui' ], function (Ui) {
-	"use strict";
+define(['../Ui'], function (Ui) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiAttachmentUpload'
-	                     , 'UiAutoAway'
-	                     , 'UiConnectionWarning'
-	                     , 'UiInput'
-	                     , 'UiInputAutocompleter'
-	                     , 'UiMessageActionDelete'
-	                     , 'UiMessageStream'
-	                     , 'UiMobile'
-	                     , 'UiNotification'
-	                     , 'UiReadMarker'
-	                     , 'UiSettings'
-	                     , 'UiTopic'
-	                     , 'UiUserActionDropdownHandler'
-	                     , 'UiUserList'
-	                     ]
+	const DEPENDENCIES = [
+		'UiAttachmentUpload',
+		'UiAutoAway',
+		'UiConnectionWarning',
+		'UiInput',
+		'UiInputAutocompleter',
+		'UiMessageActionDelete',
+		'UiMessageStream',
+		'UiMobile',
+		'UiNotification',
+		'UiReadMarker',
+		'UiSettings',
+		'UiTopic',
+		'UiUserActionDropdownHandler',
+		'UiUserList',
+	]
 	class Chat extends Ui {
-		constructor(attachmentUpload, autoAway, connectionWarning, input, autocompleter, messageActionDelete, messageStream, mobile, notification, readMarker, settings, topic, userActionDropdownHandler, userList) {
+		constructor(
+			attachmentUpload,
+			autoAway,
+			connectionWarning,
+			input,
+			autocompleter,
+			messageActionDelete,
+			messageStream,
+			mobile,
+			notification,
+			readMarker,
+			settings,
+			topic,
+			userActionDropdownHandler,
+			userList
+		) {
 			super()
 
 			this.actionDropdownHandler = userActionDropdownHandler
-			this.attachmentUpload      = attachmentUpload
-			this.autoAway              = autoAway
-			this.autocompleter         = autocompleter
-			this.connectionWarning     = connectionWarning
-			this.input                 = input
-			this.messageActionDelete   = messageActionDelete
-			this.messageStream         = messageStream
-			this.mobile                = mobile
-			this.notification          = notification
-			this.readMarker            = readMarker
-			this.settings              = settings
-			this.topic                 = topic
-			this.userList              = userList
+			this.attachmentUpload = attachmentUpload
+			this.autoAway = autoAway
+			this.autocompleter = autocompleter
+			this.connectionWarning = connectionWarning
+			this.input = input
+			this.messageActionDelete = messageActionDelete
+			this.messageStream = messageStream
+			this.mobile = mobile
+			this.notification = notification
+			this.readMarker = readMarker
+			this.settings = settings
+			this.topic = topic
+			this.userList = userList
 		}
 
 		bootstrap() {
@@ -69,4 +85,4 @@ define([ '../Ui' ], function (Ui) {
 	Chat.DEPENDENCIES = DEPENDENCIES
 
 	return Chat
-});
+})

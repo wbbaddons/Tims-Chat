@@ -11,13 +11,14 @@
  * or later of the General Public License.
  */
 
-define([ './Helper'
-       , 'WoltLabSuite/Core/Date/Util'
-       , 'WoltLabSuite/Core/User'
-       ], function (Helper, DateUtil, User) {
-	"use strict";
+define([
+	'./Helper',
+	'WoltLabSuite/Core/Date/Util',
+	'WoltLabSuite/Core/User',
+], function (Helper, DateUtil, User) {
+	'use strict'
 
-	const m                 = Symbol('message')
+	const m = Symbol('message')
 
 	class Message {
 		constructor(MessageType, message) {
@@ -87,4 +88,4 @@ define([ './Helper'
 	}
 
 	return Message
-});
+})

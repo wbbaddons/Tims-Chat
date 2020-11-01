@@ -11,8 +11,8 @@
  * or later of the General Public License.
  */
 
-define([ './Plain' ], function (Plain) {
-	"use strict";
+define(['./Plain'], function (Plain) {
+	'use strict'
 
 	class Broadcast extends Plain {
 		renderPlainText(message) {
@@ -21,4 +21,4 @@ define([ './Plain' ], function (Plain) {
 	}
 
 	return Broadcast
-});
+})

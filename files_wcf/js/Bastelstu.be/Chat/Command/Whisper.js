@@ -11,25 +11,27 @@
  * or later of the General Public License.
  */
 
-define([ '../Parser'
-       , './Plain'
-       ], function (Parser, Plain) {
-	"use strict";
+define(['../Parser', './Plain'], function (Parser, Plain) {
+	'use strict'
 
 	class Whisper extends Plain {
 		getParameterParser() {
-			return Parser.Username.thenLeft(Parser.Whitespace.rep()).then(super.getParameterParser()).map(([ username, object ]) => {
-				object.username = username
+			return Parser.Username.thenLeft(Parser.Whitespace.rep())
+				.then(super.getParameterParser())
+				.map(([username, object]) => {
+					object.username = username
 
-				return object
-			})
+					return object
+				})
 		}
 
-		* autocomplete(parameterString) {
-			const usernameDone = Parser.Username.thenLeft(Parser.Whitespace).parse(Parser.Streams.ofString(parameterString))
+		*autocomplete(parameterString) {
+			const usernameDone = Parser.Username.thenLeft(Parser.Whitespace).parse(
+				Parser.Streams.ofString(parameterString)
+			)
 
 			if (usernameDone.isAccepted()) {
-				yield * super.autocomplete(parameterString)
+				yield* super.autocomplete(parameterString)
 				return
 			}
 
@@ -43,4 +45,4 @@ define([ '../Parser'
 	}
 
 	return Whisper
-});
+})

@@ -11,8 +11,8 @@
  * or later of the General Public License.
  */
 
-define([ 'WoltLabSuite/Core/Ui/Screen' ], function (UiScreen) {
-	"use strict";
+define(['WoltLabSuite/Core/Ui/Screen'], function (UiScreen) {
+	'use strict'
 
 	const initialized = Symbol('initialized')
 
@@ -22,10 +22,11 @@ define([ 'WoltLabSuite/Core/Ui/Screen' ], function (UiScreen) {
 		}
 
 		bootstrap() {
-			UiScreen.on('screen-md-down', { match:   this.enable.bind(this)
-			                              , unmatch: this.disable.bind(this)
-			                              , setup:   this.init.bind(this)
-			                              })
+			UiScreen.on('screen-md-down', {
+				match: this.enable.bind(this),
+				unmatch: this.disable.bind(this),
+				setup: this.init.bind(this),
+			})
 		}
 
 		init() {
@@ -36,19 +37,15 @@ define([ 'WoltLabSuite/Core/Ui/Screen' ], function (UiScreen) {
 			this.initQuickSettings()
 		}
 
-		enable() {
+		enable() {}
 
-		}
-
-		disable() {
-
-		}
+		disable() {}
 
 		initQuickSettings() {
-			const navigation    = elBySel('#chatQuickSettingsNavigation > ul')
+			const navigation = elBySel('#chatQuickSettingsNavigation > ul')
 			const quickSettings = elById('chatQuickSettings')
 
-			navigation.addEventListener(WCF_CLICK_EVENT, event => {
+			navigation.addEventListener(WCF_CLICK_EVENT, (event) => {
 				event.stopPropagation()
 
 				// mimic dropdown behavior
@@ -57,7 +54,7 @@ define([ 'WoltLabSuite/Core/Ui/Screen' ], function (UiScreen) {
 				}, 10)
 			})
 
-			quickSettings.addEventListener(WCF_CLICK_EVENT, event => {
+			quickSettings.addEventListener(WCF_CLICK_EVENT, (event) => {
 				event.preventDefault()
 				event.stopPropagation()
 
@@ -67,4 +64,4 @@ define([ 'WoltLabSuite/Core/Ui/Screen' ], function (UiScreen) {
 	}
 
 	return Mobile
-});
+})

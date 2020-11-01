@@ -11,12 +11,10 @@
  * or later of the General Public License.
  */
 
-define([ './_Unsuspension' ], function (Unsuspension) {
-	"use strict";
+define(['./_Unsuspension'], function (Unsuspension) {
+	'use strict'
 
-	class Unban extends Unsuspension {
-
-	}
+	class Unban extends Unsuspension {}
 
 	return Unban
-});
+})

@@ -11,8 +11,8 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	"use strict";
+define([], function () {
+	'use strict'
 
 	class ParseError extends Error {
 		constructor(message, data) {
@@ -23,4 +23,4 @@ define([ ], function () {
 	}
 
 	return ParseError
-});
+})

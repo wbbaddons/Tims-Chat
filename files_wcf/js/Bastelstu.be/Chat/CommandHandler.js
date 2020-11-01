@@ -11,12 +11,10 @@
  * or later of the General Public License.
  */
 
-define([ './Parser'
-       , './ParseError'
-       ], function (Parser, ParseError) {
-	"use strict";
+define(['./Parser', './ParseError'], function (Parser, ParseError) {
+	'use strict'
 
-	const DEPENDENCIES = [ 'Trigger', 'Command' ]
+	const DEPENDENCIES = ['Trigger', 'Command']
 	class CommandHandler {
 		constructor(triggers, commands) {
 			this.triggers = triggers
@@ -28,19 +26,19 @@ define([ './Parser'
 
 			if (result.isAccepted()) {
 				return result.value
-			}
-			else {
+			} else {
 				throw new ParseError('Empty trigger')
 			}
 		}
 
 		applyCommand(command, parameterString) {
-			const result = command.getParameterParser().parse(Parser.Streams.ofString(parameterString))
+			const result = command
+				.getParameterParser()
+				.parse(Parser.Streams.ofString(parameterString))
 
 			if (result.isAccepted()) {
 				return result.value
-			}
-			else {
+			} else {
 				throw new ParseError('Could not parse', { result, parameterString })
 			}
 		}
@@ -64,4 +62,4 @@ define([ './Parser'
 	CommandHandler.DEPENDENCIES = DEPENDENCIES
 
 	return CommandHandler
-});
+})

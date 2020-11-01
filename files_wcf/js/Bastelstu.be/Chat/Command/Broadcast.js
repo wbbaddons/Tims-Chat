@@ -11,12 +11,10 @@
  * or later of the General Public License.
  */
 
-define([ './Plain' ], function (Plain) {
-	"use strict";
+define(['./Plain'], function (Plain) {
+	'use strict'
 
-	class Broadcast extends Plain {
-
-	}
+	class Broadcast extends Plain {}
 
 	return Broadcast
-});
+})

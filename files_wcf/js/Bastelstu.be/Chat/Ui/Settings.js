@@ -11,23 +11,27 @@
  * or later of the General Public License.
  */
 
-define([ ], function () {
-	'use strict';
+define([], function () {
+	'use strict'
 
-	const DEPENDENCIES = [ 'UiSettingsButton' ]
+	const DEPENDENCIES = ['UiSettingsButton']
 	class Settings {
 		constructor(modules) {
 			this.modules = modules
-			this.buttons = Array.from(elBySelAll('#chatQuickSettingsNavigation .button[data-module]'))
+			this.buttons = Array.from(
+				elBySelAll('#chatQuickSettingsNavigation .button[data-module]')
+			)
 		}
 
 		bootstrap() {
-			this.buttons.forEach(element => {
-				this.modules[element.dataset.module.replace(/\./g, '-')].instance(element).bootstrap()
+			this.buttons.forEach((element) => {
+				this.modules[element.dataset.module.replace(/\./g, '-')]
+					.instance(element)
+					.bootstrap()
 			})
 		}
 	}
 	Settings.DEPENDENCIES = DEPENDENCIES
 
 	return Settings
-});
+})
