@@ -54,10 +54,19 @@
 
 <div id="chatInputContainer">
 	<div>
-		<textarea maxlength="{CHAT_MAX_LENGTH}" class="long"></textarea>
-		<span id="chatQuickSettings">
-			<span class="icon icon24 fa-ellipsis-v"></span>
-		</span>
+		{if $__wcf->getSession()->getPermission('user.chat.canAttach')}
+			<div class="chatAttachButton">
+				<span id="chatAttachmentUploadButton" class="button small" title="{lang}wcf.attachment.attachments{/lang}">
+					<span class="icon icon16 fa-paperclip"></span>
+				</span>
+			</div>
+		{/if}
+		<div class="chatInputWrapper">
+			<textarea maxlength="{CHAT_MAX_LENGTH}" class="long"></textarea>
+			<span id="chatQuickSettings">
+				<span class="icon icon24 fa-ellipsis-v"></span>
+			</span>
+		</div>
 	</div>
 	<small class="innerError" style="display: none"></small>
 	<span class="charCounter dimmed"></span>
