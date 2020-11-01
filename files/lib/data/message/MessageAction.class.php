@@ -337,19 +337,34 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		foreach ($attachments as $attachment) {
 			$attachmentIDs[] = $attachment->attachmentID;
 		}
+		
+		$processor = new \wcf\system\html\input\HtmlInputProcessor();
+		$processor->process(implode(' ', array_map(function ($attachmentID) {
+			return '[attach='.$attachmentID.',none,true][/attach]';
+		}, $attachmentIDs)), 'be.bastelstu.chat.message', 0);
 
+		WCF::getDB()->beginTransaction();
 		/** @var Message $message */
 		$message = (new MessageAction([ ], 'create', [ 'data' => [ 'roomID'       => $room->roomID
 		                                                         , 'userID'       => WCF::getUser()->userID
 		                                                         , 'username'     => WCF::getUser()->username
 		                                                         , 'time'         => TIME_NOW
 		                                                         , 'objectTypeID' => $objectTypeID
-		                                                         , 'payload'      => serialize([ 'attachmentIDs' => $attachmentIDs ])
+		                                                         , 'payload'      => serialize([ 'attachmentIDs' => $attachmentIDs
+		                                                                                       , 'message' => $processor->getHtml()
+		                                                                                       ])
 		                                                         ]
 		                                             ]
 		                             )
 		           )->executeAction()['returnValues'];
 
 		$attachmentHandler->updateObjectID($message->messageID);
+		$processor->setObjectID($message->messageID);
+		if (\wcf\system\message\embedded\object\MessageEmbeddedObjectManager::getInstance()->registerObjects($processor)) {
+			(new MessageEditor($message))->update([
+				'hasEmbeddedObjects' => 1
+			]);
+		}
+		WCF::getDB()->commitTransaction();
 	}
 }

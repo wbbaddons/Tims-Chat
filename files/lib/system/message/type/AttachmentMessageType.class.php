@@ -53,6 +53,8 @@ class AttachmentMessageType implements IMessageType, IDeletableMessageType {
 		if ($user === null) $user = new \wcf\data\user\UserProfile(\wcf\system\WCF::getUser());
 
 		$payload = $message->payload;
+		$payload['formattedMessage'] = null;
+		$payload['plaintextMessage'] = null;
 
 		$parameters = [ 'message' => $message
 		              , 'user'    => $user
@@ -60,7 +62,16 @@ class AttachmentMessageType implements IMessageType, IDeletableMessageType {
 		              ];
 		\wcf\system\event\EventHandler::getInstance()->fireAction($this, 'getPayload', $parameters);
 
-		// TODO
+		if ($parameters['payload']['formattedMessage'] === null) {
+			$this->processor->setOutputType('text/html');
+			$this->processor->process($parameters['payload']['message'], 'be.bastelstu.chat.message', $message->messageID);
+			$parameters['payload']['formattedMessage'] = $this->processor->getHtml();
+		}
+		if ($parameters['payload']['plaintextMessage'] === null) {
+			$this->processor->setOutputType('text/plain');
+			$this->processor->process($parameters['payload']['message'], 'be.bastelstu.chat.message', $message->messageID);
+			$parameters['payload']['plaintextMessage'] = $this->processor->getHtml();
+		}
 
 		return $parameters['payload'];
 	}
