@@ -40,4 +40,7 @@ distclean: clean
 	-rm -f be.bastelstu.chat.tar
 	-rm -f be.bastelstu.chat.tar.gz
 
+constants.php: option.xml
+	(echo "<?php" ; xq -r '.data.import.options.option[] | "define(\"" + (.["@name"] | ascii_upcase) + "\", " + .defaultvalue + ");"' < option.xml) > constants.php
+
 .PHONY: distclean clean

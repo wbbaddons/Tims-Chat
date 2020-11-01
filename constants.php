@@ -1,0 +1,6 @@
+<?php
+define("CHAT_RELOADTIME", 3);
+define("CHAT_AUTOAWAYTIME", 0);
+define("CHAT_MAX_LENGTH", 500);
+define("CHAT_ARCHIVE_AFTER", 90);
+define("CHAT_LOG_ARCHIVETIME", 7);
