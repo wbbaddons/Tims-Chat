@@ -4,7 +4,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2024-10-31
+ * Change Date: 2024-11-01
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -178,8 +178,11 @@ define([ './Chat/console'
 			this.ui = this.bottle.container.Ui
 			this.ui.bootstrap()
 
-			this.bottle.container.UiInput.on('submit', this.onSubmit.bind(this))
-			this.bottle.container.UiInput.on('autocomplete', this.onAutocomplete.bind(this))
+			this.ui.input.on('submit', this.onSubmit.bind(this))
+			this.ui.input.on('autocomplete', this.onAutocomplete.bind(this))
+			this.ui.attachmentUpload.on('send', (event) => {
+				event.detail.promise = this.onSendAttachment(event)
+			})
 
 			await this.bottle.container.Room.join()
 
@@ -328,6 +331,10 @@ define([ './Chat/console'
 			catch (err) {
 				console.error('Chat.markAsBack', err)
 			}
+		}
+
+		async onSendAttachment(event) {
+			return this.bottle.container.Messenger.pushAttachment(event.detail.attachmentId)
 		}
 
 		onAutocomplete(event) {
