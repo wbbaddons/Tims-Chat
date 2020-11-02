@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2024-11-01
+ * Change Date: 2024-11-02
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -318,6 +318,8 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$user = new \chat\data\user\User(WCF::getUser());
 		if (!$user->isInRoom($room)) throw new PermissionDeniedException();
 
+		if (!$room->canWritePublicly(null, $reason)) throw $reason;
+
 		$this->readString('tmpHash');
 	}
 
@@ -337,7 +339,7 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		foreach ($attachments as $attachment) {
 			$attachmentIDs[] = $attachment->attachmentID;
 		}
-		
+
 		$processor = new \wcf\system\html\input\HtmlInputProcessor();
 		$processor->process(implode(' ', array_map(function ($attachmentID) {
 			return '[attach='.$attachmentID.',none,true][/attach]';

@@ -4,7 +4,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2024-11-01
+ * Change Date: 2024-11-02
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -177,8 +177,16 @@ define([
 				this.deleteOnClose = false
 				this.closeDialog()
 			} catch (error) {
-				// TODO: Error handling
 				console.error(error)
+
+				let container = this._target.querySelector('.error')
+				if (!container) {
+					container = document.createElement('div')
+					container.classList.add('error')
+					this._target.insertBefore(container, this._target.firstChild)
+				}
+				container.innerText = error.message
+				Dialog.rebuild(DIALOG_CONTAINER_ID)
 			}
 		}
 
