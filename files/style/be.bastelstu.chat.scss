@@ -565,6 +565,21 @@ $chatEmbedMaxWidth: 400px;
 			}
 		}
 	}
+
+	#chatAttachmentUploadDialog {
+		.attachmentPreview {
+			text-align: center;
+
+			img {
+				margin-left: auto !important;
+				margin-right: auto !important;
+			}
+
+			.buttonGroup {
+				justify-content: center;
+			}
+		}
+	}
 }
 
 html.fullscreen {

@@ -12,6 +12,7 @@
  */
 
 define([
+	'WoltLabSuite/Core/Core',
 	'WoltLabSuite/Core/Language',
 	'WoltLabSuite/Core/Upload',
 	'WoltLabSuite/Core/Dom/Change/Listener',
@@ -19,6 +20,7 @@ define([
 	'WoltLabSuite/Core/Ui/Dialog',
 	'../../DataStructure/EventEmitter',
 ], function (
+	Core,
 	Language,
 	Upload,
 	DomChangeListener,
@@ -74,6 +76,7 @@ define([
 					Dialog.openStatic(container.id, null, {
 						title: elData(container, 'title'),
 						onShow: () => this.showDialog(),
+						onClose: () => this.onClose(),
 					})
 				})
 
@@ -81,7 +84,7 @@ define([
 					'wcf\\data\\attachment\\AttachmentAction',
 					`#${this.previewContainer.id} > p`
 				)
-				deleteAction.setCallback(() => this.closeDialog())
+				deleteAction.setCallback(() => this.onAbort())
 
 				this.input.on('input', (event) => {
 					if (event.target.input.value.length == 0) {
@@ -93,13 +96,38 @@ define([
 			}
 		}
 
+		/**
+		 * Called by the WCF.Action.Delete callback.
+		 */
+		onAbort() {
+			this.deleteOnClose = false
+			this.closeDialog()
+		}
+
+		/**
+		 * Called when the dialog has been closed.
+		 */
+		onClose() {
+			if (this.deleteOnClose) {
+				Core.triggerEvent(this.cancelButton, 'click')
+			}
+		}
+
+		/**
+		 * Closes the dialog safely by checking if it has been created properly before.
+		 */
 		closeDialog() {
 			if (Dialog.getDialog(DIALOG_CONTAINER_ID)) {
 				Dialog.close(DIALOG_CONTAINER_ID)
 			}
 		}
 
+		/**
+		 * Prepares the initial dialog content.
+		 */
 		showDialog() {
+			this.deleteOnClose = false
+
 			if (this._button.parentNode) {
 				this._removeButton()
 			}
@@ -109,6 +137,36 @@ define([
 			elShow(this.uploadDescription)
 		}
 
+		/**
+		 * Creates the dialog form buttons (send and cancel).
+		 */
+		createButtons(uploadId, objectId, tmpHash) {
+			const formSubmit = elCreate('div')
+			formSubmit.classList.add('formSubmit', 'dialogFormSubmit')
+
+			this.sendButton = document.createElement('button')
+			this.sendButton.classList.add('buttonPrimary')
+			this.sendButton.innerText = Language.get('wcf.global.button.submit')
+			this.sendButton.addEventListener('click', (e) => this.send(tmpHash, e))
+			formSubmit.appendChild(this.sendButton)
+
+			this.cancelButton = document.createElement('button')
+			this.cancelButton.classList.add('jsDeleteButton')
+			this.cancelButton.dataset.objectId = objectId
+			this.cancelButton.dataset.eventName = 'attachment'
+			this.cancelButton.innerText = Language.get('wcf.global.button.cancel')
+			formSubmit.appendChild(this.cancelButton)
+
+			const target = this._fileElements[uploadId][0]
+			target.appendChild(formSubmit)
+
+			DomChangeListener.trigger()
+		}
+
+		/**
+		 * Tells the system to send a chat message with the
+		 * given attachment (identified by its temporary hash).
+		 */
 		async send(tmpHash, event) {
 			event.preventDefault()
 			const parameters = { promise: Promise.resolve(), tmpHash }
@@ -116,38 +174,12 @@ define([
 
 			try {
 				await parameters.promise
+				this.deleteOnClose = false
 				this.closeDialog()
 			} catch (error) {
 				// TODO: Error handling
 				console.error(error)
 			}
-		}
-
-		createButtonGroup(uploadId, objectId, tmpHash) {
-			const buttonGroup = document.createElement('ul')
-			buttonGroup.classList.add('buttonGroup')
-
-			let li = document.createElement('li')
-			const cancelButton = document.createElement('span')
-			cancelButton.classList.add('button', 'jsDeleteButton')
-			cancelButton.dataset.objectId = objectId
-			cancelButton.dataset.eventName = 'attachment'
-			cancelButton.innerText = Language.get('wcf.global.button.cancel')
-			li.appendChild(cancelButton)
-			buttonGroup.appendChild(li)
-
-			li = document.createElement('li')
-			const sendButton = document.createElement('span')
-			sendButton.classList.add('button')
-			sendButton.innerText = Language.get('wcf.global.button.submit')
-			sendButton.addEventListener('click', (e) => this.send(tmpHash, e))
-			li.appendChild(sendButton)
-			buttonGroup.appendChild(li)
-
-			const target = this._fileElements[uploadId][0]
-			target.appendChild(buttonGroup)
-
-			DomChangeListener.trigger()
 		}
 
 		/**
@@ -188,6 +220,11 @@ define([
 				data.returnValues.attachments &&
 				data.returnValues.attachments[uploadId]
 			) {
+				// An attachment was uploaded successfully, which
+				// means that we should delete it when the dialog gets closed,
+				// unless the user used the send or cancel button explicitly.
+				this.deleteOnClose = true
+
 				this._removeButton()
 				elHide(this.uploadDescription)
 
@@ -206,10 +243,10 @@ define([
 				img.setAttribute('src', url)
 				img.setAttribute('alt', '')
 
-				if (url === attachment.thumbnailURL) {
-					img.classList.add('attachmentThumbnail')
-				} else if (url === attachment.tinyURL) {
+				if (url === attachment.tinyURL) {
 					img.classList.add('attachmentTinyThumbnail')
+				} else {
+					img.classList.add('attachmentThumbnail')
 				}
 
 				img.dataset.width = attachment.width
@@ -217,7 +254,9 @@ define([
 
 				DomUtil.replaceElement(progress, img)
 
-				this.createButtonGroup(uploadId, attachment.attachmentID, this.tmpHash)
+				this.createButtons(uploadId, attachment.attachmentID, this.tmpHash)
+
+				Dialog.rebuild(DIALOG_CONTAINER_ID)
 			} else {
 				console.error('Received neither an error nor an attachment response')
 				console.error(data.returnValues)
