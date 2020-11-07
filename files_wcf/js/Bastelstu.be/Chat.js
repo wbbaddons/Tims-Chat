@@ -432,9 +432,11 @@ define([
 		}
 
 		async onSendAttachment(event) {
-			return this.bottle.container.Messenger.pushAttachment(
+			await this.bottle.container.Messenger.pushAttachment(
 				event.detail.tmpHash
 			)
+
+			this.markAsBack()
 		}
 
 		onAutocomplete(event) {
