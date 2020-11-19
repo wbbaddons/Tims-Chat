@@ -174,12 +174,13 @@
 			<points>1</points>
 		</type>
 		<!-- /activity points -->
-		
+
 		<!-- attachments -->
 		<type>
 			<name>be.bastelstu.chat.message</name>
 			<definitionname>com.woltlab.wcf.attachment.objectType</definitionname>
 			<classname>chat\system\attachment\MessageAttachmentObjectType</classname>
+			<private>1</private>
 		</type>
 		<!-- attachments -->
 	</import>
