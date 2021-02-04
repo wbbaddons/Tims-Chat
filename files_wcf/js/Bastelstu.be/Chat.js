@@ -432,9 +432,7 @@ define([
 		}
 
 		async onSendAttachment(event) {
-			await this.bottle.container.Messenger.pushAttachment(
-				event.detail.tmpHash
-			)
+			await this.bottle.container.Messenger.pushAttachment(event.detail.tmpHash)
 
 			this.markAsBack()
 		}
