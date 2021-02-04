@@ -48,7 +48,6 @@ define([
 
 			super(buttonContainerId, previewContainerId, {
 				className: 'wcf\\data\\attachment\\AttachmentAction',
-				acceptableFiles: ['.png', '.gif', '.jpg', '.jpeg'],
 			})
 
 			this.input = input
@@ -209,8 +208,11 @@ define([
 		 * @see	WoltLabSuite/Core/Upload#_success
 		 */
 		_success(uploadId, data, responseText, xhr, requestOptions) {
-			if (data.returnValues.errors && data.returnValues.errors[0]) {
-				const error = data.returnValues.errors[0]
+			const target = this._fileElements[uploadId][0]
+			const progress = target.querySelector(':scope > progress')
+
+			if (data.returnValues.errors && data.returnValues.errors[uploadId]) {
+				const error = data.returnValues.errors[uploadId]
 
 				elInnerError(
 					this._button,
@@ -218,6 +220,8 @@ define([
 						filename: error.filename,
 					})
 				)
+
+				progress.remove()
 
 				return
 			} else {
@@ -237,30 +241,36 @@ define([
 				elHide(this.uploadDescription)
 
 				const attachment = data.returnValues.attachments[uploadId]
-				const url =
-					attachment.thumbnailURL || attachment.tinyURL || attachment.url
 
-				if (!url) {
-					throw new Error('Missing image URL')
-				}
+				if (attachment.isImage) {
+					const url =
+						attachment.thumbnailURL || attachment.tinyURL || attachment.url
 
-				const target = this._fileElements[uploadId][0]
-				const progress = target.querySelector(':scope > progress')
+					if (!url) {
+						throw new Error('Missing image URL')
+					}
 
-				const img = document.createElement('img')
-				img.setAttribute('src', url)
-				img.setAttribute('alt', '')
+					const img = document.createElement('img')
+					img.setAttribute('src', url)
+					img.setAttribute('alt', '')
 
-				if (url === attachment.tinyURL) {
-					img.classList.add('attachmentTinyThumbnail')
+					if (url === attachment.tinyURL) {
+						img.classList.add('attachmentTinyThumbnail')
+					} else {
+						img.classList.add('attachmentThumbnail')
+					}
+
+					img.dataset.width = attachment.width
+					img.dataset.height = attachment.height
+
+					DomUtil.replaceElement(progress, img)
 				} else {
-					img.classList.add('attachmentThumbnail')
+					const anchor = document.createElement('a')
+					anchor.setAttribute('href', attachment.url)
+					anchor.innerText = attachment.filename
+
+					DomUtil.replaceElement(progress, anchor)
 				}
-
-				img.dataset.width = attachment.width
-				img.dataset.height = attachment.height
-
-				DomUtil.replaceElement(progress, img)
 
 				this.createButtons(uploadId, attachment.attachmentID, this.tmpHash)
 
