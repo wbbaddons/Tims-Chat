@@ -82,12 +82,15 @@ class MessageAttachmentObjectType extends \wcf\system\attachment\AbstractAttachm
 	/**
 	 * @inheritDoc
 	 */
+	public function getMaxSize() {
+		return WCF::getSession()->getPermission('user.chat.attachment.maxSize');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getAllowedExtensions() {
-		return [ 'png'
-		       , 'gif'
-		       , 'jpg'
-		       , 'jpeg'
-		       ];
+		return \wcf\util\ArrayUtil::trim(\explode("\n", WCF::getSession()->getPermission('user.chat.attachment.allowedExtensions')));
 	}
 
 	/**
