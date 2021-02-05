@@ -4,7 +4,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-02-04
+ * Change Date: 2025-02-05
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -31,7 +31,7 @@ define(['WoltLabSuite/Core/Template'], function (_Template) {
 				const templates = Object.assign({}, this.templates, variables.t || {})
 				variables.t = templates
 
-				return oldFetch(variables)
+				return oldFetch.call(this, variables);
 			}.bind(this)
 		}
 	}
