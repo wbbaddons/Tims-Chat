@@ -14,10 +14,11 @@
 define([
 	'./console',
 	'Bastelstu.be/_Push',
+	'WoltLabSuite/Core/Dom/Change/Listener',
 	'WoltLabSuite/Core/Dom/Util',
 	'WoltLabSuite/Core/Timer/Repeating',
 	'Bastelstu.be/PromiseWrap/Ajax',
-], function (console, Push, DomUtil, RepeatingTimer, Ajax) {
+], function (console, Push, DomChangeListener, DomUtil, RepeatingTimer, Ajax) {
 	'use strict'
 
 	let timer = undefined
@@ -98,6 +99,7 @@ define([
 
 			if (oldRoomList.dataset.hash !== newRoomList.dataset.hash) {
 				this.container.replaceChild(newRoomList, oldRoomList)
+				DomChangeListener.trigger()
 			}
 		}
 
