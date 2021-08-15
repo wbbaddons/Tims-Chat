@@ -8,12 +8,12 @@
 <script data-relocate="true">
 	require([ 'Language' ], function (Language) {
 		Language.addObject({
-			'wcf.attachment.upload.error.invalidExtension': '{lang}wcf.attachment.upload.error.invalidExtension{/lang}',
-			'wcf.attachment.upload.error.tooLarge': '{lang}wcf.attachment.upload.error.tooLarge{/lang}',
-			'wcf.attachment.upload.error.reachedLimit': '{lang}wcf.attachment.upload.error.reachedLimit{/lang}',
-			'wcf.attachment.upload.error.reachedRemainingLimit': '{lang}wcf.attachment.upload.error.reachedRemainingLimit{/lang}',
-			'wcf.attachment.upload.error.uploadFailed': '{lang}wcf.attachment.upload.error.uploadFailed{/lang}',
-			'wcf.attachment.upload.error.uploadPhpLimit': '{lang}wcf.attachment.upload.error.uploadPhpLimit{/lang}',
+			'wcf.attachment.upload.error.invalidExtension': '{jslang}wcf.attachment.upload.error.invalidExtension{/jslang}',
+			'wcf.attachment.upload.error.tooLarge': '{jslang}wcf.attachment.upload.error.tooLarge{/jslang}',
+			'wcf.attachment.upload.error.reachedLimit': '{jslang}wcf.attachment.upload.error.reachedLimit{/jslang}',
+			'wcf.attachment.upload.error.reachedRemainingLimit': '{jslang}wcf.attachment.upload.error.reachedRemainingLimit{/jslang}',
+			'wcf.attachment.upload.error.uploadFailed': '{jslang}wcf.attachment.upload.error.uploadFailed{/jslang}',
+			'wcf.attachment.upload.error.uploadPhpLimit': '{jslang}wcf.attachment.upload.error.uploadPhpLimit{/jslang}',
 		})
 	})
 </script>
