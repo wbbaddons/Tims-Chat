@@ -11,7 +11,7 @@
  * or later of the General Public License.
  */
 
-li[data-object-type="be.bastelstu.chat.messageType.info"] {
+li[data-object-type='be.bastelstu.chat.messageType.info'] {
 	.chatMessage > .box48 + .containerList {
 		margin-top: 20px;
 	}
@@ -21,7 +21,7 @@ li[data-object-type="be.bastelstu.chat.messageType.info"] {
 	}
 }
 
-li[data-object-type="be.bastelstu.chat.messageType.where"] {
+li[data-object-type='be.bastelstu.chat.messageType.where'] {
 	.containerList > li {
 		&:first-child {
 			border-top: none;
