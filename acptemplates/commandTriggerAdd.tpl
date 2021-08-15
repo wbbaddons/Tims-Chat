@@ -14,11 +14,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link application='chat' controller='CommandTriggerAdd'}{/link}{else}{link application='chat' controller='CommandTriggerEdit' id=$triggerID}{/link}{/if}">
 	<div class="section">

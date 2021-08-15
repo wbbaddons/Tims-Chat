@@ -26,11 +26,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link application='chat' controller='RoomAdd'}{/link}{else}{link application='chat' controller='RoomEdit' id=$roomID}{/link}{/if}">
 	<div class="section">
