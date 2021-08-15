@@ -10,7 +10,7 @@
 					<dt></dt>
 					<dd>
 						<input type="datetime" id="datetime" name="datetime" data-placeholder="{lang}chat.log.date{/lang}" value="{if $message}{$message->time|date:'c'}{/if}">
-						{@SECURITY_TOKEN_INPUT_TAG}
+						{csrfToken}
 					</dd>
 				</dl>
 
