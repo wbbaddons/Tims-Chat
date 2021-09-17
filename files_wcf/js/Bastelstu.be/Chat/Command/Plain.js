@@ -26,9 +26,9 @@ define(['../Command', '../Parser', 'WoltLabSuite/Core/StringUtil'], function (
 		}
 
 		getParameterParser() {
-			return Parser.Rest1.map(
-				StringUtil.escapeHTML.bind(StringUtil)
-			).map((text) => ({ text }))
+			return Parser.Rest1.map(StringUtil.escapeHTML.bind(StringUtil)).map(
+				(text) => ({ text })
+			)
 		}
 
 		*autocomplete(parameterString) {

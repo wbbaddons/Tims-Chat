@@ -272,8 +272,9 @@ define([
 			// Get the first and last node in the selection
 			let originalStart, start, end, originalEnd
 			start = originalStart = selection.getRangeAt(0).startContainer
-			end = originalEnd = selection.getRangeAt(selection.rangeCount - 1)
-				.endContainer
+			end = originalEnd = selection.getRangeAt(
+				selection.rangeCount - 1
+			).endContainer
 
 			const startOffset = selection.getRangeAt(0).startOffset
 			const endOffset = selection.getRangeAt(selection.rangeCount - 1).endOffset

@@ -68,9 +68,10 @@ define([
 				let userAction
 				if (
 					!this.bottle.container.UserAction ||
-					(userAction = this.bottle.container.UserAction[
-						`${moduleName.replace(/\./g, '-')}`
-					]) == null
+					(userAction =
+						this.bottle.container.UserAction[
+							`${moduleName.replace(/\./g, '-')}`
+						]) == null
 				) {
 					this.bottle.factory(
 						`UserAction.${moduleName.replace(/\./g, '-')}`,
@@ -82,9 +83,10 @@ define([
 						}
 					)
 
-					userAction = this.bottle.container.UserAction[
-						`${moduleName.replace(/\./g, '-')}`
-					]
+					userAction =
+						this.bottle.container.UserAction[
+							`${moduleName.replace(/\./g, '-')}`
+						]
 				}
 
 				element.addEventListener(WCF_CLICK_EVENT, (event) =>

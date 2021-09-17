@@ -31,7 +31,7 @@ define(['WoltLabSuite/Core/Template'], function (_Template) {
 				const templates = Object.assign({}, this.templates, variables.t || {})
 				variables.t = templates
 
-				return oldFetch.call(this, variables);
+				return oldFetch.call(this, variables)
 			}.bind(this)
 		}
 	}

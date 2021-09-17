@@ -336,10 +336,8 @@ define([
 
 			this.markAsBack()
 
-			let [
-				trigger,
-				parameterString,
-			] = this.bottle.container.CommandHandler.splitCommand(value)
+			let [trigger, parameterString] =
+				this.bottle.container.CommandHandler.splitCommand(value)
 			let command = null
 			if (trigger === null) {
 				command = this.bottle.container.CommandHandler.getCommandByIdentifier(
@@ -347,9 +345,8 @@ define([
 					'plain'
 				)
 			} else {
-				command = this.bottle.container.CommandHandler.getCommandByTrigger(
-					trigger
-				)
+				command =
+					this.bottle.container.CommandHandler.getCommandByTrigger(trigger)
 			}
 
 			if (command === null) {
@@ -418,10 +415,11 @@ define([
 				if (this.bottle.container.ProfileStore.getSelf().away == null) return
 				console.debug('Chat.markAsBack', `Marking as back`)
 
-				const command = this.bottle.container.CommandHandler.getCommandByIdentifier(
-					'be.bastelstu.chat',
-					'back'
-				)
+				const command =
+					this.bottle.container.CommandHandler.getCommandByIdentifier(
+						'be.bastelstu.chat',
+						'back'
+					)
 				return this.bottle.container.Messenger.push({
 					commandID: command.id,
 					parameters: {},
