@@ -21,7 +21,7 @@ use wcf\system\SingletonFactory;
 /**
  * Manages the room cache.
  */
-class RoomCache extends SingletonFactory
+final class RoomCache extends SingletonFactory
 {
     /**
      * List of cached rooms.
