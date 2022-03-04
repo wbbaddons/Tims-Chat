@@ -43,10 +43,9 @@ class CommandTrigger extends DatabaseObject implements IRouteController
     /**
      * Returns the trigger specified by its commandTrigger value
      *
-     * @param  string       $name
      * @return CommandTrigger
      */
-    public static function getTriggerByName($name)
+    public static function getTriggerByName(string $name)
     {
         $sql = "SELECT  *
                 FROM    chat1_command_trigger
