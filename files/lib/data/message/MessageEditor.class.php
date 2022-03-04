@@ -37,7 +37,7 @@ class MessageEditor extends DatabaseObjectEditor
         WCF::getDB()->beginTransaction();
 
         $result = parent::deleteAll($messageIDs);
-        if (!empty($messageIDs)) {
+        if ($messageIDs !== []) {
             AttachmentHandler::removeAttachments('be.bastelstu.chat.message', $messageIDs);
         }
 

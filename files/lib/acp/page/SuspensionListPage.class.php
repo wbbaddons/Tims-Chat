@@ -149,7 +149,7 @@ class SuspensionListPage extends SortablePage
         if (isset($_POST['searchUsername'])) {
             $this->searchUsername = StringUtil::trim($_POST['searchUsername']);
 
-            if (!empty($this->searchUsername)) {
+            if ($this->searchUsername !== '') {
                 $this->userID = User::getUserByUsername($this->searchUsername)->userID;
             }
         } elseif ($this->userID !== null) {
@@ -159,7 +159,7 @@ class SuspensionListPage extends SortablePage
         if (isset($_POST['searchJudge'])) {
             $this->searchJudge = StringUtil::trim($_POST['searchJudge']);
 
-            if (!empty($this->searchJudge)) {
+            if ($this->searchJudge !== '') {
                 $this->judgeID = User::getUserByUsername($this->searchJudge)->userID;
             }
         } elseif ($this->judgeID !== null) {

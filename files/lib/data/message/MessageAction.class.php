@@ -333,7 +333,7 @@ class MessageAction extends AbstractDatabaseObjectAction
             return $message->hasEmbeddedObjects;
         }));
 
-        if (!empty($embeddedObjectMessageIDs)) {
+        if ($embeddedObjectMessageIDs !== []) {
             // load embedded objects
             MessageEmbeddedObjectManager::getInstance()->loadObjects('be.bastelstu.chat.message', $embeddedObjectMessageIDs);
         }

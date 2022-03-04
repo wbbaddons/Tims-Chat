@@ -41,7 +41,7 @@ final class HourlyCleanUpCronjobExecuteTemproomListener implements IParameterize
                 $toDelete[] = $room;
             }
         }
-        if (!empty($toDelete)) {
+        if ($toDelete !== []) {
             (new RoomAction(
                 $toDelete,
                 'delete'

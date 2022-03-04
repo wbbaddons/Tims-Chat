@@ -101,7 +101,7 @@ class CommandTriggerAddForm extends AbstractForm
     {
         parent::validate();
 
-        if (empty($this->commandTrigger)) {
+        if ($this->commandTrigger === '') {
             throw new UserInputException('commandTrigger', 'empty');
         }
 
@@ -119,7 +119,7 @@ class CommandTriggerAddForm extends AbstractForm
             throw new UserInputException('commandTrigger', 'duplicate');
         }
 
-        if (empty($this->className)) {
+        if ($this->className === '') {
             throw new UserInputException('className', 'empty');
         }
 

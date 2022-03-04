@@ -225,7 +225,7 @@ class RoomAddForm extends AbstractForm
             }
         }
 
-        if (!empty($data)) {
+        if ($data !== []) {
             (new RoomEditor($room))->update($data);
         }
     }

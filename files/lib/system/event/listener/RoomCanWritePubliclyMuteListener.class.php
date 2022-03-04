@@ -42,7 +42,7 @@ final class RoomCanWritePubliclyMuteListener implements IParameterizedEventListe
             $parameters['user']->getDecoratedObject(),
             $eventObj
         );
-        if (!empty($suspensions)) {
+        if ($suspensions !== []) {
             $parameters['result'] = new PermissionDeniedException(
                 WCF::getLanguage()->getDynamicVariable('chat.suspension.info.be.bastelstu.chat.suspension.mute')
             );

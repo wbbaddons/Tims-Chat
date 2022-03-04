@@ -88,7 +88,7 @@ class UserAction extends AbstractDatabaseObjectAction
     public function clearDeadSessions()
     {
         $sessions = User::getDeadSessions();
-        if (empty($sessions)) {
+        if ($sessions !== []) {
             return;
         }
         $userIDs = \array_map(static function ($item) {

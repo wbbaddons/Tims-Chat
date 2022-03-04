@@ -36,7 +36,7 @@ final class RoomListPageHandler extends AbstractMenuPageHandler
             return $room->canSee();
         }));
 
-        if (empty($users)) {
+        if ($users === []) {
             return 0;
         }
 
