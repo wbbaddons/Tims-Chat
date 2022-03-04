@@ -39,7 +39,7 @@ final class TeamMessageType implements IMessageType, IDeletableMessageType
     /**
      * @inheritDoc
      */
-    public function getJavaScriptModuleName()
+    public function getJavaScriptModuleName(): string
     {
         return 'Bastelstu.be/Chat/MessageType/Team';
     }
@@ -55,19 +55,19 @@ final class TeamMessageType implements IMessageType, IDeletableMessageType
     /**
      * @inheritDoc
      */
-    public function canDelete(Message $message, ?UserProfile $user = null)
+    public function canDelete(Message $message, ?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
         }
 
-        return $user->getPermission('mod.chat.canDelete');
+        return !!$user->getPermission('mod.chat.canDelete');
     }
 
     /**
      * @inheritDoc
      */
-    public function canSee(Message $message, Room $room, ?UserProfile $user = null)
+    public function canSee(Message $message, Room $room, ?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
@@ -77,7 +77,7 @@ final class TeamMessageType implements IMessageType, IDeletableMessageType
             'message' => $message,
             'room' => $room,
             'user' => $user,
-            'canSee' => $user->getPermission('mod.chat.canTeam'),
+            'canSee' => !!$user->getPermission('mod.chat.canTeam'),
         ];
         EventHandler::getInstance()->fireAction($this, 'canSee', $parameters);
 
@@ -87,7 +87,7 @@ final class TeamMessageType implements IMessageType, IDeletableMessageType
     /**
      * @inheritDoc
      */
-    public function canSeeInLog(Message $message, Room $room, ?UserProfile $user = null)
+    public function canSeeInLog(Message $message, Room $room, ?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
@@ -97,7 +97,7 @@ final class TeamMessageType implements IMessageType, IDeletableMessageType
             'message' => $message,
             'room' => $room,
             'user' => $user,
-            'canSee' => $user->getPermission('mod.chat.canTeam'),
+            'canSee' => !!$user->getPermission('mod.chat.canTeam'),
         ];
         EventHandler::getInstance()->fireAction($this, 'canSeeInLog', $parameters);
 
@@ -107,7 +107,7 @@ final class TeamMessageType implements IMessageType, IDeletableMessageType
     /**
      * @inheritDoc
      */
-    public function supportsFastSelect()
+    public function supportsFastSelect(): bool
     {
         return false;
     }

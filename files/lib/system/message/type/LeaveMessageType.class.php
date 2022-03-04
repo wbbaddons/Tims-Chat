@@ -26,7 +26,7 @@ final class LeaveMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function getJavaScriptModuleName()
+    public function getJavaScriptModuleName(): string
     {
         return 'Bastelstu.be/Chat/MessageType/Leave';
     }

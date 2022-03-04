@@ -31,7 +31,7 @@ final class WhereMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function getJavaScriptModuleName()
+    public function getJavaScriptModuleName(): string
     {
         return 'Bastelstu.be/Chat/MessageType/Where';
     }

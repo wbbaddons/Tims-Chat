@@ -26,7 +26,7 @@ final class TemproomCreatedMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function getJavaScriptModuleName()
+    public function getJavaScriptModuleName(): string
     {
         return 'Bastelstu.be/Chat/MessageType/TemproomCreated';
     }

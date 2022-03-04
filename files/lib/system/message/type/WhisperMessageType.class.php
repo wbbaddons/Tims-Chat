@@ -41,7 +41,7 @@ final class WhisperMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function getJavaScriptModuleName()
+    public function getJavaScriptModuleName(): string
     {
         return 'Bastelstu.be/Chat/MessageType/Whisper';
     }
@@ -91,7 +91,7 @@ final class WhisperMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function canSee(Message $message, Room $room, ?UserProfile $user = null)
+    public function canSee(Message $message, Room $room, ?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
@@ -111,7 +111,7 @@ final class WhisperMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function canSeeInLog(Message $message, Room $room, ?UserProfile $user = null)
+    public function canSeeInLog(Message $message, Room $room, ?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
@@ -131,7 +131,7 @@ final class WhisperMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function supportsFastSelect()
+    public function supportsFastSelect(): bool
     {
         $parameters = [
             'result' => false,

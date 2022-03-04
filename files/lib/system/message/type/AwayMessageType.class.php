@@ -31,7 +31,7 @@ final class AwayMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function getJavaScriptModuleName()
+    public function getJavaScriptModuleName(): string
     {
         return 'Bastelstu.be/Chat/MessageType/Away';
     }
@@ -39,7 +39,7 @@ final class AwayMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function canSee(Message $message, Room $room, ?UserProfile $user = null)
+    public function canSee(Message $message, Room $room, ?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
@@ -63,7 +63,7 @@ final class AwayMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function canSeeInLog(Message $message, Room $room, ?UserProfile $user = null)
+    public function canSeeInLog(Message $message, Room $room, ?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
@@ -87,7 +87,7 @@ final class AwayMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function supportsFastSelect()
+    public function supportsFastSelect(): bool
     {
         return false;
     }

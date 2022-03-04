@@ -29,7 +29,7 @@ final class ChatUpdateMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function getJavaScriptModuleName()
+    public function getJavaScriptModuleName(): string
     {
         return 'Bastelstu.be/Chat/MessageType/ChatUpdate';
     }
@@ -37,7 +37,7 @@ final class ChatUpdateMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function canSee(Message $message, Room $room, ?UserProfile $user = null)
+    public function canSee(Message $message, Room $room, ?UserProfile $user = null): bool
     {
         return true;
     }
@@ -45,7 +45,7 @@ final class ChatUpdateMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function canSeeInLog(Message $message, Room $room, ?UserProfile $user = null)
+    public function canSeeInLog(Message $message, Room $room, ?UserProfile $user = null): bool
     {
         return true;
     }
@@ -53,7 +53,7 @@ final class ChatUpdateMessageType implements IMessageType
     /**
      * @inheritDoc
      */
-    public function supportsFastSelect()
+    public function supportsFastSelect(): bool
     {
         return false;
     }

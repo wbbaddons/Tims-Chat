@@ -30,7 +30,7 @@ trait TCanSeeCreator
     /**
      * @see \chat\system\message\type\IMessageType::canSee()
      */
-    public function canSee(Message $message, Room $room, ?UserProfile $user = null)
+    public function canSee(Message $message, Room $room, ?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
@@ -50,7 +50,7 @@ trait TCanSeeCreator
     /**
      * @see \chat\system\message\type\IMessageType::canSeeInLog()
      */
-    public function canSeeInLog(Message $message, Room $room, ?UserProfile $user = null)
+    public function canSeeInLog(Message $message, Room $room, ?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
@@ -70,7 +70,7 @@ trait TCanSeeCreator
     /**
      * @see \chat\system\message\type\IMessageType::supportsFastSelect()
      */
-    public function supportsFastSelect()
+    public function supportsFastSelect(): bool
     {
         $parameters = [
             'result' => true,

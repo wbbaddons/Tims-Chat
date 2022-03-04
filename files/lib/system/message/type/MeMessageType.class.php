@@ -30,7 +30,7 @@ final class MeMessageType implements IMessageType, IDeletableMessageType
     /**
      * @inheritDoc
      */
-    public function getJavaScriptModuleName()
+    public function getJavaScriptModuleName(): string
     {
         return 'Bastelstu.be/Chat/MessageType/Me';
     }
@@ -38,12 +38,12 @@ final class MeMessageType implements IMessageType, IDeletableMessageType
     /**
      * @inheritDoc
      */
-    public function canDelete(Message $message, ?UserProfile $user = null)
+    public function canDelete(Message $message, ?UserProfile $user = null): bool
     {
         if ($user === null) {
             $user = new UserProfile(WCF::getUser());
         }
 
-        return $user->getPermission('mod.chat.canDelete');
+        return !!$user->getPermission('mod.chat.canDelete');
     }
 }
