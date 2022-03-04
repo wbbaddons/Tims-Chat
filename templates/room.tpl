@@ -100,7 +100,7 @@
 		const config = {@$config}
 
 		let extraModules = [
-			{if $extraModules|isset}{$extraModules}{/if}
+			{if $extraModules|isset}{@$extraModules}{/if}
 		]
 		extraModules = extraModules.concat(Object.values(config.commands).map(item => item.module))
 		extraModules = extraModules.concat(Object.values(config.messageTypes).map(item => item.module))
