@@ -19,6 +19,12 @@ use wcf\data\DatabaseObjectList;
 
 /**
  * Represents a list command triggers.
+ *
+ * @method  CommandTrigger        current()
+ * @method  CommandTrigger[]      getObjects()
+ * @method  CommandTrigger|null   getSingleObject()
+ * @method  CommandTrigger|null   search($objectID)
+ * @property    CommandTrigger[] $objects
  */
 class CommandTriggerList extends DatabaseObjectList
 {

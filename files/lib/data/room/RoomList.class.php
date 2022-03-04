@@ -19,6 +19,12 @@ use wcf\data\DatabaseObjectList;
 
 /**
  * Represents a list of chat rooms.
+ *
+ * @method  Room        current()
+ * @method  Room[]      getObjects()
+ * @method  Room|null   getSingleObject()
+ * @method  Room|null   search($objectID)
+ * @property    Room[] $objects
  */
 class RoomList extends DatabaseObjectList
 {

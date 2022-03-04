@@ -19,6 +19,12 @@ use wcf\data\DatabaseObjectList;
 
 /**
  * Represents a list of chat commands.
+ *
+ * @method  Command        current()
+ * @method  Command[]      getObjects()
+ * @method  Command|null   getSingleObject()
+ * @method  Command|null   search($objectID)
+ * @property    Command[] $objects
  */
 class CommandList extends DatabaseObjectList
 {

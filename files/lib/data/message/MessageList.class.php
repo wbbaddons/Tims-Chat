@@ -19,6 +19,12 @@ use wcf\data\DatabaseObjectList;
 
 /**
  * Represents a list of chat messages.
+ *
+ * @method  Message        current()
+ * @method  Message[]      getObjects()
+ * @method  Message|null   getSingleObject()
+ * @method  Message|null   search($objectID)
+ * @property    Message[] $objects
  */
 class MessageList extends DatabaseObjectList
 {

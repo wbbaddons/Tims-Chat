@@ -19,6 +19,12 @@ use wcf\data\DatabaseObjectList;
 
 /**
  * Represents a list of chat suspensions.
+ *
+ * @method  Suspension        current()
+ * @method  Suspension[]      getObjects()
+ * @method  Suspension|null   getSingleObject()
+ * @method  Suspension|null   search($objectID)
+ * @property    Suspension[] $objects
  */
 class SuspensionList extends DatabaseObjectList
 {
