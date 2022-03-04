@@ -52,7 +52,7 @@ final class Room extends DatabaseObject implements
     /**
      * @see Room::getTitle()
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTitle();
     }
@@ -226,7 +226,7 @@ final class Room extends DatabaseObject implements
     /**
      * @inheritDoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return WCF::getLanguage()->get($this->title);
     }
@@ -234,7 +234,7 @@ final class Room extends DatabaseObject implements
     /**
      * @inheritDoc
      */
-    public function getTopic()
+    public function getTopic(): string
     {
         $topic = StringUtil::trim(WCF::getLanguage()->get($this->topic));
 
@@ -247,6 +247,8 @@ final class Room extends DatabaseObject implements
 
     /**
      * Returns an array of users in this room.
+     *
+     * @return \chat\data\user\User[]
      */
     public function getUsers()
     {
@@ -277,7 +279,7 @@ final class Room extends DatabaseObject implements
     /**
      * @inheritDoc
      */
-    public function getLink()
+    public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink(
             'Room',
