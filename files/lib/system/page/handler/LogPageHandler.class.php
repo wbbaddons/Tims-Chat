@@ -27,7 +27,7 @@ use wcf\system\WCF;
 /**
  * Allows to choose a room in the menu item management.
  */
-class LogPageHandler extends AbstractLookupPageHandler implements IOnlineLocationPageHandler
+final class LogPageHandler extends AbstractLookupPageHandler implements IOnlineLocationPageHandler
 {
     use TRoomPageHandler;
     use TOnlineLocationPageHandler;

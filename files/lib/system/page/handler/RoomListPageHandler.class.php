@@ -22,7 +22,7 @@ use wcf\system\page\handler\AbstractMenuPageHandler;
 /**
  * Shows the number of chatters in the RoomList menu item.
  */
-class RoomListPageHandler extends AbstractMenuPageHandler
+final class RoomListPageHandler extends AbstractMenuPageHandler
 {
     /**
      * @inheritDoc
