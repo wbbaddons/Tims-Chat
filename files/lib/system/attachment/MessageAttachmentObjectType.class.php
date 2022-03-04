@@ -30,7 +30,7 @@ final class MessageAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canDownload($objectID)
+    public function canDownload($objectID): bool
     {
         if ($objectID) {
             $message = new Message($objectID);
@@ -47,7 +47,7 @@ final class MessageAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canUpload($objectID, $parentObjectID = 0)
+    public function canUpload($objectID, $parentObjectID = 0): bool
     {
         if ($objectID) {
             return false;
@@ -72,7 +72,7 @@ final class MessageAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function canDelete($objectID)
+    public function canDelete($objectID): bool
     {
         return false;
     }
@@ -80,7 +80,7 @@ final class MessageAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function getMaxCount()
+    public function getMaxCount(): int
     {
         return 1;
     }
@@ -88,9 +88,9 @@ final class MessageAttachmentObjectType extends AbstractAttachmentObjectType
     /**
      * @inheritDoc
      */
-    public function getMaxSize()
+    public function getMaxSize(): int
     {
-        return WCF::getSession()->getPermission('user.chat.attachment.maxSize');
+        return (int)WCF::getSession()->getPermission('user.chat.attachment.maxSize');
     }
 
     /**
