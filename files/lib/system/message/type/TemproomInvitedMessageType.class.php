@@ -106,11 +106,6 @@ final class TemproomInvitedMessageType implements IMessageType
      */
     public function supportsFastSelect(): bool
     {
-        $parameters = [
-            'result' => false,
-        ];
-        EventHandler::getInstance()->fireAction($this, 'supportsFastSelect', $parameters);
-
-        return $parameters['result'];
+        return false;
     }
 }
