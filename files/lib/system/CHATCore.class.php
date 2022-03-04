@@ -20,7 +20,7 @@ use wcf\system\application\AbstractApplication;
 use wcf\system\request\route\StaticRequestRoute;
 use wcf\system\request\RouteHandler;
 
-class CHATCore extends AbstractApplication
+final class CHATCore extends AbstractApplication
 {
     /**
      * @inheritDoc
