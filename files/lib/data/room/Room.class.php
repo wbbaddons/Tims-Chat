@@ -110,7 +110,7 @@ final class Room extends DatabaseObject implements
         EventHandler::getInstance()->fireAction($this, 'canSee', $parameters);
         $reason = $parameters['result'];
 
-        if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
+        if (!($reason === null || $reason instanceof \Throwable)) {
             throw new \DomainException('Result of canSee must be a \Throwable or null.');
         }
 
@@ -147,7 +147,7 @@ final class Room extends DatabaseObject implements
         EventHandler::getInstance()->fireAction($this, 'canSeeLog', $parameters);
         $reason = $parameters['result'];
 
-        if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
+        if (!($reason === null || $reason instanceof \Throwable)) {
             throw new \DomainException('Result of canSeeLog must be a \Throwable or null.');
         }
 
@@ -179,7 +179,7 @@ final class Room extends DatabaseObject implements
         EventHandler::getInstance()->fireAction($this, 'canJoin', $parameters);
         $reason = $parameters['result'];
 
-        if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
+        if (!($reason === null || $reason instanceof \Throwable)) {
             throw new \DomainException('Result of canJoin must be a \Throwable or null.');
         }
 
@@ -216,7 +216,7 @@ final class Room extends DatabaseObject implements
         EventHandler::getInstance()->fireAction($this, 'canWritePublicly', $parameters);
         $reason = $parameters['result'];
 
-        if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
+        if (!($reason === null || $reason instanceof \Throwable)) {
             throw new \DomainException('Result of canWritePublicly must be a \Throwable or null.');
         }
 
