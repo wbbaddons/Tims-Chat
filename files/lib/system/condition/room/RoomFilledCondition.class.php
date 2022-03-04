@@ -45,6 +45,15 @@ final class RoomFilledCondition extends AbstractCheckboxCondition implements IOb
             throw new ParentClassException(\get_class($objectList), RoomList::class);
         }
 
-        $objectList->getConditionBuilder()->add("EXISTS (SELECT 1 FROM chat" . WCF_N . "_room_to_user r2u WHERE r2u.roomID = room.roomID AND active = ?)", [ 1 ]);
+        $objectList->getConditionBuilder()->add(
+            "
+            EXISTS (
+                SELECT  1
+                FROM    chat" . WCF_N . "_room_to_user r2u
+                WHERE   r2u.roomID = room.roomID
+                    AND active = ?
+            )",
+            [ 1 ]
+        );
     }
 }
