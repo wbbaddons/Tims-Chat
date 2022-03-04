@@ -35,7 +35,7 @@ class Command extends ProcessibleDatabaseObject
      *
      * The default PlainCommand implicitely has one.
      */
-    public function hasTriggers()
+    public function hasTriggers(): bool
     {
         static $chatPackageID = null;
 
