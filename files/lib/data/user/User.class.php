@@ -75,10 +75,8 @@ class User extends DatabaseObjectDecorator implements \JsonSerializable
 
     /**
      * Returns whether the user is in the given room.
-     *
-     * @return  boolean
      */
-    public function isInRoom(Room $room, $skipCache = false)
+    public function isInRoom(Room $room, $skipCache = false): bool
     {
         $assoc = $this->getRoomAssociations($skipCache);
 
