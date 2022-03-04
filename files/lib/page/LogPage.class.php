@@ -155,11 +155,10 @@ class LogPage extends AbstractPage
                 foreach ($objects as $message) {
                     if ($message->getMessageType()->getProcessor()->canSeeInLog($message, $this->room)) {
                         $parameters = [
-                            'application' => 'chat',
                             'messageid' => $message->messageID,
                             'object' => $this->room,
                         ];
-                        HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Log', $parameters));
+                        HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(self::class, $parameters));
 
                         exit;
                     }
@@ -173,7 +172,7 @@ class LogPage extends AbstractPage
                 'messageid' => $minimum,
                 'object' => $this->room,
             ];
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Log', $parameters));
+            HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(self::class, $parameters));
 
             exit;
         }

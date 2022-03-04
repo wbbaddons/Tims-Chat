@@ -15,6 +15,7 @@
 
 namespace chat\data\room;
 
+use chat\page\RoomPage;
 use chat\system\cache\runtime\UserRuntimeCache as ChatUserRuntimeCache;
 use chat\system\permission\PermissionHandler;
 use wcf\data\DatabaseObject;
@@ -281,10 +282,9 @@ final class Room extends DatabaseObject implements
      */
     public function getLink(): string
     {
-        return LinkHandler::getInstance()->getLink(
-            'Room',
+        return LinkHandler::getInstance()->getControllerLink(
+            RoomPage::class,
             [
-                'application' => 'chat',
                 'object' => $this,
                 'forceFrontend' => true,
             ]

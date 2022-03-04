@@ -17,6 +17,7 @@ namespace chat\system\box;
 
 use chat\data\room\Room;
 use chat\data\room\RoomList;
+use chat\page\RoomListPage;
 use chat\page\RoomPage;
 use wcf\system\box\AbstractDatabaseObjectListBoxController;
 use wcf\system\request\LinkHandler;
@@ -92,9 +93,7 @@ class RoomListBoxController extends AbstractDatabaseObjectListBoxController
      */
     public function getLink()
     {
-        return LinkHandler::getInstance()->getLink('RoomList', [
-            'application' => 'chat',
-        ]);
+        return LinkHandler::getInstance()->getControllerLink(RoomListPage::class);
     }
 
     /**

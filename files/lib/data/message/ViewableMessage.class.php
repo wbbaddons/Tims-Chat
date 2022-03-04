@@ -16,6 +16,7 @@
 namespace chat\data\message;
 
 use chat\data\room\Room;
+use chat\page\LogPage;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -41,10 +42,9 @@ class ViewableMessage extends DatabaseObjectDecorator implements \JsonSerializab
      */
     public function jsonSerialize()
     {
-        $link = LinkHandler::getInstance()->getLink(
-            'Log',
+        $link = LinkHandler::getInstance()->getControllerLink(
+            LogPage::class,
             [
-                'application' => 'chat',
                 'messageid' => $this->messageID,
                 'object' => $this->room,
             ]

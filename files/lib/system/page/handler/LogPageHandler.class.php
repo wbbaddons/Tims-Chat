@@ -16,6 +16,7 @@
 namespace chat\system\page\handler;
 
 use chat\data\room\RoomCache;
+use chat\page\LogPage;
 use wcf\data\page\Page;
 use wcf\data\user\online\UserOnline;
 use wcf\system\page\handler\AbstractLookupPageHandler;
@@ -42,10 +43,9 @@ final class LogPageHandler extends AbstractLookupPageHandler implements IOnlineL
             throw new \InvalidArgumentException('Invalid room ID given');
         }
 
-        return LinkHandler::getInstance()->getLink(
-            'Log',
+        return LinkHandler::getInstance()->getControllerLink(
+            LogPage::class,
             [
-                'application' => 'chat',
                 'object' => $room,
             ]
         );
