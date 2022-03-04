@@ -1,0 +1,3 @@
+*.php diff=php
+*.css diff=css
+*.scss diff=css
