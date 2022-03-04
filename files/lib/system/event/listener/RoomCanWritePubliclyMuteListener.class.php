@@ -35,9 +35,7 @@ class RoomCanWritePubliclyMuteListener implements IParameterizedEventListener
             'be.bastelstu.chat.suspension',
             'be.bastelstu.chat.suspension.mute'
         );
-        if (!$objectTypeID) {
-            throw new \LogicException('Unreachable');
-        }
+        \assert($objectTypeID !== null);
 
         $suspensions = Suspension::getActiveSuspensionsByTriple(
             $objectTypeID,

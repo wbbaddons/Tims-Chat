@@ -291,9 +291,7 @@ class RoomAction extends AbstractDatabaseObjectAction implements ISortableAction
                             AND userID = ?";
                 $statement = WCF::getDB()->prepare($sql);
                 $statement->execute([ 0, $room->roomID, $user->userID ]);
-                if ($statement->getAffectedRows() === 0) {
-                    throw new \LogicException('Unreachable');
-                }
+                \assert($statement->getAffectedRows() > 0);
 
                 WCF::getDB()->commitTransaction();
                 $commited = true;

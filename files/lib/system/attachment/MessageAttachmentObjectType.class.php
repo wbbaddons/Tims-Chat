@@ -35,9 +35,7 @@ class MessageAttachmentObjectType extends AbstractAttachmentObjectType
         if ($objectID) {
             $message = new Message($objectID);
 
-            if ($message->getMessageType()->objectType !== 'be.bastelstu.chat.messageType.attachment') {
-                throw new \LogicException('Unreachable');
-            }
+            \assert($message->getMessageType()->objectType === 'be.bastelstu.chat.messageType.attachment');
             $room = $message->getRoom();
 
             return $room->canSee();

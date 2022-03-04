@@ -35,9 +35,7 @@ class RoomCanJoinBanListener implements IParameterizedEventListener
             'be.bastelstu.chat.suspension',
             'be.bastelstu.chat.suspension.ban'
         );
-        if (!$objectTypeID) {
-            throw new \LogicException('Unreachable');
-        }
+        \assert($objectTypeID !== null);
 
         $suspensions = Suspension::getActiveSuspensionsByTriple(
             $objectTypeID,
