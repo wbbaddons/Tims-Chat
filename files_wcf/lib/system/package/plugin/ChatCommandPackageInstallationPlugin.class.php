@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -46,7 +46,7 @@ class ChatCommandPackageInstallationPlugin extends AbstractXMLPackageInstallatio
 		$sql = "DELETE FROM ".$this->application.WCF_N."_".$this->tableName."
 		        WHERE           packageID = ?
 		                    AND identifier = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement = WCF::getDB()->prepare($sql);
 
 		WCF::getDB()->beginTransaction();
 		foreach ($items as $item) {
@@ -134,7 +134,7 @@ class ChatCommandPackageInstallationPlugin extends AbstractXMLPackageInstallatio
 			// import initial triggers
 			$sql = "INSERT INTO ".$this->application.WCF_N."_command_trigger (commandTrigger, commandID)
 			        VALUES      (?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement = WCF::getDB()->prepare($sql);
 
 			try {
 				WCF::getDB()->beginTransaction();

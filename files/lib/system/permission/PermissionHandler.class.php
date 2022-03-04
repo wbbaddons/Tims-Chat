@@ -69,11 +69,11 @@ class PermissionHandler {
 				$sql = "SELECT     option_to_user.objectID AS roomID,
 				                   option_to_user.optionValue,
 				                   acl_option.optionName AS permission
-				        FROM       wcf".WCF_N."_acl_option acl_option
-				        INNER JOIN wcf".WCF_N."_acl_option_to_user option_to_user
+				        FROM       wcf1_acl_option acl_option
+				        INNER JOIN wcf1_acl_option_to_user option_to_user
 				                   ON option_to_user.optionID = acl_option.optionID
 				        ".$conditionBuilder;
-				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement = WCF::getDB()->prepare($sql);
 				$statement->execute($conditionBuilder->getParameters());
 				while (($row = $statement->fetchArray())) {
 					$userPermissions[$row['roomID']][$row['permission']] = $row['optionValue'];

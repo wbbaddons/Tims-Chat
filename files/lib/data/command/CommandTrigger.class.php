@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -42,9 +42,9 @@ class CommandTrigger extends \wcf\data\DatabaseObject implements \wcf\system\req
 	 */
 	public static function getTriggerByName($name) {
 		$sql = "SELECT	*
-			FROM	chat".WCF_N."_command_trigger
+			FROM	chat1_command_trigger
 			WHERE	commandTrigger = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement = WCF::getDB()->prepare($sql);
 		$statement->execute([ $name ]);
 		$row = $statement->fetchArray();
 		if (!$row) $row = [];

@@ -40,11 +40,11 @@ class PermissionCacheBuilder extends \wcf\system\cache\builder\AbstractCacheBuil
 			$sql = "SELECT     option_to_group.objectID AS roomID,
 				           option_to_group.optionValue,
 				           acl_option.optionName AS permission
-				FROM       wcf".WCF_N."_acl_option acl_option
-				INNER JOIN wcf".WCF_N."_acl_option_to_group option_to_group
+				FROM       wcf1_acl_option acl_option
+				INNER JOIN wcf1_acl_option_to_group option_to_group
 				        ON option_to_group.optionID = acl_option.optionID
 				".$conditionBuilder;
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement = WCF::getDB()->prepare($sql);
 			$statement->execute($conditionBuilder->getParameters());
 			while (($row = $statement->fetchArray())) {
 				if (!isset($data[$row['roomID']][$row['permission']])) {

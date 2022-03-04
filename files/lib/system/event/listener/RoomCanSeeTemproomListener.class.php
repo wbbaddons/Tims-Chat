@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 3
@@ -32,10 +32,10 @@ class RoomCanSeeTemproomListener implements \wcf\system\event\listener\IParamete
 		if ($eventObj->ownerID === $user->userID) return;
 
 		$sql = "SELECT COUNT(*)
-		        FROM   chat".WCF_N."_room_temporary_invite
+		        FROM   chat1_room_temporary_invite
 		        WHERE      userID = ?
 		               AND roomID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement = WCF::getDB()->prepare($sql);
 		$statement->execute([ $user->userID, $eventObj->roomID ]);
 		if ($statement->fetchSingleColumn() > 0) return;
 

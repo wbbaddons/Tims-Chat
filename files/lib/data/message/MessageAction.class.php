@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -34,8 +34,8 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		$message = parent::create();
 
 		if (isset($this->parameters['updateTimestamp']) && $this->parameters['updateTimestamp']) {
-			$sql = "UPDATE chat".WCF_N."_room_to_user SET lastPush = ? WHERE roomID = ? AND userID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$sql = "UPDATE chat1_room_to_user SET lastPush = ? WHERE roomID = ? AND userID = ?";
+			$statement = WCF::getDB()->prepare($sql);
 			$statement->execute([ TIME_NOW, $message->roomID, $message->userID ]);
 		}
 		if (isset($this->parameters['grantPoints']) && $this->parameters['grantPoints']) {
@@ -128,9 +128,9 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		if (!CHAT_LOG_ARCHIVETIME) return;
 
 		$sql = "SELECT messageID
-		        FROM   chat".WCF_N."_message
+		        FROM   chat1_message
 		        WHERE  time < ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement = WCF::getDB()->prepare($sql);
 		$statement->execute([ TIME_NOW - CHAT_LOG_ARCHIVETIME * 86400 ]);
 		$messageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -179,22 +179,22 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 
 			WCF::getDB()->beginTransaction();
 			// update timestamp
-			$sql = "UPDATE chat".WCF_N."_room_to_user
+			$sql = "UPDATE chat1_room_to_user
 			        SET    lastPull = ?
 			        WHERE      roomID = ?
 			               AND userID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement = WCF::getDB()->prepare($sql);
 			$statement->execute([ TIME_NOW
 			                    , $room->roomID
 			                    , WCF::getUser()->userID
 			                    ]);
 
-			$sql = "UPDATE chat".WCF_N."_session
+			$sql = "UPDATE chat1_session
 			        SET    lastRequest = ?
 			        WHERE      roomID = ?
 			               AND userID = ?
 			               AND sessionID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement = WCF::getDB()->prepare($sql);
 			$statement->execute([ TIME_NOW
 			                    , $room->roomID
 			                    , WCF::getUser()->userID
@@ -226,10 +226,10 @@ class MessageAction extends \wcf\data\AbstractDatabaseObjectAction {
 		}
 
 		$sql = "SELECT   messageID
-		        FROM     chat".WCF_N."_message
+		        FROM     chat1_message
 		        ".$condition."
 		        ORDER BY messageID ".$sortOrder;
-		$statement = WCF::getDB()->prepareStatement($sql, 20);
+		$statement = WCF::getDB()->prepare($sql, 20);
 		$statement->execute($condition->getParameters());
 		$messageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 

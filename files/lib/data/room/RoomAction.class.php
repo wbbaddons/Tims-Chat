@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -73,8 +73,8 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 
 		try {
 			// Create room_to_user mapping.
-			$sql = "INSERT INTO chat".WCF_N."_room_to_user (active, roomID, userID) VALUES (?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$sql = "INSERT INTO chat1_room_to_user (active, roomID, userID) VALUES (?, ?, ?)";
+			$statement = WCF::getDB()->prepare($sql);
 			$statement->execute([ 0, $room->roomID, $user->userID ]);
 		}
 		catch (\wcf\system\database\exception\DatabaseException $e) {
@@ -83,8 +83,8 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		}
 
 		try {
-			$sql = "INSERT INTO chat".WCF_N."_session (roomID, userID, sessionID, lastRequest) VALUES (?, ?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$sql = "INSERT INTO chat1_session (roomID, userID, sessionID, lastRequest) VALUES (?, ?, ?, ?)";
+			$statement = WCF::getDB()->prepare($sql);
 			$statement->execute([ $room->roomID, $user->userID, $sessionID, TIME_NOW ]);
 		}
 		catch (\wcf\system\database\exception\DatabaseException $e) {
@@ -106,8 +106,8 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		}
 
 		// Attempt to mark the user as active in the room.
-		$sql = "UPDATE chat".WCF_N."_room_to_user SET active = ? WHERE roomID = ? AND userID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$sql = "UPDATE chat1_room_to_user SET active = ? WHERE roomID = ? AND userID = ?";
+		$statement = WCF::getDB()->prepare($sql);
 		$statement->execute([ 1, $room->roomID, $user->userID ]);
 		if ($statement->getAffectedRows() === 0) {
 			// The User already is inside the room: Nothing to do here.
@@ -115,8 +115,8 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 		}
 
 		// Update lastPull. This must not be merged into the above query, because of the 'getAffectedRows' check.
-		$sql = "UPDATE chat".WCF_N."_room_to_user SET lastPull = ? WHERE roomID = ? AND userID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$sql = "UPDATE chat1_room_to_user SET lastPull = ? WHERE roomID = ? AND userID = ?";
+		$statement = WCF::getDB()->prepare($sql);
 		$statement->execute([ TIME_NOW, $room->roomID, $user->userID ]);
 
 		(new MessageAction([ ], 'create', [ 'data' => [ 'roomID'       => $room->roomID
@@ -179,9 +179,9 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 			if ($sessionID !== null) {
 				$condition->add('sessionID = ?', [ $sessionID ]);
 			}
-			$sql = "DELETE FROM chat".WCF_N."_session
+			$sql = "DELETE FROM chat1_session
 			       ".$condition;
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement = WCF::getDB()->prepare($sql);
 			$statement->execute($condition->getParameters());
 			if ($statement->getAffectedRows() === 0) {
 				throw new UserInputException('sessionID');
@@ -193,18 +193,18 @@ class RoomAction extends \wcf\data\AbstractDatabaseObjectAction implements \wcf\
 
 				// Check whether we deleted the last session.
 				$sql = "SELECT COUNT(*)
-				        FROM   chat".WCF_N."_session
+				        FROM   chat1_session
 				        WHERE      roomID = ?
 				               AND userID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement = WCF::getDB()->prepare($sql);
 				$statement->execute([ $room->roomID, $user->userID ]);
 
 				// We did not: Nothing to do here.
 				if ($statement->fetchColumn()) return;
 
 				// Mark the user as inactive.
-				$sql = "UPDATE chat".WCF_N."_room_to_user SET active = ? WHERE roomID = ? AND userID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
+				$sql = "UPDATE chat1_room_to_user SET active = ? WHERE roomID = ? AND userID = ?";
+				$statement = WCF::getDB()->prepare($sql);
 				$statement->execute([ 0, $room->roomID, $user->userID ]);
 				if ($statement->getAffectedRows() === 0) throw new \LogicException('Unreachable');
 

@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -75,8 +75,8 @@ class RoomPage extends \wcf\page\AbstractPage {
 
 		$package = \wcf\data\package\PackageCache::getInstance()->getPackageByIdentifier('be.bastelstu.chat');
 		if (stripos($package->packageVersion, 'Alpha') !== false) {
-			$sql = "SELECT COUNT(*) FROM wcf".WCF_N."_user";
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$sql = "SELECT COUNT(*) FROM wcf1_user";
+			$statement = WCF::getDB()->prepare($sql);
 			$statement->execute();
 			$userCount = $statement->fetchSingleColumn();
 			if ((($userCount > 5 && !OFFLINE) || ($userCount > 30 && OFFLINE)) && sha1(WCF_UUID) !== '643a6b3af2a6ea3d393c4d8371e75d7d1b66e0d0') {
@@ -90,7 +90,7 @@ class RoomPage extends \wcf\page\AbstractPage {
 	 */
 	public function readData() {
 		$sql = "SELECT 1";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement = WCF::getDB()->prepare($sql);
 		$statement->execute();
 		if ($statement->fetchSingleColumn() !== 1) {
 			throw new NamedUserException('PHP must be configured to use the MySQLnd driver, instead of libmysqlclient.');

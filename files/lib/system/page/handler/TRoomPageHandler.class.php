@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -37,17 +37,17 @@ trait TRoomPageHandler {
 	 */
 	public function lookup($searchString) {
 		$sql = "(SELECT ('chat.room.room' || roomID || '.title') AS languageItem
-		         FROM   chat".WCF_N."_room
+		         FROM   chat1_room
 		         WHERE  title LIKE ?
 		        )
 		        UNION
 		        (SELECT languageItem
-		         FROM   wcf".WCF_N."_language_item
+		         FROM   wcf1_language_item
 		         WHERE      languageItemValue LIKE ?
 		                AND languageItem LIKE ?
 		                AND languageID = ?
 		        )";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement = WCF::getDB()->prepare($sql);
 		$statement->execute([ '%'.$searchString.'%'
 		                    , '%'.$searchString.'%'
 		                    , 'chat.room.room%.title'

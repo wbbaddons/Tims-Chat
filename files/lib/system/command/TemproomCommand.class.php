@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -96,10 +96,10 @@ class TemproomCommand extends AbstractCommand implements ICommand {
 				$recipient = $this->getUser($this->assertParameter($parameters, 'username'));
 				WCF::getDB()->beginTransaction();
 				try {
-					$sql = "INSERT INTO chat".WCF_N."_room_temporary_invite
+					$sql = "INSERT INTO chat1_room_temporary_invite
 					               (userID, roomID)
 					        VALUES (?, ?)";
-					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement = WCF::getDB()->prepare($sql);
 					$statement->execute([ $recipient->userID, $room->roomID ]);
 				}
 				catch (\wcf\system\database\DatabaseException $e) {

@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -41,8 +41,8 @@ class CommandCacheBuilder extends \wcf\system\cache\builder\AbstractCacheBuilder
 		}
 
 		$sql = "SELECT *
-		        FROM   chat".WCF_N."_command_trigger";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		        FROM   chat1_command_trigger";
+		$statement = WCF::getDB()->prepare($sql);
 		$statement->execute();
 
 		$data['triggers'] = $statement->fetchMap('commandTrigger', 'commandID');

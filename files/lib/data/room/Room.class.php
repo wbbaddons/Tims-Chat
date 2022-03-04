@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -212,12 +212,12 @@ final class Room extends \wcf\data\DatabaseObject implements \wcf\system\request
 	public function getUsers() {
 		if (self::$userToRoom === null) {
 			$sql = "SELECT     r2u.userID, r2u.roomID
-			        FROM       chat".WCF_N."_room_to_user r2u
-			        INNER JOIN wcf".WCF_N."_user u
+			        FROM       chat1_room_to_user r2u
+			        INNER JOIN wcf1_user u
 			                ON r2u.userID = u.userID
 			        WHERE      r2u.active = ?
 			        ORDER BY   u.username ASC";
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement = WCF::getDB()->prepare($sql);
 			$statement->execute([ 1 ]);
 			self::$userToRoom = $statement->fetchMap('roomID', 'userID', false);
 

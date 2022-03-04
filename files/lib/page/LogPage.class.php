@@ -5,7 +5,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -113,10 +113,10 @@ class LogPage extends \wcf\page\AbstractPage {
 				}
 
 				$sql = "SELECT   messageID
-					FROM     chat".WCF_N."_message
+					FROM     chat1_message
 					".$condition."
 					ORDER BY messageID ASC";
-				$statement = WCF::getDB()->prepareStatement($sql, 20);
+				$statement = WCF::getDB()->prepare($sql, 20);
 				$statement->execute($condition->getParameters());
 				$messageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
