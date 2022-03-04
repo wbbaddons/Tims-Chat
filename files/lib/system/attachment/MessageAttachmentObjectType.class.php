@@ -25,7 +25,7 @@ use wcf\util\ArrayUtil;
 /**
  * Attachment object type implementation for messages.
  */
-class MessageAttachmentObjectType extends AbstractAttachmentObjectType
+final class MessageAttachmentObjectType extends AbstractAttachmentObjectType
 {
     /**
      * @inheritDoc
