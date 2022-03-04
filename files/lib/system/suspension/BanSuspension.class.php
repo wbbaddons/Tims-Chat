@@ -27,7 +27,7 @@ final class BanSuspension implements ISuspension
     /**
      * @inheritDoc
      */
-    public function hasEffect(Suspension $suspension)
+    public function hasEffect(Suspension $suspension): bool
     {
         $user = new UserProfile($suspension->getUser());
         $room = $suspension->getRoom();
