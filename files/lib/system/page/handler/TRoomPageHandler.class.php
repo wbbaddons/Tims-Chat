@@ -27,7 +27,7 @@ trait TRoomPageHandler
     /**
      * @inheritDoc
      */
-    public function isValid($objectID)
+    public function isValid($objectID): bool
     {
         $room = RoomCache::getInstance()->getRoom($objectID);
 

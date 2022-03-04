@@ -34,7 +34,7 @@ final class RoomPageHandler extends AbstractLookupPageHandler implements IOnline
     /**
      * @inheritDoc
      */
-    public function getOutstandingItemCount($objectID = null)
+    public function getOutstandingItemCount($objectID = null): int
     {
         return \count(RoomCache::getInstance()->getRoom($objectID)->getUsers());
     }
@@ -42,7 +42,7 @@ final class RoomPageHandler extends AbstractLookupPageHandler implements IOnline
     /**
      * @inheritDoc
      */
-    public function getLink($objectID)
+    public function getLink($objectID): string
     {
         $room = RoomCache::getInstance()->getRoom($objectID);
         if ($room === null) {
@@ -55,7 +55,7 @@ final class RoomPageHandler extends AbstractLookupPageHandler implements IOnline
     /**
      * @inheritDoc
      */
-    public function isVisible($objectID = null)
+    public function isVisible($objectID = null): bool
     {
         if (!WCF::getUser()->userID) {
             return false;
@@ -76,7 +76,7 @@ final class RoomPageHandler extends AbstractLookupPageHandler implements IOnline
     /**
      * @inheritDoc
      */
-    public function getOnlineLocation(Page $page, UserOnline $user)
+    public function getOnlineLocation(Page $page, UserOnline $user): string
     {
         if ($user->pageObjectID === null) {
             return '';

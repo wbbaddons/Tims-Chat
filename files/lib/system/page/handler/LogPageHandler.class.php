@@ -35,7 +35,7 @@ final class LogPageHandler extends AbstractLookupPageHandler implements IOnlineL
     /**
      * @inheritDoc
      */
-    public function getLink($objectID)
+    public function getLink($objectID): string
     {
         $room = RoomCache::getInstance()->getRoom($objectID);
         if ($room === null) {
@@ -54,7 +54,7 @@ final class LogPageHandler extends AbstractLookupPageHandler implements IOnlineL
     /**
      * @inheritDoc
      */
-    public function isVisible($objectID = null)
+    public function isVisible($objectID = null): bool
     {
         if (!WCF::getUser()->userID) {
             return false;
@@ -74,7 +74,7 @@ final class LogPageHandler extends AbstractLookupPageHandler implements IOnlineL
     /**
      * @inheritDoc
      */
-    public function getOnlineLocation(Page $page, UserOnline $user)
+    public function getOnlineLocation(Page $page, UserOnline $user): string
     {
         if ($user->pageObjectID === null) {
             return '';

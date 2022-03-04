@@ -27,7 +27,7 @@ final class RoomListPageHandler extends AbstractMenuPageHandler
     /**
      * @inheritDoc
      */
-    public function getOutstandingItemCount($objectID = null)
+    public function getOutstandingItemCount($objectID = null): int
     {
         $rooms = RoomCache::getInstance()->getRooms();
         $users = \array_map(static function (Room $room) {
@@ -46,7 +46,7 @@ final class RoomListPageHandler extends AbstractMenuPageHandler
     /**
      * @inheritDoc
      */
-    public function isVisible($objectID = null)
+    public function isVisible($objectID = null): bool
     {
         return Room::canSeeAny();
     }
