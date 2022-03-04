@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/templatelistener.xsd">
 	<import>
-		<!-- admin -->
-		<templatelistener name="chatVersion">
-			<environment>admin</environment>
-			<templatename>index</templatename>
-			<eventname>softwareVersions</eventname>
-			<templatecode><![CDATA[{include file='__chatVersion' application='chat'}]]></templatecode>
-		</templatelistener>
-		<!-- /admin -->
-
 		<!-- user -->
 		<templatelistener name="chatCopyright">
 			<environment>user</environment>
@@ -17,7 +8,6 @@
 			<eventname>copyright</eventname>
 			<templatecode><![CDATA[{include file='__chatCopyright' application='chat'}]]></templatecode>
 		</templatelistener>
-
 		<templatelistener name="infoCommandSuspensions">
 			<environment>user</environment>
 			<templatename>messageTypes</templatename>
@@ -43,14 +33,12 @@
 			<eventname>icons</eventname>
 			<templatecode><![CDATA[{include file='userListModerator' application='chat'}]]></templatecode>
 		</templatelistener>
-
 		<templatelistener name="temproomCommandMessageTypes">
 			<environment>user</environment>
 			<templatename>messageTypes</templatename>
 			<eventname>messageTypes</eventname>
 			<templatecode><![CDATA[{include file='temproomCommandMessageTypes' application='chat'}]]></templatecode>
 		</templatelistener>
-
 		<templatelistener name="temproomCommandLanguage">
 			<environment>user</environment>
 			<templatename>messageTypes</templatename>
@@ -59,4 +47,11 @@
 		</templatelistener>
 		<!-- /user -->
 	</import>
+	<delete>
+		<templatelistener name="chatVersion">
+			<environment>admin</environment>
+			<templatename>index</templatename>
+			<eventname>softwareVersions</eventname>
+		</templatelistener>
+	</delete>
 </data>
