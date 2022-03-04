@@ -29,7 +29,7 @@ use wcf\util\StringUtil;
 /**
  * The color command allows a user to set a color for their username
  */
-class ColorCommand extends AbstractCommand implements ICommand
+final class ColorCommand extends AbstractCommand implements ICommand
 {
     /**
      * Regular expression matching RGB values in hexadecimal notation

@@ -26,7 +26,7 @@ use wcf\system\WCF;
  * The where command shows the distribution of users among
  * the different chat rooms.
  */
-class WhereCommand extends AbstractCommand implements ICommand
+final class WhereCommand extends AbstractCommand implements ICommand
 {
     /**
      * @inheritDoc

@@ -27,7 +27,7 @@ use wcf\system\WCF;
 /**
  * The info command shows information about a single user.
  */
-class InfoCommand extends AbstractCommand implements ICommand
+final class InfoCommand extends AbstractCommand implements ICommand
 {
     use TNeedsUser;
 

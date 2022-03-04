@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * The unmute command revokes a new be.bastelstu.chat.suspension.mute suspension.
  */
-class UnmuteCommand extends AbstractUnsuspensionCommand implements ICommand
+final class UnmuteCommand extends AbstractUnsuspensionCommand implements ICommand
 {
     /**
      * @inheritDoc

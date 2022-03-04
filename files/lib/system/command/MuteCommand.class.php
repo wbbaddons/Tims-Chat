@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * The mute command creates a new be.bastelstu.chat.suspension.mute suspension.
  */
-class MuteCommand extends AbstractSuspensionCommand implements ICommand
+final class MuteCommand extends AbstractSuspensionCommand implements ICommand
 {
     /**
      * @inheritDoc

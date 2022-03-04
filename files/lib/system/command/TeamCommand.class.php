@@ -26,7 +26,7 @@ use wcf\system\WCF;
 /**
  * TeamCommand sends a broadcast to all team members.
  */
-class TeamCommand extends AbstractInputProcessedCommand implements ICommand
+final class TeamCommand extends AbstractInputProcessedCommand implements ICommand
 {
     /**
      * @inheritDoc

@@ -26,7 +26,7 @@ use wcf\system\WCF;
 /**
  * The plain command creates a normal chat message
  */
-class PlainCommand extends AbstractInputProcessedCommand implements ICommand
+final class PlainCommand extends AbstractInputProcessedCommand implements ICommand
 {
     /**
      * @inheritDoc

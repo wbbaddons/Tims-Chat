@@ -25,7 +25,7 @@ use wcf\system\WCF;
 /**
  * The unban command revokes a new be.bastelstu.chat.suspension.ban suspension.
  */
-class UnbanCommand extends AbstractUnsuspensionCommand implements ICommand
+final class UnbanCommand extends AbstractUnsuspensionCommand implements ICommand
 {
     /**
      * @inheritDoc

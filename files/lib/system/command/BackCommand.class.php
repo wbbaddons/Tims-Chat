@@ -26,7 +26,7 @@ use wcf\system\WCF;
 /**
  * The back command marks the user as being back.
  */
-class BackCommand extends AbstractCommand implements ICommand
+final class BackCommand extends AbstractCommand implements ICommand
 {
     /**
      * @inheritDoc

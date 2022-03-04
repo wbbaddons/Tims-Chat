@@ -26,7 +26,7 @@ use wcf\system\WCF;
 /**
  * The temproom command allows a user to manage temporary rooms.
  */
-class TemproomCommand extends AbstractCommand implements ICommand
+final class TemproomCommand extends AbstractCommand implements ICommand
 {
     use TNeedsUser;
 

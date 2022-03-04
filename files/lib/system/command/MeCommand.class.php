@@ -26,7 +26,7 @@ use wcf\system\WCF;
 /**
  * MeCommand represents an action message.
  */
-class MeCommand extends AbstractCommand implements ICommand
+final class MeCommand extends AbstractCommand implements ICommand
 {
     /**
      * @inheritDoc

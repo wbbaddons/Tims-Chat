@@ -26,7 +26,7 @@ use wcf\system\WCF;
 /**
  * BroadcastCommand sends a broadcast into all channels.
  */
-class BroadcastCommand extends AbstractInputProcessedCommand implements ICommand
+final class BroadcastCommand extends AbstractInputProcessedCommand implements ICommand
 {
     /**
      * @inheritDoc

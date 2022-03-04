@@ -27,7 +27,7 @@ use wcf\system\WCF;
 /**
  * The away command marks the user as being away.
  */
-class AwayCommand extends AbstractCommand implements ICommand
+final class AwayCommand extends AbstractCommand implements ICommand
 {
     /**
      * @inheritDoc

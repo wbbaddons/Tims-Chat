@@ -28,7 +28,7 @@ use wcf\system\WCF;
 /**
  * The ban command creates a new be.bastelstu.chat.suspension.ban suspension.
  */
-class BanCommand extends AbstractSuspensionCommand implements ICommand
+final class BanCommand extends AbstractSuspensionCommand implements ICommand
 {
     /**
      * @inheritDoc

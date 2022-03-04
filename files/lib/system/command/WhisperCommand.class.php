@@ -27,7 +27,7 @@ use wcf\system\WCF;
  * The whisper command creates a private message
  * between two chat users.
  */
-class WhisperCommand extends AbstractInputProcessedCommand implements ICommand
+final class WhisperCommand extends AbstractInputProcessedCommand implements ICommand
 {
     use TNeedsUser;
 
