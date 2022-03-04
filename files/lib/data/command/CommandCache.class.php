@@ -22,7 +22,7 @@ use wcf\system\SingletonFactory;
 /**
  * Manages the command cache.
  */
-class CommandCache extends SingletonFactory
+final class CommandCache extends SingletonFactory
 {
     /**
      * list of cached commands
