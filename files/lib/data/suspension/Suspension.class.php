@@ -18,6 +18,7 @@ namespace chat\data\suspension;
 use chat\data\room\Room;
 use chat\data\room\RoomCache;
 use wcf\data\DatabaseObject;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\system\cache\runtime\UserRuntimeCache;
@@ -31,10 +32,9 @@ class Suspension extends DatabaseObject implements \JsonSerializable
      * Returns the active suspensions for the given (objectTypeID, Room, User)
      * triple.
      *
-     * @param  int                                $objectTypeID
      * @return \chat\data\suspension\Suspension[]
      */
-    public static function getActiveSuspensionsByTriple($objectTypeID, User $user, Room $room)
+    public static function getActiveSuspensionsByTriple(int $objectTypeID, User $user, Room $room)
     {
         $suspensionList = new SuspensionList();
 
@@ -53,20 +53,16 @@ class Suspension extends DatabaseObject implements \JsonSerializable
 
     /**
      * Returns the suspension object type of this message.
-     *
-     * @return  \wcf\data\object\type\ObjectType
      */
-    public function getSuspensionType()
+    public function getSuspensionType(): ObjectType
     {
         return ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
     }
 
     /**
      * Returns whether this suspension still is in effect.
-     *
-     * @return boolean
      */
-    public function isActive()
+    public function isActive(): bool
     {
         if ($this->revoked !== null) {
             return false;
@@ -85,10 +81,8 @@ class Suspension extends DatabaseObject implements \JsonSerializable
     /**
      * Returns the chat room this suspension is in effect.
      * Returns null if this is a global suspension.
-     *
-     * @return \chat\data\room\Room
      */
-    public function getRoom()
+    public function getRoom(): ?Room
     {
         if ($this->roomID === null) {
             return null;
@@ -99,10 +93,8 @@ class Suspension extends DatabaseObject implements \JsonSerializable
 
     /**
      * Returns the user that is affected by this suspension.
-     *
-     * @return \wcf\data\user\User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return UserRuntimeCache::getInstance()->getObject($this->userID);
     }
