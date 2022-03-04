@@ -56,11 +56,8 @@ class CommandCache extends SingletonFactory
 
     /**
      * Returns a specific command.
-     *
-     * @param   integer     $commandID
-     * @return  Command
      */
-    public function getCommand($commandID)
+    public function getCommand(int $commandID): ?Command
     {
         if (isset($this->commands[$commandID])) {
             return $this->commands[$commandID];
@@ -71,11 +68,8 @@ class CommandCache extends SingletonFactory
 
     /**
      * Returns a specific command defined by a trigger.
-     *
-     * @param   string      $trigger
-     * @return  Command
      */
-    public function getCommandByTrigger($trigger)
+    public function getCommandByTrigger(string $trigger): ?Command
     {
         if (isset($this->triggers[$trigger])) {
             return $this->commands[$this->triggers[$trigger]];
@@ -86,11 +80,8 @@ class CommandCache extends SingletonFactory
 
     /**
      * Returns the command defined by the given package and identifier.
-     *
-     * @param   string                     $identifier
-     * @return  Command
      */
-    public function getCommandByPackageAndIdentifier(Package $package, $identifier)
+    public function getCommandByPackageAndIdentifier(Package $package, string $identifier): ?Command
     {
         if (isset($this->packages[$package->packageID][$identifier])) {
             return $this->packages[$package->packageID][$identifier];
