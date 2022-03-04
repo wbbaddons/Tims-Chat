@@ -24,7 +24,7 @@ use wcf\system\exception\ParentClassException;
 /**
  * Condition implementation for rooms to only include non-empty rooms in lists.
  */
-class RoomFilledCondition extends AbstractCheckboxCondition implements IObjectListCondition
+final class RoomFilledCondition extends AbstractCheckboxCondition implements IObjectListCondition
 {
     /**
      * @inheritDoc
