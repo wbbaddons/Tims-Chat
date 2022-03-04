@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * Denies access to muted users.
  */
-class RoomCanWritePubliclyMuteListener implements IParameterizedEventListener
+final class RoomCanWritePubliclyMuteListener implements IParameterizedEventListener
 {
     /**
      * @inheritDoc

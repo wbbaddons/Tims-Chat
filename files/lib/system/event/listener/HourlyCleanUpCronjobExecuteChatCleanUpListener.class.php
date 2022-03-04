@@ -23,7 +23,7 @@ use wcf\system\WCF;
 /**
  * Vaporizes unneeded data.
  */
-class HourlyCleanUpCronjobExecuteChatCleanUpListener implements IParameterizedEventListener
+final class HourlyCleanUpCronjobExecuteChatCleanUpListener implements IParameterizedEventListener
 {
     /**
      * @inheritDoc

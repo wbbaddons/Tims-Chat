@@ -23,7 +23,7 @@ use wcf\system\WCF;
 /**
  * Denies access to temporary rooms, unless invited.
  */
-class RoomCanSeeTemproomListener implements IParameterizedEventListener
+final class RoomCanSeeTemproomListener implements IParameterizedEventListener
 {
     /**
      * @inheritDoc

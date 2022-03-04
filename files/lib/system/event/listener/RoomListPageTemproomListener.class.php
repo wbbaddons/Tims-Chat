@@ -20,7 +20,7 @@ use wcf\system\event\listener\IParameterizedEventListener;
 /**
  * Hides temprooms in ACP.
  */
-class RoomListPageTemproomListener implements IParameterizedEventListener
+final class RoomListPageTemproomListener implements IParameterizedEventListener
 {
     /**
      * @inheritDoc

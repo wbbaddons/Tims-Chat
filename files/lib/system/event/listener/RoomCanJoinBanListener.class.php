@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * Denies access to banned users.
  */
-class RoomCanJoinBanListener implements IParameterizedEventListener
+final class RoomCanJoinBanListener implements IParameterizedEventListener
 {
     /**
      * @inheritDoc

@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * Denies access when room is full.
  */
-class RoomCanJoinUserLimitListener implements IParameterizedEventListener
+final class RoomCanJoinUserLimitListener implements IParameterizedEventListener
 {
     /**
      * @inheritDoc

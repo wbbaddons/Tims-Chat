@@ -21,7 +21,7 @@ use wcf\system\event\listener\IParameterizedEventListener;
 /**
  * Hides temprooms in ACP.
  */
-class SuspensionListPageTemproomListener implements IParameterizedEventListener
+final class SuspensionListPageTemproomListener implements IParameterizedEventListener
 {
     /**
      * @inheritDoc

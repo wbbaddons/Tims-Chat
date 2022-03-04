@@ -23,7 +23,7 @@ use wcf\system\WCF;
 /**
  * Removes empty temporary rooms.
  */
-class HourlyCleanUpCronjobExecuteTemproomListener implements IParameterizedEventListener
+final class HourlyCleanUpCronjobExecuteTemproomListener implements IParameterizedEventListener
 {
     /**
      * @inheritDoc

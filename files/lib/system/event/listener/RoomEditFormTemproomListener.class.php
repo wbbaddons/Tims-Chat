@@ -21,7 +21,7 @@ use wcf\system\exception\PermissionDeniedException;
 /**
  * Disallow editing of temprooms in ACP.
  */
-class RoomEditFormTemproomListener implements IParameterizedEventListener
+final class RoomEditFormTemproomListener implements IParameterizedEventListener
 {
     /**
      * @inheritDoc

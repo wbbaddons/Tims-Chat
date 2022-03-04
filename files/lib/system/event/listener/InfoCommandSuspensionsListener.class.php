@@ -23,7 +23,7 @@ use wcf\system\event\listener\IParameterizedEventListener;
 /**
  * Fetches information about the users suspensions
  */
-class InfoCommandSuspensionsListener implements IParameterizedEventListener
+final class InfoCommandSuspensionsListener implements IParameterizedEventListener
 {
     /**
      * @inheritDoc

@@ -23,7 +23,7 @@ use wcf\system\event\listener\IParameterizedEventListener;
 /**
  * Adds moderator permissions to the user object.
  */
-class RoomActionGetUsersModeratorListener implements IParameterizedEventListener
+final class RoomActionGetUsersModeratorListener implements IParameterizedEventListener
 {
     /**
      * @inheritDoc
