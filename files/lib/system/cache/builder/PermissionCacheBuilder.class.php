@@ -29,7 +29,7 @@ use wcf\system\WCF;
 /**
  * Caches the chat permissions for a combination of user groups.
  */
-class PermissionCacheBuilder extends AbstractCacheBuilder
+final class PermissionCacheBuilder extends AbstractCacheBuilder
 {
     /**
      * @inheritDoc

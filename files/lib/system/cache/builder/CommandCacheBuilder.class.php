@@ -22,7 +22,7 @@ use wcf\system\WCF;
 /**
  * Caches all chat commands.
  */
-class CommandCacheBuilder extends AbstractCacheBuilder
+final class CommandCacheBuilder extends AbstractCacheBuilder
 {
     /**
      * @inheritDoc

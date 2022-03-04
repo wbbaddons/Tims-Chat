@@ -21,7 +21,7 @@ use wcf\system\cache\builder\AbstractCacheBuilder;
 /**
  * Caches all chat rooms.
  */
-class RoomCacheBuilder extends AbstractCacheBuilder
+final class RoomCacheBuilder extends AbstractCacheBuilder
 {
     /**
      * @inheritDoc
