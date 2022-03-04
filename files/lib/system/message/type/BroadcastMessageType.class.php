@@ -19,23 +19,21 @@ use chat\data\message\Message;
 use chat\data\room\Room;
 use wcf\data\user\UserProfile;
 use wcf\system\event\EventHandler;
-use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\WCF;
 
 /**
  * BroadcastMessageType represents a broadcasted message.
  */
-class BroadcastMessageType extends PlainMessageType
+class BroadcastMessageType implements IMessageType, IDeletableMessageType
 {
     /**
-     * HtmlOutputProcessor to use.
-     * @var \wcf\system\html\output\HtmlOutputProcessor
+     * @var PlainMessageType
      */
-    protected $processor;
+    protected $plainMessageType;
 
     public function __construct()
     {
-        $this->processor = new HtmlOutputProcessor();
+        $this->plainMessageType = new PlainMessageType();
     }
 
     /**
@@ -44,6 +42,14 @@ class BroadcastMessageType extends PlainMessageType
     public function getJavaScriptModuleName()
     {
         return 'Bastelstu.be/Chat/MessageType/Broadcast';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPayload(Message $message, ?UserProfile $user = null)
+    {
+        return $this->plainMessageType->getPayload($message, $user);
     }
 
     /**
