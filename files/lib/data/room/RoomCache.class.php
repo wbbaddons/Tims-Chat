@@ -47,11 +47,8 @@ class RoomCache extends SingletonFactory
 
     /**
      * Returns a specific room.
-     *
-     * @param   integer     $roomID
-     * @return  Room
      */
-    public function getRoom($roomID)
+    public function getRoom(int $roomID): ?Room
     {
         if (isset($this->rooms[$roomID])) {
             return $this->rooms[$roomID];
