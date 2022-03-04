@@ -1,6 +1,7 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
@@ -14,39 +15,46 @@
 
 namespace chat\system\cache\builder;
 
-use \wcf\system\WCF;
+use chat\data\command\CommandList;
+use wcf\system\cache\builder\AbstractCacheBuilder;
+use wcf\system\WCF;
 
 /**
  * Caches all chat commands.
  */
-class CommandCacheBuilder extends \wcf\system\cache\builder\AbstractCacheBuilder {
-	/**
-	 * @see	\wcf\system\cache\AbstractCacheBuilder::rebuild()
-	 */
-	public function rebuild(array $parameters) {
-		$data = [ 'commands' => [ ]
-		        , 'triggers' => [ ]
-		        , 'packages' => [ ]
-		        ];
+class CommandCacheBuilder extends AbstractCacheBuilder
+{
+    /**
+     * @inheritDoc
+     */
+    public function rebuild(array $parameters)
+    {
+        $data = [
+            'commands' => [ ],
+            'triggers' => [ ],
+            'packages' => [ ],
+        ];
 
-		$commandList = new \chat\data\command\CommandList();
-		$commandList->sqlOrderBy = 'command.commandID';
-		$commandList->readObjects();
+        $commandList = new CommandList();
+        $commandList->sqlOrderBy = 'command.commandID';
+        $commandList->readObjects();
 
-		$data['commands'] = $commandList->getObjects();
+        $data['commands'] = $commandList->getObjects();
 
-		foreach ($data['commands'] as $command) {
-			if (!isset($data['packages'][$command->packageID])) $data['packages'][$command->packageID] = [ ];
-			$data['packages'][$command->packageID][$command->identifier] = $command;
-		}
+        foreach ($data['commands'] as $command) {
+            if (!isset($data['packages'][$command->packageID])) {
+                $data['packages'][$command->packageID] = [ ];
+            }
+            $data['packages'][$command->packageID][$command->identifier] = $command;
+        }
 
-		$sql = "SELECT *
-		        FROM   chat1_command_trigger";
-		$statement = WCF::getDB()->prepare($sql);
-		$statement->execute();
+        $sql = "SELECT  *
+                FROM    chat1_command_trigger";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute();
 
-		$data['triggers'] = $statement->fetchMap('commandTrigger', 'commandID');
+        $data['triggers'] = $statement->fetchMap('commandTrigger', 'commandID');
 
-		return $data;
-	}
+        return $data;
+    }
 }

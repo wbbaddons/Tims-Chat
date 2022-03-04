@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,48 +15,60 @@
 
 namespace chat\page;
 
-use \wcf\system\WCF;
+use chat\data\room\Room;
+use chat\data\room\RoomCache;
+use wcf\page\AbstractPage;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\WCF;
 
 /**
  * Shows the list of available chat rooms.
  */
-class RoomListPage extends \wcf\page\AbstractPage {
-	/**
-	 * @inheritDoc
-	 */
-	public $loginRequired = true;
+class RoomListPage extends AbstractPage
+{
+    /**
+     * @inheritDoc
+     */
+    public $loginRequired = true;
 
-	/**
-	 * List of rooms.
-	 *
-	 * @var	\chat\data\room\Room[]
-	 */
-	public $rooms = [ ];
+    /**
+     * List of rooms.
+     *
+     * @var \chat\data\room\Room[]
+     */
+    public $rooms = [ ];
 
-	/**
-	 * @inheritDoc
-	 */
-	public function checkPermissions() {
-		parent::checkPermissions();
+    /**
+     * @inheritDoc
+     */
+    public function checkPermissions()
+    {
+        parent::checkPermissions();
 
-		if (!\chat\data\room\Room::canSeeAny()) throw new \wcf\system\exception\PermissionDeniedException();
-	}
+        if (!Room::canSeeAny()) {
+            throw new PermissionDeniedException();
+        }
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function readData() {
-		parent::readData();
+    /**
+     * @inheritDoc
+     */
+    public function readData()
+    {
+        parent::readData();
 
-		$this->rooms = \chat\data\room\RoomCache::getInstance()->getRooms();
-	}
+        $this->rooms = RoomCache::getInstance()->getRooms();
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
+    /**
+     * @inheritDoc
+     */
+    public function assignVariables()
+    {
+        parent::assignVariables();
 
-		WCF::getTPL()->assign([ 'rooms' => $this->rooms ]);
-	}
+        WCF::getTPL()->assign([
+            'rooms' => $this->rooms,
+        ]);
+    }
 }

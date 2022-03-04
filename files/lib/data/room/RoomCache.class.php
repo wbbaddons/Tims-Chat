@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,53 +15,58 @@
 
 namespace chat\data\room;
 
-use \wcf\system\WCF;
+use chat\system\cache\builder\RoomCacheBuilder;
+use wcf\system\SingletonFactory;
 
 /**
  * Manages the room cache.
  */
-class RoomCache extends \wcf\system\SingletonFactory {
-	/**
-	 * List of cached rooms.
-	 *
-	 * @var	Room[]
-	 */
-	protected $rooms = [ ];
+class RoomCache extends SingletonFactory
+{
+    /**
+     * List of cached rooms.
+     *
+     * @var Room[]
+     */
+    protected $rooms = [ ];
 
-	/**
-	 * Cached user counts for the rooms.
-	 *
-	 * @var	int[]
-	 */
-	protected $userCount = [ ];
+    /**
+     * Cached user counts for the rooms.
+     *
+     * @var int[]
+     */
+    protected $userCount = [ ];
 
-	/**
-	 * @inheritDoc
-	 */
-	protected function init() {
-		$this->rooms = \chat\system\cache\builder\RoomCacheBuilder::getInstance()->getData();
-	}
+    /**
+     * @inheritDoc
+     */
+    protected function init()
+    {
+        $this->rooms = RoomCacheBuilder::getInstance()->getData();
+    }
 
-	/**
-	 * Returns a specific room.
-	 *
-	 * @param	integer		$roomID
-	 * @return	Room
-	 */
-	public function getRoom($roomID) {
-		if (isset($this->rooms[$roomID])) {
-			return $this->rooms[$roomID];
-		}
+    /**
+     * Returns a specific room.
+     *
+     * @param   integer     $roomID
+     * @return  Room
+     */
+    public function getRoom($roomID)
+    {
+        if (isset($this->rooms[$roomID])) {
+            return $this->rooms[$roomID];
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * Returns all rooms.
-	 *
-	 * @return	Room[]
-	 */
-	public function getRooms() {
-		return $this->rooms;
-	}
+    /**
+     * Returns all rooms.
+     *
+     * @return  Room[]
+     */
+    public function getRooms()
+    {
+        return $this->rooms;
+    }
 }

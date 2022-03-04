@@ -1,6 +1,7 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
@@ -14,41 +15,49 @@
 
 namespace chat\data\command;
 
-use \wcf\system\WCF;
+use wcf\data\DatabaseObject;
+use wcf\system\request\IRouteController;
+use wcf\system\WCF;
 
 /**
- * Represents a chat command trugger.
+ * Represents a chat command trigger.
  */
-class CommandTrigger extends \wcf\data\DatabaseObject implements \wcf\system\request\IRouteController {
-	/**
-	 * @inheritDoc
-	 */
-	public function getTitle() {
-		return $this->commandTrigger;
-	}
+class CommandTrigger extends DatabaseObject implements IRouteController
+{
+    /**
+     * @inheritDoc
+     */
+    public function getTitle()
+    {
+        return $this->commandTrigger;
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getObjectID() {
-		return $this->triggerID;
-	}
+    /**
+     * @inheritDoc
+     */
+    public function getObjectID()
+    {
+        return $this->triggerID;
+    }
 
-	/**
-	 * Returns the trigger specified by its commandTrigger value
-	 *
-	 * @param  string		$name
-	 * @return CommandTrigger
-	 */
-	public static function getTriggerByName($name) {
-		$sql = "SELECT	*
-			FROM	chat1_command_trigger
-			WHERE	commandTrigger = ?";
-		$statement = WCF::getDB()->prepare($sql);
-		$statement->execute([ $name ]);
-		$row = $statement->fetchArray();
-		if (!$row) $row = [];
+    /**
+     * Returns the trigger specified by its commandTrigger value
+     *
+     * @param  string       $name
+     * @return CommandTrigger
+     */
+    public static function getTriggerByName($name)
+    {
+        $sql = "SELECT  *
+                FROM    chat1_command_trigger
+                WHERE   commandTrigger = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([ $name ]);
+        $row = $statement->fetchArray();
+        if (!$row) {
+            $row = [];
+        }
 
-		return new self(null, $row);
-	}
+        return new self(null, $row);
+    }
 }

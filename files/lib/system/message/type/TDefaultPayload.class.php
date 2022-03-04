@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,24 +15,34 @@
 
 namespace chat\system\message\type;
 
+use chat\data\message\Message;
+use wcf\data\user\UserProfile;
+use wcf\system\event\EventHandler;
+use wcf\system\WCF;
+
 /**
  * Default implementation for 'getPayload'.
  */
-trait TDefaultPayload {
-	/**
-	 * @see	\chat\system\message\type\IMessageType::getPayload()
-	 */
-	public function getPayload(\chat\data\message\Message $message, \wcf\data\user\UserProfile $user = null) {
-		if ($user === null) $user = new \wcf\data\user\UserProfile(\wcf\system\WCF::getUser());
+trait TDefaultPayload
+{
+    /**
+     * @see \chat\system\message\type\IMessageType::getPayload()
+     */
+    public function getPayload(Message $message, ?UserProfile $user = null)
+    {
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
 
-		$payload = $message->payload;
+        $payload = $message->payload;
 
-		$parameters = [ 'message' => $message
-		              , 'user'    => $user
-		              , 'payload' => $payload
-		              ];
-		\wcf\system\event\EventHandler::getInstance()->fireAction($this, 'getPayload', $parameters);
+        $parameters = [
+            'message' => $message,
+            'user' => $user,
+            'payload' => $payload,
+        ];
+        EventHandler::getInstance()->fireAction($this, 'getPayload', $parameters);
 
-		return $parameters['payload'];
-	}
+        return $parameters['payload'];
+    }
 }

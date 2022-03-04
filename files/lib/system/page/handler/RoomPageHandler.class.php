@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,55 +15,86 @@
 
 namespace chat\system\page\handler;
 
-use \chat\data\room\RoomCache;
-use \wcf\system\WCF;
+use chat\data\room\RoomCache;
+use wcf\data\page\Page;
+use wcf\data\user\online\UserOnline;
+use wcf\system\page\handler\AbstractLookupPageHandler;
+use wcf\system\page\handler\IOnlineLocationPageHandler;
+use wcf\system\page\handler\TOnlineLocationPageHandler;
+use wcf\system\WCF;
 
 /**
  * Allows to choose a room in the menu item management.
  */
-class RoomPageHandler extends \wcf\system\page\handler\AbstractLookupPageHandler implements \wcf\system\page\handler\IOnlineLocationPageHandler {
-	use TRoomPageHandler;
-	use \wcf\system\page\handler\TOnlineLocationPageHandler;
+class RoomPageHandler extends AbstractLookupPageHandler implements IOnlineLocationPageHandler
+{
+    use TRoomPageHandler;
+    use TOnlineLocationPageHandler;
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getOutstandingItemCount($objectID = null) {
-		return count(RoomCache::getInstance()->getRoom($objectID)->getUsers());
-	}
+    /**
+     * @inheritDoc
+     */
+    public function getOutstandingItemCount($objectID = null)
+    {
+        return \count(RoomCache::getInstance()->getRoom($objectID)->getUsers());
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getLink($objectID) {
-		$room = RoomCache::getInstance()->getRoom($objectID);
-		if ($room === null) throw new \InvalidArgumentException('Invalid room ID given');
+    /**
+     * @inheritDoc
+     */
+    public function getLink($objectID)
+    {
+        $room = RoomCache::getInstance()->getRoom($objectID);
+        if ($room === null) {
+            throw new \InvalidArgumentException('Invalid room ID given');
+        }
 
-		return $room->getLink();
-	}
+        return $room->getLink();
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function isVisible($objectID = null) {
-		if (!WCF::getUser()->userID) return false;
+    /**
+     * @inheritDoc
+     */
+    public function isVisible($objectID = null)
+    {
+        if (!WCF::getUser()->userID) {
+            return false;
+        }
 
-		if ($objectID === null) throw new \InvalidArgumentException('Invalid room ID given');
-		$room = RoomCache::getInstance()->getRoom($objectID);
-		if ($room === null) throw new \InvalidArgumentException('Invalid room ID given');
+        if ($objectID === null) {
+            throw new \InvalidArgumentException('Invalid room ID given');
+        }
 
-		return $room->canSee();
-	}
+        $room = RoomCache::getInstance()->getRoom($objectID);
+        if ($room === null) {
+            throw new \InvalidArgumentException('Invalid room ID given');
+        }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getOnlineLocation(\wcf\data\page\Page $page, \wcf\data\user\online\UserOnline $user) {
-		if ($user->pageObjectID === null) return '';
-		$room = RoomCache::getInstance()->getRoom($user->pageObjectID);
-		if ($room === null) return '';
-		if (!$room->canSee()) return '';
+        return $room->canSee();
+    }
 
-		return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.'.$page->identifier, [ 'room' => $room ]);
-	}
+    /**
+     * @inheritDoc
+     */
+    public function getOnlineLocation(Page $page, UserOnline $user)
+    {
+        if ($user->pageObjectID === null) {
+            return '';
+        }
+
+        $room = RoomCache::getInstance()->getRoom($user->pageObjectID);
+        if ($room === null) {
+            return '';
+        }
+        if (!$room->canSee()) {
+            return '';
+        }
+
+        return WCF::getLanguage()->getDynamicVariable(
+            'wcf.page.onlineLocation.' . $page->identifier,
+            [
+                'room' => $room,
+            ]
+        );
+    }
 }

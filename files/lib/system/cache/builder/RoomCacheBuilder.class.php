@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,18 +15,23 @@
 
 namespace chat\system\cache\builder;
 
+use chat\data\room\RoomList;
+use wcf\system\cache\builder\AbstractCacheBuilder;
+
 /**
  * Caches all chat rooms.
  */
-class RoomCacheBuilder extends \wcf\system\cache\builder\AbstractCacheBuilder {
-	/**
-	 * @inheritDoc
-	 */
-	public function rebuild(array $parameters) {
-		$roomList = new \chat\data\room\RoomList();
-		$roomList->sqlOrderBy = "room.position";
-		$roomList->readObjects();
+class RoomCacheBuilder extends AbstractCacheBuilder
+{
+    /**
+     * @inheritDoc
+     */
+    public function rebuild(array $parameters)
+    {
+        $roomList = new RoomList();
+        $roomList->sqlOrderBy = "room.position";
+        $roomList->readObjects();
 
-		return $roomList->getObjects();
-	}
+        return $roomList->getObjects();
+    }
 }

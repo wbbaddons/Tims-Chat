@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,12 +15,16 @@
 
 namespace chat\system\cache\runtime;
 
+use chat\data\user\UserList as ChatUserList;
+use wcf\system\cache\runtime\AbstractRuntimeCache;
+
 /**
  * Runtime cache implementation for chat users.
  */
-class UserRuntimeCache extends \wcf\system\cache\runtime\AbstractRuntimeCache {
-	/**
-	 * @inheritDoc
-	 */
-	protected $listClassName = \chat\data\user\UserList::class;
+class UserRuntimeCache extends AbstractRuntimeCache
+{
+    /**
+     * @inheritDoc
+     */
+    protected $listClassName = ChatUserList::class;
 }

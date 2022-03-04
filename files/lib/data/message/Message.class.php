@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,54 +15,61 @@
 
 namespace chat\data\message;
 
-use \chat\data\room\Room;
-use \wcf\data\object\type\ObjectType;
-use \wcf\data\object\type\ObjectTypeCache;
+use chat\data\room\Room;
+use chat\data\room\RoomCache;
+use wcf\data\DatabaseObject;
+use wcf\data\object\type\ObjectType;
+use wcf\data\object\type\ObjectTypeCache;
 
 /**
  * Represents a chat message.
  *
- * @property-read	integer	$messageID
- * @property-read	integer	$time
- * @property-read	integer	$roomID
- * @property-read	integer	$userID
- * @property-read	string	$username
- * @property-read	integer	$objectTypeID
- * @property-read	mixed	$payload
- * @property-read	integer	$hasEmbeddedObjects
- * @property-read	integer	$isDeleted
+ * @property-read   integer $messageID
+ * @property-read   integer $time
+ * @property-read   integer $roomID
+ * @property-read   integer $userID
+ * @property-read   string  $username
+ * @property-read   integer $objectTypeID
+ * @property-read   mixed   $payload
+ * @property-read   integer $hasEmbeddedObjects
+ * @property-read   integer $isDeleted
  */
-class Message extends \wcf\data\DatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected function handleData($data) {
-		parent::handleData($data);
+class Message extends DatabaseObject
+{
+    /**
+     * @inheritDoc
+     */
+    protected function handleData($data)
+    {
+        parent::handleData($data);
 
-		$this->data['payload'] = @unserialize($this->data['payload']);
-		if (!is_array($this->data['payload'])) {
-			$this->data['payload'] = [ ];
-		}
-	}
+        $this->data['payload'] = @\unserialize($this->data['payload']);
+        if (!\is_array($this->data['payload'])) {
+            $this->data['payload'] = [ ];
+        }
+    }
 
-	/**
-	 * Returns whether this message already is inside the log.
-	 */
-	public function isInLog(): bool {
-		return $this->time < (TIME_NOW - CHAT_ARCHIVE_AFTER);
-	}
+    /**
+     * Returns whether this message already is inside the log.
+     */
+    public function isInLog(): bool
+    {
+        return $this->time < (TIME_NOW - CHAT_ARCHIVE_AFTER);
+    }
 
-	/**
-	 * Returns the message type object of this message.
-	 */
-	public function getMessageType(): ObjectType {
-		return ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
-	}
+    /**
+     * Returns the message type object of this message.
+     */
+    public function getMessageType(): ObjectType
+    {
+        return ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
+    }
 
-	/**
-	 * Returns the chat room that contains this message.
-	 */
-	public function getRoom(): Room {
-		return \chat\data\room\RoomCache::getInstance()->getRoom($this->roomID);
-	}
+    /**
+     * Returns the chat room that contains this message.
+     */
+    public function getRoom(): Room
+    {
+        return RoomCache::getInstance()->getRoom($this->roomID);
+    }
 }

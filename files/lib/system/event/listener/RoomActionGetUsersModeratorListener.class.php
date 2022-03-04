@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 3
@@ -14,31 +15,37 @@
 
 namespace chat\system\event\listener;
 
-use \chat\data\command\CommandCache;
-use \wcf\system\cache\runtime\UserProfileRuntimeCache;
+use chat\data\command\CommandCache;
+use wcf\data\package\PackageCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\event\listener\IParameterizedEventListener;
 
 /**
- * Adds moderator permissiosn to the user object.
+ * Adds moderator permissions to the user object.
  */
-class RoomActionGetUsersModeratorListener implements \wcf\system\event\listener\IParameterizedEventListener {
-	/**
-	 * @see	\wcf\system\event\listener\IParameterizedEventListener::execute()
-	 */
-	public function execute($eventObj, $className, $eventName, array &$users) {
-		$room = $eventObj->getObjects()[0]->getDecoratedObject();
+class RoomActionGetUsersModeratorListener implements IParameterizedEventListener
+{
+    /**
+     * @inheritDoc
+     */
+    public function execute($eventObj, $className, $eventName, array &$users)
+    {
+        $room = $eventObj->getObjects()[0]->getDecoratedObject();
 
-		$package = \wcf\data\package\PackageCache::getInstance()->getPackageByIdentifier('be.bastelstu.chat');
-		$muteCommand = CommandCache::getInstance()->getCommandByPackageAndIdentifier($package, 'mute')->getProcessor();
-		$banCommand = CommandCache::getInstance()->getCommandByPackageAndIdentifier($package, 'ban')->getProcessor();
+        $package = PackageCache::getInstance()->getPackageByIdentifier('be.bastelstu.chat');
+        $muteCommand = CommandCache::getInstance()->getCommandByPackageAndIdentifier($package, 'mute')->getProcessor();
+        $banCommand = CommandCache::getInstance()->getCommandByPackageAndIdentifier($package, 'ban')->getProcessor();
 
-		$users = array_map(function (array $user) use ($room, $muteCommand, $banCommand) {
-			$userProfile = UserProfileRuntimeCache::getInstance()->getObject($user['userID']);
-			if (!isset($user['permissions'])) $user['permissions'] = [];
+        $users = \array_map(static function (array $user) use ($room, $muteCommand, $banCommand) {
+            $userProfile = UserProfileRuntimeCache::getInstance()->getObject($user['userID']);
+            if (!isset($user['permissions'])) {
+                $user['permissions'] = [];
+            }
 
-			$user['permissions']['canMute'] = $muteCommand->isAvailable($room, $userProfile);
-			$user['permissions']['canBan'] = $banCommand->isAvailable($room, $userProfile);
+            $user['permissions']['canMute'] = $muteCommand->isAvailable($room, $userProfile);
+            $user['permissions']['canBan'] = $banCommand->isAvailable($room, $userProfile);
 
-			return $user;
-		}, $users);
-	}
+            return $user;
+        }, $users);
+    }
 }

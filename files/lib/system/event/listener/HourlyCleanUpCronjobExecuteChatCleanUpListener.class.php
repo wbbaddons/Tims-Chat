@@ -1,6 +1,7 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
@@ -14,27 +15,35 @@
 
 namespace chat\system\event\listener;
 
-use \wcf\system\WCF;
+use chat\data\message\MessageAction;
+use chat\data\user\UserAction as ChatUserAction;
+use wcf\system\event\listener\IParameterizedEventListener;
+use wcf\system\WCF;
 
 /**
  * Vaporizes unneeded data.
  */
-class HourlyCleanUpCronjobExecuteChatCleanUpListener implements \wcf\system\event\listener\IParameterizedEventListener {
-	/**
-	 * @see	\wcf\system\event\listener\IParameterizedEventListener::execute()
-	 */
-	public function execute($eventObj, $className, $eventName, array &$parameters) {
-		(new \chat\data\message\MessageAction([ ], 'prune'))->executeAction();
-		(new \chat\data\user\UserAction([], 'clearDeadSessions'))->executeAction();
+class HourlyCleanUpCronjobExecuteChatCleanUpListener implements IParameterizedEventListener
+{
+    /**
+     * @inheritDoc
+     */
+    public function execute($eventObj, $className, $eventName, array &$parameters)
+    {
+        (new MessageAction([ ], 'prune'))->executeAction();
+        (new ChatUserAction([ ], 'clearDeadSessions'))->executeAction();
 
-		$sql = "UPDATE chat1_room_to_user
-		        SET    active = ?
-		        WHERE      (roomID, userID) NOT IN (SELECT roomID, userID FROM chat1_session)
-		               AND active = ?";
-		$statement = WCF::getDB()->prepare($sql);
-		$statement->execute([ 0, 1 ]);
-		if ($statement->getAffectedRows()) {
-			\wcf\functions\exception\logThrowable(new \Exception('Unreachable'));
-		}
-	}
+        $sql = "UPDATE  chat1_room_to_user
+                SET     active = ?
+                WHERE   (roomID, userID) NOT IN (
+                            SELECT  roomID, userID
+                            FROM    chat1_session
+                        )
+                    AND active = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([ 0, 1 ]);
+        if ($statement->getAffectedRows()) {
+            \wcf\functions\exception\logThrowable(new \Exception('Unreachable'));
+        }
+    }
 }

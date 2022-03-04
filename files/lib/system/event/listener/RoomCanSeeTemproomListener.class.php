@@ -1,6 +1,7 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
@@ -14,31 +15,43 @@
 
 namespace chat\system\event\listener;
 
-use \chat\system\permission\PermissionHandler;
-use \wcf\system\exception\PermissionDeniedException;
-use \wcf\system\WCF;
+use chat\data\user\User as ChatUser;
+use wcf\system\event\listener\IParameterizedEventListener;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\WCF;
 
 /**
  * Denies access to temporary rooms, unless invited.
  */
-class RoomCanSeeTemproomListener implements \wcf\system\event\listener\IParameterizedEventListener {
-	/**
-	 * @see	\wcf\system\event\listener\IParameterizedEventListener::execute()
-	 */
-	public function execute($eventObj, $className, $eventName, array &$parameters) {
-		if (!$eventObj->isTemporary) return;
+class RoomCanSeeTemproomListener implements IParameterizedEventListener
+{
+    /**
+     * @inheritDoc
+     */
+    public function execute($eventObj, $className, $eventName, array &$parameters)
+    {
+        if (!$eventObj->isTemporary) {
+            return;
+        }
 
-		$user = new \chat\data\user\User($parameters['user']->getDecoratedObject());
-		if ($eventObj->ownerID === $user->userID) return;
+        $user = new ChatUser($parameters['user']->getDecoratedObject());
+        if ($eventObj->ownerID === $user->userID) {
+            return;
+        }
 
-		$sql = "SELECT COUNT(*)
-		        FROM   chat1_room_temporary_invite
-		        WHERE      userID = ?
-		               AND roomID = ?";
-		$statement = WCF::getDB()->prepare($sql);
-		$statement->execute([ $user->userID, $eventObj->roomID ]);
-		if ($statement->fetchSingleColumn() > 0) return;
+        $sql = "SELECT  COUNT(*)
+                FROM    chat1_room_temporary_invite
+                WHERE   userID = ?
+                    AND roomID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $user->userID,
+            $eventObj->roomID,
+        ]);
+        if ($statement->fetchSingleColumn() > 0) {
+            return;
+        }
 
-		$parameters['result'] = new PermissionDeniedException();
-	}
+        $parameters['result'] = new PermissionDeniedException();
+    }
 }

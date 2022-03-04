@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,34 +15,39 @@
 
 namespace chat\system\page\handler;
 
-use \chat\data\room\Room;
-use \chat\data\room\RoomCache;
-use \wcf\system\WCF;
+use chat\data\room\Room;
+use chat\data\room\RoomCache;
+use wcf\system\page\handler\AbstractMenuPageHandler;
 
 /**
  * Shows the number of chatters in the RoomList menu item.
  */
-class RoomListPageHandler extends \wcf\system\page\handler\AbstractMenuPageHandler {
-	/**
-	 * @inheritDoc
-	 */
-	public function getOutstandingItemCount($objectID = null) {
-		$rooms = RoomCache::getInstance()->getRooms();
-		$users = array_map(function (Room $room) {
-			return array_keys($room->getUsers());
-		}, array_filter($rooms, function (Room $room) {
-			return $room->canSee();
-		}));
+class RoomListPageHandler extends AbstractMenuPageHandler
+{
+    /**
+     * @inheritDoc
+     */
+    public function getOutstandingItemCount($objectID = null)
+    {
+        $rooms = RoomCache::getInstance()->getRooms();
+        $users = \array_map(static function (Room $room) {
+            return \array_keys($room->getUsers());
+        }, \array_filter($rooms, static function (Room $room) {
+            return $room->canSee();
+        }));
 
-		if (empty($users)) return 0;
+        if (empty($users)) {
+            return 0;
+        }
 
-		return count(array_unique(call_user_func_array('array_merge', $users)));
-	}
+        return \count(\array_unique(\call_user_func_array('array_merge', $users)));
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function isVisible($objectID = null) {
-		return Room::canSeeAny();
-	}
+    /**
+     * @inheritDoc
+     */
+    public function isVisible($objectID = null)
+    {
+        return Room::canSeeAny();
+    }
 }

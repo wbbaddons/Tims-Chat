@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright (C) 2010-2021  Tim Düsterhus
- * Copyright (C) 2010-2021  Woltlab GmbH
+ * Copyright (C) 2010-2022  Tim Düsterhus
+ * Copyright (C) 2010-2022  Woltlab GmbH
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,42 +21,45 @@
 
 namespace chat\system\cache\builder;
 
-use \wcf\system\acl\ACLHandler;
-use \wcf\system\WCF;
+use wcf\system\acl\ACLHandler;
+use wcf\system\cache\builder\AbstractCacheBuilder;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\WCF;
 
 /**
  * Caches the chat permissions for a combination of user groups.
  */
-class PermissionCacheBuilder extends \wcf\system\cache\builder\AbstractCacheBuilder {
-	/**
-	 * @inheritDoc
-	 */
-	public function rebuild(array $parameters) {
-		$data = [ ];
+class PermissionCacheBuilder extends AbstractCacheBuilder
+{
+    /**
+     * @inheritDoc
+     */
+    public function rebuild(array $parameters)
+    {
+        $data = [ ];
 
-		if (!empty($parameters)) {
-			$conditionBuilder = new \wcf\system\database\util\PreparedStatementConditionBuilder();
-			$conditionBuilder->add('acl_option.objectTypeID = ?', [ ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.chat.room') ]);
-			$conditionBuilder->add('option_to_group.groupID IN (?)', [ $parameters ]);
-			$sql = "SELECT     option_to_group.objectID AS roomID,
-				           option_to_group.optionValue,
-				           acl_option.optionName AS permission
-				FROM       wcf1_acl_option acl_option
-				INNER JOIN wcf1_acl_option_to_group option_to_group
-				        ON option_to_group.optionID = acl_option.optionID
-				".$conditionBuilder;
-			$statement = WCF::getDB()->prepare($sql);
-			$statement->execute($conditionBuilder->getParameters());
-			while (($row = $statement->fetchArray())) {
-				if (!isset($data[$row['roomID']][$row['permission']])) {
-					$data[$row['roomID']][$row['permission']] = $row['optionValue'];
-				}
-				else {
-					$data[$row['roomID']][$row['permission']] = $row['optionValue'] || $data[$row['roomID']][$row['permission']];
-				}
-			}
-		}
+        if (!empty($parameters)) {
+            $conditionBuilder = new PreparedStatementConditionBuilder();
+            $conditionBuilder->add('acl_option.objectTypeID = ?', [ ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.chat.room') ]);
+            $conditionBuilder->add('option_to_group.groupID IN (?)', [ $parameters ]);
+            $sql = "SELECT      option_to_group.objectID AS roomID,
+                                option_to_group.optionValue,
+                                acl_option.optionName AS permission
+                    FROM        wcf1_acl_option acl_option
+                    INNER JOIN  wcf1_acl_option_to_group option_to_group
+                            ON  option_to_group.optionID = acl_option.optionID
+                    {$conditionBuilder}";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute($conditionBuilder->getParameters());
+            while (($row = $statement->fetchArray())) {
+                if (!isset($data[$row['roomID']][$row['permission']])) {
+                    $data[$row['roomID']][$row['permission']] = $row['optionValue'];
+                } else {
+                    $data[$row['roomID']][$row['permission']] = $row['optionValue'] || $data[$row['roomID']][$row['permission']];
+                }
+            }
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

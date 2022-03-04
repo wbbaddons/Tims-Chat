@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright (C) 2010-2021  Tim Düsterhus
- * Copyright (C) 2010-2021  Woltlab GmbH
+ * Copyright (C) 2010-2022  Tim Düsterhus
+ * Copyright (C) 2010-2022  Woltlab GmbH
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,114 +21,136 @@
 
 namespace chat\system\permission;
 
-use \wcf\system\acl\ACLHandler;
-use \wcf\system\user\storage\UserStorageHandler;
-use \wcf\system\WCF;
+use chat\data\room\Room;
+use chat\system\cache\builder\PermissionCacheBuilder;
+use wcf\data\user\UserProfile;
+use wcf\system\acl\ACLHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\WCF;
 
 /**
  * Handles chat permissions.
  */
-class PermissionHandler {
-	/**
-	 * permissions set for the given user
-	 * @var	boolean[]
-	 */
-	protected $chatPermissions = [ ];
+class PermissionHandler
+{
+    /**
+     * permissions set for the given user
+     * @var boolean[]
+     */
+    protected $chatPermissions = [ ];
 
-	/**
-	 * given user decorated in a user profile
-	 * @var \wcf\data\user\UserProfile
-	 */
-	protected $user = null;
+    /**
+     * given user decorated in a user profile
+     * @var \wcf\data\user\UserProfile
+     */
+    protected $user;
 
-	/**
-	 * Cache of PermissionHandlers.
-	 * @var \chat\system\permission\PermissionHandler[]
-	 */
-	protected static $cache = [ ];
+    /**
+     * Cache of PermissionHandlers.
+     * @var \chat\system\permission\PermissionHandler[]
+     */
+    protected static $cache = [ ];
 
-	public function __construct(\wcf\data\user\UserProfile $user = null) {
-		if ($user === null) $user = new \wcf\data\user\UserProfile(WCF::getUser());
-		$this->user = $user;
+    public function __construct(?UserProfile $user = null)
+    {
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
+        $this->user = $user;
 
-		$this->chatPermissions = \chat\system\cache\builder\PermissionCacheBuilder::getInstance()->getData($user->getGroupIDs());
+        $this->chatPermissions = PermissionCacheBuilder::getInstance()->getData($user->getGroupIDs());
 
-		// get user permissions
-		if ($user->userID) {
-			$ush = UserStorageHandler::getInstance();
+        // get user permissions
+        if ($user->userID) {
+            $ush = UserStorageHandler::getInstance();
 
-			// get ids
-			$data = $ush->getField('chatUserPermissions', $user->userID);
+            // get ids
+            $data = $ush->getField('chatUserPermissions', $user->userID);
 
-			// cache does not exist or is outdated
-			if ($data === null) {
-				$userPermissions = [ ];
+            // cache does not exist or is outdated
+            if ($data === null) {
+                $userPermissions = [ ];
 
-				$conditionBuilder = new \wcf\system\database\util\PreparedStatementConditionBuilder();
-				$conditionBuilder->add('acl_option.objectTypeID = ?', [ ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.chat.room') ]);
-				$conditionBuilder->add('option_to_user.userID = ?', [ $user->userID ]);
-				$sql = "SELECT     option_to_user.objectID AS roomID,
-				                   option_to_user.optionValue,
-				                   acl_option.optionName AS permission
-				        FROM       wcf1_acl_option acl_option
-				        INNER JOIN wcf1_acl_option_to_user option_to_user
-				                   ON option_to_user.optionID = acl_option.optionID
-				        ".$conditionBuilder;
-				$statement = WCF::getDB()->prepare($sql);
-				$statement->execute($conditionBuilder->getParameters());
-				while (($row = $statement->fetchArray())) {
-					$userPermissions[$row['roomID']][$row['permission']] = $row['optionValue'];
-				}
+                $conditionBuilder = new PreparedStatementConditionBuilder();
+                $conditionBuilder->add('acl_option.objectTypeID = ?', [ ACLHandler::getInstance()->getObjectTypeID('be.bastelstu.chat.room') ]);
+                $conditionBuilder->add('option_to_user.userID = ?', [ $user->userID ]);
+                $sql = "SELECT     option_to_user.objectID AS roomID,
+                                   option_to_user.optionValue,
+                                   acl_option.optionName AS permission
+                        FROM       wcf1_acl_option acl_option
+                        INNER JOIN wcf1_acl_option_to_user option_to_user
+                                   ON option_to_user.optionID = acl_option.optionID
+                        " . $conditionBuilder;
+                $statement = WCF::getDB()->prepare($sql);
+                $statement->execute($conditionBuilder->getParameters());
+                while (($row = $statement->fetchArray())) {
+                    $userPermissions[$row['roomID']][$row['permission']] = $row['optionValue'];
+                }
 
-				// update cache
-				$ush->update($user->userID, 'chatUserPermissions', serialize($userPermissions));
-			}
-			else {
-				$userPermissions = unserialize($data);
-			}
+                // update cache
+                $ush->update($user->userID, 'chatUserPermissions', \serialize($userPermissions));
+            } else {
+                $userPermissions = \unserialize($data);
+            }
 
-			foreach ($userPermissions as $roomID => $permissions) {
-				foreach ($permissions as $name => $value) {
-					$this->chatPermissions[$roomID][$name] = $value;
-				}
-			}
-		}
-	}
+            foreach ($userPermissions as $roomID => $permissions) {
+                foreach ($permissions as $name => $value) {
+                    $this->chatPermissions[$roomID][$name] = $value;
+                }
+            }
+        }
+    }
 
-	public static function get(\wcf\data\user\UserProfile $user = null) {
-		if ($user === null) $user = new \wcf\data\user\UserProfile(WCF::getUser());
-		if (!isset(static::$cache[$user->userID])) {
-			static::$cache[$user->userID] = new static($user);
-		}
+    public static function get(?UserProfile $user = null)
+    {
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
+        if (!isset(static::$cache[$user->userID])) {
+            static::$cache[$user->userID] = new static($user);
+        }
 
-		return static::$cache[$user->userID];
-	}
+        return static::$cache[$user->userID];
+    }
 
-	/**
-	 * Fetches the given permission for the given room
-	 *
-	 * @param	\chat\data\room\Room	$room
-	 * @param	string			$permission
-	 * @return	boolean
-	 */
-	public function getPermission(\chat\data\room\Room $room, $permission) {
-		$groupPermission = str_replace([ 'user.', 'mod.' ], [ 'user.chat.', 'mod.chat.' ], $permission);
+    /**
+     * Fetches the given permission for the given room
+     *
+     * @param   string          $permission
+     * @return  boolean
+     */
+    public function getPermission(Room $room, $permission)
+    {
+        $groupPermission = \str_replace(
+            [
+                'user.',
+                'mod.',
+            ],
+            [
+                'user.chat.',
+                'mod.chat.',
+            ],
+            $permission
+        );
 
-		if (method_exists($this->user, 'getNeverPermission') && $this->user->getNeverPermission($groupPermission)) {
-			return false;
-		}
+        if (\method_exists($this->user, 'getNeverPermission') && $this->user->getNeverPermission($groupPermission)) {
+            return false;
+        }
 
-		if (!isset($this->chatPermissions[$room->roomID][$permission])) {
-			return $this->user->getPermission($groupPermission);
-		}
-		return (boolean) $this->chatPermissions[$room->roomID][$permission];
-	}
+        if (!isset($this->chatPermissions[$room->roomID][$permission])) {
+            return $this->user->getPermission($groupPermission);
+        }
 
-	/**
-	 * Clears the cache.
-	 */
-	public static function resetCache() {
-		UserStorageHandler::getInstance()->resetAll('chatUserPermissions');
-		\chat\system\cache\builder\PermissionCacheBuilder::getInstance()->reset();
-	}
+        return (bool)$this->chatPermissions[$room->roomID][$permission];
+    }
+
+    /**
+     * Clears the cache.
+     */
+    public static function resetCache()
+    {
+        UserStorageHandler::getInstance()->resetAll('chatUserPermissions');
+        PermissionCacheBuilder::getInstance()->reset();
+    }
 }

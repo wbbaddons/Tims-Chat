@@ -1,6 +1,7 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
@@ -14,38 +15,46 @@
 
 namespace chat\data\command;
 
-use \wcf\system\WCF;
+use chat\system\command\ICommand;
+use wcf\data\package\PackageCache;
+use wcf\data\ProcessibleDatabaseObject;
+use wcf\system\WCF;
 
 /**
  * Represents a chat command.
  */
-class Command extends \wcf\data\ProcessibleDatabaseObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $processorInterface = \chat\system\command\ICommand::class;
+class Command extends ProcessibleDatabaseObject
+{
+    /**
+     * @inheritDoc
+     */
+    protected static $processorInterface = ICommand::class;
 
-	/**
-	 * Returns whether this command has at least one trigger assigned.
-	 *
-	 * The default PlainCommand implicitely has one.
-	 */
-	public function hasTriggers() {
-		static $chatPackageID = null;
+    /**
+     * Returns whether this command has at least one trigger assigned.
+     *
+     * The default PlainCommand implicitely has one.
+     */
+    public function hasTriggers()
+    {
+        static $chatPackageID = null;
 
-		if ($chatPackageID === null) {
-			$chatPackageID = \wcf\data\package\PackageCache::getInstance()->getPackageID('be.bastelstu.chat');
-		}
+        if ($chatPackageID === null) {
+            $chatPackageID = PackageCache::getInstance()->getPackageID('be.bastelstu.chat');
+        }
 
-		if ($this->packageID === $chatPackageID && $this->identifier === 'plain') {
-			return true;
-		}
+        if ($this->packageID === $chatPackageID && $this->identifier === 'plain') {
+            return true;
+        }
 
-		$sql = "SELECT COUNT(*)
-		        FROM   chat1_command_trigger
-		        WHERE  commandID = ?";
-		$statement = WCF::getDB()->prepare($sql);
-		$statement->execute([ $this->commandID ]);
-		return $statement->fetchSingleColumn() > 0;
-	}
+        $sql = "SELECT  COUNT(*)
+                FROM    chat1_command_trigger
+                WHERE   commandID = ?";
+        $statement = WCF::getDB()->prepare($sql);
+        $statement->execute([
+            $this->commandID,
+        ]);
+
+        return $statement->fetchSingleColumn() > 0;
+    }
 }

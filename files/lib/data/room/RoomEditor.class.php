@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,20 +15,27 @@
 
 namespace chat\data\room;
 
+use chat\system\cache\builder\RoomCacheBuilder;
+use chat\system\permission\PermissionHandler;
+use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+
 /**
  * Represents a chat room editor.
  */
-class RoomEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data\IEditableCachedObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $baseClass = Room::class;
+class RoomEditor extends DatabaseObjectEditor implements IEditableCachedObject
+{
+    /**
+     * @inheritDoc
+     */
+    protected static $baseClass = Room::class;
 
-	/**
-	 * @inheritDoc
-	 */
-	public static function resetCache() {
-		\chat\system\cache\builder\RoomCacheBuilder::getInstance()->reset();
-		\chat\system\permission\PermissionHandler::resetCache();
-	}
+    /**
+     * @inheritDoc
+     */
+    public static function resetCache()
+    {
+        RoomCacheBuilder::getInstance()->reset();
+        PermissionHandler::resetCache();
+    }
 }

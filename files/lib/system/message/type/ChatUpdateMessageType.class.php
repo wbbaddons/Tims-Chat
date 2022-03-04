@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,41 +15,46 @@
 
 namespace chat\system\message\type;
 
-use \chat\data\message\Message;
-use \chat\data\room\Room;
-use \wcf\data\user\UserProfile;
+use chat\data\message\Message;
+use chat\data\room\Room;
+use wcf\data\user\UserProfile;
 
 /**
  * ChatUpdateMessageType informs the chat about a back end update.
  */
-class ChatUpdateMessageType implements IMessageType {
-	use TDefaultPayload;
+class ChatUpdateMessageType implements IMessageType
+{
+    use TDefaultPayload;
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getJavaScriptModuleName() {
-		return 'Bastelstu.be/Chat/MessageType/ChatUpdate';
-	}
+    /**
+     * @inheritDoc
+     */
+    public function getJavaScriptModuleName()
+    {
+        return 'Bastelstu.be/Chat/MessageType/ChatUpdate';
+    }
 
-	/**
-	 * @see	\chat\system\message\type\IMessageType::canSee()
-	 */
-	public function canSee(Message $message, Room $room, UserProfile $user = null) {
-		return true;
-	}
+    /**
+     * @inheritDoc
+     */
+    public function canSee(Message $message, Room $room, ?UserProfile $user = null)
+    {
+        return true;
+    }
 
-	/**
-	 * @see	\chat\system\message\type\IMessageType::canSeeInLog()
-	 */
-	public function canSeeInLog(Message $message, Room $room, UserProfile $user = null) {
-		return true;
-	}
+    /**
+     * @inheritDoc
+     */
+    public function canSeeInLog(Message $message, Room $room, ?UserProfile $user = null)
+    {
+        return true;
+    }
 
-	/**
-	 * @see»\chat\system\message\type\IMessageType::supportsFastSelect()
-	 */
-	public function supportsFastSelect() {
-		return false;
-	}
+    /**
+     * @inheritDoc
+     */
+    public function supportsFastSelect()
+    {
+        return false;
+    }
 }

@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 3
@@ -14,9 +15,11 @@
 
 namespace chat\data\suspension;
 
+use wcf\data\DatabaseObjectList;
+
 /**
  * Represents a list of chat suspensions.
  */
-class SuspensionList extends \wcf\data\DatabaseObjectList {
-
+class SuspensionList extends DatabaseObjectList
+{
 }

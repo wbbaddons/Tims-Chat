@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,72 +15,94 @@
 
 namespace chat\system\command;
 
-use \chat\data\message\MessageAction;
-use \chat\data\message\MessageEditor;
-use \chat\data\room\Room;
-use \wcf\data\user\UserProfile;
-use \wcf\system\exception\PermissionDeniedException;
-use \wcf\system\WCF;
+use chat\data\message\MessageAction;
+use chat\data\message\MessageEditor;
+use chat\data\room\Room;
+use wcf\data\user\UserProfile;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\WCF;
 
 /**
  * BroadcastCommand sends a broadcast into all channels.
  */
-class BroadcastCommand extends AbstractInputProcessedCommand implements ICommand {
-	/**
-	 * @inheritDoc
-	 */
-	public function getJavaScriptModuleName() {
-		return 'Bastelstu.be/Chat/Command/Broadcast';
-	}
+class BroadcastCommand extends AbstractInputProcessedCommand implements ICommand
+{
+    /**
+     * @inheritDoc
+     */
+    public function getJavaScriptModuleName()
+    {
+        return 'Bastelstu.be/Chat/Command/Broadcast';
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function isAvailable(Room $room, UserProfile $user = null) {
-		if ($user === null) $user = new UserProfile(WCF::getUser());
-		return $user->getPermission('mod.chat.canBroadcast');
-	}
+    /**
+     * @inheritDoc
+     */
+    public function isAvailable(Room $room, ?UserProfile $user = null)
+    {
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function validate($parameters, Room $room, UserProfile $user = null) {
-		if ($user === null) $user = new UserProfile(\wcf\system\WCF::getUser());
+        return $user->getPermission('mod.chat.canBroadcast');
+    }
 
-		if (!$user->getPermission('mod.chat.canBroadcast')) throw new PermissionDeniedException();
+    /**
+     * @inheritDoc
+     */
+    public function validate($parameters, Room $room, ?UserProfile $user = null)
+    {
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
 
-		$this->setText($this->assertParameter($parameters, 'text'));
-		$this->validateText();
-	}
+        if (!$user->getPermission('mod.chat.canBroadcast')) {
+            throw new PermissionDeniedException();
+        }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function execute($parameters, Room $room, UserProfile $user = null) {
-		if ($user === null) $user = new UserProfile(\wcf\system\WCF::getUser());
+        $this->setText($this->assertParameter($parameters, 'text'));
+        $this->validateText();
+    }
 
-		$objectTypeID = $this->getMessageObjectTypeID('be.bastelstu.chat.messageType.broadcast');
-		$this->setText($this->assertParameter($parameters, 'text'));
+    /**
+     * @inheritDoc
+     */
+    public function execute($parameters, Room $room, ?UserProfile $user = null)
+    {
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
 
-		WCF::getDB()->beginTransaction();
-		$message = (new MessageAction([ ], 'create', [ 'data' => [ 'roomID'       => $room->roomID
-		                                                         , 'userID'       => $user->userID
-		                                                         , 'username'     => $user->username
-		                                                         , 'time'         => TIME_NOW
-		                                                         , 'objectTypeID' => $objectTypeID
-		                                                         , 'payload'      => serialize([ 'message' => $this->processor->getHtml() ])
-		                                                         ]
-		                                             , 'updateTimestamp' => true
-		                                             ]
-		                             )
-		           )->executeAction()['returnValues'];
+        $objectTypeID = $this->getMessageObjectTypeID('be.bastelstu.chat.messageType.broadcast');
+        $this->setText($this->assertParameter($parameters, 'text'));
 
-		$this->processor->setObjectID($message->messageID);
-		if (\wcf\system\message\embedded\object\MessageEmbeddedObjectManager::getInstance()->registerObjects($this->processor)) {
-			(new MessageEditor($message))->update([
-				'hasEmbeddedObjects' => 1
-			]);
-		}
-		WCF::getDB()->commitTransaction();
-	}
+        WCF::getDB()->beginTransaction();
+        $message = (new MessageAction(
+            [ ],
+            'create',
+            [
+                'data' => [
+                    'roomID' => $room->roomID,
+                    'userID' => $user->userID,
+                    'username' => $user->username,
+                    'time' => TIME_NOW,
+                    'objectTypeID' => $objectTypeID,
+                    'payload' => \serialize([
+                        'message' => $this->processor->getHtml(),
+                    ]),
+                ],
+                'updateTimestamp' => true,
+            ]
+        )
+                   )->executeAction()['returnValues'];
+
+        $this->processor->setObjectID($message->messageID);
+        if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->processor)) {
+            (new MessageEditor($message))->update([
+                'hasEmbeddedObjects' => 1,
+            ]);
+        }
+        WCF::getDB()->commitTransaction();
+    }
 }

@@ -1,11 +1,12 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2025-03-05
+ * Change Date: 2026-03-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,19 +15,25 @@
 
 namespace chat\data\command;
 
+use chat\system\cache\builder\CommandCacheBuilder;
+use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+
 /**
  * Represents a command trigger editor.
  */
-class CommandTriggerEditor extends \wcf\data\DatabaseObjectEditor implements \wcf\data\IEditableCachedObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $baseClass = CommandTrigger::class;
+class CommandTriggerEditor extends DatabaseObjectEditor implements IEditableCachedObject
+{
+    /**
+     * @inheritDoc
+     */
+    protected static $baseClass = CommandTrigger::class;
 
-	/**
-	 * @inheritDoc
-	 */
-	public static function resetCache() {
-		\chat\system\cache\builder\CommandCacheBuilder::getInstance()->reset();
-	}
+    /**
+     * @inheritDoc
+     */
+    public static function resetCache()
+    {
+        CommandCacheBuilder::getInstance()->reset();
+    }
 }

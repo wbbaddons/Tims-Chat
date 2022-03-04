@@ -1,6 +1,7 @@
 <?php
+
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
@@ -14,241 +15,289 @@
 
 namespace chat\data\room;
 
-use \chat\system\cache\runtime\UserRuntimeCache;
-use \chat\system\permission\PermissionHandler;
-use \wcf\system\exception\PermissionDeniedException;
-use \wcf\system\request\LinkHandler;
-use \wcf\system\WCF;
-use \wcf\util\StringUtil;
+use chat\system\cache\runtime\UserRuntimeCache as ChatUserRuntimeCache;
+use chat\system\permission\PermissionHandler;
+use wcf\data\DatabaseObject;
+use wcf\data\ITitledLinkObject;
+use wcf\data\user\UserProfile;
+use wcf\system\event\EventHandler;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\request\IRouteController;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a chat room.
  *
- * @property-read	integer	$roomID
- * @property-read	string	$title
- * @property-read	string	$topic
- * @property-read	integer	$position
- * @property-read	integer	$userLimit
- * @property-read	integer	$isTemporary
- * @property-read	integer	$ownerID
- * @property-read	integer	$topicUseHtml
+ * @property-read   integer $roomID
+ * @property-read   string  $title
+ * @property-read   string  $topic
+ * @property-read   integer $position
+ * @property-read   integer $userLimit
+ * @property-read   integer $isTemporary
+ * @property-read   integer $ownerID
+ * @property-read   integer $topicUseHtml
  */
-final class Room extends \wcf\data\DatabaseObject implements \wcf\system\request\IRouteController
-                                                           , \wcf\data\ITitledLinkObject
-                                                           , \JsonSerializable {
-	/**
-	 * @var	?(integer[])
-	 */
-	private static $userToRoom = null;
+final class Room extends DatabaseObject implements
+    IRouteController,
+    ITitledLinkObject,
+    \JsonSerializable
+{
+    /**
+     * @var ?(integer[])
+     */
+    private static $userToRoom;
 
-	/**
-	 * @see	Room::getTitle()
-	 */
-	public function __toString() {
-		return $this->getTitle();
-	}
+    /**
+     * @see Room::getTitle()
+     */
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
 
-	/**
-	 * Returns whether the given user can see at least
-	 * one chat room. If no user is given the current user
-	 * should be assumed
-	 */
-	public static function canSeeAny(\wcf\data\user\UserProfile $user = null): bool {
-		$rooms = RoomCache::getInstance()->getRooms();
-		foreach ($rooms as $room) {
-			if ($room->canSee($user)) return true;
-		}
+    /**
+     * Returns whether the given user can see at least
+     * one chat room. If no user is given the current user
+     * should be assumed
+     */
+    public static function canSeeAny(?UserProfile $user = null): bool
+    {
+        $rooms = RoomCache::getInstance()->getRooms();
+        foreach ($rooms as $room) {
+            if ($room->canSee($user)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Returns whether the given user can see this room.
-	 * If no user is given the current user should be assumed.
-	 */
-	public function canSee(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null): bool {
-		static $cache = [ ];
-		if ($user === null) $user = new \wcf\data\user\UserProfile(WCF::getUser());
+    /**
+     * Returns whether the given user can see this room.
+     * If no user is given the current user should be assumed.
+     */
+    public function canSee(?UserProfile $user = null, ?\Exception &$reason = null): bool
+    {
+        static $cache = [ ];
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
 
-		if (!isset($cache[$this->roomID])) $cache[$this->roomID] = [];
-		if (array_key_exists($user->userID, $cache[$this->roomID])) {
-			return ($reason = $cache[$this->roomID][$user->userID]) === null;
-		}
+        if (!isset($cache[$this->roomID])) {
+            $cache[$this->roomID] = [];
+        }
+        if (\array_key_exists($user->userID, $cache[$this->roomID])) {
+            return ($reason = $cache[$this->roomID][$user->userID]) === null;
+        }
 
-		if (!$user->userID) {
-			$reason = new PermissionDeniedException();
-			return ($cache[$this->roomID][$user->userID] = $reason) === null;
-		}
+        if (!$user->userID) {
+            $reason = new PermissionDeniedException();
 
-		$result = null;
-		if (!PermissionHandler::get($user)->getPermission($this, 'user.canSee')) {
-			$result = new PermissionDeniedException();
-		}
+            return ($cache[$this->roomID][$user->userID] = $reason) === null;
+        }
 
-		$parameters = [ 'user'   => $user
-		              , 'result' => $result
-		              ];
-		\wcf\system\event\EventHandler::getInstance()->fireAction($this, 'canSee', $parameters);
-		$reason = $parameters['result'];
+        $result = null;
+        if (!PermissionHandler::get($user)->getPermission($this, 'user.canSee')) {
+            $result = new PermissionDeniedException();
+        }
 
-		if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
-			throw new \DomainException('Result of canSee must be a \Throwable or null.');
-		}
+        $parameters = [
+            'user' => $user,
+            'result' => $result,
+        ];
+        EventHandler::getInstance()->fireAction($this, 'canSee', $parameters);
+        $reason = $parameters['result'];
 
-		return ($cache[$this->roomID][$user->userID] = $reason) === null;
-	}
+        if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
+            throw new \DomainException('Result of canSee must be a \Throwable or null.');
+        }
 
-	/**
-	 * Returns whether the given user can see the log of this room.
-	 * If no user is given the current user should be assumed.
-	 */
-	public function canSeeLog(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null): bool {
-		static $cache = [ ];
-		if ($user === null) $user = new \wcf\data\user\UserProfile(WCF::getUser());
+        return ($cache[$this->roomID][$user->userID] = $reason) === null;
+    }
 
-		if (!isset($cache[$this->roomID])) $cache[$this->roomID] = [];
-		if (array_key_exists($user->userID, $cache[$this->roomID])) {
-			return ($reason = $cache[$this->roomID][$user->userID]) === null;
-		}
+    /**
+     * Returns whether the given user can see the log of this room.
+     * If no user is given the current user should be assumed.
+     */
+    public function canSeeLog(?UserProfile $user = null, ?\Exception &$reason = null): bool
+    {
+        static $cache = [ ];
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
 
-		$result = null;
-		if (!PermissionHandler::get($user)->getPermission($this, 'user.canSeeLog')) {
-			$result = new PermissionDeniedException();
-		}
+        if (!isset($cache[$this->roomID])) {
+            $cache[$this->roomID] = [];
+        }
+        if (\array_key_exists($user->userID, $cache[$this->roomID])) {
+            return ($reason = $cache[$this->roomID][$user->userID]) === null;
+        }
 
-		$parameters = [ 'user'   => $user
-		              , 'result' => $result
-		              ];
-		\wcf\system\event\EventHandler::getInstance()->fireAction($this, 'canSeeLog', $parameters);
-		$reason = $parameters['result'];
+        $result = null;
+        if (!PermissionHandler::get($user)->getPermission($this, 'user.canSeeLog')) {
+            $result = new PermissionDeniedException();
+        }
 
-		if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
-			throw new \DomainException('Result of canSeeLog must be a \Throwable or null.');
-		}
+        $parameters = [
+            'user' => $user,
+            'result' => $result,
+        ];
+        EventHandler::getInstance()->fireAction($this, 'canSeeLog', $parameters);
+        $reason = $parameters['result'];
 
-		return ($cache[$this->roomID][$user->userID] = $reason) === null;
-	}
+        if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
+            throw new \DomainException('Result of canSeeLog must be a \Throwable or null.');
+        }
 
-	/**
-	 * Returns whether the given user can join this room.
-	 * If no user is given the current user should be assumed.
-	 */
-	public function canJoin(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null): bool {
-		static $cache = [ ];
-		if ($user === null) $user = new \wcf\data\user\UserProfile(WCF::getUser());
+        return ($cache[$this->roomID][$user->userID] = $reason) === null;
+    }
 
-		if (!isset($cache[$this->roomID])) $cache[$this->roomID] = [];
-		if (array_key_exists($user->userID, $cache[$this->roomID])) {
-			return ($reason = $cache[$this->roomID][$user->userID]) === null;
-		}
+    /**
+     * Returns whether the given user can join this room.
+     * If no user is given the current user should be assumed.
+     */
+    public function canJoin(?UserProfile $user = null, ?\Exception &$reason = null): bool
+    {
+        static $cache = [ ];
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
 
-		$parameters = [ 'user' => $user
-		              , 'result' => null
-		              ];
-		\wcf\system\event\EventHandler::getInstance()->fireAction($this, 'canJoin', $parameters);
-		$reason = $parameters['result'];
+        if (!isset($cache[$this->roomID])) {
+            $cache[$this->roomID] = [];
+        }
+        if (\array_key_exists($user->userID, $cache[$this->roomID])) {
+            return ($reason = $cache[$this->roomID][$user->userID]) === null;
+        }
 
-		if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
-			throw new \DomainException('Result of canJoin must be a \Throwable or null.');
-		}
+        $parameters = [
+            'user' => $user,
+            'result' => null,
+        ];
+        EventHandler::getInstance()->fireAction($this, 'canJoin', $parameters);
+        $reason = $parameters['result'];
 
-		return ($cache[$this->roomID][$user->userID] = $reason) === null;
-	}
+        if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
+            throw new \DomainException('Result of canJoin must be a \Throwable or null.');
+        }
 
-	/**
-	 * Returns whether the given user can write public messages in this room.
-	 * If no user is given the current user should be assumed.
-	 */
-	public function canWritePublicly(\wcf\data\user\UserProfile $user = null, \Exception &$reason = null): bool {
-		static $cache = [ ];
-		if ($user === null) $user = new \wcf\data\user\UserProfile(WCF::getUser());
+        return ($cache[$this->roomID][$user->userID] = $reason) === null;
+    }
 
-		if (!isset($cache[$this->roomID])) $cache[$this->roomID] = [];
-		if (array_key_exists($user->userID, $cache[$this->roomID])) {
-			return ($reason = $cache[$this->roomID][$user->userID]) === null;
-		}
+    /**
+     * Returns whether the given user can write public messages in this room.
+     * If no user is given the current user should be assumed.
+     */
+    public function canWritePublicly(?UserProfile $user = null, ?\Exception &$reason = null): bool
+    {
+        static $cache = [ ];
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
 
-		$result = null;
-		if (!PermissionHandler::get($user)->getPermission($this, 'user.canWrite')) {
-			$result = new PermissionDeniedException();
-		}
+        if (!isset($cache[$this->roomID])) {
+            $cache[$this->roomID] = [];
+        }
+        if (\array_key_exists($user->userID, $cache[$this->roomID])) {
+            return ($reason = $cache[$this->roomID][$user->userID]) === null;
+        }
 
-		$parameters = [ 'user'   => $user
-		              , 'result' => $result
-		              ];
-		\wcf\system\event\EventHandler::getInstance()->fireAction($this, 'canWritePublicly', $parameters);
-		$reason = $parameters['result'];
+        $result = null;
+        if (!PermissionHandler::get($user)->getPermission($this, 'user.canWrite')) {
+            $result = new PermissionDeniedException();
+        }
 
-		if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
-			throw new \DomainException('Result of canWritePublicly must be a \Throwable or null.');
-		}
+        $parameters = [
+            'user' => $user,
+            'result' => $result,
+        ];
+        EventHandler::getInstance()->fireAction($this, 'canWritePublicly', $parameters);
+        $reason = $parameters['result'];
 
-		return ($cache[$this->roomID][$user->userID] = $reason) === null;
-	}
+        if (!($reason === null || $reason instanceof \Exception || $reason instanceof \Throwable)) {
+            throw new \DomainException('Result of canWritePublicly must be a \Throwable or null.');
+        }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getTitle() {
-		return WCF::getLanguage()->get($this->title);
-	}
+        return ($cache[$this->roomID][$user->userID] = $reason) === null;
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getTopic() {
-		$topic = StringUtil::trim(WCF::getLanguage()->get($this->topic));
+    /**
+     * @inheritDoc
+     */
+    public function getTitle()
+    {
+        return WCF::getLanguage()->get($this->title);
+    }
 
-		if (!$this->topicUseHtml) {
-			$topic = StringUtil::encodeHTML($topic);
-		}
+    /**
+     * @inheritDoc
+     */
+    public function getTopic()
+    {
+        $topic = StringUtil::trim(WCF::getLanguage()->get($this->topic));
 
-		return $topic;
-	}
+        if (!$this->topicUseHtml) {
+            $topic = StringUtil::encodeHTML($topic);
+        }
 
-	/**
-	 * Returns an array of users in this room.
-	 */
-	public function getUsers() {
-		if (self::$userToRoom === null) {
-			$sql = "SELECT     r2u.userID, r2u.roomID
-			        FROM       chat1_room_to_user r2u
-			        INNER JOIN wcf1_user u
-			                ON r2u.userID = u.userID
-			        WHERE      r2u.active = ?
-			        ORDER BY   u.username ASC";
-			$statement = WCF::getDB()->prepare($sql);
-			$statement->execute([ 1 ]);
-			self::$userToRoom = $statement->fetchMap('roomID', 'userID', false);
+        return $topic;
+    }
 
-			if (!empty(self::$userToRoom)) {
-				UserRuntimeCache::getInstance()->cacheObjectIDs(array_merge(...self::$userToRoom));
-			}
-		}
+    /**
+     * Returns an array of users in this room.
+     */
+    public function getUsers()
+    {
+        if (self::$userToRoom === null) {
+            $sql = "SELECT      r2u.userID,
+                                r2u.roomID
+                    FROM        chat1_room_to_user r2u
+                    INNER JOIN  wcf1_user u
+                            ON  r2u.userID = u.userID
+                    WHERE       r2u.active = ?
+                    ORDER BY    u.username ASC";
+            $statement = WCF::getDB()->prepare($sql);
+            $statement->execute([ 1 ]);
+            self::$userToRoom = $statement->fetchMap('roomID', 'userID', false);
 
-		if (!isset(self::$userToRoom[$this->roomID])) return [ ];
+            if (!empty(self::$userToRoom)) {
+                ChatUserRuntimeCache::getInstance()->cacheObjectIDs(\array_merge(...self::$userToRoom));
+            }
+        }
 
-		return UserRuntimeCache::getInstance()->getObjects(self::$userToRoom[$this->roomID]);
-	}
+        if (!isset(self::$userToRoom[$this->roomID])) {
+            return [ ];
+        }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getLink() {
-		return LinkHandler::getInstance()->getLink('Room', [ 'application'   => 'chat'
-		                                                   , 'object'        => $this
-		                                                   , 'forceFrontend' => true
-		                                                   ]
-		                                          );
-	}
+        return ChatUserRuntimeCache::getInstance()->getObjects(self::$userToRoom[$this->roomID]);
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function jsonSerialize() {
-		return [ 'title' => $this->getTitle()
-		       , 'topic' => $this->getTopic()
-		       , 'link'  => $this->getLink()
-		       ];
-	}
+    /**
+     * @inheritDoc
+     */
+    public function getLink()
+    {
+        return LinkHandler::getInstance()->getLink(
+            'Room',
+            [
+                'application' => 'chat',
+                'object' => $this,
+                'forceFrontend' => true,
+            ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'title' => $this->getTitle(),
+            'topic' => $this->getTopic(),
+            'link' => $this->getLink(),
+        ];
+    }
 }
