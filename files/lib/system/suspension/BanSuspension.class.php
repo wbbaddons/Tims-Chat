@@ -22,7 +22,7 @@ use wcf\data\user\UserProfile;
 /**
  * BanSuspension removes join privileges.
  */
-class BanSuspension implements ISuspension
+final class BanSuspension implements ISuspension
 {
     /**
      * @inheritDoc

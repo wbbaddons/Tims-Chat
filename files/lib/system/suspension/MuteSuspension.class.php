@@ -22,7 +22,7 @@ use wcf\data\user\UserProfile;
 /**
  * MuteSuspension removes write privileges.
  */
-class MuteSuspension implements ISuspension
+final class MuteSuspension implements ISuspension
 {
     /**
      * @inheritDoc
