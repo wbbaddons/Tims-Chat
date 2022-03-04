@@ -26,11 +26,8 @@ trait TNeedsUser
 {
     /**
      * Returns the user with the given username.
-     *
-     * @param   string  $username
-     * @return  \wcf\data\user\User
      */
-    protected function getUser($username)
+    protected function getUser(string $username): User
     {
         static $cache = [ ];
         if (!isset($cache[$username])) {
@@ -42,11 +39,8 @@ trait TNeedsUser
 
     /**
      * Checks whether the given username is valid and throws otherwise.
-     *
-     * @param   string  $username
-     * @return  \wcf\data\user\User
      */
-    protected function assertUser($username)
+    protected function assertUser(string $username): User
     {
         $user = $this->getUser($username);
 
