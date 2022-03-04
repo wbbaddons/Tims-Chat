@@ -29,7 +29,7 @@ use wcf\util\StringUtil;
 /**
  * Shows the suspension list.
  */
-class SuspensionListPage extends SortablePage
+final class SuspensionListPage extends SortablePage
 {
     /**
      * @inheritDoc

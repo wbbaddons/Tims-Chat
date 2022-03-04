@@ -21,7 +21,7 @@ use wcf\page\SortablePage;
 /**
  * Shows the room list.
  */
-class RoomListPage extends SortablePage
+final class RoomListPage extends SortablePage
 {
     /**
      * @inheritDoc

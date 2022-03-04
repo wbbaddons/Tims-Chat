@@ -21,7 +21,7 @@ use wcf\page\SortablePage;
 /**
  * Shows the command trigger list.
  */
-class CommandTriggerListPage extends SortablePage
+final class CommandTriggerListPage extends SortablePage
 {
     /**
      * @inheritDoc

@@ -31,7 +31,7 @@ use wcf\util\HeaderUtil;
 /**
  * Shows the log of a specific chat room.
  */
-class LogPage extends AbstractPage
+final class LogPage extends AbstractPage
 {
     use TConfiguredPage;
 

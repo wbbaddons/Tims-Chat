@@ -28,7 +28,7 @@ use wcf\system\WCF;
 /**
  * Shows a specific chat room.
  */
-class RoomPage extends AbstractPage
+final class RoomPage extends AbstractPage
 {
     use TConfiguredPage;
 

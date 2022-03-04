@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * Shows the list of available chat rooms.
  */
-class RoomListPage extends AbstractPage
+final class RoomListPage extends AbstractPage
 {
     /**
      * @inheritDoc
