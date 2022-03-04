@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * AttachmentMessageType represents a message with an attached file.
  */
-class AttachmentMessageType implements IMessageType, IDeletableMessageType
+final class AttachmentMessageType implements IMessageType, IDeletableMessageType
 {
     use TCanSeeInSameRoom;
 

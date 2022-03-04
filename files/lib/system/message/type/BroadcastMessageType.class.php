@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * BroadcastMessageType represents a broadcasted message.
  */
-class BroadcastMessageType implements IMessageType, IDeletableMessageType
+final class BroadcastMessageType implements IMessageType, IDeletableMessageType
 {
     /**
      * @var PlainMessageType

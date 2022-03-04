@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * ColorMessageType represents a color message.
  */
-class ColorMessageType implements IMessageType
+final class ColorMessageType implements IMessageType
 {
     use TDefaultPayload;
 

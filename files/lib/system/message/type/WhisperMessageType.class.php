@@ -25,7 +25,7 @@ use wcf\system\WCF;
 /**
  * WhisperMessageType represents a whispered message.
  */
-class WhisperMessageType implements IMessageType
+final class WhisperMessageType implements IMessageType
 {
     /**
      * HtmlOutputProcessor to use.

@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * BackMessageType represents a notice that a user now is now back.
  */
-class BackMessageType implements IMessageType
+final class BackMessageType implements IMessageType
 {
     use TDefaultPayload;
 

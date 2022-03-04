@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * WhereMessageType represents the reply to WhereCommand.
  */
-class WhereMessageType implements IMessageType
+final class WhereMessageType implements IMessageType
 {
     use TCanSeeCreator;
 

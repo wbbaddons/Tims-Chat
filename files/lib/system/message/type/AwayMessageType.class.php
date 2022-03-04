@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * AwayMessageType represents a notice that a user now is away from chat.
  */
-class AwayMessageType implements IMessageType
+final class AwayMessageType implements IMessageType
 {
     use TDefaultPayload;
 

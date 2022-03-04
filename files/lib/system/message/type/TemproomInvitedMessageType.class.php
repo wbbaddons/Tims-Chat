@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * TemproomInvitedMessageType informs a user that they were invited to a temporary room.
  */
-class TemproomInvitedMessageType implements IMessageType
+final class TemproomInvitedMessageType implements IMessageType
 {
     /**
      * @inheritDoc

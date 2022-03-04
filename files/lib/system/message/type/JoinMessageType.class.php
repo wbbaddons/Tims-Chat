@@ -18,7 +18,7 @@ namespace chat\system\message\type;
 /**
  * JoinMessageType represents a join message.
  */
-class JoinMessageType implements IMessageType
+final class JoinMessageType implements IMessageType
 {
     use TCanSeeInSameRoom;
     use TDefaultPayload;

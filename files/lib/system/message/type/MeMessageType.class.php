@@ -22,7 +22,7 @@ use wcf\system\WCF;
 /**
  * MeMessageType represents an action message.
  */
-class MeMessageType implements IMessageType, IDeletableMessageType
+final class MeMessageType implements IMessageType, IDeletableMessageType
 {
     use TCanSeeInSameRoom;
     use TDefaultPayload;

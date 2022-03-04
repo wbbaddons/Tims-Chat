@@ -18,7 +18,7 @@ namespace chat\system\message\type;
 /**
  * TemproomCreatedMessageType informs a user that a temporary room was created.
  */
-class TemproomCreatedMessageType implements IMessageType
+final class TemproomCreatedMessageType implements IMessageType
 {
     use TCanSeeCreator;
     use TDefaultPayload;

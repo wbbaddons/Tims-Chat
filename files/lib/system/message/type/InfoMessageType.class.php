@@ -18,7 +18,7 @@ namespace chat\system\message\type;
 /**
  * InfoMessageType represents the reply to InfoCommand.
  */
-class InfoMessageType implements IMessageType
+final class InfoMessageType implements IMessageType
 {
     use TCanSeeCreator;
     use TDefaultPayload;

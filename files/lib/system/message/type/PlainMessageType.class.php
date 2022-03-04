@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * PlainMessageType represents a normal message.
  */
-class PlainMessageType implements IMessageType, IDeletableMessageType
+final class PlainMessageType implements IMessageType, IDeletableMessageType
 {
     use TCanSeeInSameRoom;
 

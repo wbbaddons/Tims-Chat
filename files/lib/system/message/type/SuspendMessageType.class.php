@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * SuspendMessageType informs about suspensions.
  */
-class SuspendMessageType implements IMessageType
+final class SuspendMessageType implements IMessageType
 {
     /**
      * @inheritDoc

@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * TombstoneMessageType marks a different message as dead.
  */
-class TombstoneMessageType implements IMessageType
+final class TombstoneMessageType implements IMessageType
 {
     use TDefaultPayload;
 

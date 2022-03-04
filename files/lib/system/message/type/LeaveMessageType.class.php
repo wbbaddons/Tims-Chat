@@ -18,7 +18,7 @@ namespace chat\system\message\type;
 /**
  * LeaveMessageType represents a leave message.
  */
-class LeaveMessageType implements IMessageType
+final class LeaveMessageType implements IMessageType
 {
     use TCanSeeInSameRoom;
     use TDefaultPayload;

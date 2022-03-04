@@ -22,7 +22,7 @@ use wcf\data\user\UserProfile;
 /**
  * ChatUpdateMessageType informs the chat about a back end update.
  */
-class ChatUpdateMessageType implements IMessageType
+final class ChatUpdateMessageType implements IMessageType
 {
     use TDefaultPayload;
 

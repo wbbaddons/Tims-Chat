@@ -24,7 +24,7 @@ use wcf\system\WCF;
 /**
  * TeamMessageType represents a team internal message.
  */
-class TeamMessageType implements IMessageType, IDeletableMessageType
+final class TeamMessageType implements IMessageType, IDeletableMessageType
 {
     /**
      * @var PlainMessageType
