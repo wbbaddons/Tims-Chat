@@ -1,10 +1,10 @@
 {
   "dependencies": {
-    "@babel/cli": "^7.15.4",
-    "@babel/core": "^7.15.5",
-    "@babel/preset-env": "^7.15.6",
-    "prettier": "^2.4.1",
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "prettier": "^2.6.1",
     "requirejs": "^2.3.6",
-    "terser": "^5.8.0"
+    "terser": "^5.12.1"
   }
 }
