@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2026-03-10
+ * Change Date: 2026-08-10
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -157,6 +157,11 @@ $chatEmbedMaxWidth: 400px;
 		flex-direction: column;
 		flex: 1 1 auto;
 		width: 100%;
+
+		> .contentInteraction:first-child {
+			margin-top: 0;
+			margin-bottom: 20px;
+		}
 	}
 
 	#chatMessageStream > .scrollContainer,
@@ -257,7 +262,8 @@ $chatEmbedMaxWidth: 400px;
 
 							// Limit embedded images and videos to a reasonable size
 							img:not(.smiley):not(.userAvatarImage) {
-								max-width: $chatEmbedMaxWidth;
+								// Workaround: `min` is an internal Sass function but we want the actual CSS function
+								max-width: min + unquote( '(' ) + "#{100%, $chatEmbedMaxWidth}" + unquote( ')' );
 							}
 
 							.videoContainer {
@@ -607,7 +613,9 @@ html.fullscreen {
 
 		.pageHeaderContainer,
 		.pageNavigation,
-		.pageFooter {
+		.boxesFooterBoxes,
+		.pageFooter,
+		.contentInteraction {
 			display: none;
 		}
 
