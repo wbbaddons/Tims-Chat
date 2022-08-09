@@ -31,6 +31,7 @@ define([
 		constructor(element, ...superDeps) {
 			super(element, ...superDeps)
 
+			this.mobile = false
 			this.open = false
 			this.userList = document.getElementById('chatUserList')
 			this.sidebar = document.querySelector('.sidebar')
@@ -43,6 +44,7 @@ define([
 		}
 
 		enableMobile() {
+			this.mobile = true
 			this.element.parentElement.hidden = false
 		}
 
@@ -52,6 +54,7 @@ define([
 			}
 
 			this.element.parentElement.hidden = true
+			this.mobile = false
 		}
 
 		show(doShow = true) {
@@ -70,6 +73,10 @@ define([
 				this.userList.appendChild(this.closeButton)
 
 				this.userList.dataset.show = 'true'
+
+				if (this.mobile) {
+					UiScreen.scrollDisable()
+				}
 			}
 			else {
 				delete this.userList.dataset.show
@@ -81,6 +88,10 @@ define([
 
 				this.sidebar.style.removeProperty('display')
 				this.open = false
+
+				if (this.mobile) {
+					UiScreen.scrollEnable()
+				}
 			}
 		}
 

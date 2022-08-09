@@ -37,6 +37,7 @@ define([
 				return
 			}
 
+			this.mobile = false
 			this.open = false
 			this.sidebar = document.querySelector('.sidebar')
 
@@ -48,6 +49,7 @@ define([
 		}
 
 		enableMobile() {
+			this.mobile = true
 			this.element.parentElement.hidden = false
 		}
 
@@ -57,6 +59,7 @@ define([
 			}
 
 			this.element.parentElement.hidden = true
+			this.mobile = false
 		}
 
 		show(doShow = true) {
@@ -75,6 +78,10 @@ define([
 				this.roomList.appendChild(this.closeButton)
 
 				this.roomList.dataset.show = 'true'
+
+				if (this.mobile) {
+					UiScreen.scrollDisable()
+				}
 			}
 			else {
 				delete this.roomList.dataset.show
@@ -86,6 +93,10 @@ define([
 
 				this.sidebar.style.removeProperty('display')
 				this.open = false
+
+				if (this.mobile) {
+					UiScreen.scrollEnable()
+				}
 			}
 		}
 
