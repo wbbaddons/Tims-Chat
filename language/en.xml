@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="en">
+<import>
 	<category name="chat.acp.index">
 		<item name="chat.acp.index.system.software.chatVersion"><![CDATA[Tim’s Chat-Version]]></item>
 	</category>
@@ -237,4 +238,5 @@
 		<item name="wcf.user.activityPoint.objectType.be.bastelstu.chat.activityPointEvent.join"><![CDATA[Chat Joins]]></item>
 		<item name="wcf.user.activityPoint.objectType.be.bastelstu.chat.activityPointEvent.message"><![CDATA[Chat Messages]]></item>
 	</category>
+</import>
 </language>
