@@ -495,30 +495,21 @@ $chatEmbedMaxWidth: 400px;
 		margin-left: 5px;
 	}
 
-	#smileyPickerContainer {
-		#smilies-text {
-			@if variable_exists(wcfContentContainerBackground) {
-				background-color: $wcfContentContainerBackground;
-			} @else {
-				// Compatibility with API_VERSION 3.0
-				background-color: rgba(255, 255, 255, 1);
-			}
+	#chatUserList,
+	[data-box-identifier='be.bastelstu.chat.roomListSidebar'] {
+		.modalCloseButton {
+			margin: 0 -10px -20px -10px;
+		}
+	}
 
-			border: 1px solid $wcfContentBorderInner;
-			padding: 20px;
-			margin-top: 20px;
-			margin-bottom: 20px;
-
-			> .smileyList {
-				overflow: auto;
-			}
+	@include screen-md-down {
+		#smileyPickerContainer[data-show='true'] > div {
+			margin: 0;
 		}
 
-		#smileyPickerCloseButton {
-			display: none;
-		}
-
-		@include screen-md-down {
+		#smileyPickerContainer,
+		#chatUserList,
+		[data-box-identifier='be.bastelstu.chat.roomListSidebar'] {
 			&[data-show='true'] {
 				position: fixed;
 				top: 0;
@@ -530,7 +521,9 @@ $chatEmbedMaxWidth: 400px;
 				flex-direction: column;
 				pointer-events: all;
 
-				#smileyPickerCloseButton {
+				background-color: $wcfContentBackground;
+
+				.modalCloseButton {
 					background-color: $wcfSidebarBackground;
 					color: $wcfSidebarLink;
 					display: block;
@@ -540,12 +533,11 @@ $chatEmbedMaxWidth: 400px;
 					cursor: pointer;
 				}
 
-				#smilies-text {
+				> div {
 					border-top: none;
 					border-right: none;
 					border-left: none;
 
-					margin: 0;
 					height: 0;
 					flex: 1 1 auto;
 					position: relative;
@@ -573,6 +565,24 @@ $chatEmbedMaxWidth: 400px;
 					}
 				}
 			}
+		}
+	}
+
+	#smileyPickerContainer {
+		> .messageTabMenuContent {
+			background-color: $wcfContentContainerBackground;
+			border: 1px solid $wcfContentBorderInner;
+			padding: 20px;
+			margin-top: 20px;
+			margin-bottom: 20px;
+
+			> .smileyList {
+				overflow: auto;
+			}
+		}
+
+		.modalCloseButton {
+			display: none;
 		}
 	}
 

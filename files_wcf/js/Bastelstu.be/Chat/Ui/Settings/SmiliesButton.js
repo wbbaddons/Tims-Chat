@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2026-03-10
+ * Change Date: 2026-08-10
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -97,7 +97,7 @@ define(['./ToggleButton', 'WoltLabSuite/Core/Ui/Screen'], function (
 		enableMobile() {
 			this.mobile = true
 
-			elHide(this.element)
+			elHide(this.element.parentElement)
 			elShow(this.shadowToggleButton)
 
 			// Do not show the overlay when the viewport changes
@@ -114,7 +114,7 @@ define(['./ToggleButton', 'WoltLabSuite/Core/Ui/Screen'], function (
 		disableMobile() {
 			this.mobile = false
 
-			elShow(this.element)
+			elShow(this.element.parentElement)
 			elHide(this.shadowToggleButton)
 
 			UiScreen.scrollEnable()
