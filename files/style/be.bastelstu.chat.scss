@@ -70,17 +70,27 @@ $chatEmbedMaxWidth: 400px;
 			flex: 0.5 0 auto;
 			flex-direction: column;
 			margin-left: 10px;
-			max-width: 310px;
+			max-width: min(310px, 35%);
 
 			> .boxContainer {
 				-webkit-columns: 1;
 				-moz-columns: 1;
 				columns: 1;
+
+				margin-bottom: 0;
 			}
 		}
 	}
 
-	@include screen-lg {
+	@include screen-sm-up {
+		.layoutBoundary {
+			flex-wrap: nowrap;
+		}
+
+		.content + .sidebar.boxesSidebarRight {
+			margin-top: 0;
+		}
+
 		.boxesSidebarRight {
 			&,
 			> .boxContainer {
@@ -128,7 +138,9 @@ $chatEmbedMaxWidth: 400px;
 				}
 			}
 		}
+	}
 
+	@include screen-lg {
 		#chatQuickSettings {
 			display: none;
 		}
