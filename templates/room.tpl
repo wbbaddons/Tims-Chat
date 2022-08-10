@@ -10,19 +10,16 @@
 	</section>
 {/capture}
 
-{capture assign='headerNavigation'}
+{capture assign='contentInteractionButtons'}
 	{if $room->canSeeLog()}
-		<li>
-			<a href="{link controller='Log' application='chat' object=$room}{/link}" title="{lang}chat.log.title{/lang}" class="jsTooltip">
-				<span class="icon icon16 fa-tasks"></span> <span class="invisible">{lang}chat.log.title{/lang}</span>
-			</a>
-		</li>
-	{/if}
-	<li>
-		<a href="{link}{/link}" title="{lang}chat.room.button.leave{/lang}" class="jsTooltip chatLeaveButton">
-			<span class="icon icon16 fa-power-off"></span> <span class="invisible">{lang}chat.room.button.leave{/lang}</span>
+		<a href="{link controller='Log' application='chat' object=$room}{/link}" title="{lang}chat.log.title{/lang}" class="contentInteractionButton button small">
+			<span class="icon icon16 fa-tasks"></span> <span>{lang}chat.log.title{/lang}</span>
 		</a>
-	</li>
+	{/if}
+
+	<a href="{link}{/link}" title="{lang}chat.room.button.leave{/lang}" class="contentInteractionButton button small chatLeaveButton">
+		<span class="icon icon16 fa-power-off"></span> <span>{lang}chat.room.button.leave{/lang}</span>
+	</a>
 {/capture}
 
 {capture assign='__pageDataAttributes'}data-room-id="{@$room->roomID}"{/capture}
@@ -63,7 +60,7 @@
 			</div>
 		{/if}
 		<div class="chatInputWrapper">
-			<textarea maxlength="{CHAT_MAX_LENGTH}" class="long"></textarea>
+			<textarea maxlength="{CHAT_MAX_LENGTH}" class="long" rows="1"></textarea>
 			<span id="chatQuickSettings">
 				<span class="icon icon24 fa-ellipsis-v"></span>
 			</span>

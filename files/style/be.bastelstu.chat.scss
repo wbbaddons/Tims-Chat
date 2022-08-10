@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2026-03-10
+ * Change Date: 2026-08-10
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -70,17 +70,31 @@ $chatEmbedMaxWidth: 400px;
 			flex: 0.5 0 auto;
 			flex-direction: column;
 			margin-left: 10px;
-			max-width: 310px;
+			max-width: min(310px, 35%);
 
 			> .boxContainer {
 				-webkit-columns: 1;
 				-moz-columns: 1;
 				columns: 1;
+
+				margin-bottom: 0;
+
+				> .box {
+					border-bottom: none;
+				}
 			}
 		}
 	}
 
-	@include screen-lg {
+	@include screen-sm-up {
+		.layoutBoundary {
+			flex-wrap: nowrap;
+		}
+
+		.content + .sidebar.boxesSidebarRight {
+			margin-top: 0;
+		}
+
 		.boxesSidebarRight {
 			&,
 			> .boxContainer {
@@ -89,6 +103,7 @@ $chatEmbedMaxWidth: 400px;
 			}
 
 			> .boxContainer {
+				overflow: auto;
 				flex: 1 1 auto;
 
 				> .box {
@@ -96,14 +111,26 @@ $chatEmbedMaxWidth: 400px;
 						flex: 2 0 0px;
 						min-height: 15rem;
 
+						html.fullscreen & {
+							flex: 1 1 content;
+						}
+
 						> .boxContent {
 							flex-basis: 6rem;
 						}
 					}
 
 					&[data-box-identifier='be.bastelstu.chat.roomListSidebar'] {
-						flex: 1 1 0px;
+						flex: 1 1 12rem;
 						min-height: 12rem;
+
+						html.fullscreen & {
+							flex: 1 1 content;
+						}
+
+						@media screen and (max-height: 440px) {
+							min-height: 120px;
+						}
 
 						.badge {
 							float: right;
@@ -128,7 +155,9 @@ $chatEmbedMaxWidth: 400px;
 				}
 			}
 		}
+	}
 
+	@include screen-lg {
 		#chatQuickSettings {
 			display: none;
 		}
@@ -157,6 +186,11 @@ $chatEmbedMaxWidth: 400px;
 		flex-direction: column;
 		flex: 1 1 auto;
 		width: 100%;
+
+		> .contentInteraction:first-child {
+			margin-top: 0;
+			margin-bottom: 20px;
+		}
 	}
 
 	#chatMessageStream > .scrollContainer,
@@ -257,7 +291,8 @@ $chatEmbedMaxWidth: 400px;
 
 							// Limit embedded images and videos to a reasonable size
 							img:not(.smiley):not(.userAvatarImage) {
-								max-width: $chatEmbedMaxWidth;
+								// Workaround: `min` is an internal Sass function but we want the actual CSS function
+								max-width: min + unquote( '(' ) + "#{100%, $chatEmbedMaxWidth}" + unquote( ')' );
 							}
 
 							.videoContainer {
@@ -371,15 +406,18 @@ $chatEmbedMaxWidth: 400px;
 
 	#chatInputContainer {
 		margin-top: 10px;
+		margin-bottom: 1.48 * $wcfFontSizeDefault; // 1.48 is the default line height
 		clear: both;
 
-		textarea {
-			resize: none;
-		}
 
 		.charCounter {
 			float: right;
 			color: $wcfContentDimmedText;
+			margin-bottom: -(1.48 * $wcfFontSizeDefault);
+		}
+
+		textarea {
+			resize: none;
 		}
 
 		> div {
@@ -489,30 +527,21 @@ $chatEmbedMaxWidth: 400px;
 		margin-left: 5px;
 	}
 
-	#smileyPickerContainer {
-		#smilies-text {
-			@if variable_exists(wcfContentContainerBackground) {
-				background-color: $wcfContentContainerBackground;
-			} @else {
-				// Compatibility with API_VERSION 3.0
-				background-color: rgba(255, 255, 255, 1);
-			}
+	#chatUserList,
+	[data-box-identifier='be.bastelstu.chat.roomListSidebar'] {
+		.modalCloseButton {
+			margin: 0 -10px -20px -10px;
+		}
+	}
 
-			border: 1px solid $wcfContentBorderInner;
-			padding: 20px;
-			margin-top: 20px;
-			margin-bottom: 20px;
-
-			> .smileyList {
-				overflow: auto;
-			}
+	@include screen-md-down {
+		#smileyPickerContainer[data-show='true'] > div {
+			margin: 0;
 		}
 
-		#smileyPickerCloseButton {
-			display: none;
-		}
-
-		@include screen-md-down {
+		#smileyPickerContainer,
+		#chatUserList,
+		[data-box-identifier='be.bastelstu.chat.roomListSidebar'] {
 			&[data-show='true'] {
 				position: fixed;
 				top: 0;
@@ -524,7 +553,10 @@ $chatEmbedMaxWidth: 400px;
 				flex-direction: column;
 				pointer-events: all;
 
-				#smileyPickerCloseButton {
+				background-color: $wcfContentBackground;
+
+				.modalCloseButton {
+					border-top: 1px solid $wcfContentBorderInner;
 					background-color: $wcfSidebarBackground;
 					color: $wcfSidebarLink;
 					display: block;
@@ -534,12 +566,9 @@ $chatEmbedMaxWidth: 400px;
 					cursor: pointer;
 				}
 
-				#smilies-text {
-					border-top: none;
-					border-right: none;
-					border-left: none;
+				> div {
+					border: none;
 
-					margin: 0;
 					height: 0;
 					flex: 1 1 auto;
 					position: relative;
@@ -567,6 +596,24 @@ $chatEmbedMaxWidth: 400px;
 					}
 				}
 			}
+		}
+	}
+
+	#smileyPickerContainer {
+		> .messageTabMenuContent {
+			background-color: $wcfContentContainerBackground;
+			border: 1px solid $wcfContentBorderInner;
+			padding: 20px;
+			margin-top: 20px;
+			margin-bottom: 20px;
+
+			> .smileyList {
+				overflow: auto;
+			}
+		}
+
+		.modalCloseButton {
+			display: none;
 		}
 	}
 
@@ -607,7 +654,9 @@ html.fullscreen {
 
 		.pageHeaderContainer,
 		.pageNavigation,
-		.pageFooter {
+		.boxesFooterBoxes,
+		.pageFooter,
+		.contentInteraction {
 			display: none;
 		}
 

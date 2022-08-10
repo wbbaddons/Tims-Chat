@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2010-2021 Tim Düsterhus.
+ * Copyright (c) 2010-2022 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2026-03-10
+ * Change Date: 2026-08-10
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -135,6 +135,7 @@ define(['WoltLabSuite/Core/Date/Util', 'WoltLabSuite/Core/Language'], function (
 				textarea.parentNode.classList.add('flexibleTextarea')
 			}
 
+			textarea.removeAttribute('rows')
 			textarea.classList.add('flexibleTextareaContent')
 			pre.classList.add('flexibleTextareaMirror')
 
@@ -376,6 +377,20 @@ define(['WoltLabSuite/Core/Date/Util', 'WoltLabSuite/Core/Language'], function (
 			}
 
 			return out
+		}
+
+		static getElementSiblings(element) {
+			if (!element || !element.parentNode) {
+				return
+			}
+
+			const children = [ ...element.parentNode.children ]
+			const index = children.indexOf(element);
+
+			return [
+				...children.slice(0, index),
+				...children.slice(index + 1)
+			]
 		}
 	}
 

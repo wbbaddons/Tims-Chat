@@ -124,6 +124,8 @@
 		<item name="chat.room.button.fullscreen"><![CDATA[Toggle Fullscreen]]></item>
 		<item name="chat.room.button.leave"><![CDATA[Leave Chat]]></item>
 		<item name="chat.room.button.notifications"><![CDATA[Toggle Notifications]]></item>
+		<item name="chat.room.button.userList"><![CDATA[Show User List]]></item>
+		<item name="chat.room.button.roomList"><![CDATA[Show Room List]]></item>
 		<item name="chat.room.userList"><![CDATA[Users]]></item>
 		<item name="chat.room.userList.away"><![CDATA[Away{if $user.away}: {$user.away}{/if}]]></item>
 		<item name="chat.room.userList.moderator"><![CDATA[Moderator]]></item>
