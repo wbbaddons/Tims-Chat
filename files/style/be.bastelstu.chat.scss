@@ -78,6 +78,10 @@ $chatEmbedMaxWidth: 400px;
 				columns: 1;
 
 				margin-bottom: 0;
+
+				> .box {
+					border-bottom: none;
+				}
 			}
 		}
 	}
@@ -99,6 +103,7 @@ $chatEmbedMaxWidth: 400px;
 			}
 
 			> .boxContainer {
+				overflow: auto;
 				flex: 1 1 auto;
 
 				> .box {
@@ -106,14 +111,26 @@ $chatEmbedMaxWidth: 400px;
 						flex: 2 0 0px;
 						min-height: 15rem;
 
+						html.fullscreen & {
+							flex: 1 1 content;
+						}
+
 						> .boxContent {
 							flex-basis: 6rem;
 						}
 					}
 
 					&[data-box-identifier='be.bastelstu.chat.roomListSidebar'] {
-						flex: 1 1 0px;
+						flex: 1 1 12rem;
 						min-height: 12rem;
+
+						html.fullscreen & {
+							flex: 1 1 content;
+						}
+
+						@media screen and (max-height: 440px) {
+							min-height: 120px;
+						}
 
 						.badge {
 							float: right;
