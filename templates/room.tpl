@@ -60,7 +60,7 @@
 			</div>
 		{/if}
 		<div class="chatInputWrapper">
-			<textarea maxlength="{CHAT_MAX_LENGTH}" class="long"></textarea>
+			<textarea maxlength="{CHAT_MAX_LENGTH}" class="long" rows="1"></textarea>
 			<span id="chatQuickSettings">
 				<span class="icon icon24 fa-ellipsis-v"></span>
 			</span>

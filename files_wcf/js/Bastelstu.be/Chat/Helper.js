@@ -135,6 +135,7 @@ define(['WoltLabSuite/Core/Date/Util', 'WoltLabSuite/Core/Language'], function (
 				textarea.parentNode.classList.add('flexibleTextarea')
 			}
 
+			textarea.removeAttribute('rows')
 			textarea.classList.add('flexibleTextareaContent')
 			pre.classList.add('flexibleTextareaMirror')
 

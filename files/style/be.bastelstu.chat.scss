@@ -389,15 +389,18 @@ $chatEmbedMaxWidth: 400px;
 
 	#chatInputContainer {
 		margin-top: 10px;
+		margin-bottom: 1.48 * $wcfFontSizeDefault; // 1.48 is the default line height
 		clear: both;
 
-		textarea {
-			resize: none;
-		}
 
 		.charCounter {
 			float: right;
 			color: $wcfContentDimmedText;
+			margin-bottom: -(1.48 * $wcfFontSizeDefault);
+		}
+
+		textarea {
+			resize: none;
 		}
 
 		> div {
@@ -536,6 +539,7 @@ $chatEmbedMaxWidth: 400px;
 				background-color: $wcfContentBackground;
 
 				.modalCloseButton {
+					border-top: 1px solid $wcfContentBorderInner;
 					background-color: $wcfSidebarBackground;
 					color: $wcfSidebarLink;
 					display: block;
@@ -546,9 +550,7 @@ $chatEmbedMaxWidth: 400px;
 				}
 
 				> div {
-					border-top: none;
-					border-right: none;
-					border-left: none;
+					border: none;
 
 					height: 0;
 					flex: 1 1 auto;
