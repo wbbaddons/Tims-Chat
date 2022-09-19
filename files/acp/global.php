@@ -6,7 +6,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2026-09-17
+ * Change Date: 2026-09-19
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -15,5 +15,5 @@
 
 \define('RELATIVE_CHAT_DIR', '../');
 
-require_once(RELATIVE_CHAT_DIR . '/config.inc.php');
+require_once(RELATIVE_CHAT_DIR . '/app.config.inc.php');
 require_once(RELATIVE_WCF_DIR . 'acp/global.php');
