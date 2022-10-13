@@ -4,7 +4,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2026-09-17
+ * Change Date: 2026-10-13
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -144,13 +144,13 @@ define([
 			formSubmit.classList.add('formSubmit', 'dialogFormSubmit')
 
 			this.sendButton = document.createElement('button')
-			this.sendButton.classList.add('buttonPrimary')
+			this.sendButton.classList.add('button', 'buttonPrimary')
 			this.sendButton.innerText = Language.get('wcf.global.button.submit')
 			this.sendButton.addEventListener('click', (e) => this.send(tmpHash, e))
 			formSubmit.appendChild(this.sendButton)
 
 			this.cancelButton = document.createElement('button')
-			this.cancelButton.classList.add('jsDeleteButton')
+			this.cancelButton.classList.add('button', 'jsDeleteButton')
 			this.cancelButton.dataset.objectId = objectId
 			this.cancelButton.dataset.eventName = 'attachment'
 			this.cancelButton.innerText = Language.get('wcf.global.button.cancel')
