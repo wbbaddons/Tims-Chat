@@ -6,7 +6,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2026-09-17
+ * Change Date: 2026-10-13
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -110,7 +110,7 @@ class User extends DatabaseObjectDecorator implements \JsonSerializable
     /**
      * @inheritDoc
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'userID' => $this->userID,
