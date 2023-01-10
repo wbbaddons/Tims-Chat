@@ -3,9 +3,9 @@
                                             , "last 2 chromeandroid versions"
                                             , "firefox esr"
                                             , "last 2 firefox versions"
-                                            , "edge >= 17"
-                                            , "safari >= 12"
-                                            , "ios >= 12"
+                                            , "last 2 edge versions"
+                                            , "safari >= 15"
+                                            , "ios >= 15"
                                             ]
                               }
                  , "debug": true
