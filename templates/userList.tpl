@@ -6,7 +6,7 @@
 				<a href="{$user.link}">{@$user.image24}</a>
 
 				<div class="sidebarItemTitle">
-					<h3><a href="{@$user.link}" data-user-id="{@$user.userID}">{@$user.formattedUsername}</a></h3>
+					<h3><a href="{$user.link}" data-user-id="{$user.userID}">{@$user.formattedUsername}</a></h3>
 				</div>
 
 				<div class="iconColumn">

@@ -46,7 +46,7 @@
 					<tr class="jsTriggerRow">
 						<td class="columnIcon">
 							<a href="{link controller='CommandTriggerEdit' object=$trigger application='chat'}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$trigger->triggerID}" data-confirm-message-html="{lang __encode=true}chat.acp.command.trigger.delete.sure{/lang}"></span>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{$trigger->triggerID}" data-confirm-message-html="{lang __encode=true}chat.acp.command.trigger.delete.sure{/lang}"></span>
 
 							{event name='rowButtons'}
 						</td>

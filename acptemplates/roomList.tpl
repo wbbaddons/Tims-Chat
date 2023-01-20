@@ -37,14 +37,14 @@
 		<ol id="roomContainer0" class="sortableList" data-object-id="0">
 			{content}
 				{foreach from=$objects item=room}
-					<li class="sortableNode sortableNoNesting" data-object-id="{@$room->roomID}">
+					<li class="sortableNode sortableNoNesting" data-object-id="{$room->roomID}">
 						<span class="sortableNodeLabel">
 							<a href="{link controller='RoomEdit' application='chat' object=$room}{/link}">{$room}</a>
 
 							<span class="statusDisplay sortableButtonContainer">
 								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 								<a href="{link controller='RoomEdit' application='chat' object=$room}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$room->roomID}" data-confirm-message-html="{lang __encode=true}chat.acp.room.delete.sure{/lang}"></span>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{$room->roomID}" data-confirm-message-html="{lang __encode=true}chat.acp.room.delete.sure{/lang}"></span>
 								{event name='itemButtons'}
 							</span>
 						</span>

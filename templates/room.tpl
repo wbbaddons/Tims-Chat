@@ -22,7 +22,7 @@
 	</a>
 {/capture}
 
-{capture assign='__pageDataAttributes'}data-room-id="{@$room->roomID}"{/capture}
+{capture assign='__pageDataAttributes'}data-room-id="{$room->roomID}"{/capture}
 
 {include file='header'}
 

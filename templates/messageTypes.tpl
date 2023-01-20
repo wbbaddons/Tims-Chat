@@ -87,7 +87,7 @@
 				<ol class="containerList">
 					<li>
 						<div class="box48">
-							<a href="{$users.get($message.payload.user.userID).link}" title="{@$users.get($message.payload.user.userID).username}">
+							<a href="{$users.get($message.payload.user.userID).link}" title="{$users.get($message.payload.user.userID).username}">
 								{@$users.get($message.payload.user.userID).image48}
 							</a>
 							<div>
