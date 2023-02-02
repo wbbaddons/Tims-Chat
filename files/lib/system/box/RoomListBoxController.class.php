@@ -27,7 +27,7 @@ use wcf\system\WCF;
 /**
  * Dynamic box controller implementation for a list of rooms.
  */
-class RoomListBoxController extends AbstractDatabaseObjectListBoxController
+final class RoomListBoxController extends AbstractDatabaseObjectListBoxController
 {
     /**
      * @inheritDoc
