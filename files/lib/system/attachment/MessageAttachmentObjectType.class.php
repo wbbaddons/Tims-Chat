@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Copyright (c) 2010-2022 Tim Düsterhus.
+ * Copyright (c) 2010-2023 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2026-09-17
+ * Change Date: 2027-02-22
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -34,6 +34,10 @@ final class MessageAttachmentObjectType extends AbstractAttachmentObjectType
     {
         if ($objectID) {
             $message = new Message($objectID);
+
+            if (!$message->messageID) {
+                return false;
+            }
 
             \assert($message->getMessageType()->objectType === 'be.bastelstu.chat.messageType.attachment');
             $room = $message->getRoom();
