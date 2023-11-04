@@ -487,6 +487,12 @@ $chatEmbedMaxWidth: 400px;
 			@include screen-md-down {
 				@include dropdownMenu;
 
+				@at-root (with: all) {
+					html[data-color-scheme="dark"] & {
+						border: 1px solid var(--wcfDropdownBorderInner);
+					}
+				}
+
 				&.open {
 					display: block;
 					visibility: visible;
@@ -501,6 +507,7 @@ $chatEmbedMaxWidth: 400px;
 					// these rules are required to work around the .button default styling
 					.button {
 						@include wcfFontDefault;
+						text-align: start;
 
 						&.active,
 						&.active:hover {
