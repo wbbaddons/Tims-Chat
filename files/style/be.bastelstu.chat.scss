@@ -172,7 +172,7 @@ $chatEmbedMaxWidth: 400px;
 	}
 
 	.chatRoomTopic {
-		border-left: 5px solid $wcfContentBorderInner;
+		border-left: 5px solid var(--wcfContentBorderInner);
 		padding: 5px 0px 5px 10px;
 		margin-bottom: 10px;
 
@@ -352,7 +352,7 @@ $chatEmbedMaxWidth: 400px;
 					}
 
 					&.first {
-						border-top: 1px solid $wcfContentBorderInner;
+						border-top: 1px solid var(--wcfContentBorderInner);
 
 						.chatMessageContainer {
 							.chatMessageSide {
@@ -406,14 +406,14 @@ $chatEmbedMaxWidth: 400px;
 
 	#chatInputContainer {
 		margin-top: 10px;
-		margin-bottom: 1.48 * $wcfFontSizeDefault; // 1.48 is the default line height
+		margin-bottom: calc(1.48 * var(--wcfFontSizeDefault)); // 1.48 is the default line height
 		clear: both;
 
 
 		.charCounter {
 			float: right;
-			color: $wcfContentDimmedText;
-			margin-bottom: -(1.48 * $wcfFontSizeDefault);
+			color: var(--wcfContentDimmedText);
+			margin-bottom: calc(-1.48 * var(--wcfFontSizeDefault));
 		}
 
 		textarea {
@@ -511,12 +511,12 @@ $chatEmbedMaxWidth: 400px;
 
 						&.active,
 						&.active:hover {
-							color: $wcfButtonTextActive !important;
+							color: var(--wcfButtonTextActive) !important;
 						}
 
 						&:not(.active) {
 							background-color: transparent;
-							color: $wcfDropdownLink;
+							color: var(--wcfDropdownLink);
 						}
 
 						border-radius: 0;
@@ -560,12 +560,12 @@ $chatEmbedMaxWidth: 400px;
 				flex-direction: column;
 				pointer-events: all;
 
-				background-color: $wcfContentBackground;
+				background-color: var(--wcfContentBackground);
 
 				.modalCloseButton {
-					border-top: 1px solid $wcfContentBorderInner;
-					background-color: $wcfSidebarBackground;
-					color: $wcfSidebarLink;
+					border-top: 1px solid var(--wcfContentBorderInner);
+					background-color: var(--wcfSidebarBackground);
+					color: var(--wcfSidebarLink);
 					display: block;
 					padding: 10px 20px;
 					text-align: center;
@@ -588,7 +588,7 @@ $chatEmbedMaxWidth: 400px;
 						> li {
 							margin-right: 10px;
 							margin-bottom: 5px;
-							border-right: 1px solid $wcfContentBorderInner;
+							border-right: 1px solid var(--wcfContentBorderInner);
 							padding-right: 9px;
 
 							> a {
@@ -608,8 +608,8 @@ $chatEmbedMaxWidth: 400px;
 
 	#smileyPickerContainer {
 		> .messageTabMenuContent {
-			background-color: $wcfContentContainerBackground;
-			border: 1px solid $wcfContentBorderInner;
+			background-color: var(--wcfContentContainerBackground);
+			border: 1px solid var(--wcfContentBorderInner);
 			padding: 20px;
 			margin-top: 20px;
 			margin-bottom: 20px;
