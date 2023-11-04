@@ -116,7 +116,7 @@
 	</category>
 
 	<category name="chat.page">
-		<item name="chat.page.copyright"><![CDATA[<a href="https://tims.bastelstu.be"{if EXTERNAL_LINK_TARGET_BLANK} rel="noopener noreferrer" target="_blank"{/if}>Tims Chat{if SHOW_VERSION_NUMBER} v{@PACKAGE_VERSION}{/if}</a>]]></item>
+		<item name="chat.page.copyright"><![CDATA[<a href="https://tims.bastelstu.be"{if EXTERNAL_LINK_TARGET_BLANK} rel="noopener noreferrer" target="_blank"{/if}>Tims Chat{if SHOW_VERSION_NUMBER} v{@$chatVersionNumber}{/if}</a>]]></item>
 	</category>
 
 	<category name="chat.room">
