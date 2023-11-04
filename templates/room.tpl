@@ -13,12 +13,12 @@
 {capture assign='contentInteractionButtons'}
 	{if $room->canSeeLog()}
 		<a href="{link controller='Log' application='chat' object=$room}{/link}" title="{lang}chat.log.title{/lang}" class="contentInteractionButton button small">
-			<span class="icon icon16 fa-tasks"></span> <span>{lang}chat.log.title{/lang}</span>
+			{icon name='bars-progress'} <span>{lang}chat.log.title{/lang}</span>
 		</a>
 	{/if}
 
 	<a href="{link}{/link}" title="{lang}chat.room.button.leave{/lang}" class="contentInteractionButton button small chatLeaveButton">
-		<span class="icon icon16 fa-power-off"></span> <span>{lang}chat.room.button.leave{/lang}</span>
+		{icon name='power-off'} <span>{lang}chat.room.button.leave{/lang}</span>
 	</a>
 {/capture}
 
@@ -28,7 +28,7 @@
 
 {if $room->getTopic()}
 	<div class="chatRoomTopic">
-		<span class="icon icon16 fa-times pointer jsDismissRoomTopicButton"></span>
+		<span class="pointer jsDismissRoomTopicButton">{icon name='xmark'}</span>
 		{@$room->getTopic()}
 	</div>
 {/if}
@@ -54,15 +54,15 @@
 		{if $__wcf->getSession()->getPermission('user.chat.canAttach')}
 			<div class="chatAttachButton">
 				<button id="chatAttachmentUploadButton" class="button small" title="{lang}wcf.attachment.attachments{/lang}">
-					<span class="icon icon16 fa-paperclip"></span>
-					<span class="icon icon24 fa-paperclip"></span>
+					{icon name='paperclip'}
+					{icon size=24 name='paperclip'}
 				</button>
 			</div>
 		{/if}
 		<div class="chatInputWrapper">
 			<textarea maxlength="{CHAT_MAX_LENGTH}" class="long" rows="1"></textarea>
 			<span id="chatQuickSettings">
-				<span class="icon icon24 fa-ellipsis-v"></span>
+				{icon size=24 name='ellipsis-vertical'}
 			</span>
 		</div>
 	</div>

@@ -434,16 +434,16 @@ $chatEmbedMaxWidth: 400px;
 					}
 				}
 
-				.icon16 {
+				fa-icon[size="16"] {
 					display: none;
 				}
 
 				@include screen-lg {
-					.icon16 {
+					fa-icon[size="16"] {
 						display: inline-block;
 					}
 
-					.icon24 {
+					fa-icon[size="24"] {
 						display: none;
 					}
 				}

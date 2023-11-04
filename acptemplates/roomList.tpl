@@ -19,7 +19,7 @@
 
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='RoomAdd' application='chat'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}chat.acp.room.add{/lang}</span></a></li>
+			<li><a href="{link controller='RoomAdd' application='chat'}{/link}" class="button">{icon name='plus'} <span>{lang}chat.acp.room.add{/lang}</span></a></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -42,9 +42,9 @@
 							<a href="{link controller='RoomEdit' application='chat' object=$room}{/link}">{$room}</a>
 
 							<span class="statusDisplay sortableButtonContainer">
-								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-								<a href="{link controller='RoomEdit' application='chat' object=$room}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{$room->roomID}" data-confirm-message-html="{lang __encode=true}chat.acp.room.delete.sure{/lang}"></span>
+								<span class="sortableNodeHandle">{icon name='up-down-left-right'}</span>
+								<a href="{link controller='RoomEdit' application='chat' object=$room}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
+								<span class="jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{$room->roomID}" data-confirm-message-html="{lang __encode=true}chat.acp.room.delete.sure{/lang}">{icon name='xmark'}</span>
 								{event name='itemButtons'}
 							</span>
 						</span>
@@ -70,7 +70,7 @@
 
 	<nav class="contentFooterNavigation">
 		<ul>
-			<li><a href="{link controller='RoomAdd' application='chat'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}chat.acp.room.add{/lang}</span></a></li>
+			<li><a href="{link controller='RoomAdd' application='chat'}{/link}" class="button">{icon name='plus'} <span>{lang}chat.acp.room.add{/lang}</span></a></li>
 
 			{event name='contentFooterNavigation'}
 		</ul>

@@ -19,7 +19,7 @@
 
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link application='chat' controller='RoomList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}chat.acp.room.list{/lang}</span></a></li>
+			<li><a href="{link application='chat' controller='RoomList'}{/link}" class="button">{icon name='list'} <span>{lang}chat.acp.room.list{/lang}</span></a></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>

@@ -14,7 +14,7 @@
 
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="{link controller='CommandTriggerAdd' application='chat'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}chat.acp.command.trigger.add{/lang}</span></a></li>
+			<li><a href="{link controller='CommandTriggerAdd' application='chat'}{/link}" class="button">{icon name='plus'} <span>{lang}chat.acp.command.trigger.add{/lang}</span></a></li>
 
 			{event name='contentHeaderNavigation'}
 		</ul>
@@ -45,8 +45,8 @@
 				{foreach from=$objects item=trigger}
 					<tr class="jsTriggerRow">
 						<td class="columnIcon">
-							<a href="{link controller='CommandTriggerEdit' object=$trigger application='chat'}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{$trigger->triggerID}" data-confirm-message-html="{lang __encode=true}chat.acp.command.trigger.delete.sure{/lang}"></span>
+							<a href="{link controller='CommandTriggerEdit' object=$trigger application='chat'}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip">{icon name='pencil'}</a>
+							<span class="jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{$trigger->triggerID}" data-confirm-message-html="{lang __encode=true}chat.acp.command.trigger.delete.sure{/lang}">{icon name='xmark'}</span>
 
 							{event name='rowButtons'}
 						</td>
@@ -75,7 +75,7 @@
 
 	<nav class="contentFooterNavigation">
 		<ul>
-			<li><a href="{link controller='CommandTriggerAdd' application='chat'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}chat.acp.command.trigger.add{/lang}</span></a></li>
+			<li><a href="{link controller='CommandTriggerAdd' application='chat'}{/link}" class="button">{icon name='plus'} <span>{lang}chat.acp.command.trigger.add{/lang}</span></a></li>
 
 			{event name='contentFooterNavigation'}
 		</ul>

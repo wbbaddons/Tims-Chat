@@ -74,7 +74,7 @@ define(['./ToggleButton', 'WoltLabSuite/Core/Ui/Screen'], function (
 				'small'
 			)
 			this.shadowToggleButton.innerHTML =
-				'<span class="icon icon24 fa-smile-o"></span>'
+				'<fa-icon size="24" name="face-smile"></fa-icon>'
 			this.shadowToggleButton.addEventListener(
 				'mousedown',
 				this.onClick.bind(this)
