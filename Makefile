@@ -91,7 +91,7 @@ files_wcf/js/Bastelstu.be/Chat/Ui/UserActionDropdownHandler.js: ts/Bastelstu.be/
 files_wcf/js/Bastelstu.be/Chat/Ui/Attachment/Upload.js: ts/Bastelstu.be/Chat/Ui/Attachment/Upload.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Notification.js: ts/Bastelstu.be/Chat/Ui/Notification.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Mobile.js: ts/Bastelstu.be/Chat/Ui/Mobile.js
-files_wcf/js/Bastelstu.be/Chat/console.js: ts/Bastelstu.be/Chat/console.js
+files_wcf/js/Bastelstu.be/Chat/console.js: ts/Bastelstu.be/Chat/console.ts
 files_wcf/js/Bastelstu.be/Chat/Template.js: ts/Bastelstu.be/Chat/Template.js
 files_wcf/js/Bastelstu.be/Chat/Room.js: ts/Bastelstu.be/Chat/Room.js
 files_wcf/js/Bastelstu.be/Chat/MessageType.js: ts/Bastelstu.be/Chat/MessageType.js
