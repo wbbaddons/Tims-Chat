@@ -30,7 +30,7 @@ files_wcf/js/Bastelstu.be/Chat/LocalStorage.js: ts/Bastelstu.be/Chat/LocalStorag
 files_wcf/js/Bastelstu.be/Chat/Parser.js: ts/Bastelstu.be/Chat/Parser.ts
 files_wcf/js/Bastelstu.be/Chat/Helper.js: ts/Bastelstu.be/Chat/Helper.js
 files_wcf/js/Bastelstu.be/Chat/User.js: ts/Bastelstu.be/Chat/User.js
-files_wcf/js/Bastelstu.be/Chat/Ui.js: ts/Bastelstu.be/Chat/Ui.js
+files_wcf/js/Bastelstu.be/Chat/Ui.js: ts/Bastelstu.be/Chat/Ui.ts
 files_wcf/js/Bastelstu.be/Chat/DataStructure/Throttle.js: ts/Bastelstu.be/Chat/DataStructure/Throttle.js
 files_wcf/js/Bastelstu.be/Chat/DataStructure/LRU.js: ts/Bastelstu.be/Chat/DataStructure/LRU.ts
 files_wcf/js/Bastelstu.be/Chat/DataStructure/EventEmitter.js: ts/Bastelstu.be/Chat/DataStructure/EventEmitter.js
