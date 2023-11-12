@@ -19,16 +19,14 @@ class LocalStorage {
 	public static readonly DEPENDENCIES = DEPENDENCIES
 
 	readonly #subprefix: string
-	#hasLocalStorage: boolean
 	#storage: Storage | LocalStorageEmulator
 
 	constructor(subprefix: string) {
 		this.#subprefix = subprefix
-		this.#hasLocalStorage = false
-		this.setupStorage()
+		this.setStorageBackend(false)
 	}
 
-	static isQuotaExceeded(error: unknown): boolean {
+	private static isQuotaExceeded(error: unknown): boolean {
 		return (
 			error instanceof DOMException &&
 			// everything except Firefox
@@ -42,25 +40,52 @@ class LocalStorage {
 		)
 	}
 
-	static isAvailable(): boolean {
-		try {
-			const x = '__storage_test__'
-			window.localStorage.setItem(x, x)
-			window.localStorage.removeItem(x)
-			return true
-		} catch (error) {
-			return LocalStorage.isQuotaExceeded(error)
+	private clearBackend(target: Storage | LocalStorageEmulator): void {
+		for (const key in target) {
+			if (
+				!key.startsWith(this.storagePrefix) ||
+				!Object.prototype.hasOwnProperty.call(target, key)
+			) {
+				continue
+			}
+
+			target.removeItem(key)
 		}
 	}
 
-	setupStorage(): void {
-		if (LocalStorage.isAvailable()) {
+	private setStorageBackend(clear: boolean): void {
+		const value = '__storage_test__'
+		const key = `${this.storagePrefix}${value}`
+
+		try {
+			if (clear) {
+				this.clearBackend(window.localStorage)
+			}
+
+			window.localStorage.setItem(key, value)
+			window.localStorage.removeItem(key)
 			this.#storage = window.localStorage
-			this.#hasLocalStorage = true
-		} else {
-			console.info('Falling back to in-memory local storage emulation')
-			this.#storage = new LocalStorageEmulator()
+			return
+		} catch (error) {
+			console.error(`LocalStorage is unavailable:`, error)
 		}
+
+		try {
+			if (clear) {
+				this.clearBackend(window.sessionStorage)
+			}
+
+			window.sessionStorage.setItem(key, value)
+			window.sessionStorage.removeItem(key)
+			this.#storage = window.sessionStorage
+
+			return
+		} catch (error) {
+			console.error(`SessionStorage is unavailable:`, error)
+		}
+
+		console.warn(`LocalStorage is unavailable, settings cannot be saved.`)
+		this.#storage = new LocalStorageEmulator()
 	}
 
 	/**
@@ -171,43 +196,19 @@ class LocalStorage {
 	 * and try to use the real localStorage again, if the qouta isn’t exceeded anymore
 	 */
 	clear(): void {
-		const _clear = (target: Storage | LocalStorageEmulator) => {
-			for (const key in target) {
-				if (
-					!key.startsWith(this.storagePrefix) ||
-					!Object.prototype.hasOwnProperty.call(target, key)
-				) {
-					continue
-				}
-
-				target.removeItem(key)
-			}
-		}
-
-		if (
-			this.#hasLocalStorage &&
-			this.#storage instanceof LocalStorageEmulator
-		) {
+		if (this.#storage instanceof LocalStorageEmulator) {
 			try {
-				// Try to clear the real localStorage
-				_clear(localStorage)
-
-				// Check if we can use the localStorage again
-				const x = '__storage_test__'
-				window.localStorage.setItem(x, x)
-				window.localStorage.removeItem(x)
-
-				// It should be safe to use the localStorage again, as the storage
-				// of this instance (given by the prefix) has been cleared completely
-				this.#storage = localStorage
-
-				console.log('Switched back to using the localStorage')
+				// Try to clear the real localStorage and check if it is usable
+				this.setStorageBackend(true)
+				if (!(this.#storage instanceof LocalStorageEmulator)) {
+					console.log('Switched back to using the LocalStorage')
+				}
 			} catch {
 				/* no we can’t */
 			}
 		}
 
-		_clear(this.#storage)
+		this.clearBackend(this.#storage)
 	}
 }
 export = LocalStorage
