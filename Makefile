@@ -26,7 +26,7 @@ Bastelstu.be.Chat.babel.js: Bastelstu.be.Chat.js .babelrc
 	npx babel $< --out-file $@
 
 files_wcf/js/%.js: tsconfig.json
-files_wcf/js/Bastelstu.be/Chat/LocalStorage.js: ts/Bastelstu.be/Chat/LocalStorage.js
+files_wcf/js/Bastelstu.be/Chat/LocalStorage.js: ts/Bastelstu.be/Chat/LocalStorage.ts
 files_wcf/js/Bastelstu.be/Chat/Parser.js: ts/Bastelstu.be/Chat/Parser.ts
 files_wcf/js/Bastelstu.be/Chat/Helper.js: ts/Bastelstu.be/Chat/Helper.js
 files_wcf/js/Bastelstu.be/Chat/User.js: ts/Bastelstu.be/Chat/User.js
