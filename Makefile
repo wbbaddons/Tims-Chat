@@ -40,7 +40,7 @@ files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Helper.js: ts/Bastelst
 files_wcf/js/Bastelstu.be/Chat/ProfileStore.js: ts/Bastelstu.be/Chat/ProfileStore.ts
 files_wcf/js/Bastelstu.be/Chat/Autocompleter.js: ts/Bastelstu.be/Chat/Autocompleter.ts
 files_wcf/js/Bastelstu.be/Chat/ParseError.js: ts/Bastelstu.be/Chat/ParseError.ts
-files_wcf/js/Bastelstu.be/Chat/Messenger.js: ts/Bastelstu.be/Chat/Messenger.js
+files_wcf/js/Bastelstu.be/Chat/Messenger.js: ts/Bastelstu.be/Chat/Messenger.ts
 files_wcf/js/Bastelstu.be/Chat/LocalStorageEmulator.js: ts/Bastelstu.be/Chat/LocalStorageEmulator.ts
 files_wcf/js/Bastelstu.be/Chat/Command.js: ts/Bastelstu.be/Chat/Command.ts
 files_wcf/js/Bastelstu.be/Chat/Message.js: ts/Bastelstu.be/Chat/Message.ts
