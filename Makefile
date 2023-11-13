@@ -1,6 +1,6 @@
 FILES = $(shell find files -type f)
 WCF_FILES = $(shell find files_wcf -type f)
-TS_FILES = $(shell find ts/ -type f |sed 's/ts$$/js/g;s!^ts/!files_wcf/js/!')
+TS_FILES = $(shell find ts/Bastelstu.be/ -type f |sed 's/ts$$/js/g;s!^ts/!files_wcf/js/!')
 JS_MODULE_FILES = $(shell find ts/Bastelstu.be -type f)
 
 all: be.bastelstu.chat.tar be.bastelstu.chat.tar.gz
