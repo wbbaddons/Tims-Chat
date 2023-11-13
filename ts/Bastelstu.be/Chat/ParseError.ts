@@ -11,16 +11,22 @@
  * or later of the General Public License.
  */
 
-define([], function () {
-	'use strict'
-
-	class ParseError extends Error {
-		constructor(message, data) {
-			super(message)
-
-			this.data = data
-		}
+interface ParseErrorContext {
+	result: {
+		// TODO
+		offset: number
 	}
+	parameterString: string
+}
 
-	return ParseError
-})
+class ParseError extends Error {
+	data: unknown
+
+	constructor(message: string, data?: ParseErrorContext) {
+		super(message)
+
+		this.data = data
+	}
+}
+
+export = ParseError
