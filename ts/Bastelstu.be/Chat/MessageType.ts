@@ -18,8 +18,7 @@ import User from './User'
 
 import type ProfileStore from './ProfileStore'
 import type Template from './Template'
-
-type Message = any
+import type Message from './Message'
 
 const DEPENDENCIES = ['ProfileStore', 'Template']
 class MessageType {

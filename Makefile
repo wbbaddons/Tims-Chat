@@ -43,7 +43,7 @@ files_wcf/js/Bastelstu.be/Chat/ParseError.js: ts/Bastelstu.be/Chat/ParseError.ts
 files_wcf/js/Bastelstu.be/Chat/Messenger.js: ts/Bastelstu.be/Chat/Messenger.js
 files_wcf/js/Bastelstu.be/Chat/LocalStorageEmulator.js: ts/Bastelstu.be/Chat/LocalStorageEmulator.ts
 files_wcf/js/Bastelstu.be/Chat/Command.js: ts/Bastelstu.be/Chat/Command.js
-files_wcf/js/Bastelstu.be/Chat/Message.js: ts/Bastelstu.be/Chat/Message.js
+files_wcf/js/Bastelstu.be/Chat/Message.js: ts/Bastelstu.be/Chat/Message.ts
 files_wcf/js/Bastelstu.be/Chat/Log.js: ts/Bastelstu.be/Chat/Log.js
 files_wcf/js/Bastelstu.be/Chat/Command/Unmute.js: ts/Bastelstu.be/Chat/Command/Unmute.js
 files_wcf/js/Bastelstu.be/Chat/Command/_Unsuspension.js: ts/Bastelstu.be/Chat/Command/_Unsuspension.js
