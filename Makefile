@@ -35,7 +35,8 @@ files_wcf/js/Bastelstu.be/Chat/DataStructure/Throttle.js: ts/Bastelstu.be/Chat/D
 files_wcf/js/Bastelstu.be/Chat/DataStructure/LRU.js: ts/Bastelstu.be/Chat/DataStructure/LRU.ts
 files_wcf/js/Bastelstu.be/Chat/DataStructure/EventEmitter.js: ts/Bastelstu.be/Chat/DataStructure/EventEmitter.js
 files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Node.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Node.ts
-files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Tree.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Tree.js
+files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Tree.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Tree.ts
+files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Helper.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Helper.ts
 files_wcf/js/Bastelstu.be/Chat/ProfileStore.js: ts/Bastelstu.be/Chat/ProfileStore.js
 files_wcf/js/Bastelstu.be/Chat/Autocompleter.js: ts/Bastelstu.be/Chat/Autocompleter.js
 files_wcf/js/Bastelstu.be/Chat/ParseError.js: ts/Bastelstu.be/Chat/ParseError.ts

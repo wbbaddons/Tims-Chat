@@ -11,23 +11,14 @@
  * or later of the General Public License.
  */
 
-const enum Color {
-	Red = 'RED',
-	Black = 'BLACK',
-}
-
-const enum Side {
-	Left = 'LEFT',
-	Right = 'RIGHT',
-	Is = 'IS',
-}
+import { Color, Side } from "./Helper"
 
 class Node {
-	private value: number
+	value: number
 	#left: Node | undefined
 	#right: Node | undefined
-	private parent: Node | undefined
-	private color: Color
+	parent: Node | undefined
+	color: Color
 
 	constructor(value: number) {
 		this.value = value
