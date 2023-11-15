@@ -62,7 +62,7 @@ files_wcf/js/Bastelstu.be/Chat/Command/Me.js: ts/Bastelstu.be/Chat/Command/Me.js
 files_wcf/js/Bastelstu.be/Chat/Command/Ban.js: ts/Bastelstu.be/Chat/Command/Ban.js
 files_wcf/js/Bastelstu.be/Chat/Command/Mute.js: ts/Bastelstu.be/Chat/Command/Mute.js
 files_wcf/js/Bastelstu.be/Chat/Command/Away.js: ts/Bastelstu.be/Chat/Command/Away.js
-files_wcf/js/Bastelstu.be/Chat/BoxRoomList.js: ts/Bastelstu.be/Chat/BoxRoomList.js
+files_wcf/js/Bastelstu.be/Chat/BoxRoomList.js: ts/Bastelstu.be/Chat/BoxRoomList.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/UserActions/MuteAction.js: ts/Bastelstu.be/Chat/Ui/UserActions/MuteAction.js
 files_wcf/js/Bastelstu.be/Chat/Ui/UserActions/WhisperAction.js: ts/Bastelstu.be/Chat/Ui/UserActions/WhisperAction.js
 files_wcf/js/Bastelstu.be/Chat/Ui/UserActions/BanAction.js: ts/Bastelstu.be/Chat/Ui/UserActions/BanAction.js
