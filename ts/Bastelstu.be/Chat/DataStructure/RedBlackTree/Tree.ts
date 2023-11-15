@@ -42,22 +42,23 @@ class Tree {
 		const search = this.search(value)!
 		const [side, parent] = search
 
-		if (side === Side.Is) {
-			return [side, parent.value]
+		switch (side) {
+			case Side.Is: {
+				return [side, parent.value]
+			}
+			case Side.Left: {
+				parent.left = node
+				this.#fix(node)
+
+				return [side, parent.value]
+			}
+			case Side.Right: {
+				parent.right = node
+				this.#fix(node)
+
+				return [side, parent.value]
+			}
 		}
-
-		if (side === Side.Left) {
-			parent.left = node
-			this.#fix(node)
-
-			return [side, parent.value]
-		}
-
-		// side must be RIGHT
-		parent.right = node
-		this.#fix(node)
-
-		return [side, parent.value]
 	}
 
 	#fix(N: Node): void {
