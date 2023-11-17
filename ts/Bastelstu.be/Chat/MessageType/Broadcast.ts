@@ -4,21 +4,21 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2029-02-08
+ * Change Date: 2029-04-23
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
  * or later of the General Public License.
  */
 
-define(['./Plain'], function (Plain) {
-	'use strict'
+import Plain from './Plain'
 
-	class Broadcast extends Plain {
-		renderPlainText(message) {
-			return `[📢] ${message.payload.plaintextMessage}`
-		}
+type PlainMessage = Parameters<Plain['renderPlainText']>[0]
+
+class Broadcast extends Plain {
+	renderPlainText(message: PlainMessage): string {
+		return `[📢] ${message.payload.plaintextMessage}`
 	}
+}
 
-	return Broadcast
-})
+export = Broadcast
