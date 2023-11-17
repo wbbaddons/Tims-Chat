@@ -11,10 +11,21 @@
  * or later of the General Public License.
  */
 
-define(['../MessageType'], function (MessageType) {
-	'use strict'
+import MessageType from '../MessageType'
+import type Message from '../Message'
 
-	class TemproomInvited extends MessageType {}
+interface TemproomInvitedMessage extends Message {
+	payload: {
+		recipient: number
+		recipientName: string
+		room: {
+			roomID: number
+			title: string
+			link: string
+		}
+	}
+}
 
-	return TemproomInvited
-})
+class TemproomInvited extends MessageType {}
+
+export = TemproomInvited
