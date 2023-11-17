@@ -108,7 +108,7 @@ files_wcf/js/Bastelstu.be/Chat/MessageType/ChatUpdate.js: ts/Bastelstu.be/Chat/M
 files_wcf/js/Bastelstu.be/Chat/MessageType/Whisper.js: ts/Bastelstu.be/Chat/MessageType/Whisper.js
 files_wcf/js/Bastelstu.be/Chat/MessageType/TemproomInvited.js: ts/Bastelstu.be/Chat/MessageType/TemproomInvited.js
 files_wcf/js/Bastelstu.be/Chat/MessageType/Info.js: ts/Bastelstu.be/Chat/MessageType/Info.js
-files_wcf/js/Bastelstu.be/Chat/MessageType/Team.js: ts/Bastelstu.be/Chat/MessageType/Team.js
+files_wcf/js/Bastelstu.be/Chat/MessageType/Team.js: ts/Bastelstu.be/Chat/MessageType/Team.ts
 files_wcf/js/Bastelstu.be/Chat/MessageType/Tombstone.js: ts/Bastelstu.be/Chat/MessageType/Tombstone.js
 files_wcf/js/Bastelstu.be/Chat/MessageType/Unsuspend.js: ts/Bastelstu.be/Chat/MessageType/Unsuspend.js
 files_wcf/js/Bastelstu.be/Chat/MessageType/Broadcast.js: ts/Bastelstu.be/Chat/MessageType/Broadcast.ts
