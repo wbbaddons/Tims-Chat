@@ -113,7 +113,7 @@ files_wcf/js/Bastelstu.be/Chat/MessageType/Tombstone.js: ts/Bastelstu.be/Chat/Me
 files_wcf/js/Bastelstu.be/Chat/MessageType/Unsuspend.js: ts/Bastelstu.be/Chat/MessageType/Unsuspend.js
 files_wcf/js/Bastelstu.be/Chat/MessageType/Broadcast.js: ts/Bastelstu.be/Chat/MessageType/Broadcast.js
 files_wcf/js/Bastelstu.be/Chat/MessageType/Back.js: ts/Bastelstu.be/Chat/MessageType/Back.ts
-files_wcf/js/Bastelstu.be/Chat/MessageType/Plain.js: ts/Bastelstu.be/Chat/MessageType/Plain.js
+files_wcf/js/Bastelstu.be/Chat/MessageType/Plain.js: ts/Bastelstu.be/Chat/MessageType/Plain.ts
 files_wcf/js/Bastelstu.be/Chat/MessageType/Away.js: ts/Bastelstu.be/Chat/MessageType/Away.ts
 files_wcf/js/Bastelstu.be/Chat.js: ts/Bastelstu.be/Chat.js
 files_wcf/js/%.js:
