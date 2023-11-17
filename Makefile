@@ -99,7 +99,7 @@ files_wcf/js/Bastelstu.be/Chat/MessageType.js: ts/Bastelstu.be/Chat/MessageType.
 files_wcf/js/Bastelstu.be/Chat/CommandHandler.js: ts/Bastelstu.be/Chat/CommandHandler.js
 files_wcf/js/Bastelstu.be/Chat/MessageType/Color.js: ts/Bastelstu.be/Chat/MessageType/Color.ts
 files_wcf/js/Bastelstu.be/Chat/MessageType/Leave.js: ts/Bastelstu.be/Chat/MessageType/Leave.ts
-files_wcf/js/Bastelstu.be/Chat/MessageType/TemproomCreated.js: ts/Bastelstu.be/Chat/MessageType/TemproomCreated.js
+files_wcf/js/Bastelstu.be/Chat/MessageType/TemproomCreated.js: ts/Bastelstu.be/Chat/MessageType/TemproomCreated.ts
 files_wcf/js/Bastelstu.be/Chat/MessageType/Suspend.js: ts/Bastelstu.be/Chat/MessageType/Suspend.js
 files_wcf/js/Bastelstu.be/Chat/MessageType/Where.js: ts/Bastelstu.be/Chat/MessageType/Where.js
 files_wcf/js/Bastelstu.be/Chat/MessageType/Join.js: ts/Bastelstu.be/Chat/MessageType/Join.ts
