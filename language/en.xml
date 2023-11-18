@@ -130,7 +130,7 @@
 		<item name="chat.room.userList.away"><![CDATA[Away{if $user.away}: {$user.away}{/if}]]></item>
 		<item name="chat.room.userList.moderator"><![CDATA[Moderator]]></item>
 		<item name="chat.room.userList.mute"><![CDATA[Mute]]></item>
-		<item name="chat.room.temporary.blueprint"><![CDATA[{assign var='microtime' value=true|microtime}Temproom#{$microtime*1000%1000} ({$user->username})]]></item>
+		<item name="chat.room.temporary.blueprint"><![CDATA[{assign var='number' value=1000|random_int:9999}Temproom#{$number} ({$user->username})]]></item>
 	</category>
 
 	<category name="chat.room.condition">
