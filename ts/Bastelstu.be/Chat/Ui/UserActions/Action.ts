@@ -13,12 +13,8 @@
 
 import type User from '../../User'
 
-class Action {
+abstract class Action {
 	public static readonly DEPENDENCIES: string[] = []
-
-	constructor() {
-		// do nothing
-	}
 
 	onClick(_user: User, _event: Event): void {
 		// do nothing
