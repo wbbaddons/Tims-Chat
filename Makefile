@@ -79,7 +79,7 @@ files_wcf/js/Bastelstu.be/Chat/Ui/Input/Autocompleter.js: ts/Bastelstu.be/Chat/U
 files_wcf/js/Bastelstu.be/Chat/Ui/ErrorDialog.js: ts/Bastelstu.be/Chat/Ui/ErrorDialog.js
 files_wcf/js/Bastelstu.be/Chat/Ui/AutoAway.js: ts/Bastelstu.be/Chat/Ui/AutoAway.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Log.js: ts/Bastelstu.be/Chat/Ui/Log.js
-files_wcf/js/Bastelstu.be/Chat/Ui/Topic.js: ts/Bastelstu.be/Chat/Ui/Topic.js
+files_wcf/js/Bastelstu.be/Chat/Ui/Topic.js: ts/Bastelstu.be/Chat/Ui/Topic.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/ToggleButton.js: ts/Bastelstu.be/Chat/Ui/Settings/ToggleButton.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/Button.js: ts/Bastelstu.be/Chat/Ui/Settings/Button.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/NotificationsButton.js: ts/Bastelstu.be/Chat/Ui/Settings/NotificationsButton.js
