@@ -82,7 +82,7 @@ files_wcf/js/Bastelstu.be/Chat/Ui/Log.js: ts/Bastelstu.be/Chat/Ui/Log.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Topic.js: ts/Bastelstu.be/Chat/Ui/Topic.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/ToggleButton.js: ts/Bastelstu.be/Chat/Ui/Settings/ToggleButton.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/Button.js: ts/Bastelstu.be/Chat/Ui/Settings/Button.ts
-files_wcf/js/Bastelstu.be/Chat/Ui/Settings/NotificationsButton.js: ts/Bastelstu.be/Chat/Ui/Settings/NotificationsButton.js
+files_wcf/js/Bastelstu.be/Chat/Ui/Settings/NotificationsButton.js: ts/Bastelstu.be/Chat/Ui/Settings/NotificationsButton.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/FullscreenButton.js: ts/Bastelstu.be/Chat/Ui/Settings/FullscreenButton.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/UserListButton.js: ts/Bastelstu.be/Chat/Ui/Settings/UserListButton.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/RoomListButton.js: ts/Bastelstu.be/Chat/Ui/Settings/RoomListButton.js
