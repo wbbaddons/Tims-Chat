@@ -76,7 +76,7 @@ files_wcf/js/Bastelstu.be/Chat/Ui/MessageActions/Delete.js: ts/Bastelstu.be/Chat
 files_wcf/js/Bastelstu.be/Chat/Ui/Chat.js: ts/Bastelstu.be/Chat/Ui/Chat.js
 files_wcf/js/Bastelstu.be/Chat/Ui/UserList.js: ts/Bastelstu.be/Chat/Ui/UserList.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/Input/Autocompleter.js: ts/Bastelstu.be/Chat/Ui/Input/Autocompleter.js
-files_wcf/js/Bastelstu.be/Chat/Ui/ErrorDialog.js: ts/Bastelstu.be/Chat/Ui/ErrorDialog.js
+files_wcf/js/Bastelstu.be/Chat/Ui/ErrorDialog.js: ts/Bastelstu.be/Chat/Ui/ErrorDialog.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/AutoAway.js: ts/Bastelstu.be/Chat/Ui/AutoAway.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Log.js: ts/Bastelstu.be/Chat/Ui/Log.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Topic.js: ts/Bastelstu.be/Chat/Ui/Topic.ts
