@@ -81,7 +81,7 @@ files_wcf/js/Bastelstu.be/Chat/Ui/AutoAway.js: ts/Bastelstu.be/Chat/Ui/AutoAway.
 files_wcf/js/Bastelstu.be/Chat/Ui/Log.js: ts/Bastelstu.be/Chat/Ui/Log.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Topic.js: ts/Bastelstu.be/Chat/Ui/Topic.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/ToggleButton.js: ts/Bastelstu.be/Chat/Ui/Settings/ToggleButton.js
-files_wcf/js/Bastelstu.be/Chat/Ui/Settings/Button.js: ts/Bastelstu.be/Chat/Ui/Settings/Button.js
+files_wcf/js/Bastelstu.be/Chat/Ui/Settings/Button.js: ts/Bastelstu.be/Chat/Ui/Settings/Button.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/NotificationsButton.js: ts/Bastelstu.be/Chat/Ui/Settings/NotificationsButton.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/FullscreenButton.js: ts/Bastelstu.be/Chat/Ui/Settings/FullscreenButton.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/UserListButton.js: ts/Bastelstu.be/Chat/Ui/Settings/UserListButton.js
