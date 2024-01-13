@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Copyright (c) 2010-2022 Tim Düsterhus.
+ * Copyright (c) 2010-2024 Tim Düsterhus.
  *
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2027-02-22
+ * Change Date: 2028-01-13
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 3

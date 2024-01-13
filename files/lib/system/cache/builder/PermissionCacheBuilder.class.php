@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright (C) 2010-2022  Tim Düsterhus
- * Copyright (C) 2010-2022  Woltlab GmbH
+ * Copyright (C) 2010-2024  Tim Düsterhus
+ * Copyright (C) 2010-2024  Woltlab GmbH
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
