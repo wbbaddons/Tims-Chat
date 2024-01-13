@@ -256,7 +256,11 @@
 				</small>
 			</div>
 			<span class="chatMessageIcon">
-				<span class="icon icon16 fa-sign-{if $message.objectType === 'be.bastelstu.chat.messageType.join'}in{else}out{/if}"></span>
+				{if $message.objectType === 'be.bastelstu.chat.messageType.join'}
+					<span class="icon icon16 fa-sign-in"></span>
+				{else}
+					<span class="icon icon16 fa-sign-out"></span>
+				{/if}
 			</span>
 			<div class="chatMessage">{lang}chat.messageType.{$message.objectType}{/lang}</div>
 		</div>
