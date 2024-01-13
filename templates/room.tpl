@@ -53,10 +53,10 @@
 	<div>
 		{if $__wcf->getSession()->getPermission('user.chat.canAttach')}
 			<div class="chatAttachButton">
-				<span id="chatAttachmentUploadButton" class="button small" title="{lang}wcf.attachment.attachments{/lang}">
+				<button id="chatAttachmentUploadButton" class="button small" title="{lang}wcf.attachment.attachments{/lang}">
 					<span class="icon icon16 fa-paperclip"></span>
 					<span class="icon icon24 fa-paperclip"></span>
-				</span>
+				</button>
 			</div>
 		{/if}
 		<div class="chatInputWrapper">
