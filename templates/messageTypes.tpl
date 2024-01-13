@@ -164,7 +164,13 @@
 				</small>
 			</div>
 			<span class="chatMessageIcon">
-				<span class="icon icon16 {if $__window.RegExp('^shower(?:ing)?$', 'i').test($message.payload.message)}fa-shower{else if $__window.RegExp('^bath(?:ing)?$', 'i').test($message.payload.message)}fa-bath{else}fa-user-o{/if}"></span>
+				{if $__window.RegExp('^shower(?:ing)?$', 'i').test($message.payload.message)}
+					<span class="icon icon16 fa-shower"></span>
+				{else if $__window.RegExp('^bath(?:ing)?$', 'i').test($message.payload.message)}
+					<span class="icon icon16 fa-bath"></span>
+				{else}
+					<span class="icon icon16 fa-user-o"></span>
+				{/if}
 			</span>
 			<div class="chatMessage">{lang}chat.messageType.{$message.objectType}{/lang}</div>
 		</div>
