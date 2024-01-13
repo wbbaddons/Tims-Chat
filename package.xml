@@ -24,6 +24,7 @@
 
 	<excludedpackages>
 		<excludedpackage version="6.0.0 Alpha 1">com.woltlab.wcf</excludedpackage>
+		<excludedpackage version="1.700.0 Alpha 1">be.bastelstu.parserCombinator</excludedpackage>
 	</excludedpackages>
 
 	<instructions type="install">
