@@ -59,7 +59,7 @@ files_wcf/js/Bastelstu.be/Chat/Command/Temproom.js: ts/Bastelstu.be/Chat/Command
 files_wcf/js/Bastelstu.be/Chat/Command/Color.js: ts/Bastelstu.be/Chat/Command/Color.ts
 files_wcf/js/Bastelstu.be/Chat/Command/Back.js: ts/Bastelstu.be/Chat/Command/Back.ts
 files_wcf/js/Bastelstu.be/Chat/Command/Me.js: ts/Bastelstu.be/Chat/Command/Me.ts
-files_wcf/js/Bastelstu.be/Chat/Command/Ban.js: ts/Bastelstu.be/Chat/Command/Ban.js
+files_wcf/js/Bastelstu.be/Chat/Command/Ban.js: ts/Bastelstu.be/Chat/Command/Ban.ts
 files_wcf/js/Bastelstu.be/Chat/Command/Mute.js: ts/Bastelstu.be/Chat/Command/Mute.js
 files_wcf/js/Bastelstu.be/Chat/Command/Away.js: ts/Bastelstu.be/Chat/Command/Away.ts
 files_wcf/js/Bastelstu.be/Chat/BoxRoomList.js: ts/Bastelstu.be/Chat/BoxRoomList.ts

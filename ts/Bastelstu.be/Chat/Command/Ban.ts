@@ -4,17 +4,15 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2029-04-23
+ * Change Date: 2029-04-27
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 3
  * or later of the General Public License.
  */
 
-define(['./_Suspension'], function (Suspension) {
-	'use strict'
+import Suspension from './_Suspension'
 
-	class Ban extends Suspension {}
+class Ban extends Suspension {}
 
-	return Ban
-})
+export = Ban
