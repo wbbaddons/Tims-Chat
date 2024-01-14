@@ -52,7 +52,7 @@ files_wcf/js/Bastelstu.be/Chat/Command/Whisper.js: ts/Bastelstu.be/Chat/Command/
 files_wcf/js/Bastelstu.be/Chat/Command/Info.js: ts/Bastelstu.be/Chat/Command/Info.ts
 files_wcf/js/Bastelstu.be/Chat/Command/Team.js: ts/Bastelstu.be/Chat/Command/Team.ts
 files_wcf/js/Bastelstu.be/Chat/Command/Unban.js: ts/Bastelstu.be/Chat/Command/Unban.ts
-files_wcf/js/Bastelstu.be/Chat/Command/_Suspension.js: ts/Bastelstu.be/Chat/Command/_Suspension.js
+files_wcf/js/Bastelstu.be/Chat/Command/_Suspension.js: ts/Bastelstu.be/Chat/Command/_Suspension.ts
 files_wcf/js/Bastelstu.be/Chat/Command/Broadcast.js: ts/Bastelstu.be/Chat/Command/Broadcast.ts
 files_wcf/js/Bastelstu.be/Chat/Command/Where.js: ts/Bastelstu.be/Chat/Command/Where.ts
 files_wcf/js/Bastelstu.be/Chat/Command/Temproom.js: ts/Bastelstu.be/Chat/Command/Temproom.ts
