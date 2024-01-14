@@ -324,7 +324,7 @@ export declare const F: {
 	lazy: <T>(p: Parser<T>, parameters?: any[], self?: object) => Parser<T>
 	returns: <T>(v: T) => IParser<T>
 	error: Parser
-	eos: Parser
+	eos: Parser<Unit>
 	satisfy: <T>(predicate: (value: T) => boolean) => Parser<T>
 	sequence: <T>() => Parser<T>
 	startsWith: <T>(value: T) => Parser<T>
