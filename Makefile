@@ -119,7 +119,7 @@ files_wcf/js/%.js:
 	npx tsc
 
 Bastelstu.be.Chat.js: $(TS_FILES) require.build.js package.json package-lock.json
-	npx r_js -o require.build.js
+	npx r.js -o require.build.js
 
 clean:
 	-rm -f files.tar

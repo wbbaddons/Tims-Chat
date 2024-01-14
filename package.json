@@ -11,6 +11,7 @@
     "@typescript-eslint/eslint-plugin": "^8.20.0",
     "@typescript-eslint/parser": "^8.20.0",
     "@woltlab/d.ts": "github:WoltLab/d.ts#6.0",
+    "@woltlab/r.js": "git+https://github.com/WoltLab/r.js.git#ad2413df45fdf6164611243f9870943de3d2bce3",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "typescript": "^5.7.3"
