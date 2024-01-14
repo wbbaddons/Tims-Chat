@@ -11,10 +11,8 @@
  * or later of the General Public License.
  */
 
-define(['./Plain'], function (Plain) {
-	'use strict'
+import Plain from './Plain'
 
-	class Team extends Plain {}
+class Team extends Plain {}
 
-	return Team
-})
+export = Team
