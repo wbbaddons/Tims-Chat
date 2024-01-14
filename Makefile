@@ -48,7 +48,7 @@ files_wcf/js/Bastelstu.be/Chat/Log.js: ts/Bastelstu.be/Chat/Log.js
 files_wcf/js/Bastelstu.be/Chat/Command/Unmute.js: ts/Bastelstu.be/Chat/Command/Unmute.js
 files_wcf/js/Bastelstu.be/Chat/Command/_Unsuspension.js: ts/Bastelstu.be/Chat/Command/_Unsuspension.js
 files_wcf/js/Bastelstu.be/Chat/Command/Plain.js: ts/Bastelstu.be/Chat/Command/Plain.ts
-files_wcf/js/Bastelstu.be/Chat/Command/Whisper.js: ts/Bastelstu.be/Chat/Command/Whisper.js
+files_wcf/js/Bastelstu.be/Chat/Command/Whisper.js: ts/Bastelstu.be/Chat/Command/Whisper.ts
 files_wcf/js/Bastelstu.be/Chat/Command/Info.js: ts/Bastelstu.be/Chat/Command/Info.js
 files_wcf/js/Bastelstu.be/Chat/Command/Team.js: ts/Bastelstu.be/Chat/Command/Team.js
 files_wcf/js/Bastelstu.be/Chat/Command/Unban.js: ts/Bastelstu.be/Chat/Command/Unban.js
