@@ -32,7 +32,7 @@ class Command {
 		this.#data = _data
 	}
 
-	getParameterParser(): IParser<any> {
+	getParameterParser(): IParser<unknown> {
 		return Parser.Rest
 	}
 
