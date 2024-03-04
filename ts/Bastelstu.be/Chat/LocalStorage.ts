@@ -92,14 +92,7 @@ class LocalStorage {
 	 * Return the prefix to use for the local storage
 	 */
 	get storagePrefix(): string {
-		let prefix = ''
-
-		// WSC 3.1
-		if (typeof Core.getStoragePrefix === 'function') {
-			prefix = Core.getStoragePrefix()
-		}
-
-		return `${prefix}be.bastelstu.Chat.${this.#subprefix}`
+		return `${Core.getStoragePrefix()}be.bastelstu.Chat.${this.#subprefix}`
 	}
 
 	/**
