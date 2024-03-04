@@ -23,7 +23,7 @@
 <script type="x-text/template" data-application="be.bastelstu.chat" data-template-name="DeleteButton">
 	{/literal}
 	<li>
-		<a class="button jsTooltip jsDeleteButton" href="#" data-tooltip="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true __literal=true}chat.stream.button.delete.sure{/lang}"><span class="icon icon16 fa-times"></span> <span class="invisible">{lang}wcf.global.button.delete{/lang}</span></a>
+		<a class="button jsTooltip jsDeleteButton" href="#" data-tooltip="{lang}wcf.global.button.delete{/lang}" data-confirm-message-html="{lang __encode=true __literal=true}chat.stream.button.delete.sure{/lang}">{icon name='xmark'} <span class="invisible">{lang}wcf.global.button.delete{/lang}</span></a>
 	</li>
 	{literal}
 </script>
@@ -32,7 +32,7 @@
 	<div class="chatMessageContainer inline">
 		<div class="chatMessageSide">
 			<div class="chatUserAvatar">
-				<span class="icon icon32 fa-info-circle"></span>
+				{icon size=32 name='circle-info'}
 			</div>
 			<time><a href="{$message.link}">{$message.formattedTime}</a></time>
 		</div>
@@ -72,7 +72,7 @@
 	<div class="chatMessageContainer inline">
 		<div class="chatMessageSide">
 			<div class="chatUserAvatar">
-				<span class="icon icon32 fa-info-circle"></span>
+				{icon size=32 name='circle-info'}
 			</div>
 			<time><a href="{$message.link}">{$message.formattedTime}</a></time>
 		</div>
@@ -165,11 +165,11 @@
 			</div>
 			<span class="chatMessageIcon">
 				{if $__window.RegExp('^shower(?:ing)?$', 'i').test($message.payload.message)}
-					<span class="icon icon16 fa-shower"></span>
+					{icon name='shower'}
 				{else if $__window.RegExp('^bath(?:ing)?$', 'i').test($message.payload.message)}
-					<span class="icon icon16 fa-bath"></span>
+					{icon name='bath'}
 				{else}
-					<span class="icon icon16 fa-user-o"></span>
+					{icon name='user'}
 				{/if}
 			</span>
 			<div class="chatMessage">{lang}chat.messageType.{$message.objectType}{/lang}</div>
@@ -197,7 +197,7 @@
 				</small>
 			</div>
 			<span class="chatMessageIcon">
-				<span class="icon icon16 fa-user"></span>
+				{icon name='user' type='solid'}
 			</span>
 			<div class="chatMessage">{lang}chat.messageType.{$message.objectType}{/lang}</div>
 		</div>
@@ -257,9 +257,9 @@
 			</div>
 			<span class="chatMessageIcon">
 				{if $message.objectType === 'be.bastelstu.chat.messageType.join'}
-					<span class="icon icon16 fa-sign-in"></span>
+					{icon name='right-to-bracket'}
 				{else}
-					<span class="icon icon16 fa-sign-out"></span>
+					{icon name='right-from-bracket'}
 				{/if}
 			</span>
 			<div class="chatMessage">{lang}chat.messageType.{$message.objectType}{/lang}</div>
@@ -289,7 +289,7 @@
 				</small>
 			</div>
 			<span class="chatMessageIcon">
-				<span class="icon icon16 fa-user-times"></span>
+				{icon name='user-xmark'}
 			</span>
 			<div class="chatMessage">{lang}chat.suspension.message.new.{$message.payload.suspension.objectType}{/lang}</div>
 		</div>
@@ -316,7 +316,7 @@
 				</small>
 			</div>
 			<span class="chatMessageIcon">
-				<span class="icon icon16 fa-user-times"></span>
+				{icon name='user-xmark'}
 			</span>
 			<div class="chatMessage">{lang}chat.suspension.message.revoke.{$message.payload.objectType}{/lang}</div>
 		</div>
@@ -338,7 +338,7 @@
 						{@$author.coloredUsername}
 					</a>
 				</span>
-				<span class="icon icon16 fa-chevron-right" data-insert-whisper="{if $message.isOwnMessage()}{$message.payload.recipientName}{else}{$author.username}{/if}"></span>
+				<span data-insert-whisper="{if $message.isOwnMessage()}{$message.payload.recipientName}{else}{$author.username}{/if}">{icon name='chevron-right'}</span>
 				<span class="recipientUsername">{$message.payload.recipientName}</span>
 				<small class="separatorLeft">
 					<time><a href="{$message.link}">{$message.formattedTime}</a></time>
@@ -359,7 +359,7 @@
 		</div>
 		<div class="chatMessageContent">
 			<div class="chatMessageHeader">
-				<span class="username"><span class="icon icon16 fa-bullhorn jsTooltip" title="{lang}chat.messageType.be.bastelstu.chat.messageType.broadcast.tooltip{/lang}"></span>
+				<span class="username"><span class="jsTooltip" title="{lang}chat.messageType.be.bastelstu.chat.messageType.broadcast.tooltip{/lang}">{icon name='bullhorn'}</span>
 					<a href="{$author.link}" class="jsUserActionDropdown" data-user-id="{$author.userID}">
 						{@$author.coloredUsername}
 					</a>
@@ -391,7 +391,7 @@
 		<div class="chatMessageContent">
 			<div class="chatMessageHeader">
 				<span class="username">
-					<span class="icon icon16 fa-star-o jsTooltip" title="{lang}chat.messageType.be.bastelstu.chat.messageType.team.tooltip{/lang}"></span>
+					<span class="jsTooltip" title="{lang}chat.messageType.be.bastelstu.chat.messageType.team.tooltip{/lang}">{icon name='star'}</span>
 					<a href="{$author.link}" class="jsUserActionDropdown" data-user-id="{$author.userID}">
 						{@$author.coloredUsername}
 					</a>
@@ -510,7 +510,7 @@
 				</small>
 			</div>
 			<span class="chatMessageIcon">
-				<span class="icon icon16 fa-trash"></span>
+				{icon name='trash-can' type='solid'}
 			</span>
 			<div class="chatMessage">
 				{lang}chat.messageType.be.bastelstu.chat.messageType.tombstone.message{/lang}

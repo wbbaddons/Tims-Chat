@@ -15,7 +15,7 @@
 	</authorinformation>
 
 	<requiredpackages>
-		<requiredpackage minversion="5.5.20">com.woltlab.wcf</requiredpackage>
+		<requiredpackage minversion="6.0.7">com.woltlab.wcf</requiredpackage>
 		<requiredpackage minversion="1.1.0">be.bastelstu.promiseWrap</requiredpackage>
 		<requiredpackage minversion="0.6.1">be.bastelstu.parserCombinator</requiredpackage>
 		<requiredpackage minversion="1.6.1">be.bastelstu.bottle</requiredpackage>
@@ -23,7 +23,7 @@
 	</requiredpackages>
 
 	<excludedpackages>
-		<excludedpackage version="6.0.0 Alpha 1">com.woltlab.wcf</excludedpackage>
+		<excludedpackage version="6.1.0 Alpha 1">com.woltlab.wcf</excludedpackage>
 		<excludedpackage version="1.700.0 Alpha 1">be.bastelstu.parserCombinator</excludedpackage>
 	</excludedpackages>
 

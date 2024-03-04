@@ -1,3 +1,3 @@
 {ldelim}if $user.permissions.canMute || $user.permissions.canBan}
-	<span class="icon icon24 fa-legal jsTooltip" title="{lang}chat.room.userList.moderator{/lang}"></span>
+	<span class="jsTooltip" title="{lang}chat.room.userList.moderator{/lang}">{icon size=24 name='gavel'}</span>
 {ldelim}/if}

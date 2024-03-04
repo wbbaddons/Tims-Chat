@@ -141,7 +141,7 @@ require([ 'Bastelstu.be/PromiseWrap/Ajax', 'Bastelstu.be/PromiseWrap/Ui/Confirma
 				{foreach from=$objects item=suspension}
 					<tr class="jsSuspensionRow" data-object-id="{$suspension->suspensionID}">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-undo{if !$suspension->isActive()} disabled{else} pointer{/if} jsRevokeButton" title="{lang}chat.acp.suspension.revoke{/lang}" data-confirm-message-html="{lang}chat.acp.suspension.revoke.sure{/lang}"></span>
+							<span class="jsRevokeButton{if !$suspension->isActive()} disabled{else} pointer{/if}" title="{lang}chat.acp.suspension.revoke{/lang}" data-confirm-message-html="{lang}chat.acp.suspension.revoke.sure{/lang}">{icon name='arrow-rotate-left'}</span>
 							{event name='rowButtons'}
 						</td>
 

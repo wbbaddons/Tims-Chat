@@ -11,10 +11,10 @@
 
 				<div class="iconColumn">
 				{if $user.away !== null}
-					<span class="icon icon24 fa-clock-o jsTooltip awayIcon" title="{lang}chat.room.userList.away{/lang}"></span>
+					<span class="jsTooltip awayIcon" title="{lang}chat.room.userList.away{/lang}">{icon size=24 name='clock'}</span>
 				{/if}
 				{if !$user.permissions.canWritePublicly}
-					<span class="icon icon24 fa-remove jsTooltip" title="{lang}chat.room.userList.mute{/lang}"></span>
+					<span class="jsTooltip" title="{lang}chat.room.userList.mute{/lang}">{icon size=24 name='xmark'}</span>
 				{/if}
 				{/literal}
 				{event name='icons'}

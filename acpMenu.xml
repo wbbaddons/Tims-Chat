@@ -16,7 +16,7 @@
 			<controller>chat\acp\form\RoomAddForm</controller>
 			<parent>chat.acp.menu.link.room.list</parent>
 			<permissions>admin.chat.canManageRoom</permissions>
-			<icon>fa-plus</icon>
+			<icon>plus</icon>
 		</acpmenuitem>
 
 		<acpmenuitem name="chat.acp.menu.link.command.trigger.list">
@@ -29,7 +29,7 @@
 			<controller>chat\acp\form\CommandTriggerAddForm</controller>
 			<parent>chat.acp.menu.link.command.trigger.list</parent>
 			<permissions>admin.chat.canManageTriggers</permissions>
-			<icon>fa-plus</icon>
+			<icon>plus</icon>
 		</acpmenuitem>
 
 		<acpmenuitem name="chat.acp.menu.link.suspension.list">

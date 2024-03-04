@@ -87,8 +87,8 @@ define([
 				button.closest('.chatMessageBoundary').hidden = true
 			})
 
-			const icon = document.createElement('span')
-			icon.classList.add('icon', 'icon16', 'fa-times')
+			const icon = document.createElement('fa-icon')
+			icon.setIcon('xmark')
 
 			button.append(icon)
 
