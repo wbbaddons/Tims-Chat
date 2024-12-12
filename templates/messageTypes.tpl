@@ -55,7 +55,7 @@
 								<div class="containerContent">
 									<ul class="inlineList commaSeparated">
 										{foreach from=$room.users item='user'}
-											<li><a href="{$user.link}" class="userLink" data-user-id="{$user.userID}">{$user.username}</a></li>
+											<li><a href="{$user.link}" class="userLink" data-object-id="{$user.userID}">{$user.username}</a></li>
 										{/foreach}
 									</ul>
 								</div>
@@ -93,7 +93,7 @@
 							<div>
 								<div class="containerHeadline">
 									<h3>
-										<a href="{$users.get($message.payload.user.userID).link}" class="username userLink" data-user-id="{$message.payload.user.userID}">{$users.get($message.payload.user.userID).username}</a>
+										<a href="{$users.get($message.payload.user.userID).link}" class="username userLink" data-object-id="{$message.payload.user.userID}">{$users.get($message.payload.user.userID).username}</a>
 										{if $users.get($message.payload.user.userID).userTitle}
 											<span class="userTitle">
 												<span class="badge userTitleBadge{if $users.get($message.payload.user.userID).userRankClass} {@$users.get($message.payload.user.userID).userRankClass}{/if}">	{$users.get($message.payload.user.userID).userTitle}</span>
