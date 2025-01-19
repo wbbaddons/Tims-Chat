@@ -1,0 +1,22 @@
+{
+  "include": ["node_modules/@woltlab/d.ts/global.d.ts", "ts/**/*"],
+  "compilerOptions": {
+    "allowJs": true, // remove once migration is done
+    "target": "ES2022",
+    "module": "amd",
+    "rootDir": "ts/",
+    "outDir": "files_wcf/js/",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/@woltlab/d.ts/*", "ts/@types/*"]
+    },
+    "importHelpers": true,
+    "newLine": "lf"
+  }
+}
