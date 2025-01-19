@@ -1,6 +1,6 @@
 <script type="x-text/template" data-application="be.bastelstu.chat" data-template-name="UserListDropdownMenuItems">
 	<ul class="dropdownMenu">
-		{literal}<li><a href="{$user.link}" class="userLink" data-user-id="{$user.userID}">{lang}chat.user.action.profile{/lang}</a></li>{/literal}
+		{literal}<li><a href="{$user.link}" class="userLink" data-object-id="{$user.userID}">{lang}chat.user.action.profile{/lang}</a></li>{/literal}
 		<li><span data-module="Bastelstu.be/Chat/Ui/UserActions/WhisperAction" data-trigger="whisper">{lang}chat.user.action.whisper{/lang}</span></li>
 		{capture append='extraModules'}
 		'Bastelstu.be/Chat/Ui/UserActions/WhisperAction',

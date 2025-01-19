@@ -16,14 +16,8 @@ define([
 	'./Button',
 	'WoltLabSuite/Core/Dom/Util',
 	'WoltLabSuite/Core/Language',
-	'WoltLabSuite/Core/Ui/Screen'
-], function (
-	Helper,
-	Button,
-	DomUtil,
-	Language,
-	UiScreen
-) {
+	'WoltLabSuite/Core/Ui/Screen',
+], function (Helper, Button, DomUtil, Language, UiScreen) {
 	'use strict'
 
 	const DEPENDENCIES = [].concat(Button.DEPENDENCIES || [])
@@ -31,7 +25,9 @@ define([
 		constructor(element, ...superDeps) {
 			super(element, ...superDeps)
 
-			this.roomList = document.querySelector(`[data-box-identifier='be.bastelstu.chat.roomListSidebar']`)
+			this.roomList = document.querySelector(
+				`[data-box-identifier='be.bastelstu.chat.roomListSidebar']`
+			)
 			if (!this.roomList) {
 				element.remove()
 				return
@@ -65,7 +61,7 @@ define([
 		show(doShow = true) {
 			if (doShow) {
 				this.open = true
-				this.sidebar.style.setProperty('display', 'contents', '');
+				this.sidebar.style.setProperty('display', 'contents', '')
 
 				for (let sibling of Helper.getElementSiblings(this.roomList)) {
 					DomUtil.hide(sibling)
@@ -82,8 +78,7 @@ define([
 				if (this.mobile) {
 					UiScreen.scrollDisable()
 				}
-			}
-			else {
+			} else {
 				delete this.roomList.dataset.show
 				this.closeButton.remove()
 

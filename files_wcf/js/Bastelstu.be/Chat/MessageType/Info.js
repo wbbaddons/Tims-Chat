@@ -11,11 +11,11 @@
  * or later of the General Public License.
  */
 
-define([
-	'WoltLabSuite/Core/Language',
-	'../Helper',
-	'../MessageType',
-], function (Language, Helper, MessageType) {
+define(['WoltLabSuite/Core/Language', '../Helper', '../MessageType'], function (
+	Language,
+	Helper,
+	MessageType
+) {
 	'use strict'
 
 	const decorators = Symbol('decorators')
