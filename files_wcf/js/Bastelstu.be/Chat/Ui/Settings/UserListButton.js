@@ -16,14 +16,8 @@ define([
 	'./Button',
 	'WoltLabSuite/Core/Dom/Util',
 	'WoltLabSuite/Core/Language',
-	'WoltLabSuite/Core/Ui/Screen'
-], function (
-	Helper,
-	Button,
-	DomUtil,
-	Language,
-	UiScreen
-) {
+	'WoltLabSuite/Core/Ui/Screen',
+], function (Helper, Button, DomUtil, Language, UiScreen) {
 	'use strict'
 
 	const DEPENDENCIES = [].concat(Button.DEPENDENCIES || [])
@@ -60,7 +54,7 @@ define([
 		show(doShow = true) {
 			if (doShow) {
 				this.open = true
-				this.sidebar.style.setProperty('display', 'contents', '');
+				this.sidebar.style.setProperty('display', 'contents', '')
 
 				for (let sibling of Helper.getElementSiblings(this.userList)) {
 					DomUtil.hide(sibling)
@@ -77,8 +71,7 @@ define([
 				if (this.mobile) {
 					UiScreen.scrollDisable()
 				}
-			}
-			else {
+			} else {
 				delete this.userList.dataset.show
 				this.closeButton.remove()
 

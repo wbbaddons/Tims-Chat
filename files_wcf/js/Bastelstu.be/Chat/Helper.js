@@ -384,13 +384,10 @@ define(['WoltLabSuite/Core/Date/Util', 'WoltLabSuite/Core/Language'], function (
 				return
 			}
 
-			const children = [ ...element.parentNode.children ]
-			const index = children.indexOf(element);
+			const children = [...element.parentNode.children]
+			const index = children.indexOf(element)
 
-			return [
-				...children.slice(0, index),
-				...children.slice(index + 1)
-			]
+			return [...children.slice(0, index), ...children.slice(index + 1)]
 		}
 	}
 
