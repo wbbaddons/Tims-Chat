@@ -22,11 +22,7 @@ class LocalStorageEmulator implements Storage {
 		return new Proxy(this, {
 			get(target, property): unknown {
 				// Check if the property exists on the object or its prototype
-				if (
-					// eslint-disable-next-line no-prototype-builtins
-					target.hasOwnProperty(property) ||
-					Object.getPrototypeOf(target)[property]
-				) {
+				if (property in target) {
 					return target[property as string]
 				}
 
@@ -40,11 +36,7 @@ class LocalStorageEmulator implements Storage {
 				_receiver: unknown
 			): boolean {
 				// Check if the property exists on the object or its prototype
-				if (
-					// eslint-disable-next-line no-prototype-builtins
-					target.hasOwnProperty(property) ||
-					Object.getPrototypeOf(target)[property]
-				) {
+				if (property in target) {
 					target[property as string] = value
 				} else {
 					// Proxy to the underlying map
@@ -54,11 +46,9 @@ class LocalStorageEmulator implements Storage {
 			},
 			has(target, property) {
 				return (
-					// eslint-disable-next-line no-prototype-builtins
-					target.hasOwnProperty(property) || // check the properties of the object
-					Object.getPrototypeOf(target)[property] || // check its prototype
+					property in target || // Check if the property exists on the object or its prototype
 					target.#data.has(property as string) // check the underlying map
-				) 
+				)
 			},
 			ownKeys(target): string[] {
 				// Proxy to the underlying map
