@@ -11,9 +11,6 @@
  * or later of the General Public License.
  */
 
-const s = Symbol('s')
-const start = Symbol('start')
-
 interface Entry<T> {
 	value: T
 	next: Entry<T> | undefined
@@ -21,21 +18,21 @@ interface Entry<T> {
 }
 
 class LRU<T = unknown> {
-	private [s]: Map<T, Entry<T>>;
-	private [start]: Entry<T> | undefined
+	#s: Map<T, Entry<T>>;
+	#start: Entry<T> | undefined
 
 	constructor() {
-		this[s] = new Map()
-		this[start] = undefined
+		this.#s = new Map()
+		this.#start = undefined
 	}
 
 	add(value: T) {
-		if (this[start] && this[start].value === value) {
+		if (this.#start && this.#start.value === value) {
 			return
 		}
 
-		if (this[s].has(value)) {
-			const entry = this[s].get(value)!
+		if (this.#s.has(value)) {
+			const entry = this.#s.get(value)!
 			if (entry.prev) {
 				entry.prev.next = entry.next
 			}
@@ -43,16 +40,16 @@ class LRU<T = unknown> {
 				entry.next.prev = entry.prev
 			}
 		}
-		const obj = { value, next: this[start], prev: undefined }
-		this[start] = obj
-		if (this[start].next) {
-			this[start].next.prev = obj
+		const obj = { value, next: this.#start, prev: undefined }
+		this.#start = obj
+		if (this.#start.next) {
+			this.#start.next.prev = obj
 		}
-		this[s].set(value, obj)
+		this.#s.set(value, obj)
 	}
 
 	*[Symbol.iterator](): Generator<T, void, void> {
-		let current = this[start]
+		let current = this.#start
 		if (!current) return
 
 		do {
