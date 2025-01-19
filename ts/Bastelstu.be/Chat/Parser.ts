@@ -17,13 +17,23 @@ import type { IParser } from 'Bastelstu.be/parser-combinator'
 const { C, F, N, X, Streams } = parsec
 const response = parsec.parsec.response
 
-const peek = function <T>(p: IParser<T>): IParser<T> {
-	return F.parse((input, index = 0) =>
-		p.parse(input, index).fold(
-			(accept) => response.accept(accept.value, accept.input, index, false),
-			(reject) => response.reject(input.location(reject.offset), false)
+/**
+ * peek() transform a given parser into a new parser accepting
+ * the same inputs, but without consuming the input stream.
+ */
+function peek<T>(p: IParser<T>): IParser<T> {
+	return F.parse(function (input, index = 0) {
+		return p.parse(input, index).fold(
+			function (accept) {
+				// Preserve the `accept.value`, but keep the original input, index
+				// and indicate that nothing was consumed.
+				return response.accept(accept.value, input, index, false)
+			},
+			function (reject) {
+				return response.reject(input.location(reject.offset), false)
+			}
 		)
-	)
+	})
 }
 
 const Whitespace: IParser<string> = F.satisfy<string>((item) => /\s/.test(item))
