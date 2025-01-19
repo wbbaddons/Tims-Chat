@@ -14,11 +14,11 @@
 import parsec from 'Bastelstu.be/parser-combinator'
 import type { IParser } from 'Bastelstu.be/parser-combinator'
 
-const { C, F, N, X, parser, Streams } = parsec
+const { C, F, N, X, Streams } = parsec
 const response = parsec.parsec.response
 
 const peek = function <T>(p: IParser<T>): IParser<T> {
-	return new parser((input, index = 0) =>
+	return F.parse((input, index = 0) =>
 		p.parse(input, index).fold(
 			(accept) => response.accept(accept.value, accept.input, index, false),
 			(reject) => response.reject(input.location(reject.offset), false)
