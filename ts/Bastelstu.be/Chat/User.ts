@@ -33,6 +33,7 @@ interface User extends UserPayload {}
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class User {
 	#u: UserPayload
+	#coloredUsername: string | null = null
 
 	constructor(user: UserPayload) {
 		this.#u = Helper.deepFreeze(user)
@@ -50,9 +51,13 @@ class User {
 	}
 
 	get coloredUsername(): string {
+		if (this.#coloredUsername !== null) {
+			return this.#coloredUsername
+		}
+
 		// No color
 		if (this.color1 === null && this.color2 === null) {
-			return StringUtil.escapeHTML(this.username)
+			return (this.#coloredUsername = StringUtil.escapeHTML(this.username))
 		}
 
 		// If color1 was null, color2 must be set, otherwise both would have been null
@@ -69,9 +74,9 @@ class User {
 
 		// Single color, if both are identical, neither can be null
 		if (color1 === color2) {
-			return `<span style="color: ${Helper.intToRGBHex(
+			return (this.#coloredUsername = `<span style="color: ${Helper.intToRGBHex(
 				color1
-			)};">${StringUtil.escapeHTML(this.username)}</span>`
+			)};">${StringUtil.escapeHTML(this.username)}</span>`)
 		}
 
 		// Gradient
@@ -87,7 +92,7 @@ class User {
 		const g = (g1 - g2) / steps
 		const b = (b1 - b2) / steps
 
-		return this.#u.username
+		return (this.#coloredUsername = this.#u.username
 			.split('')
 			.map((letter: string, index: number) => {
 				const R = Math.round(r1 - index * r)
@@ -98,7 +103,7 @@ class User {
 					letter
 				)}</span>`
 			})
-			.join('')
+			.join(''))
 	}
 
 	get self(): boolean {
