@@ -11,16 +11,12 @@
  * or later of the General Public License.
  */
 
-define([], function () {
-	'use strict'
+import type { ConfirmationOptions as CoreConfirmationOptions } from 'WoltLabSuite/Core/Ui/Confirmation'
 
-	class ParseError extends Error {
-		constructor(message, data) {
-			super(message)
+type ConfirmationOptions = Omit<CoreConfirmationOptions, 'confirm' | 'cancel'>
 
-			this.data = data
-		}
-	}
+declare class Confirmation {
+	static show(options: ConfirmationOptions): Promise<void>
+}
 
-	return ParseError
-})
+export = Confirmation

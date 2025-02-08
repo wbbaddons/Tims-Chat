@@ -11,12 +11,13 @@
  * or later of the General Public License.
  */
 
-define([], function () {
-	'use strict'
+export const enum Color {
+	Red = 'RED',
+	Black = 'BLACK',
+}
 
-	class Ui {
-		constructor() {}
-	}
-
-	return Ui
-})
+export const enum Side {
+	Left = 'LEFT',
+	Right = 'RIGHT',
+	Is = 'IS',
+}
