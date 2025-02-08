@@ -52,7 +52,7 @@ class User {
 	get coloredUsername(): string {
 		// No color
 		if (this.color1 === null && this.color2 === null) {
-			return this.username
+			return StringUtil.escapeHTML(this.username)
 		}
 
 		// If color1 was null, color2 must be set, otherwise both would have been null
