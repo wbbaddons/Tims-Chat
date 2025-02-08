@@ -4,23 +4,19 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2029-01-19
+ * Change Date: 2029-02-08
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
  * or later of the General Public License.
  */
 
-define([], function () {
-	'use strict'
+import type { ConfirmationOptions as CoreConfirmationOptions } from 'WoltLabSuite/Core/Ui/Confirmation'
 
-	class ParseError extends Error {
-		constructor(message, data) {
-			super(message)
+type ConfirmationOptions = Omit<CoreConfirmationOptions, 'confirm' | 'cancel'>
 
-			this.data = data
-		}
-	}
+declare class Confirmation {
+	static show(options: ConfirmationOptions): Promise<void>
+}
 
-	return ParseError
-})
+export = Confirmation

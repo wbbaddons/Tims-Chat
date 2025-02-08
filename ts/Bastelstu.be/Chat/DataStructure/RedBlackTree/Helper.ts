@@ -4,19 +4,20 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2029-01-19
+ * Change Date: 2029-02-08
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
  * or later of the General Public License.
  */
 
-define([], function () {
-	'use strict'
+export const enum Color {
+	Red = 'RED',
+	Black = 'BLACK',
+}
 
-	class Ui {
-		constructor() {}
-	}
-
-	return Ui
-})
+export const enum Side {
+	Left = 'LEFT',
+	Right = 'RIGHT',
+	Is = 'IS',
+}

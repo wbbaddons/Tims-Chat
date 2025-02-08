@@ -1,6 +1,6 @@
 FILES = $(shell find files -type f)
 WCF_FILES = $(shell find files_wcf -type f)
-TS_FILES = $(shell find ts/ -type f |sed 's/ts$$/js/g;s!^ts/!files_wcf/js/!')
+TS_FILES = $(shell find ts/Bastelstu.be/ -type f |sed 's/ts$$/js/g;s!^ts/!files_wcf/js/!')
 JS_MODULE_FILES = $(shell find ts/Bastelstu.be -type f)
 
 all: be.bastelstu.chat.tar be.bastelstu.chat.tar.gz
@@ -26,21 +26,22 @@ Bastelstu.be.Chat.babel.js: Bastelstu.be.Chat.js .babelrc
 	npx babel $< --out-file $@
 
 files_wcf/js/%.js: tsconfig.json
-files_wcf/js/Bastelstu.be/Chat/LocalStorage.js: ts/Bastelstu.be/Chat/LocalStorage.js
-files_wcf/js/Bastelstu.be/Chat/Parser.js: ts/Bastelstu.be/Chat/Parser.js
+files_wcf/js/Bastelstu.be/Chat/LocalStorage.js: ts/Bastelstu.be/Chat/LocalStorage.ts
+files_wcf/js/Bastelstu.be/Chat/Parser.js: ts/Bastelstu.be/Chat/Parser.ts
 files_wcf/js/Bastelstu.be/Chat/Helper.js: ts/Bastelstu.be/Chat/Helper.js
 files_wcf/js/Bastelstu.be/Chat/User.js: ts/Bastelstu.be/Chat/User.js
-files_wcf/js/Bastelstu.be/Chat/Ui.js: ts/Bastelstu.be/Chat/Ui.js
+files_wcf/js/Bastelstu.be/Chat/Ui.js: ts/Bastelstu.be/Chat/Ui.ts
 files_wcf/js/Bastelstu.be/Chat/DataStructure/Throttle.js: ts/Bastelstu.be/Chat/DataStructure/Throttle.js
-files_wcf/js/Bastelstu.be/Chat/DataStructure/LRU.js: ts/Bastelstu.be/Chat/DataStructure/LRU.js
+files_wcf/js/Bastelstu.be/Chat/DataStructure/LRU.js: ts/Bastelstu.be/Chat/DataStructure/LRU.ts
 files_wcf/js/Bastelstu.be/Chat/DataStructure/EventEmitter.js: ts/Bastelstu.be/Chat/DataStructure/EventEmitter.js
-files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Node.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Node.js
-files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Tree.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Tree.js
+files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Node.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Node.ts
+files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Tree.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Tree.ts
+files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Helper.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Helper.ts
 files_wcf/js/Bastelstu.be/Chat/ProfileStore.js: ts/Bastelstu.be/Chat/ProfileStore.js
 files_wcf/js/Bastelstu.be/Chat/Autocompleter.js: ts/Bastelstu.be/Chat/Autocompleter.js
-files_wcf/js/Bastelstu.be/Chat/ParseError.js: ts/Bastelstu.be/Chat/ParseError.js
+files_wcf/js/Bastelstu.be/Chat/ParseError.js: ts/Bastelstu.be/Chat/ParseError.ts
 files_wcf/js/Bastelstu.be/Chat/Messenger.js: ts/Bastelstu.be/Chat/Messenger.js
-files_wcf/js/Bastelstu.be/Chat/LocalStorageEmulator.js: ts/Bastelstu.be/Chat/LocalStorageEmulator.js
+files_wcf/js/Bastelstu.be/Chat/LocalStorageEmulator.js: ts/Bastelstu.be/Chat/LocalStorageEmulator.ts
 files_wcf/js/Bastelstu.be/Chat/Command.js: ts/Bastelstu.be/Chat/Command.js
 files_wcf/js/Bastelstu.be/Chat/Message.js: ts/Bastelstu.be/Chat/Message.js
 files_wcf/js/Bastelstu.be/Chat/Log.js: ts/Bastelstu.be/Chat/Log.js
@@ -91,8 +92,8 @@ files_wcf/js/Bastelstu.be/Chat/Ui/UserActionDropdownHandler.js: ts/Bastelstu.be/
 files_wcf/js/Bastelstu.be/Chat/Ui/Attachment/Upload.js: ts/Bastelstu.be/Chat/Ui/Attachment/Upload.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Notification.js: ts/Bastelstu.be/Chat/Ui/Notification.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Mobile.js: ts/Bastelstu.be/Chat/Ui/Mobile.js
-files_wcf/js/Bastelstu.be/Chat/console.js: ts/Bastelstu.be/Chat/console.js
-files_wcf/js/Bastelstu.be/Chat/Template.js: ts/Bastelstu.be/Chat/Template.js
+files_wcf/js/Bastelstu.be/Chat/console.js: ts/Bastelstu.be/Chat/console.ts
+files_wcf/js/Bastelstu.be/Chat/Template.js: ts/Bastelstu.be/Chat/Template.ts
 files_wcf/js/Bastelstu.be/Chat/Room.js: ts/Bastelstu.be/Chat/Room.js
 files_wcf/js/Bastelstu.be/Chat/MessageType.js: ts/Bastelstu.be/Chat/MessageType.js
 files_wcf/js/Bastelstu.be/Chat/CommandHandler.js: ts/Bastelstu.be/Chat/CommandHandler.js
@@ -119,7 +120,7 @@ files_wcf/js/%.js:
 	npx tsc
 
 Bastelstu.be.Chat.js: $(TS_FILES) require.build.js package.json package-lock.json
-	npx r_js -o require.build.js
+	npx r.js -o require.build.js
 
 clean:
 	-rm -f files.tar
