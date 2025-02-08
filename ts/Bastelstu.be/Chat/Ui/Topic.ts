@@ -11,21 +11,16 @@
  * or later of the General Public License.
  */
 
-define(['WoltLabSuite/Core/Dom/Traverse'], function (Traverse) {
-	'use strict'
-
-	class Topic {
-		bootstrap() {
-			elBySelAll('.chatRoomTopic', document, function (element) {
-				elBySel('.jsDismissRoomTopicButton', element).addEventListener(
-					'click',
-					function (event) {
-						elRemove(element)
-					}
-				)
-			})
-		}
+class Topic {
+	bootstrap(): void {
+		document.querySelectorAll('.chatRoomTopic').forEach(function (element) {
+			element
+				.querySelector('.jsDismissRoomTopicButton')
+				?.addEventListener('click', function () {
+					element.remove()
+				})
+		})
 	}
+}
 
-	return Topic
-})
+export = Topic
