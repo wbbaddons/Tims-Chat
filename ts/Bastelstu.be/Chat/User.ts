@@ -15,8 +15,6 @@ import CoreUser from 'WoltLabSuite/Core/User'
 import * as StringUtil from 'WoltLabSuite/Core/StringUtil'
 import Helper from './Helper'
 
-const u = Symbol('user')
-
 interface UserPayload {
 	username: string
 	userID: number | null
@@ -34,18 +32,18 @@ interface User extends UserPayload {}
  */
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class User {
-	[u]: UserPayload
+	#u: UserPayload
 
 	constructor(user: UserPayload) {
-		this[u] = Helper.deepFreeze(user)
+		this.#u = Helper.deepFreeze(user)
 
-		Object.getOwnPropertyNames(this[u]).forEach((key) => {
+		Object.getOwnPropertyNames(this.#u).forEach((key) => {
 			if (this[key] != null) {
 				throw new Error('Attempting to override existing property')
 			}
 
 			Object.defineProperty(this, key, {
-				value: this[u][key],
+				value: this.#u[key],
 				enumerable: true,
 			})
 		})
@@ -89,7 +87,7 @@ class User {
 		const g = (g1 - g2) / steps
 		const b = (b1 - b2) / steps
 
-		return this[u].username
+		return this.#u.username
 			.split('')
 			.map((letter: string, index: number) => {
 				const R = Math.round(r1 - index * r)
@@ -114,11 +112,11 @@ class User {
 	}
 
 	wrap(): { user: UserPayload } {
-		return { user: this[u] }
+		return { user: this.#u }
 	}
 
 	toJSON(): UserPayload {
-		return this[u]
+		return this.#u
 	}
 }
 
