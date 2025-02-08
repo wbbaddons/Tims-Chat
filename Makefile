@@ -28,8 +28,8 @@ Bastelstu.be.Chat.babel.js: Bastelstu.be.Chat.js .babelrc
 files_wcf/js/%.js: tsconfig.json
 files_wcf/js/Bastelstu.be/Chat/LocalStorage.js: ts/Bastelstu.be/Chat/LocalStorage.ts
 files_wcf/js/Bastelstu.be/Chat/Parser.js: ts/Bastelstu.be/Chat/Parser.ts
-files_wcf/js/Bastelstu.be/Chat/Helper.js: ts/Bastelstu.be/Chat/Helper.js
-files_wcf/js/Bastelstu.be/Chat/User.js: ts/Bastelstu.be/Chat/User.js
+files_wcf/js/Bastelstu.be/Chat/Helper.js: ts/Bastelstu.be/Chat/Helper.ts
+files_wcf/js/Bastelstu.be/Chat/User.js: ts/Bastelstu.be/Chat/User.ts
 files_wcf/js/Bastelstu.be/Chat/Ui.js: ts/Bastelstu.be/Chat/Ui.ts
 files_wcf/js/Bastelstu.be/Chat/DataStructure/Throttle.js: ts/Bastelstu.be/Chat/DataStructure/Throttle.js
 files_wcf/js/Bastelstu.be/Chat/DataStructure/LRU.js: ts/Bastelstu.be/Chat/DataStructure/LRU.ts
@@ -37,7 +37,7 @@ files_wcf/js/Bastelstu.be/Chat/DataStructure/EventEmitter.js: ts/Bastelstu.be/Ch
 files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Node.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Node.ts
 files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Tree.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Tree.ts
 files_wcf/js/Bastelstu.be/Chat/DataStructure/RedBlackTree/Helper.js: ts/Bastelstu.be/Chat/DataStructure/RedBlackTree/Helper.ts
-files_wcf/js/Bastelstu.be/Chat/ProfileStore.js: ts/Bastelstu.be/Chat/ProfileStore.js
+files_wcf/js/Bastelstu.be/Chat/ProfileStore.js: ts/Bastelstu.be/Chat/ProfileStore.ts
 files_wcf/js/Bastelstu.be/Chat/Autocompleter.js: ts/Bastelstu.be/Chat/Autocompleter.js
 files_wcf/js/Bastelstu.be/Chat/ParseError.js: ts/Bastelstu.be/Chat/ParseError.ts
 files_wcf/js/Bastelstu.be/Chat/Messenger.js: ts/Bastelstu.be/Chat/Messenger.js
@@ -62,7 +62,7 @@ files_wcf/js/Bastelstu.be/Chat/Command/Me.js: ts/Bastelstu.be/Chat/Command/Me.js
 files_wcf/js/Bastelstu.be/Chat/Command/Ban.js: ts/Bastelstu.be/Chat/Command/Ban.js
 files_wcf/js/Bastelstu.be/Chat/Command/Mute.js: ts/Bastelstu.be/Chat/Command/Mute.js
 files_wcf/js/Bastelstu.be/Chat/Command/Away.js: ts/Bastelstu.be/Chat/Command/Away.js
-files_wcf/js/Bastelstu.be/Chat/BoxRoomList.js: ts/Bastelstu.be/Chat/BoxRoomList.js
+files_wcf/js/Bastelstu.be/Chat/BoxRoomList.js: ts/Bastelstu.be/Chat/BoxRoomList.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/UserActions/MuteAction.js: ts/Bastelstu.be/Chat/Ui/UserActions/MuteAction.js
 files_wcf/js/Bastelstu.be/Chat/Ui/UserActions/WhisperAction.js: ts/Bastelstu.be/Chat/Ui/UserActions/WhisperAction.js
 files_wcf/js/Bastelstu.be/Chat/Ui/UserActions/BanAction.js: ts/Bastelstu.be/Chat/Ui/UserActions/BanAction.js
@@ -74,14 +74,14 @@ files_wcf/js/Bastelstu.be/Chat/Ui/Settings.js: ts/Bastelstu.be/Chat/Ui/Settings.
 files_wcf/js/Bastelstu.be/Chat/Ui/ReadMarker.js: ts/Bastelstu.be/Chat/Ui/ReadMarker.js
 files_wcf/js/Bastelstu.be/Chat/Ui/MessageActions/Delete.js: ts/Bastelstu.be/Chat/Ui/MessageActions/Delete.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Chat.js: ts/Bastelstu.be/Chat/Ui/Chat.js
-files_wcf/js/Bastelstu.be/Chat/Ui/UserList.js: ts/Bastelstu.be/Chat/Ui/UserList.js
+files_wcf/js/Bastelstu.be/Chat/Ui/UserList.js: ts/Bastelstu.be/Chat/Ui/UserList.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/Input/Autocompleter.js: ts/Bastelstu.be/Chat/Ui/Input/Autocompleter.js
-files_wcf/js/Bastelstu.be/Chat/Ui/ErrorDialog.js: ts/Bastelstu.be/Chat/Ui/ErrorDialog.js
+files_wcf/js/Bastelstu.be/Chat/Ui/ErrorDialog.js: ts/Bastelstu.be/Chat/Ui/ErrorDialog.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/AutoAway.js: ts/Bastelstu.be/Chat/Ui/AutoAway.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Log.js: ts/Bastelstu.be/Chat/Ui/Log.js
-files_wcf/js/Bastelstu.be/Chat/Ui/Topic.js: ts/Bastelstu.be/Chat/Ui/Topic.js
+files_wcf/js/Bastelstu.be/Chat/Ui/Topic.js: ts/Bastelstu.be/Chat/Ui/Topic.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/ToggleButton.js: ts/Bastelstu.be/Chat/Ui/Settings/ToggleButton.js
-files_wcf/js/Bastelstu.be/Chat/Ui/Settings/Button.js: ts/Bastelstu.be/Chat/Ui/Settings/Button.js
+files_wcf/js/Bastelstu.be/Chat/Ui/Settings/Button.js: ts/Bastelstu.be/Chat/Ui/Settings/Button.ts
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/NotificationsButton.js: ts/Bastelstu.be/Chat/Ui/Settings/NotificationsButton.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/FullscreenButton.js: ts/Bastelstu.be/Chat/Ui/Settings/FullscreenButton.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Settings/UserListButton.js: ts/Bastelstu.be/Chat/Ui/Settings/UserListButton.js
@@ -91,7 +91,7 @@ files_wcf/js/Bastelstu.be/Chat/Ui/Settings/AutoscrollButton.js: ts/Bastelstu.be/
 files_wcf/js/Bastelstu.be/Chat/Ui/UserActionDropdownHandler.js: ts/Bastelstu.be/Chat/Ui/UserActionDropdownHandler.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Attachment/Upload.js: ts/Bastelstu.be/Chat/Ui/Attachment/Upload.js
 files_wcf/js/Bastelstu.be/Chat/Ui/Notification.js: ts/Bastelstu.be/Chat/Ui/Notification.js
-files_wcf/js/Bastelstu.be/Chat/Ui/Mobile.js: ts/Bastelstu.be/Chat/Ui/Mobile.js
+files_wcf/js/Bastelstu.be/Chat/Ui/Mobile.js: ts/Bastelstu.be/Chat/Ui/Mobile.ts
 files_wcf/js/Bastelstu.be/Chat/console.js: ts/Bastelstu.be/Chat/console.ts
 files_wcf/js/Bastelstu.be/Chat/Template.js: ts/Bastelstu.be/Chat/Template.ts
 files_wcf/js/Bastelstu.be/Chat/Room.js: ts/Bastelstu.be/Chat/Room.js
