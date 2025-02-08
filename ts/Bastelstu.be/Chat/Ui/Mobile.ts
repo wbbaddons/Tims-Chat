@@ -13,13 +13,11 @@
 
 import * as UiScreen from 'WoltLabSuite/Core/Ui/Screen'
 
-const initialized = Symbol('initialized')
-
 class Mobile {
-	[initialized]: boolean
+	#initialized: boolean
 
 	constructor() {
-		this[initialized] = false
+		this.#initialized = false
 	}
 
 	bootstrap() {
@@ -37,11 +35,11 @@ class Mobile {
 	}
 
 	init() {
-		if (this[initialized]) {
+		if (this.#initialized) {
 			return
 		}
 
-		this[initialized] = true
+		this.#initialized = true
 
 		this.initQuickSettings()
 	}
