@@ -317,7 +317,7 @@ function getTextContent(node: Node): string {
 				continue
 			}
 
-			out += node.nodeValue!.replace(/\n/g, '')
+			out += node.nodeValue!.replace(/\n/g, ' ')
 		} else {
 			switch (node.tagName) {
 				case 'IMG': {
