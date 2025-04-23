@@ -11,14 +11,21 @@
  * or later of the General Public License.
  */
 
-define(['../Command', '../Parser'], function (Command, Parser) {
-	'use strict'
+import MessageType from '../MessageType'
+import type Message from '../Message'
 
-	class Where extends Command {
-		getParameterParser() {
-			return Parser.F.eos
+interface TemproomInvitedMessage extends Message {
+	payload: {
+		recipient: number
+		recipientName: string
+		room: {
+			roomID: number
+			title: string
+			link: string
 		}
 	}
+}
 
-	return Where
-})
+class TemproomInvited extends MessageType {}
+
+export = TemproomInvited

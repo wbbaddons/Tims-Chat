@@ -11,14 +11,18 @@
  * or later of the General Public License.
  */
 
-define(['../Command', '../Parser'], function (Command, Parser) {
-	'use strict'
+import type { IParser } from 'Bastelstu.be/parser-combinator'
+import Command from '../Command'
+import Parser from '../Parser'
 
-	class Back extends Command {
-		getParameterParser() {
-			return Parser.F.eos
-		}
+interface Payload {
+	reason: string
+}
+
+class Away extends Command {
+	getParameterParser(): IParser<Payload> {
+		return Parser.Rest.map((reason) => ({ reason }))
 	}
+}
 
-	return Back
-})
+export = Away

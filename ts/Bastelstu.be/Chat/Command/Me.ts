@@ -11,10 +11,18 @@
  * or later of the General Public License.
  */
 
-define(['../MessageType'], function (MessageType) {
-	'use strict'
+import Plain from './Plain'
+import Parser from '../Parser'
+import type { IParser } from 'Bastelstu.be/parser-combinator'
 
-	class TemproomCreated extends MessageType {}
+interface Payload {
+	text: string
+}
 
-	return TemproomCreated
-})
+class Me extends Plain {
+	getParameterParser(): IParser<Payload> {
+		return Parser.Rest1.map((text) => ({ text }))
+	}
+}
+
+export = Me

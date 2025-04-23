@@ -11,10 +11,8 @@
  * or later of the General Public License.
  */
 
-define(['./Plain'], function (Plain) {
-	'use strict'
+import Plain from './Plain'
 
-	class Broadcast extends Plain {}
+class Broadcast extends Plain {}
 
-	return Broadcast
-})
+export = Broadcast
