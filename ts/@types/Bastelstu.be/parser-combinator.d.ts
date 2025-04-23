@@ -228,7 +228,7 @@ declare class Parser<T = any> {
 
 declare function _string(s: string): Parser<string>
 
-export interface ArrayResponse<T> extends Response<T> {
+export interface ArrayResponse<T> extends Response<T[]> {
 	value: T[]
 }
 
@@ -236,7 +236,7 @@ export interface ListResponse<T> extends Response<List<T>> {
 	value: List<T>
 }
 
-export interface OptionResponse<T> extends Response<T> {
+export interface OptionResponse<T> extends Response<Option<T>> {
 	value: Option<T>
 }
 
@@ -258,6 +258,7 @@ declare class Response<T = any> {
 	input: Stream<T>
 	offset: number
 	consumed: boolean
+	value: T
 
 	isAccepted(): boolean
 	toTry(): Try<T, Error>
@@ -324,7 +325,7 @@ export declare const F: {
 	lazy: <T>(p: Parser<T>, parameters?: any[], self?: object) => Parser<T>
 	returns: <T>(v: T) => IParser<T>
 	error: Parser
-	eos: Parser
+	eos: Parser<Unit>
 	satisfy: <T>(predicate: (value: T) => boolean) => Parser<T>
 	sequence: <T>() => Parser<T>
 	startsWith: <T>(value: T) => Parser<T>

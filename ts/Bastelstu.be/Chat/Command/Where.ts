@@ -11,14 +11,14 @@
  * or later of the General Public License.
  */
 
-define(['./Plain', '../Parser'], function (Plain, Parser) {
-	'use strict'
+import type { IParser } from 'Bastelstu.be/parser-combinator'
+import Command from '../Command'
+import Parser from '../Parser'
 
-	class Me extends Plain {
-		getParameterParser() {
-			return Parser.Rest1.map((text) => ({ text }))
-		}
+class Where extends Command {
+	getParameterParser(): IParser<unknown> {
+		return Parser.F.eos
 	}
+}
 
-	return Me
-})
+export = Where

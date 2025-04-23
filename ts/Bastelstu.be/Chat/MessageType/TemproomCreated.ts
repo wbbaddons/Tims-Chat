@@ -11,14 +11,19 @@
  * or later of the General Public License.
  */
 
-define(['../Command', '../Parser'], function (Command, Parser) {
-	'use strict'
+import MessageType from '../MessageType'
+import type Message from '../Message'
 
-	class Away extends Command {
-		getParameterParser() {
-			return Parser.Rest.map((reason) => ({ reason }))
+interface TemproomCreatedMessage extends Message {
+	payload: {
+		room: {
+			title: string
+			topic: string
+			link: string
 		}
 	}
+}
 
-	return Away
-})
+class TemproomCreated extends MessageType {}
+
+export = TemproomCreated

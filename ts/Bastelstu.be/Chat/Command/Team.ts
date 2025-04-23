@@ -11,10 +11,8 @@
  * or later of the General Public License.
  */
 
-define(['../MessageType'], function (MessageType) {
-	'use strict'
+import Plain from './Plain'
 
-	class TemproomInvited extends MessageType {}
+class Team extends Plain {}
 
-	return TemproomInvited
-})
+export = Team
