@@ -14,8 +14,6 @@
 import type { IParser } from 'Bastelstu.be/parser-combinator'
 import Parser from './Parser'
 
-const data = Symbol('data')
-
 interface CommandData {
 	package: string
 	identifier: string
@@ -28,10 +26,10 @@ interface CommandData {
  * Represents a chat command.
  */
 class Command {
-	[data]: CommandData
+	#data: CommandData
 
 	constructor(_data: CommandData) {
-		this[data] = _data
+		this.#data = _data
 	}
 
 	getParameterParser(): IParser<any> {
@@ -43,23 +41,23 @@ class Command {
 	}
 
 	get id(): number {
-		return this[data].commandID
+		return this.#data.commandID
 	}
 
 	get package(): string {
-		return this[data].package
+		return this.#data.package
 	}
 
 	get identifier(): string {
-		return this[data].identifier
+		return this.#data.identifier
 	}
 
 	get module(): string {
-		return this[data].module
+		return this.#data.module
 	}
 
 	get isAvailable(): boolean {
-		return this[data].isAvailable
+		return this.#data.isAvailable
 	}
 }
 
