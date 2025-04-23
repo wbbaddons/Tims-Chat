@@ -17,8 +17,6 @@ import User from 'WoltLabSuite/Core/User'
 
 import type MessageType from './MessageType'
 
-const m = Symbol('message')
-
 interface ViewableMessagePayload {
 	messageID: number
 	userID: number
@@ -36,23 +34,23 @@ interface Message extends ViewableMessagePayload {}
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class Message {
-	[m]: ViewableMessagePayload
+	#m: ViewableMessagePayload
 	MessageType: Record<string, MessageType>
 
 	constructor(
 		MessageType: Message['MessageType'],
 		message: ViewableMessagePayload
 	) {
-		this[m] = Helper.deepFreeze(message)
+		this.#m = Helper.deepFreeze(message)
 		this.MessageType = MessageType
 	}
 
 	get messageID(): number {
-		return this[m].messageID
+		return this.#m.messageID
 	}
 
 	get objectType(): string {
-		return this[m].objectType
+		return this.#m.objectType
 	}
 
 	getMessageType(): MessageType {
@@ -60,7 +58,7 @@ class Message {
 	}
 
 	get time(): number {
-		return this[m].time
+		return this.#m.time
 	}
 
 	get formattedTime(): string {
@@ -68,31 +66,31 @@ class Message {
 	}
 
 	get date(): Date {
-		return new Date(this[m].time * 1000)
+		return new Date(this.#m.time * 1000)
 	}
 
 	get link(): string {
-		return this[m].link
+		return this.#m.link
 	}
 
 	get userID(): number {
-		return this[m].userID
+		return this.#m.userID
 	}
 
 	get username(): string {
-		return this[m].username
+		return this.#m.username
 	}
 
 	get isIgnored(): boolean {
-		return this[m].isIgnored
+		return this.#m.isIgnored
 	}
 
 	get isDeleted(): boolean {
-		return this[m].isDeleted
+		return this.#m.isDeleted
 	}
 
 	get payload(): unknown {
-		return this[m].payload
+		return this.#m.payload
 	}
 
 	isOwnMessage(): boolean {
@@ -100,11 +98,11 @@ class Message {
 	}
 
 	wrap(): { message: ViewableMessagePayload } {
-		return { message: this[m] }
+		return { message: this.#m }
 	}
 
 	toJSON(): ViewableMessagePayload {
-		return this[m]
+		return this.#m
 	}
 }
 
