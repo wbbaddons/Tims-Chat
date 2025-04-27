@@ -17,8 +17,6 @@ import MessageType from '../MessageType'
 
 import type Message from '../Message'
 
-const decorators = Symbol('decorators')
-
 interface InfoMessage extends Message {
 	payload: {
 		rooms: {
@@ -43,12 +41,12 @@ type Decorator = (
 ) => InfoMessage['payload'] & Record<string, unknown>
 
 class Info extends MessageType {
-	[decorators]: Set<Decorator>
+	#decorators: Set<Decorator>
 
 	constructor(...superArgs: ConstructorParameters<typeof MessageType>) {
 		super(...superArgs)
 
-		this[decorators] = new Set()
+		this.#decorators = new Set()
 	}
 
 	addDecorator(decorator: Decorator) {
@@ -56,7 +54,7 @@ class Info extends MessageType {
 			throw new TypeError('Supplied argument must be a function')
 		}
 
-		this[decorators].add(decorator)
+		this.#decorators.add(decorator)
 	}
 
 	getReferencedUsers(message: InfoMessage) {
@@ -93,7 +91,7 @@ class Info extends MessageType {
 		})
 
 		const payload = Helper.deepFreeze(
-			Array.from(this[decorators]).reduce(
+			Array.from(this.#decorators).reduce(
 				(payload, decorator) => decorator(payload),
 				Object.assign({}, message.payload, { rooms })
 			)
