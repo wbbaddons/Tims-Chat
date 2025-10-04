@@ -24,8 +24,6 @@ import console from '../console'
 
 import type Message from '../Message'
 
-const enableAutoscroll = Symbol('enableAutoscroll')
-
 // Convince TypeScript that this class is an EventEmitter,
 // this is done by calling EventEmitter(Input.prototype) after the class definition
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging, @typescript-eslint/no-empty-object-type
@@ -65,8 +63,8 @@ interface MessageStream extends EventEmitter<MessageStream> {
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class MessageStream {
 	stream: HTMLElement
-	scrollContainer: HTMLElement;
-	[enableAutoscroll]: boolean
+	scrollContainer: HTMLElement
+	#enableAutoscroll: boolean
 	lastScrollPosition: number | undefined
 	nodeMap: WeakMap<Element, Message>
 	positions: Tree
@@ -75,20 +73,20 @@ class MessageStream {
 		this.stream = document.getElementById('chatMessageStream')!
 		this.scrollContainer = this.stream.querySelector('.scrollContainer')!
 
-		this[enableAutoscroll] = true
+		this.#enableAutoscroll = true
 		this.lastScrollPosition = undefined
 		this.nodeMap = new WeakMap()
 		this.positions = new Tree()
 	}
 
 	get enableAutoscroll(): boolean {
-		return this[enableAutoscroll]
+		return this.#enableAutoscroll
 	}
 
 	set enableAutoscroll(value: boolean) {
-		this[enableAutoscroll] = value
+		this.#enableAutoscroll = value
 
-		if (this[enableAutoscroll]) {
+		if (this.#enableAutoscroll) {
 			this.scrollToBottom()
 		}
 	}
