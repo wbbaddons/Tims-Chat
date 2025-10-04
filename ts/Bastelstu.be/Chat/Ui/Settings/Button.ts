@@ -12,7 +12,7 @@
  */
 
 class Button {
-	public static readonly DEPENDENCIES = []
+	public static readonly DEPENDENCIES: string[] = []
 
 	element: Element
 
