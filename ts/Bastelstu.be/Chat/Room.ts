@@ -4,7 +4,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2029-04-27
+ * Change Date: 2029-10-04
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -16,7 +16,7 @@ import * as Core from 'WoltLabSuite/Core/Core'
 
 import User from './User'
 
-import type { DatabaseObjectActionResponse } from 'WoltLabSuite/Core/Ajax/Data'
+import type { DatabaseObjectActionResponse, RequestOptions } from 'WoltLabSuite/Core/Ajax/Data'
 
 interface RoomActionGetUsersResponse extends DatabaseObjectActionResponse {
 	returnValues: ReturnType<User['toJSON']>[]
@@ -40,7 +40,7 @@ class Room {
 	/**
 	 * Sends a request to join the room.
 	 */
-	async join() {
+	async join(): Promise<unknown> {
 		const payload = {
 			className: 'chat\\data\\room\\RoomAction',
 			actionName: 'join',
@@ -55,7 +55,7 @@ class Room {
 	 *
 	 * @param unload Send a beacon if true'ish and a regular AJAX request otherwise.
 	 */
-	leave(unload = false) {
+	leave(unload = false): Promise<unknown> {
 		const payload = {
 			className: 'chat\\data\\room\\RoomAction',
 			actionName: 'leave',
@@ -101,7 +101,7 @@ class Room {
 		return Object.values(result.returnValues).map((user) => new User(user))
 	}
 
-	_ajaxSetup() {
+	_ajaxSetup(): RequestOptions {
 		return { silent: true, ignoreError: true }
 	}
 }

@@ -94,7 +94,7 @@ declare class Bottle<EntryName extends string = string> {
 	value(name: EntryName, val: any): this
 }
 
-export = Bottle
+export default Bottle
 
 declare module Bottle {
 	type Middleware = (service: any, next: (error?: Error) => void) => void
@@ -114,4 +114,8 @@ declare module Bottle {
 		$register(Obj: Bottle.IRegisterableObject): this
 		$list(container?: Bottle.IContainer): EntryName[]
 	}
+}
+
+export interface InstanceFactory<T, A = undefined> {
+	instance: (...args: A extends any[] ? { [K in keyof A]: A[K] } : A extends undefined ? any[] : never) => T
 }
