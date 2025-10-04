@@ -29,10 +29,6 @@ define([], function () {
 				listeners.get(this).get(type).add({ listener, options })
 			},
 
-			off(type, listener) {
-				listeners.get(this).get(type).delete(listener)
-			},
-
 			emit(type, detail = {}) {
 				if (!listeners.has(this)) return
 				if (!listeners.get(this).has(type)) return
