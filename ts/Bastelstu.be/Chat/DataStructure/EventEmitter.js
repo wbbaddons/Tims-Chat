@@ -17,7 +17,7 @@ define([], function () {
 	const listeners = new WeakMap()
 	const EventEmitter = function (target) {
 		Object.assign(target, {
-			on(type, listener, options = {}) {
+			on(type, listener) {
 				if (!listeners.has(this)) {
 					listeners.set(this, new Map())
 				}
@@ -25,8 +25,7 @@ define([], function () {
 					listeners.get(this).set(type, new Set())
 				}
 
-				if (!options.once) options.once = false
-				listeners.get(this).get(type).add({ listener, options })
+				listeners.get(this).get(type).add({ listener })
 			},
 
 			emit(type, detail = {}) {
@@ -36,11 +35,7 @@ define([], function () {
 				const set = listeners.get(this).get(type)
 
 				set.forEach(
-					function ({ listener, options }) {
-						if (options.once) {
-							set.delete(listener)
-						}
-
+					function ({ listener }) {
 						listener({ target: this, detail })
 					}.bind(this)
 				)
