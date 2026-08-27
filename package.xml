@@ -5,8 +5,8 @@
 		<packagename language="de">Tims Chat</packagename>
 		<isapplication>1</isapplication>
 		<applicationdirectory>chat</applicationdirectory>
-		<version>4.3.0 RC 1</version>
-		<date>2024-06-15</date>
+		<version>4.3.0 RC 2</version>
+		<date>2026-08-27</date>
 	</packageinformation>
 
 	<authorinformation>
@@ -15,11 +15,11 @@
 	</authorinformation>
 
 	<requiredpackages>
-		<requiredpackage minversion="6.0.14">com.woltlab.wcf</requiredpackage>
+		<requiredpackage minversion="6.0.26">com.woltlab.wcf</requiredpackage>
 		<requiredpackage minversion="1.1.0">be.bastelstu.promiseWrap</requiredpackage>
 		<requiredpackage minversion="0.6.1">be.bastelstu.parserCombinator</requiredpackage>
 		<requiredpackage minversion="1.6.1">be.bastelstu.bottle</requiredpackage>
-		<requiredpackage minversion="2.1.0 Alpha 1">be.bastelstu.wcf.push</requiredpackage>
+		<requiredpackage minversion="2.1.7">be.bastelstu.wcf.push</requiredpackage>
 	</requiredpackages>
 
 	<excludedpackages>
@@ -83,7 +83,7 @@
 		<instruction type="script" run="standalone">acp/be.bastelstu.chat_install.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="4.2.2">
+	<instructions type="update" fromversion="4.2.9">
 		<instruction type="file" application="wcf" run="standalone">files_wcf.tar</instruction>
 		<instruction type="file" />
 		<instruction type="template" />
@@ -95,52 +95,7 @@
 		<instruction type="script" run="standalone">acp/be.bastelstu.chat_update.php</instruction>
 	</instructions>
 
-	<instructions type="update" fromversion="4.3.0 Alpha 1">
-		<instruction type="file" application="wcf" run="standalone">files_wcf.tar</instruction>
-		<instruction type="file" />
-		<instruction type="template" />
-		<instruction type="acpTemplate" />
-
-		<instruction type="language" />
-		<instruction type="acpMenu" />
-
-		<instruction type="script" run="standalone">acp/be.bastelstu.chat_update.php</instruction>
-	</instructions>
-
-	<instructions type="update" fromversion="4.2.5">
-		<instruction type="file" application="wcf" run="standalone">files_wcf.tar</instruction>
-		<instruction type="file" />
-		<instruction type="template" />
-		<instruction type="acpTemplate" />
-
-		<instruction type="language" />
-
-		<instruction type="script" run="standalone">acp/be.bastelstu.chat_update.php</instruction>
-	</instructions>
-
-	<instructions type="update" fromversion="4.2.6">
-		<instruction type="file" application="wcf" run="standalone">files_wcf.tar</instruction>
-		<instruction type="file" />
-		<instruction type="template" />
-		<instruction type="acpTemplate" />
-
-		<instruction type="language" />
-
-		<instruction type="script" run="standalone">acp/be.bastelstu.chat_update.php</instruction>
-	</instructions>
-
-	<instructions type="update" fromversion="4.2.7">
-		<instruction type="file" application="wcf" run="standalone">files_wcf.tar</instruction>
-		<instruction type="file" />
-		<instruction type="template" />
-		<instruction type="acpTemplate" />
-
-		<instruction type="language" />
-
-		<instruction type="script" run="standalone">acp/be.bastelstu.chat_update.php</instruction>
-	</instructions>
-
-	<instructions type="update" fromversion="4.2.8">
+	<instructions type="update" fromversion="4.3.0 RC 1">
 		<instruction type="file" application="wcf" run="standalone">files_wcf.tar</instruction>
 		<instruction type="file" />
 		<instruction type="template" />
