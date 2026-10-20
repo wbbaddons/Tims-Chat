@@ -28,39 +28,17 @@
 	</excludedpackages>
 
 	<instructions type="install">
-		<instruction type="sql">sql/0001-chat1_room.sql</instruction>
-		<instruction type="sql">sql/0002-Default-Room.sql</instruction>
-		<instruction type="sql">sql/0003-chat1_room_to_user.sql</instruction>
-		<instruction type="sql">sql/0004-chat1_message.sql</instruction>
-		<instruction type="sql">sql/0005-chat1_room_to_user-FOREIGN_KEY.sql</instruction>
-		<instruction type="sql">sql/0006-chat1_room_to_user-Timestamps.sql</instruction>
-		<instruction type="sql">sql/0007-chat1_room_to_user_lastPull.sql</instruction>
-		<instruction type="sql">sql/0008-chat1_message-Username-Width.sql</instruction>
-		<instruction type="sql">sql/0009-chat1_command.sql</instruction>
-		<instruction type="sql">sql/0010-chat1_command_trigger.sql</instruction>
-		<instruction type="sql">sql/0011-chat1_session.sql</instruction>
-		<instruction type="sql">sql/0012-chat1_message-Nullroom.sql</instruction>
-		<instruction type="sql">sql/0013-chat1_session-Index.sql</instruction>
-		<instruction type="sql">sql/0014-chat1_message-Embedded-Objects.sql</instruction>
-		<instruction type="sql">sql/0015-chat1_user-Away.sql</instruction>
-		<instruction type="sql">sql/0016-chat1_command_trigger-PRIMARY_KEY.sql</instruction>
-		<instruction type="sql">sql/0017-chat1_command-Unique-className.sql</instruction>
-		<instruction type="sql">sql/0018-wcf1_user-Color.sql</instruction>
-		<instruction type="sql">sql/0019-chat1_room-User-Limit.sql</instruction>
-		<instruction type="sql">sql/0019-chat1_suspension.sql</instruction>
-		<instruction type="sql">sql/0020-chat1_suspension-Revoked.sql</instruction>
-		<instruction type="sql">sql/0021-chat1_room-Temporary.sql</instruction>
-		<instruction type="sql">sql/0022-chat1_room_temporary_invite.sql</instruction>
-		<instruction type="sql">sql/0023-chat1_message-isDeleted.sql</instruction>
-		<instruction type="sql">sql/0024-chat1_room-topicUseHtml.sql</instruction>
-		<instruction type="sql">sql/0025-chat1_room-topic-text.sql</instruction>
-
 		<instruction type="file" application="wcf" run="standalone">files_wcf.tar</instruction>
 		<instruction type="packageInstallationPlugin" run="standalone" />
+
 		<instruction type="file" />
-		<instruction type="chatCommand" /> <!-- This needs to be performed in the same request as 'file' -->
+		<instruction type="database" run="standalone">acp/database/be.bastelstu.chat_install.php</instruction>
+
 		<instruction type="template" />
 		<instruction type="acpTemplate" />
+
+		<instruction type="script">acp/be.bastelstu.chat_install_chatCommand.php</instruction>
+		<instruction type="chatCommand" />
 
 		<instruction type="objectTypeDefinition" />
 		<instruction type="objectType" />
@@ -102,6 +80,23 @@
 		<instruction type="acpTemplate" />
 
 		<instruction type="language" />
+
+		<instruction type="database" run="standalone">acp/database/be.bastelstu.chat_update_step1.php</instruction>
+		<instruction type="database" run="standalone">acp/database/be.bastelstu.chat_update_step2.php</instruction>
+
+		<instruction type="script" run="standalone">acp/be.bastelstu.chat_update.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="4.3.0 RC 2">
+		<instruction type="file" application="wcf" run="standalone">files_wcf.tar</instruction>
+		<instruction type="file" />
+		<instruction type="template" />
+		<instruction type="acpTemplate" />
+
+		<instruction type="language" />
+
+		<instruction type="database" run="standalone">acp/database/be.bastelstu.chat_update_step1.php</instruction>
+		<instruction type="database" run="standalone">acp/database/be.bastelstu.chat_update_step2.php</instruction>
 
 		<instruction type="script" run="standalone">acp/be.bastelstu.chat_update.php</instruction>
 	</instructions>

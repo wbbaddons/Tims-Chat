@@ -6,7 +6,7 @@
  * Use of this software is governed by the Business Source License
  * included in the LICENSE file.
  *
- * Change Date: 2030-08-27
+ * Change Date: 2030-10-20
  *
  * On the date above, in accordance with the Business Source
  * License, use of this software will be governed by version 2
@@ -14,6 +14,7 @@
  */
 
 use wcf\system\box\BoxHandler;
+use wcf\system\WCF;
 
 BoxHandler::getInstance()->createBoxCondition(
     'be.bastelstu.chat.roomListDashboard',
@@ -23,3 +24,9 @@ BoxHandler::getInstance()->createBoxCondition(
         'chatRoomIsFilled' => 1,
     ]
 );
+
+$sql = "INSERT INTO chat" . WCF_N . "_room
+                    (title, topic, position)
+        VALUES      (?, ?, ?)";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute(['Default', '', 0]);

@@ -8,7 +8,7 @@ all: be.bastelstu.chat.tar be.bastelstu.chat.tar.gz
 be.bastelstu.chat.tar.gz: be.bastelstu.chat.tar
 	gzip -9 < $< > $@
 
-be.bastelstu.chat.tar: files.tar files_wcf.tar acptemplates.tar templates.tar *.xml LICENSE sql/*.sql language/*.xml
+be.bastelstu.chat.tar: files.tar files_wcf.tar acptemplates.tar templates.tar *.xml LICENSE language/*.xml
 	tar cvf $@ --mtime="@$(shell git log -1 --format=%ct)" --owner=0 --group=0 --numeric-owner --exclude-vcs -- $^
 
 files.tar: $(FILES)
